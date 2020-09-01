@@ -27,7 +27,13 @@ module('Acceptance | profile/basic layout', function (hooks) {
       github_id: 1974,
       vcs_type: 'GithubUser',
       vcs_id: 1974,
-      avatar_url: '/images/tiny.gif'
+      avatar_url: '/images/tiny.gif',
+      allowance: {
+        subscription_type: 2,
+        private_repos: false,
+        public_repos: false,
+        concurrency_limit: 1
+      }
     });
 
     signInUser(this.user);
@@ -190,6 +196,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
 
     assert.equal(profilePage.name, 'User Name of exceeding length');
     assert.equal(profilePage.login, '@user-login');
+    assert.equal(profilePage.flash, 'Builds have been temporarily disabled for private repositories due to a negative credit balance. Please go to the Plan page to replenish your credit balance');
 
     assert.ok(profilePage.avatar.src.startsWith('/images/tiny.gif'), 'expected avatar URL to have the same beginning');
     assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for active subscription');

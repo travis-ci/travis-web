@@ -20,6 +20,8 @@ export default Component.extend({
 
   accounts: service(),
   features: service(),
+  flashes: service(),
+  router: service(),
 
   activeModel: null,
   model: reads('activeModel'),
@@ -62,19 +64,20 @@ export default Component.extend({
   }),
 
   didRender() {
-    const isUser = this.model.isUser;
-    const login = this.model.login;
-    const allowance = this.model.allowance;
-    const plansPath = isUser ? `https://travis-ci.com/account/${config.planSuffix}` : `https://travis-ci.com/organizations/${login}/${config.planSuffix}`;
-    const settingsPath = isUser ? `https://travis-ci.com/account/${config.settingsSuffix}` : `https://travis-ci.com/organizations/${login}/${config.settingsSuffix}`;
+    const { allowance, isUser } = this.model;
+    if (!allowance || allowance.subscription_type !== 2)
+      return;
 
-    if (allowance && !allowance.public_repos) {
-      this.flashes.warning(`Builds have been temporarily disabled for public repositories due to a negative credit balance. \
-                            Please go to the <a href="${plansPath}">Plan page</a> to replenish your credit balance or alter your \
-                            <a href="${settingsPath}">OSS Credits consumption setting</a>`);
-    } else if (allowance && !allowance.private_repos) {
+    const planPageUrl = isUser ? this.router.urlFor('account.plan') : this.router.urlFor('organization.plan', this.model);
+    const settinigsPageUrl = isUser ? this.router.urlFor('account.settings') : this.router.urlFor('organization.settings', this.model);
+
+    if (!allowance.private_repos) {
       this.flashes.warning(`Builds have been temporarily disabled for private repositories due to a negative credit balance. \
-                            Please go to the <a href="${plansPath}">Plan page</a> to replenish your credit balance`);
+                            Please go to the <a href="${planPageUrl}">Plan page</a> to replenish your credit balance`);
+    } else if (!allowance.public_repos) {
+      this.flashes.warning(`Builds have been temporarily disabled for public repositories due to a negative credit balance. \
+                            Please go to the <a href="${planPageUrl}">Plan page</a> to replenish your credit balance or alter your \
+                            <a href="${settinigsPageUrl}">OSS Credits consumption setting</a>`);
     }
   }
 

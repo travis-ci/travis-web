@@ -1,12 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import config from 'travis/config/environment';
 
 export default Component.extend({
   externalLinks: service(),
   features: service(),
   flashes: service(),
+  router: service(),
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
@@ -43,14 +43,13 @@ export default Component.extend({
   didRender() {
     const repo = this.get('repo');
     const isUser = repo.ownerType === 'user';
-    const login = repo.ownerName;
-    const plansPath = isUser ? `https://travis-ci.com/account/${config.planSuffix}` : `https://travis-ci.com/organizations/${login}/${config.planSuffix}`;
-    const settingsPath = isUser ? `https://travis-ci.com/account/${config.settingsSuffix}` : `https://travis-ci.com/organizations/${login}/${config.settingsSuffix}`;
+    const planPageUrl = isUser ? this.router.urlFor('account.plan') : this.router.urlFor('organization.plan', repo.owner);
+    const settinigsPageUrl = isUser ? this.router.urlFor('account.settings') : this.router.urlFor('organization.settings', repo.owner);
 
     if (!repo.canOwnerBuild) {
       this.flashes.warning(`Builds have been temporarily disabled for this repository due to a negative credit balance. \
-                            Please go to the <a href="${plansPath}">Plan page</a> to replenish your credit balance or alter your \
-                            <a href="${settingsPath}">OSS Credits consumption setting</a>`);
+                            Please go to the <a href="${planPageUrl}">Plan page</a> to replenish your credit balance or alter your \
+                            <a href="${settinigsPageUrl}">OSS Credits consumption setting</a>`);
     }
   }
 });
