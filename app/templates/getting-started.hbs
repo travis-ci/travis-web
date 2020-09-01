@@ -90,6 +90,11 @@
       {{#if this.showGitlab}}
         <GettingStartedStepsGeneric @provider='gitlab' />
       {{/if}}
+
+      {{!-- Assembla --}}
+      {{#if this.showAssembla}}
+        <GettingStartedStepsGeneric @provider='assembla' />
+      {{/if}}
     </div>
   </UiKit::Box>
 </Layouts::Sidebar>
