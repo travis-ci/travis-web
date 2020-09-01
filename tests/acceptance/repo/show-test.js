@@ -93,57 +93,6 @@ module('Acceptance | show repo page', function (hooks) {
     otherCommit.job = otherJob;
     otherJob.save();
     otherCommit.save();
-
-    let nextRepository = this.server.create('repository', {
-      name: 'next-repository',
-      vcs_name: 'next-repository',
-      slug: 'user-login/next-repository',
-      owner: {
-        login: 'user-login',
-        allowance: {
-          subscription_type: 2,
-          private_repos: false,
-          public_repos: false,
-          concurrency_limit: 1
-        }
-      },
-      owner_name: 'user-login'
-    });
-
-    let nextBranch = nextRepository.createBranch({
-      name: 'branch#what',
-      id: '/v3/repo/${repository.id}/branch/branch#what',
-      default_branch: true
-    });
-
-    let nextCommit = this.server.create('commit', {
-      author: gitUser,
-      committer: gitUser,
-      branch: 'other-tests',
-      message: 'An other message',
-      branch_is_default: true
-    });
-
-    let nextBuild = this.server.create('build', {
-      repository: nextRepository,
-      state: 'failed',
-      commit_id: nextCommit.id,
-      commit: nextCommit,
-      branch: nextBranch,
-      finished_at: new Date(1919, 4, 1),
-    });
-
-    let nextJob = this.server.create('job', {
-      number: '1919.1919',
-      repository: nextRepository,
-      state: 'failed',
-      config: {},
-      commit: nextCommit,
-      build: nextBuild
-    });
-    nextCommit.job = nextJob;
-    nextJob.save();
-    nextCommit.save();
   });
 
   test('loading branches doesnt update the default branch on the repo', async function (assert) {
@@ -165,12 +114,6 @@ module('Acceptance | show repo page', function (hooks) {
 
     assert.equal(page.gitHubLink.href, 'https://github.com/org-login/repository-name');
     assert.equal(page.gitHubLink.title, 'repository-name on GitHub');
-  });
-
-  test('warning is displayed in case owner cannot build', async function (assert) {
-    await page.visit({ organization: 'user-login', repo: 'next-repository' });
-
-    assert.equal(page.flash, 'Builds have been temporarily disabled for this repository due to a negative credit balance. Please go to the Plan page to replenish your credit balance or alter your OSS Credits consumption setting');
   });
 
   test('visiting the root shows the most recent current build', async function (assert) {

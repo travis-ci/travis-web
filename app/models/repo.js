@@ -24,6 +24,7 @@ export const HISTORY_MIGRATION_STATUS = {
 const Repo = VcsEntity.extend({
   api: service(),
   auth: service(),
+  features: service(),
 
   permissions: attr(),
   slug: attr('string'),
@@ -69,9 +70,10 @@ const Repo = VcsEntity.extend({
 
   allowance: reads('owner.allowance'),
   canOwnerBuild: computed('allowance', 'private', 'features.{proVersion,enterpriseVersion}', function () {
-    const isPro = !this.get('features.proVersion');
+    const isPro = this.get('features.proVersion');
     const enterprise = !!this.get('features.enterpriseVersion');
-    if (isPro || enterprise) {
+
+    if (!isPro || enterprise) {
       return true;
     }
     const { allowance, private: isPrivate } = this;
@@ -79,6 +81,7 @@ const Repo = VcsEntity.extend({
       return true;
     if (!allowance)
       return false;
+
     return isPrivate ? allowance.private_repos : allowance.public_repos;
   }),
 
