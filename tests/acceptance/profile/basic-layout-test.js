@@ -32,17 +32,18 @@ module('Acceptance | profile/basic layout', function (hooks) {
         subscription_type: 2,
         private_repos: false,
         public_repos: false,
-        concurrency_limit: 1
+        concurrency_limit: 4
       }
     });
-
-    signInUser(this.user);
 
     this.server.create('installation', {
       owner: this.user,
       github_id: 2691
     });
+
     this.user.save();
+
+    signInUser(this.user);
 
     let subscription = this.server.create('subscription', {
       owner: this.user,
@@ -196,7 +197,6 @@ module('Acceptance | profile/basic layout', function (hooks) {
 
     assert.equal(profilePage.name, 'User Name of exceeding length');
     assert.equal(profilePage.login, '@user-login');
-    assert.equal(profilePage.flash, 'Builds have been temporarily disabled for private repositories due to a negative credit balance. Please go to the Plan page to replenish your credit balance');
 
     assert.ok(profilePage.avatar.src.startsWith('/images/tiny.gif'), 'expected avatar URL to have the same beginning');
     assert.ok(profilePage.avatar.checkmark.isVisible, 'expected avatar to have a checkmark for active subscription');

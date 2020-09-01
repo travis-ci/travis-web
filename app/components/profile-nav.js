@@ -65,6 +65,7 @@ export default Component.extend({
 
   didRender() {
     const { allowance, isUser } = this.model;
+
     if (!allowance || allowance.subscription_type !== 2)
       return;
 
