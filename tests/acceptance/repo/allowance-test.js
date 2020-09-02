@@ -61,6 +61,6 @@ module('Acceptance | repo allowance', function (hooks) {
   test('warning is displayed in case owner cannot build', async function (assert) {
     await page.visit({ organization: 'user-login', repo: 'repository-name' });
 
-    assert.equal(page.flash, 'Builds have been temporarily disabled for this repository due to a negative credit balance. Please go to the Plan page to replenish your credit balance or alter your OSS Credits consumption setting');
+    assert.equal(page.flash, 'Builds have been temporarily disabled for public repositories due to a negative credit balance. Please go to the Plan page to replenish your credit balance or alter your OSS Credits consumption setting.');
   });
 });
