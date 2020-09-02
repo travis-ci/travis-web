@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads, empty, bool, not, and } from '@ember/object/computed';
+import { reads, empty, bool, not, and, or } from '@ember/object/computed';
 
 export default Component.extend({
   store: service(),
@@ -11,20 +11,26 @@ export default Component.extend({
 
   subscription: reads('account.subscription'),
   v2subscription: reads('account.v2subscription'),
+  isV2SubscriptionEmpty: empty('v2subscription'),
   isSubscriptionEmpty: empty('subscription'),
+  isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
+  hasV2Subscription: not('isV2SubscriptionEmpty'),
   trial: reads('account.trial'),
   isEducationalAccount: bool('account.education'),
   isNotEducationalAccount: not('isEducationalAccount'),
 
-  isTrial: and('isSubscriptionEmpty', 'isNotEducationalAccount'),
+  isTrial: and('isSubscriptionsEmpty', 'isNotEducationalAccount'),
   isManual: bool('subscription.isManual'),
   isManaged: bool('subscription.managedSubscription'),
-  isEducation: and('isSubscriptionEmpty', 'isEducationalAccount'),
+  isEducation: and('isSubscriptionsEmpty', 'isEducationalAccount'),
 
-  invoices: computed('subscription.id', function () {
-    let subscriptionId = this.get('subscription.id');
+  isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
+
+  invoices: computed('subscription.id', 'v2subscription.id', function () {
+    let subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');
+    let modelName = this.isV2SubscriptionEmpty ? 'invoice' : 'v2-invoice';
     if (subscriptionId) {
-      return this.store.query('invoice', { subscription_id: subscriptionId });
+      return this.store.query(modelName, { subscription_id: subscriptionId });
     } else {
       return [];
     }

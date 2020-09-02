@@ -56,7 +56,7 @@ export default Service.extend({
         this.logMissingPlanException();
       }
 
-      return subscriptions.sortBy('validTo');
+      return subscriptions;
     } catch (e) {
       this.set('v2SubscriptionError', true);
     }

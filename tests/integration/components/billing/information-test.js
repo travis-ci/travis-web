@@ -89,7 +89,7 @@ module('Integration | Component | billing-information', function (hooks) {
         @selectedPlan={{selectedPlan}}
         @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
-        @newSubscription={{newSubscription}}
+        @selectedPlan={{this.selectedPlan}}
         @next={{action 'next'}}
         @back={{action 'back'}}
         @goToFirstStep={{action 'goToFirstStep'}}
@@ -104,7 +104,7 @@ module('Integration | Component | billing-information', function (hooks) {
       <Billing::Information
         @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
-        @newSubscription={{newSubscription}}
+        @selectedPlan={{this.selectedPlan}}
         @next={{action 'next'}}
         @back={{action 'back'}}
         @goToFirstStep={{action 'goToFirstStep'}}

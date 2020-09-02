@@ -30,7 +30,7 @@ export default Component.extend({
       yield this.submit.perform();
     } else {
       const { store } = this;
-      const selectedPlan = store.peekRecord('plan', this.selectedPlan.id) || store.createRecord('plan', { ...this.selectedPlan });
+      const selectedPlan = store.peekRecord('v2-plan-config', this.selectedPlan.id) || store.createRecord('v2-plan-config', { ...this.selectedPlan });
       this.set('selectedPlanId', selectedPlan.id);
       this.submit();
     }

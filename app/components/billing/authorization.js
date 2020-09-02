@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, not, equal, and, or, bool } from '@ember/object/computed';
+import { reads, not, equal, and, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { computed } from '@ember/object';
@@ -16,9 +16,7 @@ export default Component.extend({
   showPlansSelector: false,
   showCancelModal: false,
   isV2Subscription: false,
-  selectedPlan: reads('subscription.plan'),
-  showAnnual: bool('selectedPlan.annual'),
-  showMonthly: not('showAnnual'),
+  selectedPlan: null,
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),

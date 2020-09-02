@@ -15,7 +15,6 @@ export default Component.extend({
   account: null,
   stripeElement: null,
   stripeLoading: false,
-  newSubscription: null,
   couponId: null,
   options: config.stripeOptions,
 
@@ -47,12 +46,11 @@ export default Component.extend({
 
   creditCardInfo: reads('subscription.creditCardInfo'),
   creditCardInfoEmpty: computed('subscription.creditCardInfo', function () {
-    return this.creditCardInfo.token == null;
+    return !this.creditCardInfo.lastDigits;
   }),
 
   updatePlan: task(function* () {
     yield this.subscription.changePlan.perform({ plan: this.selectedPlan.id });
-    yield this.accounts.fetchSubscriptions.perform();
     yield this.accounts.fetchV2Subscriptions.perform();
     yield this.retryAuthorization.perform();
     this.storage.clearBillingData();
@@ -68,13 +66,9 @@ export default Component.extend({
     try {
       const { token } = yield this.stripe.createStripeToken.perform(stripeElement);
       if (token) {
-        subscription.creditCardInfo.setProperties({
-          token: token.id,
-          lastDigits: token.card.last4
-        });
+        yield this.subscription.creditCardInfo.updateToken(this.subscription.id, token);
         yield subscription.save();
         yield subscription.changePlan.perform({ plan: selectedPlan.id });
-        yield this.accounts.fetchSubscriptions.perform();
         yield this.accounts.fetchV2Subscriptions.perform();
         this.metrics.trackEvent({ button: 'pay-button' });
         this.storage.clearBillingData();

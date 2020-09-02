@@ -50,6 +50,7 @@
     <Billing::Process
       @account={{this.account}}
       @subscription={{this.subscription}}
+      @selectedPlan={{this.selectedPlan}}
       @showPlansSelector={{this.showPlansSelector}}
       @retryAuthorization={{this.retryAuthorization}}
     />
@@ -69,7 +70,7 @@
         </div>
         <div class='billing-subscription__buttons--addons'>
           {{#if (and this.isV2Subscription this.canBuyAddons)}}
-            <button {{on 'click' void}} class='button--white-and-teal button--hover' data-test-buy-addons='true'>
+            <button class='button--white-and-teal button--hover' data-test-buy-addons='true'>
               Buy addons
             </button>
           {{/if}}

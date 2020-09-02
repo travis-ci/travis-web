@@ -13,6 +13,17 @@ export default Component.extend({
 
   subscription: reads('account.subscription'),
   accountTrial: reads('account.trial'),
+  newSubscription: computed(function () {
+    const plan = this.store.createRecord('v2-plan-config');
+    const billingInfo = this.store.createRecord('v2-billing-info');
+    const creditCardInfo = this.store.createRecord('v2-credit-card-info');
+    return this.store.createRecord('v2-subscription', {
+      billingInfo,
+      plan,
+      creditCardInfo,
+    });
+  }),
+
   isGithubTrial: and('subscription.isGithub', 'accountTrial.hasActiveTrial'),
   newTrial: null,
   trial: computed('accountTrial', 'newTrial', function () {

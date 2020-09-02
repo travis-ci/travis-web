@@ -23,15 +23,15 @@ export default Component.extend({
 
   billingInfoExists: computed(function () {
     const billingInfo = this.existingBillingInfo;
-    return billingInfo.firstName && billingInfo.lastName && billingInfo.billingEmail && billingInfo.address
-                                 && billingInfo.city && billingInfo.zipCode && billingInfo.country;
+    if (billingInfo)
+      return billingInfo.firstName && billingInfo.lastName && billingInfo.billingEmail && billingInfo.address
+                                   && billingInfo.city && billingInfo.zipCode && billingInfo.country;
+    return false;
   }),
 
   isStepOne: equal('currentStep', STEPS.ONE),
   isStepTwo: equal('currentStep', STEPS.TWO),
   isStepThree: equal('currentStep', STEPS.THREE),
-  selectedPlan: null,
-  billingInfo: reads('newSubscription.billingInfo'),
   existingBillingInfo: reads('subscription.billingInfo'),
   existingCreditCardInfo: reads('subscription.creditCardInfo'),
 
@@ -51,7 +51,7 @@ export default Component.extend({
 
   persistBillingData(step) {
     this.storage.billingStep = step;
-    this.storage.billingPlan = this.selectedPlan.getProperties(['id', 'name', 'starting_price', 'starting_users']);
+    this.storage.billingPlan = this.selectedPlan;
     this.storage.billingInfo = this.billingInfo;
   },
 

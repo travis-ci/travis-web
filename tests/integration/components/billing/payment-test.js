@@ -74,7 +74,7 @@ module('Integration | Component | billing-payment', function (hooks) {
 
     await render(hbs`<Billing::Payment
       @paymentInfo={{paymentInfo}}
-      @newSubscription={{newSubscription}}
+      @selectedPlan={{this.selectedPlan}}
       @cancel={{action 'cancel'}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @back={{action 'back'}}

@@ -51,6 +51,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     this.server.create('plan', { id: 'travis-ci-one-build', name: 'Bootstrap', builds: 1, price: 6900, currency: 'USD' });
     this.defaultPlan = this.server.create('plan', { id: 'travis-ci-two-builds', name: 'Startup', builds: 2, price: 12900, currency: 'USD' });
+    this.defaultV2Plan = this.server.create('v2_plan_config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', starting_price: 30000, starting_users: 10000, private_credits: 500000, public_credits: 40000 });
     this.server.create('plan', { id: 'travis-ci-five-builds', name: 'Premium', builds: 5, price: 24900, currency: 'USD' });
     this.lastPlan = this.server.create('plan', { id: 'travis-ci-ten-builds', name: 'Small Business', builds: 10, price: 48900, currency: 'USD' });
 
@@ -889,8 +890,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
-    await subscribeButton.click();
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
 
     percySnapshot(assert);
 
@@ -909,10 +912,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingForm.proceedPayment.click();
 
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
@@ -966,14 +970,16 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+    assert.equal(profilePage.billing.selectedPlan.subscribeButton.text, 'Upgrade');
 
-    await profilePage.billing.subscribeButton.click();
+    await profilePage.billing.selectedPlan.subscribeButton.click();
 
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
   });
 
@@ -982,13 +988,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
     await profilePage.billing.changeSubscriptionButton.click();
 
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
 
-    await profilePage.billing.selectedPlanOverview.changePlan.click();
+    assert.equal(profilePage.billing.selectedPlan.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlan.subscribeButton.text, 'Upgrade');
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.name.text, 'You have 10 trial builds left');

@@ -34,10 +34,10 @@
                 {{/if}}
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.credits}} Credits
+                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.private_credits}} Credits
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> 40,000 OSS Credits<span class='color-cement-grey'>/month</span>
+                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.public_credits}} OSS Credits<span class='color-cement-grey'>/month</span>
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
                 <SvgImage @name="icon-passed" @class="icon blue" />

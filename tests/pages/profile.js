@@ -513,47 +513,47 @@ export default create({
       isHighlighted: hasClass('highlight-plan'),
 
       heading: {
-        scope: '.highlight-plan [data-test-selected-plan-heading]',
+        scope: '[data-test-selected-plan-heading]',
         text: text()
       },
 
       name: {
-        scope: '.highlight-plan [data-test-selected-plan-name]',
+        scope: '[data-test-selected-plan-name]',
         text: text()
       },
 
       credits: {
-        scope: '.highlight-plan [data-test-selected-plan-credits]',
+        scope: '[data-test-selected-plan-credits]',
         text: text()
       },
 
       osscredits: {
-        scope: '.highlight-plan [data-test-selected-plan-oss-credits]',
+        scope: '[data-test-selected-plan-oss-credits]',
         text: text()
       },
 
       users: {
-        scope: '.highlight-plan [data-test-selected-plan-users]',
+        scope: '[data-test-selected-plan-users]',
         text: text()
       },
 
       repos: {
-        scope: '.highlight-plan [data-test-selected-plan-repos]',
+        scope: '[data-test-selected-plan-repos]',
         text: text()
       },
 
       os: {
-        scope: '.highlight-plan [data-test-selected-plan-os]',
+        scope: '[data-test-selected-plan-os]',
         text: text()
       },
 
       price: {
-        scope: '.highlight-plan [data-test-selected-plan-price]',
+        scope: '[data-test-selected-plan-price]',
         text: text()
       },
 
       changePlan: {
-        scope: '.highlight-plan [data-test-change-selected-plan]',
+        scope: '[data-test-change-selected-plan]',
         text: text()
       },
 

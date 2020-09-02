@@ -76,7 +76,6 @@
   {{/if}}
   {{#if this.subscription.isStripe}}
     <Billing::Authorization
-      @newSubscription={{this.newSubscription}}
       @subscription={{this.subscription}}
       @account={{this.account}}
       @isPending={{this.isPending}}

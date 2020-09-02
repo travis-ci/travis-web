@@ -3,13 +3,13 @@
     {{#if this.v2subscription.isValid}}
       <Billing::SummaryV2
         @subscription={{this.v2subscription}}
-        @newSubscription={{this.newSubscription}}
+        @selectedPlan={{this.selectedPlan}}
         @account={{this.account}}
       />
     {{else}}
       <Billing::Summary
         @subscription={{this.subscription}}
-        @newSubscription={{this.newSubscription}}
+        @selectedPlan={{this.selectedPlan}}
         @account={{this.account}}
       />
     {{/if}}
@@ -17,7 +17,7 @@
   {{#if (and this.subscription.isGithubResubscribable (not this.hasExpiredStripeSubscription))}}
     <Billing::Process
       @account={{this.account}}
-      @newSubscription={{this.newSubscription}}
+      @selectedPlan={{this.selectedPlan}}
     />
   {{/if}}
 </section>

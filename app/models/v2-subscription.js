@@ -18,7 +18,6 @@ export default Model.extend({
 
   source: attr(),
   status: attr(),
-  validTo: attr(),
   createdAt: attr('date'),
   permissions: computed('', () => ({ write: true, read: true })),
   organizationId: attr(),
@@ -27,11 +26,11 @@ export default Model.extend({
   paymentIntent: attr(),
 
   discount: belongsTo('discount', { async: false }),
-  billingInfo: belongsTo('billing-info', { async: false }),
-  creditCardInfo: belongsTo('credit-card-info', { async: false }),
-  invoices: hasMany('invoice'),
+  billingInfo: belongsTo('v2-billing-info', { async: false }),
+  creditCardInfo: belongsTo('v2-credit-card-info', { async: false }),
+  invoices: hasMany('v2-invoice'),
   owner: belongsTo('owner', { polymorphic: true }),
-  plan: belongsTo(),
+  plan: belongsTo('v2-plan-config'),
   addons: attr(),
 
   isSubscribed: equal('status', 'subscribed'),
@@ -82,7 +81,7 @@ export default Model.extend({
     };
   }),
 
-  priceInCents: reads('plan.price'),
+  priceInCents: reads('plan.starting_price'),
   validateCouponResult: reads('validateCoupon.last.value'),
 
   planPrice: computed('priceInCents', function () {
