@@ -12,9 +12,7 @@ export default Component.extend({
   messages: alias('flashes.messages'),
 
   type: computed('messages.@each.type', function () {
-    const classes = this.messages.map(message => message.type).reduce(
-      (unique, item) => (unique.includes(item) ? unique : [...unique, item]),
-      []).join(' ');
+    const classes = this.messages.uniqBy('type').mapBy('type').join(' ');
     return `flash ${classes}`;
   }),
 

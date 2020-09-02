@@ -2,33 +2,30 @@ import { run } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
+import { assert } from '@ember/debug';
 
 const messageTypeToIcon = {
   notice: 'icon-flag',
   success: 'flash-success',
-  error: 'flash-error',
-  warning: ''
+  error: 'flash-error'
 };
 
 const messageTypeToPreamble = {
   notice: 'Heads up!',
   success: 'Hooray!',
-  error: 'Oh no!',
-  warning: ''
+  error: 'Oh no!'
 };
 
 const messageTypeToCloseButton = {
   notice: true,
   success: false,
-  error: true,
-  warning: false
+  error: true
 };
 
 const messageTypeToAutoclose = {
   notice: false,
   success: true,
-  error: false,
-  warning: false
+  error: false
 };
 
 export default Service.extend({
@@ -101,9 +98,9 @@ export default Service.extend({
   },
 
   display(type, message, preamble, aboveOverlay = false) {
-    if (!['error', 'notice', 'success', 'warning'].includes(type)) {
+    if (!['error', 'notice', 'success'].includes(type)) {
       // eslint-disable-next-line
-      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'warning', 'notice' and 'success' types");
+      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
     }
 
     this.loadFlashes([{ [type]: { message, preamble, aboveOverlay } }]);
@@ -121,7 +118,9 @@ export default Service.extend({
     this.display('notice', message, preamble, aboveOverlay);
   },
 
-  warning(message, preamble = messageTypeToPreamble['warning'], aboveOverlay = false) {
-    this.display('warning', message, preamble, aboveOverlay);
+  custom(component, data = {}) {
+    assert('Component name is mandatory for custom flashes', !!component);
+    const flash = { component, data, type: 'custom' };
+    this.flashes.unshiftObject(flash);
   }
 });

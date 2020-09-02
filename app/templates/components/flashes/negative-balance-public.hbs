@@ -1,0 +1,21 @@
+<ul class="flash custom ember-view">
+  <li class="custom below-top-bar ember-view">
+    <p class="flash-message">
+      <span data-test-flash-message-text class="message">
+        Builds have been temporarily disabled for public repositories due to a negative credit balance.
+        Please go to the 
+        {{#if @data.isUser}}
+          <LinkTo @route="account.plan">Plan page</LinkTo>
+        {{else}}
+          <LinkTo @route="organization.plan" @model={{@data.owner}}>Plan page</LinkTo>
+        {{/if}}
+        to replenish your credit balance or alter your 
+        {{#if @data.isUser}}
+          <LinkTo @route="account.settings">OSS Credits consumption setting</LinkTo>.
+        {{else}}
+          <LinkTo @route="organization.settings" @model={{@data.owner}}>OSS Credits consumption setting</LinkTo>.
+        {{/if}}
+      </span>
+    </p>
+  </li>
+</ul>

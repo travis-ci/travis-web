@@ -64,21 +64,15 @@ export default Component.extend({
   }),
 
   didRender() {
-    const { allowance, isUser } = this.model;
+    const allowance = this.model.allowance;
 
     if (!allowance || allowance.subscription_type !== 2)
       return;
 
-    const planPageUrl = isUser ? this.router.urlFor('account.plan') : this.router.urlFor('organization.plan', this.model);
-    const settinigsPageUrl = isUser ? this.router.urlFor('account.settings') : this.router.urlFor('organization.settings', this.model);
-
     if (!allowance.private_repos) {
-      this.flashes.warning(`Builds have been temporarily disabled for private repositories due to a negative credit balance. \
-                            Please go to the <a href="${planPageUrl}">Plan page</a> to replenish your credit balance`);
+      this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser });
     } else if (!allowance.public_repos) {
-      this.flashes.warning(`Builds have been temporarily disabled for public repositories due to a negative credit balance. \
-                            Please go to the <a href="${planPageUrl}">Plan page</a> to replenish your credit balance or alter your \
-                            <a href="${settinigsPageUrl}">OSS Credits consumption setting</a>`);
+      this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser });
     }
   }
 
