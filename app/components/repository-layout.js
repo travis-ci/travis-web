@@ -41,22 +41,24 @@ export default Component.extend({
 
   didRender() {
     const repo = this.get('repo');
+    const isUser = repo.ownerType === 'user';
 
     if (!repo.canOwnerBuild && repo.private) {
-      this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: repo.ownerType === 'user' }, 'warning');
+      this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: isUser }, 'warning');
     } else if (!repo.canOwnerBuild && !repo.private) {
-      this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: repo.ownerType === 'user' }, 'warning');
+      this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'warning');
     }
   },
 
   willDestroyElement() {
     const repo = this.get('repo');
+    const isUser = repo.ownerType === 'user';
 
     if (!repo.canOwnerBuild) {
       if (repo.private) {
-        this.flashes.removeCustomFlashNow('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
+        this.flashes.removeCustomFlashNow('flashes/negative-balance-private', { owner: this.model, isUser: isUser }, 'warning');
       } else {
-        this.flashes.removeCustomFlashNow('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
+        this.flashes.removeCustomFlashNow('flashes/negative-balance-public', { owner: this.model, isUser: isUser }, 'warning');
       }
     }
   }
