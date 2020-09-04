@@ -20,7 +20,11 @@
     You have used {{this.creditsUsed}} of {{this.creditsTotal}} credits
   </p>
   <div class='credits-bar-bg'>
-    <div class='credits-bar' style='width: {{this.creditsUsedPercentage}}%'></div>
+    {{#if this.isNegativeBalance}}
+      <div class='credits-bar-negative'></div>
+    {{else}}
+      <div class='credits-bar' style='width: {{this.creditsUsedPercentage}}%'></div>
+    {{/if}}
   </div>
   <p class='credits-bar-left'>
     {{this.creditsAvailable}} available <span class='credits-bar-right'>{{this.creditsUsed}} used</span>

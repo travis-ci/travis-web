@@ -27,8 +27,8 @@ export default Component.extend({
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
 
   invoices: computed('subscription.id', 'v2subscription.id', function () {
-    let subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');
-    let modelName = this.isV2SubscriptionEmpty ? 'invoice' : 'v2-invoice';
+    const subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');
+    const modelName = this.isV2SubscriptionEmpty ? 'invoice' : 'v2-invoice';
     if (subscriptionId) {
       return this.store.query(modelName, { subscription_id: subscriptionId });
     } else {

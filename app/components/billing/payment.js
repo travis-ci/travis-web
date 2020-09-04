@@ -62,10 +62,15 @@ export default Component.extend({
       action: 'Pay Button Clicked',
       category: 'Subscription',
     });
-    const { stripeElement, subscription, selectedPlan } = this;
+    const { stripeElement, account, subscription, selectedPlan } = this;
     try {
       const { token } = yield this.stripe.createStripeToken.perform(stripeElement);
       if (token) {
+        const organizationId = account.type === 'organization' ? +(account.id) : null;
+        subscription.setProperties({
+          organizationId,
+          plan: selectedPlan,
+        });
         yield this.subscription.creditCardInfo.updateToken(this.subscription.id, token);
         yield subscription.save();
         yield subscription.changePlan.perform({ plan: selectedPlan.id });
@@ -87,11 +92,6 @@ export default Component.extend({
 
   handleError() {
     let message = 'An error occurred when creating your subscription. Please try again.';
-    const subscriptionErrors = this.subscription.errors;
-    if (subscriptionErrors && subscriptionErrors.get('validationErrors').length > 0) {
-      const validationError = subscriptionErrors.get('validationErrors')[0];
-      message = validationError.message;
-    }
     this.flashes.error(message);
   },
 

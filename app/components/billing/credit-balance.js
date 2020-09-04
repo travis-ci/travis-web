@@ -37,6 +37,10 @@ export default Component.extend({
     return (this.creditsAvailable / this.creditsTotal) * 100;
   }),
 
+  isNegativeBalance: computed('creditsAvailable', function () {
+    return this.creditsAvailable < 0;
+  }),
+
   actions: {
     setPrivateCreditsTab() {
       this.set('creditsTab', 0);

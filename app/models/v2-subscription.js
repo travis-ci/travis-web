@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { typeOf } from '@ember/utils';
-import { and, equal, or, reads } from '@ember/object/computed';
+import { equal, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -17,7 +17,6 @@ export default Model.extend({
   accounts: service(),
 
   source: attr(),
-  status: attr(),
   createdAt: attr('date'),
   permissions: computed('', () => ({ write: true, read: true })),
   organizationId: attr(),
@@ -33,19 +32,9 @@ export default Model.extend({
   plan: belongsTo('v2-plan-config'),
   addons: attr(),
 
-  isSubscribed: equal('status', 'subscribed'),
-  isCanceled: equal('status', 'canceled'),
-  isExpired: equal('status', 'expired'),
-  isPending: equal('status', 'pending'),
-  isIncomplete: equal('status', 'incomplete'),
   isStripe: equal('source', 'stripe'),
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
-
-  isNotSubscribed: or('isCanceled', 'isExpired'),
-  managedSubscription: or('isStripe', 'isGithub'),
-  isResubscribable: and('isStripe', 'isNotSubscribed'),
-  isGithubResubscribable: and('isGithub', 'isNotSubscribed'),
 
   addonUsage: computed('addons', function () {
     const publicUsages = this.addons.reduce((processed, addon) => {

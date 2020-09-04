@@ -42,9 +42,9 @@
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
                 <SvgImage @name="icon-passed" @class="icon blue" />
                 {{#if (eq plan.starting_users 999999)}}
-                  Unlimited unique users
+                  <a href='' class='billing-plans__box-v2--help'>Unlimited unique users</a>
                 {{else}}
-                  Up to {{plan.starting_users}} unique users
+                  <a href='' class='billing-plans__box-v2--help'>Up to {{plan.starting_users}} unique users</a>
                 {{/if}}
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
@@ -61,12 +61,12 @@
                   class='{{if (eq plan.id this.selectedPlan.id) 'button--blue' 'button--white'}} billing-plans__box-v2--button'
                   disabled={{not (eq plan.id this.selectedPlan.id)}}
                 >
-                  Upgrade
+                  Select plan
                 </button>
               {{/if}}
               <a
-                href="test"
-                class="billing-plans__box-v2--link"
+                href='test'
+                class='billing-plans__box-v2--link'
               >
                 Learn more
               </a>

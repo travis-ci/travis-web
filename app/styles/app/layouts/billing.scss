@@ -176,6 +176,13 @@
         }
       }
 
+      &--help {
+        &:hover {
+          border-bottom: 1px solid;
+          cursor: pointer;
+        }
+      }
+
       &--price {
         margin: 0 0 25px 0;
         font-weight: 200;
@@ -703,6 +710,16 @@
       .credits-bar {
         height: 20px;
         background-color: $oxide-blue;
+        text-align: center;
+        line-height: 20px;
+        color: $cement-grey;
+        border-radius: 8px;
+      }
+
+      .credits-bar-negative {
+        height: 20px;
+        width: 100%;
+        background-color: $dark-red;
         text-align: center;
         line-height: 20px;
         color: $cement-grey;

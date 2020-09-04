@@ -4,7 +4,7 @@
       Total:
     </h6>
     {{#if this.subscription.plan }}
-      {{#if (eq this.subscription.plan.starting_price 0)}}
+      {{#if this.subscription.plan.isFree}}
         <p class='selected-plan__price--large' data-test-price>
           Free
         </p>

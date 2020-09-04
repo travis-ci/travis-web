@@ -220,6 +220,72 @@ export default function () {
     return schema.plans.all();
   });
 
+  this.post('/v2_subscriptions', function (schema, request) {
+    const attrs = JSON.parse(request.requestBody);
+    const owner = attrs.organization_id ? schema.organizations.first() : schema.users.first();
+
+    const updatedAttrs = {
+      ...attrs,
+      owner,
+      plan: schema.plans.find(attrs.plan),
+      source: 'stripe',
+      status: 'pending',
+      valid_to: new Date(2018, 5, 19),
+    };
+    const savedSubscription = schema.subscriptions.create(updatedAttrs);
+
+    return this.serialize(savedSubscription);
+  });
+
+  this.get('/v2_subscriptions', function (schema, params) {
+    return null;
+  });
+
+  this.get('/v2_subscription/:subscription_id/invoices', function (schema, { params }) {
+    return schema.subscriptions.find(params.subscription_id).invoices;
+  });
+
+  this.patch('/v2_subscription/:subscription_id/address', function (schema, { params, requestBody }) {
+    const attrs = JSON.parse(requestBody);
+
+    const subscription = schema.subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'billing_info', {
+        ...attrs
+      }
+    );
+  });
+
+  this.patch('/v2_subscription/:subscription_id/creditcard', function (schema, { params, requestBody }) {
+    const attrs = JSON.parse(requestBody);
+
+    const subscription = schema.subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'credit_card_info', {
+        ...attrs
+      }
+    );
+  });
+
+  this.post('/v2_subscription/:subscription_id/cancel', function (schema, { params, requestBody }) {
+    const subscription = schema.subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'status', 'canceled'
+    );
+  });
+
+  this.patch('/v2_subscription/:subscription_id/resubscribe', function (schema, { params, requestBody }) {
+    const subscription = schema.subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'status', 'subscribed'
+    );
+    return {
+      payment_intent: {
+        client_secret: ''
+      }
+    };
+  });
+
   this.get('/v2_plans_for/user', function (schema) {
     return {
       v2_plans:
@@ -228,7 +294,7 @@ export default function () {
           id: 'free_tier_plan',
           name: 'Free Tier Plan',
           starting_price: 0,
-          starting_users: 99999,
+          starting_users: 999999,
           private_credits: 10000,
           public_credits: 40000
         },
@@ -260,7 +326,7 @@ export default function () {
           id: 'free_tier_plan',
           name: 'Free Tier Plan',
           starting_price: 0,
-          starting_users: 99999,
+          starting_users: 999999,
           private_credits: 10000,
           public_credits: 40000
         },

@@ -518,37 +518,37 @@ export default create({
       },
 
       name: {
-        scope: '[data-test-selected-plan-name]',
+        scope: '.highlight-plan [data-test-selected-plan-name]',
         text: text()
       },
 
       credits: {
-        scope: '[data-test-selected-plan-credits]',
+        scope: '.highlight-plan [data-test-selected-plan-credits]',
         text: text()
       },
 
       osscredits: {
-        scope: '[data-test-selected-plan-oss-credits]',
+        scope: '.highlight-plan [data-test-selected-plan-oss-credits]',
         text: text()
       },
 
       users: {
-        scope: '[data-test-selected-plan-users]',
+        scope: '.highlight-plan [data-test-selected-plan-users]',
         text: text()
       },
 
       repos: {
-        scope: '[data-test-selected-plan-repos]',
+        scope: '.highlight-plan [data-test-selected-plan-repos]',
         text: text()
       },
 
       os: {
-        scope: '[data-test-selected-plan-os]',
+        scope: '.highlight-plan [data-test-selected-plan-os]',
         text: text()
       },
 
       price: {
-        scope: '[data-test-selected-plan-price]',
+        scope: '.highlight-plan [data-test-selected-plan-price]',
         text: text()
       },
 
