@@ -117,8 +117,11 @@ export default Service.extend({
     this.flashes.unshiftObject(flash);
   },
 
-  removeCustomFlashNow(component, data = {}, className = null) {
-    const flash = { component, data, type: 'custom', className: className };
-    this.close(flash);
+  removeCustomsByClassName(className) {
+    this.flashes.forEach(flash => {
+      if (flash.type === 'custom' && flash.className && flash.className === className) {
+        this.close(flash);
+      }
+    });
   }
 });
