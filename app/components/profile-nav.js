@@ -68,11 +68,18 @@ export default Component.extend({
     if (!allowance || allowance.subscription_type !== 2)
       return;
 
-    this.flashes.removeCustomsByClassName('warning');
     if (!allowance.private_repos) {
       this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
     } else if (!allowance.public_repos) {
       this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
+    }
+  },
+
+  willDestroyElement() {
+    const allowance = this.model.allowance;
+
+    if (allowance && allowance.subscription_type === 2) {
+      this.flashes.removeCustomsByClassName('warning');
     }
   }
 });

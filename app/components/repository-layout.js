@@ -41,13 +41,21 @@ export default Component.extend({
 
   didRender() {
     const repo = this.get('repo');
-    const isUser = repo.ownerType === 'user';
 
-    this.flashes.removeCustomsByClassName('warning');
-    if (!repo.canOwnerBuild && repo.private) {
-      this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: isUser }, 'warning');
-    } else if (!repo.canOwnerBuild && !repo.private) {
-      this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'warning');
+    if (!repo.canOwnerBuild) {
+      const isUser = repo.ownerType === 'user';
+
+      if (repo.private) {
+        this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: isUser }, 'warning');
+      } else {
+        this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'warning');
+      }
+    } else {
+      this.flashes.removeCustomsByClassName('warning');
     }
+  },
+
+  willDestroyElement() {
+    this.flashes.removeCustomsByClassName('warning');
   }
 });
