@@ -6,7 +6,6 @@ export default Component.extend({
   externalLinks: service(),
   features: service(),
   flashes: service(),
-  router: service(),
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
@@ -43,10 +42,22 @@ export default Component.extend({
   didRender() {
     const repo = this.get('repo');
 
-    if (!repo.canOwnerBuild && repo.isPrivate) {
-      this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: repo.ownerType === 'user' });
-    } else if (!repo.canOwnerBuild && !repo.isPrivate) {
-      this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: repo.ownerType === 'user' });
+    if (!repo.canOwnerBuild && repo.private) {
+      this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: repo.ownerType === 'user' }, 'warning');
+    } else if (!repo.canOwnerBuild && !repo.private) {
+      this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: repo.ownerType === 'user' }, 'warning');
+    }
+  },
+
+  willDestroyElement() {
+    const repo = this.get('repo');
+
+    if (!repo.canOwnerBuild) {
+      if (repo.private) {
+        this.flashes.removeCustomFlashNow('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
+      } else {
+        this.flashes.removeCustomFlashNow('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
+      }
     }
   }
 });

@@ -6,13 +6,13 @@ import { alias } from '@ember/object/computed';
 export default Component.extend({
   flashes: service(),
 
-  classNameBindings: ['type'],
+  classNameBindings: ['className'],
   tagName: 'ul',
 
   messages: alias('flashes.messages'),
 
-  type: computed('messages.@each.type', function () {
-    const classes = this.messages.uniqBy('type').mapBy('type').join(' ');
+  className: computed('messages.@each.className', function () {
+    const classes = this.messages.uniqBy('className').mapBy('className').join(' ');
     return `flash ${classes}`;
   }),
 

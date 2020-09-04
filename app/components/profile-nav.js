@@ -21,7 +21,6 @@ export default Component.extend({
   accounts: service(),
   features: service(),
   flashes: service(),
-  router: service(),
 
   activeModel: null,
   model: reads('activeModel'),
@@ -70,10 +69,20 @@ export default Component.extend({
       return;
 
     if (!allowance.private_repos) {
-      this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser });
+      this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
     } else if (!allowance.public_repos) {
-      this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser });
+      this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
+    }
+  },
+
+  willDestroyElement() {
+    const allowance = this.model.allowance;
+    if (allowance && allowance.subscription_type == 2) {
+      if (!allowance.private_repos) {
+        this.flashes.removeCustomFlashNow('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
+      } else if (!allowance.public_repos) {
+        this.flashes.removeCustomFlashNow('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
+      }
     }
   }
-
 });

@@ -13,7 +13,7 @@
     width: 100%;
   }
 
-  li.notice, li.success, li.error, li.custom {
+  li.notice, li.success, li.error, li.warning {
     opacity: 1;
 
     @include z-index(flashes);
@@ -87,19 +87,15 @@
     }
   }
 
-  .custom {
+  .warning {
     color: $brick-red;
     background-color: $quartz-red;
-    a {
-      color: inherit;
-      border-bottom: 1px solid;
-    }
   }
 }
 
-ul.flash.custom+.wrapper-main,
-ul.flash.custom+#main,
-ul.flash.custom+.wrapper-main+#left {
+ul.flash.warning+.wrapper-main,
+ul.flash.warning+#main,
+ul.flash.warning+.wrapper-main+#left {
   margin-top: 55px;
 }
 

@@ -76,7 +76,10 @@ const Repo = VcsEntity.extend({
     if (!isPro || enterprise) {
       return true;
     }
-    const { allowance, private: isPrivate } = this;
+
+    const allowance = this.allowance;
+    const isPrivate = this.private;
+
     if (allowance && allowance.subscription_type === 1)
       return true;
     if (!allowance)

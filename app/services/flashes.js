@@ -22,12 +22,6 @@ const messageTypeToCloseButton = {
   error: true
 };
 
-const messageTypeToAutoclose = {
-  notice: false,
-  success: true,
-  error: false
-};
-
 export default Service.extend({
   auth: service(),
   store: service(),
@@ -68,12 +62,11 @@ export default Service.extend({
       const { message, preamble = messageTypeToPreamble[type], aboveOverlay } = flash[type];
       const icon = messageTypeToIcon[type];
       const closeButton = messageTypeToCloseButton[type];
-      const autoClose = messageTypeToAutoclose[type];
       const item = { type, message, icon, preamble, closeButton, aboveOverlay };
 
       this.flashes.unshiftObject(item);
 
-      if (autoClose) this.removeFlash(item);
+      if (!closeButton) this.removeFlash(item);
     });
   },
 
@@ -118,9 +111,14 @@ export default Service.extend({
     this.display('notice', message, preamble, aboveOverlay);
   },
 
-  custom(component, data = {}) {
+  custom(component, data = {}, className = null) {
     assert('Component name is mandatory for custom flashes', !!component);
-    const flash = { component, data, type: 'custom' };
+    const flash = { component, data, type: 'custom', className: className };
     this.flashes.unshiftObject(flash);
+  },
+
+  removeCustomFlashNow(component, data = {}, className = null) {
+    const flash = { component, data, type: 'custom', className: className };
+    this.close(flash);
   }
 });
