@@ -40,6 +40,8 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.trial = trial;
 
+    this.defaultV2Plan = this.server.create('v2_plan_config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', starting_price: 30000, starting_users: 10000, private_credits: 500000, public_credits: 40000 });
+
     let plan = this.server.create('plan', {
       name: 'Small Business1',
       builds: 5,
@@ -51,7 +53,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     this.server.create('plan', { id: 'travis-ci-one-build', name: 'Bootstrap', builds: 1, price: 6900, currency: 'USD' });
     this.defaultPlan = this.server.create('plan', { id: 'travis-ci-two-builds', name: 'Startup', builds: 2, price: 12900, currency: 'USD' });
-    this.defaultV2Plan = this.server.create('v2_plan_config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', starting_price: 30000, starting_users: 10000, private_credits: 500000, public_credits: 40000 });
     this.server.create('plan', { id: 'travis-ci-five-builds', name: 'Premium', builds: 5, price: 24900, currency: 'USD' });
     this.lastPlan = this.server.create('plan', { id: 'travis-ci-ten-builds', name: 'Small Business', builds: 10, price: 48900, currency: 'USD' });
 
@@ -933,8 +934,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingPaymentForm.completePayment.click();
 
-    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs (plus 1 for free)');
+    assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
@@ -1054,7 +1055,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingCouponForm.submitCoupon.click();
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - price}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultV2Plan.starting_price / 100) - price}`);
   });
 
   test('apply coupon value higher than price', async function (assert) {
@@ -1149,11 +1150,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingCouponForm.submitCoupon.click();
 
-    const amountInDollars = this.defaultPlan.price / 100;
+    const amountInDollars = this.defaultV2Plan.starting_price / 100;
     const price = amountInDollars - (amountInDollars * coupon.percentOff) / 100;
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price}`);
   });
 
   test('apply invalid coupon', async function (assert) {
@@ -1208,7 +1209,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const price = Math.floor(coupon.amountOff / 100);
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - price}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultV2Plan.starting_price / 100) - price}`);
   });
 
   test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {
@@ -1268,12 +1269,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingPaymentForm.completePayment.click();
 
-    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
+    assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
-    assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 
   test('view billing tab when no organization subscription should fill form and transition to payment', async function (assert) {
@@ -1338,12 +1338,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingPaymentForm.completePayment.click();
 
-    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
+    assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
-    assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 
   test('create subscription with multiple emails', async function (assert) {
@@ -1417,11 +1416,10 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingPaymentForm.completePayment.click();
 
-    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
+    assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com joe@email.com doe@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
-    assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 });

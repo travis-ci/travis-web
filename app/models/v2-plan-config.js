@@ -1,5 +1,5 @@
 import Model, { attr } from '@ember-data/model';
-import { computed } from '@ember/object';
+import { equal } from '@ember/object/computed';
 
 export default Model.extend({
   name: attr('string'),
@@ -8,7 +8,5 @@ export default Model.extend({
   private_credits: attr(),
   public_credits: attr(),
 
-  isFree: computed('starting_price', function () {
-    return this.starting_price === 0;
-  })
+  isFree: equal('starting_price', 0)
 });

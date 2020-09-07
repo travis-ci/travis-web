@@ -624,6 +624,9 @@ export default create({
       name: text('[data-test-plan-name]'),
       concurrency: {
         scope: '[data-test-plan-concurrency]'
+      },
+      description: {
+        scope: '[data-test-plan-description]'
       }
     },
 

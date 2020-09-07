@@ -12,9 +12,15 @@
       {{#if this.isLoading}}
         <LoadingIndicator/>
       {{else}}
-        <button class='button--green' {{on 'click' (perform this.updatePlan)}} data-test-complete-payment='true'>
-          Switch plan
-        </button>
+        {{#if this.isNewSubscription}}
+          <button class='button--green' {{on 'click' (perform this.createFreeSubscription)}} data-test-complete-payment='true'>
+            Select plan
+          </button>
+        {{else}}
+          <button class='button--green' {{on 'click' (perform this.updatePlan)}} data-test-complete-payment='true'>
+            Switch plan
+          </button>
+        {{/if}}
       {{/if}}
     </div>
     <span class="notice-banner--yellow" data-test-plan-notice='true'>

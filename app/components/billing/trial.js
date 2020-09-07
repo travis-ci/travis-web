@@ -17,6 +17,19 @@ export default Component.extend({
     const plan = this.store.createRecord('v2-plan-config');
     const billingInfo = this.store.createRecord('v2-billing-info');
     const creditCardInfo = this.store.createRecord('v2-credit-card-info');
+    billingInfo.setProperties({
+      firstName: '',
+      lastName: '',
+      address: '',
+      city: '',
+      zipCode: '',
+      country: '',
+      billingEmail: ''
+    });
+    creditCardInfo.setProperties({
+      token: '',
+      lastDigits: ''
+    });
     return this.store.createRecord('v2-subscription', {
       billingInfo,
       plan,

@@ -24,6 +24,7 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
 
     await render(hbs`<Billing::SelectedPlan
       @selectedPlan={{selectedPlan}}
+      @totalPrice={{selectedPlan.starting_price}}
       @goToFirstStep={{action 'goToFirstStep'}}/>`);
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plan1.name}`);

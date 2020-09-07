@@ -1,6 +1,5 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { typeOf } from '@ember/utils';
 import { equal, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
@@ -37,6 +36,13 @@ export default Model.extend({
   isManual: equal('source', 'manual'),
 
   addonUsage: computed('addons', function () {
+    if (!this.addons) {
+      const emptyUsage = { totalCredits: 0, usedCredits: 0, remainingCredits: 0 };
+      return {
+        public: emptyUsage,
+        private: emptyUsage
+      };
+    }
     const publicUsages = this.addons.reduce((processed, addon) => {
       if (addon.type === 'credit_public') {
         processed.totalCredits += addon.current_usage.addon_quantity;
@@ -75,29 +81,6 @@ export default Model.extend({
 
   planPrice: computed('priceInCents', function () {
     return this.priceInCents && Math.floor(this.priceInCents / 100);
-  }),
-
-  discountByAmount: computed('validateCouponResult.amountOff', 'planPrice', function () {
-    const { amountOff } = this.validateCouponResult || {};
-    return amountOff && this.planPrice && Math.max(0, this.planPrice - Math.floor(amountOff / 100));
-  }),
-
-  discountByPercentage: computed('validateCouponResult.percentOff', 'planPrice', function () {
-    const { percentOff } = this.validateCouponResult || {};
-    if (percentOff && this.planPrice) {
-      const discountPrice = Math.max(0, this.planPrice - (this.planPrice * percentOff) / 100);
-      return +discountPrice.toFixed(2);
-    }
-  }),
-
-  totalPrice: computed('discountByAmount', 'discountByPercentage', 'planPrice', function () {
-    if (typeOf(this.discountByAmount) === 'number' && this.discountByAmount >= 0) {
-      return this.discountByAmount;
-    } else if (typeOf(this.discountByPercentage) === 'number' && this.discountByPercentage >= 0) {
-      return this.discountByPercentage;
-    } else {
-      return this.planPrice;
-    }
   }),
 
   validateCoupon: task(function* (couponId) {
