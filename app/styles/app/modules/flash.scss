@@ -19,6 +19,9 @@
     @include z-index(flashes);
 
     height: $top-height;
+    @media #{$small-only} {
+      height: $top-height-mobile;
+    }
     top: -1px;
 
     &.fixed {
@@ -96,7 +99,10 @@
 ul.flash.warning+.wrapper-main,
 ul.flash.warning+#main,
 ul.flash.warning+.wrapper-main+#left {
-  margin-top: 55px;
+  margin-top: $top-height;
+  @media #{$small-only} {
+    height: $top-height-mobile;
+  }
 }
 
 .flash-message {
@@ -104,7 +110,7 @@ ul.flash.warning+.wrapper-main+#left {
   align-items: center;
   padding: 0;
   margin: 0;
-  line-height: 1;
+  line-height: 1.14;
   font-size: 1.14rem;
 
   .preamble {
