@@ -3,7 +3,14 @@ import { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { reads, or, equal, notEmpty, filterBy } from '@ember/object/computed';
+import {
+  equal,
+  filterBy,
+  match,
+  notEmpty,
+  or,
+  reads
+} from '@ember/object/computed';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
 
@@ -31,6 +38,7 @@ export default VcsEntity.extend({
   type: attr('string'),
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
+  isAssembla: match('vcsType', /Assembla\S+$/),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
