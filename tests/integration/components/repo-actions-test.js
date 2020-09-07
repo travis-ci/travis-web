@@ -46,8 +46,15 @@ module('Integration | Component | repo actions', function (hooks) {
     await render(hbs`{{repo-actions userHasPullPermissionForRepo=false job=this.job}}`);
     assert.dom('button[aria-label="Restart job"]').doesNotExist();
 
-    await render(hbs`{{repo-actions userHasPullPermissionForRepo=true job=this.job}}`);
+    await render(hbs`{{repo-actions userHasPullPermissionForRepo=true canOwnerBuild=true job=this.job}}`);
     assert.dom('button[aria-label="Restart job"]').exists();
+  });
+
+  test('it does not show restart button if owner cannot build', async function (assert) {
+    this.set('job', EmberObject.create({ canRestart: true }));
+
+    await render(hbs`{{repo-actions userHasPullPermissionForRepo=true canOwnerBuild=false job=this.job}}`);
+    assert.dom('button[aria-label="Restart job"]').doesNotExist();
   });
 
   test('it shows prioritize button only if build is not prioritized, it is also not already started and if the org and user are having acces of it', async function (assert) {

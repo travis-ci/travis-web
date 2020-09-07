@@ -24,6 +24,7 @@ export const HISTORY_MIGRATION_STATUS = {
 const Repo = VcsEntity.extend({
   api: service(),
   auth: service(),
+  features: service(),
 
   permissions: attr(),
   slug: attr('string'),
@@ -65,6 +66,26 @@ const Repo = VcsEntity.extend({
     const isFailed = this.isMigrationFailed;
     const hasPermissions = this.permissions.migrate;
     return hasPermissions && (!isMigrated || isFailed);
+  }),
+
+  allowance: reads('owner.allowance'),
+  canOwnerBuild: computed('allowance', 'private', 'features.{proVersion,enterpriseVersion}', function () {
+    const isPro = this.get('features.proVersion');
+    const enterprise = !!this.get('features.enterpriseVersion');
+
+    if (!isPro || enterprise) {
+      return true;
+    }
+
+    const allowance = this.allowance;
+    const isPrivate = this.private;
+
+    if (allowance && allowance.subscription_type === 1)
+      return true;
+    if (!allowance)
+      return false;
+
+    return isPrivate ? allowance.private_repos : allowance.public_repos;
   }),
 
   defaultBranch: belongsTo('branch', { async: false }),
