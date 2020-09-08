@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { alias } from '@ember/object/computed';
+import { alias, reads } from '@ember/object/computed';
 
 export default Component.extend({
   permissionsService: service('permissions'),
@@ -13,6 +13,7 @@ export default Component.extend({
   isTriggering: false,
   dropupIsOpen: false,
 
+  canOwnerBuild: reads('repo.canOwnerBuild'),
   currentBuild: alias('repo.currentBuild'),
 
   displayMenuTofu: alias('repo.permissions.create_request'),
