@@ -44,11 +44,11 @@ export default Component.extend({
 
   addErrorsFromResponse(errArr) {
     if (errArr !== undefined && errArr.length) {
-      let error = errArr[0].detail;
+      const { code } = errArr[0];
 
-      if (error.code === 'not_a_private_key') {
+      if (code === 'not_a_private_key') {
         return this.set('valueError', 'This key is not a private key.');
-      } else if (error.code === 'key_with_a_passphrase') {
+      } else if (code === 'key_with_a_passphrase') {
         return this.set('valueError', 'The key can\'t have a passphrase.');
       }
     }

@@ -1,1 +1,7 @@
-<Owner::Repositories @owner={{this.owner}} />
+{{#if (and this.owner.isUser this.owner.isAssembla)}}
+  <PaperBlock>
+    In order to see your repositories please select a Space on the left sidebar.
+  </PaperBlock>
+{{else}}
+  <Owner::Repositories @owner={{this.owner}} />
+{{/if}}

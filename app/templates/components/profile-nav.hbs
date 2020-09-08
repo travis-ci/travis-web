@@ -48,7 +48,7 @@
       {{/each}}
     </ul>
   </section>
-  {{#if this.accessSettingsUrl}}
+  {{#if (and this.accessSettingsUrl (not this.user.isAssembla))}}
     <section class="profile-additional no-divider">
       <h2>
         Missing {{indefinite-article (vcs-vocab this.model.vcsType 'organization')}} {{vcs-vocab this.model.vcsType 'organization'}}?
@@ -112,7 +112,7 @@
               Settings
             </LinkTo>
           </li>
-          {{#if this.checkSubscriptionStatus}}
+          {{#if this.showSubscriptionTab}}
             <li data-test-billing-tab>
               <LinkTo @route="account.billing">
                 Subscription
@@ -140,7 +140,7 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if this.checkSubscriptionStatus}}
+          {{#if this.showSubscriptionTab}}
             <li data-test-billing-tab>
               <LinkTo @route="organization.billing" @model={{this.model}}>
                 Subscription

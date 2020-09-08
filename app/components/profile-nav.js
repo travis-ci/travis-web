@@ -49,7 +49,7 @@ export default Component.extend({
   reposToMigrate: reads('model.githubAppsRepositoriesOnOrg'),
 
   showMigrateTab: and('features.proVersion', 'isNotEnterpriseVersion', 'isMatchGithub'),
-  showSubscriptionStatusBanner: and('checkSubscriptionStatus', 'model.subscriptionError'),
+  showSubscriptionStatusBanner: and('showSubscriptionTab', 'model.subscriptionError'),
   showMigrationBetaBanner: and('isNotProVersion', 'isNotEnterpriseVersion', 'hasAccountsForBeta'),
 
   isOrganization: reads('model.isOrganization'),
@@ -57,8 +57,10 @@ export default Component.extend({
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
   showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
 
-  checkSubscriptionStatus: computed('features.enterpriseVersion', function () {
-    return !this.features.get('enterpriseVersion') && !!billingEndpoint;
+  showSubscriptionTab: computed('features.enterpriseVersion', 'model.isAssembla', 'model.isUser', function () {
+    const isAssemblaUser = this.model.isUser && this.model.isAssembla;
+    const isEnterprise = this.features.get('enterpriseVersion');
+    return !isEnterprise && !isAssemblaUser && !!billingEndpoint;
   }),
 
 });

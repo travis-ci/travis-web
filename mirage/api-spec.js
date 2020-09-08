@@ -499,6 +499,16 @@ export default {
 
             ]
           }
+        ],
+        "increasePriority": [
+          {
+            "@type": "template",
+            "request_method": "POST",
+            "uri_template": "/v3/build/{build.id}/priority?cancel_all",
+            "accepted_params": [
+
+            ]
+          }
         ]
       },
       "attributes": [
@@ -522,7 +532,8 @@ export default {
         "created_by",
         "updated_at",
         "request",
-        "yaml"
+        "yaml",
+        "priority"
       ],
       "representations": {
         "minimal": [
@@ -558,13 +569,15 @@ export default {
           "stages",
           "created_by",
           "updated_at",
-          "yaml"
+          "yaml",
+          "priority"
         ]
       },
       "permissions": [
         "read",
         "cancel",
-        "restart"
+        "restart",
+        "prioritize"
       ]
     },
     "builds": {

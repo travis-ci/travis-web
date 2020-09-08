@@ -2,8 +2,6 @@
 
 export CLEANED_BRANCH_SUBDOMAIN=`git name-rev --name-only HEAD | tr '.' '-' | tr '/' '-' | tr '[:upper:]' '[:lower:]'`
 
-eval $(./config/deployment/store-redis-urls.sh)
-
 if [[ $TRAVIS_PULL_REQUEST_BRANCH = *staging* ]]
 then
   echo "Staging branch is not allowed to be deployed locally"

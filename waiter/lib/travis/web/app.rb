@@ -253,6 +253,13 @@ class Travis::Web::App
         'caches' => options[:caches_enabled]
       }
 
+      if options[:default_provider]
+        provider = options[:default_provider]
+        config['providers'] ||= {}
+        config['providers'][provider] ||= {}
+        config['providers'][provider]['isDefault'] = true
+      end
+
       regexp = %r(<meta name="travis/config/environment"\s+content="([^"]+)")
       string.gsub!(regexp) do
         ember_config = JSON.parse(URI.unescape($1))

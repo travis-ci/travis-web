@@ -6,6 +6,10 @@
   }
 }
 
+.align-action-btn {
+  margin-right: 16px;
+}
+
 .build-header {
   @include travisBorder;
   @include travisColorRows;

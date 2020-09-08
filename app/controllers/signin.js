@@ -9,8 +9,6 @@ export default Controller.extend({
   accounts: reads('auth.accounts'),
   hasAccounts: gt('accounts.length', 0),
 
-  showOtherProviders: reads('multiVcs.enabled'),
-
   actions: {
     signIn(provider) {
       this.auth.signInWith(provider);

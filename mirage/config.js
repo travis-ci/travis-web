@@ -553,6 +553,18 @@ export default function () {
     }
   });
 
+  this.post('/build/:id/priority', (schema, request) => {
+    let build = schema.builds.find(request.params.id);
+    if (build) {
+      return {
+        flash: [{ notice: 'The build was successfully prioritized.' }],
+        result: true
+      };
+    } else {
+      return new Response(404, {}, {});
+    }
+  });
+
   this.post('/build/:id/cancel', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {

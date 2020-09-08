@@ -6,14 +6,14 @@ import config from 'travis/config/environment';
 export default Mixin.create({
   store: service(),
 
-  searchBranch: task(function* (repositoryId, query, filter = []) {
+  searchBranch: task(function* (repositoryId, query = '', filter = []) {
     yield timeout(config.intervals.searchDebounceRate);
     let branches = yield this.store.query('branch', {
       repository_id: repositoryId,
       data: {
         name: query,
         sort_by: 'name',
-        limit: 10,
+        limit: query.length > 3 ? 100 : 10,
         exists_on_github: true
       }
     });

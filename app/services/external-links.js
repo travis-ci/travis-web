@@ -6,25 +6,25 @@ import { vcsUrl } from 'travis/utils/vcs';
 // The URLs below are used in `helpers/format-message.js` which needs
 // to be changed to use services.
 export const vcsLinks = {
-  commitUrl: (vcsType, { owner, repo, commit }) => vcsUrl('commit', vcsType, { owner, repo, commit }),
+  commitUrl: (vcsType, params) => vcsUrl('commit', vcsType, params),
 
-  issueUrl: (vcsType, { owner, repo, issue }) => vcsUrl('issue', vcsType, { owner, repo, issue }),
+  issueUrl: (vcsType, params) => vcsUrl('issue', vcsType, params),
 
-  profileUrl: (vcsType, { owner }) => vcsUrl('profile', vcsType, { owner }),
+  profileUrl: (vcsType, params) => vcsUrl('profile', vcsType, params),
 
-  accessSettingsUrl: (vcsType, { owner }) => vcsUrl('accessSettings', vcsType, { owner }),
+  accessSettingsUrl: (vcsType, params) => vcsUrl('accessSettings', vcsType, params),
 };
 
 export default Service.extend({
   ...vcsLinks,
 
-  branchUrl: (vcsType, { owner, repo, branch }) => vcsUrl('branch', vcsType, { owner, repo, branch }),
+  branchUrl: (vcsType, params) => vcsUrl('branch', vcsType, params),
 
-  fileUrl: (vcsType, { owner, repo, branch, file }) => vcsUrl('file', vcsType, { owner, repo, branch, file }),
+  fileUrl: (vcsType, params) => vcsUrl('file', vcsType, params),
 
-  repoUrl: (vcsType, { owner, repo }) => vcsUrl('repo', vcsType, { owner, repo }),
+  repoUrl: (vcsType, params) => vcsUrl('repo', vcsType, params),
 
-  tagUrl: (vcsType, { owner, repo, tag }) => vcsUrl('tag', vcsType, { owner, repo, tag }),
+  tagUrl: (vcsType, params) => vcsUrl('tag', vcsType, params),
 
   email(email) {
     return `mailto:${email}`;
