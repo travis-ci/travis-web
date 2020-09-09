@@ -33,7 +33,7 @@ export default Component.extend({
     return this.creditsPrivateAvailable;
   }),
 
-  creditsUsedPercentage: computed('creditsTab', 'creditsUsed', function () {
+  creditsUsedPercentage: computed('creditsAvailable', 'creditsTotal', function () {
     return (this.creditsAvailable / this.creditsTotal) * 100;
   }),
 

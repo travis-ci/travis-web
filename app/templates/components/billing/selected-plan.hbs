@@ -4,16 +4,16 @@
       {{this.selectedPlan.name}}
     </p>
     <p class='selected-plan__details--desc' data-test-selected-plan-credits>
-      {{this.selectedPlan.private_credits}} Credits
+      {{this.selectedPlan.privateCredits}} Credits
     </p>
     <p class='selected-plan__details--desc' data-test-selected-plan-oss-credits>
-      {{this.selectedPlan.public_credits}} OSS Credits<span class='color-cement-grey'>/month</span>
+      {{this.selectedPlan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
     </p>
     <p class='selected-plan__details--desc' data-test-selected-plan-users>
-      {{#if (eq this.selectedPlan.starting_users 999999)}}
+      {{#if this.selectedPlan.isUnlimitedUsers}}
         Unlimited unique users
       {{else}}
-        Up to {{this.selectedPlan.starting_users}} unique users
+        Up to {{this.selectedPlan.startingUsers}} unique users
         <div data-test-selected-plan-period='true' class='selected-plan__period'>
           Charged monthly per usage - check pricing
         </div>
@@ -28,7 +28,7 @@
       <p class='selected-plan__price--total' data-test-plan-total='true'>
         Total:
       </p>
-      {{#if (eq this.selectedPlan.starting_price 0)}}
+      {{#if this.selectedPlan.isFree}}
         <p class='selected-plan__price--large' data-test-selected-plan-price>
           Free
         </p>

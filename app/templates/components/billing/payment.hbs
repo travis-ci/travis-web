@@ -7,7 +7,7 @@
     @goToFirstStep={{action this.goToFirstStep}}
     @totalPrice={{this.totalPrice}}
   />
-  {{#if (eq this.selectedPlan.starting_price 0)}}
+  {{#if this.selectedPlan.isFree}}
     <div class='mt-5'>
       {{#if this.isLoading}}
         <LoadingIndicator/>

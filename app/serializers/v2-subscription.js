@@ -3,10 +3,6 @@ import { underscore } from '@ember/string';
 import { isNone } from '@ember/utils';
 
 export default V3Serializer.extend({
-  attrs: {
-    permissions: { key: '@permissions' }
-  },
-
   serialize(snapshot, options) {
     const json = this._super(...arguments);
     if (options && options.update) {

@@ -32,7 +32,7 @@ export default Component.extend({
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
-  freeV2Plan: equal('subscription.plan.starting_price', 0),
+  freeV2Plan: equal('subscription.plan.startingPrice', 0),
   canBuyAddons: not('freeV2Plan'),
 
   handleError: reads('stripe.handleError'),
@@ -54,7 +54,11 @@ export default Component.extend({
     const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
     try {
       if (token) {
-        yield this.subscription.creditCardInfo.updateToken(this.subscription.id, token);
+        yield this.subscription.creditCardInfo.updateToken.perform({
+          subscriptionId: this.subscription.id,
+          tokenId: token.id,
+          tokenCard: token.card
+        });
         const { client_secret: clientSecret } = yield this.subscription.chargeUnpaidInvoices.perform();
         yield this.stripe.handleStripePayment.perform(clientSecret);
       }
@@ -64,7 +68,7 @@ export default Component.extend({
   }).drop(),
 
   editPlan: task(function* () {
-    yield this.subscription.changePlan.perform({ plan: this.selectedPlan.id });
+    yield this.subscription.changePlan.perform(this.selectedPlan.id);
     yield this.accounts.fetchSubscriptions.perform();
     yield this.accounts.fetchV2Subscriptions.perform();
     yield this.retryAuthorization.perform();

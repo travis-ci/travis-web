@@ -21,6 +21,12 @@ export default Mixin.create({
     this.controller.set('billingStep', 1);
   },
 
+  afterModel(model) {
+    if (model && !model.error) {
+      model.account.fetchV2Plans.perform();
+    }
+  },
+
   selectedPlan() {
     const savedPlan = this.storage.billingPlan;
     const selectedPlan = savedPlan && savedPlan.id && this.store.peekRecord('v2-plan-config', savedPlan.id);

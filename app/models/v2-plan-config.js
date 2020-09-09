@@ -3,10 +3,11 @@ import { equal } from '@ember/object/computed';
 
 export default Model.extend({
   name: attr('string'),
-  starting_price: attr(),
-  starting_users: attr(),
-  private_credits: attr(),
-  public_credits: attr(),
+  startingPrice: attr('number'),
+  startingUsers: attr('number'),
+  privateCredits: attr('number'),
+  publicCredits: attr('number'),
 
-  isFree: equal('starting_price', 0)
+  isFree: equal('startingPrice', 0),
+  isUnlimitedUsers: equal('startingUsers', 999999)
 });

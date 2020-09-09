@@ -15,13 +15,13 @@ module('Integration | Component | billing-information', function (hooks) {
     const plans = [{
       id: 1,
       name: 'A',
-      starting_users: 5,
-      starting_price: 20000,
+      startingUsers: 5,
+      startingPrice: 20000,
     }, {
       id: 2,
       name: 'B',
-      starting_users: 10,
-      starting_price: 30000
+      startingUsers: 10,
+      startingPrice: 30000
     }];
     this.plans = plans;
 
@@ -69,8 +69,8 @@ module('Integration | Component | billing-information', function (hooks) {
     assert.dom('[data-test-contact-details-title]').hasText('Contact details');
     assert.dom('[data-test-billing-details-title]').hasText('Billing address');
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plans[0].name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.plans[0].starting_users} unique users Charged monthly per usage - check pricing`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plans[0].starting_price / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.plans[0].startingUsers} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plans[0].startingPrice / 100}`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.dom('input').isVisible({ count: 8 });

@@ -40,7 +40,9 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.trial = trial;
 
-    this.defaultV2Plan = this.server.create('v2_plan_config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', starting_price: 30000, starting_users: 10000, private_credits: 500000, public_credits: 40000 });
+    this.server.create('v2-plan-config', { id: 'free_tier_plan',  name: 'Free Tier Plan', startingPrice: 0, startingUsers: 999999, privateCredits: 10000, publicCredits: 40000, isFree: true, isUnlimitedUsers: true });
+    this.server.create('v2-plan-config', { id: 'standard_tier_plan', name: 'Standard Tier Plan', startingPrice: 3000, startingUsers: 100, privateCredits: 25000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
+    this.defaultV2Plan = this.server.create('v2-plan-config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', startingPrice: 30000, startingUsers: 10000, privateCredits: 500000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
 
     let plan = this.server.create('plan', {
       name: 'Small Business1',
@@ -914,10 +916,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingForm.proceedPayment.click();
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
-    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
@@ -935,7 +937,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
-    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
@@ -977,10 +979,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.selectedPlan.subscribeButton.click();
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
-    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
   });
 
@@ -994,10 +996,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.selectedPlan.subscribeButton.click();
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
-    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     await profilePage.billing.selectedPlanOverview.changePlan.click();
@@ -1055,7 +1057,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingCouponForm.submitCoupon.click();
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultV2Plan.starting_price / 100) - price}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultV2Plan.startingPrice / 100) - price}`);
   });
 
   test('apply coupon value higher than price', async function (assert) {
@@ -1150,7 +1152,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingCouponForm.submitCoupon.click();
 
-    const amountInDollars = this.defaultV2Plan.starting_price / 100;
+    const amountInDollars = this.defaultV2Plan.startingPrice / 100;
     const price = amountInDollars - (amountInDollars * coupon.percentOff) / 100;
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
@@ -1209,7 +1211,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const price = Math.floor(coupon.amountOff / 100);
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultV2Plan.starting_price / 100) - price}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultV2Plan.startingPrice / 100) - price}`);
   });
 
   test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {
@@ -1249,10 +1251,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingForm.proceedPayment.click();
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
-    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
@@ -1270,7 +1272,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
-    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
@@ -1318,10 +1320,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingForm.proceedPayment.click();
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
-    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
@@ -1339,7 +1341,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
-    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
@@ -1396,10 +1398,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingForm.proceedPayment.click();
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
-    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
@@ -1417,7 +1419,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
-    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com joe@email.com doe@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');

@@ -50,7 +50,7 @@ export default Service.extend({
   fetchV2Subscriptions: task(function* () {
     this.set('v2SubscriptionError', false);
     try {
-      const subscriptions = yield this.store.findAll('v2_subscription') || [];
+      const subscriptions = yield this.store.findAll('v2-subscription') || [];
 
       if (subscriptions.any(s => s.isSubscribed && !s.belongsTo('plan').id())) {
         this.logMissingPlanException();

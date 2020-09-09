@@ -17,9 +17,7 @@ export default Component.extend({
   defaultPlanName: reads('defaultPlans.firstObject.name'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
 
-  displayedPlans: computed('availablePlans.[]', function () {
-    return this.availablePlans;
-  }),
+  displayedPlans: reads('availablePlans'),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
     return this.displayedPlans.findBy('name', this.defaultPlanName);

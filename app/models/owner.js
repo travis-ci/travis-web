@@ -104,15 +104,25 @@ export default VcsEntity.extend({
   fetchV2Plans: task(function* () {
     const url = this.isOrganization ? `/v2_plans_for/organization/${this.id}` : '/v2_plans_for/user';
     const result = yield this.api.get(url);
-    return result ? result.v2_plans : [];
-  }).keepLatest(),
+    if (result) {
+      return result.v2_plans.map(plan => {
+        const { store } = this;
+        const planConfig = store.peekRecord('v2-plan-config', plan.id) || store.createRecord('v2-plan-config', {
+          id: plan.id,
+          name: plan.name,
+          startingPrice: plan.starting_price,
+          startingUsers: plan.starting_users,
+          privateCredits: plan.private_credits,
+          publicCredits: plan.public_credits,
+        });
+        return planConfig;
+      });
+    }
+    return [];
+  }).drop(),
 
-  fetchV2PlansInstance: computed(function () {
-    return this.fetchV2Plans.perform();
-  }),
-
-  isFetchV2PlansRunning: reads('fetchV2PlansInstance.isRunning'),
-  eligibleV2Plans: reads('fetchV2PlansInstance.value'),
+  isFetchV2PlansRunning: reads('fetchV2Plans.isRunning'),
+  eligibleV2Plans: reads('fetchV2Plans.lastSuccessful.value'),
 
   fetchBetaMigrationRequests() {
     return this.tasks.fetchBetaMigrationRequestsTask.perform();
@@ -175,40 +185,19 @@ export default VcsEntity.extend({
   v2subscriptions: reads('accounts.v2subscriptions'),
 
   accountv2Subscriptions: computed(
-    'v2subscriptions.@each.{validTo,owner,isSubscribed,isPending,isIncomplete}',
+    'v2subscriptions.@each.{owner}',
     'login',
     function () {
       let subscriptions = this.v2subscriptions || [];
       return subscriptions.filterBy('owner.login', this.login);
     }),
 
-  activeAccountv2Subscriptions: filterBy('accountv2Subscriptions', 'isSubscribed'),
-  incompleteAccountv2Subscriptions: filterBy('accountv2Subscriptions', 'isIncomplete'),
-  pendingAccountv2Subscriptions: filterBy('accountv2Subscriptions', 'isPending'),
-  expiredAccountv2Subscriptions: filterBy('accountv2Subscriptions', 'isExpired'),
-  expiredStripev2Subscriptions: filterBy('expiredAccountv2Subscriptions', 'isStripe'),
-
-  expiredStripev2Subscription: computed('expiredStripev2Subscriptions.[]', function () {
-    if (this.expiredStripev2Subscriptions.length > 1) {
-      this.logMultipleSubscriptionsError();
-    }
-    return this.expiredStripev2Subscriptions.get('firstObject');
-  }),
-
   v2subscription: computed(
-    'accountv2Subscriptions.[]',
-    'activeAccountv2Subscriptions.[]',
-    'pendingAccountv2Subscriptions.[]',
-    'incompleteAccountv2Subscriptions.[]', function () {
-      if (this.activeAccountv2Subscriptions.length > 1 ||
-        this.pendingAccountv2Subscriptions.length > 1 ||
-        this.incompleteAccountv2Subscriptions.length > 1) {
+    'accountv2Subscriptions.[]', function () {
+      if (this.accountv2Subscriptions.length > 1) {
         this.logMultipleSubscriptionsError();
       }
-      return this.activeAccountv2Subscriptions.get('firstObject') ||
-        this.pendingAccountv2Subscriptions.get('firstObject') ||
-        this.incompleteAccountv2Subscriptions.get('firstObject') ||
-        this.accountv2Subscriptions.get('lastObject');
+      return this.accountv2Subscriptions.get('lastObject');
     }),
 
   trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {

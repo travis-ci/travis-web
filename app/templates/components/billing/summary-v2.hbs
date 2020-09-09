@@ -10,7 +10,7 @@
       {{#if this.subscription.plan.isFree}}
         Please note that your Credit balance will be replenished monthly. Additional add-ons are not available for this plan
       {{else}}
-        Please note that you will ONLY be charged monthly  for the unique users who triggered builds! You can replenish your Credit balance anytime by Buying add-ons. Credits are timeless and can be used in any month. Your OSS Credit balance will be replenished monthly.
+        Please note that you will ONLY be charged monthly for the unique users who triggered builds! You can replenish your Credit balance anytime by Buying add-ons. Credits are timeless and can be used in any month. Your OSS Credit balance will be replenished monthly.
       {{/if}}
     </span>
     <div class="flex flex--space-between flex--wrap plan-overview__details">
@@ -27,17 +27,17 @@
             </p>
             <div class='plan-overview__description' data-test-plan-description>
               <p>
-                {{#if (eq this.subscription.plan.starting_users 999999)}}
+                {{#if this.subscription.plan.isUnlimitedUsers}}
                   Unlimited unique users
                 {{else}}
-                  Up to {{this.subscription.plan.starting_users}} unique users
+                  Up to {{this.subscription.plan.startingUsers}} unique users
                 {{/if}}
               </p>
               <p>
-                {{this.subscription.plan.private_credits}} Credits
+                {{this.subscription.plan.privateCredits}} Credits
               </p>
               <p>
-                {{this.subscription.plan.public_credits}} OSS Credits per month
+                {{this.subscription.plan.publicCredits}} OSS Credits per month
               </p>
               <p>
                 Linux, Windows, macOS builds
@@ -58,7 +58,7 @@
               </p>
             {{else}}
               <p class='selected-plan__price--large' data-test-price>
-                {{format-currency this.subscription.plan.starting_price floor="true"}}
+                {{format-currency this.subscription.plan.startingPrice floor="true"}}
               </p>
             {{/if}}
           {{/if}}

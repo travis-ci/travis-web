@@ -222,7 +222,8 @@ export default function () {
 
   this.post('/v2_subscriptions', function (schema, request) {
     const attrs = JSON.parse(request.requestBody);
-    const owner = attrs.organization_id ? schema.organizations.first() : schema.users.first();
+    const owner = attrs.organization_id ? schema.organizations.where({ id: attrs.organization_id }).models[0]
+      : schema.users.where({ token: validAuthToken}).models[0];
 
     const updatedAttrs = {
       ...attrs,
@@ -239,7 +240,7 @@ export default function () {
     let response = this.serialize(schema.v2Subscriptions.all());
 
     let owners = schema.organizations.all().models.slice();
-    owners.push(schema.users.first());
+    owners.push(schema.users.where({ token: validAuthToken}).models[0]);
 
     response['@permissions'] = owners.map(owner => {
       return {

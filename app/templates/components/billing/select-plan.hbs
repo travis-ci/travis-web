@@ -16,7 +16,7 @@
             >
               <p class='billing-plans__box-v2--name color-asphalt-grey' data-test-selected-plan-name="true">
                 {{plan.name}}
-                {{#if (eq plan.starting_price 0)}}
+                {{#if plan.isFree}}
                   <span>
                     <SvgImage @name="icon-help" @class="icon-help" />
                     <EmberTooltip @text="Free Plan is a monthly-based plan.&#10;The Credits will be replenished&#10;automatically every month." />
@@ -24,27 +24,27 @@
                 {{/if}}
               </p>
               <p class='billing-plans__box-v2--price' data-test-selected-plan-price="true">
-                {{#if (eq plan.starting_price 0)}}
+                {{#if plan.isFree}}
                   Free
                 {{else}}
                   <span class='color-asphalt-grey'>
                     Starting at
                   </span>
-                  {{format-currency plan.starting_price floor="true"}}
+                  {{format-currency plan.startingPrice floor="true"}}
                 {{/if}}
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.private_credits}} Credits
+                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.privateCredits}} Credits
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.public_credits}} OSS Credits<span class='color-cement-grey'>/month</span>
+                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
                 <SvgImage @name="icon-passed" @class="icon blue" />
-                {{#if (eq plan.starting_users 999999)}}
-                  <a href='' class='billing-plans__box-v2--help'>Unlimited unique users</a>
+                {{#if plan.isUnlimitedUsers}}
+                  Unlimited unique users
                 {{else}}
-                  <a href='' class='billing-plans__box-v2--help'>Up to {{plan.starting_users}} unique users</a>
+                  Up to {{plan.startingUsers}} unique users
                 {{/if}}
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">

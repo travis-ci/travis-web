@@ -25,7 +25,11 @@ export default Component.extend({
     const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
     try {
       if (token) {
-        yield this.subscription.creditCardInfo.updateToken(this.subscription.id, token);
+        yield this.subscription.creditCardInfo.updateToken.perform({
+          subscriptionId: this.subscription.id,
+          tokenId: token.id,
+          tokenCard: token.card
+        });
         this.set('openCreditCardForm', false);
       }
     } catch (error) {

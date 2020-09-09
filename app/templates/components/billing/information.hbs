@@ -7,7 +7,7 @@
   </h3>
   <Billing::SelectedPlan
     @selectedPlan={{this.selectedPlan}}
-    @totalPrice={{this.selectedPlan.starting_price}}
+    @totalPrice={{this.selectedPlan.startingPrice}}
     @goToFirstStep={{action this.goToFirstStep}}
   />
   <TravisForm @onSubmit={{action next}} as |form|>

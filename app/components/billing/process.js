@@ -21,7 +21,7 @@ export default Component.extend({
     return this.storage.billingStep || STEPS.ONE;
   }),
 
-  billingInfoExists: computed(function () {
+  billingInfoExists: computed('existingBillingInfo.{firstName,lastName,billingEmail,city,zipCode,country}', function () {
     const billingInfo = this.existingBillingInfo;
     if (billingInfo)
       return billingInfo.firstName && billingInfo.lastName && billingInfo.billingEmail && billingInfo.address
@@ -73,7 +73,7 @@ export default Component.extend({
         const currentIndex = this.steps.indexOf(this.currentStep);
         const lastIndex = this.steps.length - 1;
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
-        if ((this.billingInfoExists && this.currentStep === STEPS.ONE) || this.selectedPlan.starting_price === 0) {
+        if ((this.billingInfoExists && this.currentStep === STEPS.ONE) || this.selectedPlan.startingPrice === 0) {
           const currentStep = STEPS.THREE;
           this.set('currentStep', currentStep);
           this.set('billingInfo', this.existingBillingInfo);

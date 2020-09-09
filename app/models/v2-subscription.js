@@ -15,13 +15,12 @@ export default Model.extend({
   api: service(),
   accounts: service(),
 
-  source: attr(),
+  source: attr('string'),
   createdAt: attr('date'),
-  permissions: computed('', () => ({ write: true, read: true })),
-  organizationId: attr(),
-  coupon: attr(),
-  clientSecret: attr(),
-  paymentIntent: attr(),
+  organizationId: attr('number'),
+  coupon: attr('string'),
+  clientSecret: attr('string'),
+  paymentIntent: attr('string'),
 
   discount: belongsTo('discount', { async: false }),
   billingInfo: belongsTo('v2-billing-info', { async: false }),
@@ -76,7 +75,7 @@ export default Model.extend({
     };
   }),
 
-  priceInCents: reads('plan.starting_price'),
+  priceInCents: reads('plan.startingPrice'),
   validateCouponResult: reads('validateCoupon.last.value'),
 
   planPrice: computed('priceInCents', function () {
@@ -89,7 +88,7 @@ export default Model.extend({
     });
   }).drop(),
 
-  billingUrl: computed('owner.{type,login}', 'isGithub', 'isResubscribable', function () {
+  billingUrl: computed('owner.{type,login}', 'isGithub', function () {
     let type = this.get('owner.type');
     let login = this.get('owner.login');
     let isGithub = this.isGithub;
@@ -103,46 +102,18 @@ export default Model.extend({
     }
   }),
 
-  activeManagedSubscription: computed('isStripe', 'isGithub', 'isSubscribed', function () {
-    let isStripe = this.isStripe;
-    let isGithub = this.isGithub;
-    let isSubscribed = this.isSubscribed;
-    return ((isStripe || isGithub) && isSubscribed);
-  }),
-
   sourceWords: computed('source', function () {
     let source = this.source;
     return sourceToWords[source];
-  }),
-
-  manualSubscriptionExpired: computed('isManual', 'validTo', function () {
-    let isManual = this.isManual;
-    let validTo = this.validTo;
-    let today = new Date().toISOString();
-    let date = Date.parse(today);
-    let validToDate = Date.parse(validTo);
-    return (isManual && (date > validToDate));
   }),
 
   chargeUnpaidInvoices: task(function* () {
     return yield this.api.post(`/v2_subscription/${this.id}/pay`);
   }).drop(),
 
-  cancelSubscription: task(function* (data) {
-    yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
-      data
-    });
+  changePlan: task(function* (plan) {
+    const data = { plan };
+    yield this.api.patch(`/v2_subscription/${this.id}/plan`, { data });
     yield this.accounts.fetchV2Subscriptions.perform();
-  }).drop(),
-
-  changePlan: task(function* (data) {
-    yield this.api.patch(`/v2_subscription/${this.id}/plan`, {
-      data
-    });
-    yield this.accounts.fetchV2Subscriptions.perform();
-  }).drop(),
-
-  resubscribe: task(function* () {
-    return yield this.api.patch(`/v2_subscription/${this.id}/resubscribe`);
-  }).drop(),
+  }).drop()
 });

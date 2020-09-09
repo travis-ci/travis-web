@@ -18,16 +18,16 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     const plan1 = {
       id: 1,
       name: 'Standard Tier Plan',
-      starting_users: 5,
-      starting_price: 20000
+      startingUsers: 5,
+      startingPrice: 20000
     };
     this.plan1 = plan1;
 
     const plan2 = {
       id: 2,
       name: 'Pro Tier Plan',
-      starting_users: 10,
-      starting_price: 30000
+      startingUsers: 10,
+      startingPrice: 30000
     };
     this.plan2 = plan2;
 
@@ -48,8 +48,8 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     );
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan1.name}`);
-    assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan1.starting_users} unique users`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan1.starting_price / 100}`);
+    assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan1.startingUsers} unique users`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan1.startingPrice / 100}`);
   });
 
   test('changing selected plan should highlight new plan', async function (assert) {
@@ -66,7 +66,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     );
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan2.name}`);
-    assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan2.starting_users} unique users`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan2.starting_price / 100}`);
+    assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan2.startingUsers} unique users`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan2.startingPrice / 100}`);
   });
 });
