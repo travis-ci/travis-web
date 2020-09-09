@@ -36,14 +36,14 @@ Router.map(function () {
   this.route('account', function () {
     this.route('repositories');
     this.route('settings', { path: '/preferences' });
-    this.route('billing', { path: '/subscription' });
+    this.route('billing', { path: '/plan' });
     this.route('migrate');
     this.route('plan', { path: '/plan' });
   });
   this.route('organization', { path: '/organizations/:login' }, function () {
     this.route('repositories');
     this.route('settings', { path: '/preferences' });
-    this.route('billing', { path: '/subscription' });
+    this.route('billing', { path: '/plan' });
     this.route('migrate');
     this.route('plan', { path: '/plan' });
   });

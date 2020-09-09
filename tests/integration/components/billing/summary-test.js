@@ -57,7 +57,7 @@ module('Integration | Component | billing-summary', function (hooks) {
       @planMessage={{planMessage}}
     />`);
 
-    assert.dom('h3').hasText('Overview');
+    assert.dom('h3').hasText('Plan information');
     assert.equal(profilePage.billing.plan.name, 'A plan active');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Valid until ${date}`);
     assert.equal(profilePage.billing.planMessage.text, `Valid until ${date}`);
@@ -82,7 +82,7 @@ module('Integration | Component | billing-summary', function (hooks) {
       @planMessage={{planMessage}}
     />`);
 
-    assert.dom('h3').hasText('Overview');
+    assert.dom('h3').hasText('Plan information');
     assert.equal(profilePage.billing.plan.name, 'A plan canceled');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
@@ -107,7 +107,7 @@ module('Integration | Component | billing-summary', function (hooks) {
       @planMessage={{planMessage}}
     />`);
 
-    assert.dom('h3').hasText('Overview');
+    assert.dom('h3').hasText('Plan information');
     assert.equal(profilePage.billing.plan.name, 'A plan expired');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expired ${date}`);
     assert.equal(profilePage.billing.planMessage.text, `Expired ${date}`);
@@ -130,7 +130,7 @@ module('Integration | Component | billing-summary', function (hooks) {
       @isPending={{isPending}}
     />`);
 
-    assert.dom('h3').hasText('Overview');
+    assert.dom('h3').hasText('Plan information');
     assert.equal(profilePage.billing.plan.name, 'A plan pending');
     assert.equal(profilePage.billing.price.text, '$129');
     assert.equal(profilePage.billing.period.text, '/month');
@@ -151,7 +151,7 @@ module('Integration | Component | billing-summary', function (hooks) {
       @planMessage={{planMessage}}
     />`);
 
-    assert.dom('h3').hasText('Overview');
+    assert.dom('h3').hasText('Plan information');
     assert.equal(profilePage.billing.plan.name, 'A plan incomplete');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Incomplete');
     assert.equal(profilePage.billing.planMessage.text, 'Incomplete');

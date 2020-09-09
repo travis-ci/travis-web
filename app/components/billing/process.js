@@ -21,11 +21,19 @@ export default Component.extend({
     return this.storage.billingStep || STEPS.ONE;
   }),
 
+  billingInfoExists: computed(function () {
+    const billingInfo = this.existingBillingInfo;
+    if (billingInfo)
+      return billingInfo.firstName && billingInfo.lastName && billingInfo.billingEmail && billingInfo.address
+                                   && billingInfo.city && billingInfo.zipCode && billingInfo.country;
+    return false;
+  }),
+
   isStepOne: equal('currentStep', STEPS.ONE),
   isStepTwo: equal('currentStep', STEPS.TWO),
   isStepThree: equal('currentStep', STEPS.THREE),
-  selectedPlan: reads('newSubscription.plan'),
-  billingInfo: reads('newSubscription.billingInfo'),
+  existingBillingInfo: reads('subscription.billingInfo'),
+  existingCreditCardInfo: reads('subscription.creditCardInfo'),
 
   trackButtonClicks() {
     if (this.currentStep === STEPS.ONE) {
@@ -43,7 +51,7 @@ export default Component.extend({
 
   persistBillingData(step) {
     this.storage.billingStep = step;
-    this.storage.billingPlan = this.selectedPlan.getProperties(['id', 'name', 'builds', 'price', 'annual']);
+    this.storage.billingPlan = this.selectedPlan;
     this.storage.billingInfo = this.billingInfo;
   },
 
@@ -65,10 +73,16 @@ export default Component.extend({
         const currentIndex = this.steps.indexOf(this.currentStep);
         const lastIndex = this.steps.length - 1;
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
-        const currentStep = this.steps[nextIndex];
-        this.set('currentStep', currentStep);
-        this.updateBillingQueryParams(currentStep);
-        this.persistBillingData(currentStep);
+        if ((this.billingInfoExists && this.currentStep === STEPS.ONE) || this.selectedPlan.starting_price === 0) {
+          const currentStep = STEPS.THREE;
+          this.set('currentStep', currentStep);
+          this.set('billingInfo', this.existingBillingInfo);
+        } else {
+          const currentStep = this.steps[nextIndex];
+          this.set('currentStep', currentStep);
+        }
+        this.updateBillingQueryParams(this.currentStep);
+        this.persistBillingData(this.currentStep);
       }
     },
 

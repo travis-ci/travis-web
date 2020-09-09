@@ -16,7 +16,7 @@ export default Controller.extend({
   config,
   anchor: '',
   scrollToEnterpriseSection: equal('anchor', ANCHOR.ENTERPRISE_SECTION),
-  billingUrl: `${config.billingEndpoint}/account/subscription`,
+  billingUrl: `${config.billingEndpoint}/account/plan`,
   buildMatrixUrl: config.urls.buildMatrix,
   enterpriseUrl: config.urls.enterprise,
 

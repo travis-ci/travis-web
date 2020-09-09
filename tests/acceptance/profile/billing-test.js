@@ -40,6 +40,8 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.trial = trial;
 
+    this.defaultV2Plan = this.server.create('v2_plan_config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', starting_price: 30000, starting_users: 10000, private_credits: 500000, public_credits: 40000 });
+
     let plan = this.server.create('plan', {
       name: 'Small Business1',
       builds: 5,
@@ -135,7 +137,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
@@ -374,7 +375,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.cancelSubscriptionButton.click();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
@@ -410,10 +410,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
     assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
-
-    await profilePage.billing.changePlanResubscribe.click();
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 5 job plan');
   });
 
   test('view billing on a canceled stripe plan', async function (assert) {
@@ -424,7 +420,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
@@ -460,12 +455,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired manual subscription');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Expired July 16, 2018');
     assert.equal(profilePage.billing.planMessage.text, 'Expired July 16, 2018');
     assert.equal(profilePage.billing.price.text, '$69');
-    assert.equal(profilePage.billing.billingFormHeading.text, 'Subscribe to a plan');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing on a marketplace plan', async function (assert) {
@@ -477,8 +468,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active github marketplace subscription');
-    assert.dom(profilePage.billing.plan.concurrency.scope)
-      .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
   });
 
   test('view billing tab with marketplace trial subscription', async function (assert) {
@@ -506,8 +495,6 @@ module('Acceptance | profile/billing', function (hooks) {
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan trial github marketplace subscription');
-    assert.dom(profilePage.billing.plan.concurrency.scope)
-      .hasTextContaining('5 concurrent jobs Valid until June 19, 2018');
   });
 
   test('view billing tab when marketplace trial subscription has ended', async function (assert) {
@@ -535,8 +522,6 @@ module('Acceptance | profile/billing', function (hooks) {
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
-    assert.dom(profilePage.billing.plan.concurrency.scope)
-      .hasTextContaining('5 concurrent jobs Expired June 19, 2018');
   });
 
 
@@ -566,8 +551,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.inactiveChangePlanResubscribe.isDisabled);
     assert.dom(profilePage.billing.inactiveResubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
     assert.dom(profilePage.billing.inactiveChangePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
-    assert.ok(profilePage.billing.billingPlanChoices.boxes.isHidden);
-    assert.ok(profilePage.billing.subscribeButton.isHidden);
   });
 
   test('view billing on a cancelled marketplace plan with Stripe plan', async function (assert) {
@@ -590,12 +573,9 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Cancelled on June 19, 2018');
     assert.equal(profilePage.billing.planMessage.text, 'Cancelled on June 19, 2018');
     assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
     assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
-    assert.ok(profilePage.billing.billingPlanChoices.boxes.isHidden);
-    assert.ok(profilePage.billing.subscribeButton.isHidden);
   });
 
   test('view billing on a canceled marketplace plan', async function (assert) {
@@ -607,16 +587,12 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Cancelled on June 19, 2018');
     assert.equal(profilePage.billing.planMessage.text, 'Cancelled on June 19, 2018');
 
     assert.ok(profilePage.billing.userDetails.isHidden);
     assert.ok(profilePage.billing.billingDetails.isHidden);
     assert.ok(profilePage.billing.creditCardNumber.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
-
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing on an expired marketplace plan', async function (assert) {
@@ -633,10 +609,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Expired June 19, 2018');
     assert.equal(profilePage.billing.planMessage.text, 'Expired June 19, 2018');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing on an annual plan', async function (assert) {
@@ -665,8 +638,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing tab when not subscribed and has subscription write permissions with active trial', async function (assert) {
@@ -681,8 +652,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('view billing tab when there is no subscription and no write permissions', async function (assert) {
@@ -708,35 +677,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.resubscribeSubscriptionButton.isHidden);
   });
 
-  test('view billing tab when switch is clicked on plan changes correctly', async function (assert) {
-    this.subscription.destroy();
-
-    await profilePage.visit();
-    await profilePage.billing.visit();
-
-    assert.dom(profilePage.billing.selectedPlan.name.scope).hasTextContaining(`${this.defaultPlan.name}`);
-    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasTextContaining(`${this.defaultPlan.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasTextContaining(`$${this.defaultPlan.price / 100} /month`);
-
-    await profilePage.billing.switchPlan.click();
-
-    assert.dom(profilePage.billing.selectedPlan.name.scope).hasTextContaining(`${this.defaultAnnualPlan.name}`);
-    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasTextContaining(`${this.defaultAnnualPlan.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasTextContaining(`$${this.defaultAnnualPlan.price / 100} /year`);
-  });
-
-  test('view billing tab when not subscribed select different plan changes correctly', async function (assert) {
-    this.subscription.destroy();
-
-    await profilePage.visit();
-    await profilePage.billing.visit();
-    await profilePage.billing.billingPlanChoices.lastBox.visit();
-
-    assert.dom(profilePage.billing.selectedPlan.name.scope).hasTextContaining(`${this.lastPlan.name}`);
-    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasTextContaining(`${this.lastPlan.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasTextContaining(`$${this.lastPlan.price / 100} /month`);
-  });
-
   test('switching to another account’s billing tab loads the subscription form properly', async function (assert) {
     this.organization.permissions = {
       createSubscription: true
@@ -755,15 +695,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-
-    await profilePage.billing.billingPlanChoices.lastBox.visit();
-
-    assert.dom(profilePage.billing.selectedPlan.name.scope).hasTextContaining(`${this.lastPlan.name}`);
-    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasTextContaining(`${this.lastPlan.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasTextContaining(`$${this.lastPlan.price / 100} /month`);
-
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 10 job plan');
   });
 
   test('view billing tab when trial has not started', async function (assert) {
@@ -784,9 +715,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab with no create subscription permissions', async function (assert) {
@@ -831,9 +759,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab when trial has started', async function (assert) {
@@ -866,8 +791,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab when trial builds are less than 11', async function (assert) {
@@ -902,8 +825,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab when trial has ended', async function (assert) {
@@ -934,8 +855,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
   test('view billing tab on education account', async function (assert) {
@@ -951,8 +870,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, 'Bootstrap plan education subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('1 concurrent job');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @org-login to 2 job plan');
   });
 
 
@@ -974,8 +891,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
-    await subscribeButton.click();
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
 
     percySnapshot(assert);
 
@@ -994,11 +913,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingForm.proceedPayment.click();
 
-    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
@@ -1015,8 +934,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingPaymentForm.completePayment.click();
 
-    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs (plus 1 for free)');
+    assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
@@ -1052,15 +971,16 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+    assert.equal(profilePage.billing.selectedPlan.subscribeButton.text, 'Select plan');
 
-    await profilePage.billing.subscribeButton.click();
+    await profilePage.billing.selectedPlan.subscribeButton.click();
 
-    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
   });
 
@@ -1069,13 +989,15 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
-    await profilePage.billing.subscribeButton.click();
 
-    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+    await profilePage.billing.selectedPlan.subscribeButton.click();
+
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     await profilePage.billing.selectedPlanOverview.changePlan.click();
@@ -1086,13 +1008,9 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-    assert.dom(profilePage.billing.billingPlanChoices.boxes.scope).exists({ count: 5 });
-    assert.equal(profilePage.billing.subscribeButton.text, 'Subscribe @user-login to 2 job plan');
   });
 
   test('apply 10 dollars off coupon', async function (assert) {
-    this.subscription.destroy();
-
     window.Stripe = StripeMock;
     let config = {
       mock: true,
@@ -1109,8 +1027,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
-    await subscribeButton.click();
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingCouponForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
 
     percySnapshot(assert);
 
@@ -1135,7 +1055,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingCouponForm.submitCoupon.click();
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - price}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultV2Plan.starting_price / 100) - price}`);
   });
 
   test('apply coupon value higher than price', async function (assert) {
@@ -1157,8 +1077,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
-    await subscribeButton.click();
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingCouponForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
 
     percySnapshot(assert);
 
@@ -1203,8 +1125,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
-    await subscribeButton.click();
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingCouponForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
 
     percySnapshot(assert);
 
@@ -1226,11 +1150,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingCouponForm.submitCoupon.click();
 
-    const amountInDollars = this.defaultPlan.price / 100;
+    const amountInDollars = this.defaultV2Plan.starting_price / 100;
     const price = amountInDollars - (amountInDollars * coupon.percentOff) / 100;
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price.toFixed(2)}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${price}`);
   });
 
   test('apply invalid coupon', async function (assert) {
@@ -1252,8 +1176,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    const { billingForm, subscribeButton, billingCouponForm } = profilePage.billing;
-    await subscribeButton.click();
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingCouponForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
 
     percySnapshot(assert);
 
@@ -1283,7 +1209,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const price = Math.floor(coupon.amountOff / 100);
 
     assert.equal(billingCouponForm.validCoupon.text, 'Coupon applied');
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultPlan.price / 100) - price}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${(this.defaultV2Plan.starting_price / 100) - price}`);
   });
 
   test('view billing tab when no individual subscription should fill form and transition to payment', async function (assert) {
@@ -1300,8 +1226,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
-    await subscribeButton.click();
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
 
     percySnapshot(assert);
 
@@ -1320,11 +1248,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingForm.proceedPayment.click();
 
-    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
@@ -1341,12 +1269,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingPaymentForm.completePayment.click();
 
-    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
+    assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
-    assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 
   test('view billing tab when no organization subscription should fill form and transition to payment', async function (assert) {
@@ -1368,8 +1295,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
-    await subscribeButton.click();
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
 
     percySnapshot(assert);
 
@@ -1388,11 +1317,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingForm.proceedPayment.click();
 
-    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
@@ -1409,12 +1338,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingPaymentForm.completePayment.click();
 
-    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
+    assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
-    assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 
   test('create subscription with multiple emails', async function (assert) {
@@ -1436,8 +1364,10 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    const { billingForm, subscribeButton, billingPaymentForm } = profilePage.billing;
-    await subscribeButton.click();
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
@@ -1465,11 +1395,11 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingForm.proceedPayment.click();
 
-    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultPlan.name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.defaultPlan.builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultPlan.price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.private_credits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.starting_price / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.public_credits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.starting_users} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
@@ -1486,11 +1416,10 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingPaymentForm.completePayment.click();
 
-    assert.equal(profilePage.billing.plan.name, 'Startup plan pending');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('2 concurrent jobs');
+    assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.private_credits} Credits`);
 
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com joe@email.com doe@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
-    assert.dom(profilePage.billing.planMessage.scope).hasText('');
   });
 });

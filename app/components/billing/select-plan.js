@@ -2,8 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import config from 'travis/config/environment';
-import { or, not, reads, filterBy } from '@ember/object/computed';
+import { or, reads, filterBy } from '@ember/object/computed';
 
 export default Component.extend({
   accounts: service(),
@@ -13,17 +12,13 @@ export default Component.extend({
   showPlansSelector: true,
   showCancelButton: false,
   title: null,
-  showAnnual: false,
-  showMonthly: not('showAnnual'),
-  monthlyPlans: reads('account.monthlyPlans'),
-  annualPlans: reads('account.annualPlans'),
-  availablePlans: computed(() => config.plans),
+  availablePlans: reads('account.eligibleV2Plans'),
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
-  isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning'),
+  isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
 
-  displayedPlans: computed('showAnnual', 'annualPlans.[]', 'monthlyPlans.[]', function () {
-    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
+  displayedPlans: computed('availablePlans.[]', function () {
+    return this.availablePlans;
   }),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
@@ -35,16 +30,9 @@ export default Component.extend({
       yield this.submit.perform();
     } else {
       const { store } = this;
-      const selectedPlan = store.peekRecord('plan', this.selectedPlan.id) || store.createRecord('plan', { ...this.selectedPlan });
-      this.newSubscription.set('plan', selectedPlan);
+      const selectedPlan = store.peekRecord('v2-plan-config', this.selectedPlan.id) || store.createRecord('v2-plan-config', { ...this.selectedPlan });
+      this.set('selectedPlanId', selectedPlan.id);
       this.submit();
     }
-    this.set('showPlansSelector', false);
-  }).drop(),
-
-  actions: {
-    togglePlanPeriod() {
-      this.toggleProperty('showAnnual');
-    },
-  }
+  }).drop()
 });

@@ -1,7 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { typeOf } from '@ember/utils';
-import { and, equal, or, reads } from '@ember/object/computed';
+import { equal, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -17,65 +16,71 @@ export default Model.extend({
   accounts: service(),
 
   source: attr(),
-  status: attr(),
-  validTo: attr(),
   createdAt: attr('date'),
-  permissions: attr(),
+  permissions: computed('', () => ({ write: true, read: true })),
   organizationId: attr(),
   coupon: attr(),
   clientSecret: attr(),
   paymentIntent: attr(),
-  planName: attr(),
 
   discount: belongsTo('discount', { async: false }),
-  billingInfo: belongsTo('billing-info', { async: false }),
-  creditCardInfo: belongsTo('credit-card-info', { async: false }),
-  invoices: hasMany('invoice'),
+  billingInfo: belongsTo('v2-billing-info', { async: false }),
+  creditCardInfo: belongsTo('v2-credit-card-info', { async: false }),
+  invoices: hasMany('v2-invoice'),
   owner: belongsTo('owner', { polymorphic: true }),
-  plan: belongsTo(),
+  plan: belongsTo('v2-plan-config'),
+  addons: attr(),
 
-  isSubscribed: equal('status', 'subscribed'),
-  isCanceled: equal('status', 'canceled'),
-  isExpired: equal('status', 'expired'),
-  isPending: equal('status', 'pending'),
-  isIncomplete: equal('status', 'incomplete'),
   isStripe: equal('source', 'stripe'),
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
 
-  isNotSubscribed: or('isCanceled', 'isExpired'),
-  managedSubscription: or('isStripe', 'isGithub'),
-  isResubscribable: and('isStripe', 'isNotSubscribed'),
-  isGithubResubscribable: and('isGithub', 'isNotSubscribed'),
+  addonUsage: computed('addons', function () {
+    if (!this.addons) {
+      const emptyUsage = { totalCredits: 0, usedCredits: 0, remainingCredits: 0 };
+      return {
+        public: emptyUsage,
+        private: emptyUsage
+      };
+    }
+    const publicUsages = this.addons.reduce((processed, addon) => {
+      if (addon.type === 'credit_public') {
+        processed.totalCredits += addon.current_usage.addon_quantity;
+        processed.usedCredits += addon.current_usage.addon_usage;
+        processed.remainingCredits += addon.current_usage.remaining;
+      }
 
-  priceInCents: reads('plan.price'),
+      return processed;
+    }, {
+      totalCredits: 0,
+      usedCredits: 0,
+      remainingCredits: 0,
+    });
+    const privateUsages = this.addons.reduce((processed, addon) => {
+      if (addon.type === 'credit_private') {
+        processed.totalCredits += addon.current_usage.addon_quantity;
+        processed.usedCredits += addon.current_usage.addon_usage;
+        processed.remainingCredits += addon.current_usage.remaining;
+      }
+
+      return processed;
+    }, {
+      totalCredits: 0,
+      usedCredits: 0,
+      remainingCredits: 0,
+    });
+
+    return {
+      public: publicUsages,
+      private: privateUsages
+    };
+  }),
+
+  priceInCents: reads('plan.starting_price'),
   validateCouponResult: reads('validateCoupon.last.value'),
 
   planPrice: computed('priceInCents', function () {
     return this.priceInCents && Math.floor(this.priceInCents / 100);
-  }),
-
-  discountByAmount: computed('validateCouponResult.amountOff', 'planPrice', function () {
-    const { amountOff } = this.validateCouponResult || {};
-    return amountOff && this.planPrice && Math.max(0, this.planPrice - Math.floor(amountOff / 100));
-  }),
-
-  discountByPercentage: computed('validateCouponResult.percentOff', 'planPrice', function () {
-    const { percentOff } = this.validateCouponResult || {};
-    if (percentOff && this.planPrice) {
-      const discountPrice = Math.max(0, this.planPrice - (this.planPrice * percentOff) / 100);
-      return +discountPrice.toFixed(2);
-    }
-  }),
-
-  totalPrice: computed('discountByAmount', 'discountByPercentage', 'planPrice', function () {
-    if (typeOf(this.discountByAmount) === 'number' && this.discountByAmount >= 0) {
-      return this.discountByAmount;
-    } else if (typeOf(this.discountByPercentage) === 'number' && this.discountByPercentage >= 0) {
-      return this.discountByPercentage;
-    } else {
-      return this.planPrice;
-    }
   }),
 
   validateCoupon: task(function* (couponId) {
@@ -94,7 +99,7 @@ export default Model.extend({
     if (isGithub) {
       return config.marketplaceEndpoint;
     } else {
-      return `${config.billingEndpoint}/subscriptions/${id}`;
+      return `${config.billingEndpoint}/v2_subscriptions/${id}`;
     }
   }),
 
@@ -120,24 +125,24 @@ export default Model.extend({
   }),
 
   chargeUnpaidInvoices: task(function* () {
-    return yield this.api.post(`/subscription/${this.id}/pay`);
+    return yield this.api.post(`/v2_subscription/${this.id}/pay`);
   }).drop(),
 
   cancelSubscription: task(function* (data) {
-    yield this.api.post(`/subscription/${this.id}/cancel`, {
+    yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
       data
     });
-    yield this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
 
   changePlan: task(function* (data) {
     yield this.api.patch(`/v2_subscription/${this.id}/plan`, {
       data
     });
-    yield this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
 
   resubscribe: task(function* () {
-    return yield this.api.patch(`/subscription/${this.id}/resubscribe`);
+    return yield this.api.patch(`/v2_subscription/${this.id}/resubscribe`);
   }).drop(),
 });

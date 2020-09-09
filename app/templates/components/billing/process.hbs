@@ -1,23 +1,30 @@
 {{#if this.account.hasSubscriptionPermissions}}
   {{#if this.isStepOne}}
     <Billing::SelectPlan
-      @title="Subscribe to a plan"
-      @newSubscription={{this.newSubscription}}
+      @title="Edit plan"
+      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
       @account={{this.account}}
+      @showPlansSelector={{this.showPlansSelector}}
       @submit={{action 'next'}}
+      @showCancelButton={{true}}
     />
   {{else if this.isStepTwo}}
     <Billing::Information
-      @newSubscription={{this.newSubscription}}
+      @subscription={{this.subscription}}
+      @selectedPlan={{this.selectedPlan}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @next={{action 'next'}}
       @back={{action 'back'}}
     />
   {{else if this.isStepThree}}
     <Billing::Payment
-      @newSubscription={{this.newSubscription}}
+      @subscription={{this.subscription}}
+      @selectedPlan={{this.selectedPlan}}
       @account={{this.account}}
       @goToFirstStep={{action 'goToFirstStep'}}
+      @retryAuthorization={{this.retryAuthorization}}
+      @showPlansSelector={{this.showPlansSelector}}
       @back={{action 'back'}}
     />
   {{/if}}

@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, not, equal, and, or, bool } from '@ember/object/computed';
+import { reads, not, equal, and, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { computed } from '@ember/object';
@@ -15,9 +15,8 @@ export default Component.extend({
 
   showPlansSelector: false,
   showCancelModal: false,
-  selectedPlan: reads('subscription.plan'),
-  showAnnual: bool('selectedPlan.annual'),
-  showMonthly: not('showAnnual'),
+  isV2Subscription: false,
+  selectedPlan: null,
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
@@ -30,7 +29,11 @@ export default Component.extend({
   isComplete: not('isIncomplete'),
   canCancelSubscription: and('isSubscribed', 'hasSubscriptionPermissions'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
-  isLoading: or('accounts.fetchSubscriptions.isRunning', 'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
+  isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
+    'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
+
+  freeV2Plan: equal('subscription.plan.starting_price', 0),
+  canBuyAddons: not('freeV2Plan'),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,
@@ -63,6 +66,7 @@ export default Component.extend({
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform({ plan: this.selectedPlan.id });
     yield this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.perform();
     yield this.retryAuthorization.perform();
   }).drop(),
 
@@ -72,6 +76,7 @@ export default Component.extend({
       yield this.stripe.handleStripePayment.perform(result.payment_intent.client_secret);
     } else {
       yield this.accounts.fetchSubscriptions.perform();
+      yield this.accounts.fetchV2Subscriptions.perform();
     }
   }).drop(),
 

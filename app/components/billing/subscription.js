@@ -7,4 +7,6 @@ export default Component.extend({
 
   subscription: reads('account.subscription'),
   hasExpiredStripeSubscription: bool('account.expiredStripeSubscription'),
+  v2subscription: reads('account.v2subscription'),
+  hasExpiredStripev2Subscription: bool('account.expiredStripev2Subscription'),
 });

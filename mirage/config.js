@@ -220,6 +220,131 @@ export default function () {
     return schema.plans.all();
   });
 
+  this.post('/v2_subscriptions', function (schema, request) {
+    const attrs = JSON.parse(request.requestBody);
+    const owner = attrs.organization_id ? schema.organizations.first() : schema.users.first();
+
+    const updatedAttrs = {
+      ...attrs,
+      owner,
+      plan: schema.plans.find(attrs.plan),
+      source: 'stripe'
+    };
+    const savedSubscription = schema.v2Subscriptions.create(updatedAttrs);
+
+    return this.serialize(savedSubscription);
+  });
+
+  this.get('/v2_subscriptions', function (schema, params) {
+    let response = this.serialize(schema.v2Subscriptions.all());
+
+    let owners = schema.organizations.all().models.slice();
+    owners.push(schema.users.first());
+
+    response['@permissions'] = owners.map(owner => {
+      return {
+        owner: {
+          // The API for now is returning these capitalised
+          type: `${owner.modelName.substr(0, 1).toUpperCase()}${owner.modelName.substr(1)}`,
+          id: owner.id
+        },
+        create: (owner.permissions || {}).createSubscription
+      };
+    });
+
+    return response;
+  });
+
+  this.get('/v2_subscription/:subscription_id/invoices', function (schema, { params }) {
+    return schema.v2Subscriptions.find(params.subscription_id).invoices;
+  });
+
+  this.patch('/v2_subscription/:subscription_id/address', function (schema, { params, requestBody }) {
+    const attrs = JSON.parse(requestBody);
+
+    const subscription = schema.v2Subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'billing_info', {
+        ...attrs
+      }
+    );
+  });
+
+  this.patch('/v2_subscription/:subscription_id/creditcard', function (schema, { params, requestBody }) {
+    const attrs = JSON.parse(requestBody);
+
+    const subscription = schema.v2Subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'credit_card_info', {
+        ...attrs
+      }
+    );
+  });
+
+  this.get('/v2_plans_for/user', function (schema) {
+    return {
+      v2_plans:
+      [
+        {
+          id: 'free_tier_plan',
+          name: 'Free Tier Plan',
+          starting_price: 0,
+          starting_users: 999999,
+          private_credits: 10000,
+          public_credits: 40000
+        },
+        {
+          id: 'standard_tier_plan',
+          name: 'Standard Tier Plan',
+          starting_price: 3000,
+          starting_users: 100,
+          private_credits: 25000,
+          public_credits: 40000
+        },
+        {
+          id: 'pro_tier_plan',
+          name: 'Pro Tier Plan',
+          starting_price: 30000,
+          starting_users: 10000,
+          private_credits: 500000,
+          public_credits: 40000
+        }
+      ]
+    };
+  });
+
+  this.get('/v2_plans_for/organization/:organization_id', function (schema) {
+    return {
+      v2_plans:
+      [
+        {
+          id: 'free_tier_plan',
+          name: 'Free Tier Plan',
+          starting_price: 0,
+          starting_users: 999999,
+          private_credits: 10000,
+          public_credits: 40000
+        },
+        {
+          id: 'standard_tier_plan',
+          name: 'Standard Tier Plan',
+          starting_price: 3000,
+          starting_users: 100,
+          private_credits: 25000,
+          public_credits: 40000
+        },
+        {
+          id: 'pro_tier_plan',
+          name: 'Pro Tier Plan',
+          starting_price: 30000,
+          starting_users: 10000,
+          private_credits: 500000,
+          public_credits: 40000
+        }
+      ]
+    };
+  });
+
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });

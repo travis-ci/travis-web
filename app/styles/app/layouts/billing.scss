@@ -38,11 +38,11 @@
 
       height: 38px;
       white-space: nowrap;
-      
+
       &__input {
         flex-basis: 85%;
       }
-      
+
       &__validate-button-wrapper {
         flex-basis: 20%;
         font-size: 14px;
@@ -66,7 +66,7 @@
 
         .icon-passed {
           @include colorSVG($ansi-green);
-    
+
           color: inherit;
         }
       }
@@ -81,7 +81,7 @@
 
         .icon-warn {
           @include colorSVG($ansi-red);
-    
+
           color: inherit;
         }
       }
@@ -152,42 +152,96 @@
     margin-bottom: 1em;
     margin-top: 1em;
 
-    &__box {
+    &__box-v2 {
       background-color: #fff;
       border-radius: 5px;
       padding: 6px 13px;
       border: 1px solid $pebble-grey;
       margin-bottom: 10px;
-      width: 120px;
-      flex-basis: 100%;
+      width: 208px;
+      height: 380px;
+      flex-basis: auto;
       margin-right: 5px;
 
-      &--jobs {
-        color: $cement-grey;
-        text-transform: uppercase;
-        font-weight: 600;
-        font-size: 0.8em;
-        margin: 5px 0 5px 0;
-      }
-
-      &--price {
-        margin: 0;
+      &--desc {
+        color: $asphalt-grey;
         font-weight: 500;
-        font-size: 1.7em;
-        color: $oxide-blue;
+        font-size: 0.8em;
+        margin: 5px 0 12px 0;
 
         span {
-          font-size: .4em;
+          color: $cement-grey;
+          font-size: .8em;
           font-style: italic;
         }
       }
 
+      &--help {
+        &:hover {
+          border-bottom: 1px solid;
+          cursor: pointer;
+        }
+      }
+
+      &--price {
+        margin: 0 0 25px 0;
+        font-weight: 200;
+        font-size: 1.7em;
+        text-align: center;
+        color: $oxide-blue;
+
+        span {
+          color: $cement-grey;
+          font-size: .5em;
+        }
+      }
+
       &--name {
-        margin: 8px 0 0 0;
-        font-size: 1.1em;
+        margin: 8px 0 15px 0;
+        color: #000000;
+        font-size: 1.25em;
+        text-align: center;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+
+      &--button {
+        display: block;
+        max-width: 120px;
+        margin: 25px auto 0 auto;
+      }
+
+      &--cancel {
+        color: $asphalt-grey;
+        font-weight: 500;
+        font-size: 0.8em;
+        text-align: center;
+        margin: 40px 0 0 0;
+      }
+
+      &--link {
+        cursor: pointer;
+        display: block;
+        max-width: fit-content;
+        margin: 20px auto 0 auto;
+        font-size: 0.7em;
+        text-align: center;
+        border-bottom: 1px solid transparent;
+        color: $oxide-blue;
+
+        &:hover {
+          border-bottom-color: $oxide-blue;
+        }
+      }
+
+      &--link-grey {
+        cursor: pointer;
+        display: inline-block;
+        border-bottom: 1px solid transparent;
+        color: $asphalt-grey;
+        margin: auto 1px;
+        border-bottom-color: $asphalt-grey;
       }
 
       &:hover {
@@ -196,7 +250,7 @@
       }
     }
 
-    &__box:last-child {
+    &__box-v2:last-child {
       margin-right: 0;
     }
 
@@ -234,10 +288,11 @@
 
   .billing-select-plan {
     h4 {
-      margin: 0;
+      margin: 35px 0 28px 0;
       text-transform: uppercase;
+      text-align: center;
       font-weight: 700;
-      color: $cement-grey;
+      color: $oxide-blue;
       font-size: 12px;
     }
 
@@ -252,13 +307,13 @@
         height: 30px;
         margin-left: -5px;
         padding-top: 1px;
-  
+
         span {
           width: 82px;
           height: 25px;
           line-height: 1.7;
           padding-left: 0;
-  
+
           span {
             color: $ansi-black;
             font-size: 1.2em;
@@ -279,7 +334,6 @@
       color: $oxide-blue;
       border: 1px solid $oxide-blue;
       box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
-      background: rgba(181, 214, 217, .2);
     }
   }
 
@@ -423,7 +477,7 @@
         }
       }
     }
-    
+
   }
 
   h3 {
@@ -501,7 +555,7 @@
         font-size: 1.8em;
       }
 
-      &--jobs {
+      &--desc {
         margin: 0;
       }
 
@@ -603,6 +657,10 @@
       &--cancel {
         margin-left: 10px;
       }
+
+      &--addons {
+        margin-left: 10px;
+      }
     }
 
     .payment {
@@ -621,6 +679,70 @@
         font-weight: 700;
         color: $cement-grey;
         font-size: .8em;
+      }
+    }
+
+    .billing-subscription-credits {
+      margin-bottom: 25px;
+
+      nav.travistab-nav--secondary {
+        li {
+          width: 45%;
+          font-size: 14px;
+          text-align: center;
+          padding-right: 1em;
+          cursor: pointer;
+        }
+      }
+
+      .avail-credits {
+        font-size: 14px;
+        font-weight: 600;
+        color: $asphalt-grey;
+      }
+
+      .used-credits {
+        font-size: 14px;
+        color: $asphalt-grey;
+        margin-bottom: 8px;
+      }
+
+      .credits-bar {
+        height: 20px;
+        background-color: $oxide-blue;
+        text-align: center;
+        line-height: 20px;
+        color: $cement-grey;
+        border-radius: 8px;
+      }
+
+      .credits-bar-negative {
+        height: 20px;
+        width: 100%;
+        background-color: $dark-red;
+        text-align: center;
+        line-height: 20px;
+        color: $cement-grey;
+        border-radius: 8px;
+      }
+
+      .credits-bar-bg {
+        background-color: $pebble-grey;
+        border-radius: 8px;
+      }
+
+      .credits-bar-left {
+        font-size: 14px;
+        color: $asphalt-grey;
+        text-align: left;
+        margin-top: 4px;
+      }
+
+      .credits-bar-right {
+        font-size: 14px;
+        color: $asphalt-grey;
+        text-align: right;
+        float: right;
       }
     }
 

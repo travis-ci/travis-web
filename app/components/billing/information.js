@@ -6,7 +6,7 @@ export default Component.extend({
 
   actions: {
     updateEmails(values) {
-      this.newSubscription.billingInfo.set('billingEmail', values.join(','));
+      this.subscription.billingInfo.set('billingEmail', values.join(','));
     },
   }
 });
