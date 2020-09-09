@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and, not, or } from '@ember/object/computed';
+import { alias, and, not, or, reads } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 
@@ -58,6 +58,8 @@ export default Component.extend({
       return user.hasPushAccessToRepo(repo);
     }
   }),
+
+  canOwnerBuild: reads('repo.canOwnerBuild'),
 
   showPriority: true,
   showPrioritizeBuildModal: false,
