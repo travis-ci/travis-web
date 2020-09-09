@@ -2203,7 +2203,8 @@ export default {
         "synced_at",
         "recently_signed_up",
         "vcs_type",
-        "vcs_id"
+        "vcs_id",
+        "allowance"
       ],
       "representations": {
         "minimal": [
@@ -2222,7 +2223,8 @@ export default {
           "synced_at",
           "recently_signed_up",
           "vcs_type",
-          "vcs_id"
+          "vcs_id",
+          "allowance"
         ],
         "additional": [
           "repositories",

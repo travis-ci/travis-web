@@ -69,6 +69,7 @@ export default create({
   name: text('.profile-header h1'),
   nameBadge: { scope: '.profile-header .badge' },
   login: text('.login'),
+  flash: text('[data-test-components-flash-item]'),
 
   avatar: {
     scope: '.profile-header .avatar-wrapper',
@@ -548,11 +549,6 @@ export default create({
 
       name: {
         scope: '[data-test-selected-plan-name]',
-        text: text()
-      },
-
-      jobs: {
-        scope: '[data-test-selected-plan-jobs]',
         text: text()
       },
 

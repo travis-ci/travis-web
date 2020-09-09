@@ -140,17 +140,19 @@
                 <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
                 </button>
                 <ul class="dropup-list">
-                  <li>
-                    <button
-                      title="Trigger a build on the default branch"
-                      onclick={{action "triggerBuild"}}
-                    >
-                      <SvgImage @name="icon-restart" @class="icon" />
-                      <span class="label-align">
-                        Trigger a build
-                      </span>
-                    </button>
-                  </li>
+                  {{#if this.canOwnerBuild}}
+                    <li>
+                      <button
+                        title="Trigger a build on the default branch"
+                        onclick={{action "triggerBuild"}}
+                      >
+                        <SvgImage @name="icon-restart" @class="icon" />
+                        <span class="label-align">
+                          Trigger a build
+                        </span>
+                      </button>
+                    </li>
+                  {{/if}}
                   <li>
                     <LinkTo
                       @route="settings"
@@ -176,13 +178,15 @@
           {{#if this.isTriggering}}
             <LoadingIndicator @inline={{true}}/>
           {{else}}
-            <button
-              class="button--blue"
-              title="Trigger a build on the default branch"
-              onclick={{action "triggerBuild"}}
-            >
-              Trigger a build
-            </button>
+            {{#if this.canOwnerBuild}}
+              <button
+                class="button--blue"
+                title="Trigger a build on the default branch"
+                onclick={{action "triggerBuild"}}
+              >
+                Trigger a build
+              </button>
+            {{/if}}
           {{/if}}
         </div>
       {{/if}}

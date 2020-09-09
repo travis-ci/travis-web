@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 export default Component.extend({
   externalLinks: service(),
   features: service(),
+  flashes: service(),
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
@@ -37,5 +38,25 @@ export default Component.extend({
     toggleTriggerBuildModal() {
       this.toggleProperty('isShowingTriggerBuildModal');
     }
+  },
+
+  didRender() {
+    const repo = this.get('repo');
+
+    if (!repo.canOwnerBuild) {
+      const isUser = repo.ownerType === 'user';
+
+      if (repo.private) {
+        this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: isUser }, 'warning');
+      } else {
+        this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'warning');
+      }
+    } else {
+      this.flashes.removeCustomsByClassName('warning');
+    }
+  },
+
+  willDestroyElement() {
+    this.flashes.removeCustomsByClassName('warning');
   }
 });

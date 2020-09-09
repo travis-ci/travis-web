@@ -8,6 +8,7 @@
     <UiKit::Text
       @tag='span'
       @variant={{this.variant}}
+      @color={{this.color}}
     >
       {{~yield~}}
     </UiKit::Text>
@@ -17,6 +18,8 @@
   <UiKit::Text
     @tag='a'
     @variant={{this.variant}}
+    @color={{this.color}}
+    @size={{this.size}}
     href={{this.href}}
     rel={{this.rel}}
     target={{this.target}}
