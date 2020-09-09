@@ -78,7 +78,6 @@ export const PLANS_PAGE_HEADER_SECTION = '[data-test-plans-page-header-section]'
 export const PLANS_PAGE_HEADER_TITLE = '[data-test-plans-page-header-title]';
 export const PLANS_PAGE_HEADER_BODY = '[data-test-plans-page-header-body]';
 export const PLANS_PAGE_PRODUCT_SECTION = '[data-test-plans-page-product-section]';
-export const PLANS_PAGE_PRODUCT_SWITCH = '[data-test-plans-page-product-switch]';
 export const PLANS_PAGE_PRODUCT_LIST = '[data-test-plans-page-product-list]';
 export const PLANS_PAGE_PRODUCT_BUTTON = '[data-test-plans-page-product-button]';
 export const PLANS_PAGE_OSS_SECTION = '[data-test-plans-page-oss-section]';

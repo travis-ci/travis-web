@@ -16,7 +16,7 @@
         <StatusIcon @status={{this.repo.defaultBranch.lastBuild.state}} />
         <LinkTo
           @route="repo"
-          @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}}
+          @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
           class="label-align"
         >
           <span class="repo-title-text">

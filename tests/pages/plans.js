@@ -13,9 +13,7 @@ import {
   PLANS_PAGE_HEADER_BODY,
 
   PLANS_PAGE_PRODUCT_SECTION,
-  PLANS_PAGE_PRODUCT_SWITCH,
   PLANS_PAGE_PRODUCT_LIST,
-  PLANS_PAGE_PRODUCT_BUTTON,
 
   PLANS_PAGE_OSS_SECTION,
   PLANS_PAGE_OSS_BUTTON,
@@ -63,23 +61,12 @@ export default create({
     scope: PLANS_PAGE_PRODUCT_SECTION,
     isPresent: isPresent(),
 
-    intervalSwitch: {
-      scope: PLANS_PAGE_PRODUCT_SWITCH,
-      isPresent: isPresent(),
-    },
-
     list: {
       scope: PLANS_PAGE_PRODUCT_LIST,
       isPresent: isPresent(),
       items: collection('.grid-item', {
         isPresent: isPresent(),
       })
-    },
-
-    button: {
-      scope: PLANS_PAGE_PRODUCT_BUTTON,
-      isPresent: isPresent(),
-      text: text(),
     },
   },
 
