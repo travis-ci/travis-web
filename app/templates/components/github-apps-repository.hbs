@@ -1,7 +1,7 @@
 <RepositoryVisibilityIcon @repository={{this.repository}} @hideShared={{true}} />
 <LinkTo
   @route="repo"
-  @models={{array this.repository.provider this.repository.ownerName this.repository.vcsName}}
+  @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}
   @query={{this.hash}}
   class="profile-repo"
 >
@@ -22,7 +22,7 @@
   {{/if}}
   <LinkTo
     @route="settings"
-    @models={{array this.repository.provider this.repository.ownerName this.repository.vcsName}}
+    @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}
     @title="Go to Travis CI repository settings"
     class="profile-settings button"
   >
