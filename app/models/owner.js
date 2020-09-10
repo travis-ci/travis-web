@@ -110,22 +110,10 @@ export default VcsEntity.extend({
   }),
 
   fetchV2Plans: task(function* () {
-    const url = this.isOrganization ? `/v2_plans_for/organization/${this.id}` : '/v2_plans_for/user';
-    const result = yield this.api.get(url);
-    if (result) {
-      return result.v2_plans.map(plan => {
-        const { store } = this;
-        const planConfig = store.peekRecord('v2-plan-config', plan.id) || store.createRecord('v2-plan-config', {
-          id: plan.id,
-          name: plan.name,
-          startingPrice: plan.starting_price,
-          startingUsers: plan.starting_users,
-          privateCredits: plan.private_credits,
-          publicCredits: plan.public_credits,
-        });
-        return planConfig;
-      });
-    }
+    const { id, type } = this; // owner properties
+    const plans = yield this.store.query('v2-plan-config', { type, orgId: id });
+    if (plans)
+      return plans;
     return [];
   }).drop(),
 
