@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
+import { later } from '@ember/runloop';
 import { or, reads, filterBy } from '@ember/object/computed';
 
 export default Component.extend({
@@ -22,13 +23,17 @@ export default Component.extend({
   }),
 
   save: task(function* () {
-    if (this.submit.perform) {
-      yield this.submit.perform();
+    if (this.next.perform) {
+      yield this.next.perform();
     } else {
-      const { store } = this;
-      const selectedPlan = store.peekRecord('v2-plan-config', this.selectedPlan.id) || store.createRecord('v2-plan-config', { ...this.selectedPlan });
-      this.set('selectedPlanId', selectedPlan.id);
-      this.submit();
+      this.next();
     }
-  }).drop()
+  }).drop(),
+
+  actions: {
+    selectAndSubmit(plan, form) {
+      this.set('selectedPlan', plan);
+      later(() => form.submit(), 500);
+    }
+  }
 });

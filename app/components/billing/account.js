@@ -30,9 +30,9 @@ export default Component.extend({
 
   invoices: computed('subscription.id', 'v2subscription.id', function () {
     const subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');
-    const modelName = this.isV2SubscriptionEmpty ? 'invoice' : 'v2-invoice';
+    const type = this.isV2SubscriptionEmpty ? 1 : 2;
     if (subscriptionId) {
-      return this.store.query(modelName, { subscription_id: subscriptionId });
+      return this.store.query('invoice', { type, subscriptionId });
     } else {
       return [];
     }

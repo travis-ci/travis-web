@@ -23,6 +23,7 @@ export default V3Serializer.extend({
     let key = relationship.key;
     let belongsTo = snapshot.belongsTo(key);
     const planId = snapshot.belongsTo('plan', { id: true });
+    const orgId = snapshot.belongsTo('organization', { id: true });
 
     key = this.keyForRelationship ? this.keyForRelationship(key, 'belongsTo', 'serialize') : key;
 
@@ -30,6 +31,8 @@ export default V3Serializer.extend({
       json[key] = null;
     } else if (key === 'plan') {
       json['plan'] = planId;
+    } else if (key === 'organization') {
+      json['organization_id'] = orgId;
     } else {
       belongsTo.eachAttribute(name => {
         json[`${key}.${underscore(name)}`] = belongsTo.attr(name);

@@ -88,8 +88,9 @@ export default Component.extend({
     try {
       const organizationId = account.type === 'organization' ? +(account.id) : null;
       const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
+      const org = organizationId && this.store.peekRecord('organization', organizationId);
       subscription.setProperties({
-        organizationId,
+        organization: org,
         plan: plan,
       });
       yield subscription.save();
@@ -112,8 +113,9 @@ export default Component.extend({
       if (token) {
         const organizationId = account.type === 'organization' ? +(account.id) : null;
         const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
+        const org = organizationId && this.store.peekRecord('organization', organizationId);
         subscription.setProperties({
-          organizationId,
+          organization: org,
           plan: plan,
         });
         if (!this.subscription.id) {

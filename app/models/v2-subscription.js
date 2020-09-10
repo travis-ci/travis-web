@@ -17,7 +17,7 @@ export default Model.extend({
 
   source: attr('string'),
   createdAt: attr('date'),
-  organizationId: attr('number'),
+  organization: belongsTo('organization'),
   coupon: attr('string'),
   clientSecret: attr('string'),
   paymentIntent: attr('string'),
@@ -25,7 +25,7 @@ export default Model.extend({
   discount: belongsTo('discount', { async: false }),
   billingInfo: belongsTo('v2-billing-info', { async: false }),
   creditCardInfo: belongsTo('v2-credit-card-info', { async: false }),
-  invoices: hasMany('v2-invoice'),
+  invoices: hasMany('invoice'),
   owner: belongsTo('owner', { polymorphic: true }),
   plan: belongsTo('v2-plan-config'),
   addons: attr(),
@@ -34,7 +34,7 @@ export default Model.extend({
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
 
-  addonUsage: computed('addons', 'addons.current_usage', function () {
+  addonUsage: computed('addons.[].current_usage', function () {
     if (!this.addons) {
       const emptyUsage = { totalCredits: 0, usedCredits: 0, remainingCredits: 0 };
       return {

@@ -56,21 +56,12 @@
               {{#if (eq plan.id this.subscription.plan.id)}}
                 <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
               {{else}}
-                {{#if (not (eq plan.id this.selectedPlan.id))}}
-                  <button data-test-subscribe-button
-                    onclick={{action (mut this.selectedPlan) plan}}
-                    class='button--white billing-plans__box-v2--button'
-                  >
-                    Select plan
-                  </button>
-                {{else}}
-                  <button data-test-subscribe-button
-                    onclick={{action form.submit}}
-                    class='button--blue billing-plans__box-v2--button'
-                  >
-                    Select plan
-                  </button>
-                {{/if}}
+                <button data-test-subscribe-button
+                  onclick={{action 'selectAndSubmit' plan form}}
+                  class='button--white-and-teal billing-plans__box-v2--button'
+                >
+                  Select plan
+                </button>
               {{/if}}
               <ExternalLinkTo
                 @href={{config-get 'urls.planDocs'}}
