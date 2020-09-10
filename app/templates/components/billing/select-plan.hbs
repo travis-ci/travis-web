@@ -72,12 +72,12 @@
                   </button>
                 {{/if}}
               {{/if}}
-              <a
-                href='plan'
+              <ExternalLinkTo
+                @href={{config-get 'urls.planDocs'}}
                 class='billing-plans__box-v2--link'
               >
                 Learn more
-              </a>
+              </ExternalLinkTo>
             </div>
           {{/each}}
         </div>

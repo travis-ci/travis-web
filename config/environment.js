@@ -109,7 +109,8 @@ module.exports = function (environment) {
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
       pardotHost: 'https://info.travis-ci.com',
-      pardotForm: '/l/845883/2020-02-03/257j'
+      pardotForm: '/l/845883/2020-02-03/257j',
+      planDocs: 'https://docs.travis-ci.com',
     },
     endpoints: {},
     githubApps: false,
