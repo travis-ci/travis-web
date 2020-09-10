@@ -56,16 +56,24 @@
               {{#if (eq plan.id this.subscription.plan.id)}}
                 <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
               {{else}}
-                <button data-test-subscribe-button
-                  onclick={{action form.submit}}
-                  class='{{if (eq plan.id this.selectedPlan.id) 'button--blue' 'button--white'}} billing-plans__box-v2--button'
-                  disabled={{not (eq plan.id this.selectedPlan.id)}}
-                >
-                  Select plan
-                </button>
+                {{#if (not (eq plan.id this.selectedPlan.id))}}
+                  <button data-test-subscribe-button
+                    onclick={{action (mut this.selectedPlan) plan}}
+                    class='button--white billing-plans__box-v2--button'
+                  >
+                    Select plan
+                  </button>
+                {{else}}
+                  <button data-test-subscribe-button
+                    onclick={{action form.submit}}
+                    class='button--blue billing-plans__box-v2--button'
+                  >
+                    Select plan
+                  </button>
+                {{/if}}
               {{/if}}
               <a
-                href='test'
+                href='plan'
                 class='billing-plans__box-v2--link'
               >
                 Learn more

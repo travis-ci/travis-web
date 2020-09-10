@@ -26,6 +26,8 @@ export default Component.extend({
 
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
 
+  showPlansSelector: false,
+
   invoices: computed('subscription.id', 'v2subscription.id', function () {
     const subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');
     const modelName = this.isV2SubscriptionEmpty ? 'invoice' : 'v2-invoice';

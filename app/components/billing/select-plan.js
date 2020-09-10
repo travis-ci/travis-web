@@ -9,8 +9,6 @@ export default Component.extend({
   store: service(),
 
   account: null,
-  showPlansSelector: true,
-  showCancelButton: false,
   title: null,
   availablePlans: reads('account.eligibleV2Plans'),
   defaultPlans: filterBy('availablePlans', 'isDefault'),

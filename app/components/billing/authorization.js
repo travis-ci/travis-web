@@ -13,7 +13,6 @@ export default Component.extend({
   account: null,
   subscription: null,
 
-  showPlansSelector: false,
   showCancelModal: false,
   isV2Subscription: false,
   selectedPlan: null,

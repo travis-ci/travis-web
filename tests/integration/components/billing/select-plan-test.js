@@ -16,18 +16,26 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     };
 
     const plan1 = {
-      id: 1,
+      id: 'standard_tier_plan',
       name: 'Standard Tier Plan',
-      startingUsers: 5,
-      startingPrice: 20000
+      startingPrice: 3000,
+      startingUsers: 100,
+      privateCredits: 25000,
+      publicCredits: 40000,
+      isFree: false,
+      isUnlimitedUsers: false,
     };
     this.plan1 = plan1;
 
     const plan2 = {
-      id: 2,
+      id: 'pro_tier_plan',
       name: 'Pro Tier Plan',
-      startingUsers: 10,
-      startingPrice: 30000
+      startingPrice: 30000,
+      startingUsers: 10000,
+      privateCredits: 500000,
+      publicCredits: 40000,
+      isFree: false,
+      isUnlimitedUsers: false,
     };
     this.plan2 = plan2;
 
@@ -42,8 +50,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     await render(hbs`<Billing::SelectPlan
       @displayedPlans={{displayedPlans}}
       @selectedPlan={{selectedPlan}}
-      @showMonthly={{this.showMonthly}}
-      @showAnnual={{this.showAnnual}}
+      @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );
 
@@ -54,14 +61,11 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
   test('changing selected plan should highlight new plan', async function (assert) {
     this.set('selectedPlan', this.plan2);
-    this.set('showAnnual', true);
-    this.set('showMonthly', false);
 
     await render(hbs`<Billing::SelectPlan
       @displayedPlans={{displayedPlans}}
       @selectedPlan={{selectedPlan}}
-      @showMonthly={{this.showMonthly}}
-      @showAnnual={{this.showAnnual}}
+      @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );
 

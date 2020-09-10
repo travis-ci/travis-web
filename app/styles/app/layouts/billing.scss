@@ -20,11 +20,9 @@
   .icon-help {
     width: 17px;
     height: 17px;
+    margin-left: 0;
+    margin-bottom: 3px;
     border: 1px solid $cement-grey;
-
-    &:hover {
-      @include colorSVG($cement-grey);
-    }
   }
 
   .icon-help-yellow {
@@ -209,6 +207,7 @@
       &--button {
         display: block;
         max-width: 120px;
+        height: 36px;
         margin: 25px auto 0 auto;
       }
 

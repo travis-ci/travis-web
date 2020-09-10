@@ -34,7 +34,7 @@ export default Model.extend({
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
 
-  addonUsage: computed('addons', function () {
+  addonUsage: computed('addons', 'addons.current_usage', function () {
     if (!this.addons) {
       const emptyUsage = { totalCredits: 0, usedCredits: 0, remainingCredits: 0 };
       return {

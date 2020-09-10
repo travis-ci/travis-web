@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { reads, bool } from '@ember/object/computed';
+import { reads, bool, empty, not } from '@ember/object/computed';
 
 export default Component.extend({
   account: null,
@@ -8,5 +8,7 @@ export default Component.extend({
   subscription: reads('account.subscription'),
   hasExpiredStripeSubscription: bool('account.expiredStripeSubscription'),
   v2subscription: reads('account.v2subscription'),
+  isV2SubscriptionEmpty: empty('account.v2subscription'),
+  hasV2Subscription: not('isV2SubscriptionEmpty'),
   hasExpiredStripev2Subscription: bool('account.expiredStripev2Subscription'),
 });

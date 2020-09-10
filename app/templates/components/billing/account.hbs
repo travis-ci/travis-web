@@ -19,6 +19,7 @@
     {{#if (or this.isManaged this.hasV2Subscription)}}
       <Billing::Subscription
         @selectedPlan={{this.selectedPlan}}
+        @showPlansSelector={{this.showPlansSelector}}
         @account={{this.account}}
       />
     {{/if}}
@@ -29,7 +30,7 @@
       />
     {{/if}}
   </section>
-  {{#if this.invoices}}
+  {{#if (and this.invoices (not this.showPlansSelector))}}
     <Billing::Invoices
       @account={{this.account}}
       @invoices={{this.invoices}}

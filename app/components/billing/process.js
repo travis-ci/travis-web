@@ -17,6 +17,8 @@ export default Component.extend({
   account: null,
   steps: computed(() => [...Object.values(STEPS)]),
 
+  showCancelButton: false,
+
   currentStep: computed(function () {
     return this.storage.billingStep || STEPS.ONE;
   }),
