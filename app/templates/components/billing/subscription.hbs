@@ -16,10 +16,11 @@
       />
     {{/if}}
   </section>
-  {{#if (and this.subscription.isGithubResubscribable (not this.hasExpiredStripeSubscription))}}
+  {{#if (and this.subscription.isGithubResubscribable (and this.isV2SubscriptionEmpty (not this.hasExpiredStripeSubscription)))}}
     <Billing::Process
       @account={{this.account}}
-      @showPlansSelector={{this.showPlansSelector}}
+      @showPlansSelector={{true}}
+      @subscription={{this.newSubscription}}
       @selectedPlan={{this.selectedPlan}}
     />
   {{/if}}
