@@ -1,0 +1,18 @@
+{{#if this.isNotGithubTrial}}
+  <div class='selected-plan__price'>
+    <h6 class='selected-plan__price--total' data-test-plan-total='true'>
+      Total:
+    </h6>
+    {{#if this.subscription.plan }}
+      {{#if this.subscription.plan.isFree}}
+        <p class='selected-plan__price--large' data-test-price>
+          Free
+        </p>
+      {{else}}
+        <p class='selected-plan__price--large' data-test-price>
+          {{format-currency this.subscription.plan.startingPrice floor='true'}}
+        </p>
+      {{/if}}
+    {{/if}}
+  </div>
+{{/if}}

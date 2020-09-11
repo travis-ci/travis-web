@@ -1,14 +1,27 @@
 <section>
   <section class="billing-subscription">
-    <Billing::Summary
-      @subscription={{this.subscription}}
-      @account={{this.account}}
-    />
+    {{#if this.hasV2Subscription}}
+      <Billing::SummaryV2
+        @subscription={{this.v2subscription}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @selectedPlan={{this.selectedPlan}}
+        @account={{this.account}}
+      />
+    {{else}}
+      <Billing::Summary
+        @subscription={{this.subscription}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @selectedPlan={{this.selectedPlan}}
+        @account={{this.account}}
+      />
+    {{/if}}
   </section>
-  {{#if (and this.subscription.isGithubResubscribable (not this.hasExpiredStripeSubscription))}}
-    <Billing::Process 
-      @account={{this.account}} 
-      @newSubscription={{this.newSubscription}}
+  {{#if (and this.subscription.isGithubResubscribable (and this.isV2SubscriptionEmpty (not this.hasExpiredStripeSubscription)))}}
+    <Billing::Process
+      @account={{this.account}}
+      @showPlansSelector={{true}}
+      @subscription={{this.newSubscription}}
+      @selectedPlan={{this.selectedPlan}}
     />
   {{/if}}
 </section>

@@ -514,7 +514,7 @@ export default create({
       isHighlighted: hasClass('highlight-plan'),
 
       heading: {
-        scope: '.highlight-plan [data-test-selected-plan-heading]',
+        scope: '[data-test-selected-plan-heading]',
         text: text()
       },
 
@@ -523,8 +523,28 @@ export default create({
         text: text()
       },
 
-      jobs: {
-        scope: '.highlight-plan [data-test-selected-plan-jobs]',
+      credits: {
+        scope: '.highlight-plan [data-test-selected-plan-credits]',
+        text: text()
+      },
+
+      osscredits: {
+        scope: '.highlight-plan [data-test-selected-plan-oss-credits]',
+        text: text()
+      },
+
+      users: {
+        scope: '.highlight-plan [data-test-selected-plan-users]',
+        text: text()
+      },
+
+      repos: {
+        scope: '.highlight-plan [data-test-selected-plan-repos]',
+        text: text()
+      },
+
+      os: {
+        scope: '.highlight-plan [data-test-selected-plan-os]',
         text: text()
       },
 
@@ -534,8 +554,12 @@ export default create({
       },
 
       changePlan: {
-        scope: '.highlight-plan [data-test-change-selected-plan]',
+        scope: '[data-test-change-selected-plan]',
         text: text()
+      },
+
+      subscribeButton: {
+        scope: '[data-test-subscribe-button]',
       }
     },
 
@@ -552,6 +576,31 @@ export default create({
         text: text()
       },
 
+      credits: {
+        scope: '[data-test-selected-plan-credits]',
+        text: text()
+      },
+
+      osscredits: {
+        scope: '[data-test-selected-plan-oss-credits]',
+        text: text()
+      },
+
+      users: {
+        scope: '[data-test-selected-plan-users]',
+        text: text()
+      },
+
+      repos: {
+        scope: '[data-test-selected-plan-repos]',
+        text: text()
+      },
+
+      os: {
+        scope: '[data-test-selected-plan-os]',
+        text: text()
+      },
+
       price: {
         scope: '[data-test-selected-plan-price]',
         text: text()
@@ -560,11 +609,11 @@ export default create({
       changePlan: {
         scope: '[data-test-change-selected-plan]',
         text: text()
-      }
-    },
+      },
 
-    subscribeButton: {
-      scope: '[data-test-subscribe-button]',
+      subscribeButton: {
+        scope: '[data-test-subscribe-button]',
+      }
     },
 
     marketplaceButton: {
@@ -576,6 +625,9 @@ export default create({
       name: text('[data-test-plan-name]'),
       concurrency: {
         scope: '[data-test-plan-concurrency]'
+      },
+      description: {
+        scope: '[data-test-plan-description]'
       }
     },
 

@@ -1,92 +1,148 @@
 <div class='billing-checkout' data-test-payment-form='true'>
-  <Billing::SelectedPlan 
+  <h3 data-test-summary-title='true'>
+    Order Summary
+  </h3>
+  <Billing::SelectedPlan
     @selectedPlan={{this.selectedPlan}}
     @goToFirstStep={{action this.goToFirstStep}}
     @totalPrice={{this.totalPrice}}
   />
-  <div class='billing-checkout__details' data-test-contact-details='true'>
-    <div class='flex flex--wrap'>
-      <div class='flex--col-2'>
-        <h4 data-test-contact-heading='true'>contact details</h4>
-        <p data-test-contact-firstName='true' class='billing-checkout__details--info'>{{concat this.firstName ' ' this.lastName}}</p>
-        <p data-test-contact-company='true' class='billing-checkout__details--info'>{{this.company}}</p>
-        <div class="flex flex--col">
-          {{#each this.billingEmails as |email|}}
-            <p data-test-contact-email='true' class='billing-checkout__details--email'>{{email}}</p>
-          {{/each}}
-        </div>
-      </div>
-      <div class='flex--col-2'>
-        <h4 data-test-billing-heading='true'>billing details</h4>
-        <p data-test-billing-address='true' class='billing-checkout__details--info'>{{this.address}}</p>
-        <p data-test-billing-city='true' class='billing-checkout__details--info'>{{this.city}}</p>
-        <p data-test-billing-country='true' class='billing-checkout__details--info'>{{this.country}}</p>
-      </div>
-      <button data-test-edit-billing-button='true' class='mt-3 button--white button--hover' {{on 'click' (action back)}}>Edit details</button>
-    </div>
-  </div>
-  <h3>
-    Payment
-  </h3>
-  <h4 data-test-coupon-code='true' class="pb-3">coupon code</h4>
-  <div class="pb-3">
-    <TravisForm @onSubmit={{perform this.validateCoupon}} as |form|>
-      <div data-test-coupon-form='true' class="coupon-validation flex flex--center flex-v-center">
-        <form.field
-          class="coupon-validation__input"
-          @value={{this.couponId}}
-          @showValidationStatusIcons={{false}}
-          @onFocus={{action 'handleCouponFocus'}}
-          @onChange={{action (mut this.couponId)}} 
-          as |Field|
-        >
-          <Field.input @name='couponId' @placeholder='Coupon code'/>
-        </form.field>
-        <div class="coupon-validation__validate-button-wrapper {{if this.validateCoupon.isRunning 'coupon-loading'}}">
-          {{#if this.validateCoupon.isRunning}}
-            <LoadingIndicator/>
-          {{else if this.isValidCoupon}}
-            <p data-test-valid-coupon class="coupon-validation__valid-coupon">
-              <SvgImage @name="icon-passed" @class="icon icon-passed" />
-              Coupon applied
-            </p>
-          {{else if this.couponHasError}}
-            <p data-test-invalid-coupon="true" class="coupon-validation__invalid-coupon">
-              <SvgImage @name="form-error-icon" @class="icon icon-warn" />
-              Coupon invalid
-            </p>
-          {{else}}
-            <button class='button--white coupon-validation__validate-button' {{on 'click' form.submit}} data-test-coupon-button='true'>
-              Validate coupon
-            </button>
-          {{/if}}
-        </div>
-      </div>
-    </TravisForm>
-  </div>
-  <span class="notice-banner--white flex flex--v-center" data-test-help-text='true'>
-    <div>
-      <SvgImage @name='icon-help' @class='icon-help' />
-    </div>
-    <span class="pl-3">
-      Credit card details are never stored on nor reach our servers. Payment data is handled by Stripe.
-    </span>
-  </span>
-  <h4 data-test-credit-card='true' class="py-3">credit card details</h4>
-  <TravisForm data-test-stripe-form='true' @onSubmit={{perform this.createSubscription}} as |form|>
-    <StripeCard @onComplete={{action "complete"}} @options={{this.options}} as |stripeError|>
-      {{#if stripeError}}
-        <p>{{stripeError.message}}</p>
-      {{/if}}
-    </StripeCard>
-    <div class='billing-checkout__payment'>
+  {{#if this.selectedPlan.isFree}}
+    <div class='mt-5'>
       {{#if this.isLoading}}
         <LoadingIndicator/>
       {{else}}
-        <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
-          Pay {{this.discountedPrice}} to complete subscription
-        </button>
+        {{#if this.isNewSubscription}}
+          <button class='button--green' {{on 'click' (perform this.createFreeSubscription)}} data-test-complete-payment='true'>
+            Select plan
+          </button>
+        {{else}}
+          <button class='button--green' {{on 'click' (perform this.updatePlan)}} data-test-complete-payment='true'>
+            Switch plan
+          </button>
+        {{/if}}
       {{/if}}
     </div>
-  </TravisForm>
+    <span class="notice-banner--yellow" data-test-plan-notice='true'>
+      Please note that your Credit balance will be replenished monthly. Additional add-ons are not available for this plan.
+    </span>
+  {{else}}
+    <div class='billing-checkout__details' data-test-contact-details='true'>
+      <div class='flex flex--wrap'>
+        <div class='flex--col-2'>
+          <h4 data-test-contact-heading='true'>contact details</h4>
+          <p data-test-contact-firstName='true' class='billing-checkout__details--info'>{{concat this.firstName ' ' this.lastName}}</p>
+          <p data-test-contact-company='true' class='billing-checkout__details--info'>{{this.company}}</p>
+          <div class="flex flex--col">
+            {{#each this.billingEmails as |email|}}
+              <p data-test-contact-email='true' class='billing-checkout__details--email'>{{email}}</p>
+            {{/each}}
+          </div>
+        </div>
+        <div class='flex--col-2'>
+          <h4 data-test-billing-heading='true'>billing details</h4>
+          <p data-test-billing-address='true' class='billing-checkout__details--info'>{{this.address}}</p>
+          <p data-test-billing-city='true' class='billing-checkout__details--info'>{{this.city}}</p>
+          <p data-test-billing-country='true' class='billing-checkout__details--info'>{{this.country}}</p>
+        </div>
+        <button data-test-edit-billing-button='true' class='mt-3 button--white button--hover' {{on 'click' (action back)}}>Edit details</button>
+      </div>
+    </div>
+    <h3>
+      Payment
+    </h3>
+    <h4 data-test-coupon-code='true' class="pb-3">coupon code</h4>
+    <div class="pb-3">
+      <TravisForm @onSubmit={{perform this.validateCoupon}} as |form|>
+        <div data-test-coupon-form='true' class="coupon-validation flex flex--center flex-v-center">
+          <form.field
+            class="coupon-validation__input"
+            @value={{this.couponId}}
+            @showValidationStatusIcons={{false}}
+            @onFocus={{action 'handleCouponFocus'}}
+            @onChange={{action (mut this.couponId)}}
+            as |Field|
+          >
+            <Field.input @name='couponId' @placeholder='Coupon code'/>
+          </form.field>
+          <div class="coupon-validation__validate-button-wrapper {{if this.validateCoupon.isRunning 'coupon-loading'}}">
+            {{#if this.validateCoupon.isRunning}}
+              <LoadingIndicator/>
+            {{else if this.isValidCoupon}}
+              <p data-test-valid-coupon class="coupon-validation__valid-coupon">
+                <SvgImage @name="icon-passed" @class="icon icon-passed" />
+                Coupon applied
+              </p>
+            {{else if this.couponHasError}}
+              <p data-test-invalid-coupon="true" class="coupon-validation__invalid-coupon">
+                <SvgImage @name="form-error-icon" @class="icon icon-warn" />
+                Coupon invalid
+              </p>
+            {{else}}
+              <button class='button--white coupon-validation__validate-button' {{on 'click' form.submit}} data-test-coupon-button='true'>
+                Validate coupon
+              </button>
+            {{/if}}
+          </div>
+        </div>
+      </TravisForm>
+    </div>
+    <span class="notice-banner--white flex flex--v-center" data-test-help-text='true'>
+      <div>
+        <SvgImage @name='icon-help' @class='icon-help' />
+      </div>
+      <span class="pl-3">
+        Credit card details are never stored on nor reach our servers. Payment data is handled by Stripe.
+      </span>
+    </span>
+    {{#if this.creditCardInfoEmpty}}
+      <h4 data-test-credit-card='true' class="py-3">credit card details</h4>
+      <TravisForm data-test-stripe-form='true' @onSubmit={{perform this.createSubscription}} as |form|>
+        <StripeCard @onComplete={{action "complete"}} @options={{this.options}} as |stripeError|>
+          {{#if stripeError}}
+            <p>{{stripeError.message}}</p>
+          {{/if}}
+        </StripeCard>
+        <div class='billing-checkout__payment'>
+          {{#if this.isLoading}}
+            <LoadingIndicator/>
+          {{else}}
+            <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
+              Pay {{this.discountedPrice}} to complete order
+            </button>
+          {{/if}}
+        </div>
+      </TravisForm>
+    {{else}}
+      <div class='billing-checkout__details' data-test-credit-card-details='true'>
+        <div class='flex flex--wrap'>
+          <div class='flex--col-2'>
+            <h4 data-test-credit-card='true'>credit card details</h4>
+            <div class="flex flex--v-center">
+            <SvgImage @name="icon-credit-card" @class="icon--color" />
+            <p data-test-credit-card>
+              •••• •••• ••••
+              {{this.subscription.creditCardInfo.lastDigits}}
+            </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='mt-5'>
+        {{#if this.isLoading}}
+          <LoadingIndicator/>
+        {{else}}
+          <button class='button--green' {{on 'click' (perform this.updatePlan)}} data-test-complete-payment='true'>
+            Pay {{this.discountedPrice}} to complete order
+          </button>
+        {{/if}}
+      </div>
+    {{/if}}
+    <span class="notice-banner--yellow" data-test-plan-notice='true'>
+      Please note that you will be charged monthly for the unique users who triggered builds. You can
+      replenish your credit balance anytime by visiting the plan page and buying credits add-ons from there.
+      Purchased credits do not expire and can be used at any time. Your OSS Credit balance does expire and
+      will be replenished monthly.
+    </span>
+  {{/if}}
 </div>

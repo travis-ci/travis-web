@@ -111,6 +111,17 @@ export default VcsEntity.extend({
     return filteredAnnualPlans.sortBy('builds');
   }),
 
+  fetchV2Plans: task(function* () {
+    const { id, type } = this; // owner properties
+    const plans = yield this.store.query('v2-plan-config', { type, orgId: id });
+    if (plans)
+      return plans;
+    return [];
+  }).drop(),
+
+  isFetchV2PlansRunning: reads('fetchV2Plans.isRunning'),
+  eligibleV2Plans: reads('fetchV2Plans.lastSuccessful.value'),
+
   fetchBetaMigrationRequests() {
     return this.tasks.fetchBetaMigrationRequestsTask.perform();
   },
@@ -167,6 +178,24 @@ export default VcsEntity.extend({
         this.pendingAccountSubscriptions.get('firstObject') ||
         this.incompleteAccountSubscriptions.get('firstObject') ||
         this.accountSubscriptions.get('lastObject');
+    }),
+
+  v2subscriptions: reads('accounts.v2subscriptions'),
+
+  accountv2Subscriptions: computed(
+    'v2subscriptions.@each.{owner}',
+    'login',
+    function () {
+      let subscriptions = this.v2subscriptions || [];
+      return subscriptions.filterBy('owner.login', this.login);
+    }),
+
+  v2subscription: computed(
+    'accountv2Subscriptions.[]', function () {
+      if (this.accountv2Subscriptions.length > 1) {
+        this.logMultipleSubscriptionsError();
+      }
+      return this.accountv2Subscriptions.get('lastObject');
     }),
 
   trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {

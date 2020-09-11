@@ -16,28 +16,32 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     };
 
     const plan1 = {
-      id: 1,
-      name: 'Startup',
-      builds: 5,
-      price: 20000,
-      annual: false
+      id: 'standard_tier_plan',
+      name: 'Standard Tier Plan',
+      startingPrice: 3000,
+      startingUsers: 100,
+      privateCredits: 25000,
+      publicCredits: 40000,
+      isFree: false,
+      isUnlimitedUsers: false,
     };
     this.plan1 = plan1;
 
     const plan2 = {
-      id: 2,
-      name: 'Premium',
-      builds: 10,
-      price: 30000,
-      annual: true
+      id: 'pro_tier_plan',
+      name: 'Pro Tier Plan',
+      startingPrice: 30000,
+      startingUsers: 10000,
+      privateCredits: 500000,
+      publicCredits: 40000,
+      isFree: false,
+      isUnlimitedUsers: false,
     };
     this.plan2 = plan2;
 
     this.setProperties({
       displayedPlans: [plan1, plan2],
       selectedPlan: plan1,
-      showMonthly: true,
-      showAnnual: false
     });
   });
 
@@ -46,31 +50,27 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     await render(hbs`<Billing::SelectPlan
       @displayedPlans={{displayedPlans}}
       @selectedPlan={{selectedPlan}}
-      @showMonthly={{this.showMonthly}}
-      @showAnnual={{this.showAnnual}}
+      @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan1.name}`);
-    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasText(`${this.plan1.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan1.price / 100} /month`);
+    assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan1.startingUsers} unique users`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan1.startingPrice / 100}`);
   });
 
   test('changing selected plan should highlight new plan', async function (assert) {
     this.set('selectedPlan', this.plan2);
-    this.set('showAnnual', true);
-    this.set('showMonthly', false);
 
     await render(hbs`<Billing::SelectPlan
       @displayedPlans={{displayedPlans}}
       @selectedPlan={{selectedPlan}}
-      @showMonthly={{this.showMonthly}}
-      @showAnnual={{this.showAnnual}}
+      @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan2.name}`);
-    assert.dom(profilePage.billing.selectedPlan.jobs.scope).hasText(`${this.plan2.builds} concurrent jobs`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan2.price / 100} /year`);
+    assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan2.startingUsers} unique users`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan2.startingPrice / 100}`);
   });
 });
