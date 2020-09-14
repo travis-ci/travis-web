@@ -73,7 +73,7 @@ module('Integration | Component | billing-information', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plans[0].startingPrice / 100}`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
-    assert.dom('input').isVisible({ count: 8 });
+    assert.dom('input').isVisible({ count: 7 });
     assert.dom(EPS_TRIGGER).isVisible({ count: 1 });
   });
 
