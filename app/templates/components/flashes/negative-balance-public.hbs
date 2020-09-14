@@ -5,9 +5,9 @@
         Builds have been temporarily disabled for public repositories due to a negative credit balance.
         Please go to the 
         {{#if @data.isUser}}
-          <LinkTo @route="account.plan">Plan page</LinkTo>
+          <LinkTo @route="account.billing">Plan page</LinkTo>
         {{else}}
-          <LinkTo @route="organization.plan" @model={{@data.owner}}>Plan page</LinkTo>
+          <LinkTo @route="organization.billing" @model={{@data.owner}}>Plan page</LinkTo>
         {{/if}}
         to replenish your credit balance or alter your 
         {{#if @data.isUser}}
