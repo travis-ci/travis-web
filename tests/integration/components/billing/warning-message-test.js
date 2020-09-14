@@ -47,7 +47,7 @@ module('Integration | Component | warning-message', function (hooks) {
       />`);
 
 
-    assert.equal(profilePage.billing.warningMessage.text, `You are switching to the Startup. Your remaining credits will be added to credits coming with Startup. Credits that will be added: Credits remaining balance: 10`);
+    assert.equal(profilePage.billing.warningMessage.text, 'You are switching to the Startup. Your remaining credits will be added to credits coming with Startup. Credits that will be added: Credits remaining balance: 10');
   });
 
   test('other addons', async function (assert) {
@@ -89,7 +89,7 @@ module('Integration | Component | warning-message', function (hooks) {
       @subscription={{subscription}}
       />`);
 
-    assert.equal(profilePage.billing.warningMessage.text, `Pricing for number of users who are allowed to trigger builds may be changed. See ​our documentation for more details.`);
+    assert.equal(profilePage.billing.warningMessage.text, 'Pricing for number of users who are allowed to trigger builds may be changed. See our documentation for more details.');
   });
 
   test('negative ballance', async function (assert) {
@@ -131,6 +131,6 @@ module('Integration | Component | warning-message', function (hooks) {
       @subscription={{subscription}}
       />`);
 
-    assert.equal(profilePage.billing.warningMessage.text, `Your Private or OSS Credit balance is negative. After upgrading to the Startup plan the negative Credit amount will be deducted from the respective new credit type balance. Please see our documentation for more details.`);
+    assert.equal(profilePage.billing.warningMessage.text, 'Your Private or OSS Credit balance is negative. After upgrading to the Startup plan the negative Credit amount will be deducted from the respective new credit type balance. Please see our documentation for more details.');
   });
 });
