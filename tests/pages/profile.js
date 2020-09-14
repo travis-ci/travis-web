@@ -562,6 +562,11 @@ export default create({
       }
     },
 
+    warningMessage: {
+      scope: '[data-test-warning-message]',
+      text: text()
+    },
+
     selectedPlanOverview: {
       scope: '.selected-plan',
 

@@ -45,7 +45,7 @@
   <span class="notice-banner--yellow" data-test-trial-running-out='true'>
     We are currently waiting for Stripe to finish processing your order.
   </span>
-{{else if (and this.isComplete this.subscription.isStripe)}}
+{{else if (and this.isComplete (or this.subscription.isStripe this.subscription.isManual))}}
   {{#if this.showPlansSelector}}
     <Billing::Process
       @account={{this.account}}

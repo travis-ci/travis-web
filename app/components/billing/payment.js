@@ -19,6 +19,7 @@ export default Component.extend({
   stripeLoading: false,
   couponId: null,
   options: config.stripeOptions,
+  showSwitchToFreeModal: false,
 
   firstName: reads('subscription.billingInfo.firstName'),
   lastName: reads('subscription.billingInfo.lastName'),
@@ -76,11 +77,15 @@ export default Component.extend({
   }),
 
   updatePlan: task(function* () {
-    yield this.subscription.changePlan.perform(this.selectedPlan.id);
-    yield this.accounts.fetchV2Subscriptions.perform();
-    yield this.retryAuthorization.perform();
-    this.storage.clearBillingData();
-    this.set('showPlansSelector', false);
+    if (this.selectedPlan.startingPrice > 0) {
+      yield this.subscription.changePlan.perform(this.selectedPlan.id);
+      yield this.accounts.fetchV2Subscriptions.perform();
+      yield this.retryAuthorization.perform();
+      this.storage.clearBillingData();
+      this.set('showPlansSelector', false);
+    } else {
+      this.set('showSwitchToFreeModal', true);
+    }
   }).drop(),
 
   createFreeSubscription: task(function* () {
@@ -153,6 +158,12 @@ export default Component.extend({
     let message = 'An error occurred when creating your subscription. Please try again.';
     this.flashes.error(message);
   },
+
+  closeSwitchToModal: task(function* () {
+    this.set('showSwitchToFreeModal', false);
+    this.storage.clearBillingData();
+    yield this.set('showPlansSelector', false);
+  }),
 
   actions: {
     complete(stripeElement) {

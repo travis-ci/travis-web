@@ -10,6 +10,10 @@
     @totalPrice={{this.selectedPlan.startingPrice}}
     @goToFirstStep={{action this.goToFirstStep}}
   />
+  <Billing::WarningMessage
+    @selectedPlan={{this.selectedPlan}}
+    @subscription={{this.subscription}}
+  />
   <TravisForm @onSubmit={{action next}} as |form|>
     <div data-test-billing-form>
       <div class='flex flex--col flex-md-row'>

@@ -83,7 +83,7 @@
       @showPlansSelector={{this.showPlansSelector}}
     />
   {{/if}}
-  {{#if this.subscription.isStripe}}
+  {{#if (or this.subscription.isStripe this.subscription.isManual)}}
     <Billing::Authorization
       @selectedPlan={{this.selectedPlan}}
       @subscription={{this.subscription}}

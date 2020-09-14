@@ -111,6 +111,13 @@ export default Model.extend({
     return yield this.api.post(`/v2_subscription/${this.id}/pay`);
   }).drop(),
 
+  switchToFreeSubscription: task(function* (data) {
+    yield this.api.post(`/v2_subscription/${this.id}/changetofree`, {
+      data
+    });
+    yield this.accounts.fetchV2Subscriptions.perform();
+  }).drop(),
+
   changePlan: task(function* (plan) {
     const data = { plan };
     yield this.api.patch(`/v2_subscription/${this.id}/plan`, { data });

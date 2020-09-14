@@ -7,6 +7,10 @@
     @goToFirstStep={{action this.goToFirstStep}}
     @totalPrice={{this.totalPrice}}
   />
+  <Billing::WarningMessage
+    @selectedPlan={{this.selectedPlan}}
+    @subscription={{this.subscription}}
+  />
   {{#if this.selectedPlan.isFree}}
     <div class='mt-5'>
       {{#if this.isLoading}}
@@ -146,3 +150,8 @@
     </span>
   {{/if}}
 </div>
+<Dialogs::SwitchToFreeModal
+  @isOpen={{this.showSwitchToFreeModal}}
+  @onClose={{action (perform this.closeSwitchToModal)}}
+  @subscription={{this.subscription}}
+/>

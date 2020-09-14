@@ -780,17 +780,34 @@
   }
 }
 
-.cancel-subscription-modal {
+.cancel-subscription-modal,
+.switchtofree-subscription-modal {
 
-  .confirm-cancellation-button {
+  .confirm-cancellation-button,
+  .confirm-switchtofree-button {
     margin-right: 20px;
   }
 
-  .cancellation-information {
+  .cancellation-information,
+  .switchtofree-information {
     margin: 35px 0;
     font-size: 16px;
   }
 
+  .switchtofree-notice {
+    font-size: $font-size-sm;
+    border-radius: 2px;
+    background-color: $light-yellow;
+    color: #000;
+    max-width: 690px;
+    padding: 12px 15px;
+  }
+
+  .buttons {
+    a, button {
+      margin: 0 10px;
+    }
+  }
   h2 {
     color: $oxide-blue;
     margin: 0;
