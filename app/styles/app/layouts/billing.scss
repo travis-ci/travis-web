@@ -30,6 +30,11 @@
     border: 1px solid $dozer-yellow;
   }
 
+  .icon-desc {
+    margin-bottom: 3px;
+    @include colorSVG($oxide-blue);
+  }
+
   .billing-checkout {
 
     .coupon-validation {

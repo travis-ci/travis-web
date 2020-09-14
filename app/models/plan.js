@@ -4,6 +4,8 @@ import { equal } from '@ember/object/computed';
 export default Model.extend({
   privateCredits: attr('number'),
   publicCredits: attr('number'),
+  builds: attr('number'),
+  annual: attr('boolean'),
   users: attr('number'),
   price: attr('number'),
   name: attr('string'),

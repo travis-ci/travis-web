@@ -8,84 +8,8 @@
         @onSubmit={{perform this.editContact}}
         as |form|
       >
-        <div class='flex flex--col flex-md-row'>
-          <div class="form-elem inline-form-elem">
-            <form.field
-              @label="Street Address"
-              @value={{this.info.address}}
-              @required={{true}}
-              @validateOnField={{false}}
-              @showValidationStatusIcons={{false}}
-              @onChange={{action (mut this.info.address)}}
-              as |field|
-            >
-              <field.input name="address" placeholder="Address" />
-            </form.field>
-          </div>
-          <div class='form-elem'>
-            <form.field
-              @label='Country'
-              @value={{this.info.country}}
-              @required={{true}}
-              class='billing-country'
-              @showRequiredMark={{true}}
-              @showValidationStatusIcons={{false}}
-              @onChange={{action (mut this.info.country)}}
-              as |field|
-            >
-              <field.select
-                @placeholder='Select country'
-                @options={{this.countries}} 
-                as |country|
-              >
-                {{country}}
-              </field.select>
-            </form.field>
-          </div>
-        </div>
-        <div class='flex flex--col flex-md-row'>
-          <div class="form-elem inline-form-elem">
-            <form.field
-              @label="City"
-              @value={{this.info.city}}
-              @required={{true}}
-              @validateOnField={{false}}
-              @showValidationStatusIcons={{false}}
-              @onChange={{action (mut this.info.city)}}
-              as |field|
-            >
-              <field.input name="city" placeholder="City" />
-            </form.field>
-          </div>
-          <div class='flex flex--col flex-md-row w-full'>
-            <div class="form-elem inline-form-elem">
-              <form.field
-                @label="Post Code"
-                @value={{this.info.zipCode}}
-                @required={{true}}
-                @validateOnField={{false}}
-                @showValidationStatusIcons={{false}}
-                @onChange={{action (mut this.info.zipCode)}}
-                as |field|
-              >
-                <field.input name="postCode" placeholder="Post Code" />
-              </form.field>
-            </div>  
-            <div class="form-elem">
-              <form.field
-                @label="Vat Id"
-                @value={{this.info.vatId}}
-                @validateOnField={{false}}
-                @showValidationStatusIcons={{false}}
-                @onChange={{action (mut this.info.vatId)}}
-                as |field|
-              >
-                <field.input name="vatId" />
-              </form.field>
-            </div>
-          </div>
-        </div>
-        <div class="form-elem">
+        <Billing::PostalAddress @billingInfo={{this.info}} @form={{form}} />
+        <div class="form-elem mt-5">
           {{#if this.editContact.isRunning}}
             <LoadingIndicator />
           {{else}}
@@ -135,7 +59,7 @@
       {{/if}}
     </div>
     {{#if this.account.hasSubscriptionPermissions}}
-      <button class='button--blue billing-subscription__buttons' 
+      <button class='button--blue billing-subscription__buttons'
         onClick={{action (toggle 'openEditBillingForm' this)}} data-test-edit-billing-address='true'
       >
         Edit billing details
