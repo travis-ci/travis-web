@@ -34,13 +34,13 @@
                 {{/if}}
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.privateCredits}} Credits
+                <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.privateCredits}} Credits
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
+                <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
-                <SvgImage @name="icon-passed" @class="icon blue" />
+                <SvgImage @name="stage-passed" @class="icon icon-desc" />
                 {{#if plan.isUnlimitedUsers}}
                   Unlimited unique users
                 {{else}}
@@ -48,10 +48,10 @@
                 {{/if}}
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> Private &amp; Open-Source repos
+                <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
               </p>
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
-                <SvgImage @name="icon-passed" @class="icon blue" /> Linux, Windows, macOS
+                <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS
               </p>
               {{#if (eq plan.id this.subscription.plan.id)}}
                 <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
