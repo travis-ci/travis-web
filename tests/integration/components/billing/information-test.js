@@ -58,8 +58,8 @@ module('Integration | Component | billing-information', function (hooks) {
 
   test('it renders billing information form correctly', async function (assert) {
     await render(hbs`
-      <Billing::Information 
-        @displayedPlans={{displayedPlans}} 
+      <Billing::Information
+        @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
         @newSubscription={{newSubscription}}
         @next={{action 'next'}}
@@ -77,7 +77,7 @@ module('Integration | Component | billing-information', function (hooks) {
     assert.equal(profilePage.billing.period.text, '/month');
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
-    assert.dom('input').isVisible({ count: 8 });
+    assert.dom('input').isVisible({ count: 7 });
     assert.dom(EPS_TRIGGER).isVisible({ count: 1 });
   });
 
@@ -89,9 +89,9 @@ module('Integration | Component | billing-information', function (hooks) {
     };
 
     await render(hbs`
-      <Billing::Information 
-        @selectedPlan={{selectedPlan}} 
-        @displayedPlans={{displayedPlans}} 
+      <Billing::Information
+        @selectedPlan={{selectedPlan}}
+        @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
         @newSubscription={{newSubscription}}
         @next={{action 'next'}}
@@ -105,8 +105,8 @@ module('Integration | Component | billing-information', function (hooks) {
 
   test('it adds multiple email inputs to form', async function (assert) {
     await render(hbs`
-      <Billing::Information 
-        @displayedPlans={{displayedPlans}} 
+      <Billing::Information
+        @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
         @newSubscription={{newSubscription}}
         @next={{action 'next'}}
