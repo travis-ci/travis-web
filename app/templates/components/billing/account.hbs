@@ -20,6 +20,7 @@
       <Billing::Subscription
         @selectedPlan={{this.selectedPlan}}
         @showPlansSelector={{this.showPlansSelector}}
+        @showAddonsSelector={{this.showAddonsSelector}}
         @account={{this.account}}
       />
     {{/if}}
@@ -30,7 +31,7 @@
       />
     {{/if}}
   </section>
-  {{#if (and this.invoices (not this.showPlansSelector))}}
+  {{#if (and this.invoices (and (not this.showPlansSelector) (not this.showAddonsSelector)))}}
     <Billing::Invoices
       @account={{this.account}}
       @invoices={{this.invoices}}

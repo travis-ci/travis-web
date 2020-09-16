@@ -16,6 +16,7 @@ export default Component.extend({
   showCancelModal: false,
   isV2Subscription: false,
   selectedPlan: null,
+  selectedAddon: null,
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),

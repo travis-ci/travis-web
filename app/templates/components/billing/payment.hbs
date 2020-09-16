@@ -2,11 +2,19 @@
   <h3 data-test-summary-title='true'>
     Order Summary
   </h3>
-  <Billing::SelectedPlan
-    @selectedPlan={{this.selectedPlan}}
-    @goToFirstStep={{action this.goToFirstStep}}
-    @totalPrice={{this.totalPrice}}
-  />
+  {{#if this.selectedAddon}}
+    <Billing::SelectedAddon
+      @selectedAddon={{this.selectedAddon}}
+      @goToFirstStep={{action this.goToFirstStep}}
+      @totalPrice={{this.totalPrice}}
+    />
+  {{else}}
+    <Billing::SelectedPlan
+      @selectedPlan={{this.selectedPlan}}
+      @goToFirstStep={{action this.goToFirstStep}}
+      @totalPrice={{this.totalPrice}}
+    />
+  {{/if}}
   {{#if this.selectedPlan.isFree}}
     <div class='mt-5'>
       {{#if this.isLoading}}

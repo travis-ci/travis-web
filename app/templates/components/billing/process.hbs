@@ -1,18 +1,34 @@
 {{#if this.account.hasSubscriptionPermissions}}
   {{#if this.isStepOne}}
-    <Billing::SelectPlan
-      @title="Edit plan"
-      @selectedPlan={{this.selectedPlan}}
-      @subscription={{this.subscription}}
-      @account={{this.account}}
-      @showPlansSelector={{this.showPlansSelector}}
-      @next={{action 'next'}}
-      @showCancelButton={{this.showCancelButton}}
-    />
+    {{#if this.showAddonsSelector}}
+      <Billing::SelectAddon
+        @title="Buy addon"
+        @selectedPlan={{this.selectedPlan}}
+        @selectedAddon={{this.selectedAddon}}
+        @subscription={{this.subscription}}
+        @account={{this.account}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showAddonsSelector={{this.showAddonsSelector}}
+        @next={{action 'next'}}
+        @showCancelButton={{this.showCancelButton}}
+      />
+    {{else}}
+      <Billing::SelectPlan
+        @title="Edit plan"
+        @selectedPlan={{this.selectedPlan}}
+        @subscription={{this.subscription}}
+        @account={{this.account}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showAddonsSelector={{this.showAddonsSelector}}
+        @next={{action 'next'}}
+        @showCancelButton={{this.showCancelButton}}
+      />
+    {{/if}}
   {{else if this.isStepTwo}}
     <Billing::Information
       @subscription={{this.subscription}}
       @selectedPlan={{this.selectedPlan}}
+      @selectedAddon={{this.selectedAddon}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @next={{action 'next'}}
       @back={{action 'back'}}
@@ -25,6 +41,8 @@
       @goToFirstStep={{action 'goToFirstStep'}}
       @retryAuthorization={{this.retryAuthorization}}
       @showPlansSelector={{this.showPlansSelector}}
+      @showAddonsSelector={{this.showAddonsSelector}}
+      @selectedAddon={{this.selectedAddon}}
       @back={{action 'back'}}
     />
   {{/if}}
