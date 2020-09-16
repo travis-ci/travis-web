@@ -41,11 +41,17 @@ module.exports = function () {
       extensions: ['js']
     },
     'ember-prism': {
-      'components': ['yaml'],
+      'components': [
+        'json',
+        'yaml'
+      ],
       plugins: [
         'line-numbers',
         'line-highlight'
       ],
+    },
+    codemirror: {
+      modes: ['javascript', 'yaml'],
     },
     svg: {
       optimize: false,

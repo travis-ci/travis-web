@@ -1,0 +1,75 @@
+.repo-config .request-configs .request-configs-buttons {
+  position: relative;
+  text-align: right;
+
+  .request-configs-button-cancel {
+    display: none;
+  }
+}
+
+.request-configs .request-configs-buttons {
+  position: absolute;
+  top: 1px;
+  right: 0;
+}
+
+.request-configs-button {
+  display: inline-block;
+  vertical-align: bottom;
+  outline: none;
+  user-select: none;
+}
+
+.request-configs-button-trigger-build {
+  @include travisBorder;
+  width: 100px;
+  padding: 8px 12px;
+  color: $asphalt-grey;
+}
+
+.request-configs-button-cancel,
+.request-configs-button-customize,
+.request-configs-button-preview,
+.request-configs-button-trigger-build {
+  @include travisBorder;
+  padding: 8px 12px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover,
+  &:active,
+  &:focus {
+    border-color: $oxide-blue;
+    color: $oxide-blue;
+    outline: none;
+  }
+}
+
+.request-configs-button-cancel {
+  margin-right: 8px;
+  padding: 8px;
+  border: 1px solid transparent;
+
+  &:hover {
+    border-color: transparent;
+  }
+}
+
+.request-configs-button-customize {
+  margin-right: 8px;
+}
+
+.closed {
+  .request-configs-button-cancel,
+  .request-configs-button-customize,
+  .request-configs-button-preview {
+    display: none;
+  }
+}
+
+.customize .request-configs-button-customize,
+.preview .request-configs-button-preview {
+  border-color: $oxide-blue;
+  color: $oxide-blue;
+}
+

@@ -29,10 +29,14 @@ let rawConfigs = [
   {
     config: config,
     source: source2
+  },
+  {
+    config: config,
+    source: 'api'
   }
 ];
 
-module('Acceptance | config/yaml', function (hooks) {
+module('Acceptance | request/config', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -41,15 +45,45 @@ module('Acceptance | config/yaml', function (hooks) {
     const currentUser = this.server.create('user');
     signInUser(currentUser);
 
-    this.repository = this.server.create('repository', { slug: slug });
-    this.server.create('setting', {
-      repository: this.repository,
-      name: 'config_validation',
-      value: true
-    });
+    this.repository = this.server.create('repository', {
+      slug,
+      config_validation: true,
+      permissions: {
+        create_request: true
+      }
+    }),
+
+    this.server.create('setting', { repository: this.repository, name: 'config_validation', value: true });
 
     let branch = this.server.create('branch', { name: 'acceptance-tests' });
-    this.request = this.server.create('request', { repository: this.repository, raw_configs: rawConfigs });
+    this.msg1 = {
+      level: 'warn',
+      key: 'jortleby',
+      code: 'skortleby',
+      args: {
+        jortle: 'tortle'
+      },
+      src: source,
+      line: 2,
+    };
+    this.msg2 = {
+      level: 'warn',
+      key: 'language',
+      code: 'cast',
+      args: {
+        given_value: 'tortle',
+        given_type: 'str',
+        value: true,
+        type: 'bool'
+      },
+      src: source2,
+    };
+
+    this.request = this.server.create('request', {
+      repository: this.repository,
+      raw_configs: rawConfigs,
+      messages: [this.msg1, this.msg2]
+    });
     this.build = this.server.create('build', { number: '5', state: 'started', repository: this.repository, branch, request: this.request });
     this.job = this.server.create('job', { number: '1234.1', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
   });
@@ -59,66 +93,41 @@ module('Acceptance | config/yaml', function (hooks) {
       this.server.create('job', { number: '1234.2', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
     });
 
-    test('renders build yaml', async function (assert) {
+    test('renders build config', async function (assert) {
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
 
       assert.equal(document.title, `Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
-      await page.yamlTab.click();
+
+      await page.configTab.click();
 
       assert.equal(document.title, `Config - Build #${this.build.number} - travis-ci/travis-web - Travis CI`);
-      assert.equal(page.yaml[0].codeblock.text, 'language: jortle sudo: tortle');
-      assert.equal(page.yaml[0].source, '.travis.yml');
-      assert.equal(page.yaml[0].codeblock.id, codeblockName(source));
+      assert.equal(page.config[0].codeblock.text, 'language: jortle sudo: tortle');
+      assert.equal(page.config[0].source, '.travis.yml');
+      assert.equal(page.config[0].codeblock.id, codeblockName(source));
     });
 
     test('shows build messages when they exist', async function (assert) {
-      const msg1 = this.server.create('message', {
-        request: this.request,
-        level: 'warn',
-        key: 'jortleby',
-        code: 'skortleby',
-        args: {
-          jortle: 'tortle'
-        },
-        src: source,
-        line: 2,
-      });
-
-      this.server.create('message', {
-        request: this.request,
-        level: 'warn',
-        key: 'language',
-        code: 'cast',
-        args: {
-          given_value: 'tortle',
-          given_type: 'str',
-          value: true,
-          type: 'bool'
-        },
-        src: source2,
-      });
-
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      await page.yamlMessagesHeader.click();
+      await page.configTab.click();
+      await page.requestMessagesHeader.click();
 
-      assert.equal(page.ymlMessages.length, 2, 'expected two yml messages');
+      assert.equal(page.requestMessages.length, 2, 'expected two request messages');
 
-      page.ymlMessages[0].as(message => {
-        assert.ok(message.icon.isWarning, 'expected the yml message to be a warn');
+      page.requestMessages[0].as(message => {
+        assert.ok(message.icon.isWarning, 'expected the request message to be a warn');
         assert.equal(message.message, 'unrecognised message code skortleby');
-        assert.equal(page.yaml[0].codeblock.id, codeblockName(msg1.src));
-        assert.equal(message.link.href, `#${codeblockName(msg1.src)}.${msg1.line + 1}`);
+        assert.equal(page.config[0].codeblock.id, codeblockName(this.msg1.src));
+        assert.equal(message.link.href, `#${codeblockName(this.msg1.src)}.${this.msg1.line + 1}`);
       });
 
       percySnapshot(assert);
     });
 
-    test('hides the tab when no yaml is found', async function (assert) {
+    test('hides the tab when no config is found', async function (assert) {
       this.request.raw_configs = [];
 
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      assert.ok(page.yamlTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
+      assert.ok(page.configTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
     });
 
     test('shows the job note when viewing a single job', async function (assert) {
@@ -129,8 +138,8 @@ module('Acceptance | config/yaml', function (hooks) {
 
     test('shows all unique raw configs', async function (assert) {
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      assert.equal(page.yaml.length, 3, 'expected three yaml code block');
+      await page.configTab.click();
+      assert.equal(page.config.length, 3, 'expected three config code block');
     });
 
     test('shows only file name for travis yml', async function (assert) {
@@ -140,8 +149,8 @@ module('Acceptance | config/yaml', function (hooks) {
         source: source
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      assert.equal(page.yaml[0].source, '.travis.yml');
+      await page.configTab.click();
+      assert.equal(page.config[0].source, '.travis.yml');
     });
 
     test('shows internal path with sha', async function (assert) {
@@ -151,8 +160,8 @@ module('Acceptance | config/yaml', function (hooks) {
         source: source
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      assert.equal(page.yaml[0].source, './internal/config.yml@7e0d841');
+      await page.configTab.click();
+      assert.equal(page.config[0].source, './internal/config.yml@7e0d841');
     });
 
     test('shows external path with formatted sha', async function (assert) {
@@ -162,13 +171,13 @@ module('Acceptance | config/yaml', function (hooks) {
         source: source
       }];
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
-      await page.yamlTab.click();
-      assert.equal(page.yaml[0].source, 'some_path/config.yml@7e0d841');
+      await page.configTab.click();
+      assert.equal(page.config[0].source, 'some_path/config.yml@7e0d841');
     });
   });
 
   module('with a single-job build', function () {
-    test('shows yaml', async function (assert) {
+    test('shows config', async function (assert) {
       this.server.create('message', {
         request: this.request,
         level: 'warn',
@@ -176,18 +185,19 @@ module('Acceptance | config/yaml', function (hooks) {
       });
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
-      await page.yamlTab.click();
+      await page.configTab.click();
 
       assert.ok(page.jobYamlNote.isHidden, 'expected the job note to be hidden for a single-job build');
-      assert.equal(page.yaml[0].codeblock.text, 'language: jortle sudo: tortle');
-      assert.equal(page.yaml[0].source, '.travis.yml');
+      assert.equal(page.config[0].codeblock.text, 'language: jortle sudo: tortle');
+      assert.equal(page.config[0].source, '.travis.yml');
     });
 
-    test('hides the tab when no yaml is found', async function (assert) {
+    test('hides the tab when no config is found', async function (assert) {
       this.request.raw_configs = [];
 
       await visit(`/travis-ci/travis-web/jobs/${this.job.id}`);
-      assert.ok(page.yamlTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
+
+      assert.ok(page.configTab.isDisabled, 'expected the config tab to be disabled when there’s no .travis.yml');
     });
   });
 });

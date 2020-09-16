@@ -65,6 +65,7 @@ module('Acceptance | repo | requests', function (hooks) {
       repository: this.repo,
       state: 'passed',
       commit_id: olderApprovedCommit.id,
+      commit: olderApprovedCommit,
       request: olderApprovedRequest,
       number: '1871'
     });

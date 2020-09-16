@@ -1797,6 +1797,7 @@ export default {
         "starred",
         "managed_by_installation",
         "active_on_org",
+        "config_validation",
         "migration_status",
         "current_build",
         "last_started_build",
@@ -1824,6 +1825,7 @@ export default {
           "owner_name",
           "default_branch",
           "starred",
+          "config_validation",
           "managed_by_installation",
           "active_on_org",
           "migration_status"
@@ -1878,6 +1880,8 @@ export default {
         "base_commit",
         "head_commit",
         "raw_configs",
+        "messages",
+        "config",
         "pull_request_mergeable"
       ],
       "representations": {
@@ -1886,6 +1890,7 @@ export default {
           "state",
           "result",
           "message",
+          "config",
           "pull_request_mergeable"
         ],
         "standard": [
@@ -1899,10 +1904,12 @@ export default {
           "builds",
           "owner",
           "created_at",
+          "messages",
           "event_type",
           "base_commit",
           "head_commit",
           "raw_configs",
+          "config",
           "pull_request_mergeable"
         ]
       }

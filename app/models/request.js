@@ -1,17 +1,17 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import {
-  empty,
-  equal,
-  gt,
-  uniqBy
-} from '@ember/object/computed';
-import { task } from 'ember-concurrency';
+import { empty, equal, gt, uniqBy } from '@ember/object/computed';
 
 export const PULL_REQUEST_MERGEABLE = {
   DRAFT: 'draft',
   CLEAN: 'clean'
+};
+
+export const DEFAULT_MERGE_MODE = 'deep_merge_append';
+
+const SOURCES = {
+  API: 'api'
 };
 
 export default Model.extend({
@@ -28,11 +28,15 @@ export default Model.extend({
   pullRequestTitle: attr('string'),
   pullRequestNumber: attr('number'),
   config: attr(),
-  raw_configs: attr(),
-  uniqRawConfigs: uniqBy('raw_configs', 'source'),
-  noYaml: empty('raw_configs'),
+  rawConfigs: attr(),
+  uniqRawConfigs: uniqBy('rawConfigs', 'source'),
+  noConfigs: empty('rawConfigs'),
   repo: belongsTo('repo', { async: true }),
   commit: belongsTo('commit', { async: true }),
+  messages: attr(),
+  state: attr(),
+  mergeMode: attr(),
+  configs: attr(),
 
   // API models this as hasMany but serializers:request#normalize overrides it
   build: belongsTo('build', { async: true }),
@@ -57,22 +61,14 @@ export default Model.extend({
 
   isDraft: equal('pullRequestMergeable', PULL_REQUEST_MERGEABLE.DRAFT),
 
-  messages: computed('repo.id', 'build.request.id', 'fetchMessages.last.value', function () {
-    const messages = this.fetchMessages.get('lastSuccessful.value');
-    if (!messages) {
-      this.fetchMessages.perform();
-    }
-    return messages || [];
+  hasMessages: gt('messages.length', 0),
+
+  apiConfigs: computed('uniqRawConfigs', function () {
+    const configs = this.get('uniqRawConfigs') || [];
+    return configs.filter(this.isApiConfig);
   }),
 
-  fetchMessages: task(function* () {
-    const repoId = this.get('repo.id');
-    const requestId = this.get('build.request.id');
-    if (repoId && requestId) {
-      const response = yield this.api.get(`/repo/${repoId}/request/${requestId}/messages`) || {};
-      return response.messages;
-    }
-  }).drop(),
-
-  hasMessages: gt('messages.length', 0),
+  isApiConfig(config) {
+    return config.source.toString().startsWith(SOURCES.API);
+  }
 });

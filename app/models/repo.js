@@ -42,6 +42,7 @@ const Repo = VcsEntity.extend({
   emailSubscribed: attr('boolean'),
   migrationStatus: attr('string'),
   historyMigrationStatus: attr('string'),
+  configValidation: attr('boolean'),
 
   ownerType: reads('owner.@type'),
 

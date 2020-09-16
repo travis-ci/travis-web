@@ -1,0 +1,49 @@
+<div class="request-configs-preview">
+  <div class="left">
+    <h4 class="request-configs-heading">
+      Build Config
+    </h4>
+
+    {{#if this.loading}}
+      <LoadingIndicator />
+    {{else}}
+      <CodeBlock
+        @language="json"
+        @code={{this.formattedRequestConfig}}
+        class="codedisplay line-numbers"
+        data-test-preview-request-config="true"
+      />
+    {{/if}}
+  </div>
+
+  <div class="right">
+    {{#if this.loading}}
+      <h4 class="request-configs-heading">
+        Jobs
+      </h4>
+
+      <LoadingIndicator />
+    {{else}}
+      {{#each this.formattedJobConfigs as |config index|}}
+        <h4 class="request-configs-heading">
+          Job #{{increment index}}
+        </h4>
+
+        <CodeBlock
+          @language="json"
+          @code={{config}}
+          class="codedisplay line-numbers"
+          data-test-preview-job-configs="true"
+        />
+      {{else}}
+        <h4 class="request-configs-heading">
+          Jobs
+        </h4>
+
+        <p>
+          This build config does not result in any jobs and would be rejected.
+        </p>
+      {{/each}}
+    {{/if}}
+  </div>
+</div>

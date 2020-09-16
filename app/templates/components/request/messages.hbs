@@ -1,0 +1,38 @@
+{{#if (or this.hasMessages this.repo.configValidation)}}
+  <div class="request-messages request-message-{{this.maxLevel}} {{if this.hasMessages 'request-messages-expandable'}}" data-test-configs-messages="true">
+    <div class="header" {{on 'click' (action 'toggle')}} data-test-configs-messages-toggle="true">
+      <span class="tooltip-wrapper level-icon">
+        <SvgImage @name="msg-{{this.maxLevel}}"  @class={{this.iconClass}} />
+        <EmberTooltip @text={{this.summary}} />
+      </span>
+
+      <span class="request-messages-summary" data-test-config-messages-summary="true">
+        Build config validation
+        {{#if this.loading}}
+          <LoadingIndicator />
+        {{else if this.displaySummary}}
+          &mdash; {{this.summary}}
+        {{/if}}
+      </span>
+
+      <div class="tools">
+        <ExternalLinkTo href="{{config-get 'urls.buildConfigValidation'}}">
+          <SvgImage @name='icon-help' @class='icon-help' />
+        </ExternalLinkTo>
+        {{#if this.messages}}
+          <SvgImage
+            @name="icon-dropdown-arrow"
+            @class="icon-toggle icon-{{this.toggleStatus}}"
+          />
+        {{/if}}
+      </div>
+    </div>
+    {{#if (and this.expanded this.hasMessages)}}
+      <div class="list">
+        {{#each this.messages as |message|}}
+          <Request::Message @message={{message}} />
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

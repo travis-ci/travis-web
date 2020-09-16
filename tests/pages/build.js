@@ -83,16 +83,16 @@ export default create({
     scope: '[data-test-build-matrix-tab]'
   },
 
-  yamlTab: {
-    scope: '[data-test-build-yaml-tab]',
+  configTab: {
+    scope: '[data-test-build-config-tab]',
     isDisabled: hasClass('disabled')
   },
 
-  yamlMessagesHeader: {
-    scope: '.yml-messages .header'
+  requestMessagesHeader: {
+    scope: '[data-test-configs-messages-toggle]'
   },
 
-  ymlMessages: collection('.yml-message', {
+  requestMessages: collection('[data-test-configs-message]', {
     icon: {
       scope: '.level-icon svg',
       isInfo: hasClass('icon-info'),
@@ -101,23 +101,23 @@ export default create({
     },
     message: text('.message'),
     link: {
-      scope: '[data-test-yml-message-link]',
+      scope: '[data-test-request-message-link]',
       isPresent: isPresent(),
       href: attribute('href'),
       text: text(),
-    }
+    },
   }),
 
-  yaml: collection('.inner-yaml-container', {
+  config: collection('[data-test-raw-config]', {
     codeblock: {
-      scope: '[data-test-yaml]',
+      scope: '[data-test-config]',
       text: text(),
       id: attribute('id'),
     },
-    source: text('.header')
+    source: text('[data-test-config-source]')
   }),
 
   jobYamlNote: {
-    scope: '[data-test-job-yaml-note]'
+    scope: '[data-test-job-config-note]'
   },
 });

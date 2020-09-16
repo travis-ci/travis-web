@@ -1,0 +1,34 @@
+<div class="request-configs-buttons" data-test-request-configs-button='true'>
+  {{#if this.closed}}
+    <button
+      data-test-request-configs-trigger-build="true"
+      {{on 'click' (action this.onTrigger)}}
+      class="request-configs-button-trigger-build"
+      title="Trigger build"
+    >
+      Trigger build
+    </button>
+  {{else}}
+    <button
+      data-test-request-configs-button-cancel="true"
+      class="request-configs-button request-configs-button-cancel"
+      {{on 'click' (action this.onCancel)}}
+    >
+      Cancel
+    </button>
+    <button
+      data-test-request-configs-button-customize="true"
+      class="request-configs-button request-configs-button-customize"
+      {{on 'click' (action this.onCustomize)}}
+    >
+      Customize
+    </button>
+    <button
+      data-test-request-configs-button-preview="true"
+      class="request-configs-button request-configs-button-preview"
+      {{on 'click' (action this.onPreview)}}
+    >
+      Preview
+    </button>
+  {{/if}}
+</div>

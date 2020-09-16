@@ -1,40 +1,44 @@
-<div class="inner-yaml-container">
+<div class="request-config" data-test-raw-config="true">
   <div class="header" {{on 'click' (action 'toggle')}}>
     {{#if this.fileUrl}}
       <ExternalLinkTo @href={{this.fileUrl}}>
         <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
-        <span class="vertical-align">
+        <span class="vertical-align" data-test-config-source="true">
           {{this.filePath}}
         </span>
       </ExternalLinkTo>
     {{else}}
       <SvgImage @name="job-name-icon" @class="icon" @width=14 @height=14 />
-      <span class="vertical-align">
+      <span class="vertical-align" data-test-config-source="true">
         {{this.filePath}}
       </span>
     {{/if}}
     <div class="tools">
-      <SvgImage @name="icon-dropdown-arrow" @class="icon-toggle icon-{{this.toggleStatusClass}}" />
+      {{#if this.expanded}}
+        <Request::CopyButton
+          @copyText={{this.formattedConfig}}
+          @success={{action "copied"}}
+        >
+          <SvgImage @name="icon-copy" @class="icon" />
+          <span>
+            {{this.buttonText}}
+          </span>
+        </Request::CopyButton>
+      {{/if}}
+      <SvgImage
+        @name="icon-dropdown-arrow"
+        @class="icon-toggle icon-{{this.status}}"
+      />
     </div>
   </div>
-  {{#if this.isExpanded}}
+  {{#if this.expanded}}
     <div class="position-relative">
       <CodeBlock
         @language="yaml"
         class="codedisplay line-numbers"
         id={{this.codeblockId}}
-        data-test-yaml="true"
+        data-test-config="true"
       >{{this.formattedConfig}}</CodeBlock>
-      <CopyButton
-        @clipboardText={{this.rawConfig.config}}
-        @title={{this.buttonLabel}}
-        @success={{action "copied" this.rawConfig.source}}
-      >
-        <SvgImage @name="icon-copy" @class="icon" />
-        <span>
-          {{this.buttonLabel}}
-        </span>
-      </CopyButton>
     </div>
   {{/if}}
 </div>

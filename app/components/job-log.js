@@ -2,13 +2,15 @@ import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
-export default Component.extend({
+export default Component.extend(WithConfigValidation, {
   classNames: ['job-log'],
   store: service('store'),
 
   _oldJob: null,
 
+  request: reads('job.build.request'),
   job: null,
   log: reads('job.log'),
 

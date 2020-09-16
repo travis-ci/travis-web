@@ -4,7 +4,6 @@ import { inject as service } from '@ember/service';
 import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
 export default Component.extend(WithConfigValidation, {
-  tagName: 'div',
   classNames: ['travistab'],
 
   router: service(),
@@ -13,6 +12,7 @@ export default Component.extend(WithConfigValidation, {
   isLog: not('isConfig'),
 
   repo: reads('build.repo'),
-  messages: reads('build.request.messages'),
+  request: reads('build.request'),
+  messages: reads('request.messages'),
 
 });

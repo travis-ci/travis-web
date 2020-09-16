@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads, sort } from '@ember/object/computed';
+import { and, not, gt, reads, sort } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
 import WithConfigValidation from 'travis/mixins/components/with-config-validation';
 
@@ -12,19 +12,20 @@ const MSGS = {
 };
 
 export default Component.extend(WithConfigValidation, {
-  tagName: '',
-  isExpanded: false,
-
-  request: null,
+  expanded: false,
+  collapsed: not('expanded'),
+  displaySummary: and('collapsed', 'summary'),
 
   repo: reads('request.repo'),
-  messages: reads('request.messages'),
+  request: null,
+  messages: computed(() => []),
+  hasMessages: gt('messages.length', 0),
 
-  toggleStatusClass: computed('isExpanded', function () {
-    return this.get('isExpanded') ? 'expanded' : 'collapsed';
+  toggleStatus: computed('expanded', function () {
+    return this.get('expanded') ? 'expanded' : 'collapsed';
   }),
 
-  sortedMessages: sort('request.messages', (lft, rgt) =>
+  sortedMessages: sort('messages', (lft, rgt) =>
     sortOrder(lft.level) - sortOrder(rgt.level)
   ),
 
@@ -40,12 +41,16 @@ export default Component.extend(WithConfigValidation, {
     let counts = countBy(this.get('sortedMessages'), 'level');
     if (Object.entries(counts).length > 0) {
       return Object.entries(counts).map((entry) => formatLevel(...entry)).join(', ');
+    } else {
+      return 'valid';
     }
   }),
 
   actions: {
     toggle() {
-      this.toggleProperty('isExpanded');
+      if (this.hasMessages) {
+        this.toggleProperty('expanded');
+      }
     }
   }
 });

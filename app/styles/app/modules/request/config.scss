@@ -1,0 +1,101 @@
+.request-config {
+  @include travisBorder;
+  position: relative;
+  margin-bottom: 1.2em;
+
+  .copy-button {
+    display: inline-block;
+    cursor: pointer;
+    padding: 3px 8px 5px 8px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    font-size: 12px;
+    color: $cement-grey;
+    @include colorSVG($cement-grey);
+
+    span {
+      display: none;
+    }
+
+    svg {
+      width: 13px;
+      height: 15px;
+    }
+
+    &:hover {
+      margin-right: 1em;
+      border-color: $dry-cement;
+      span {
+        display: inline-block;
+      }
+    }
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+$config-code-font-size: 12px;
+pre.codedisplay[class*='language-'] {
+  white-space: pre-wrap;
+  background-color: white;
+  font-family: $font-family-monospace;
+  font-size: $config-code-font-size;
+
+  code,
+  .line-numbers-rows {
+    font-family: $font-family-monospace;
+    font-size: $config-code-font-size;
+  }
+
+  code {
+    color: $asphalt-grey;
+  }
+
+  .line-numbers-rows {
+    color: $dry-cement;
+    border-right: 0px;
+    top: -2px;
+  }
+}
+
+.job-tabs .paper-block {
+  padding: 1em;
+}
+
+.header {
+  padding: 1em;
+  cursor: pointer;
+
+  .icon {
+    margin-right: 6px;
+  }
+
+  .tools {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+
+    .icon-help {
+      margin: 0 3px 3px 0;
+    }
+
+    .icon-toggle {
+      height: 15px;
+      width: 15px;
+      margin-right: 8px;
+      vertical-align: middle;
+      transform: scale(0.9, 1.1);
+
+      path {
+        stroke: $cement-grey;
+        stroke-width: 1;
+      }
+
+      &.icon-expanded {
+        transform: scaleY(-1);
+      }
+    }
+  }
+}

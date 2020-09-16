@@ -106,6 +106,7 @@ module.exports = function (environment) {
       status: 'https://www.traviscistatus.com/',
       support: 'mailto:support@travis-ci.com',
       travisVsJenkins: 'https://travis-ci.com/travisci-vs-jenkins',
+      triggerBuildMergeModes: 'https://docs.travis-ci.com/user/triggering-builds/#merge-modes',
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
       pardotHost: 'https://info.travis-ci.com',

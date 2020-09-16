@@ -1,7 +1,6 @@
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
-let Serializer = V2FallbackSerializer.extend({
-
+export default V2FallbackSerializer.extend({
   keyForV2Relationship: function (key/* , typeClass, method*/) {
     if (key === 'repo') {
       return 'repository_id';
@@ -27,10 +26,37 @@ let Serializer = V2FallbackSerializer.extend({
     // This converts this from hasMany to belongsTo
     if (resourceHash.builds) {
       resourceHash.build = resourceHash.builds[0];
+    } else if (resourceHash['@type'] === 'pending') {
+      resourceHash = resourceHash.request;
+      resourceHash['@type'] = 'request';
+      resourceHash.repository['@type'] = 'repository';
+    }
+
+    if (resourceHash.raw_configs) {
+      resourceHash.raw_configs = resourceHash.raw_configs.map((config) => {
+        config.mergeMode = config.merge_mode;
+        delete config.merge_mode;
+        return config;
+      });
     }
 
     return this._super(modelClass, resourceHash);
+  },
+
+  serialize: function (snapshot, options) {
+    return {
+      request: {
+        branch: snapshot.attr('branchName'),
+        sha: snapshot.belongsTo('commit').attr('sha'),
+        message: snapshot.attr('message'),
+        configs: configsFrom(snapshot.attr('configs'))
+      }
+    };
   }
 });
 
-export default Serializer;
+function configsFrom(configs) {
+  configs = configs.filter(config => config.config);
+  if (configs.length === 0) configs = [{ config: '' }];
+  return configs.map(config => ({ config: config.config, mode: config.mergeMode }));
+}

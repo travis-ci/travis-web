@@ -1,0 +1,197 @@
+<div class="request-configs-form">
+  <TravisForm
+    @onSubmit={{perform this.triggerBuild}}
+    as |form|
+  >
+    <div class="request-configs-fields" data-test-request-config-form='true'>
+      <div class="request-configs-fields-container">
+        <div class="form-elem">
+          <form.field
+            data-test-request-configs-branch="true"
+            @label="Branch"
+            @classNames="ref-type-branch"
+            @placeholder="Select a branch"
+            @value={{this.branch}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action "update" "branch" null}}
+            as |field|
+          >
+            <field.select
+              @search={{perform this.searchBranches}}
+              as |branch|
+            >
+              {{branch}}
+            </field.select>
+          </form.field>
+        </div>
+
+        <div class="form-elem">
+          <form.field
+            data-test-request-configs-sha="true"
+            @label="Commit"
+            @placeholder="Specify a Git sha (optional)"
+            @value={{this.sha}}
+            @onChange={{action "update" "sha" null}}
+            as |field|
+          >
+            {{field.input}}
+            <p class="request-configs-sha-notice">
+              Please make sure the given commit is on the selected branch.
+            </p>
+          </form.field>
+        </div>
+      </div>
+
+      <div class="form-elem">
+        <form.field
+          data-test-request-configs-message="true"
+          @classNames="ref-type-sha"
+          @value={{this.message}}
+          @label="Message"
+          @onChange={{action "update" "message" null}}
+          @placeholder="Overwrite the commit message (optional)"
+          as |field|
+        >
+          {{field.input}}
+        </form.field>
+      </div>
+
+      {{#each this.configs as |config ix|}}
+        <div class="form-elem config-field {{config.format}}">
+          <div class="request-configs-config-header">
+            <h4 class="request-configs-heading">
+              Build config
+              {{#if (gt this.configs.length 1)}}
+                #{{increment ix}}
+              {{/if}}
+
+              {{#if (eq (increment ix) this.configs.length)}}
+                <a
+                  class="request-configs-button-add"
+                  {{on 'click' (action 'add' ix)}}
+                >
+                  <SvgImage @name='icon-circle-plus' />
+                  <EmberTooltip @text="Add another config" />
+                </a>
+
+                {{#if (gt ix 0)}}
+                  <a
+                    class="request-configs-button-remove"
+                    {{on 'click' (action 'remove' ix)}}
+                  >
+                    <SvgImage @name='icon-circle-minus' />
+                    <EmberTooltip @text="Remove this config" />
+                  </a>
+                {{/if}}
+              {{/if}}
+            </h4>
+
+            <div class="config-type tooltip-wrapper">
+              <div>
+                <span class="yaml">YAML</span>
+                <span class="javascript">JSON</span>
+                <EmberTooltip @text="Detected format" @classNames="config-type-tooltip" />
+              </div>
+            </div>
+
+            <IvyCodemirror
+              @value={{config.config}}
+              @valueUpdated={{action 'update' 'config' ix}}
+              @options={{hash
+                mode=this.configMode
+                lineNumbers=true
+                lineWrapping=true
+                tabSize=2
+                indentWithTabs=false
+                placeholder="Overwrite build config"
+              }}
+            />
+          </div>
+        </div>
+
+        <div class="form-elem">
+          <h4 class="request-configs-heading">
+            Merge mode
+          </h4>
+
+          <form.field
+            @disableFrame={{true}}
+            @value={{eq config.mergeMode 'deep_merge_append'}}
+            @onChange={{action 'update' 'mergeMode' ix 'deep_merge_append'}}
+            class="inline-block mr-6"
+            as |field|
+          >
+            <field.checkbox>
+              Deep Merge &amp; Append
+            </field.checkbox>
+          </form.field>
+          <form.field
+            @disableFrame={{true}}
+            @value={{eq config.mergeMode 'deep_merge_prepend'}}
+            @onChange={{action 'update' 'mergeMode' ix 'deep_merge_prepend'}}
+            class="inline-block mr-6"
+            as |field|
+          >
+            <field.checkbox>
+              Deep Merge &amp; Prepend
+            </field.checkbox>
+          </form.field>
+          <form.field
+            @disableFrame={{true}}
+            @value={{eq config.mergeMode 'deep_merge'}}
+            @onChange={{action 'update' 'mergeMode' ix 'deep_merge'}}
+            class="inline-block mr-6"
+            as |field|
+          >
+            <field.checkbox>
+              Deep Merge
+            </field.checkbox>
+          </form.field>
+          <form.field
+            @disableFrame={{true}}
+            @value={{eq config.mergeMode 'merge'}}
+            @onChange={{action 'update' 'mergeMode' ix 'merge'}}
+            class="inline-block mr-6"
+            as |field|
+          >
+            <field.checkbox>
+              Merge
+            </field.checkbox>
+          </form.field>
+          <form.field
+            @disableFrame={{true}}
+            @value={{eq config.mergeMode 'replace'}}
+            @onChange={{action 'update' 'mergeMode' ix 'replace'}}
+            class="inline-block mr-10"
+            as |field|
+          >
+            <field.checkbox>
+              Replace
+            </field.checkbox>
+          </form.field>
+
+          <ExternalLinkTo class="hint" href="{{config-get 'urls.triggerBuildMergeModes'}}">
+            <SvgImage @name='icon-help' @class='icon-help' />
+          </ExternalLinkTo>
+        </div>
+      {{/each}}
+    </div>
+  </TravisForm>
+
+  {{#unless this.replacing}}
+    <h4 class="request-configs-heading">
+      Build {{pluralize this.rawConfigs.length 'Config' without-count=true}}
+    </h4>
+
+    {{#each this.rawConfigs as |config|}}
+      <Request::RawConfig
+        data-test-raw-config="true"
+        @source={{config.source}}
+        @config={{get config 'config'}}
+        @loading={{this.loading}}
+        @build={{@request.build}}
+        @slug={{@request.repo.slug}}
+      />
+    {{/each}}
+  {{/unless}}
+</div>

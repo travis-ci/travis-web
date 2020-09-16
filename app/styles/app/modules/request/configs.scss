@@ -1,0 +1,134 @@
+.repo-config {
+  position: relative;
+  margin-top: 1em;
+}
+
+.request-configs {
+  .request-configs-matrix-notice {
+    border: 1px solid $dry-cement;
+    margin-bottom: 1em;
+  }
+
+  .request-configs-heading {
+    color: $cement-grey;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+
+  .request-configs-heading,
+  .travis-form .travis-form__field .travis-form__label {
+    margin-bottom: 0.75em;
+  }
+
+  .icon-help {
+    opacity: 0.85;
+    border: 0;
+    width: 16px;
+    height: 16px;
+    path {
+      stroke: $cement-grey;
+      stroke-width: 2;
+    }
+  }
+}
+
+.request-configs-trigger-build-notice {
+  display: flex;
+  position: relative;
+  margin: 1em 0;
+  padding: 1.5em 1em;
+  border: 1px solid $dry-cement;
+
+  @each $status, $colors in $buildRequest {
+    @include colorBg(map-get($colors, gradient), $status, 5px);
+
+    &.#{$status} .request-configs-button-submit,
+    &.#{$status} .request-configs-link-success {
+      background-color: #{map-get($colors, gradient)};
+    }
+  }
+
+  .request-configs-icon {
+    position: relative;
+    top: 2px;
+    height: 13px;
+    width: 16px;
+    margin: 0px 6px 0 0;
+    opacity: 0.4;
+  }
+
+  .request-configs-trigger-build-notice-text {
+    flex: 10;
+    padding-right: 110px;
+    display: inline-block;
+  }
+
+  .request-configs-trigger-build-notice-buttons {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    padding-top: 2px;
+  }
+
+  .request-configs-button-submit,
+  .request-configs-button-reset,
+  .request-configs-link-success {
+    display: inline-block;
+    padding: 8px 12px;
+    line-height: 1;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .request-configs-button-reset {
+    margin-right: 8px;
+
+    &:hover,
+    &:active {
+      color: $oxide-blue;
+    }
+  }
+
+  .request-configs-button-submit,
+  .request-configs-link-success {
+    width: 100px;
+    border-radius: 2px;
+    color: white;
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
+
+    .loading-indicator {
+      vertical-align: bottom;
+      i {
+        background-color: white;
+      }
+    }
+
+    svg {
+      width: 9px;
+      height: 9px;
+      margin: 0 -6px 0 2px;
+      vertical-align: baseline;
+
+      path {
+        stroke: white;
+        stroke-width: 3px;
+      }
+    }
+  }
+
+  .underline {
+    text-decoration: underline;
+  }
+}
+
+.job-config-notice {
+  border: 1px solid $dry-cement;
+  margin-bottom: 1em;
+  padding: 1em;
+}

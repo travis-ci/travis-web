@@ -36,7 +36,6 @@
 @import "app/modules/forms";
 @import "app/modules/notice";
 @import "app/modules/build-header";
-@import "app/modules/build-messages";
 @import "app/modules/avatar";
 @import "app/modules/popup";
 @import "app/modules/lastbuild";
@@ -53,13 +52,18 @@
 @import "app/modules/loading-screen";
 @import "app/modules/paper-block";
 @import "app/modules/travis-form";
-@import "app/modules/yaml";
 @import "app/modules/loading-overlay";
 @import "app/modules/migrate";
 @import "app/modules/modals";
 @import "app/modules/visibility-setting-list";
 @import "app/modules/overlay-backdrop";
 @import "app/modules/migrate-beta-dialog";
+@import "app/modules/request/buttons";
+@import "app/modules/request/config";
+@import "app/modules/request/configs";
+@import "app/modules/request/form";
+@import "app/modules/request/preview";
+@import "app/modules/request/messages";
 @import "app/modules/prioritize-build";
 
 @import "app/animation/tractor";

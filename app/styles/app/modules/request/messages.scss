@@ -1,4 +1,4 @@
-.build-messages-badge {
+.request-messages-badge {
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -17,17 +17,18 @@
   }
 }
 
-.yml-messages {
+.request-messages {
   @include travisBorder;
 
   margin: 1.2em 0;
 
   font-size: $font-size-sm;
+  color: $asphalt-grey;
 
   .header {
     position: relative;
     padding: 1em;
-    cursor: pointer;
+    cursor: auto;
 
     .icon {
       width: 18px;
@@ -53,6 +54,35 @@
         stroke-width: 1;
       }
     }
+    .icon-help {
+      margin-right: 6px;
+      opacity: 0.85;
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+      border: 0;
+      path {
+        stroke: $cement-grey;
+        stroke-width: 2;
+      }
+    }
+
+    .request-messages-summary > div {
+      position: relative;
+      display: inline;
+      top: -1px;
+      left: 6px;
+
+      .loading-indicator {
+        opacity: 0.8;
+        vertical-align: bottom;
+
+        i {
+          width: 6px;
+          height: 6px;
+        }
+      }
+    }
 
     .tools {
       position: absolute;
@@ -64,6 +94,7 @@
         width: 15px;
         vertical-align: middle;
         transform: scale(0.9, 1.1);
+
         path {
           stroke: $cement-grey;
           stroke-width: 1;
@@ -73,19 +104,18 @@
           transform: scaleY(-1);
         }
       }
-
-      .icon-help {
-        border: 0px;
-        transform: scale(0.8);
-        path {
-          stroke: $cement-grey;
-          stroke-width: 2;
-        }
-      }
     }
   }
 
-  .yml-message-link {
+  &.request-messages-expandable .header {
+    cursor: pointer;
+  }
+
+  .list {
+    padding-bottom: 1em;
+  }
+
+  .request-message-link {
     display: block;
 
     &:hover {
@@ -93,7 +123,7 @@
     }
   }
 
-  .yml-message-line {
+  .request-message-line {
     display: flex;
     align-items: flex-start;
 
@@ -103,11 +133,6 @@
       width: 14px;
       height: 14px;
       margin-left: 2px;
-    }
-
-    .icon-help {
-      width: 18px;
-      height: 18px;
     }
 
     .icon-info {
@@ -130,22 +155,18 @@
       @include colorSVG($brick-red);
     }
 
+    .icon-help {
+      display: none;
+      margin-right: 5px;
+    }
+
+    &:hover .icon-help {
+      display: block;
+    }
+
     .message {
       flex-grow: 1;
       margin-left: 6px;
-    }
-
-    .message-help svg {
-      display: none;
-      transform: scale(0.8);
-      border-color: $oxide-blue;
-      @include colorSVG($oxide-blue);
-    }
-
-    &:hover {
-      .message-help svg {
-        display: block;
-      }
     }
 
     code {

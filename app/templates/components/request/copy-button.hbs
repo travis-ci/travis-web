@@ -1,0 +1,13 @@
+<div
+  class='copy-button'
+  {{on 'click' this.stopBubble}}
+>
+  <CopyButton
+    @clipboardText={{@copyText}}
+    @delegateClickEvent={{false}}
+    @success={{@success}}
+    title={{@title}}
+  >
+    {{yield}}
+  </CopyButton>
+</div>

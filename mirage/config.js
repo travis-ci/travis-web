@@ -633,6 +633,23 @@ export default function () {
     return this.serialize(builds, 'build');
   });
 
+  this.post('/repo/:id/request/preview', (schema, { params }) => {
+    if (params.config === 'invalid') {
+      return Response(400, {}, {
+        error_type: 'invalid_config_format',
+        error_message: 'Invalid value: invalid'
+      });
+    } else {
+      const requestConfig = server.create('request-config');
+      return new Response(200, {}, {
+        raw_configs: requestConfig.raw_configs,
+        request_config: requestConfig.request_config,
+        job_configs: requestConfig.job_configs,
+        messages: requestConfig.messages,
+      });
+    }
+  });
+
   this.get('/repo/:repo_id/requests', function (schema, { params: { repo_id: repoId } }) {
     let requests = schema.requests.where({ repositoryId: repoId });
 
@@ -670,6 +687,8 @@ export default function () {
     function ({ messages }, { params: { request_id: requestId } }) {
       return this.serialize(messages.where({ requestId }));
     });
+
+  this.get('commits/:id');
 
   this.get('/job/:id/log', function (schema, request) {
     let jobId = request.params.id;

@@ -177,6 +177,54 @@ export default Component.extend({
     return `${format(key)}: skipping stage #${format(args.number)} because its condition does not match: ${format(args.condition)}`;
   },
 
+  invalid_config_format() {
+    return 'invalid config format (must be a hash)';
+  },
+
+  invalid_ref(key, args) {
+    return `${format(key)}: invalid config source ref ${format(args.ref)}`;
+  },
+
+  too_many_imports(_, args) {
+    return args.message;
+  },
+
+  invalid_ownership(_, args) {
+    return args.message;
+  },
+
+  import_not_allowed(key, args) {
+    return `${format(key)}: import not allowed from private repo ${format(args.repo)}`;
+  },
+
+  invalid_visibility(key, args) {
+    return `${format(key)}: cannot import from private repo ${format(args.repo)} to a public repo`;
+  },
+
+  not_allowed(_, args) {
+    return args.message;
+  },
+
+  parse_error(_, args) {
+    return 'Parse error';
+  },
+
+  unauthorized(_, args) {
+    return stripDetails(args.message);
+  },
+
+  repo_not_found(_, args) {
+    return stripDetails(args.message);
+  },
+
+  file_not_found(_, args) {
+    return stripDetails(args.message);
+  },
+
+  server_error(_, args) {
+    return stripDetails(args.message);
+  },
+
   iconClass: computed('message.level', function () {
     let level = this.get('message.level');
     return `icon icon-level icon-${level}`;
@@ -203,18 +251,16 @@ export default Component.extend({
 });
 
 function format(obj, length) {
-  length = length || 30;
-  return `<code>${escape(truncate(dump(obj, length), 30))}</code>`;
+  length = length || 60;
+  return `<code>${escape(truncate(dump(obj), length))}</code>`;
 }
 
-function dump(obj, length) {
+function dump(obj) {
   switch (typeOf(obj)) {
     case 'array':
       return `[${obj.map((obj) => dump(obj, 10)).join(', ')}]`;
     case 'object':
       return `{ ${Object.entries(obj).map((entry) => `${entry[0]}: ${dump(entry[1], 10)}`).join(', ')} }`;
-    case 'string':
-      return `${truncate(obj, length)}`;
     default:
       return obj;
   }
@@ -225,5 +271,9 @@ function truncate(str, length) {
     str = `${str.substring(0, length)} ...`;
   }
   return str;
+}
+
+function stripDetails(str) {
+  return str.replace(/ \(.*/s, '');
 }
 /* eslint-enable max-len */

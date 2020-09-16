@@ -1,7 +1,10 @@
 {{#if this.model.build.isMatrix}}
-  <PaperBlock data-test-job-yaml-note="true" @elevation="2">
+  <PaperBlock class="job-config-notice" data-test-job-config-note="true" @elevation="0">
     <SvgImage @name="icon-megaphone" @class="icon icon-megaphone" />
     This is the configuration for all of build #{{this.model.build.number}}, including this job
   </PaperBlock>
 {{/if}}
-<AnnotatedYaml @request={{this.model}} />
+<Request::Configs
+  @request={{this.model}}
+  @status={{this.status}}
+/>
