@@ -77,14 +77,14 @@ export default Component.extend({
   }),
 
   updatePlan: task(function* () {
-    if (this.selectedPlan.startingPrice > 0) {
+    if (this.selectedPlan.isFree) {
+      this.set('showSwitchToFreeModal', true);
+    } else {
       yield this.subscription.changePlan.perform(this.selectedPlan.id);
       yield this.accounts.fetchV2Subscriptions.perform();
       yield this.retryAuthorization.perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
-    } else {
-      this.set('showSwitchToFreeModal', true);
     }
   }).drop(),
 
@@ -159,11 +159,11 @@ export default Component.extend({
     this.flashes.error(message);
   },
 
-  closeSwitchToModal: task(function* () {
+  closeSwitchToFreeModal: function () {
     this.set('showSwitchToFreeModal', false);
     this.storage.clearBillingData();
-    yield this.set('showPlansSelector', false);
-  }),
+    this.set('showPlansSelector', false);
+  },
 
   actions: {
     complete(stripeElement) {

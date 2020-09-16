@@ -621,6 +621,10 @@ export default create({
       }
     },
 
+    freeTierPlan: {
+      scope: '.select-plan-free_tier_plan'
+    },
+
     marketplaceButton: {
       scope: '.marketplace-button',
       href: attribute('href')

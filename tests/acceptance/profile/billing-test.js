@@ -1012,6 +1012,55 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
   });
 
+  test('shows switch to free modal window if free plan is selected ', async function (assert) {
+    const { billingPaymentForm } = profilePage.billing;
+    this.subscription.destroy();
+
+    let v2Subscription = this.server.create('v2_subscription', {
+      plan: this.defaultV2Plan,
+      owner: this.user,
+      status: 'subscribed',
+      valid_to: new Date(2018, 5, 19),
+      created_at: new Date(2018, 5, 19),
+      source: 'stripe',
+      addons: [],
+      permissions: {
+        write: true
+      }
+    });
+    v2Subscription.save();
+    this.subscription = v2Subscription;
+
+    v2Subscription.createBillingInfo({
+      first_name: 'User',
+      last_name: 'Name',
+      company: 'Travis CI GmbH',
+      address: 'Rigaerstraße 8',
+      address2: 'Address 2',
+      billing_email: 'user@email.com',
+      city: 'Berlin',
+      state: 'Berlin',
+      zip_code: '10987',
+      country: 'Germany',
+      vat_id: '12345'
+    });
+
+    v2Subscription.createCreditCardInfo({
+      last_digits: '1919'
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+    await profilePage.billing.selectedPlan.subscribeButton.click();
+
+    await profilePage.billing.selectedPlanOverview.changePlan.click();
+    await profilePage.billing.freeTierPlan.click();
+
+    await billingPaymentForm.completePayment.click();
+  });
+
   test('apply 10 dollars off coupon', async function (assert) {
     window.Stripe = StripeMock;
     let config = {

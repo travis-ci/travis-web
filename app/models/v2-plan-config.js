@@ -12,5 +12,5 @@ export default Model.extend({
 
   isUnlimitedUsers: equal('startingUsers', 999999),
 
-  addon_configs: attr()
+  addonConfigs: attr()
 });

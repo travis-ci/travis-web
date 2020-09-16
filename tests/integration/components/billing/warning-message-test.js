@@ -20,7 +20,6 @@ module('Integration | Component | warning-message', function (hooks) {
       ]
     };
 
-    this.selectedPlan = selectedPlan;
     this.set('selectedPlan', selectedPlan);
 
     const subscription = {
@@ -39,7 +38,6 @@ module('Integration | Component | warning-message', function (hooks) {
       ],
     };
 
-    this.subscription = subscription;
     this.set('subscription', subscription);
     await render(hbs`<Billing::WarningMessage
       @selectedPlan={{selectedPlan}}
@@ -63,7 +61,6 @@ module('Integration | Component | warning-message', function (hooks) {
       ]
     };
 
-    this.selectedPlan = selectedPlan;
     this.set('selectedPlan', selectedPlan);
 
     const subscription = {
@@ -82,7 +79,6 @@ module('Integration | Component | warning-message', function (hooks) {
       ],
     };
 
-    this.subscription = subscription;
     this.set('subscription', subscription);
     await render(hbs`<Billing::WarningMessage
       @selectedPlan={{selectedPlan}}
@@ -105,7 +101,6 @@ module('Integration | Component | warning-message', function (hooks) {
       ]
     };
 
-    this.selectedPlan = selectedPlan;
     this.set('selectedPlan', selectedPlan);
 
     const subscription = {
