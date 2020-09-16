@@ -1,13 +1,13 @@
 {{#if this.subscription.isStripe}}
   <section class="contact">
     {{#let this.subscription.billingInfo as |info|}}
-      <Billing::ContactDetails 
+      <Billing::ContactDetails
         @openEditContactForm={{this.openEditContactForm}}
         @editContact={{this.editContact}}
         @account={{this.account}}
         @info={{info}}
       />
-      <Billing::BillingDetails 
+      <Billing::BillingDetails
         @openEditBillingForm={{this.openEditBillingForm}}
         @editContact={{this.editContact}}
         @account={{this.account}}
