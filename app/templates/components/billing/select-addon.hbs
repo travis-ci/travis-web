@@ -34,20 +34,16 @@
       </span>
     </div>
     <div class="flex flex--wrap {{if this.account.hasSubscriptionPermissions 'billing-subscription__buttons'}}">
-      {{#if this.isLoading}}
-        <LoadingIndicator/>
-      {{else}}
-        <div class="billing-subscription__buttons--change">
-          <button onclick={{action 'selectAndSubmit' form}} class='button--blue {{if this.isButtonDisabled 'disabled'}}' data-test-buy-addons='true' disabled={{this.isButtonDisabled}}>
-            Buy Addons
-          </button>
-        </div>
-        <div class='billing-subscription__buttons--addons'>
-          <button {{on 'click' (fn (mut this.showAddonsSelector) false)}} class='button--white-and-teal button--hover' data-test-buy-addons-cancel='true'>
-            Cancel
-          </button>
-        </div>
-      {{/if}}
+      <div class="billing-subscription__buttons--change">
+        <button onclick={{action 'selectAndSubmit' form}} class='button--blue {{if this.isButtonDisabled 'disabled'}}' data-test-buy-addons='true' disabled={{this.isButtonDisabled}}>
+          Buy Addons
+        </button>
+      </div>
+      <div class='billing-subscription__buttons--addons'>
+        <button {{on 'click' (fn (mut this.showAddonsSelector) false)}} class='button--white-and-teal button--hover' data-test-buy-addons-cancel='true'>
+          Cancel
+        </button>
+      </div>
     </div>
   </TravisForm>
 </section>

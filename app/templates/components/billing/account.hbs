@@ -31,7 +31,7 @@
       />
     {{/if}}
   </section>
-  {{#if (and this.invoices (and (not this.showPlansSelector) (not this.showAddonsSelector)))}}
+  {{#if this.showInvoices}}
     <Billing::Invoices
       @account={{this.account}}
       @invoices={{this.invoices}}

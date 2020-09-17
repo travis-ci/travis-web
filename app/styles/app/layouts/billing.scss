@@ -167,11 +167,10 @@
       margin-right: 5px;
 
       &--desc {
-        color: $asphalt-grey;
+        color: $cement-grey;
         font-weight: 600;
         font-size: 0.8em;
         margin: 5px 0 12px 0;
-        color: #9d9d9d;
         text-transform: uppercase;
 
         span {
@@ -203,7 +202,7 @@
 
       &--name {
         margin: 0px 0 10px 0;
-        color: #666666;
+        color: $asphalt-grey;
         font-size: 1em;
         font-weight: 300;
         text-align: left;
