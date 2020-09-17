@@ -26,7 +26,7 @@ export default Component.extend({
   isGithubSubscription: reads('subscription.isGithub'),
   expiredStripeSubscription: reads('account.expiredStripeSubscription'),
   hasExpiredStripeSubscription: bool('expiredStripeSubscription'),
-  showPlanInfo: computed('showPlansSelector', 'showAddonsSelector', function() {
+  showPlanInfo: computed('showPlansSelector', 'showAddonsSelector', function () {
     return !this.showPlansSelector && !this.showAddonsSelector;
   }),
 });
