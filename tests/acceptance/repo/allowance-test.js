@@ -14,6 +14,9 @@ module('Acceptance | repo allowance', function (hooks) {
     const currentUser = this.server.create('user', {login: 'user-login'});
     signInUser(currentUser);
 
+    this.server.create('user', {login: 'user-login2'});
+    this.server.create('user', {login: 'user-login3'});
+
     const repoPrivate = this.server.create('repository', {
       name: 'repository-private',
       slug: 'user-login/repository-private',
@@ -21,16 +24,35 @@ module('Acceptance | repo allowance', function (hooks) {
       active: true,
       owner: {
         login: 'user-login',
-        allowance: {
-          subscription_type: 2,
-          private_repos: false,
-          public_repos: true,
-          concurrency_limit: 1
-        }
+        id: 1
       },
       vcs_name: 'repository-private',
       owner_name: 'user-login'
     });
+
+    this.server.create('allowance', {
+      id: 1,
+      subscription_type: 2,
+      public_repos: false,
+      private_repos: false,
+      concurrency_limit: 777
+    }),
+
+    this.server.create('allowance', {
+      id: 2,
+      subscription_type: 2,
+      public_repos: true,
+      private_repos: true,
+      concurrency_limit: 666
+    }),
+
+    this.server.create('allowance', {
+      id: 3,
+      subscription_type: 2,
+      public_repos: true,
+      private_repos: false,
+      concurrency_limit: 2
+    }),
 
     this.server.create('repository', {
       name: 'repository-public',
@@ -39,12 +61,7 @@ module('Acceptance | repo allowance', function (hooks) {
       active: true,
       owner: {
         login: 'user-login',
-        allowance: {
-          subscription_type: 2,
-          private_repos: true,
-          public_repos: false,
-          concurrency_limit: 1
-        }
+        id: 1
       },
       vcs_name: 'repository-public',
       owner_name: 'user-login'
@@ -52,38 +69,28 @@ module('Acceptance | repo allowance', function (hooks) {
 
     this.server.create('repository', {
       name: 'repository-private-allowed',
-      slug: 'user-login/repository-private-allowed',
+      slug: 'user-login2/repository-private-allowed',
       'private': true,
       active: true,
       owner: {
-        login: 'user-login',
-        allowance: {
-          subscription_type: 2,
-          private_repos: true,
-          public_repos: true,
-          concurrency_limit: 1
-        }
+        login: 'user-login2',
+        id: 2
       },
       vcs_name: 'repository-private',
-      owner_name: 'user-login'
+      owner_name: 'user-login2'
     });
 
     this.server.create('repository', {
       name: 'repository-public-allowed',
-      slug: 'user-login/repository-public-allowed',
+      slug: 'user-login3/repository-public-allowed',
       'private': false,
       active: true,
       owner: {
-        login: 'user-login',
-        allowance: {
-          subscription_type: 2,
-          private_repos: true,
-          public_repos: true,
-          concurrency_limit: 1
-        }
+        login: 'user-login3',
+        id: 3
       },
       vcs_name: 'repository-public',
-      owner_name: 'user-login'
+      owner_name: 'user-login3'
     });
 
     let branch = repoPrivate.createBranch({
@@ -125,13 +132,13 @@ module('Acceptance | repo allowance', function (hooks) {
   });
 
   test('warning is not displayed in case owner can build in private repository', async function (assert) {
-    await page.visit({ organization: 'user-login', repo: 'repository-private-allowed' });
+    await page.visit({ organization: 'user-login2', repo: 'repository-private-allowed' });
 
     assert.dom('[data-test-components-flash-item]').doesNotExist();
   });
 
   test('warning is not displayed in case owner can build in public repository', async function (assert) {
-    await page.visit({ organization: 'user-login', repo: 'repository-public-allowed' });
+    await page.visit({ organization: 'user-login3', repo: 'repository-public-allowed' });
 
     assert.dom('[data-test-components-flash-item]').doesNotExist();
   });

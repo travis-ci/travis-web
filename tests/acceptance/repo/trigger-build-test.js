@@ -24,14 +24,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
       slug: 'adal/difference-engine',
       permissions: {
         create_request: true
-      },
-      owner: {
-        allowance: {
-          subscription_type: 1,
-          private_repos: false,
-          public_repos: false,
-          concurrency_limit: 1
-        }
       }
     });
 

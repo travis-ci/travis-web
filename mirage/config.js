@@ -516,6 +516,16 @@ export default function () {
     }
   });
 
+  this.get('/owner/:provider/:login/allowance', function (schema, request) {
+    let owner = schema.users.where({ login: request.params.login }).models[0];
+    const allowance = schema.allowances.all().filter(allowance => allowance.id === owner.id);
+    if (allowance) {
+      return this.serialize(allowance, 'allowance');
+    } else {
+      return new Response(404, {}, {});
+    }
+  });
+
   this.get('/owner/:provider/:login/repos', function (schema, { params, queryParams = {} }) {
     const { login } = params;
     const { sort_by, name_filter } = queryParams;

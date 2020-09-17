@@ -25,6 +25,7 @@ const Repo = VcsEntity.extend({
   api: service(),
   auth: service(),
   features: service(),
+  store: service(),
 
   permissions: attr(),
   slug: attr('string'),
@@ -68,7 +69,23 @@ const Repo = VcsEntity.extend({
     return hasPermissions && (!isMigrated || isFailed);
   }),
 
-  allowance: reads('owner.allowance'),
+  allowance: computed('owner.allowance', 'repoOwnerAllowance', function () {
+    if (this.owner.allowance)
+      return this.owner.allowance;
+    if (this.repoOwnerAllowance)
+      return this.repoOwnerAllowance;
+    this.fetchRepoOwnerAllowance.perform();
+  }),
+
+  repoOwnerAllowance: reads('fetchRepoOwnerAllowance.lastSuccessful.value'),
+
+  fetchRepoOwnerAllowance: task(function* () {
+    const allowance = this.store.peekRecord('allowance', this.owner.id);
+    if (allowance)
+      return allowance;
+    yield this.store.queryRecord('allowance', { login: this.owner.login, provider: this.provider });
+  }).drop(),
+
   canOwnerBuild: computed('allowance', 'private', 'features.{proVersion,enterpriseVersion}', function () {
     const isPro = this.get('features.proVersion');
     const enterprise = !!this.get('features.enterpriseVersion');
@@ -80,12 +97,16 @@ const Repo = VcsEntity.extend({
     const allowance = this.allowance;
     const isPrivate = this.private;
 
-    if (allowance && allowance.subscription_type === 1)
+    if (allowance && allowance.subscriptionType === 1)
       return true;
-    if (!allowance)
+    if (!allowance && !this.repoOwnerAllowance) {
+      return true; // pending allowance call
+    }
+    if (!allowance) {
       return false;
+    }
 
-    return isPrivate ? allowance.private_repos : allowance.public_repos;
+    return isPrivate ? allowance.privateRepos : allowance.publicRepos;
   }),
 
   defaultBranch: belongsTo('branch', { async: false }),

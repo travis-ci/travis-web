@@ -15,12 +15,6 @@ export default Factory.extend({
   is_syncing: false,
   recently_signed_up: true,
   vcs_type: 'GithubUser',
-  allowance: { // eslint-disable-line
-    subscription_type: 1,
-    private_repos: false,
-    public_repos: false,
-    concurrency_limit: 2
-  },
 
   channels() {
     return `private-user-${this.id}`;
