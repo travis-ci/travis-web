@@ -83,7 +83,7 @@ const Repo = VcsEntity.extend({
     const allowance = this.store.peekRecord('allowance', this.owner.id);
     if (allowance)
       return allowance;
-    yield this.store.queryRecord('allowance', { login: this.owner.login, provider: this.provider });
+    return yield this.store.queryRecord('allowance', { login: this.owner.login, provider: this.provider });
   }).drop(),
 
   canOwnerBuild: computed('allowance', 'private', 'features.{proVersion,enterpriseVersion}', function () {
