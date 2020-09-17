@@ -6,5 +6,5 @@ export default Model.extend({
   privateRepos: attr('boolean'),
   concurrencyLimit: attr('number'),
 
-  subscription: belongsTo('owner')
+  owner: belongsTo('owner')
 });
