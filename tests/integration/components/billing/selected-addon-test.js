@@ -21,7 +21,6 @@ module('Integration | Component | selected-addon', function (hooks) {
       type: 'credit_private'
     };
 
-    this.selectedAddon = addonConfig;
     this.set('selectedAddon', addonConfig);
 
     await render(hbs`<Billing::SelectedAddon
