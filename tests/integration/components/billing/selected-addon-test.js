@@ -14,11 +14,11 @@ module('Integration | Component | selected-addon', function (hooks) {
     };
 
     const addonConfig = {
-      id: "credits_500k",
-      name: "500 000 credits (50k Linux build minutes)",
+      id: 'credits_500k',
+      name: '500 000 credits (50k Linux build minutes)',
       price: 30000,
       quantity: 500000,
-      type: "credit_private"
+      type: 'credit_private'
     };
 
     this.selectedAddon = addonConfig;
@@ -28,8 +28,8 @@ module('Integration | Component | selected-addon', function (hooks) {
       @selectedAddon={{selectedAddon}}
       @goToFirstStep={{action 'goToFirstStep'}}/>`);
 
-    assert.equal(profilePage.billing.selectedAddonOverview.name.text, `${this.selectedAddon.price.name}`);
+    assert.equal(profilePage.billing.selectedAddonOverview.name.text, this.selectedAddon.name);
     assert.equal(profilePage.billing.selectedAddonOverview.price.text, `$${this.selectedAddon.price / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change addon');
+    assert.equal(profilePage.billing.selectedAddonOverview.changeAddon.text, 'Change addon');
   });
 });

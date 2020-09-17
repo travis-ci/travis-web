@@ -596,7 +596,7 @@ export default create({
     },
 
     selectedPlanOverview: {
-      scope: '.selected-plan',
+      scope: '[data-test-selected-plan]',
 
       heading: {
         scope: '[data-test-selected-plan-heading]',
