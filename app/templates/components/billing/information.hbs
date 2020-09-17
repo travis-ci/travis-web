@@ -13,8 +13,8 @@
   {{else}}
     <Billing::SelectedPlan
       @selectedPlan={{this.selectedPlan}}
+      @totalPrice={{this.selectedPlan.startingPrice}}
       @goToFirstStep={{action this.goToFirstStep}}
-      @totalPrice={{this.totalPrice}}
     />
   {{/if}}
   <TravisForm @onSubmit={{action next}} as |form|>

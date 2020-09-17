@@ -12,11 +12,11 @@ export default Component.extend({
   account: null,
   title: null,
   selectedAddon: null,
-  availableStandaloneAddons: reads('account.availableStandaloneAddons'),
-  isButtonDisabled: not('selectedAddon'),
-  displayedStandaloneAddons: computed('availableStandaloneAddons', function () {
-    return this.availableStandaloneAddons.sortBy('price');
+  availableStandaloneAddons: computed('account.availableStandaloneAddons', function () {
+    return this.account.availableStandaloneAddons.sortBy('price');
   }),
+  isButtonDisabled: not('selectedAddon'),
+  displayedStandaloneAddons: reads('availableStandaloneAddons'),
   totalPrice: computed('selectedAddon', function () {
     return this.selectedAddon ? this.selectedAddon.price : 0;
   }),

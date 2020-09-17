@@ -34,15 +34,15 @@ module('Integration | Component | billing-select-addon', function (hooks) {
     this.addon2 = addon2;
 
     this.setProperties({
-      availableStandaloneAddons: [addon1, addon2],
       displayedStandaloneAddons: [addon1, addon2],
-      selectedAddon: addon1,
+      selectedAddon: addon1
     });
   });
 
   test('it renders selected addon', async function (assert) {
     await render(hbs`<Billing::SelectAddon
-      @selectedAddon={{this.selectedAddon}}
+      @displayedStandaloneAddons={{displayedStandaloneAddons}}
+      @selectedAddon={{selectedAddon}}
       @showAddonsSelector={{true}}
       @next={{action 'next'}}/>`
     );
