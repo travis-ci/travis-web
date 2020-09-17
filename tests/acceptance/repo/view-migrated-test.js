@@ -19,12 +19,24 @@ module('Acceptance | repo/view migrated', function (hooks) {
 
     await signInUser(user);
 
+    this.server.create('allowance', {
+      id: 1,
+      subscription_type: 2,
+      public_repos: true,
+      private_repos: true,
+      concurrency_limit: 2
+    });
+
     const repository = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       active: true,
       active_on_org: false,
       permissions: {
         admin: true
+      },
+      owner: {
+        login: 'musterfrau',
+        id: 1
       },
       migration_status: 'migrated',
     });
