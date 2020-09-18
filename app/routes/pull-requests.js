@@ -21,4 +21,11 @@ export default TravisRoute.extend({
   titleToken() {
     return 'Pull Requests';
   },
+
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    if (!repo.repoOwnerAllowance) {
+      repo.fetchRepoOwnerAllowance.perform();
+    }
+  }
 });

@@ -517,7 +517,14 @@ export default function () {
   });
 
   this.get('/owner/:provider/:login/allowance', function (schema, request) {
-    let owner = schema.users.where({ login: request.params.login }).models[0];
+    const users = schema.users.where({ login: request.params.login }).models;
+    let owner;
+    if (users.length === 0) {
+      const orgs = schema.organizations.where({ login: request.params.login }).models;
+      owner = orgs[0];
+    } else {
+      owner = users[0];
+    }
     const allowance = schema.allowances.all().filter(allowance => allowance.id === owner.id);
     if (allowance) {
       return this.serialize(allowance, 'allowance');

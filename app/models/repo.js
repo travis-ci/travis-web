@@ -74,7 +74,6 @@ const Repo = VcsEntity.extend({
       return this.owner.allowance;
     if (this.repoOwnerAllowance)
       return this.repoOwnerAllowance;
-    this.fetchRepoOwnerAllowance.perform();
   }),
 
   repoOwnerAllowance: reads('fetchRepoOwnerAllowance.lastSuccessful.value'),
@@ -99,9 +98,6 @@ const Repo = VcsEntity.extend({
 
     if (allowance && allowance.subscriptionType === 1)
       return true;
-    if (!allowance && !this.repoOwnerAllowance) {
-      return true; // pending allowance call
-    }
     if (!allowance) {
       return false;
     }

@@ -31,7 +31,6 @@ module('Acceptance | repo allowance', function (hooks) {
     });
 
     this.server.create('allowance', {
-      id: 1,
       subscription_type: 2,
       public_repos: false,
       private_repos: false,
@@ -39,7 +38,6 @@ module('Acceptance | repo allowance', function (hooks) {
     }),
 
     this.server.create('allowance', {
-      id: 2,
       subscription_type: 2,
       public_repos: true,
       private_repos: true,
@@ -47,7 +45,6 @@ module('Acceptance | repo allowance', function (hooks) {
     }),
 
     this.server.create('allowance', {
-      id: 3,
       subscription_type: 2,
       public_repos: true,
       private_repos: false,
