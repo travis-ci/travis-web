@@ -21,6 +21,7 @@ module('Acceptance | repo build list routes', function (hooks) {
       name: 'User Name',
       login: 'user-login'
     });
+    this.server.create('allowance', {subscription_type: 1});
 
     signInUser(currentUser);
 
@@ -29,7 +30,11 @@ module('Acceptance | repo build list routes', function (hooks) {
     });
 
     const repository = this.server.create('repository', {
-      slug: 'org-login/repository-name'
+      slug: 'org-login/repository-name',
+      owner: {
+        login: 'org-login',
+        id: 1
+      }
     });
     this.repository = repository;
 

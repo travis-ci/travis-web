@@ -13,7 +13,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    this.user = this.server.create('user');
+    this.user = this.server.create('user', { login: 'some-user' });
+    this.server.create('allowance', { subscription_type: 1 });
     await signInUser(this.user);
   });
 
@@ -21,7 +22,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
     hooks.beforeEach(async function () {
       this.repo = this.server.create('repository', {
         owner: {
-          login: 'some-user'
+          login: 'some-user',
+          id: 1
         },
         owner_name: 'some-user'
       });

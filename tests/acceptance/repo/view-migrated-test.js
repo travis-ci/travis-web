@@ -19,13 +19,8 @@ module('Acceptance | repo/view migrated', function (hooks) {
 
     await signInUser(user);
 
-    this.server.create('allowance', {
-      id: 1,
-      subscription_type: 2,
-      public_repos: true,
-      private_repos: true,
-      concurrency_limit: 2
-    });
+    this.server.create('allowance', { subscription_type: 1 });
+    this.server.create('allowance', { subscription_type: 1 });
 
     const repository = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
@@ -51,6 +46,7 @@ module('Acceptance | repo/view migrated', function (hooks) {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });
+    this.server.create('allowance', { subscription_type: 1 });
 
     await signInUser(user);
 
@@ -62,6 +58,10 @@ module('Acceptance | repo/view migrated', function (hooks) {
         admin: true
       },
       migration_status: 'migrated',
+      owner: {
+        login: 'musterfrau',
+        id: 2
+      }
     });
 
     await visit(`${repository.slug}`);
