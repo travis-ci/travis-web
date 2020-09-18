@@ -1016,7 +1016,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const { billingPaymentForm } = profilePage.billing;
     this.subscription.destroy();
 
-    let v2Subscription = this.server.create('v2_subscription', {
+    let v2Subscription = this.server.create('v2-subscription', {
       plan: this.defaultV2Plan,
       owner: this.user,
       status: 'subscribed',
