@@ -21,7 +21,6 @@ module('Acceptance | repo build list routes', function (hooks) {
       name: 'User Name',
       login: 'user-login'
     });
-    this.server.create('allowance', {subscription_type: 1});
 
     signInUser(currentUser);
 
@@ -29,11 +28,15 @@ module('Acceptance | repo build list routes', function (hooks) {
       name: 'Other User Name'
     });
 
+    const org = this.server.create('organization', { login: 'org-login' });
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('allowance', {subscription_type: 1});
+
     const repository = this.server.create('repository', {
-      slug: 'user-login/repository-name',
+      slug: 'org-login/repository-name',
       owner: {
-        login: 'user-login',
-        id: 1
+        login: org.login,
+        id: org.id
       }
     });
     this.repository = repository;
@@ -262,18 +265,7 @@ module('Acceptance | repo build list routes', function (hooks) {
   });
 
   test('renders no builds messaging when none present', async function (assert) {
-    const tr = this.server.create('user', {
-      name: 'travis-ci',
-      login: 'travis-ci'
-    });
-    this.server.create('allowance', {subscription_type: 1});
-    this.server.create('allowance', {subscription_type: 1});
-    this.server.create('repository', {
-      owner: {
-        login: tr.login,
-        id: tr.id
-      }
-    });
+    this.server.create('repository');
 
     await page.visitBuildHistory({ organization: 'travis-ci', repo: 'travis-web' });
 
