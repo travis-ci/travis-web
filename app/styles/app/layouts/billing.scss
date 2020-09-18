@@ -155,6 +155,107 @@
     margin-bottom: 1em;
     margin-top: 1em;
 
+    &__addons_box {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 6px 13px;
+      border: 1px solid $pebble-grey;
+      margin-bottom: 10px;
+      width: 208px;
+      height: 114px;
+      flex-basis: auto;
+      margin-right: 5px;
+
+      &--desc {
+        color: $cement-grey;
+        font-weight: 600;
+        font-size: 0.8em;
+        margin: 5px 0 12px 0;
+        text-transform: uppercase;
+
+        span {
+          color: $cement-grey;
+          font-size: .8em;
+          font-style: italic;
+        }
+      }
+
+      &--help {
+        &:hover {
+          border-bottom: 1px solid;
+          cursor: pointer;
+        }
+      }
+
+      &--price {
+        margin: 0 0 10px 0;
+        font-weight: 300;
+        font-size: 1.7em;
+        text-align: left;
+        color: $oxide-blue;
+
+        span {
+          color: $cement-grey;
+          font-size: .5em;
+        }
+      }
+
+      &--name {
+        margin: 0px 0 10px 0;
+        color: $asphalt-grey;
+        font-size: 1em;
+        font-weight: 300;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &--button {
+        display: block;
+        max-width: 120px;
+        height: 36px;
+        margin: 25px auto 0 auto;
+      }
+
+      &--cancel {
+        color: $asphalt-grey;
+        font-weight: 500;
+        font-size: 0.8em;
+        text-align: center;
+        margin: 40px 0 0 0;
+      }
+
+      &--link {
+        cursor: pointer;
+        display: block;
+        max-width: fit-content;
+        margin: 20px auto 0 auto;
+        font-size: 0.7em;
+        text-align: center;
+        border-bottom: 1px solid transparent;
+        color: $oxide-blue;
+
+        &:hover {
+          border-bottom-color: $oxide-blue;
+        }
+      }
+
+      &--link-grey {
+        cursor: pointer;
+        display: inline-block;
+        border-bottom: 1px solid transparent;
+        color: $asphalt-grey;
+        margin: auto 1px;
+        border-bottom-color: $asphalt-grey;
+      }
+
+      &:hover {
+        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+      }
+    }
+
     &__box-v2 {
       background-color: #fff;
       border-radius: 5px;

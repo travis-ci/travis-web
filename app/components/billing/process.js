@@ -70,7 +70,7 @@ export default Component.extend({
     },
 
     next() {
-      if (this.selectedPlan) {
+      if (this.selectedPlan || this.selectedAddon) {
         this.trackButtonClicks();
         const currentIndex = this.steps.indexOf(this.currentStep);
         const lastIndex = this.steps.length - 1;

@@ -5,11 +5,18 @@
   <h3 data-test-contact-details-title='true'>
     Contact details
   </h3>
-  <Billing::SelectedPlan
-    @selectedPlan={{this.selectedPlan}}
-    @totalPrice={{this.selectedPlan.startingPrice}}
-    @goToFirstStep={{action this.goToFirstStep}}
-  />
+  {{#if this.selectedAddon}}
+    <Billing::SelectedAddon
+      @selectedAddon={{this.selectedAddon}}
+      @goToFirstStep={{action this.goToFirstStep}}
+    />
+  {{else}}
+    <Billing::SelectedPlan
+      @selectedPlan={{this.selectedPlan}}
+      @totalPrice={{this.selectedPlan.startingPrice}}
+      @goToFirstStep={{action this.goToFirstStep}}
+    />
+  {{/if}}
   <TravisForm @onSubmit={{action next}} as |form|>
     <div data-test-billing-form>
       <div class='flex flex--col flex-md-row'>

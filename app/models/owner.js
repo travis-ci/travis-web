@@ -121,6 +121,7 @@ export default VcsEntity.extend({
 
   isFetchV2PlansRunning: reads('fetchV2Plans.isRunning'),
   eligibleV2Plans: reads('fetchV2Plans.lastSuccessful.value'),
+  availableStandaloneAddons: reads('v2subscription.plan.availableStandaloneAddons'),
 
   fetchBetaMigrationRequests() {
     return this.tasks.fetchBetaMigrationRequestsTask.perform();

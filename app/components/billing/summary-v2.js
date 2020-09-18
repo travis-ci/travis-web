@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { reads, or, not, and, bool } from '@ember/object/computed';
 
 export default Component.extend({
@@ -25,4 +26,7 @@ export default Component.extend({
   isGithubSubscription: reads('subscription.isGithub'),
   expiredStripeSubscription: reads('account.expiredStripeSubscription'),
   hasExpiredStripeSubscription: bool('expiredStripeSubscription'),
+  showPlanInfo: computed('showPlansSelector', 'showAddonsSelector', function () {
+    return !this.showPlansSelector && !this.showAddonsSelector;
+  }),
 });
