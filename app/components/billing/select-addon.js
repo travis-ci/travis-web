@@ -33,6 +33,10 @@ export default Component.extend({
     selectAndSubmit(form) {
       this.set('selectedAddon', this.selectedAddon);
       later(() => form.submit(), 500);
+    },
+    cancel() {
+      this.set('selectedAddon', null);
+      this.set('showAddonsSelector', false);
     }
   }
 });

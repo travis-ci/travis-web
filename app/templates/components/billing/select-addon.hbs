@@ -40,7 +40,7 @@
         </button>
       </div>
       <div class='billing-subscription__buttons--addons'>
-        <button {{on 'click' (fn (mut this.showAddonsSelector) false)}} class='button--white-and-teal button--hover' data-test-buy-addons-cancel='true'>
+        <button onclick={{action 'cancel'}} class='button--white-and-teal button--hover' data-test-buy-addons-cancel='true'>
           Cancel
         </button>
       </div>
