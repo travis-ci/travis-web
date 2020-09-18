@@ -237,7 +237,6 @@ export default function () {
   });
 
   this.get('/v2_subscriptions', function (schema, params) {
-    debugger
     let response = this.serialize(schema.v2Subscriptions.all());
 
     let owners = schema.organizations.all().models.slice();

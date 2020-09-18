@@ -40,9 +40,9 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.trial = trial;
 
-    this.server.create('v2-plan-config', { id: 'free_tier_plan',  name: 'Free Tier Plan', startingPrice: 0, startingUsers: 999999, privateCredits: 10000, publicCredits: 40000, isFree: true, isUnlimitedUsers: true });
-    this.server.create('v2-plan-config', { id: 'standard_tier_plan', name: 'Standard Tier Plan', startingPrice: 3000, startingUsers: 100, privateCredits: 25000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
-    this.defaultV2Plan = this.server.create('v2-plan-config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', startingPrice: 30000, startingUsers: 10000, privateCredits: 500000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
+    this.server.create('v2-plan-config', { name: 'Free Tier Plan', startingPrice: 0, startingUsers: 999999, privateCredits: 10000, publicCredits: 40000, isFree: true, isUnlimitedUsers: true });
+    this.server.create('v2-plan-config', { name: 'Standard Tier Plan', startingPrice: 3000, startingUsers: 100, privateCredits: 25000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
+    this.defaultV2Plan = this.server.create('v2-plan-config', { name: 'Pro Tier Plan', startingPrice: 30000, startingUsers: 10000, privateCredits: 500000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
     this.defaultV2Plan.save();
 
     let plan = this.server.create('plan', {
@@ -1011,56 +1011,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
-  });
-
-  test('shows switch to free modal window if free plan is selected ', async function (assert) {
-    const { billingPaymentForm } = profilePage.billing;
-    this.subscription.destroy();
-
-    let v2Subscription = this.server.create('v2-subscription', {
-      plan: this.defaultV2Plan,
-      owner: this.user,
-      status: 'subscribed',
-      valid_to: new Date(2018, 5, 19),
-      created_at: new Date(2018, 5, 19),
-      source: 'stripe',
-      addons: [],
-      permissions: {
-        write: true
-      }
-    });
-
-    v2Subscription.save();
-    this.subscription = v2Subscription;
-
-    v2Subscription.createBillingInfo({
-      first_name: 'User',
-      last_name: 'Name',
-      company: 'Travis CI GmbH',
-      address: 'Rigaerstraße 8',
-      address2: 'Address 2',
-      billing_email: 'user@email.com',
-      city: 'Berlin',
-      state: 'Berlin',
-      zip_code: '10987',
-      country: 'Germany',
-      vat_id: '12345'
-    });
-
-    v2Subscription.createCreditCardInfo({
-      last_digits: '1919'
-    });
-
-    await profilePage.visit();
-    await profilePage.billing.visit();
-
-    await profilePage.billing.billingPlanChoices.lastBox.visit();
-    await profilePage.billing.selectedPlan.subscribeButton.click();
-
-    await profilePage.billing.selectedPlanOverview.changePlan.click();
-    await profilePage.billing.freeTierPlan.click();
-
-    await billingPaymentForm.completePayment.click();
   });
 
   test('apply 10 dollars off coupon', async function (assert) {
