@@ -17,10 +17,7 @@ export default Component.extend({
 
   switchToFreeSubscription: task(function* () {
     if (this.selectedSwitchToFreeReason) {
-      yield this.subscription.switchToFreeSubscription.perform({
-        reason: this.selectedSwitchToFreeReason,
-        reason_details: this.switchToFreeReasonDetails
-      });
+      yield this.subscription.switchToFreeSubscription.perform(this.selectedSwitchToFreeReason, this.switchToFreeReasonDetails);
       this.onClose();
     }
   }).drop(),

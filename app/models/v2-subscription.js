@@ -119,9 +119,9 @@ export default Model.extend({
     return yield this.api.post(`/v2_subscription/${this.id}/pay`);
   }).drop(),
 
-  switchToFreeSubscription: task(function* (data) {
+  switchToFreeSubscription: task(function* (reason, details) {
     yield this.api.post(`/v2_subscription/${this.id}/changetofree`, {
-      data
+      data: { reason, reason_details: details }
     });
     yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
