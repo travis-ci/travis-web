@@ -58,6 +58,13 @@ export default TravisRoute.extend(ScrollResetMixin, {
     return Repo.fetchBySlug(this.store, slug, provider);
   },
 
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    if (repo && !repo.repoOwnerAllowance) {
+      repo.fetchRepoOwnerAllowance.perform();
+    }
+  },
+
   actions: {
     error(error) {
       error.slug = this.slug;

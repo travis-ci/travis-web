@@ -10,7 +10,9 @@ module('Acceptance | job/build matrix', function (hooks) {
   setupMirage(hooks);
 
   test('visiting build matrix', async function (assert) {
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
     let branch = this.server.create('branch', { name: 'acceptance-tests' });
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });

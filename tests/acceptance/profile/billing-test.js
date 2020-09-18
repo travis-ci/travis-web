@@ -30,6 +30,7 @@ module('Acceptance | profile/billing', function (hooks) {
         createSubscription: true
       }
     });
+    this.server.create('allowance', {subscription_type: 1});
 
     signInUser(this.user);
 

@@ -10,16 +10,15 @@ module('Acceptance | builds/debug', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
+    const currentUser = this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
     signInUser(currentUser);
   });
 
   test('debugging single-job build', async function (assert) {
     enableFeature('debug-builds');
 
-    let repository =  this.server.create('repository', {
-      private: true
-    });
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', private: true, owner: { login: 'travis-ci', id: 1} });
 
     this.server.create('branch', {});
 
@@ -46,7 +45,8 @@ module('Acceptance | builds/debug', function (hooks) {
   test('multi-job builds cannot be debugged', async function (assert) {
     enableFeature('debug-builds');
 
-    let repository =  this.server.create('repository');
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1} });
+
     this.server.create('branch', {});
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });

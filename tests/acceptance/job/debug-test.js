@@ -13,13 +13,16 @@ module('Acceptance | jobs/debug', function (hooks) {
 
   hooks.beforeEach(function () {
     const currentUser = this.server.create('user');
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
     signInUser(currentUser);
   });
 
   test('debugging job', async function (assert) {
     enableFeature('debugBuilds');
 
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', private: true });
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', private: true, owner: { login: 'travis-ci', id: 1 } });
     let branch = this.server.create('branch', { name: 'acceptance-tests' });
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
