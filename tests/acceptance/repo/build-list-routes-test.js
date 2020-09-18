@@ -265,7 +265,11 @@ module('Acceptance | repo build list routes', function (hooks) {
   });
 
   test('renders no builds messaging when none present', async function (assert) {
-    this.server.create('repository');
+    this.server.create('user', {
+      login: 'travis-ci'
+    });
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('repository', { owner: { login: 'travis-ci', id: 3 } });
 
     await page.visitBuildHistory({ organization: 'travis-ci', repo: 'travis-web' });
 
