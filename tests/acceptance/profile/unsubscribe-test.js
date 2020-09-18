@@ -50,7 +50,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
         this.repo = this.server.create('repository', {
           email_subscribed: true,
           owner: {
-            login: this.user.login
+            login: this.user.login,
+            id: this.user.id
           },
           owner_name: this.user.login
         });
@@ -93,7 +94,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
         this.repo = this.server.create('repository', {
           email_subscribed: false,
           owner: {
-            login: this.user.login
+            login: this.user.login,
+            id: this.user.id
           },
           owner_name: this.user.login
         });

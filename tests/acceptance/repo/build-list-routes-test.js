@@ -30,9 +30,9 @@ module('Acceptance | repo build list routes', function (hooks) {
     });
 
     const repository = this.server.create('repository', {
-      slug: 'org-login/repository-name',
+      slug: 'user-login/repository-name',
       owner: {
-        login: 'org-login',
+        login: 'user-login',
         id: 1
       }
     });
@@ -262,7 +262,18 @@ module('Acceptance | repo build list routes', function (hooks) {
   });
 
   test('renders no builds messaging when none present', async function (assert) {
-    this.server.create('repository');
+    const tr = this.server.create('user', {
+      name: 'travis-ci',
+      login: 'travis-ci'
+    });
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('repository', {
+      owner: {
+        login: tr.login,
+        id: tr.id
+      }
+    });
 
     await page.visitBuildHistory({ organization: 'travis-ci', repo: 'travis-web' });
 
