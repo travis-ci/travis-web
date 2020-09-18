@@ -26,13 +26,16 @@ module('Acceptance | repo settings', function (hooks) {
       login: 'org-login',
     });
 
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('allowance', {subscription_type: 1});
     const repository = this.server.create('repository', {
       name: 'repository-name',
       slug: 'org-login/repository-name',
       private: true,
       permissions: {
         admin: true
-      }
+      },
+      owner: { login: 'org-login', id: 2 }
     });
 
     repository.attrs.permissions.create_cron = true;

@@ -10,12 +10,14 @@ module('Acceptance | builds/view pull request', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
+    const currentUser = this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
     signInUser(currentUser);
   });
 
   test('renders a pull request', async function (assert) {
-    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1} });
+
 
     let commitBody =
       'Within the organization there is a gap between words and deeds, between what organizations say they will do, ' +

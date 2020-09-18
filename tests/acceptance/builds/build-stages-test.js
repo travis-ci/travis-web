@@ -17,7 +17,9 @@ module('Acceptance | build stages', function (hooks) {
   }
 
   test('visiting build with one stage', async function (assert) {
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1} });
 
     let branch = this.server.create('branch', { name: 'acceptance-tests' });
     let gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -49,7 +51,10 @@ module('Acceptance | build stages', function (hooks) {
   });
 
   test('visiting build with stages', async function (assert) {
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1} });
+
     this.server.create('branch', {});
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
