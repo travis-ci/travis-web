@@ -563,6 +563,11 @@ export default create({
       }
     },
 
+    warningMessage: {
+      scope: '[data-test-warning-message]',
+      text: text()
+    },
+
     selectedAddonOverview: {
       scope: '.selected-plan',
       name: {
@@ -646,6 +651,10 @@ export default create({
       subscribeButton: {
         scope: '[data-test-subscribe-button]',
       }
+    },
+
+    freeTierPlan: {
+      scope: '.select-plan-free_tier_plan'
     },
 
     marketplaceButton: {

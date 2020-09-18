@@ -75,6 +75,14 @@ export default Model.extend({
     };
   }),
 
+  hasPublicCredits: computed('addonUsage.public.remainingCredits', function () {
+    return this.addonUsage.public.remainingCredits > 0;
+  }),
+
+  hasPrivateCredits: computed('addonUsage.private.remainingCredits', function () {
+    return this.addonUsage.public.remainingCredits > 0;
+  }),
+
   priceInCents: reads('plan.startingPrice'),
   validateCouponResult: reads('validateCoupon.last.value'),
 
@@ -109,6 +117,13 @@ export default Model.extend({
 
   chargeUnpaidInvoices: task(function* () {
     return yield this.api.post(`/v2_subscription/${this.id}/pay`);
+  }).drop(),
+
+  switchToFreeSubscription: task(function* (reason, details) {
+    yield this.api.post(`/v2_subscription/${this.id}/changetofree`, {
+      data: { reason, reason_details: details }
+    });
+    yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
 
   changePlan: task(function* (plan) {

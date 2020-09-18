@@ -10,5 +10,8 @@ export default Model.extend({
   availableStandaloneAddons: attr(),
 
   isFree: equal('startingPrice', 0),
-  isUnlimitedUsers: equal('startingUsers', 999999)
+
+  isUnlimitedUsers: equal('startingUsers', 999999),
+
+  addonConfigs: attr()
 });
