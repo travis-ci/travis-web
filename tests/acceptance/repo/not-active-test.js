@@ -15,8 +15,18 @@ module('Acceptance | repo not active', function (hooks) {
       active: false,
       permissions: {
         admin: false
+      },
+      owner: {
+        login: 'musterfrau',
+        id: 1
       }
     });
+
+    this.server.create('user', {
+      name: 'Erika Musterfrau',
+      login: 'musterfrau'
+    });
+    this.server.create('allowance', {subscription_type: 1});
 
     await page.visit({ organization: 'musterfrau', repo: 'a-repo' });
 
@@ -31,6 +41,10 @@ module('Acceptance | repo not active', function (hooks) {
       active: false,
       permissions: {
         admin: true
+      },
+      owner: {
+        login: 'musterfrau',
+        id: 1
       }
     });
 
@@ -38,6 +52,7 @@ module('Acceptance | repo not active', function (hooks) {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });
+    this.server.create('allowance', {subscription_type: 1});
 
     signInUser(user);
 
@@ -58,7 +73,8 @@ module('Acceptance | repo not active', function (hooks) {
         admin: true,
       },
       owner: {
-        login: 'musterfrau'
+        login: 'musterfrau',
+        id: 1
       }
     });
 
@@ -66,6 +82,8 @@ module('Acceptance | repo not active', function (hooks) {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });
+
+    this.server.create('allowance', {subscription_type: 1});
 
     signInUser(user);
 
@@ -86,7 +104,9 @@ module('Acceptance | repo not active', function (hooks) {
         github_id: 321,
         installation: {
           id: 5678
-        }
+        },
+        login: 'musterfrau',
+        id: 1
       }
     });
 
@@ -94,6 +114,8 @@ module('Acceptance | repo not active', function (hooks) {
       name: 'Erika Musterfrau',
       login: 'musterfrau'
     });
+
+    this.server.create('allowance', {subscription_type: 1});
 
     signInUser(user);
 
