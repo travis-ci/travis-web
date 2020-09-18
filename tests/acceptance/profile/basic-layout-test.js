@@ -27,13 +27,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
       github_id: 1974,
       vcs_type: 'GithubUser',
       vcs_id: 1974,
-      avatar_url: '/images/tiny.gif',
-      allowance: {
-        subscription_type: 2,
-        private_repos: false,
-        public_repos: false,
-        concurrency_limit: 4
-      }
+      avatar_url: '/images/tiny.gif'
     });
 
     this.server.create('installation', {

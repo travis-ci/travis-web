@@ -23,10 +23,14 @@ export default Component.extend({
   isManual: bool('subscription.isManual'),
   isManaged: bool('subscription.managedSubscription'),
   isEducation: and('isSubscriptionsEmpty', 'isEducationalAccount'),
+  showInvoices: computed('showPlansSelector', 'showAddonsSelector', function () {
+    return !this.showPlansSelector && !this.showAddonsSelector && this.invoices;
+  }),
 
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
 
   showPlansSelector: false,
+  showAddonsSelector: false,
 
   invoices: computed('subscription.id', 'v2subscription.id', function () {
     const subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');

@@ -40,7 +40,7 @@ export default VcsEntity.extend({
   isOrganization: equal('type', 'organization'),
   isAssembla: match('vcsType', /Assembla\S+$/),
 
-  allowance: attr(),
+  allowance: belongsTo('allowance', { async: false }),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
@@ -121,6 +121,7 @@ export default VcsEntity.extend({
 
   isFetchV2PlansRunning: reads('fetchV2Plans.isRunning'),
   eligibleV2Plans: reads('fetchV2Plans.lastSuccessful.value'),
+  availableStandaloneAddons: reads('v2subscription.plan.availableStandaloneAddons'),
 
   fetchBetaMigrationRequests() {
     return this.tasks.fetchBetaMigrationRequestsTask.perform();

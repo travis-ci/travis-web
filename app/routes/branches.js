@@ -27,5 +27,12 @@ export default TravisRoute.extend({
       this.set('tabStates.sidebarTab', 'owned');
       this.set('tabStates.mainTab', 'branches');
     }
+  },
+
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    if (!repo.repoOwnerAllowance) {
+      repo.fetchRepoOwnerAllowance.perform();
+    }
   }
 });

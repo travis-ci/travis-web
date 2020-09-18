@@ -16,6 +16,9 @@ module('Acceptance | repo branches', function (hooks) {
       name: 'User Name',
       login: 'user-login',
     });
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('allowance', {subscription_type: 1});
 
     signInUser(this.currentUser);
 
@@ -33,9 +36,18 @@ module('Acceptance | repo branches', function (hooks) {
       login: 'org-login',
     });
 
+    this.server.create('organization', {
+      name: 'Travis CI',
+      login: 'travis-ci',
+    });
+
     const repository = this.server.create('repository', {
       name: 'repository-name',
-      slug: 'org-login/repository-name'
+      slug: 'org-login/repository-name',
+      owner: {
+        login: 'org-login',
+        id: 2
+      }
     });
 
     const repoId = parseInt(repository.id);
@@ -235,7 +247,7 @@ module('Acceptance | repo branches', function (hooks) {
     this.server.db.repositories.remove();
     this.server.db.builds.remove();
 
-    this.server.create('repository');
+    this.server.create('repository', { owner: { login: 'travis-ci', id: 3}});
 
     await branchesPage.visit({ organization: 'travis-ci', repo: 'travis-web' });
 

@@ -80,11 +80,16 @@ export default Component.extend({
     if (this.selectedPlan.isFree) {
       this.set('showSwitchToFreeModal', true);
     } else {
-      yield this.subscription.changePlan.perform(this.selectedPlan.id);
+      if (this.selectedAddon) {
+        yield this.subscription.buyAddon.perform(this.selectedAddon);
+      } else {
+        yield this.subscription.changePlan.perform(this.selectedPlan.id);
+      }
       yield this.accounts.fetchV2Subscriptions.perform();
       yield this.retryAuthorization.perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
+      this.set('showAddonsSelector', false);
     }
   }).drop(),
 

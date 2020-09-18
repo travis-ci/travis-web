@@ -568,8 +568,40 @@ export default create({
       text: text()
     },
 
-    selectedPlanOverview: {
+    selectedAddonOverview: {
       scope: '.selected-plan',
+      name: {
+        scope: '[data-test-selected-addon-name]',
+        text: text()
+      },
+      price: {
+        scope: '[data-test-selected-addon-price]',
+        text: text()
+      },
+      changeAddon: {
+        scope: '[data-test-change-selected-addon]',
+        text: text()
+      }
+    },
+
+    selectedAddon: {
+      scope: '.highlight-plan',
+      price: {
+        scope: '[data-test-selected-addon-price]',
+        text: text()
+      },
+      name: {
+        scope: '[data-test-selected-addon-name]',
+        text: text()
+      },
+      desc: {
+        scope: '[data-test-selected-addon-desc]',
+        text: text()
+      }
+    },
+
+    selectedPlanOverview: {
+      scope: '[data-test-selected-plan]',
 
       heading: {
         scope: '[data-test-selected-plan-heading]',

@@ -7,6 +7,7 @@ export default Model.extend({
   startingUsers: attr('number'),
   privateCredits: attr('number'),
   publicCredits: attr('number'),
+  availableStandaloneAddons: attr(),
 
   isFree: equal('startingPrice', 0),
 
