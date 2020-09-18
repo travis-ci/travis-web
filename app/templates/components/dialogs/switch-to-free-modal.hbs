@@ -30,7 +30,6 @@
             <field.textarea rows="4" placeholder="Could you share more information with us?">{{this.switchToFreeReasonDetails}}</field.textarea>
           </form.field>
         </div>
-        {{log }}
         <div class="form-elem switchtofree-notice">
           You are switching to the Free Trier Plan. Your remaining addon credits will be discarded and only the credits coming with the Free Trier Plan plan will be available.
           {{#if (or (gt this.subscription.addonUsage.public.remainingCredits 0)
