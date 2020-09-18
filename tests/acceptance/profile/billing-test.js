@@ -43,6 +43,7 @@ module('Acceptance | profile/billing', function (hooks) {
     this.server.create('v2-plan-config', { id: 'free_tier_plan',  name: 'Free Tier Plan', startingPrice: 0, startingUsers: 999999, privateCredits: 10000, publicCredits: 40000, isFree: true, isUnlimitedUsers: true });
     this.server.create('v2-plan-config', { id: 'standard_tier_plan', name: 'Standard Tier Plan', startingPrice: 3000, startingUsers: 100, privateCredits: 25000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
     this.defaultV2Plan = this.server.create('v2-plan-config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', startingPrice: 30000, startingUsers: 10000, privateCredits: 500000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
+    this.defaultV2Plan.save();
 
     let plan = this.server.create('plan', {
       name: 'Small Business1',
@@ -1028,6 +1029,7 @@ module('Acceptance | profile/billing', function (hooks) {
         write: true
       }
     });
+
     v2Subscription.save();
     this.subscription = v2Subscription;
 
