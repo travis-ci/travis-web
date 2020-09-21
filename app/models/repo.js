@@ -98,6 +98,9 @@ const Repo = VcsEntity.extend({
 
     if (allowance && allowance.subscriptionType === 1)
       return true;
+    if (!allowance && !this.repoOwnerAllowance) {
+      return true;
+    }
     if (!allowance) {
       return false;
     }

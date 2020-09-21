@@ -120,7 +120,7 @@ export default Model.extend({
   }).drop(),
 
   switchToFreeSubscription: task(function* (reason, details) {
-    yield this.api.post(`/v2_subscription/${this.id}/changetofree`, {
+    yield this.api.patch(`/v2_subscription/${this.id}/changetofree`, {
       data: { reason, reason_details: details }
     });
     yield this.accounts.fetchV2Subscriptions.perform();

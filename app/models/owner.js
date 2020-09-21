@@ -40,7 +40,7 @@ export default VcsEntity.extend({
   isOrganization: equal('type', 'organization'),
   isAssembla: match('vcsType', /Assembla\S+$/),
 
-  allowance: belongsTo('allowance', { async: false }),
+  allowance: belongsTo('allowance', { async: true }),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
