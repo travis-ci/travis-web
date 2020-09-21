@@ -67,12 +67,12 @@ export default Component.extend({
   didRender() {
     const allowance = this.model.allowance;
 
-    if (!allowance || allowance.subscriptionType !== 2)
+    if (!allowance || (allowance && allowance.get('subscriptionType') !== 2))
       return;
 
-    if (!allowance.privateRepos) {
+    if (!allowance.get('privateRepos')) {
       this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.publicRepos) {
+    } else if (!allowance.get('publicRepos')) {
       this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
     }
   },
@@ -80,7 +80,7 @@ export default Component.extend({
   willDestroyElement() {
     const allowance = this.model.allowance;
 
-    if (allowance && allowance.subscriptionType === 2) {
+    if (allowance && allowance.get('subscriptionType') === 2) {
       this.flashes.removeCustomsByClassName('warning');
     }
   }
