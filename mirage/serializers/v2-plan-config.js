@@ -3,6 +3,10 @@ import { isArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
 
 export default Serializer.extend({
+  serializeSingle(plan) {
+    return plan.id;
+  },
+
   serialize(object) {
     if (isArray(object.models)) {
       return {

@@ -787,6 +787,22 @@
       }
     }
 
+    .billing-subscription-user-usage {
+      margin-bottom: 25px;
+
+      .used-users {
+        font-size: 14px;
+        font-weight: 600;
+        color: $asphalt-grey;
+      }
+
+      .desc {
+        font-size: 14px;
+        color: $asphalt-grey;
+        margin-bottom: 8px;
+      }
+    }
+
     .billing-subscription-credits {
       margin-bottom: 25px;
 
