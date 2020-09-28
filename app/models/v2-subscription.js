@@ -34,6 +34,19 @@ export default Model.extend({
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
 
+  usedUsers: computed('addons.[].current_usage', function () {
+    if (!this.addons) {
+      return 0;
+    }
+    return this.addons.reduce((processed, addon) => {
+      if (addon.type === 'user_license') {
+        processed += addon.current_usage.addon_usage;
+      }
+
+      return processed;
+    }, 0);
+  }),
+
   addonUsage: computed('addons.[].current_usage', function () {
     if (!this.addons) {
       const emptyUsage = { totalCredits: 0, usedCredits: 0, remainingCredits: 0 };

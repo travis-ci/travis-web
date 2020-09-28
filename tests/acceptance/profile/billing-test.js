@@ -41,9 +41,9 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.trial = trial;
 
-    this.server.create('v2-plan-config', { name: 'Free Tier Plan', startingPrice: 0, startingUsers: 999999, privateCredits: 10000, publicCredits: 40000, isFree: true, isUnlimitedUsers: true });
-    this.server.create('v2-plan-config', { name: 'Standard Tier Plan', startingPrice: 3000, startingUsers: 100, privateCredits: 25000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
-    this.defaultV2Plan = this.server.create('v2-plan-config', { name: 'Pro Tier Plan', startingPrice: 30000, startingUsers: 10000, privateCredits: 500000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
+    this.server.create('v2-plan-config', { id: 'free_tier_plan', name: 'Free Tier Plan', startingPrice: 0, startingUsers: 999999, privateCredits: 10000, publicCredits: 40000, isFree: true, isUnlimitedUsers: true });
+    this.server.create('v2-plan-config', { id: 'standard_tier_plan', name: 'Standard Tier Plan', startingPrice: 3000, startingUsers: 100, privateCredits: 25000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
+    this.defaultV2Plan = this.server.create('v2-plan-config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', startingPrice: 30000, startingUsers: 10000, privateCredits: 500000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
     this.defaultV2Plan.save();
 
     let plan = this.server.create('plan', {
@@ -115,6 +115,7 @@ module('Acceptance | profile/billing', function (hooks) {
       id: '1919',
       created_at: new Date(1919, 4, 15),
       url: 'https://example.com/1919.pdf',
+      status: 'paid',
       amount_due: 6900
     });
 
@@ -122,6 +123,7 @@ module('Acceptance | profile/billing', function (hooks) {
       id: '2010',
       created_at: new Date(2010, 1, 14),
       url: 'https://example.com/2010.pdf',
+      status: 'paid',
       amount_due: 6900
     });
 
@@ -129,6 +131,7 @@ module('Acceptance | profile/billing', function (hooks) {
       id: '20102',
       created_at: new Date(2010, 2, 14),
       url: 'https://example.com/20102.pdf',
+      status: 'open',
       amount_due: 6900
     });
 
@@ -170,6 +173,7 @@ module('Acceptance | profile/billing', function (hooks) {
       id: '2009',
       created_at: new Date(2009, 4, 15),
       url: 'https://example.com/2009.pdf',
+      status: 'paid',
       amount_due: 6900
     });
 
@@ -177,6 +181,7 @@ module('Acceptance | profile/billing', function (hooks) {
       id: '2010',
       created_at: new Date(2010, 1, 14),
       url: 'https://example.com/2010.pdf',
+      status: 'paid',
       amount_due: 6900
     });
 
@@ -184,6 +189,7 @@ module('Acceptance | profile/billing', function (hooks) {
       id: '20102',
       created_at: new Date(2010, 2, 14),
       url: 'https://example.com/20102.pdf',
+      status: 'paid',
       amount_due: 6900
     });
 
@@ -628,20 +634,15 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden, 'expected the invitation to switch to annual billing to be hidden');
   });
 
-  test('view billing tab when not subscribed and has subscription write permissions with no trial', async function (assert) {
+  test('view billing tab when not subscribed and has subscription write permissions', async function (assert) {
     this.trial.destroy();
     this.subscription.destroy();
 
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    assert.equal(profilePage.billing.trial.bannerInformation, 'Open source builds are always free. If you\'d like more concurrency, start a trial or subscribe to a plan.');
-    assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
-    assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
-    assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
+    assert.ok(profilePage.billing.billingPlanChoices.isPresent);
+    assert.ok(profilePage.billing.billingPlanChoices.isVisible);
   });
 
   test('view billing tab when not subscribed and has subscription write permissions with active trial', async function (assert) {
@@ -656,6 +657,9 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
+
+    assert.ok(profilePage.billing.billingPlanChoices.isPresent);
+    assert.ok(profilePage.billing.billingPlanChoices.isVisible);
   });
 
   test('view billing tab when there is no subscription and no write permissions', async function (assert) {
@@ -693,12 +697,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
-    assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
-    assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
+    assert.ok(profilePage.billing.billingPlanChoices.isPresent);
+    assert.ok(profilePage.billing.billingPlanChoices.isVisible);
   });
 
   test('view billing tab when trial has not started', async function (assert) {
@@ -712,13 +712,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     percySnapshot(assert);
 
-
-    assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name.text, '100 free builds to get you started');
-    assert.equal(profilePage.billing.trial.subtext, 'Start your trial to get 100 free builds and 2 concurrent jobs for both public and private projects.');
-    assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
+    assert.ok(profilePage.billing.billingPlanChoices.isPresent);
+    assert.ok(profilePage.billing.billingPlanChoices.isVisible);
   });
 
   test('view billing tab with no create subscription permissions', async function (assert) {
@@ -730,8 +725,8 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    assert.ok(profilePage.billing.trial.activateButton.isDisabled);
-    assert.equal(profilePage.billing.trial.activateButton.text, 'Activate trial');
+    assert.ok(profilePage.billing.noPermissionMessage.isPresent);
+    assert.ok(profilePage.billing.noPermissionMessage.isVisible);
   });
 
   test('view billing tab when there is a new trial', async function (assert) {
@@ -1006,12 +1001,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.billing.selectedPlanOverview.changePlan.click();
 
-    assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
-    assert.equal(profilePage.billing.trial.name.text, 'You have 10 trial builds left');
-    assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
-    assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
-    assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
-    assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');
+    assert.ok(profilePage.billing.billingPlanChoices.isPresent);
+    assert.ok(profilePage.billing.billingPlanChoices.isVisible);
   });
 
   test('apply 10 dollars off coupon', async function (assert) {

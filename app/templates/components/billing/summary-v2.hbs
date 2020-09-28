@@ -99,10 +99,11 @@
 </div>
 <hr />
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
+  <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
+  <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
   {{#if (not this.subscription.plan.isFree)}}
     <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
     <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
     <hr />
   {{/if}}
-  <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
 {{/if}}

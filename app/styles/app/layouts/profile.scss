@@ -679,6 +679,15 @@ section.invoices {
     margin-left: -5px;
   }
 
+  .invoice-status {
+    text-transform: capitalize;
+  }
+
+  .bad-invoice {
+    text-transform: capitalize;
+    color: $dark-red;
+  }
+
   .icon-download {
     height: 24px;
     width: 24px;

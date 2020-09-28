@@ -7,6 +7,7 @@
         @account={{this.account}}
         @selectedPlan={{this.selectedPlan}}
         @subscription={{this.subscription}}
+        @newSubscription={{this.newV2Subscription}}
       />
     {{/if}}
     {{#if this.isManual}}
@@ -28,14 +29,23 @@
       <Billing::Trial
         @account={{this.account}}
         @selectedPlan={{this.selectedPlan}}
+        @newSubscription={{this.newV2Subscription}}
       />
     {{/if}}
   </section>
   {{#if this.showInvoices}}
-    <Billing::Invoices
-      @account={{this.account}}
-      @invoices={{this.invoices}}
-      @subscription={{this.subscription}}
-    />
+    {{#if this.hasV2Subscription}}
+      <Billing::Invoices
+        @account={{this.account}}
+        @invoices={{this.invoices}}
+        @subscription={{this.v2subscription}}
+      />
+    {{else}}
+      <Billing::Invoices
+        @account={{this.account}}
+        @invoices={{this.invoices}}
+        @subscription={{this.subscription}}
+      />
+    {{/if}}
   {{/if}}
 {{/if}}
