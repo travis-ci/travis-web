@@ -1,0 +1,14 @@
+<div class="oss-toggle">
+  <TravisSwitch
+    @active={{this.consumeOSSCredits}}
+    @disabled={{this.toggleOSSCredits.isRunning}}
+    @onToggle={{perform this.toggleOSSCredits}}
+  />
+  <span class="oss-name">
+    OSS Credits consumption
+  </span>
+  <p class="oss-description">
+    You are attempting to run a build via OSS credits, the monthly credit allotment for the OSS credits has been met. You can regain
+    your build times once your monthly cycle resets or switch to using your private credits for your OSS builds.
+  </p>
+</div>
