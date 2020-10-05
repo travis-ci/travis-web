@@ -47,10 +47,12 @@ export default Model.extend({
         processed.totalCredits += addon.current_usage.addon_quantity;
         processed.usedCredits += addon.current_usage.addon_usage;
         processed.remainingCredits += addon.current_usage.remaining;
+        processed.validDate = Date.parse(addon.current_usage.valid_to);
       }
 
       return processed;
     }, {
+      validDate: Date(2000, 1, 1),
       totalCredits: 0,
       usedCredits: 0,
       remainingCredits: 0,
@@ -60,10 +62,12 @@ export default Model.extend({
         processed.totalCredits += addon.current_usage.addon_quantity;
         processed.usedCredits += addon.current_usage.addon_usage;
         processed.remainingCredits += addon.current_usage.remaining;
+        processed.purchaseDate = Date.parse(addon.current_usage.purchase_date);
       }
 
       return processed;
     }, {
+      purchaseDate: Date(2000, 1, 1),
       totalCredits: 0,
       usedCredits: 0,
       remainingCredits: 0,

@@ -1,7 +1,7 @@
 {{#if (lt this.subscription.addonUsage.private.remainingCredits 0)}}
   <span class="notice-banner--yellow" data-test-warning-message='true'>
     Your Private or OSS Credit balance is negative. After upgrading to the {{this.selectedPlan.name}} plan the negative Credit amount
-    will be deducted from the respective new credit type balance. Please see our <ExternalLinkTo @href={{this.config.urls.docs}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details.
+    will be deducted from the respective new credit type balance. Please see our <ExternalLinkTo @href={{config-get 'urls.docs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details.
   </span>
 {{else if (gt this.subscription.addonUsage.private.remainingCredits 0)}}
   {{#if this.sameAddons}}
@@ -17,7 +17,7 @@
     </span>
   {{else}}
     <span class="notice-banner--yellow" data-test-warning-message='true'>
-      Pricing for number of users who are allowed to trigger builds may be changed. See our <ExternalLinkTo @href={{this.config.urls.docs}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details.
+      Pricing for number of users who are allowed to trigger builds may be changed. See our <ExternalLinkTo @href={{config-get 'urls.docs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details.
     </span>
   {{/if}}
 {{/if}}
