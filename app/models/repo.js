@@ -105,7 +105,9 @@ const Repo = VcsEntity.extend({
       return false;
     }
 
-    return isPrivate ? allowance.privateRepos : allowance.publicRepos;
+    const buildCredits = isPrivate ? allowance.privateRepos : allowance.publicRepos;
+
+    return buildCredits && allowance.userUsage;
   }),
 
   defaultBranch: belongsTo('branch', { async: false }),

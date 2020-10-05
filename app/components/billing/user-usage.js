@@ -6,6 +6,9 @@ export default Component.extend({
   subscription: null,
   account: null,
 
-  usedUsers: reads('subscription.usedUsers')
+  usedUsers: reads('subscription.usedUsers'),
+
+  usersUsage: reads('account.allowance.userUsage'),
+  pendingUserLicenses: reads('account.allowance.pendingUserLicenses')
 
 });
