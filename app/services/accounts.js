@@ -72,6 +72,7 @@ export default Service.extend({
     this.fetchOrganizations.perform();
     if (billingEndpoint) {
       this.fetchSubscriptions.perform();
+      this.fetchV2Subscriptions.perform();
       this.fetchTrials.perform();
     }
   },
