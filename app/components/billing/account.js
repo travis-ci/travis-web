@@ -41,4 +41,10 @@ export default Component.extend({
       return [];
     }
   }),
+
+  init() {
+    this._super(...arguments);
+
+    this.accounts.fetchV2Subscriptions.perform();
+  }
 });
