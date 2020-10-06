@@ -75,6 +75,12 @@ export default Component.extend({
     } else if (!allowance.get('publicRepos')) {
       this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
     }
+
+    if (allowance.get('pendingUserLicenses')) {
+      this.flashes.custom('flashes/pending-user-licenses', { owner: this.model, isUser: this.model.isUser }, 'warning');
+    } else if (!allowance.get('userUsage')) {
+      this.flashes.custom('flashes/users-limit-exceeded', { owner: this.model, isUser: this.model.isUser }, 'warning');
+    }
   },
 
   willDestroyElement() {

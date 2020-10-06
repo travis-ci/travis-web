@@ -19,6 +19,8 @@ module('Acceptance | repo/trigger build', function (hooks) {
       subscription_type: 2,
       public_repos: true,
       private_repos: true,
+      user_usage: true,
+      pending_user_licenses: false,
       concurrency_limit: 2
     }),
 
