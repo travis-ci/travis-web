@@ -11,9 +11,11 @@ export default Component.extend({
   creditsPublicTotal: reads('subscription.addonUsage.public.totalCredits'),
   creditsPublicUsed: reads('subscription.addonUsage.public.usedCredits'),
   creditsPublicAvailable: reads('subscription.addonUsage.public.remainingCredits'),
+  creditsPublicValidDate: reads('subscription.addonUsage.public.validDate'),
   creditsPrivateTotal: reads('subscription.addonUsage.private.totalCredits'),
   creditsPrivateUsed: reads('subscription.addonUsage.private.usedCredits'),
   creditsPrivateAvailable: reads('subscription.addonUsage.private.remainingCredits'),
+  creditsPrivatePurchaseDate: reads('subscription.addonUsage.private.purchaseDate'),
 
   creditsTotal: computed('creditsTab', 'creditsPublicTotal', 'creditsPrivateTotal', function () {
     if (this.creditsTab === 1)

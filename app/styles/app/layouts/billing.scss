@@ -280,6 +280,13 @@
         }
       }
 
+      &--desclink {
+        &:hover {
+          border-bottom: 1px solid;
+          cursor: pointer;
+        }  
+      }
+
       &--help {
         &:hover {
           border-bottom: 1px solid;
@@ -308,6 +315,11 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &-bold {
+          @extend .billing-plans__box-v2--name;
+          font-weight: bolder;
+        }
       }
 
       &--button {
