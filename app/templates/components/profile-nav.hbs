@@ -126,6 +126,13 @@
               </LinkTo>
             </li>
           {{/if}}
+          {{#if this.showSubscriptionTab}}
+            <li data-test-plan_usage-tab>
+              <LinkTo @route="account.plan_usage">
+                Plan usage
+              </LinkTo>
+            </li>
+          {{/if}}
         {{/if}}
         {{#if this.model.isOrganization}}
           <li>
@@ -151,6 +158,13 @@
             <li>
               <LinkTo @route="organization.migrate" @model={{this.model}}>
                 Migrate
+              </LinkTo>
+            </li>
+          {{/if}}
+          {{#if this.showSubscriptionTab}}
+            <li data-test-plan_usage-tab>
+              <LinkTo @route="organization.plan_usage" @model={{this.model}}>
+                Plan usage
               </LinkTo>
             </li>
           {{/if}}

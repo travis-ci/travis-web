@@ -235,5 +235,13 @@ export default VcsEntity.extend({
   logMultipleSubscriptionsError() {
     const exception = new Error(`Account ${this.login} has more than one active subscription!`);
     this.raven.logException(exception, true);
-  }
+  },
+
+  executions: reads('fetchExecutions.lastSuccessful.value'),
+
+  fetchExecutions: task(function* (from, to) {
+    const url = `/v3/owner/${this.login}/executions?page=${1}&per_page=${1000}&from=${from}&to=${to}`;
+    const result = yield this.api.get(url);
+    return result ? result.executions : [];
+  }).keepLatest(),
 });
