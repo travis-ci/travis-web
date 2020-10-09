@@ -33,12 +33,16 @@
                   {{format-currency plan.startingPrice floor="true"}}
                 {{/if}}
               </p>
-              <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.privateCredits}} Credits
-              </p>
-              <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-                <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
-              </p>
+              {{#if plan.hasCreditAddons}}
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.privateCredits}} Credits
+                </p>
+              {{/if}}
+              {{#if plan.hasOSSCreditAddons}}
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
+                </p>
+              {{/if}}
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
                 <SvgImage @name="stage-passed" @class="icon icon-desc" />
                 {{#if plan.isUnlimitedUsers}}

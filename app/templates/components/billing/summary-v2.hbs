@@ -33,12 +33,16 @@
                   Up to {{this.subscription.plan.startingUsers}} unique users
                 {{/if}}
               </p>
-              <p>
-                {{this.subscription.plan.privateCredits}} Credits
-              </p>
-              <p>
-                {{this.subscription.plan.publicCredits}} OSS Credits per month
-              </p>
+              {{#if this.subscription.plan.hasCreditAddons}}
+                <p>
+                  {{this.subscription.plan.privateCredits}} Credits
+                </p>
+              {{/if}}
+              {{#if this.subscription.plan.hasOSSCreditAddons}}
+                <p>
+                  {{this.subscription.plan.publicCredits}} OSS Credits per month
+                </p>
+              {{/if}}
               <p>
                 Linux, Windows, macOS builds
               </p>

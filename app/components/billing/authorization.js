@@ -33,7 +33,9 @@ export default Component.extend({
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
   freeV2Plan: equal('subscription.plan.startingPrice', 0),
-  canBuyAddons: not('freeV2Plan'),
+  paidV2Plan: not('freeV2Plan'),
+  v2PlanHasAddons: or('subscription.plan.hasCreditAddons', 'subscription.plan.hasOSSAddons'),
+  canBuyAddons: and('paidV2Plan', 'v2PlanHasAddons'),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,

@@ -9,7 +9,7 @@
       You are switching to the {{this.selectedPlan.name}}. Your remaining credits will be added to credits coming with {{this.selectedPlan.name}}.
       Credits that will be added:
       {{#if (gt this.subscription.addonUsage.public.remainingCredits 0)}}
-        OSS Credits remaining balance: {{this.subscription.addonUsage.public.remainingCredits}}
+        OSS Only Credits remaining balance: {{this.subscription.addonUsage.public.remainingCredits}}
       {{/if}}
       {{#if (gt this.subscription.addonUsage.private.remainingCredits 0)}}
         Credits remaining balance: {{this.subscription.addonUsage.private.remainingCredits}}

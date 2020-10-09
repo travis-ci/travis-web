@@ -1568,10 +1568,10 @@ export default {
     "v2-plan-config":  {
       "@type":            "resource",
       "actions":          { },
-      "attributes":       ["id", "name", "private_repos", "starting_price", "starting_users", "private_credits", "public_credits"],
+      "attributes":       ["id", "name", "private_repos", "starting_price", "starting_users", "private_credits", "public_credits", "addon_configs"],
       "representations":  {
-        "standard":       ["id", "name", "private_repos", "starting_price", "starting_users", "private_credits", "public_credits"],
-        "minimal":        ["id", "name", "private_repos", "starting_price", "starting_users", "private_credits", "public_credits"],
+        "standard":       ["id", "name", "private_repos", "starting_price", "starting_users", "private_credits", "public_credits", "addon_configs"],
+        "minimal":        ["id", "name", "private_repos", "starting_price", "starting_users", "private_credits", "public_credits", "addon_configs"],
       }
     },
     "preference": {
