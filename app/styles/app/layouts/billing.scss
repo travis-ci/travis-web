@@ -1004,7 +1004,13 @@
       max-height: 170px;
       border: solid 10px #3eaaaf;
       border-radius: 50%;
-      margin: 1%;
+      margin: 5%;
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
       span {
         vertical-align: middle;
         display: table-cell;

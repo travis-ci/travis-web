@@ -45,7 +45,7 @@ export default Component.extend({
   summarizedMinutesByOs: reads('summarizedCalculations.minutesByOs'),
   circleWidth: computed('summarizedMinutesByOs', function () {
     const oss = Object.keys(this.summarizedMinutesByOs).length;
-    const width = Math.round(100 / (oss === 0 ? 1 : oss)) - 2;
+    const width = Math.round(100 / (oss === 0 ? 1 : oss));
     return `${width}%`;
   }),
   uniqueUsers: computed('summarizedCalculations.users', function () {
@@ -64,6 +64,10 @@ export default Component.extend({
     let minutesByOs = [];
     let users = [];
     const executions = this.owner.get('executions');
+
+    minutesByOs[getOsIconName('linux')] = 0;
+    minutesByOs[getOsIconName('osx')] = 0;
+    minutesByOs[getOsIconName('windows')] = 0;
 
     if (executions) {
       executions.forEach((execution) => {
@@ -129,7 +133,7 @@ export default Component.extend({
   executionsDataForCsv: computed('owner.executions', function () {
     let data = [];
     const executions = this.owner.get('executions');
-    if (executions) {      
+    if (executions) {
       executions.forEach(async (execution) => {
         const minutes = execution.started_at && execution.finished_at ?
           (Date.parse(execution.started_at) - Date.parse(execution.finished_at)) / 1000 * 60 : 0;
