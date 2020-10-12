@@ -54,11 +54,7 @@ module('Integration | Component | warning-message', function (hooks) {
       id: 1,
       name: 'Startup',
       startingPrice: 3000,
-      startingUsers: 10,
-      addonConfigs: [
-        {id: '1', name: 'abc', price: 0, quantity: 40000, type: 'credit_public'},
-        {id: '2', name: 'xyz', price: 0, quantity: 10000, type: 'credit_private'}
-      ]
+      startingUsers: 10
     };
 
     this.set('selectedPlan', selectedPlan);
