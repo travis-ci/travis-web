@@ -5,7 +5,6 @@ import { or, not, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { typeOf } from '@ember/utils';
 import config from 'travis/config/environment';
-import Ember from 'ember';
 
 export default Component.extend({
   stripe: service(),
@@ -86,11 +85,7 @@ export default Component.extend({
       } else {
         yield this.subscription.changePlan.perform(this.selectedPlan.id);
       }
-      if (!Ember.testing) {
-        yield this.pollSubscription.perform();
-      } else {
-        yield this.accounts.fetchV2Subscriptions.perform();
-      }
+      yield this.pollSubscription.perform();
       yield this.retryAuthorization.perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
@@ -148,11 +143,7 @@ export default Component.extend({
           yield subscription.save();
           yield subscription.changePlan.perform(selectedPlan.id);
         }
-        if (!Ember.testing) {
-          yield this.pollSubscription.perform();
-        } else {
-          yield this.accounts.fetchV2Subscriptions.perform();
-        }
+        yield this.pollSubscription.perform();
         this.metrics.trackEvent({ button: 'pay-button' });
         this.storage.clearBillingData();
         this.set('showPlansSelector', false);
