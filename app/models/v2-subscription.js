@@ -44,25 +44,26 @@ export default Model.extend({
     }
     const publicUsages = this.addons.reduce((processed, addon) => {
       if (addon.type === 'credit_public') {
-        processed.totalCredits += addon.current_usage.addon_quantity;
-        processed.usedCredits += addon.current_usage.addon_usage;
-        processed.remainingCredits += addon.current_usage.remaining;
-        processed.validDate = Date.parse(addon.current_usage.valid_to);
+        if (addon.current_usage.active) {
+          processed.totalCredits += addon.current_usage.addon_quantity;
+          processed.usedCredits += addon.current_usage.addon_usage;
+          processed.remainingCredits += addon.current_usage.remaining;
+        }
       }
 
       return processed;
     }, {
-      validDate: Date(2000, 1, 1),
       totalCredits: 0,
       usedCredits: 0,
       remainingCredits: 0,
     });
     const privateUsages = this.addons.reduce((processed, addon) => {
       if (addon.type === 'credit_private') {
-        processed.totalCredits += addon.current_usage.addon_quantity;
-        processed.usedCredits += addon.current_usage.addon_usage;
-        processed.remainingCredits += addon.current_usage.remaining;
-        processed.purchaseDate = Date.parse(addon.current_usage.purchase_date);
+        if (addon.current_usage.active) {
+          processed.totalCredits += addon.current_usage.addon_quantity;
+          processed.usedCredits += addon.current_usage.addon_usage;
+          processed.remainingCredits += addon.current_usage.remaining;
+        }
       }
 
       return processed;
