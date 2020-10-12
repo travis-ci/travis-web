@@ -55,7 +55,7 @@ module('Integration | Component | warning-message', function (hooks) {
       name: 'Startup',
       startingPrice: 3000,
       startingUsers: 10,
-      addonCsonfigs: [
+      addonConfigs: [
         {id: '1', name: 'abc', price: 0, quantity: 40000, type: 'credit_public'},
         {id: '2', name: 'xyz', price: 0, quantity: 10000, type: 'credit_private'}
       ]
