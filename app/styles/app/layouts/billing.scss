@@ -230,6 +230,7 @@
         cursor: pointer;
         display: block;
         max-width: fit-content;
+        max-width: -moz-fit-content;
         margin: 20px auto 0 auto;
         font-size: 0.7em;
         text-align: center;
@@ -341,6 +342,7 @@
         cursor: pointer;
         display: block;
         max-width: fit-content;
+        max-width: -moz-fit-content;
         margin: 20px auto 0 auto;
         font-size: 0.7em;
         text-align: center;
