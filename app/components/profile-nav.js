@@ -70,7 +70,9 @@ export default Component.extend({
     if (!allowance || (allowance && allowance.get('subscriptionType') !== 2))
       return;
 
-    if (!allowance.get('privateRepos')) {
+    if (!allowance.get('privateRepos') && !allowance.get('publicRepos')) {
+      this.flashes.custom('flashes/negative-balance-private-and-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
+    } else if (!allowance.get('privateRepos')) {
       this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
     } else if (!allowance.get('publicRepos')) {
       this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
