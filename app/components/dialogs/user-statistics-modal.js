@@ -1,30 +1,11 @@
 import Component from '@ember/component';
-import { task } from 'ember-concurrency';
-
-const switchToFreeReasons = [
-  { name: 'Price' },
-  { name: 'Support' },
-  { name: 'Build Times' },
-  { name: 'End of Project' },
-  { name: 'Other' },
-];
+import { computed } from '@ember/object';
 
 export default Component.extend({
-  switchToFreeReasons,
-  selectedSwitchToFreeReason: null,
-  switchToFreeReasonDetails: null,
-  isOpen: false,
+  dateCenter: null,
+  dateRange: null,
+  showDatePicker: false,
+  summarizedUsers: computed('owner.executions', 'dateRange', function () {
 
-  switchToFreeSubscription: task(function* () {
-    if (this.selectedSwitchToFreeReason) {
-      yield this.subscription.switchToFreeSubscription.perform(this.selectedSwitchToFreeReason, this.switchToFreeReasonDetails);
-      this.onClose();
-    }
-  }).drop(),
-
-  actions: {
-    selectSwitchToFreeReason(reason) {
-      this.set('selectedSwitchToFreeReason', reason.name);
-    },
-  }
+  })
 });

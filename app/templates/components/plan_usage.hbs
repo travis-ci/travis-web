@@ -46,7 +46,7 @@
   <section>
     <h3 class="usage-statistics">Usage statistics</h3>
     <div class="date-picker-container">
-      <button class="date-picker" onclick={{action (mut this.showDatePicker) (not this.showDatePicker)}} >
+      <button class="date-picker" onclick={{action "datePicker"}} >
         {{moment-format this.dateRange.start "YYYY-MM-DD"}} - {{moment-format this.dateRange.end "YYYY-MM-DD"}}
         <SvgImage @name="icon-dropdown-arrow" @class="icon" />
       </button>
@@ -134,4 +134,5 @@
   @isOpen={{this.showUserStatisticsModals}}
   @onClose={{fn (mut this.showUserStatisticsModals) false}}
   @subscription={{this.subscription.plan}}
+  @owner={{this.owner}}
 />

@@ -1,10 +1,53 @@
-
 <Modal
   @isVisible={{@isOpen}}
   @onClose={{fn @onClose}}
   @closeButton={{true}}
 >
-  <div data-test-switchtofree-subscription-modal="true" class="flex flex--v-center flex--center flex--col user-statistics-modal">
+  <div data-test-user-statistics-modal="true" class="flex flex--v-center flex--center flex--col user-statistics-modal">
     <h2>User statistics</h2>
+    <span class="active-users">{{this.usersCount}} active users</span>
+    <button class="date-picker" onclick={{action (mut this.showDatePicker) (not this.showDatePicker)}} >
+      {{moment-format this.dateRange.start "YYYY-MM-DD"}} - {{moment-format this.dateRange.end "YYYY-MM-DD"}}
+      <SvgImage @name="icon-dropdown-arrow" @class="icon" />
+    </button>
+    {{#if this.showDatePicker}}
+      <PowerCalendarRange
+        class="calendar-medium date-picker-calendar"
+        @center={{this.dateCenter}}
+        @onCenterChange={{action (mut this.dateCenter) value="date"}} 
+        @selected={{this.dateRange}}
+        @maxRange="2 month"
+        @onSelect={{action (mut this.dateRange) value="date"}}
+        as |calendar|>
+        <calendar.Nav/>
+        <calendar.Days/>
+      </PowerCalendarRange>
+    {{/if}}
+    <table class="users-build-times">
+      <thead>
+        <tr data-test-table-header-row='true'>
+          <th>Name</th>
+          <th>Total build minutes</th>
+          <th>Total credits</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.summarizedUsers as |user|}}
+          <tr data-test-repository='true'>
+            <td>
+              {{user.fullName}}
+              <br />
+              {{user.email}}
+            </td>
+            <td>
+              {{format-number user.buildMinutes}}
+            </td>
+            <td>
+              {{format-number user.buildCredits}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
 </Modal>

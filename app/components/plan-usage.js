@@ -165,6 +165,13 @@ export default Component.extend({
       const data = this.get('executionsDataForCsv');
 
       this.download.asCSV(fileName, header, data);
+    },
+
+    datePicker() {
+      this.set('showDatePicker', !this.showDatePicker);
+      if (!this.showDatePicker) {
+        this.account.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+      }
     }
   }
 });
