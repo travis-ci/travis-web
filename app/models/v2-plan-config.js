@@ -8,7 +8,7 @@ export default Model.extend({
   startingUsers: attr('number'),
   privateCredits: attr('number'),
   publicCredits: attr('number'),
-  fixedPrice: attr('number'),
+  price: attr('number'),
   type: attr('string'),
   availableStandaloneAddons: attr(),
 
