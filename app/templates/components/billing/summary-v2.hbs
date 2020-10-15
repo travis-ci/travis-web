@@ -24,6 +24,34 @@
               {{else}}
                 Unknown plan
               {{/if}}
+              {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                {{#if this.subscription.isSubscribed}}
+                  <span class="badge green square" data-test-active-status='true'>
+                    active
+                  </span>
+                {{else if this.subscription.isExpired}}
+                  <span class="badge red square" data-test-expired-status='true'>
+                    expired
+                  </span>
+                {{else}}
+                  <span class="badge grey square grey-badge" data-test-grey-status='true'>
+                    {{this.subscription.status}}
+                  </span>
+                {{/if}}
+                <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
+                  {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
+                >
+                  {{#if this.isSubscribed}}
+                    Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                  {{else if this.isIncomplete}}
+                    Incomplete
+                  {{else if (and this.isComplete this.isCanceled)}}
+                    Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                  {{else if (and this.isComplete this.isExpired)}}
+                    Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                  {{/if}}
+                </span>
+              {{/if}}
             </p>
             <div class='plan-overview__description' data-test-plan-description>
               {{#if this.subscription.plan.hasUserLicenseAddons}}
