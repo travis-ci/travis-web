@@ -113,10 +113,10 @@
 </div>
 <hr />
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
-  {{#if this.subscription.plan.hasUserLicenseAddons}}
+  {{#if this.subscription.hasUserLicenseAddons}}
     <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
   {{/if}}
-  {{#if this.subscription.plan.hasCredits}}
+  {{#if this.subscription.hasCredits}}
     <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
   {{/if}}
   {{#if (not this.subscription.plan.isFree)}}

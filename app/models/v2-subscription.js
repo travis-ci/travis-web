@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { equal, reads } from '@ember/object/computed';
+import { equal, reads, or } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -103,6 +103,17 @@ export default Model.extend({
   hasPrivateCredits: computed('addonUsage.private.remainingCredits', function () {
     return this.addonUsage.public.remainingCredits > 0;
   }),
+
+  hasCreditAddons: computed('addonConfigs', function () {
+    return this.addons.filter(addon => addon.type === 'credit_private').length > 0;
+  }),
+  hasOSSCreditAddons: computed('addonConfigs', function () {
+    return this.addons.filter(addon => addon.type === 'credit_public').length > 0;
+  }),
+  hasUserLicenseAddons: computed('addonConfigs', function () {
+    return this.addons.filter(addon => addon.type === 'user_license').length > 0;
+  }),
+  hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons'),
 
   priceInCents: reads('plan.planPrice'),
   validateCouponResult: reads('validateCoupon.last.value'),
