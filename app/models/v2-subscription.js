@@ -16,7 +16,9 @@ export default Model.extend({
   accounts: service(),
 
   source: attr('string'),
+  status: attr('string'),
   createdAt: attr('date'),
+  validTo: attr('date'),
   organization: belongsTo('organization'),
   coupon: attr('string'),
   clientSecret: attr('string'),
@@ -29,6 +31,12 @@ export default Model.extend({
   owner: belongsTo('owner', { polymorphic: true }),
   plan: belongsTo('v2-plan-config'),
   addons: attr(),
+
+  isSubscribed: equal('status', 'subscribed'),
+  isCanceled: equal('status', 'canceled'),
+  isExpired: equal('status', 'expired'),
+  isPending: equal('status', 'pending'),
+  isIncomplete: equal('status', 'incomplete'),
 
   isStripe: equal('source', 'stripe'),
   isGithub: equal('source', 'github'),
