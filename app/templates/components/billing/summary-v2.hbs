@@ -26,13 +26,15 @@
               {{/if}}
             </p>
             <div class='plan-overview__description' data-test-plan-description>
-              <p>
-                {{#if this.subscription.plan.isUnlimitedUsers}}
-                  Unlimited unique users
-                {{else}}
-                  Up to {{this.subscription.plan.startingUsers}} unique users
-                {{/if}}
-              </p>
+              {{#if this.subscription.plan.hasUserLicenseAddons}}
+                <p>
+                  {{#if this.subscription.plan.isUnlimitedUsers}}
+                    Unlimited unique users
+                  {{else}}
+                    Up to {{this.subscription.plan.startingUsers}} unique users
+                  {{/if}}
+                </p>
+              {{/if}}
               {{#if this.subscription.plan.hasCreditAddons}}
                 <p>
                   {{this.subscription.plan.privateCredits}} Credits

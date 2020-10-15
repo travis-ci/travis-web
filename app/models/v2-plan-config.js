@@ -9,12 +9,12 @@ export default Model.extend({
   privateCredits: attr('number'),
   publicCredits: attr('number'),
   price: attr('number'),
-  type: attr('string'),
+  planType: attr('string'),
   availableStandaloneAddons: attr(),
 
-  planPrice: computed('startingPrice', 'price', 'type', () => { this.type === 'metered' ? this.startingPrice : this.price; }),
+  planPrice: computed('startingPrice', 'price', 'type', () => { this.planType === 'metered' ? this.startingPrice : this.price; }),
 
-  isFree: equal('startingPrice', 0),
+  isFree: equal('planPrice', 0),
 
   isUnlimitedUsers: equal('startingUsers', 999999),
 
