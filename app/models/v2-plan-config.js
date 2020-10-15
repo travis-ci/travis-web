@@ -12,7 +12,7 @@ export default Model.extend({
   planType: attr('string'),
   availableStandaloneAddons: attr(),
 
-  planPrice: computed('startingPrice', 'price', 'type', () => { this.planType === 'metered' ? this.startingPrice : this.price; }),
+  planPrice: computed('startingPrice', 'price', 'planType', () => { this.planType === 'metered' ? this.startingPrice : this.price; }),
 
   isFree: equal('planPrice', 0),
 

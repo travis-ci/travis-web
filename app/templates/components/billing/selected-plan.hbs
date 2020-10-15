@@ -41,6 +41,9 @@
       {{else}}
         <p class='selected-plan__price--large' data-test-selected-plan-price>
           {{format-currency this.price floor="true"}}
+          {{#if (eq this.selectedPlan.planType 'hybrid')}}
+            <span class='color-cement-grey'>/month</span>
+          {{/if}}
         </p>
       {{/if}}
     </div>
