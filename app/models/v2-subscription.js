@@ -47,8 +47,10 @@ export default Model.extend({
         processed.totalCredits += addon.current_usage.addon_quantity;
         processed.usedCredits += addon.current_usage.addon_usage;
         processed.remainingCredits += addon.current_usage.remaining;
-        processed.validDate = Date.parse(addon.current_usage.valid_to);
-        processed.purchaseDate = Date.parse(addon.current_usage.purchase_date);
+        const validDate = Date.parse(addon.current_usage.valid_to);
+        const purchaseDate = Date.parse(addon.current_usage.purchase_date);
+        processed.validDate = validDate < processed.validDate ? validDate : processed.validDate;
+        processed.purchaseDate = purchaseDate > processed.purchaseDate ? purchaseDate : processed.purchaseDate;
       }
 
       return processed;
