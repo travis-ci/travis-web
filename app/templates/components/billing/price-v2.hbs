@@ -10,7 +10,7 @@
         </p>
       {{else}}
         <p class='selected-plan__price--large' data-test-price>
-          {{format-currency this.subscription.plan.planPrice floor='true'}}
+          {{format-currency this.subscription.plan.startingPrice floor='true'}}
         </p>
       {{/if}}
     {{/if}}

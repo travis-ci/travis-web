@@ -75,7 +75,7 @@ export default Component.extend({
         const currentIndex = this.steps.indexOf(this.currentStep);
         const lastIndex = this.steps.length - 1;
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
-        if ((this.billingInfoExists && this.currentStep === STEPS.ONE) || this.selectedPlan.planPrice === 0) {
+        if ((this.billingInfoExists && this.currentStep === STEPS.ONE) || this.selectedPlan.startingPrice === 0) {
           const currentStep = STEPS.THREE;
           this.set('currentStep', currentStep);
           this.set('billingInfo', this.existingBillingInfo);

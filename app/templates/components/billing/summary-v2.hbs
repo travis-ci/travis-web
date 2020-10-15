@@ -45,6 +45,11 @@
                   {{this.subscription.plan.publicCredits}} OSS Credits per month
                 </p>
               {{/if}}
+              {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                <p>
+                  {{pluralize this.subscription.plan.concurrencyLimit "concurrent job"}}
+                </p>
+              {{/if}}
               <p>
                 Linux, Windows, macOS builds
               </p>
@@ -64,8 +69,11 @@
               </p>
             {{else}}
               <p class='selected-plan__price--large' data-test-price>
-                {{format-currency this.subscription.plan.planPrice floor="true"}}
+                {{format-currency this.subscription.plan.startingPrice floor="true"}}
               </p>
+              {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                <span class='color-cement-grey'>/month</span>
+              {{/if}}
             {{/if}}
           {{/if}}
         </div>
@@ -105,8 +113,12 @@
 </div>
 <hr />
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
-  <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
-  <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
+  {{#if this.subscription.plan.hasUserLicenseAddons}}
+    <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
+  {{/if}}
+  {{#if this.subscription.plan.hasCredits}}
+    <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
+  {{/if}}
   {{#if (not this.subscription.plan.isFree)}}
     <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
     <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>

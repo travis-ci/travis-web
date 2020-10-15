@@ -27,10 +27,14 @@
                 {{#if plan.isFree}}
                   Free
                 {{else}}
-                  <span class='color-asphalt-grey'>
-                    Starting at
-                  </span>
-                  {{format-currency plan.planPrice floor="true"}}
+                  {{#if (eq plan.planType 'hybrid')}}
+                    {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/month</span>
+                  {{else}}
+                    <span class='color-asphalt-grey'>
+                      Starting at
+                    </span>
+                    {{format-currency plan.startingPrice floor="true"}}
+                  {{/if}}
                 {{/if}}
               </p>
               {{#if plan.hasCreditAddons}}
@@ -51,6 +55,11 @@
                   {{else}}
                     Up to {{plan.startingUsers}} unique users
                   {{/if}}
+                </p>
+              {{/if}}
+              {{#if (eq plan.planType 'hybrid')}}
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
                 </p>
               {{/if}}
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">

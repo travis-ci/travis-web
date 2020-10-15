@@ -13,7 +13,7 @@
   {{else}}
     <Billing::SelectedPlan
       @selectedPlan={{this.selectedPlan}}
-      @totalPrice={{this.selectedPlan.planPrice}}
+      @totalPrice={{this.selectedPlan.startingPrice}}
       @goToFirstStep={{action this.goToFirstStep}}
     />
     <Billing::WarningMessage

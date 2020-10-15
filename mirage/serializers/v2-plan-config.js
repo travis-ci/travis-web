@@ -21,7 +21,8 @@ export default Serializer.extend({
             starting_users: plan.attrs.startingUsers,
             private_credits: plan.attrs.privateCredits,
             public_credits: plan.attrs.publicCredits,
-            addon_configs: plan.attrs.addonConfigs
+            addon_configs: plan.attrs.addonConfigs,
+            plan_type: plan.attrs.planType
           };
         })
       };
