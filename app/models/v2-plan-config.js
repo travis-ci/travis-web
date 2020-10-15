@@ -12,6 +12,8 @@ export default Model.extend({
   type: attr('string'),
   availableStandaloneAddons: attr(),
 
+  planPrice: computed('startingPrice', 'price', 'type', () => { this.type === 'metered' ? this.startingPrice : this.price; }),
+
   isFree: equal('startingPrice', 0),
 
   isUnlimitedUsers: equal('startingUsers', 999999),
@@ -22,5 +24,8 @@ export default Model.extend({
   }),
   hasOSSCreditAddons: computed('addonConfigs', function () {
     return this.addonConfigs.filter(addon => addon.type === 'credit_public').length > 0;
+  }),
+  hasUserLicenseAddons: computed('addonConfigs', function () {
+    return this.addonConfigs.filter(addon => addon.type === 'user_license').length > 0;
   })
 });

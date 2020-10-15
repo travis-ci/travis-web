@@ -104,7 +104,7 @@ export default Model.extend({
     return this.addonUsage.public.remainingCredits > 0;
   }),
 
-  priceInCents: reads('plan.startingPrice'),
+  priceInCents: reads('plan.planPrice'),
   validateCouponResult: reads('validateCoupon.last.value'),
 
   planPrice: computed('priceInCents', function () {

@@ -30,7 +30,7 @@
                   <span class='color-asphalt-grey'>
                     Starting at
                   </span>
-                  {{format-currency plan.startingPrice floor="true"}}
+                  {{format-currency plan.planPrice floor="true"}}
                 {{/if}}
               </p>
               {{#if plan.hasCreditAddons}}
@@ -43,14 +43,16 @@
                   <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
                 </p>
               {{/if}}
-              <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
-                <SvgImage @name="stage-passed" @class="icon icon-desc" />
-                {{#if plan.isUnlimitedUsers}}
-                  Unlimited unique users
-                {{else}}
-                  Up to {{plan.startingUsers}} unique users
-                {{/if}}
-              </p>
+              {{#if plan.hasUserLicenseAddons}}
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" />
+                  {{#if plan.isUnlimitedUsers}}
+                    Unlimited unique users
+                  {{else}}
+                    Up to {{plan.startingUsers}} unique users
+                  {{/if}}
+                </p>
+              {{/if}}
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
                 <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
               </p>
