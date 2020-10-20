@@ -17,13 +17,13 @@ export default Model.extend({
   isUnlimitedUsers: equal('startingUsers', 999999),
 
   addonConfigs: attr(),
-  hasCreditAddons: computed('addonConfigs', function () {
+  hasCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addonConfigs.filter(addon => addon.type === 'credit_private').length > 0;
   }),
-  hasOSSCreditAddons: computed('addonConfigs', function () {
+  hasOSSCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addonConfigs.filter(addon => addon.type === 'credit_public').length > 0;
   }),
-  hasUserLicenseAddons: computed('addonConfigs', function () {
+  hasUserLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addonConfigs.filter(addon => addon.type === 'user_license').length > 0;
   }),
   hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons')
