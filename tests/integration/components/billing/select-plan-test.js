@@ -24,6 +24,9 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       publicCredits: 40000,
       isFree: false,
       isUnlimitedUsers: false,
+      hasCreditAddons: true,
+      hasOSSCreditAddons: true,
+      hasUserLicenseAddons: true,
     };
     this.plan1 = plan1;
 
@@ -36,6 +39,9 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       publicCredits: 40000,
       isFree: false,
       isUnlimitedUsers: false,
+      hasCreditAddons: true,
+      hasOSSCreditAddons: true,
+      hasUserLicenseAddons: true,
     };
     this.plan2 = plan2;
 

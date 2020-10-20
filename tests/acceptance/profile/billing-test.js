@@ -41,9 +41,24 @@ module('Acceptance | profile/billing', function (hooks) {
     });
     this.trial = trial;
 
-    this.server.create('v2-plan-config', { id: 'free_tier_plan', name: 'Free Tier Plan', startingPrice: 0, startingUsers: 999999, privateCredits: 10000, publicCredits: 40000, isFree: true, isUnlimitedUsers: true });
-    this.server.create('v2-plan-config', { id: 'standard_tier_plan', name: 'Standard Tier Plan', startingPrice: 3000, startingUsers: 100, privateCredits: 25000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
-    this.defaultV2Plan = this.server.create('v2-plan-config', { id: 'pro_tier_plan', name: 'Pro Tier Plan', startingPrice: 30000, startingUsers: 10000, privateCredits: 500000, publicCredits: 40000, isFree: false, isUnlimitedUsers: false });
+    this.server.create('v2-plan-config', {
+      id: 'free_tier_plan', name: 'Free Tier Plan', startingPrice: 0,
+      startingUsers: 999999, privateCredits: 10000, publicCredits: 40000,
+      isFree: true, isUnlimitedUsers: true, addonConfigs: [{ type: 'credit_private' }, { type: 'credit_public'}, { type: 'user_license'}],
+      hasCreditAddons: true, hasOSSCreditAddons: true, planType: 'metered'
+    });
+    this.server.create('v2-plan-config', {
+      id: 'standard_tier_plan', name: 'Standard Tier Plan', startingPrice: 3000,
+      startingUsers: 100, privateCredits: 25000, publicCredits: 40000,
+      isFree: false, isUnlimitedUsers: false, addonConfigs: [{ type: 'credit_private' }, { type: 'credit_public'}, { type: 'user_license'}],
+      hasCreditAddons: true, hasOSSCreditAddons: true, planType: 'metered'
+    });
+    this.defaultV2Plan = this.server.create('v2-plan-config', {
+      id: 'pro_tier_plan', name: 'Pro Tier Plan', startingPrice: 30000,
+      startingUsers: 10000, privateCredits: 500000, publicCredits: 40000,
+      isFree: false, isUnlimitedUsers: false, addonConfigs: [{ type: 'credit_private' }, { type: 'credit_public'}, { type: 'user_license'}],
+      hasCreditAddons: true, hasOSSCreditAddons: true, planType: 'metered'
+    });
     this.defaultV2Plan.save();
 
     let plan = this.server.create('plan', {
@@ -915,7 +930,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
     assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Only Credits/month`);
     assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
@@ -978,7 +993,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
     assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Only Credits/month`);
     assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
   });
@@ -995,7 +1010,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
     assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Only Credits/month`);
     assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
@@ -1246,7 +1261,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
     assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Only Credits/month`);
     assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
@@ -1315,7 +1330,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
     assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Only Credits/month`);
     assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
@@ -1393,7 +1408,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
     assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Only Credits/month`);
     assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 

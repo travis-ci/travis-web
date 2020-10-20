@@ -263,7 +263,8 @@
       border: 1px solid $pebble-grey;
       margin-bottom: 10px;
       width: 208px;
-      height: 380px;
+      height: fit-content;
+      max-height: 380px;
       flex-basis: auto;
       margin-right: 5px;
 

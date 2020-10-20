@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { equal, reads } from '@ember/object/computed';
+import { equal, reads, or } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -16,7 +16,9 @@ export default Model.extend({
   accounts: service(),
 
   source: attr('string'),
+  status: attr('string'),
   createdAt: attr('date'),
+  validTo: attr('date'),
   organization: belongsTo('organization'),
   coupon: attr('string'),
   clientSecret: attr('string'),
@@ -29,6 +31,12 @@ export default Model.extend({
   owner: belongsTo('owner', { polymorphic: true }),
   plan: belongsTo('v2-plan-config'),
   addons: attr(),
+
+  isSubscribed: equal('status', 'subscribed'),
+  isCanceled: equal('status', 'canceled'),
+  isExpired: equal('status', 'expired'),
+  isPending: equal('status', 'pending'),
+  isIncomplete: equal('status', 'incomplete'),
 
   isStripe: equal('source', 'stripe'),
   isGithub: equal('source', 'github'),
@@ -96,7 +104,18 @@ export default Model.extend({
     return this.addonUsage.public.remainingCredits > 0;
   }),
 
-  priceInCents: reads('plan.startingPrice'),
+  hasCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+    return this.addons.filter(addon => addon.type === 'credit_private').length > 0;
+  }),
+  hasOSSCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+    return this.addons.filter(addon => addon.type === 'credit_public').length > 0;
+  }),
+  hasUserLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+    return this.addons.filter(addon => addon.type === 'user_license').length > 0;
+  }),
+  hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons'),
+
+  priceInCents: reads('plan.planPrice'),
   validateCouponResult: reads('validateCoupon.last.value'),
 
   planPrice: computed('priceInCents', function () {

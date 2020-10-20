@@ -6,13 +6,15 @@
     </span>
   {{/if}}
   {{#if this.showPlanInfo}}
-    <span class="notice-banner--white" data-test-plan-notice='true'>
-      {{#if this.subscription.plan.isFree}}
-        Please note that your Credit balance will be replenished monthly. Additional add-ons are not available for this plan
-      {{else}}
-        Please note that you will ONLY be charged monthly for the unique users who triggered builds! You can replenish your Credit balance anytime by Buying add-ons. Credits are timeless and can be used in any month. Your OSS Credit balance will be replenished monthly.
-      {{/if}}
-    </span>
+    {{#if (eq this.subscription.plan.planType 'metered')}}
+      <span class="notice-banner--white" data-test-plan-notice='true'>
+        {{#if this.subscription.plan.isFree}}
+          Please note that your Credit balance will be replenished monthly. Additional add-ons are not available for this plan
+        {{else}}
+          Please note that you will ONLY be charged monthly for the unique users who triggered builds! You can replenish your Credit balance anytime by Buying add-ons. Credits are timeless and can be used in any month. Your OSS Credit balance will be replenished monthly.
+        {{/if}}
+      </span>
+    {{/if}}
     <div class="flex flex--space-between flex--wrap plan-overview__details">
       <section>
         <h3 class='plan-overview__header'> Plan information </h3>
@@ -24,21 +26,60 @@
               {{else}}
                 Unknown plan
               {{/if}}
+              {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                {{#if this.subscription.isSubscribed}}
+                  <span class="badge green square" data-test-active-status='true'>
+                    active
+                  </span>
+                {{else if this.subscription.isExpired}}
+                  <span class="badge red square" data-test-expired-status='true'>
+                    expired
+                  </span>
+                {{else}}
+                  <span class="badge grey square grey-badge" data-test-grey-status='true'>
+                    {{this.subscription.status}}
+                  </span>
+                {{/if}}
+                <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
+                  {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
+                >
+                  {{#if this.isSubscribed}}
+                    Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                  {{else if this.isIncomplete}}
+                    Incomplete
+                  {{else if (and this.isComplete this.isCanceled)}}
+                    Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                  {{else if (and this.isComplete this.isExpired)}}
+                    Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                  {{/if}}
+                </span>
+              {{/if}}
             </p>
             <div class='plan-overview__description' data-test-plan-description>
-              <p>
-                {{#if this.subscription.plan.isUnlimitedUsers}}
-                  Unlimited unique users
-                {{else}}
-                  Up to {{this.subscription.plan.startingUsers}} unique users
-                {{/if}}
-              </p>
-              <p>
-                {{this.subscription.plan.privateCredits}} Credits
-              </p>
-              <p>
-                {{this.subscription.plan.publicCredits}} OSS Credits per month
-              </p>
+              {{#if this.subscription.plan.hasUserLicenseAddons}}
+                <p>
+                  {{#if this.subscription.plan.isUnlimitedUsers}}
+                    Unlimited unique users
+                  {{else}}
+                    Up to {{this.subscription.plan.startingUsers}} unique users
+                  {{/if}}
+                </p>
+              {{/if}}
+              {{#if this.subscription.plan.hasCreditAddons}}
+                <p>
+                  {{this.subscription.plan.privateCredits}} Credits
+                </p>
+              {{/if}}
+              {{#if this.subscription.plan.hasOSSCreditAddons}}
+                <p>
+                  {{this.subscription.plan.publicCredits}} OSS Credits per month
+                </p>
+              {{/if}}
+              {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                <p>
+                  {{pluralize this.subscription.plan.concurrencyLimit "concurrent job"}}
+                </p>
+              {{/if}}
               <p>
                 Linux, Windows, macOS builds
               </p>
@@ -60,6 +101,9 @@
               <p class='selected-plan__price--large' data-test-price>
                 {{format-currency this.subscription.plan.startingPrice floor="true"}}
               </p>
+              {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                <span class='color-cement-grey'>/month</span>
+              {{/if}}
             {{/if}}
           {{/if}}
         </div>
@@ -99,8 +143,12 @@
 </div>
 <hr />
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
-  <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
-  <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
+  {{#if this.subscription.hasUserLicenseAddons}}
+    <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
+  {{/if}}
+  {{#if this.subscription.hasCredits}}
+    <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
+  {{/if}}
   {{#if (not this.subscription.plan.isFree)}}
     <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
     <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
