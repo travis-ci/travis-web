@@ -47,7 +47,13 @@
     <h3 class="usage-statistics">Usage statistics</h3>
     <div class="date-picker-container">
       <button class="date-picker" onclick={{action "datePicker"}} >
-        {{moment-format this.dateRange.start "YYYY-MM-DD"}} - {{moment-format this.dateRange.end "YYYY-MM-DD"}}
+        {{#if this.dateRange.start}}
+          {{moment-format this.dateRange.start "YYYY-MM-DD"}}
+        {{/if}}
+        &nbsp;-&nbsp;
+        {{#if this.dateRange.end}}
+          {{moment-format this.dateRange.end "YYYY-MM-DD"}}
+        {{/if}}
         <SvgImage @name="icon-dropdown-arrow" @class="icon" />
       </button>
       {{#if this.showDatePicker}}

@@ -59,7 +59,7 @@ export default Component.extend({
     return this.summarizedRepositories.reduce((sum, repo) => sum + repo.buildCredits, 0);
   }),
 
-  summarizedCalculations: computed('owner.executions', 'repo.[]', 'repositoriesVisiblity', function () {
+  summarizedCalculations: computed('owner.executions', 'repositoriesVisiblity', function () {
     let repositories = [];
     let minutesByOs = [];
     let users = [];
@@ -70,41 +70,37 @@ export default Component.extend({
     minutesByOs[getOsIconName('windows')] = 0;
 
     if (executions) {
-      executions.forEach((execution) => {
+      executions.forEach(async (execution) => {
         if (!users.includes(execution.sender_id)) {
           users.push(execution.sender_id);
         }
 
-        const repo = this.store.peekRecord('repo', execution.repository_id);
-        if (!repo) {
-          this.store.findRecord('repo', execution.repository_id, {reload: true});
-        } else {
-          if (this.repositoriesVisiblity === 'All repositories' ||
-            (this.repositoriesVisiblity === 'Private repositories' && repo.private === true) ||
-            (this.repositoriesVisiblity === 'Public repositories' && repo.private === false)) {
-            const minutes = execution.started_at && execution.finished_at ?
-              (Date.parse(execution.started_at) - Date.parse(execution.finished_at)) / 1000 * 60 : 0;
-            const credits = execution.credits_consumed;
-            const osIcon = getOsIconName(execution.os);
-            if (minutesByOs[osIcon]) {
-              minutesByOs[osIcon] += minutes;
-            } else {
-              minutesByOs[osIcon] = minutes;
-            }
-            if (repositories[`'${execution.repository_id}'`]) {
-              repositories[`'${execution.repository_id}'`].buildMinutes += minutes;
-              repositories[`'${execution.repository_id}'`].buildCredits += credits;
-            } else {
-              repositories[`'${execution.repository_id}'`] = {
-                name: repo ? repo.name : '',
-                provider: repo ? repo.provider : '',
-                urlOwnerName: repo ? repo.ownerName : '',
-                urlName: repo ? repo.urlName : '',
-                formattedSlug: repo ? repo.formattedSlug : '',
-                buildMinutes: minutes,
-                buildCredits: credits
-              };
-            }
+        const repo = this.store.peekRecord('repo', execution.repository_id) || (await this.store.findRecord('repo', execution.repository_id));
+
+        if (this.repositoriesVisiblity === 'All repositories' ||
+          (this.repositoriesVisiblity === 'Private repositories' && repo.private === true) ||
+          (this.repositoriesVisiblity === 'Public repositories' && repo.private === false)) {
+          const minutes = calculateMinutes(execution.started_at, execution.finished_at);
+          const credits = execution.credits_consumed;
+          const osIcon = getOsIconName(execution.os);
+          if (minutesByOs[osIcon]) {
+            minutesByOs[osIcon] += minutes;
+          } else {
+            minutesByOs[osIcon] = minutes;
+          }
+          if (repositories[`'${execution.repository_id}'`]) {
+            repositories[`'${execution.repository_id}'`].buildMinutes += minutes;
+            repositories[`'${execution.repository_id}'`].buildCredits += credits;
+          } else {
+            repositories[`'${execution.repository_id}'`] = {
+              name: repo ? repo.name : '',
+              provider: repo ? repo.provider : '',
+              urlOwnerName: repo ? repo.ownerName : '',
+              urlName: repo ? repo.urlName : '',
+              formattedSlug: repo ? repo.formattedSlug : '',
+              buildMinutes: minutes,
+              buildCredits: credits
+            };
           }
         }
       });
@@ -135,8 +131,7 @@ export default Component.extend({
     const executions = this.owner.get('executions');
     if (executions) {
       executions.forEach(async (execution) => {
-        const minutes = execution.started_at && execution.finished_at ?
-          (Date.parse(execution.started_at) - Date.parse(execution.finished_at)) / 1000 * 60 : 0;
+        const minutes = calculateMinutes(execution.started_at, execution.finished_at);
         const repo = this.store.peekRecord('repo', execution.repository_id) || (await this.store.findRecord('repo', execution.repository_id));
         const sender = this.store.peekRecord('user', execution.sender_id) || (await this.store.findRecord('user', execution.sender_id));
         data.push([
@@ -175,6 +170,10 @@ export default Component.extend({
     }
   }
 });
+
+const calculateMinutes = (start, finish) => {
+  return start && finish ? (Date.parse(finish) - Date.parse(start)) / 1000 * 60 : 0;
+};
 
 const getOsIconName = (os) => {
   if (os === 'linux') {
