@@ -1,7 +1,10 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import moment from 'moment';
 
 export default Component.extend({
+  store: service(),
   dateCenter: null,
   dateRange: null,
   showDatePicker: false,
@@ -54,6 +57,4 @@ export default Component.extend({
 
 });
 
-const calculateMinutes = (start, finish) => {
-  return start && finish ? (Date.parse(finish) - Date.parse(start)) / 1000 * 60 : 0;
-}  
+const calculateMinutes = (start, finish) => (start && finish ? (Date.parse(finish) - Date.parse(start)) / 1000 * 60 : 0);

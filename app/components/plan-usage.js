@@ -171,9 +171,7 @@ export default Component.extend({
   }
 });
 
-const calculateMinutes = (start, finish) => {
-  return start && finish ? (Date.parse(finish) - Date.parse(start)) / 1000 * 60 : 0;
-};
+const calculateMinutes = (start, finish) => (start && finish ? (Date.parse(finish) - Date.parse(start)) / 1000 * 60 : 0);
 
 const getOsIconName = (os) => {
   if (os === 'linux') {
