@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { or, not, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
@@ -85,7 +85,7 @@ export default Component.extend({
       } else {
         yield this.subscription.changePlan.perform(this.selectedPlan.id);
       }
-      yield this.pollSubscription.perform();
+      yield this.accounts.fetchV2Subscriptions.perform();
       yield this.retryAuthorization.perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
@@ -144,7 +144,8 @@ export default Component.extend({
           yield subscription.save();
           yield subscription.changePlan.perform(selectedPlan.id);
         }
-        yield this.pollSubscription.perform();
+        yield this.accounts.fetchV2Subscriptions.perform();
+        yield this.retryAuthorization.perform();
         this.metrics.trackEvent({ button: 'pay-button' });
         this.storage.clearBillingData();
         this.set('showPlansSelector', false);
@@ -152,22 +153,6 @@ export default Component.extend({
     } catch (error) {
       this.handleError();
     }
-  }).drop(),
-
-  pollSubscription: task(function* () {
-    let runSubscriptionUpdate = true;
-    let attempts = 0;
-    this.set('oldAddons', JSON.stringify(this.subscription.addons));
-    while (runSubscriptionUpdate) {
-      attempts += 1;
-      yield timeout(config.intervals.updateTimes);
-      yield this.accounts.fetchV2Subscriptions.perform();
-      runSubscriptionUpdate = this.oldAddons === JSON.stringify(this.subscription.addons);
-      if (runSubscriptionUpdate && attempts > 10) {
-        runSubscriptionUpdate = false;
-      }
-    }
-    this.set('oldAddons', undefined);
   }).drop(),
 
   validateCoupon: task(function* () {
