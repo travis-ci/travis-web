@@ -22,7 +22,7 @@ export default Model.extend({
   organization: belongsTo('organization'),
   coupon: attr('string'),
   clientSecret: attr('string'),
-  paymentIntent: attr('string'),
+  paymentIntent: attr(),
 
   discount: belongsTo('discount', { async: false }),
   billingInfo: belongsTo('v2-billing-info', { async: false }),
