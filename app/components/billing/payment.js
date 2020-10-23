@@ -133,7 +133,8 @@ export default Component.extend({
             token: token.id,
             lastDigits: token.card.last4
           });
-          yield subscription.save();
+          const { clientSecret } = yield subscription.save();
+          this.stripe.handleStripePayment.perform(clientSecret);
         } else {
           yield this.subscription.creditCardInfo.updateToken.perform({
             subscriptionId: this.subscription.id,

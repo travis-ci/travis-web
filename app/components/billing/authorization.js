@@ -46,7 +46,8 @@ export default Component.extend({
 
   retryAuthorization: task(function* () {
     if (this.requiresSourceAction && this.retryAuthorizationClientSecret) {
-      yield this.stripe.handleStripePayment.perform(this.retryAuthorizationClientSecret);
+      this.stripe.handleStripePayment.perform(this.retryAuthorizationClientSecret);
+      yield this.accounts.fetchV2Subscriptions.perform();
     }
   }).drop(),
 
@@ -61,6 +62,7 @@ export default Component.extend({
         });
         const { client_secret: clientSecret } = yield this.subscription.chargeUnpaidInvoices.perform();
         yield this.stripe.handleStripePayment.perform(clientSecret);
+        yield this.accounts.fetchV2Subscriptions.perform();
       }
     } catch (error) {
       this.flashes.error('An error occurred when creating your subscription. Please try again.');
