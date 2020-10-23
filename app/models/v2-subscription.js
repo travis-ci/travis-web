@@ -63,28 +63,29 @@ export default Model.extend({
         private: emptyUsage
       };
     }
-    const publicUsages = this.addons.reduce((processed, addon) => {
-      if (addon.type === 'credit_public') {
+    const addonReduce = (type) => (processed, addon) => {
+      if (addon.type === type) {
         processed.totalCredits += addon.current_usage.addon_quantity;
         processed.usedCredits += addon.current_usage.addon_usage;
         processed.remainingCredits += addon.current_usage.remaining;
+        const validDate = Date.parse(addon.current_usage.valid_to);
+        const purchaseDate = Date.parse(addon.current_usage.purchase_date);
+        processed.validDate = validDate < processed.validDate ? validDate : processed.validDate;
+        processed.purchaseDate = purchaseDate > processed.purchaseDate ? purchaseDate : processed.purchaseDate;
       }
 
       return processed;
-    }, {
+    };
+    const publicUsages = this.addons.reduce(addonReduce('credit_public'), {
+      validDate: Date.now(),
+      purchaseDate: Date.now(),
       totalCredits: 0,
       usedCredits: 0,
       remainingCredits: 0,
     });
-    const privateUsages = this.addons.reduce((processed, addon) => {
-      if (addon.type === 'credit_private') {
-        processed.totalCredits += addon.current_usage.addon_quantity;
-        processed.usedCredits += addon.current_usage.addon_usage;
-        processed.remainingCredits += addon.current_usage.remaining;
-      }
-
-      return processed;
-    }, {
+    const privateUsages = this.addons.reduce(addonReduce('credit_private'), {
+      validDate: Date.now(),
+      purchaseDate: Date.now(),
       totalCredits: 0,
       usedCredits: 0,
       remainingCredits: 0,

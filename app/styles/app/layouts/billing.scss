@@ -230,6 +230,7 @@
         cursor: pointer;
         display: block;
         max-width: fit-content;
+        max-width: -moz-fit-content;
         margin: 20px auto 0 auto;
         font-size: 0.7em;
         text-align: center;
@@ -281,6 +282,13 @@
         }
       }
 
+      &--desclink {
+        &:hover {
+          border-bottom: 1px solid;
+          cursor: pointer;
+        }  
+      }
+
       &--help {
         &:hover {
           border-bottom: 1px solid;
@@ -309,6 +317,11 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &-bold {
+          @extend .billing-plans__box-v2--name;
+          font-weight: bolder;
+        }
       }
 
       &--button {
@@ -330,6 +343,7 @@
         cursor: pointer;
         display: block;
         max-width: fit-content;
+        max-width: -moz-fit-content;
         margin: 20px auto 0 auto;
         font-size: 0.7em;
         text-align: center;
