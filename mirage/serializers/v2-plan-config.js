@@ -3,6 +3,10 @@ import { isArray } from '@ember/array';
 import { assign } from '@ember/polyfills';
 
 export default Serializer.extend({
+  serializeSingle(plan) {
+    return plan.id;
+  },
+
   serialize(object) {
     if (isArray(object.models)) {
       return {
@@ -16,7 +20,9 @@ export default Serializer.extend({
             starting_price: plan.attrs.startingPrice,
             starting_users: plan.attrs.startingUsers,
             private_credits: plan.attrs.privateCredits,
-            public_credits: plan.attrs.publicCredits
+            public_credits: plan.attrs.publicCredits,
+            addon_configs: plan.attrs.addonConfigs,
+            plan_type: plan.attrs.planType
           };
         })
       };

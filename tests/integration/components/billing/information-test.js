@@ -17,11 +17,17 @@ module('Integration | Component | billing-information', function (hooks) {
       name: 'A',
       startingUsers: 5,
       startingPrice: 20000,
+      hasCreditAddons: true,
+      hasOSSCreditAddons: true,
+      hasUserLicenseAddons: true,
     }, {
       id: 2,
       name: 'B',
       startingUsers: 10,
-      startingPrice: 30000
+      startingPrice: 30000,
+      hasCreditAddons: true,
+      hasOSSCreditAddons: true,
+      hasUserLicenseAddons: true,
     }];
     this.plans = plans;
 

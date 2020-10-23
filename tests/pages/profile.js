@@ -762,6 +762,7 @@ export default create({
         invoiceDate: text('td', { at: 0 }),
         invoiceCardDigits: text('td', { at: 1 }),
         invoiceCardPrice: text('td', { at: 2 }),
+        invoiceCardStatus: text('td', { at: 3 }),
         invoiceUrl: {
           scope: '[data-test-invoice-url]',
           href: attribute('href'),

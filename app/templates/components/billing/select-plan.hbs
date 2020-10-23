@@ -27,26 +27,41 @@
                 {{#if plan.isFree}}
                   Free
                 {{else}}
-                  <span class='color-asphalt-grey'>
-                    Starting at
-                  </span>
-                  {{format-currency plan.startingPrice floor="true"}}
+                  {{#if (eq plan.planType 'hybrid')}}
+                    {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/month</span>
+                  {{else}}
+                    <span class='color-asphalt-grey'>
+                      Starting at
+                    </span>
+                    {{format-currency plan.startingPrice floor="true"}}
+                  {{/if}}
                 {{/if}}
               </p>
-              <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                <SvgImage @name="stage-passed" @class="icon icon-desc" /> <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} class='billing-plans__box-v2--desclink'>{{plan.privateCredits}} Credits</ExternalLinkTo>
-              </p>
-              <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-                <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
-              </p>
-              <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
-                <SvgImage @name="stage-passed" @class="icon icon-desc" />
-                {{#if plan.isUnlimitedUsers}}
-                  <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Unlimited unique users</ExternalLinkTo>
-                {{else}}
-                  <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Up to {{plan.startingUsers}} unique users</ExternalLinkTo>
-                {{/if}}
-              </p>
+              {{#if plan.hasCreditAddons}}
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} class='billing-plans__box-v2--desclink'>{{plan.privateCredits}} Credits</ExternalLinkTo>
+                </p>
+              {{/if}}
+              {{#if plan.hasOSSCreditAddons}}
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
+                </p>
+              {{/if}}
+              {{#if plan.hasUserLicenseAddons}}
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" />
+                  {{#if plan.isUnlimitedUsers}}
+                    <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Unlimited unique users</ExternalLinkTo>
+                  {{else}}
+                    <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Up to {{plan.startingUsers}} unique users</ExternalLinkTo>
+                  {{/if}}
+                </p>
+              {{/if}}
+              {{#if (eq plan.planType 'hybrid')}}
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
+                </p>
+              {{/if}}
               <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
                 <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
               </p>

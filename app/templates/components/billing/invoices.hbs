@@ -38,6 +38,7 @@
           <th> invoice date </th>
           <th> payment card </th>
           <th> total </th>
+          <th> status </th>
           <th> download </th>
         </tr>
       </thead>
@@ -56,6 +57,11 @@
               {{this.subscription.creditCardInfo.lastDigits}} 
             </td>
             <td> {{format-currency invoice.amountDue }} </td>
+            <td>              
+              <span class={{if invoice.isUnpaid 'bad-invoice' 'invoice-status'}}>
+                {{ invoice.presentableStatus }}
+              </span>
+            </td>
             <td>
               {{#if this.account.hasSubscriptionPermissions}}
                 <a data-test-invoice-url='true' href={{invoice.url}} class="invoice-link">

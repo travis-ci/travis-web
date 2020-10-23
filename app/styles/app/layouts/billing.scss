@@ -264,7 +264,8 @@
       border: 1px solid $pebble-grey;
       margin-bottom: 10px;
       width: 208px;
-      height: 380px;
+      height: fit-content;
+      max-height: 380px;
       flex-basis: auto;
       margin-right: 5px;
 
@@ -801,6 +802,28 @@
       }
     }
 
+    .billing-subscription-user-usage {
+      margin-bottom: 25px;
+
+      .used-users {
+        font-size: 14px;
+        font-weight: 600;
+        color: $asphalt-grey;
+      }
+
+      .desc {
+        font-size: 14px;
+        color: $asphalt-grey;
+        margin-bottom: 8px;
+      }
+
+      .warning {
+        font-size: 14px;
+        color: $dark-red;
+        margin-bottom: 8px;
+      }
+    }
+
     .billing-subscription-credits {
       margin-bottom: 25px;
 
@@ -862,6 +885,24 @@
         color: $asphalt-grey;
         text-align: right;
         float: right;
+      }
+
+      .oss-toggle {
+        margin-top: 35px;
+      }
+
+      .oss-name {
+        flex: 1;
+        white-space: nowrap;
+        padding-right: 5px;
+        font-size: 14px;
+      }
+  
+      .oss-description {
+        flex: 1 1 100%;
+        font-style: italic;
+        font-size: 12px;
+        margin: 5px 0 0 5px;
       }
     }
 

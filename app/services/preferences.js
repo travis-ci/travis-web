@@ -17,6 +17,7 @@ export default Service.extend({
 
   buildEmails: reads('hash.build_emails.value'),
   privateInsightsVisibility: reads('hash.private_insights_visibility.value'),
+  consumeOSSCredits: reads('hash.consume_oss_credits.value'),
 
   fetchPreferences: task(function* () {
     return yield this.store.findAll('preference');

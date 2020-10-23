@@ -7,7 +7,7 @@ export default Component.extend({
   subscription: null,
   account: null,
 
-  selectedPlan: reads('subscription.plan'),
+  selectedPlan: null,
 
   isEditPlanLoading: reads('subscription.changePlan.isLoading'),
   isIncomplete: reads('subscription.isIncomplete'),

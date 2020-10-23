@@ -17,7 +17,10 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
       id: 1,
       name: 'Startup',
       startingPrice: 3000,
-      startingUsers: 10
+      startingUsers: 10,
+      hasCreditAddons: true,
+      hasOSSCreditAddons: true,
+      hasUserLicenseAddons: true,
     };
     this.plan1 = plan1;
     this.set('selectedPlan', plan1);
