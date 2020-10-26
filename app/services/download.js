@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 
-const LINE_DELIMITER = "\n";
-const DATA_DELIMITER = ";";
+const LINE_DELIMITER = '\n';
+const DATA_DELIMITER = ';';
 
 export default Service.extend({
 

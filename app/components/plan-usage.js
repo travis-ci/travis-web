@@ -163,8 +163,10 @@ export default Component.extend({
     datePicker() {
       this.set('showDatePicker', !this.showDatePicker);
       if (!this.showDatePicker) {
-        this.account.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
-        this.account.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+        this.account.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
+          moment(this.dateRange.end).format('YYYY-MM-DD'));
+        this.account.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
+          moment(this.dateRange.end).format('YYYY-MM-DD'));
       }
     }
   }

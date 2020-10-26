@@ -31,14 +31,15 @@ export default Component.extend({
   }),
 
   usersToShow: computed('users', 'page', function () {
-    return this.users.slice(( this.page - 1) * this.perPage, this.page * this.perPage);
+    return this.users.slice((this.page - 1) * this.perPage, this.page * this.perPage);
   }),
 
   actions: {
     datePicker() {
       this.set('showDatePicker', !this.showDatePicker);
       if (!this.showDatePicker) {
-        this.account.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+        this.account.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
+          moment(this.dateRange.end).format('YYYY-MM-DD'));
       }
     },
     setPage(newPage) {
