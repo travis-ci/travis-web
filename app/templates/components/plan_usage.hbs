@@ -138,7 +138,9 @@
 </div>
 <Dialogs::UserStatisticsModal
   @isOpen={{this.showUserStatisticsModals}}
+  @account={{this.account}}
   @onClose={{fn (mut this.showUserStatisticsModals) false}}
-  @subscription={{this.subscription.plan}}
   @owner={{this.owner}}
+  @dateCenter={{this.dateCenter}}
+  @dateRange={{this.dateRange}}
 />

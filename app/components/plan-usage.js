@@ -29,7 +29,8 @@ export default Component.extend({
       start: twoMonthsAgo,
       end: new Date()
     };
-    this.account.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+    this.account.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+    this.account.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
   },
 
   summarizedRepositories: computed('summarizedCalculations.repositories', function () {
@@ -43,13 +44,16 @@ export default Component.extend({
   }),
 
   summarizedMinutesByOs: reads('summarizedCalculations.minutesByOs'),
+
   circleWidth: computed('summarizedMinutesByOs', function () {
     const oss = Object.keys(this.summarizedMinutesByOs).length;
     const width = Math.round(100 / (oss === 0 ? 1 : oss));
     return `${width}%`;
   }),
-  uniqueUsers: computed('summarizedCalculations.users', function () {
-    return this.summarizedCalculations.users.length;
+
+  uniqueUsers: computed('owner.executionsPerSender', function () {
+    const senders = this.owner.get('executionsPerSender');
+    return senders ? senders.length : 0;
   }),
 
   totalBuildMinutes: computed('summarizedRepositories', function () {
@@ -59,11 +63,10 @@ export default Component.extend({
     return this.summarizedRepositories.reduce((sum, repo) => sum + repo.buildCredits, 0);
   }),
 
-  summarizedCalculations: computed('owner.executions', 'repositoriesVisiblity', function () {
+  summarizedCalculations: computed('owner.executionsPerRepo', 'repositoriesVisiblity', function () {
     let repositories = [];
     let minutesByOs = [];
-    let users = [];
-    const executions = this.owner.get('executions');
+    const executions = this.owner.get('executionsPerRepo');
 
     minutesByOs[getOsIconName('linux')] = 0;
     minutesByOs[getOsIconName('osx')] = 0;
@@ -71,16 +74,12 @@ export default Component.extend({
 
     if (executions) {
       executions.forEach(async (execution) => {
-        if (!users.includes(execution.sender_id)) {
-          users.push(execution.sender_id);
-        }
-
-        const repo = this.store.peekRecord('repo', execution.repository_id) || (await this.store.findRecord('repo', execution.repository_id));
+        const repo = execution.repository;
 
         if (this.repositoriesVisiblity === 'All repositories' ||
           (this.repositoriesVisiblity === 'Private repositories' && repo.private === true) ||
           (this.repositoriesVisiblity === 'Public repositories' && repo.private === false)) {
-          const minutes = calculateMinutes(execution.started_at, execution.finished_at);
+          const minutes = execution.minutes_consumed;
           const credits = execution.credits_consumed;
           const osIcon = getOsIconName(execution.os);
           if (minutesByOs[osIcon]) {
@@ -93,11 +92,10 @@ export default Component.extend({
             repositories[`'${execution.repository_id}'`].buildCredits += credits;
           } else {
             repositories[`'${execution.repository_id}'`] = {
-              name: repo ? repo.name : '',
-              provider: repo ? repo.provider : '',
-              urlOwnerName: repo ? repo.ownerName : '',
-              urlName: repo ? repo.urlName : '',
-              formattedSlug: repo ? repo.formattedSlug : '',
+              name: repo.name,
+              provider: repo.vcs_type.replace('Repository', ''),
+              urlOwnerName: repo.owner_name,
+              formattedSlug: repo.slug.replace('/', ' / '),
               buildMinutes: minutes,
               buildCredits: credits
             };
@@ -107,8 +105,7 @@ export default Component.extend({
     }
     return {
       repositories: repositories,
-      minutesByOs: minutesByOs,
-      users: users
+      minutesByOs: minutesByOs
     };
   }),
 
@@ -151,12 +148,13 @@ export default Component.extend({
   }),
 
   actions: {
-    downloadCsv() {
+    async downloadCsv() {
       const startDate = moment(this.dateRange.start).format('YYYY-MM-DD');
       const endDate = moment(this.dateRange.end).format('YYYY-MM-DD');
       const fileName = `usage_${startDate}_${endDate}.csv`;
 
-      const header = ['Job ID', 'Started at', 'Finished at', 'OS', 'Credits consumed', 'Minutes consumend', 'Repository', 'Owner', 'Sender'];
+      await this.account.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+      const header = ['Job Id', 'Started at', 'Finished at', 'OS', 'Credits consumed', 'Minutes consumend', 'Repository', 'Owner', 'Sender'];
       const data = this.get('executionsDataForCsv');
 
       this.download.asCSV(fileName, header, data);
@@ -165,7 +163,8 @@ export default Component.extend({
     datePicker() {
       this.set('showDatePicker', !this.showDatePicker);
       if (!this.showDatePicker) {
-        this.account.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+        this.account.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+        this.account.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
       }
     }
   }

@@ -3,52 +3,77 @@
   @onClose={{fn @onClose}}
   @closeButton={{true}}
 >
-  <div data-test-user-statistics-modal="true" class="flex flex--v-center flex--center flex--col user-statistics-modal">
+  <div data-test-user-statistics-modal="true" class="user-statistics-modal">
     <h2>User statistics</h2>
     <span class="active-users">{{this.usersCount}} active users</span>
-    <button class="date-picker" onclick={{action (mut this.showDatePicker) (not this.showDatePicker)}} >
-      {{moment-format this.dateRange.start "YYYY-MM-DD"}} - {{moment-format this.dateRange.end "YYYY-MM-DD"}}
-      <SvgImage @name="icon-dropdown-arrow" @class="icon" />
-    </button>
-    {{#if this.showDatePicker}}
-      <PowerCalendarRange
-        class="calendar-medium date-picker-calendar"
-        @center={{this.dateCenter}}
-        @onCenterChange={{action (mut this.dateCenter) value="date"}} 
-        @selected={{this.dateRange}}
-        @maxRange="2 month"
-        @onSelect={{action (mut this.dateRange) value="date"}}
-        as |calendar|>
-        <calendar.Nav/>
-        <calendar.Days/>
-      </PowerCalendarRange>
-    {{/if}}
-    {{log this.summarizedUsers}}
+    <div class="date-picker-container">
+      <button class="date-picker" onclick={{action "datePicker"}} >
+        {{moment-format this.dateRange.start "YYYY-MM-DD"}} - {{moment-format this.dateRange.end "YYYY-MM-DD"}}
+        <SvgImage @name="icon-dropdown-arrow" @class="icon" />
+      </button>
+      {{#if this.showDatePicker}}
+        <PowerCalendarRange
+          class="calendar-medium date-picker-calendar"
+          @center={{this.dateCenter}}
+          @onCenterChange={{action (mut this.dateCenter) value="date"}} 
+          @selected={{this.dateRange}}
+          @maxRange="2 month"
+          @onSelect={{action (mut this.dateRange) value="date"}}
+          as |calendar|>
+          <calendar.Nav/>
+          <calendar.Days/>
+        </PowerCalendarRange>
+      {{/if}}
+    </div>
     <table class="users-build-times">
       <thead>
         <tr data-test-table-header-row='true'>
           <th>Name</th>
-          <th>Total build minutes</th>
-          <th>Total credits</th>
+          <th>Build minutes</th>
+          <th>Build credits</th>
         </tr>
       </thead>
       <tbody>
-        {{#each this.summarizedUsers as |user|}}
+        {{#each this.usersToShow as |user|}}
+        {{log user}}
           <tr data-test-repository='true'>
             <td>
-              {{user.fullName}}
-              <br />
-              {{user.email}}
+               <UserAvatar
+                @url={{user.sender.avatar_url}}
+                @name={{user.sender.name}}
+                @size={{42}}
+              />
+              <div class="sender">
+                <span class="sender-name">
+                {{#if user.sender.name}}
+                  {{user.sender.name}}
+                {{else}}
+                  {{user.sender.login}}
+                {{/if}}
+                </span>
+                <br />
+                {{user.sender.email}}
+              </div>
             </td>
             <td>
-              {{format-number user.buildMinutes}}
+              {{format-number user.minutes_consumed}}
             </td>
             <td>
-              {{format-number user.buildCredits}}
+              {{format-number user.credits_consumed}}
             </td>
           </tr>
         {{/each}}
       </tbody>
     </table>
+    {{#if (gt this.usersCount this.perPage)}}
+      {{pagination-links
+        currentPage=this.page
+        showFirstAndLast=false
+        lastPage=this.maxPages
+        prevPageIcon='Prev'
+        nextPageIcon='Next'
+        goToPage=(action 'setPage')
+      }}
+    {{/if}}
   </div>
 </Modal>
