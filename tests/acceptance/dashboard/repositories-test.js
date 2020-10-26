@@ -308,7 +308,6 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.equal(build.stateAndNumber.text, '#15 received');
     });
 
-
     let otherUser = this.server.create('user');
     let otherBranch = this.server.create('branch', {
       lastBuild: this.server.create('build', {
@@ -349,7 +348,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await page.activeRepos.visit();
 
-    assert.equal(page.activeRepos.repos.length, 4);
+    assert.equal(page.activeRepos.repos.length, 5);
   });
 
   test('logging out leaves the dashboard', async function (assert) {

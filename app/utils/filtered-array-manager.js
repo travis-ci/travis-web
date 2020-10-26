@@ -10,16 +10,25 @@ const PromiseArray = ArrayProxy.extend(PromiseProxyMixin);
 let FilteredArray = ArrayProxy.extend({
   init(createArgs) {
     const { filterFunction, _all, dependencies } = createArgs;
+    this.defineContentProperty(filterFunction, _all, dependencies);
+    this._super(createArgs);
+  },
+
+  defineContentProperty(filterFunction, _all, dependencies) {
     defineProperty(
       this,
       'content',
       computed(
-        `_all.@each.{${dependencies.join(',')}}`,
-        () => _all.filter(item => item && filterFunction(item))
+        `_all.@each.{${dependencies.join(',')}}`, {
+          get() {
+            return _all.filter(item => item && filterFunction(item));
+          },
+          set(key, value) {
+            return value;
+          }
+        }
       )
     );
-
-    this._super(createArgs);
   }
 });
 
@@ -90,7 +99,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
       // to get new results
       let promise = new EmberPromise((resolve, reject) => {
         this.fetchQuery(queryParams).then(queryResult => {
-          array.set('queryResult', queryResult);
+          array.setProperties({ content: queryResult, queryResult });
           resolve(array);
         }, reject);
       });
@@ -197,7 +206,7 @@ let FilteredArrayManager = EmberObject.extend({
 
   fetchArray(modelName, ...rest) {
     return this.filteredArrayManagerForType(modelName).fetchArray(...rest)
-      ._promise;
+      ._lastPromise;
   },
 
   filteredArrayManagerForType(modelName) {
