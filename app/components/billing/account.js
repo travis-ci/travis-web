@@ -32,6 +32,30 @@ export default Component.extend({
   showPlansSelector: false,
   showAddonsSelector: false,
 
+  newV2Subscription: computed(function () {
+    const plan = this.store.createRecord('v2-plan-config');
+    const billingInfo = this.store.createRecord('v2-billing-info');
+    const creditCardInfo = this.store.createRecord('v2-credit-card-info');
+    billingInfo.setProperties({
+      firstName: '',
+      lastName: '',
+      address: '',
+      city: '',
+      zipCode: '',
+      country: '',
+      billingEmail: ''
+    });
+    creditCardInfo.setProperties({
+      token: '',
+      lastDigits: ''
+    });
+    return this.store.createRecord('v2-subscription', {
+      billingInfo,
+      plan,
+      creditCardInfo,
+    });
+  }),
+
   invoices: computed('subscription.id', 'v2subscription.id', function () {
     const subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');
     const type = this.isV2SubscriptionEmpty ? 1 : 2;

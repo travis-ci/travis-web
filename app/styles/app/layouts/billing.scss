@@ -263,7 +263,8 @@
       border: 1px solid $pebble-grey;
       margin-bottom: 10px;
       width: 208px;
-      height: 380px;
+      height: fit-content;
+      max-height: 380px;
       flex-basis: auto;
       margin-right: 5px;
 
@@ -784,6 +785,110 @@
         font-weight: 700;
         color: $cement-grey;
         font-size: .8em;
+      }
+    }
+
+    .billing-subscription-user-usage {
+      margin-bottom: 25px;
+
+      .used-users {
+        font-size: 14px;
+        font-weight: 600;
+        color: $asphalt-grey;
+      }
+
+      .desc {
+        font-size: 14px;
+        color: $asphalt-grey;
+        margin-bottom: 8px;
+      }
+
+      .warning {
+        font-size: 14px;
+        color: $dark-red;
+        margin-bottom: 8px;
+      }
+    }
+
+    .billing-subscription-credits {
+      margin-bottom: 25px;
+
+      nav.travistab-nav--secondary {
+        li {
+          width: 45%;
+          font-size: 14px;
+          text-align: center;
+          padding-right: 1em;
+          cursor: pointer;
+        }
+      }
+
+      .avail-credits {
+        font-size: 14px;
+        font-weight: 600;
+        color: $asphalt-grey;
+      }
+
+      .used-credits {
+        font-size: 14px;
+        color: $asphalt-grey;
+        margin-bottom: 8px;
+      }
+
+      .credits-bar {
+        height: 20px;
+        background-color: $oxide-blue;
+        text-align: center;
+        line-height: 20px;
+        color: $cement-grey;
+        border-radius: 8px;
+      }
+
+      .credits-bar-negative {
+        height: 20px;
+        width: 100%;
+        background-color: $dark-red;
+        text-align: center;
+        line-height: 20px;
+        color: $cement-grey;
+        border-radius: 8px;
+      }
+
+      .credits-bar-bg {
+        background-color: $pebble-grey;
+        border-radius: 8px;
+      }
+
+      .credits-bar-left {
+        font-size: 14px;
+        color: $asphalt-grey;
+        text-align: left;
+        margin-top: 4px;
+      }
+
+      .credits-bar-right {
+        font-size: 14px;
+        color: $asphalt-grey;
+        text-align: right;
+        float: right;
+      }
+
+      .oss-toggle {
+        margin-top: 35px;
+      }
+
+      .oss-name {
+        flex: 1;
+        white-space: nowrap;
+        padding-right: 5px;
+        font-size: 14px;
+      }
+  
+      .oss-description {
+        flex: 1 1 100%;
+        font-style: italic;
+        font-size: 12px;
+        margin: 5px 0 0 5px;
       }
     }
 

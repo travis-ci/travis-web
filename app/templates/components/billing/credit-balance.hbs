@@ -14,10 +14,10 @@
   <nav class="travistab-nav--secondary">
     <ul>
       <li>
-        <a class="{{if (eq this.creditsTab 0) 'active' ''}}" onclick={{action "setPrivateCreditsTab"}}>Paid credits</a>
+        <a class="{{if (eq this.creditsTab 0) 'active' ''}}" onclick={{action "setPrivateCreditsTab"}}>Credits</a>
       </li>
       <li>
-        <a class="{{if (eq this.creditsTab 1) 'active' ''}}" onclick={{action "setOSSCreditsTab"}}>Open Source Credits</a>
+        <a class="{{if (eq this.creditsTab 1) 'active' ''}}" onclick={{action "setOSSCreditsTab"}}>OSS only credits</a>
       </li>
     </ul>
   </nav>
@@ -38,5 +38,6 @@
   <p class='credits-bar-left'>
     {{this.creditsAvailable}} available <span class='credits-bar-right'>{{this.creditsUsed}} used</span>
   </p>
+  <Billing::OssCreditToggle/>
 </div>
 <hr />

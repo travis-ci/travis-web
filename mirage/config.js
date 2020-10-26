@@ -228,7 +228,48 @@ export default function () {
     const updatedAttrs = {
       ...attrs,
       owner,
-      plan: schema.plans.find(attrs.plan),
+      plan: schema.v2PlanConfigs.find(attrs.plan),
+      addons: [
+        {
+          'id': 1,
+          'name': 'Free 40 000 credits (renewed monthly)',
+          'type': 'credit_public',
+          'current_usage': {
+            'id': 1,
+            'addon_id': 1,
+            'addon_quantity': 40000,
+            'addon_usage': 100,
+            'remaining': 39900,
+            'active': true
+          }
+        },
+        {
+          'id': 2,
+          'name': '25 000 credits (2,5k Linux build minutes)',
+          'type': 'credit_private',
+          'current_usage': {
+            'id': 2,
+            'addon_id': 2,
+            'addon_quantity': 25000,
+            'addon_usage': 10,
+            'remaining': 24990,
+            'active': true
+          }
+        },
+        {
+          'id': 3,
+          'name': 'Standard Tier user licenses',
+          'type': 'user_license',
+          'current_usage': {
+            'id': 3,
+            'addon_id': 3,
+            'addon_quantity': 1000,
+            'addon_usage': 0,
+            'remaining': 1000,
+            'active': true
+          }
+        }
+      ],
       source: 'stripe'
     };
     const savedSubscription = schema.v2Subscriptions.create(updatedAttrs);

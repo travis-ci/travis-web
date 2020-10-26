@@ -16,6 +16,9 @@ module('Acceptance | repo allowance', function (hooks) {
 
     this.server.create('user', {login: 'user-login2'});
     this.server.create('user', {login: 'user-login3'});
+    this.server.create('user', {login: 'user-login4'});
+    this.server.create('user', {login: 'user-login5'});
+    this.server.create('user', {login: 'user-login6'});
 
     const repoPrivate = this.server.create('repository', {
       name: 'repository-private',
@@ -34,6 +37,8 @@ module('Acceptance | repo allowance', function (hooks) {
       subscription_type: 2,
       public_repos: false,
       private_repos: false,
+      user_usage: true,
+      pending_user_licenses: false,
       concurrency_limit: 777
     }),
 
@@ -41,6 +46,8 @@ module('Acceptance | repo allowance', function (hooks) {
       subscription_type: 2,
       public_repos: true,
       private_repos: true,
+      user_usage: true,
+      pending_user_licenses: false,
       concurrency_limit: 666
     }),
 
@@ -48,6 +55,35 @@ module('Acceptance | repo allowance', function (hooks) {
       subscription_type: 2,
       public_repos: true,
       private_repos: false,
+      user_usage: true,
+      pending_user_licenses: false,
+      concurrency_limit: 2
+    }),
+
+    this.server.create('allowance', {
+      subscription_type: 2,
+      public_repos: true,
+      private_repos: true,
+      user_usage: false,
+      pending_user_licenses: false,
+      concurrency_limit: 2
+    }),
+
+    this.server.create('allowance', {
+      subscription_type: 2,
+      public_repos: true,
+      private_repos: true,
+      user_usage: false,
+      pending_user_licenses: true,
+      concurrency_limit: 2
+    }),
+
+    this.server.create('allowance', {
+      subscription_type: 2,
+      public_repos: true,
+      private_repos: true,
+      user_usage: true,
+      pending_user_licenses: false,
       concurrency_limit: 2
     }),
 
@@ -90,6 +126,45 @@ module('Acceptance | repo allowance', function (hooks) {
       owner_name: 'user-login3'
     });
 
+    this.server.create('repository', {
+      name: 'repository-users-exceeded',
+      slug: 'user-login4/repository-users-exceeded',
+      'private': false,
+      active: true,
+      owner: {
+        login: 'user-login4',
+        id: 4
+      },
+      vcs_name: 'repository-public',
+      owner_name: 'user-login4'
+    });
+
+    this.server.create('repository', {
+      name: 'repository-pending-users',
+      slug: 'user-login5/repository-pending-users',
+      'private': false,
+      active: true,
+      owner: {
+        login: 'user-login5',
+        id: 5
+      },
+      vcs_name: 'repository-public',
+      owner_name: 'user-login5'
+    });
+
+    this.server.create('repository', {
+      name: 'repository-users-allowed',
+      slug: 'user-login6/repository-users-allowed',
+      'private': false,
+      active: true,
+      owner: {
+        login: 'user-login6',
+        id: 6
+      },
+      vcs_name: 'repository-public',
+      owner_name: 'user-login6'
+    });
+
     let branch = repoPrivate.createBranch({
       name: 'feminist#yes',
       id: '/v3/repo/${repoPrivate.id}/branch/feminist#yes',
@@ -128,6 +203,18 @@ module('Acceptance | repo allowance', function (hooks) {
     assert.equal(page.flash, 'Builds have been temporarily disabled for public repositories due to a negative credit balance. Please go to the Plan page to replenish your credit balance or alter your OSS Credits consumption setting.');
   });
 
+  test('warning is displayed in case owner cannot build due to user limit exceeded', async function (assert) {
+    await page.visit({ organization: 'user-login4', repo: 'repository-users-exceeded' });
+
+    assert.equal(page.flash, 'We are unable to start your build at this time. You exceeded the number of users allowed for your plan. Please review your plan details and follow the steps to resolution.');
+  });
+
+  test('warning is displayed in case owner cannot build due to pending user license', async function (assert) {
+    await page.visit({ organization: 'user-login5', repo: 'repository-pending-users' });
+
+    assert.equal(page.flash, 'We are unable to start your build at this time. There are charges pending on your account. Please review your plan details and follow the steps to resolution.');
+  });
+
   test('warning is not displayed in case owner can build in private repository', async function (assert) {
     await page.visit({ organization: 'user-login2', repo: 'repository-private-allowed' });
 
@@ -136,6 +223,12 @@ module('Acceptance | repo allowance', function (hooks) {
 
   test('warning is not displayed in case owner can build in public repository', async function (assert) {
     await page.visit({ organization: 'user-login3', repo: 'repository-public-allowed' });
+
+    assert.dom('[data-test-components-flash-item]').doesNotExist();
+  });
+
+  test('warning is not displayed in case owner has active user license', async function (assert) {
+    await page.visit({ organization: 'user-login6', repo: 'repository-users-allowed' });
 
     assert.dom('[data-test-components-flash-item]').doesNotExist();
   });
