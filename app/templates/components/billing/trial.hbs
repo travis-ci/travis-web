@@ -47,6 +47,17 @@
             </p>
           {{/if}}
         </div>
+        <div class="icon-wrapper flex flex--v-center">
+          {{svg-jar "icon-plus" class="icon icon-wrapper__plus"}}
+        </div>
+        <div class="billing-trial-info" data-test-open-source-box='true'>
+          <div class="billing-trial-info__box">
+            <p class="billing-trial-info__box--open-source" data-test-open-source-header='true'>5 concurrent jobs, free!</p>
+            <p class="billing-trial-info__box--jobs" data-test-open-source-jobs='true'>
+              We &lt;3 open source! You will always get 3 free additional concurrent jobs for your open source projects.
+            </p>
+          </div>
+        </div>
       </div>
       {{#if this.showBuildRunningOutBanner}}
         <span class="notice-banner--yellow" data-test-trial-running-out='true'>
