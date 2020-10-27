@@ -364,23 +364,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.billing.billingPlanChoices.lastBox.visit();
 
-    const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
+    const { selectedPlan, billingPaymentForm } = profilePage.billing;
     await selectedPlan.subscribeButton.click();
-
-    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
-
-    await billingForm
-      .fillIn('firstname', 'John')
-      .fillIn('lastname', 'Doe')
-      .fillIn('companyName', 'Travis')
-      .fillIn('address', '15 Olalubi street')
-      .fillIn('city', 'Berlin')
-      .fillIn('zip', '353564')
-      .fillIn('vat', '356463');
-
-    await profilePage.billing.billingEmails.objectAt(0).fillEmail('john@doe.com');
-
-    await billingForm.proceedPayment.click();
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
     assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
@@ -390,12 +375,11 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
-    assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
-    assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
-    assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
+    assert.equal(billingPaymentForm.contactDetails.firstName.text, 'User Name');
+    assert.equal(billingPaymentForm.contactDetails.email.text, 'user@email.com');
 
     assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details');
-    assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
+    assert.equal(billingPaymentForm.contactDetails.address.text, 'Rigaerstraße 8');
     assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
     assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
 
@@ -406,8 +390,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
     assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits} Credits`);
 
-    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
+    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name billing email user@email.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
   });
 
   test('view billing on an incomplete stripe plan', async function (assert) {
