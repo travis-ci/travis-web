@@ -360,11 +360,54 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
 
-    await profilePage.billing.resubscribeSubscriptionButton.click();
+    await profilePage.billing.changePlanResubscribe.click();
 
-    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
-    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
+    await profilePage.billing.billingPlanChoices.lastBox.visit();
+
+    const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
+    await selectedPlan.subscribeButton.click();
+
+    await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
+
+    await billingForm
+      .fillIn('firstname', 'John')
+      .fillIn('lastname', 'Doe')
+      .fillIn('companyName', 'Travis')
+      .fillIn('address', '15 Olalubi street')
+      .fillIn('city', 'Berlin')
+      .fillIn('zip', '353564')
+      .fillIn('vat', '356463');
+
+    await profilePage.billing.billingEmails.objectAt(0).fillEmail('john@doe.com');
+
+    await billingForm.proceedPayment.click();
+
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits} Credits`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.defaultV2Plan.startingPrice / 100}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.osscredits.text, `${this.defaultV2Plan.publicCredits} OSS Only Credits/month`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.defaultV2Plan.startingUsers} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
+
+    assert.equal(billingPaymentForm.contactDetails.contactHeading.text, 'contact details');
+    assert.equal(billingPaymentForm.contactDetails.firstName.text, 'John Doe');
+    assert.equal(billingPaymentForm.contactDetails.company.text, 'Travis');
+    assert.equal(billingPaymentForm.contactDetails.email.text, 'john@doe.com');
+
+    assert.equal(billingPaymentForm.contactDetails.billingHeading.text, 'billing details');
+    assert.equal(billingPaymentForm.contactDetails.address.text, '15 Olalubi street');
+    assert.equal(billingPaymentForm.contactDetails.city.text, 'Berlin');
+    assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
+
+    assert.ok(billingPaymentForm.isPresent);
+
+    await billingPaymentForm.completePayment.click();
+
+    assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
+    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits} Credits`);
+
+    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
+    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
   });
 
   test('view billing on an incomplete stripe plan', async function (assert) {
@@ -411,20 +454,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.period.text, '/month');
 
     assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
-    assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
-  });
-
-  test('resubscribe to a canceled stripe plan', async function (assert) {
-    this.subscription.status = 'canceled';
-
-    await profilePage.visit();
-    await profilePage.billing.visit();
-
-    assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
-    assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
-
-    await profilePage.billing.resubscribeSubscriptionButton.click();
-    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
   });
 
   test('change and resubscribe to a canceled stripe plan', async function (assert) {
@@ -434,7 +463,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
-    assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
   });
 
   test('view billing on a canceled stripe plan', async function (assert) {
@@ -600,7 +628,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
     assert.equal(profilePage.billing.planMessage.text, 'Cancelled on June 19, 2018');
     assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
-    assert.dom(profilePage.billing.resubscribeSubscriptionButton.scope).hasTextContaining('Resubscribe to plan');
   });
 
   test('view billing on a canceled marketplace plan', async function (assert) {
