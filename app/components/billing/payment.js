@@ -83,7 +83,21 @@ export default Component.extend({
       if (this.selectedAddon) {
         yield this.subscription.buyAddon.perform(this.selectedAddon);
       } else {
-        yield this.subscription.changePlan.perform(this.selectedPlan.id);
+        if (!this.subscription.id && this.v1SubscriptionId) {
+          const { account, subscription, selectedPlan } = this;
+          const organizationId = account.type === 'organization' ? +(account.id) : null;
+          const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
+          const org = organizationId && this.store.peekRecord('organization', organizationId);
+          subscription.setProperties({
+            organization: org,
+            plan: plan,
+            v1SubscriptionId: this.v1SubscriptionId,
+          });
+          const { clientSecret } = yield subscription.save();
+          this.stripe.handleStripePayment.perform(clientSecret);
+        } else {
+          yield this.subscription.changePlan.perform(this.selectedPlan.id);
+        }
       }
       yield this.accounts.fetchV2Subscriptions.perform();
       yield this.retryAuthorization.perform();

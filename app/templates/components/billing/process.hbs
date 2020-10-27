@@ -35,6 +35,7 @@
   {{else if this.isStepThree}}
     <Billing::Payment
       @subscription={{this.subscription}}
+      @v1SubscriptionId={{this.v1SubscriptionId}}
       @selectedPlan={{this.selectedPlan}}
       @account={{this.account}}
       @goToFirstStep={{action 'goToFirstStep'}}
