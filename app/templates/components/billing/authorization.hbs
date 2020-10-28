@@ -47,16 +47,29 @@
   </span>
 {{else if (and this.isComplete (or this.subscription.isStripe this.subscription.isManual))}}
   {{#if (or this.showPlansSelector this.showAddonsSelector)}}
-    <Billing::Process
-      @account={{this.account}}
-      @subscription={{this.subscription}}
-      @selectedPlan={{this.selectedPlan}}
-      @selectedAddon={{this.selectedAddon}}
-      @showPlansSelector={{this.showPlansSelector}}
-      @showAddonsSelector={{this.showAddonsSelector}}
-      @showCancelButton={{true}}
-      @retryAuthorization={{this.retryAuthorization}}
-    />
+    {{#if (not this.isV2Subscription)}}
+      <Billing::Process
+        @account={{this.account}}
+        @subscription={{this.newV2Subscription}}
+        @isProcessCompleted={{this.isProcessCompleted}}
+        @v1SubscriptionId={{this.subscription.id}}
+        @selectedPlan={{this.selectedPlan}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showCancelButton={{true}}
+        @retryAuthorization={{this.retryAuthorization}}
+      />
+    {{else}}
+      <Billing::Process
+        @account={{this.account}}
+        @subscription={{this.subscription}}
+        @selectedPlan={{this.selectedPlan}}
+        @selectedAddon={{this.selectedAddon}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showAddonsSelector={{this.showAddonsSelector}}
+        @showCancelButton={{true}}
+        @retryAuthorization={{this.retryAuthorization}}
+      />
+    {{/if}}
   {{else}}
     <div class="flex flex--wrap {{if this.account.hasSubscriptionPermissions 'billing-subscription__buttons'}}">
       {{#if this.isLoading}}
@@ -68,6 +81,7 @@
             @githubSubscription={{this.githubSubscription}}
             @subscription={{this.subscription}}
             @resubscribe={{this.resubscribe}}
+            @isV2Subscription={{this.isV2Subscription}}
             @openPlansSelector={{fn (mut this.showPlansSelector) true}}
           />
         </div>

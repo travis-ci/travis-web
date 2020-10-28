@@ -24,6 +24,8 @@ export default Model.extend({
   clientSecret: attr('string'),
   paymentIntent: attr(),
 
+  v1SubscriptionId: attr('number'),
+
   discount: belongsTo('discount', { async: false }),
   billingInfo: belongsTo('v2-billing-info', { async: false }),
   creditCardInfo: belongsTo('v2-credit-card-info', { async: false }),
