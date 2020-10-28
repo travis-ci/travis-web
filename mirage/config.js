@@ -2,7 +2,6 @@
 import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'fuzzysort';
-import moment from 'moment';
 
 const { validAuthToken, apiEndpoint } = config;
 
@@ -127,14 +126,13 @@ export default function () {
     return response;
   });
 
-  this.get('/v3/owner/:login/executions?from=:from&to=:to', function (schema, request) {
-    const twoMonthsAgo = new Date();
-    twoMonthsAgo.setTime(twoMonthsAgo.getTime() - 60 * 24 * 60 * 60 * 1000);
-    const from = moment(twoMonthsAgo).format('YYYY-MM-DD');
-    const to = moment(new Date()).format('YYYY-MM-DD');
+  this.get('/v3/owner/:login/executions', function (schema, request) {
+    const from = request.queryParams.from;
+    const to = request.queryParams.to;
+    const login = request.params.login;
     let response = {
       '@type': 'executions',
-      '@href': `/v3/owner/user-login/executions?from=${from}&to=${to}`,
+      '@href': `/v3/owner/${login}/executions?from=${from}&to=${to}`,
       '@representation': 'standard',
       'executions': [
         {
@@ -163,21 +161,19 @@ export default function () {
     return response;
   });
 
-  this.get('/v3/owner/:login/executions_per_repo?from=:from&to=:to', function (schema, request) {
-    debugger
-    const twoMonthsAgo = new Date();
-    twoMonthsAgo.setTime(twoMonthsAgo.getTime() - 60 * 24 * 60 * 60 * 1000);
-    const from = moment(twoMonthsAgo).format('YYYY-MM-DD');
-    const to = moment(new Date()).format('YYYY-MM-DD');
+  this.get('/v3/owner/:login/executions_per_repo', function (schema, request) {
+    const from = request.queryParams.from;
+    const to = request.queryParams.to;
+    const login = request.params.login;
     let response = {
       '@type': 'executionsperrepo',
-      '@href': `/v3/owner/user-login/executions_per_repo?from=${from}&to=${to}`,
+      '@href': `/v3/owner/${login}/executions_per_repo?from=${from}&to=${to}`,
       '@representation': 'standard',
       'executionsperrepo': [
         {
           'repository_id': 1,
           'os': 'linux',
-          'credits_consumed': 0,
+          'credits_consumed': 10,
           'minutes_consumed': 1,
           'repository': {
             '@type': 'repository',
@@ -199,7 +195,7 @@ export default function () {
             },
             'id': 1,
             'name': 'reponame',
-            'slug': 'user-login/reponame',
+            'slug': `${login}/reponame`,
             'description': 'reponame',
             'github_id': 1,
             'vcs_id': '1',
@@ -210,10 +206,122 @@ export default function () {
             'owner': {
               '@type': 'organization',
               'id': 10619,
-              'login': 'user-login',
+              'login': `${login}`,
               '@href': '/org/1'
             },
-            'owner_name': 'user-login',
+            'owner_name': `${login}`,
+            'vcs_name': 'reponame',
+            'default_branch': {
+              '@type': 'branch',
+              '@href': '/repo/1/branch/main',
+              '@representation': 'minimal',
+              'name': 'main'
+            },
+            'starred': false,
+            'managed_by_installation': true,
+            'active_on_org': false,
+            'migration_status': null,
+            'history_migration_status': null,
+            'shared': false,
+            'config_validation': true
+          }
+        },
+        {
+          'repository_id': 2,
+          'os': 'windows',
+          'credits_consumed': 20,
+          'minutes_consumed': 2,
+          'repository': {
+            '@type': 'repository',
+            '@href': '/repo/2',
+            '@representation': 'standard',
+            '@permissions': {
+              'read': false,
+              'delete_key_pair': false,
+              'create_request': false,
+              'admin': false,
+              'activate': false,
+              'deactivate': false,
+              'migrate': false,
+              'star': false,
+              'unstar': false,
+              'create_cron': false,
+              'create_env_var': false,
+              'create_key_pair': false
+            },
+            'id': 1,
+            'name': 'reponame2',
+            'slug': `${login}/reponame2`,
+            'description': 'reponame2',
+            'github_id': 1,
+            'vcs_id': '1',
+            'vcs_type': 'GithubRepository',
+            'github_language': null,
+            'active': true,
+            'private': true,
+            'owner': {
+              '@type': 'organization',
+              'id': 10619,
+              'login': `${login}`,
+              '@href': '/org/1'
+            },
+            'owner_name': `${login}`,
+            'vcs_name': 'reponame',
+            'default_branch': {
+              '@type': 'branch',
+              '@href': '/repo/1/branch/main',
+              '@representation': 'minimal',
+              'name': 'main'
+            },
+            'starred': false,
+            'managed_by_installation': true,
+            'active_on_org': false,
+            'migration_status': null,
+            'history_migration_status': null,
+            'shared': false,
+            'config_validation': true
+          }
+        },
+        {
+          'repository_id': 3,
+          'os': 'osx',
+          'credits_consumed': 30,
+          'minutes_consumed': 3,
+          'repository': {
+            '@type': 'repository',
+            '@href': '/repo/2',
+            '@representation': 'standard',
+            '@permissions': {
+              'read': false,
+              'delete_key_pair': false,
+              'create_request': false,
+              'admin': false,
+              'activate': false,
+              'deactivate': false,
+              'migrate': false,
+              'star': false,
+              'unstar': false,
+              'create_cron': false,
+              'create_env_var': false,
+              'create_key_pair': false
+            },
+            'id': 1,
+            'name': 'reponame3',
+            'slug': `${login}/reponame3`,
+            'description': 'reponame3',
+            'github_id': 1,
+            'vcs_id': '1',
+            'vcs_type': 'GithubRepository',
+            'github_language': null,
+            'active': true,
+            'private': true,
+            'owner': {
+              '@type': 'organization',
+              'id': 10619,
+              'login': `${login}`,
+              '@href': '/org/1'
+            },
+            'owner_name': `${login}`,
             'vcs_name': 'reponame',
             'default_branch': {
               '@type': 'branch',
@@ -235,14 +343,13 @@ export default function () {
     return response;
   });
 
-  this.get('/v3/owner/:login/executions_per_sender?from=:from&to=:to', function (schema, request) {
-    const twoMonthsAgo = new Date();
-    twoMonthsAgo.setTime(twoMonthsAgo.getTime() - 60 * 24 * 60 * 60 * 1000);
-    const from = moment(twoMonthsAgo).format('YYYY-MM-DD');
-    const to = moment(new Date()).format('YYYY-MM-DD');
+  this.get('/v3/owner/:login/executions_per_sender', function (schema, request) {
+    const from = request.queryParams.from;
+    const to = request.queryParams.to;
+    const login = request.params.login;
     let response = {
       '@type': 'executionspersender',
-      '@href': `/v3/owner/user-login/executions_per_sender?from=${from}&to=${to}`,
+      '@href': `/v3/owner/${login}/executions_per_sender?from=${from}&to=${to}`,
       '@representation': 'standard',
       'executionspersender': [
         {
@@ -258,8 +365,8 @@ export default function () {
               'sync': false
             },
             'id': 1,
-            'login': 'user-login',
-            'name': 'user-login',
+            'login': `${login}`,
+            'name': `${login}`,
             'github_id': 1,
             'vcs_id': '1',
             'vcs_type': 'GithubUser',

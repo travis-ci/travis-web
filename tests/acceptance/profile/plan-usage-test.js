@@ -46,20 +46,6 @@ module('Acceptance | profile/plan usage', function (hooks) {
     const validTo = new Date();
     validTo.setMonth(validTo.getMonth() + 1);
 
-    let v2subscription = this.server.create('v2subscription', {
-      defaultV2Plan: this.defaultV2Plan,
-      owner: this.user,
-      status: 'subscribed',
-      valid_to: validTo,
-      created_at: new Date(),
-      source: 'stripe',
-      permissions: {
-        write: true
-      }
-    });
-
-    this.v2subscription = v2subscription;
-    this.user.v2subscription = v2subscription;
     const account = { id: 1, hasSubscriptionPermissions: true, type: 'Organization' };
     this.setProperties({
       account,
@@ -71,6 +57,25 @@ module('Acceptance | profile/plan usage', function (hooks) {
     await profilePage.planUsage.visit();
 
     percySnapshot(assert);
+
+    assert.equal(profilePage.planUsage.page.uniquUsers.text, '1 Unique users who are running builds');
+    assert.equal(profilePage.planUsage.page.macMinutes.text, '3 min');
+    assert.equal(profilePage.planUsage.page.windowsMinutes.text, '2 min');
+    assert.equal(profilePage.planUsage.page.linuxMinutes.text, '1 min');
+    assert.equal(profilePage.planUsage.page.creditsTotal.text, '60');
+    assert.equal(profilePage.planUsage.page.minutesTotal.text, '6');
   });
 
+  test('click Check users activity', async function (assert) {
+    await profilePage.visit();
+    await profilePage.planUsage.visit();
+    await profilePage.planUsage.checkUserActivity.visit();
+
+    percySnapshot(assert);
+
+    assert.equal(profilePage.planUsage.checkUserActivity.uniqueUsers.text, '1 active users');
+    assert.equal(profilePage.planUsage.checkUserActivity.userName.text, 'user-login');
+    assert.equal(profilePage.planUsage.checkUserActivity.minutesConsumed.text, '1');
+    assert.equal(profilePage.planUsage.checkUserActivity.creditsConsumed.text, '0');
+  });
 });

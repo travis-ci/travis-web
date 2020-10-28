@@ -26,7 +26,7 @@
     {{/each}}
     </ul>
     <h3>Users</h3>
-    <strong>
+    <strong data-test-plan-usage-unique-users='true'>
     {{#if this.subscription.plan}}
       {{this.subscription.plan.users}}
     {{/if}}
@@ -35,7 +35,7 @@
     <br />
     A user is anyone who triggers the use of the compute resources. You will be charged monthly for
     <br />
-    <button class="button--blue" {{on 'click' (fn (mut this.showUserStatisticsModals) true)}} data-test-complete-payment='true'>
+    <button class="button--blue" {{on 'click' (fn (mut this.showUserStatisticsModals) true)}} data-test-plan-usage-check-user-activity='true'>
       Check your user activity
     </button>
     <hr />
@@ -95,7 +95,7 @@
     <div class="minutes-circle-container">
       {{#each-in this.summarizedMinutesByOs as |osicon minutes|}}
         <div class="minutes-circle" style="width: {{this.circleWidth}};">
-          <span>
+          <span class="data-test-plan-usage-os-{{osicon}}-minutes">
             <SvgImage @name={{osicon}} @class="icon" />
             <br />
             {{format-number minutes}} min
@@ -129,8 +129,8 @@
         {{/each}}
         <tr>
           <td>Total</td>
-          <td>{{format-number this.totalBuildMinutes}}</td>
-          <td>{{format-number this.totalBuildCredits}}</td>
+          <td data-test-plan-usage-minutes-total='true'>{{format-number this.totalBuildMinutes}}</td>
+          <td data-test-plan-usage-credits-total='true'>{{format-number this.totalBuildCredits}}</td>
         </tr>
       </tbody>
     </table>

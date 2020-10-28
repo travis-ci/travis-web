@@ -5,7 +5,7 @@
 >
   <div data-test-user-statistics-modal="true" class="user-statistics-modal">
     <h2>User statistics</h2>
-    <span class="active-users">{{this.usersCount}} active users</span>
+    <span class="active-users" data-test-plan-usage-user-statistics-modal-unique-users='true'>{{this.usersCount}} active users</span>
     <div class="date-picker-container">
       <button class="date-picker" onclick={{action "datePicker"}} >
         {{moment-format this.dateRange.start "YYYY-MM-DD"}} - {{moment-format this.dateRange.end "YYYY-MM-DD"}}
@@ -43,7 +43,7 @@
                 @size={{42}}
               />
               <div class="sender">
-                <span class="sender-name">
+                <span class="sender-name" data-test-plan-usage-user-statistics-modal-user-name='true'>
                 {{#if user.sender.name}}
                   {{user.sender.name}}
                 {{else}}
@@ -54,10 +54,10 @@
                 {{user.sender.email}}
               </div>
             </td>
-            <td>
+            <td data-test-plan-usage-user-statistics-modal-minutes-consumed='true'>
               {{format-number user.minutes_consumed}}
             </td>
-            <td>
+            <td data-test-plan-usage-user-statistics-modal-credits-consumed='true'>
               {{format-number user.credits_consumed}}
             </td>
           </tr>
