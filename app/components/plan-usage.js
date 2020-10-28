@@ -29,8 +29,8 @@ export default Component.extend({
       start: twoMonthsAgo,
       end: new Date()
     };
-    this.account.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
-    this.account.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+    this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+    this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
   },
 
   summarizedRepositories: computed('summarizedCalculations.repositories', function () {
@@ -153,7 +153,7 @@ export default Component.extend({
       const endDate = moment(this.dateRange.end).format('YYYY-MM-DD');
       const fileName = `usage_${startDate}_${endDate}.csv`;
 
-      await this.account.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+      await this.owner.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
       const header = ['Job Id', 'Started at', 'Finished at', 'OS', 'Credits consumed', 'Minutes consumend', 'Repository', 'Owner', 'Sender'];
       const data = this.get('executionsDataForCsv');
 
@@ -163,9 +163,9 @@ export default Component.extend({
     datePicker() {
       this.set('showDatePicker', !this.showDatePicker);
       if (!this.showDatePicker) {
-        this.account.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
+        this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
           moment(this.dateRange.end).format('YYYY-MM-DD'));
-        this.account.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
+        this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
           moment(this.dateRange.end).format('YYYY-MM-DD'));
       }
     }

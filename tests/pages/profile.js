@@ -777,6 +777,10 @@ export default create({
     },
   },
 
+  planUsage: {
+    visit: clickable('li[data-test-plan_usage-tab] a'),
+  },
+
   migrate: {
     visit: clickable('li[data-test-migrate-tab] a'),
 

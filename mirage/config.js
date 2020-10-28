@@ -2,6 +2,7 @@
 import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'fuzzysort';
+import moment from 'moment';
 
 const { validAuthToken, apiEndpoint } = config;
 
@@ -123,6 +124,168 @@ export default function () {
     let owners = schema.organizations.all().models.slice();
     owners.push(schema.users.first());
 
+    return response;
+  });
+
+  this.get('/v3/owner/:login/executions?from=:from&to=:to', function (schema, request) {
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setTime(twoMonthsAgo.getTime() - 60 * 24 * 60 * 60 * 1000);
+    const from = moment(twoMonthsAgo).format('YYYY-MM-DD');
+    const to = moment(new Date()).format('YYYY-MM-DD');
+    let response = {
+      '@type': 'executions',
+      '@href': `/v3/owner/user-login/executions?from=${from}&to=${to}`,
+      '@representation': 'standard',
+      'executions': [
+        {
+          '@type': 'execution',
+          '@representation': 'standard',
+          'id': 1,
+          'os': 'linux',
+          'instance_size': 'standard-2',
+          'arch': 'amd64',
+          'virtualization_type': 'vm',
+          'queue': 'builds.gce',
+          'job_id': 1,
+          'repository_id': 1,
+          'owner_id': 1,
+          'owner_type': 'Organization',
+          'plan_id': 1,
+          'sender_id': 1,
+          'credits_consumed': 0,
+          'started_at': '2020-10-22T15:09:38.000Z',
+          'finished_at': '2020-10-22T15:09:58.000Z',
+          'created_at': '2020-10-22T15:09:59.404Z',
+          'updated_at': '2020-10-22T15:09:59.404Z'
+        }
+      ]
+    };
+    return response;
+  });
+
+  this.get('/v3/owner/:login/executions_per_repo?from=:from&to=:to', function (schema, request) {
+    debugger
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setTime(twoMonthsAgo.getTime() - 60 * 24 * 60 * 60 * 1000);
+    const from = moment(twoMonthsAgo).format('YYYY-MM-DD');
+    const to = moment(new Date()).format('YYYY-MM-DD');
+    let response = {
+      '@type': 'executionsperrepo',
+      '@href': `/v3/owner/user-login/executions_per_repo?from=${from}&to=${to}`,
+      '@representation': 'standard',
+      'executionsperrepo': [
+        {
+          'repository_id': 1,
+          'os': 'linux',
+          'credits_consumed': 0,
+          'minutes_consumed': 1,
+          'repository': {
+            '@type': 'repository',
+            '@href': '/repo/1',
+            '@representation': 'standard',
+            '@permissions': {
+              'read': false,
+              'delete_key_pair': false,
+              'create_request': false,
+              'admin': false,
+              'activate': false,
+              'deactivate': false,
+              'migrate': false,
+              'star': false,
+              'unstar': false,
+              'create_cron': false,
+              'create_env_var': false,
+              'create_key_pair': false
+            },
+            'id': 1,
+            'name': 'reponame',
+            'slug': 'user-login/reponame',
+            'description': 'reponame',
+            'github_id': 1,
+            'vcs_id': '1',
+            'vcs_type': 'GithubRepository',
+            'github_language': null,
+            'active': true,
+            'private': true,
+            'owner': {
+              '@type': 'organization',
+              'id': 10619,
+              'login': 'user-login',
+              '@href': '/org/1'
+            },
+            'owner_name': 'user-login',
+            'vcs_name': 'reponame',
+            'default_branch': {
+              '@type': 'branch',
+              '@href': '/repo/1/branch/main',
+              '@representation': 'minimal',
+              'name': 'main'
+            },
+            'starred': false,
+            'managed_by_installation': true,
+            'active_on_org': false,
+            'migration_status': null,
+            'history_migration_status': null,
+            'shared': false,
+            'config_validation': true
+          }
+        }
+      ]
+    };
+    return response;
+  });
+
+  this.get('/v3/owner/:login/executions_per_sender?from=:from&to=:to', function (schema, request) {
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setTime(twoMonthsAgo.getTime() - 60 * 24 * 60 * 60 * 1000);
+    const from = moment(twoMonthsAgo).format('YYYY-MM-DD');
+    const to = moment(new Date()).format('YYYY-MM-DD');
+    let response = {
+      '@type': 'executionspersender',
+      '@href': `/v3/owner/user-login/executions_per_sender?from=${from}&to=${to}`,
+      '@representation': 'standard',
+      'executionspersender': [
+        {
+          'credits_consumed': 0,
+          'minutes_consumed': 1,
+          'sender_id': 1,
+          'sender': {
+            '@type': 'user',
+            '@href': '/user/1',
+            '@representation': 'standard',
+            '@permissions': {
+              'read': true,
+              'sync': false
+            },
+            'id': 1,
+            'login': 'user-login',
+            'name': 'user-login',
+            'github_id': 1,
+            'vcs_id': '1',
+            'vcs_type': 'GithubUser',
+            'avatar_url': 'https://avatars0.githubusercontent.com/u/1?v=4',
+            'education': false,
+            'allow_migration': false,
+            'allowance': {
+              '@type': 'allowance',
+              '@representation': 'minimal',
+              'subscription_type': 1,
+              'public_repos': true,
+              'private_repos': false,
+              'concurrency_limit': 1,
+              'user_usage': false,
+              'pending_user_licenses': false,
+              'id': 1
+            },
+            'email': null,
+            'is_syncing': false,
+            'synced_at': '2020-10-27T19:30:19Z',
+            'recently_signed_up': false,
+            'secure_user_hash': 'hash'
+          }
+        }
+      ]
+    };
     return response;
   });
 
