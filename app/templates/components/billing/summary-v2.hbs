@@ -145,6 +145,7 @@
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
   {{#if this.subscription.hasUserLicenseAddons}}
     <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
+    <hr />
   {{/if}}
   {{#if this.subscription.hasCredits}}
     <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
