@@ -43,8 +43,15 @@ module('Acceptance | profile/plan usage', function (hooks) {
       hasCreditAddons: true, hasOSSCreditAddons: true, planType: 'metered'
     });
     this.defaultV2Plan.save();
-    const validTo = new Date();
-    validTo.setMonth(validTo.getMonth() + 1);
+
+    this.v2subscription = this.server.create('v2-subscription', {
+      owner: this.user,
+      status: 'subscribed',
+      valid_to: new Date(),
+      addons: [
+        {name: 'User license addon', type: 'user_license', current_usage: {addon_usage: 1}}
+      ]
+    });
 
     const account = { id: 1, hasSubscriptionPermissions: true, type: 'Organization' };
     this.setProperties({

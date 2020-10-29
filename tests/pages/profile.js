@@ -780,7 +780,7 @@ export default create({
     visit: clickable('li[data-test-plan-usage-tab] a'),
     page: {
       uniquUsers: {
-        scope: '[data-test-plan-usage-unique-users]',
+        scope: '[data-test-user-usage-unique-users]',
         text: text()
       },
       macMinutes: {
