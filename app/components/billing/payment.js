@@ -81,10 +81,19 @@ export default Component.extend({
       this.set('showSwitchToFreeModal', true);
     } else {
       if (this.selectedAddon) {
+        this.metrics.trackEvent({
+          action: 'Buy Addon Pay Button Clicked',
+          category: 'Subscription',
+        });
         yield this.subscription.buyAddon.perform(this.selectedAddon);
       } else {
+        this.metrics.trackEvent({
+          action: 'Change Plan Pay Button Clicked',
+          category: 'Subscription',
+        });
         yield this.subscription.changePlan.perform(this.selectedPlan.id);
       }
+      this.metrics.trackEvent({ button: 'pay-button' });
       yield this.accounts.fetchV2Subscriptions.perform();
       yield this.retryAuthorization.perform();
       this.storage.clearBillingData();
@@ -94,6 +103,10 @@ export default Component.extend({
   }).drop(),
 
   createFreeSubscription: task(function* () {
+    this.metrics.trackEvent({
+      action: 'Free Plan Chosen',
+      category: 'Subscription',
+    });
     const { account, subscription, selectedPlan } = this;
     try {
       const organizationId = account.type === 'organization' ? +(account.id) : null;
