@@ -17,6 +17,10 @@ export default Component.extend({
 
   switchToFreeSubscription: task(function* () {
     if (this.selectedSwitchToFreeReason) {
+      this.metrics.trackEvent({
+        action: 'Plan Reverted to Free Plan',
+        category: 'Subscription',
+      });
       yield this.subscription.switchToFreeSubscription.perform(this.selectedSwitchToFreeReason, this.switchToFreeReasonDetails);
       this.onClose();
     }

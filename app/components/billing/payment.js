@@ -78,10 +78,6 @@ export default Component.extend({
 
   updatePlan: task(function* () {
     if (this.selectedPlan.isFree) {
-      this.metrics.trackEvent({
-        action: 'Plan Reverted to Free Plan',
-        category: 'Subscription',
-      });
       this.set('showSwitchToFreeModal', true);
     } else {
       if (this.selectedAddon) {
