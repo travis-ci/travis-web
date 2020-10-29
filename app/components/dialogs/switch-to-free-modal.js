@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 
 const switchToFreeReasons = [
   { name: 'Price' },
@@ -10,6 +11,8 @@ const switchToFreeReasons = [
 ];
 
 export default Component.extend({
+  metrics: service(),
+
   switchToFreeReasons,
   selectedSwitchToFreeReason: null,
   switchToFreeReasonDetails: null,
