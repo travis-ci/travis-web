@@ -51,11 +51,6 @@ export default Component.extend({
     return `${width}%`;
   }),
 
-  uniqueUsers: computed('owner.executionsPerSender', function () {
-    const senders = this.owner.get('executionsPerSender');
-    return senders ? senders.length : 0;
-  }),
-
   totalBuildMinutes: computed('summarizedRepositories', function () {
     return this.summarizedRepositories.reduce((sum, repo) => sum + repo.buildMinutes, 0);
   }),
