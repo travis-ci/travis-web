@@ -29,4 +29,5 @@ export default Component.extend({
   showPlanInfo: computed('showPlansSelector', 'showAddonsSelector', function () {
     return !this.showPlansSelector && !this.showAddonsSelector;
   }),
+  showUserManagementModal: false,
 });
