@@ -15,13 +15,13 @@
     {{this.stripeErrorMessage}}
   </span>
   <TravisForm
-    data-test-stripe-form='true' 
-    @onSubmit={{perform this.retryPayment}} 
+    data-test-stripe-form='true'
+    @onSubmit={{perform this.retryPayment}}
     as |form|
   >
-    <StripeCard 
-      @onComplete={{action "complete"}} 
-      @options={{this.options}} 
+    <StripeCard
+      @onComplete={{action "complete"}}
+      @options={{this.options}}
       as |stripeError|
     >
       {{#if stripeError}}
@@ -45,16 +45,17 @@
   <span class="notice-banner--yellow" data-test-trial-running-out='true'>
     We are currently waiting for Stripe to finish processing your order.
   </span>
-{{else if (and this.isComplete this.subscription.isStripe)}}
-  {{#if this.showPlansSelector}}
-    <Billing::SelectPlan
-      @title="Edit plan"
+{{else if (and this.isComplete (or this.subscription.isStripe this.subscription.isManual))}}
+  {{#if (or this.showPlansSelector this.showAddonsSelector)}}
+    <Billing::Process
       @account={{this.account}}
+      @subscription={{this.subscription}}
       @selectedPlan={{this.selectedPlan}}
-      @showAnnual={{this.showAnnual}}
+      @selectedAddon={{this.selectedAddon}}
       @showPlansSelector={{this.showPlansSelector}}
-      @submit={{this.editPlan}}
+      @showAddonsSelector={{this.showAddonsSelector}}
       @showCancelButton={{true}}
+      @retryAuthorization={{this.retryAuthorization}}
     />
   {{else}}
     <div class="flex flex--wrap {{if this.account.hasSubscriptionPermissions 'billing-subscription__buttons'}}">
@@ -62,7 +63,7 @@
         <LoadingIndicator/>
       {{else}}
         <div class="billing-subscription__buttons--change">
-          <BillingResubscribeButton 
+          <BillingResubscribeButton
             @account={{this.account}}
             @githubSubscription={{this.githubSubscription}}
             @subscription={{this.subscription}}
@@ -70,8 +71,15 @@
             @openPlansSelector={{fn (mut this.showPlansSelector) true}}
           />
         </div>
+        <div class='billing-subscription__buttons--addons'>
+          {{#if (and this.isV2Subscription this.canBuyAddons)}}
+            <button {{on 'click' (fn (mut this.showAddonsSelector) true)}}  class='button--white-and-teal button--hover' data-test-buy-addons='true'>
+              Buy addons
+            </button>
+          {{/if}}
+        </div>
         <div class='billing-subscription__buttons--cancel'>
-          {{#if this.canCancelSubscription}}
+          {{#if (and this.canCancelSubscription (not this.isV2Subscription))}}
             <button {{on 'click' (fn (mut this.showCancelModal) true)}} class='button--white button--hover' data-test-open-cancel-subscription-modal='true'>
               Cancel subscription
             </button>
@@ -81,7 +89,7 @@
     </div>
   {{/if}}
 {{/if}}
- <Dialogs::CancelSubscriptionModal 
+ <Dialogs::CancelSubscriptionModal
   @isOpen={{this.showCancelModal}}
   @onClose={{fn (mut this.showCancelModal) false}}
   @subscription={{this.subscription}}

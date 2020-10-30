@@ -43,9 +43,9 @@ module('Acceptance | profile/redirect', function (hooks) {
     assert.equal(currentURL(), '/account/preferences');
   });
 
-  test('visiting /profile/:username/subscription redirects to /account/subscription', async function (assert) {
-    await visit(`/profile/${this.user.login}/subscription`);
-    assert.equal(currentURL(), '/account/subscription');
+  test('visiting /profile/:username/plan redirects to /account/plan', async function (assert) {
+    await visit(`/profile/${this.user.login}/plan`);
+    assert.equal(currentURL(), '/account/plan');
   });
 
   test('visiting /profile/:org redirects to /organisations/:org/repositories', async function (assert) {
@@ -58,9 +58,9 @@ module('Acceptance | profile/redirect', function (hooks) {
     assert.equal(currentURL(), `/organizations/${this.org.login}/repositories`);
   });
 
-  test('visiting /profile/:org/subscription redirects to /organisations/:org/subscription', async function (assert) {
-    await visit(`/profile/${this.org.login}/subscription`);
-    assert.equal(currentURL(), `/organizations/${this.org.login}/subscription`);
+  test('visiting /profile/:org/plan redirects to /organisations/:org/plan', async function (assert) {
+    await visit(`/profile/${this.org.login}/plan`);
+    assert.equal(currentURL(), `/organizations/${this.org.login}/plan`);
   });
 });
 

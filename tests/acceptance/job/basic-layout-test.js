@@ -25,7 +25,10 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting job-view', async function (assert) {
-    let repo = this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+
+    let repo = this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } }),
       branch = this.server.create('branch', { name: 'acceptance-tests' });
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -85,7 +88,9 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting pull request job-view', async function (assert) {
-    let repo = this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repo = this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } }),
       branch = this.server.create('branch', { name: 'acceptance-tests' });
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -147,7 +152,9 @@ module('Acceptance | job/basic layout', function (hooks) {
 
   test('visiting a job in created(received) state', async function (assert) {
     let branch = this.server.create('branch', { name: 'acceptance-tests' });
-    let repo = this.server.create('repository', { slug: 'travis-ci/travis-web', defaultBranch: branch });
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repo = this.server.create('repository', { slug: 'travis-ci/travis-web', defaultBranch: branch, owner: { login: 'travis-ci', id: 1 } });
     let commit = this.server.create('commit', {
       id: 100,
       sha: 'abcd',
@@ -271,7 +278,9 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting a job with a truncated log', async function (assert) {
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
     let branch = this.server.create('branch', { name: 'acceptance-tests' });
 
     let gitAuthor = this.server.create('git-user', { name: 'Mr T' });
@@ -300,7 +309,9 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting a job with a complex log', async function (assert) {
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } }),
       branch = this.server.create('branch', { name: 'acceptance-tests' });
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -421,7 +432,9 @@ module('Acceptance | job/basic layout', function (hooks) {
   });
 
   test('visiting a job with fold duration', async function (assert) {
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } }),
       branch = this.server.create('branch', { name: 'acceptance-tests' });
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -459,7 +472,9 @@ module('Acceptance | job/basic layout', function (hooks) {
   test('visiting a job when log-rendering is off', async function (assert) {
     localStorage.setItem('travis.logRendering', false);
 
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } }),
       branch = this.server.create('branch', { name: 'acceptance-tests' });
 
     let commit = this.server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });

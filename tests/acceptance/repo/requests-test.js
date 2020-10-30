@@ -11,7 +11,9 @@ module('Acceptance | repo | requests', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.repo = this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    this.repo = this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
   });
 
   test('list requests', async function (assert) {

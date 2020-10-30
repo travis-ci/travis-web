@@ -30,13 +30,14 @@ module('Acceptance | profile/basic layout', function (hooks) {
       avatar_url: '/images/tiny.gif'
     });
 
-    signInUser(this.user);
-
     this.server.create('installation', {
       owner: this.user,
       github_id: 2691
     });
+
     this.user.save();
+
+    signInUser(this.user);
 
     let subscription = this.server.create('subscription', {
       owner: this.user,

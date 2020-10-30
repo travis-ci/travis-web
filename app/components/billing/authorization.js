@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, not, equal, and, or, bool } from '@ember/object/computed';
+import { reads, not, equal, and, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { computed } from '@ember/object';
@@ -13,11 +13,10 @@ export default Component.extend({
   account: null,
   subscription: null,
 
-  showPlansSelector: false,
   showCancelModal: false,
-  selectedPlan: reads('subscription.plan'),
-  showAnnual: bool('selectedPlan.annual'),
-  showMonthly: not('showAnnual'),
+  isV2Subscription: false,
+  selectedPlan: null,
+  selectedAddon: null,
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
@@ -30,7 +29,11 @@ export default Component.extend({
   isComplete: not('isIncomplete'),
   canCancelSubscription: and('isSubscribed', 'hasSubscriptionPermissions'),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
-  isLoading: or('accounts.fetchSubscriptions.isRunning', 'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
+  isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
+    'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
+
+  freeV2Plan: equal('subscription.plan.startingPrice', 0),
+  canBuyAddons: not('freeV2Plan'),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,
@@ -51,7 +54,11 @@ export default Component.extend({
     const { token } = yield this.stripe.createStripeToken.perform(this.stripeElement);
     try {
       if (token) {
-        yield this.subscription.creditCardInfo.updateToken(this.subscription.id, token);
+        yield this.subscription.creditCardInfo.updateToken.perform({
+          subscriptionId: this.subscription.id,
+          tokenId: token.id,
+          tokenCard: token.card
+        });
         const { client_secret: clientSecret } = yield this.subscription.chargeUnpaidInvoices.perform();
         yield this.stripe.handleStripePayment.perform(clientSecret);
       }
@@ -61,8 +68,9 @@ export default Component.extend({
   }).drop(),
 
   editPlan: task(function* () {
-    yield this.subscription.changePlan.perform({ plan: this.selectedPlan.id });
+    yield this.subscription.changePlan.perform(this.selectedPlan.id);
     yield this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.perform();
     yield this.retryAuthorization.perform();
   }).drop(),
 
@@ -72,6 +80,7 @@ export default Component.extend({
       yield this.stripe.handleStripePayment.perform(result.payment_intent.client_secret);
     } else {
       yield this.accounts.fetchSubscriptions.perform();
+      yield this.accounts.fetchV2Subscriptions.perform();
     }
   }).drop(),
 

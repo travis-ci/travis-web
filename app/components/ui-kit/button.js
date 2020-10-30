@@ -48,12 +48,15 @@ const LABEL_COLORS = {
   default: 'white',
 };
 
+const DEFAULT_WIDTH = 'auto';
+
 export default Component.extend({
   tagName: '',
 
   // Public interface
   role: 'button',
   color: DEFAULT_COLOR,
+  width: DEFAULT_WIDTH,
   invert: false,
   disabled: false,
 

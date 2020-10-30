@@ -10,5 +10,12 @@ export default TravisRoute.extend({
     return this.store.query('request', {
       repository_id: this.modelFor('repo').get('id')
     });
+  },
+
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    if (repo && !repo.repoOwnerAllowance) {
+      repo.fetchRepoOwnerAllowance.perform();
+    }
   }
 });

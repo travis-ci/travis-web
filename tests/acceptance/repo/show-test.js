@@ -12,13 +12,18 @@ module('Acceptance | show repo page', function (hooks) {
 
   hooks.beforeEach(function () {
     const currentUser = this.server.create('user', {login: 'user-login'});
+    this.server.create('allowance', {subscription_type: 1});
+
+    this.server.create('organization', {login: 'org-login'});
+    this.server.create('allowance', {subscription_type: 1});
     signInUser(currentUser);
 
     const repo = this.server.create('repository', {
       name: 'repository-name',
       slug: 'org-login/repository-name',
       owner: {
-        login: 'org-login'
+        login: 'org-login',
+        id: 2
       },
       vcs_name: 'repository-name',
       owner_name: 'org-login'

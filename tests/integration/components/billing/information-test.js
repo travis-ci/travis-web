@@ -15,19 +15,17 @@ module('Integration | Component | billing-information', function (hooks) {
     const plans = [{
       id: 1,
       name: 'A',
-      builds: 5,
-      price: 20000,
-      annual: false
+      startingUsers: 5,
+      startingPrice: 20000,
     }, {
-      id: 1,
+      id: 2,
       name: 'B',
-      builds: 10,
-      price: 30000,
-      annual: true
+      startingUsers: 10,
+      startingPrice: 30000
     }];
     this.plans = plans;
 
-    const newSubscription = {
+    const subscription = {
       billingInfo: {
         firstName: '',
         lastName: '',
@@ -51,8 +49,8 @@ module('Integration | Component | billing-information', function (hooks) {
 
     this.setProperties({
       displayedPlans: plans,
-      showAnnual: false,
-      newSubscription
+      subscription,
+      selectedPlan: plans[0]
     });
   });
 
@@ -60,8 +58,8 @@ module('Integration | Component | billing-information', function (hooks) {
     await render(hbs`
       <Billing::Information
         @displayedPlans={{displayedPlans}}
-        @showAnnual={{showAnnual}}
-        @newSubscription={{newSubscription}}
+        @subscription={{subscription}}
+        @selectedPlan={{selectedPlan}}
         @next={{action 'next'}}
         @back={{action 'back'}}
         @goToFirstStep={{action 'goToFirstStep'}}
@@ -70,11 +68,9 @@ module('Integration | Component | billing-information', function (hooks) {
 
     assert.dom('[data-test-contact-details-title]').hasText('Contact details');
     assert.dom('[data-test-billing-details-title]').hasText('Billing address');
-    assert.equal(profilePage.billing.selectedPlanOverview.heading.text, 'summary');
-    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plans[0].name} plan`);
-    assert.equal(profilePage.billing.selectedPlanOverview.jobs.text, `${this.plans[0].builds} concurrent jobs`);
-    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plans[0].price / 100}`);
-    assert.equal(profilePage.billing.period.text, '/month');
+    assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plans[0].name}`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.plans[0].startingUsers} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plans[0].startingPrice / 100}`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
     assert.dom('input').isVisible({ count: 7 });
@@ -93,7 +89,7 @@ module('Integration | Component | billing-information', function (hooks) {
         @selectedPlan={{selectedPlan}}
         @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
-        @newSubscription={{newSubscription}}
+        @selectedPlan={{this.selectedPlan}}
         @next={{action 'next'}}
         @back={{action 'back'}}
         @goToFirstStep={{action 'goToFirstStep'}}
@@ -108,7 +104,7 @@ module('Integration | Component | billing-information', function (hooks) {
       <Billing::Information
         @displayedPlans={{displayedPlans}}
         @showAnnual={{showAnnual}}
-        @newSubscription={{newSubscription}}
+        @selectedPlan={{this.selectedPlan}}
         @next={{action 'next'}}
         @back={{action 'back'}}
         @goToFirstStep={{action 'goToFirstStep'}}

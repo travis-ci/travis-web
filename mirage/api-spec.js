@@ -1565,6 +1565,15 @@ export default {
         "minimal":        ["id", "name", "price", "currency", "builds", "annual"],
       }
     },
+    "v2-plan-config":  {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       ["id", "name", "private_repos", "starting_price", "starting_users", "private_credits", "public_credits"],
+      "representations":  {
+        "standard":       ["id", "name", "private_repos", "starting_price", "starting_users", "private_credits", "public_credits"],
+        "minimal":        ["id", "name", "private_repos", "starting_price", "starting_users", "private_credits", "public_credits"],
+      }
+    },
     "preference": {
       "@type": "resource",
       "actions": {
@@ -2132,6 +2141,34 @@ export default {
         ],
       },
     },
+    "v2-subscription": {
+      "@type":            "resource",
+      "actions":          { },
+      "attributes":       [
+        "id",
+        "plan",
+        "addons",
+        "billing_info",
+        "credit_card_info",
+        "discount",
+        "owner",
+        "created_at",
+        "source",
+      ],
+      "representations":  {
+        "standard":       [
+          "id",
+          "plan",
+          "addons",
+          "billing_info",
+          "credit_card_info",
+          "discount",
+          "owner",
+          "created_at",
+          "source",
+        ],
+      },
+    },
     "template": {
       "@type": "resource",
       "actions": {
@@ -2203,7 +2240,8 @@ export default {
         "synced_at",
         "recently_signed_up",
         "vcs_type",
-        "vcs_id"
+        "vcs_id",
+        "allowance"
       ],
       "representations": {
         "minimal": [
@@ -2222,7 +2260,8 @@ export default {
           "synced_at",
           "recently_signed_up",
           "vcs_type",
-          "vcs_id"
+          "vcs_id",
+          "allowance"
         ],
         "additional": [
           "repositories",

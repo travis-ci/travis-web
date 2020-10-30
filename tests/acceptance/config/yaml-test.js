@@ -38,10 +38,11 @@ module('Acceptance | config/yaml', function (hooks) {
 
   // Shouldn’t be necessary, but without this, Mirage’s beta_features 403s.
   hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
+    const currentUser = this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
     signInUser(currentUser);
 
-    this.repository = this.server.create('repository', { slug: slug });
+    this.repository =  this.server.create('repository', { slug: slug, owner: { login: 'travis-ci', id: 1} });
     this.server.create('setting', {
       repository: this.repository,
       name: 'config_validation',

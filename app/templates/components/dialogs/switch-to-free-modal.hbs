@@ -1,0 +1,64 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+  @closeButton={{true}}
+>
+  <div data-test-switchtofree-subscription-modal="true" class="flex flex--v-center flex--center flex--col switchtofree-subscription-modal">
+    <h2>Looks like you are changing your plan</h2>
+    <p class="switchtofree-subscription-modal__message">
+      To keep improving our product and how it works for our users,<br />we’d like to hear your feedback on why you’re changing your plan
+    </p>
+    <h5>Reason for changing your plan</h5>
+    <div class="flex switchtofree-subscription-modal__reason-options">
+      {{#each this.switchToFreeReasons as |reason|}}
+        <div data-test-switchtofree-reason-option='true' onClick={{action 'selectSwitchToFreeReason' reason}} class='{{if (eq selectedSwitchToFreeReason reason.name) 'selected'}}'>
+          <p>{{reason.name}}</p>
+        </div>
+      {{/each}}
+    </div>
+    <div class="full-width">
+      <TravisForm
+        @onSubmit={{perform this.switchToFreeSubscription}}
+        as |form|
+      >
+        <div class="form-elem switchtofree-information">
+          <form.field
+            @label=""
+            @onChange={{action (mut this.switchToFreeReasonDetails)}}
+            as |field|
+          >
+            <field.textarea rows="4" placeholder="Could you share more information with us?">{{this.switchToFreeReasonDetails}}</field.textarea>
+          </form.field>
+        </div>
+        <div class="form-elem switchtofree-notice">
+          You are switching to the Free Trier Plan. Your remaining addon credits will be discarded and only the credits coming with the Free Trier Plan plan will be available.
+          {{#if (or (gt this.subscription.addonUsage.public.remainingCredits 0)
+                    (gt this.subscription.addonUsage.private.remainingCredits 0))}}
+                Credits that will be discarded:
+          {{/if}}
+          {{#if (gt this.subscription.addonUsage.public.remainingCredits 0)}}
+            OSS Credits remaining balance: {{this.subscription.addonUsage.public.remainingCredits}}
+          {{/if}}
+          {{#if (gt this.subscription.addonUsage.private.remainingCredits 0)}}
+            Credits remaining balance: {{this.subscription.addonUsage.private.remainingCredits}}
+          {{/if}}
+        </div>
+        <div class="flex flex--v-center flex--center buttons">
+          {{#if this.switchToFreeSubscription.isRunning}}
+            <LoadingIndicator />
+          {{else}}
+            <button data-test-switchtofree-subscription="true" {{action (perform this.switchToFreeSubscription)}} class="button--red switchtofree-cancellation-button">
+              {{#if (not this.selectedSwitchToFreeReason)}}
+                <EmberTooltip @text="Please select a reason for switching the plan." />
+              {{/if}}
+              Confirm &amp; switch to Free Plan
+            </button>
+            <a class="link" {{on 'click' (fn @onClose)}}>
+              I changed my mind
+            </a>
+          {{/if}}
+        </div>
+      </TravisForm>
+    </div>
+  </div>
+</Modal>

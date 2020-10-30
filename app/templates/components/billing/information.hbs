@@ -1,13 +1,28 @@
+{{#if (eq this.skipBillingInfo true)}}
+  {{action next}}
+{{/if}}
 <div class='billing-information-form'>
-  <Billing::SelectedPlan
-    @selectedPlan={{this.newSubscription.plan}}
-    @goToFirstStep={{action this.goToFirstStep}}
-  />
+  <h3 data-test-contact-details-title='true'>
+    Contact details
+  </h3>
+  {{#if this.selectedAddon}}
+    <Billing::SelectedAddon
+      @selectedAddon={{this.selectedAddon}}
+      @goToFirstStep={{action this.goToFirstStep}}
+    />
+  {{else}}
+    <Billing::SelectedPlan
+      @selectedPlan={{this.selectedPlan}}
+      @totalPrice={{this.selectedPlan.startingPrice}}
+      @goToFirstStep={{action this.goToFirstStep}}
+    />
+    <Billing::WarningMessage
+      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
+    />
+  {{/if}}
   <TravisForm @onSubmit={{action next}} as |form|>
     <div data-test-billing-form>
-      <h3 data-test-contact-details-title='true'>
-        Contact details
-      </h3>
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
@@ -62,7 +77,7 @@
       <h3 data-test-billing-details-title='true'>
         Billing address
       </h3>
-      <Billing::PostalAddress @billingInfo={{this.newSubscription.billingInfo}} @form={{form}} />
+      <Billing::PostalAddress @billingInfo={{this.subscription.billingInfo}} @form={{form}} />
       <div class='form-elem flex flex--wrap'>
         <button
           onclick={{action form.submit}}
