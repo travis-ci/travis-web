@@ -1,4 +1,4 @@
-<TravisLayout @layoutName="layouts/center" class="tailwind-overrides">
+<TravisLayout @layoutName="layouts/center-max" class="tailwind-overrides">
 
   {{!-- Header section --}}
   <UiKit::Box
@@ -23,7 +23,7 @@
       <UiKit::Grid
         @base={{1}}
         @md={{2}}
-        @lg={{3}}
+        @xl={{4}}
         data-test-plans-page-product-list="true"
         as |grid|
       >
@@ -70,15 +70,6 @@
                     {{else}}
                       Adjustable credits amount
                     {{/if}}
-                  </UiKit::Text>
-                </UiKit::Box>
-
-                <UiKit::Box @margin={{hash bottom=5}}>
-                  <UiKit::Box @display='inline-block' @width={{3}}>
-                    <SvgImage @name='stage-passed-green' @class="icon" />
-                  </UiKit::Box>
-                  <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                    {{plan.publicCredits}} OSS Credits <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>/ month</UiKit::Text>
                   </UiKit::Text>
                 </UiKit::Box>
 
