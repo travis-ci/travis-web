@@ -25,8 +25,8 @@ const plans = [
   },
   {
     id: 'two_concurrent',
-    private_credits: 25000,
-    public_credits: 40000,
+    private_credits: 0,
+    public_credits: 0,
     users: 0,
     price: 12900,
     name: '2 concurrent jobs',
