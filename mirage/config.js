@@ -220,6 +220,117 @@ export default function () {
     return schema.plans.all();
   });
 
+  this.post('/v2_subscriptions', function (schema, request) {
+    const attrs = JSON.parse(request.requestBody);
+    const owner = attrs.organization_id ? schema.organizations.where({ id: attrs.organization_id }).models[0]
+      : schema.users.where({ token: validAuthToken}).models[0];
+
+    const updatedAttrs = {
+      ...attrs,
+      owner,
+      plan: schema.v2PlanConfigs.find(attrs.plan),
+      addons: [
+        {
+          'id': 1,
+          'name': 'Free 40 000 credits (renewed monthly)',
+          'type': 'credit_public',
+          'current_usage': {
+            'id': 1,
+            'addon_id': 1,
+            'addon_quantity': 40000,
+            'addon_usage': 100,
+            'remaining': 39900,
+            'active': true
+          }
+        },
+        {
+          'id': 2,
+          'name': '25 000 credits (2,5k Linux build minutes)',
+          'type': 'credit_private',
+          'current_usage': {
+            'id': 2,
+            'addon_id': 2,
+            'addon_quantity': 25000,
+            'addon_usage': 10,
+            'remaining': 24990,
+            'active': true
+          }
+        },
+        {
+          'id': 3,
+          'name': 'Standard Tier user licenses',
+          'type': 'user_license',
+          'current_usage': {
+            'id': 3,
+            'addon_id': 3,
+            'addon_quantity': 1000,
+            'addon_usage': 0,
+            'remaining': 1000,
+            'active': true
+          }
+        }
+      ],
+      source: 'stripe'
+    };
+    const savedSubscription = schema.v2Subscriptions.create(updatedAttrs);
+
+    return this.serialize(savedSubscription);
+  });
+
+  this.get('/v2_subscriptions', function (schema, params) {
+    let response = this.serialize(schema.v2Subscriptions.all());
+
+    let owners = schema.organizations.all().models.slice();
+    owners.push(schema.users.where({ token: validAuthToken}).models[0]);
+
+    response['@permissions'] = owners.map(owner => {
+      return {
+        owner: {
+          // The API for now is returning these capitalised
+          type: `${owner.modelName.substr(0, 1).toUpperCase()}${owner.modelName.substr(1)}`,
+          id: owner.id
+        },
+        create: (owner.permissions || {}).createSubscription
+      };
+    });
+
+    return response;
+  });
+
+  this.get('/v2_subscription/:subscription_id/invoices', function (schema, { params }) {
+    return schema.v2Subscriptions.find(params.subscription_id).invoices;
+  });
+
+  this.patch('/v2_subscription/:subscription_id/address', function (schema, { params, requestBody }) {
+    const attrs = JSON.parse(requestBody);
+
+    const subscription = schema.v2Subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'billing_info', {
+        ...attrs
+      }
+    );
+  });
+
+  this.patch('/v2_subscription/:subscription_id/creditcard', function (schema, { params, requestBody }) {
+    const attrs = JSON.parse(requestBody);
+
+    const subscription = schema.v2Subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'credit_card_info', {
+        ...attrs
+      }
+    );
+  });
+
+  this.get('/v2_plans_for/user', function (schema) {
+    return schema.v2PlanConfigs.all();
+  });
+
+  this.get('/v2_plans_for/organization/:organization_id', function (schema) {
+    return schema.v2PlanConfigs.all();
+  });
+
   this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });
@@ -441,6 +552,23 @@ export default function () {
     let owner = schema.users.where({ login: request.params.login }).models[0];
     if (owner) {
       return this.serialize(owner, 'owner');
+    } else {
+      return new Response(404, {}, {});
+    }
+  });
+
+  this.get('/owner/:provider/:login/allowance', function (schema, request) {
+    const users = schema.users.where({ login: request.params.login }).models;
+    let owner;
+    if (users.length === 0) {
+      const orgs = schema.organizations.where({ login: request.params.login }).models;
+      owner = orgs[0];
+    } else {
+      owner = users[0];
+    }
+    const allowance = schema.allowances.all().filter(allowance => allowance.id === owner.id);
+    if (allowance) {
+      return this.serialize(allowance, 'allowance');
     } else {
       return new Response(404, {}, {});
     }

@@ -32,13 +32,11 @@ module('Acceptance | plans page', function (hooks) {
 
   test('product section structure', async function (assert) {
     const { productSection } = plansPage;
-    const { intervalSwitch, list, button } = productSection;
+    const { list } = productSection;
 
     assert.ok(productSection.isPresent);
-    assert.ok(intervalSwitch.isPresent);
     assert.ok(list.isPresent);
-    assert.equal(list.items.length, 4);
-    assert.ok(button.isPresent);
+    assert.equal(list.items.length, 3);
   });
 
   test('oss section structure', async function (assert) {

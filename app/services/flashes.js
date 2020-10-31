@@ -2,6 +2,7 @@ import { run } from '@ember/runloop';
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
+import { assert } from '@ember/debug';
 
 const messageTypeToIcon = {
   notice: 'icon-flag',
@@ -108,5 +109,16 @@ export default Service.extend({
 
   notice(message, preamble = messageTypeToPreamble['notice'], aboveOverlay = false) {
     this.display('notice', message, preamble, aboveOverlay);
+  },
+
+  custom(component, data = {}, className = null) {
+    assert('Component name is mandatory for custom flashes', !!component);
+    this.removeCustomsByClassName(className);
+    const flash = { component, data, type: 'custom', className: className };
+    this.flashes.unshiftObject(flash);
+  },
+
+  removeCustomsByClassName(className) {
+    this.flashes.filterBy('type', 'custom').filterBy('className', className).forEach(flash => this.close(flash));
   }
 });

@@ -17,16 +17,17 @@ module('Acceptance | builds/pull requests', function (hooks) {
   hooks.beforeEach(function () {
     this.currentUser = this.server.create('user', {
       name: 'Travis CI',
-      login: 'travisci',
+      login: 'travis-ci',
     });
 
     this.branch = this.server.create('branch', { name: 'wetsuwetenstrong' });
+    this.server.create('allowance', {subscription_type: 1});
 
     signInUser(this.currentUser);
   });
 
   test('renders no pull requests messaging when none present', async function (assert) {
-    this.server.create('repository');
+    this.server.create('repository', { owner: { login: 'travis-ci', id: 1 }});
 
     await page.visitPullRequests({ organization: 'travis-ci', repo: 'travis-web' });
 
@@ -34,7 +35,7 @@ module('Acceptance | builds/pull requests', function (hooks) {
   });
 
   test('view and cancel pull requests', async function (assert) {
-    const repository = this.server.create('repository');
+    const repository = this.server.create('repository', { owner: { login: 'travis-ci', id: 1 }});
     const request = this.server.create('request', { pull_request_mergeable: 'draft' });
 
     const pullRequestBuild = this.server.create('build', {

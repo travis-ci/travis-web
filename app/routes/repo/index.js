@@ -43,6 +43,13 @@ export default TravisRoute.extend({
     controller.removeObserver('repo.currentBuildId', this, 'renderTemplate');
   },
 
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    if (repo && !repo.repoOwnerAllowance) {
+      repo.fetchRepoOwnerAllowance.perform();
+    }
+  },
+
   renderTemplate() {
     let controller = this.controllerFor('repo');
 

@@ -53,42 +53,62 @@
     <LoadingIndicator @height={{true}} />
   {{else}}
     <div class="action-button-container">
-      <button
-        class="action-button--restart"
-        aria-label="Restart {{this.type}}"
-        type="button"
-        {{action (perform this.restart)}}
-      >
-        {{#if this.tooltips}}
-          <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
-            Restart {{this.type}}
-          </EmberTooltip>
-        {{/if}}
-        <SvgImage @name="icon-restart" @class="icon" />
-        <span class="label-align">
-          Restart {{this.type}}
-        </span>
-      </button>
-    </div>
-    {{#if (and this.features.debugBuilds this.canDebug)}}
-      <div class="action-button-container">
+      {{#if this.canOwnerBuild}}
         <button
-          data-test-repo-actions-debug-button
-          class="action-button--debug"
-          aria-label="Restart as debug {{type}}"
+          class="action-button--restart"
+          aria-label="Restart {{this.type}}"
           type="button"
-          {{action (perform this.debug)}}
+          {{action (perform this.restart)}}
         >
           {{#if this.tooltips}}
             <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
-              Restart as debug {{this.type}}
+              Restart {{this.type}}
             </EmberTooltip>
           {{/if}}
-          <SvgImage @name="icon-debug" @class="icon" />
+          <SvgImage @name="icon-restart" @class="icon" />
           <span class="label-align">
-            Debug {{this.type}}
+            Restart {{this.type}}
           </span>
         </button>
+      {{else}}
+        <a class="disabled action-button--restart">
+          <EmberTooltip @text="Builds have been temporarily disabled for this repository due to a negative credit balance." />
+          <SvgImage @name="icon-restart" @class="icon" />
+          <span class="label-align">
+            Restart {{this.type}}
+          </span>
+        </a>
+      {{/if}}
+    </div>
+    {{#if (and this.features.debugBuilds this.canDebug)}}
+      <div class="action-button-container">
+        {{#if this.canOwnerBuild}}
+          <button
+            data-test-repo-actions-debug-button
+            class="action-button--debug"
+            aria-label="Restart as debug {{type}}"
+            type="button"
+            {{action (perform this.debug)}}
+          >
+            {{#if this.tooltips}}
+              <EmberTooltip class={{if this.mobilelabels "hidden-on-mobile"}}>
+                Restart as debug {{this.type}}
+              </EmberTooltip>
+            {{/if}}
+            <SvgImage @name="icon-debug" @class="icon" />
+            <span class="label-align">
+              Debug {{this.type}}
+            </span>
+          </button>
+        {{else}}
+         <a class="disabled action-button--debug">
+            <EmberTooltip @text="Builds have been temporarily disabled for this repository due to a negative credit balance." />
+            <SvgImage @name="icon-debug" @class="icon" />
+            <span class="label-align">
+              Debug {{this.type}}
+            </span>
+          </a>
+        {{/if}}
       </div>
     {{/if}}
   {{/if}}

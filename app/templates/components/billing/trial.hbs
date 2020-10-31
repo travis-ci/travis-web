@@ -1,3 +1,18 @@
+{{#if (not this.trial)}}
+  {{#if (not this.hasNoSubscriptionPermissions)}}
+    <Billing::Process
+      @account={{this.account}}
+      @subscription={{this.newSubscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @showPlansSelector={{true}}
+      @isProcessCompleted={{this.isProcessCompleted}}
+    />
+  {{else}}
+    <p data-test-no-permission-message>
+      You don't have permission to create a subscription
+    </p>
+  {{/if}}  
+{{else}}
 <div class="billing-trial">
   <span class="notice-banner--white flex flex--v-center" data-test-help-text='true'>
     <div>
@@ -75,23 +90,15 @@
           Your trial has ended. Subscribe to a plan to continue building your project!
         </span>
       {{/if}}
-      {{#if (not this.trial)}}
-        {{#if this.hasNoSubscriptionPermissions}}
-          <div class="button--blue activate-trial-button disabled" data-test-activate-button='true'>
-            <EmberTooltip @text="You do not have permission to start a trial" />
-            Activate trial
-          </div>
-        {{else}}
-          <button onclick={{perform this.activateTrial}} class="button--blue activate-trial-button" data-test-activate-button='true'>
-            Activate trial
-          </button>
-        {{/if}}
-      {{/if}}
     </div>
     <hr />
   </div>
 </div>
 <Billing::Process
   @account={{this.account}}
-  @newSubscription={{this.newSubscription}}
+  @subscription={{this.newSubscription}}
+  @selectedPlan={{this.selectedPlan}}
+  @showPlansSelector={{true}}
+  @isProcessCompleted={{this.isProcessCompleted}}
 />
+{{/if}}

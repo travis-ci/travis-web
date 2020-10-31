@@ -3,6 +3,7 @@ import { checkColor, checkDictionary } from 'travis/utils/ui-kit/assertions';
 import prefix from 'travis/utils/ui-kit/prefix';
 import concat from 'travis/utils/ui-kit/concat';
 import { variantProp } from 'travis/utils/ui-kit/variant';
+import { BORDER_WIDTHS } from 'travis/components/ui-kit/box';
 
 export const ALIGNMENTS = {
   LEFT: 'left',
@@ -20,6 +21,7 @@ export const COLORS = {
   GREY_DARK: 'grey-dark',
   YELLOW_DARK: 'yellow-dark',
   WHITE: 'white',
+  GREY_CONCRETE: 'grey-concrete',
 };
 const DEFAULT_TEXT_COLOR = COLORS.GREY_DARK;
 
@@ -32,6 +34,7 @@ const TEXT_COLORS = {
   [COLORS.GREY_DARK]: 'grey-800',
   [COLORS.YELLOW_DARK]: 'yellow-600',
   [COLORS.WHITE]: 'white',
+  [COLORS.GREY_CONCRETE]: 'grey-concrete',
 };
 
 const FAMILIES = {
@@ -112,6 +115,7 @@ const VARIANTS = {
   P: 'p',
   LINK_BLUE: 'link-blue',
   LINK_UNDER: 'link-underlined',
+  LINK_UNDER_HOVER: 'link-underlined-hover',
 };
 const VARIANT_PROPS = {
   [VARIANTS.SMALLCAPS]: {
@@ -141,6 +145,9 @@ const VARIANT_PROPS = {
   [VARIANTS.LINK_UNDER]: {
     borderWidth: { bottom: 'px' },
   },
+  [VARIANTS.LINK_UNDER_HOVER]: {
+    hoverBorderWidth: { bottom: 'px' }
+  },
 };
 
 // Component definition
@@ -162,6 +169,7 @@ export default Component.extend({
 
   borderColor: variantProp(VARIANT_PROPS, null),
   borderWidth: variantProp(VARIANT_PROPS, null),
+  hoverBorderWidth: variantProp(VARIANT_PROPS, null),
   display: variantProp(VARIANT_PROPS, null),
   margin: variantProp(VARIANT_PROPS, null),
   maxWidth: variantProp(VARIANT_PROPS, null),
@@ -181,6 +189,20 @@ export default Component.extend({
   transformClass: prefix('transform'),
   weightClass: prefix('weight', 'font'),
 
+  // Hover border
+  hoverBorderAllWidthClass: prefix('hoverBorderWidth.all', 'hover-border', { dictionary: BORDER_WIDTHS }),
+  hoverBorderTopWidthClass: prefix('hoverBorderWidth.top', 'hover-border-t', { dictionary: BORDER_WIDTHS }),
+  hoverBorderRightWidthClass: prefix('hoverBorderWidth.right', 'hover-border-r', { dictionary: BORDER_WIDTHS }),
+  hoverBorderBottomWidthClass: prefix('hoverBorderWidth.bottom', 'hover-border-b', { dictionary: BORDER_WIDTHS }),
+  hoverBorderLeftWidthClass: prefix('hoverBorderWidth.left', 'hover-border-l', { dictionary: BORDER_WIDTHS }),
+  hoverBorderWidthClasses: concat(
+    'hoverBorderAllWidthClass',
+    'hoverBorderTopWidthClass',
+    'hoverBorderRightWidthClass',
+    'hoverBorderBottomWidthClass',
+    'hoverBorderLeftWidthClass',
+  ),
+
   allClasses: concat(
     'alignClass',
     'colorClass',
@@ -191,6 +213,7 @@ export default Component.extend({
     'trackingClass',
     'transformClass',
     'weightClass',
+    'hoverBorderWidthClasses',
   ),
 
   // Lifecycle

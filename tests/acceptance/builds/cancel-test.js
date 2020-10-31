@@ -10,15 +10,16 @@ module('Acceptance | builds/cancel', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
+    const currentUser = this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
     signInUser(currentUser);
   });
 
   test('cancelling build', async function (assert) {
-    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1} });
 
     let branch = this.server.create('branch', { repository, name: 'acceptance-tests', default_branch: true });
-    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let gitUser = this.server.create('git-user', { name: 'Mr T' });
     let commit = this.server.create('commit', { author: gitUser, committer: gitUser, committer_name: 'Mr T', message: 'This is a message' });
     let build = this.server.create('build', { number: '5', state: 'started', repository, commit, branch });
     let job = this.server.create('job', { number: '1234.1', state: 'started', repository, commit, build });

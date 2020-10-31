@@ -14,6 +14,16 @@ module('Acceptance | repo/trigger build', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
+    this.server.create('allowance', {
+      id: 1,
+      subscription_type: 2,
+      public_repos: true,
+      private_repos: true,
+      user_usage: true,
+      pending_user_licenses: false,
+      concurrency_limit: 2
+    }),
+
     this.currentUser = this.server.create('user', {
       name: 'Ada Lovelace',
       login: 'adal',
@@ -24,6 +34,10 @@ module('Acceptance | repo/trigger build', function (hooks) {
       slug: 'adal/difference-engine',
       permissions: {
         create_request: true
+      },
+      owner: {
+        login: 'adal',
+        id: 1
       }
     });
 

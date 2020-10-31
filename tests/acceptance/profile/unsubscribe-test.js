@@ -13,7 +13,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    this.user = this.server.create('user');
+    this.user = this.server.create('user', { login: 'some-user' });
+    this.server.create('allowance', { subscription_type: 1 });
     await signInUser(this.user);
   });
 
@@ -21,7 +22,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
     hooks.beforeEach(async function () {
       this.repo = this.server.create('repository', {
         owner: {
-          login: 'some-user'
+          login: 'some-user',
+          id: 1
         },
         owner_name: 'some-user'
       });
@@ -48,7 +50,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
         this.repo = this.server.create('repository', {
           email_subscribed: true,
           owner: {
-            login: this.user.login
+            login: this.user.login,
+            id: this.user.id
           },
           owner_name: this.user.login
         });
@@ -91,7 +94,8 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
         this.repo = this.server.create('repository', {
           email_subscribed: false,
           owner: {
-            login: this.user.login
+            login: this.user.login,
+            id: this.user.id
           },
           owner_name: this.user.login
         });

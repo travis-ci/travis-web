@@ -53,6 +53,13 @@ export default TravisRoute.extend({
       .then(request => request && request.fetchMessages.perform());
   },
 
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    if (repo && !repo.repoOwnerAllowance) {
+      repo.fetchRepoOwnerAllowance.perform();
+    }
+  },
+
   ensureJobOwnership(job, urlSlug) {
     const jobSlug = job.get('repositorySlug') || job.get('repo.slug');
     const repoVcsSlug = job.get('repo.vcsSlug');

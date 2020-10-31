@@ -6,6 +6,7 @@ $tooltip-color: $asphalt-grey;
   line-height: 1.8;
   background-color: $tooltip-color;
   text-align: center;
+  z-index: 50;
 
   &[x-placement^="top"] .ember-tooltip-arrow {
     border-top-color: $tooltip-color;

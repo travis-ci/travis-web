@@ -24,6 +24,8 @@ export const HISTORY_MIGRATION_STATUS = {
 const Repo = VcsEntity.extend({
   api: service(),
   auth: service(),
+  features: service(),
+  store: service(),
 
   permissions: attr(),
   slug: attr('string'),
@@ -65,6 +67,47 @@ const Repo = VcsEntity.extend({
     const isFailed = this.isMigrationFailed;
     const hasPermissions = this.permissions.migrate;
     return hasPermissions && (!isMigrated || isFailed);
+  }),
+
+  allowance: computed('owner.allowance', 'repoOwnerAllowance', function () {
+    if (this.owner.allowance)
+      return this.owner.allowance;
+    if (this.repoOwnerAllowance)
+      return this.repoOwnerAllowance;
+  }),
+
+  repoOwnerAllowance: reads('fetchRepoOwnerAllowance.lastSuccessful.value'),
+
+  fetchRepoOwnerAllowance: task(function* () {
+    const allowance = this.store.peekRecord('allowance', this.owner.id);
+    if (allowance)
+      return allowance;
+    return yield this.store.queryRecord('allowance', { login: this.owner.login, provider: this.provider });
+  }).drop(),
+
+  canOwnerBuild: computed('allowance', 'private', 'features.{proVersion,enterpriseVersion}', function () {
+    const isPro = this.get('features.proVersion');
+    const enterprise = !!this.get('features.enterpriseVersion');
+
+    if (!isPro || enterprise) {
+      return true;
+    }
+
+    const allowance = this.allowance;
+    const isPrivate = this.private;
+
+    if (allowance && allowance.subscriptionType === 1)
+      return true;
+    if (!allowance && !this.repoOwnerAllowance) {
+      return true;
+    }
+    if (!allowance) {
+      return false;
+    }
+
+    const buildCredits = isPrivate ? allowance.privateRepos : allowance.publicRepos;
+
+    return buildCredits && allowance.userUsage;
   }),
 
   defaultBranch: belongsTo('branch', { async: false }),

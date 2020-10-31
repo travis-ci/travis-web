@@ -4,7 +4,7 @@ import { reads } from '@ember/object/computed';
 export default Component.extend({
   newSubscription: null,
 
-  billingInfo: reads('newSubscription.billingInfo'),
+  billingInfo: reads('subscription.billingInfo'),
 
   actions: {
     updateEmails(values) {

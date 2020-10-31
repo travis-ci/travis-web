@@ -1,0 +1,49 @@
+<section class='billing-select-plan'>
+  <TravisForm @onSubmit={{perform this.save}} as |form|>
+    <h3 data-test-billing-buy-addon-info-title>
+      Buy Addons
+    </h3>
+    <p class='billing-plans__addons_box--desc color-asphalt-grey' data-test-billing-buy-addon-info-description>
+      Choose addons you want to add to your plan
+    </p>
+    <div class='plan-selector'>
+      <div class='billing-plans flex flex--wrap' data-test-billing-addon-choices>
+        {{#each this.displayedStandaloneAddons as |addon|}}
+          <div
+            data-test-addon-box='true'
+            class='billing-plans__addons_box pointer {{if (eq addon.id this.selectedAddon.id) 'highlight-plan'}}'
+            onclick={{action (mut this.selectedAddon) addon}}
+          >
+            <p class='billing-plans__addons_box--price' data-test-selected-addon-price>
+              {{format-currency addon.price floor="true"}}
+            </p>
+            <p class='billing-plans__addons_box--name color-asphalt-grey' data-test-selected-addon-name>
+              Additional credits
+            </p>
+            <p class='billing-plans__addons_box--desc color-asphalt-grey' data-test-selected-addon-desc>
+              {{addon.quantity}} credits
+            </p>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div>
+      <span class='billing-plans__addons_box--desc'>Total:</span>
+      <span class='billing-plans__addons_box--price'>
+        {{format-currency this.totalPrice floor="true"}}
+      </span>
+    </div>
+    <div class="flex flex--wrap {{if this.account.hasSubscriptionPermissions 'billing-subscription__buttons'}}">
+      <div class="billing-subscription__buttons--change">
+        <button onclick={{action 'selectAndSubmit' form}} class='button--blue {{if this.isButtonDisabled 'disabled'}}' data-test-buy-addons='true' disabled={{this.isButtonDisabled}}>
+          Buy Addons
+        </button>
+      </div>
+      <div class='billing-subscription__buttons--addons'>
+        <button onclick={{action 'cancel'}} class='button--white-and-teal button--hover' data-test-buy-addons-cancel='true'>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </TravisForm>
+</section>

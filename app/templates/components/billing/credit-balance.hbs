@@ -1,0 +1,42 @@
+<div class="billing-subscription-credits">
+  <h3>
+    Credits
+  </h3>
+  <nav class="travistab-nav--secondary">
+    <ul>
+      <li>
+        <a class="{{if (eq this.creditsTab 0) 'active' ''}}" onclick={{action "setPrivateCreditsTab"}}>Credits</a>
+      </li>
+      <li>
+        <a class="{{if (eq this.creditsTab 1) 'active' ''}}" onclick={{action "setOSSCreditsTab"}}>OSS only credits</a>
+      </li>
+    </ul>
+  </nav>
+
+  <p class='avail-credits'>
+    {{#if (eq this.creditsTab 1)}}
+      {{this.creditsAvailable}} available credits (next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})
+    {{else}}
+      {{this.creditsAvailable}} available credits (purchase date: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}})
+    {{/if}}
+  </p>
+  <p class='used-credits'>
+    {{#if (eq this.creditsTab 1)}}
+      You have used {{this.creditsUsed}} of your {{this.creditsTotal}} monthly credits
+    {{else}}
+      You have used {{this.creditsUsed}} of {{this.creditsTotal}} credits
+    {{/if}}
+  </p>
+  <div class='credits-bar-bg'>
+    {{#if this.isNegativeBalance}}
+      <div class='credits-bar-negative'></div>
+    {{else}}
+      <div class='credits-bar' style='width: {{this.creditsUsedPercentage}}%'></div>
+    {{/if}}
+  </div>
+  <p class='credits-bar-left'>
+    {{this.creditsAvailable}} available <span class='credits-bar-right'>{{this.creditsUsed}} used</span>
+  </p>
+  <Billing::OssCreditToggle/>
+</div>
+<hr />

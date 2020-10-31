@@ -13,12 +13,15 @@
     width: 100%;
   }
 
-  li.notice, li.success, li.error {
+  li.notice, li.success, li.error, li.warning {
     opacity: 1;
 
     @include z-index(flashes);
 
     height: $top-height;
+    @media #{$small-only} {
+      height: $top-height-mobile;
+    }
     top: -1px;
 
     &.fixed {
@@ -86,6 +89,20 @@
       stroke-width: 1.5px;
     }
   }
+
+  .warning {
+    color: $brick-red;
+    background-color: $quartz-red;
+  }
+}
+
+ul.flash.warning+.wrapper-main,
+ul.flash.warning+#main,
+ul.flash.warning+.wrapper-main+#left {
+  margin-top: $top-height;
+  @media #{$small-only} {
+    height: $top-height-mobile;
+  }
 }
 
 .flash-message {
@@ -93,7 +110,7 @@
   align-items: center;
   padding: 0;
   margin: 0;
-  line-height: 1;
+  line-height: 1.14;
   font-size: 1.14rem;
 
   .preamble {

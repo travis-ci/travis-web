@@ -20,12 +20,17 @@ module('Acceptance | repo not active', function (hooks) {
 
     signInUser(user);
 
+    this.server.create('allowance', {subscription_type: 1});
     this.server.create('repository', {
       slug: 'musterfrau/a-repo',
       active: true,
       active_on_org: true,
       permissions: {
         admin: true
+      },
+      owner: {
+        login: 'musterfrau',
+        id: 1
       }
     });
 

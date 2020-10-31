@@ -1,0 +1,20 @@
+<div class='selected-plan' data-test-selected-addon>
+  <div class='selected-plan__details'>
+    <p class='selected-plan__details--name' data-test-selected-addon-name>
+      {{this.selectedAddon.name}}
+    </p>
+    <button onClick={{action this.goToFirstStep}} class='mt-3 button--white button--hover' data-test-change-selected-addon>
+      Change addon
+    </button>
+  </div>
+  <div>
+    <div class='selected-plan__price'>
+      <p class='selected-plan__price--total' data-test-addon-total>
+        Total:
+      </p>
+      <p class='selected-plan__price--large' data-test-selected-addon-price>
+        {{format-currency this.total floor="true"}}
+      </p>
+    </div>
+  </div>
+</div>
