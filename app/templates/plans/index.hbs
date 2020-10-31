@@ -284,7 +284,7 @@
           </UiKit::Text>
           <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
             New customers are assigned the Free plan by default.
-            You will be given 10,000 credits per month, 40,000 credits for Open Source builds, that replenish monthly.
+            You will be given 10,000 credits to try out the system.
             Linux, Windows, macOS builds all supported.
           </UiKit::Text>
         </grid.item>
@@ -309,6 +309,7 @@
             Simply select the annual option when signing up for a subscription, or go to
             <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='md' @href={{billingUrl}}>{{format-domain billingUrl}}</UiKit::Link>
             if you want to switch your current plan to annual.
+            For more flexible, usage based Plans please <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
           </UiKit::Text>
         </grid.item>
 
@@ -319,7 +320,7 @@
             <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
               Absolutely! You can manage your account on your billing page. Go to
               <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' @href={{billingUrl}}>{{format-domain billingUrl}}</UiKit::Link>
-              and choose the account you want to cancel.
+              and choose the account you want to cancel. Then switch to 'Free' Plan.
             </UiKit::Text>
         </grid.item>
 
@@ -352,8 +353,8 @@
           </UiKit::Text>
           <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
             Every commit triggers a build composed of jobs by default.
-            With the new pricing system, there is no limit on job concurrency.
-            You will be able to run as many jobs at the same time as you would like.
+            With the new pricing system, job concurrency limits are defined by selcted plan or are lifted to a very high threshold (custom usage based plans).
+            With the latter you will be able to run as many jobs at the same time as you would like.
             All the builds will be executed as soon as possible with no real severe limitations.
           </UiKit::Text>
         </grid.item>
