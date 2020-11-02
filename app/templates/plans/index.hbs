@@ -122,52 +122,6 @@
     </UiKit::Box>
   </UiKit::Box>
 
-  {{!-- Open Source Section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-oss-section="true">
-    <UiKit::Grid
-      @md={{1}}
-      @lg={{2}}
-      @align='center'
-      @gap={{2}}
-      @justify='between'
-      as |grid|
-    >
-      <grid.item>
-        <UiKit::Box
-          @margin={{hash x='auto'}}
-          @maxWidth='xs'
-          @padding={{hash base=(hash y=4)}}
-        >
-          <SvgImage @name='always-free' @width='100%'/>
-        </UiKit::Box>
-      </grid.item>
-      <grid.item>
-        <UiKit::Box
-          @maxWidth={{hash base='full' md='xl'}}
-          @padding={{hash y=4}}
-          @margin={{hash md=(hash x='auto') }}
-          @textAlign={{hash base='center' lg='left'}}
-        >
-          <UiKit::Text @tag='h2' @leading='md' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-            Free for Open Source
-          </UiKit::Text>
-          <UiKit::Text @margin={{hash bottom=8}} @size='md' @leading='lg' @color='grey-concrete'>
-            Free for open source. We love the Open Source Community, and to show how much we love it,
-            upon validated request you may receive free OSS credits for your public builds that will replenish
-            every month automatically.
-          </UiKit::Text>
-
-          <UiKit::Button @onClick={{action 'signIn'}} @color='grey' @invert={{true}} data-test-plans-page-oss-button="true">
-            Set up your open source project now
-          </UiKit::Button>
-        </UiKit::Box>
-      </grid.item>
-      {{#if this.scrollToEnterpriseSection}}
-        <ScrollHere />
-      {{/if}}
-    </UiKit::Grid>
-  </UiKit::Box>
-
   {{!-- Enterprise section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-enterprise-section="true">
     <UiKit::Grid
