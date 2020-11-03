@@ -48,6 +48,9 @@
             <LoadingIndicator />
           {{else}}
             <button data-test-switchtofree-subscription="true" {{action (perform this.switchToFreeSubscription)}} class="button--red switchtofree-cancellation-button">
+              {{#if (not this.selectedSwitchToFreeReason)}}
+                <EmberTooltip @text="Please select a reason for switching the plan." />
+              {{/if}}
               Confirm &amp; switch to Free Plan
             </button>
             <a class="link" {{on 'click' (fn @onClose)}}>

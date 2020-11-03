@@ -14,12 +14,12 @@
               class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
               onclick={{action (mut this.selectedPlan) plan}}
             >
-              <p class='billing-plans__box-v2--name color-asphalt-grey' data-test-selected-plan-name="true">
+              <p class='{{if (eq plan.id 'standard_tier_plan') 'billing-plans__box-v2--name-bold' 'billing-plans__box-v2--name' }}' data-test-selected-plan-name="true">
                 {{plan.name}}
                 {{#if plan.isFree}}
                   <span>
                     <SvgImage @name="icon-help" @class="icon-help" />
-                    <EmberTooltip @text="Free Plan is a monthly-based plan.&#10;The Credits will be replenished&#10;automatically every month." />
+                    <EmberTooltip @text="Free Plan is trial plan. The credits will be not replenished. Switch to Free Plan if you wish to cancel your subscription." />
                   </span>
                 {{/if}}
               </p>
@@ -39,21 +39,21 @@
               </p>
               {{#if plan.hasCreditAddons}}
                 <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.privateCredits}} Credits
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} class='billing-plans__box-v2--desclink'>{{plan.privateCredits}} Credits</ExternalLinkTo>
                 </p>
               {{/if}}
               {{#if plan.hasOSSCreditAddons}}
                 <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
                 </p>
               {{/if}}
               {{#if plan.hasUserLicenseAddons}}
                 <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
                   <SvgImage @name="stage-passed" @class="icon icon-desc" />
                   {{#if plan.isUnlimitedUsers}}
-                    Unlimited unique users
+                    <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Unlimited unique users</ExternalLinkTo>
                   {{else}}
-                    Up to {{plan.startingUsers}} unique users
+                    <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Up to {{plan.startingUsers}} unique users</ExternalLinkTo>
                   {{/if}}
                 </p>
               {{/if}}

@@ -35,12 +35,14 @@
   {{else if this.isStepThree}}
     <Billing::Payment
       @subscription={{this.subscription}}
+      @v1SubscriptionId={{this.v1SubscriptionId}}
       @selectedPlan={{this.selectedPlan}}
       @account={{this.account}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @retryAuthorization={{this.retryAuthorization}}
       @showPlansSelector={{this.showPlansSelector}}
       @showAddonsSelector={{this.showAddonsSelector}}
+      @isProcessCompleted={{this.isProcessCompleted}}
       @selectedAddon={{this.selectedAddon}}
       @back={{action 'back'}}
     />

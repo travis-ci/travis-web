@@ -11,9 +11,9 @@
         {{/if}}
         to replenish your credit balance or alter your 
         {{#if @data.isUser}}
-          <LinkTo @route="account.settings" @query={{hash anchor="oss-consumption"}}>OSS Credits consumption setting</LinkTo>.
+          <LinkTo @route="account.billing" @query={{hash anchor="oss-consumption"}}>Consume paid credits for OSS setting</LinkTo>.
         {{else}}
-          <LinkTo @route="organization.settings" @model={{@data.owner}} @query={{hash anchor="oss-consumption"}}>OSS Credits consumption setting</LinkTo>.
+          <LinkTo @route="organization.billing" @model={{@data.owner}} @query={{hash anchor="oss-consumption"}}>Consume paid credits for OSS setting</LinkTo>.
         {{/if}}
       </span>
     </p>
