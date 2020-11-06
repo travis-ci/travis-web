@@ -44,6 +44,9 @@
         </ExternalLinkTo>
       </li>
     </ul>
+    <button class="button--blue" {{on 'click' (fn (mut this.showUserManagementModal) true)}} data-test-repo-settings-show-user-management-modal='true'>
+      User management
+    </button>
   </section>
   {{#if this.showAutoCancellationSwitches}}
     <section class="settings-section auto-cancellation">
@@ -229,3 +232,8 @@
     </div>
   </div>
 </Modal>
+<Dialogs::UserManagementModal
+  @isOpen={{this.showUserManagementModal}}
+  @onClose={{fn (mut this.showUserManagementModal) false}}
+  @context={{this.model.repository}}
+/>

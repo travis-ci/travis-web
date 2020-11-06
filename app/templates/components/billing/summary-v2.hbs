@@ -142,7 +142,6 @@
   {{/if}}
 </div>
 <hr />
-{{log this.subscription}}
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
   {{#if this.subscription.hasUserLicenseAddons}}
     <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
@@ -161,9 +160,12 @@
     <hr />
   {{/if}}
 {{/if}}
+TODO:REMOVEIT!<br><br><br>
+    <button class="button--blue" {{on 'click' (fn (mut this.showUserManagementModal) true)}} data-test-plan-show-user-management-modal='true'>
+      User management
+    </button>
 <Dialogs::UserManagementModal
   @isOpen={{this.showUserManagementModal}}
-  @account={{this.account}}
   @onClose={{fn (mut this.showUserManagementModal) false}}
-  @owner={{this.owner}}
+  @context={{this.account}}
 />

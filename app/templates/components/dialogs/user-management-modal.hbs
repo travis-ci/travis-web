@@ -5,60 +5,94 @@
 >
   <div data-test-user-management-modal="true" class="user-management-modal">
     <h2>Manage users</h2>
-    <span class="active-users" data-test-plan-usage-user-statistics-modal-unique-users='true'>{{this.usersCount}} active users</span>
-    <div class="date-picker-container">
-      <button class="date-picker" onclick={{action "datePicker"}} >
-        {{moment-format this.dateRange.start "YYYY-MM-DD"}} - {{moment-format this.dateRange.end "YYYY-MM-DD"}}
-        <SvgImage @name="icon-dropdown-arrow" @class="icon" />
+    <nav
+      class="option-button {{if this.isBulkMenuOpen 'is-open'}}"
+      {{on 'click' (fn (mut this.isBulkMenuOpen) true)}}
+      {{on 'mouseleave' (fn (mut this.isBulkMenuOpen) false)}}
+    >
+      <button class="option-display" type="button" title="Show more options">
+        <span class="label-align">
+          Bulk actions
+          <SvgImage @name="icon-dropdown-arrow" @class="icon" />
+        </span>
       </button>
-      {{#if this.showDatePicker}}
-        <PowerCalendarRange
-          class="calendar-medium date-picker-calendar"
-          @center={{this.dateCenter}}
-          @onCenterChange={{action (mut this.dateCenter) value="date"}} 
-          @selected={{this.dateRange}}
-          @maxRange="2 month"
-          @onSelect={{action (mut this.dateRange) value="date"}}
-          as |calendar|>
-          <calendar.Nav/>
-          <calendar.Days/>
-        </PowerCalendarRange>
-      {{/if}}
-    </div>
-    <table class="users-build-times">
+      <ul class="option-dropdown">
+        <li>
+          <button
+            type="button"
+            onclick={{perform this.bulkActivate}}
+          >
+            Activate
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            onclick={{perform this.bulkDeactivate}}
+          >
+            Deactivate
+          </button>
+        </li>
+      </ul>
+    </nav>
+    <Input
+      class="filter-users-input"
+      placeholder="Filter users"
+      onkeyup={{action "setFilter"}}
+    />
+    <table class="manage-users">
       <thead>
         <tr data-test-table-header-row='true'>
+          <th>
+            <TravisForm
+              as |form|
+            >
+              <form.field
+                @disableFrame={{true}}
+                @value={{this.isAllSelected}}
+                onclick={{action "setAllUserIds"}}
+                as |field|
+              >
+                <field.checkbox />
+              </form.field>
+            </TravisForm>
+          </th>
           <th>Name</th>
-          <th>Build minutes</th>
-          <th>Build credits</th>
+          <th>Permission</th>
+          <th>Active</th>
         </tr>
       </thead>
       <tbody>
-        {{#each this.usersToShow as |user|}}
-          <tr data-test-repository='true'>
-            <td>
-               <UserAvatar
-                @url={{user.sender.avatar_url}}
-                @name={{user.sender.name}}
-                @size={{42}}
+        {{#each this.filteredBuildPermissions as |perm|}}
+          <tr data-test-permission='true'>
+            <td>              
+              <TravisForm
+                as |form|
+              >
+                <form.field
+                  @disableFrame={{true}}
+                  @value={{get this.selectedUserIds perm.user.id}}
+                  onclick={{action "setUserId" perm.user.id}}
+                  as |field|
+                >
+                  <field.checkbox />
+                </form.field>
+              </TravisForm>
+            </td>
+            <td data-test-permission-username='true'>
+              <LinkTo @route="owner" @models={{array perm.user.provider perm.user.login}} class="login-link">
+                {{perm.user.name}} ({{perm.user.login}})
+              </LinkTo>
+            </td>
+            <td data-test-permission-role='true'>
+              {{perm.role}}
+            </td>
+            <td data-test-permission-active='true'>
+              <TravisSwitch
+                @active={{perm.permission}}
+                @onToggle={{perform this.changePermissions perm.user.id}}
+                @stateful={{true}}
               />
-              <div class="sender">
-                <span class="sender-name" data-test-plan-usage-user-statistics-modal-user-name='true'>
-                {{#if user.sender.name}}
-                  {{user.sender.name}}
-                {{else}}
-                  {{user.sender.login}}
-                {{/if}}
-                </span>
-                <br />
-                {{user.sender.email}}
-              </div>
-            </td>
-            <td data-test-plan-usage-user-statistics-modal-minutes-consumed='true'>
-              {{format-number user.minutes_consumed}}
-            </td>
-            <td data-test-plan-usage-user-statistics-modal-credits-consumed='true'>
-              {{format-number user.credits_consumed}}
             </td>
           </tr>
         {{/each}}
