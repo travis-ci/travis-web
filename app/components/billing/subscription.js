@@ -15,6 +15,10 @@ export default Component.extend({
   isV2SubscriptionEmpty: empty('account.v2subscription'),
   hasV2Subscription: not('isV2SubscriptionEmpty'),
 
+  isProcessCompleted: computed(function () {
+    return this.hasV2Subscription;
+  }),
+
   newSubscription: computed(function () {
     const plan = this.store.createRecord('v2-plan-config');
     const billingInfo = this.store.createRecord('v2-billing-info');

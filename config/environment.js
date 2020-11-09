@@ -111,6 +111,8 @@ module.exports = function (environment) {
       pardotHost: 'https://info.travis-ci.com',
       pardotForm: '/l/845883/2020-02-03/257j',
       planDocs: 'https://docs.travis-ci.com',
+      planCreditDocs: 'https://docs.travis-ci.com',
+      planUsersDocs: 'https://docs.travis-ci.com',
     },
     endpoints: {},
     githubApps: false,

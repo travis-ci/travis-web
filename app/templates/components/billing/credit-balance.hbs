@@ -23,10 +23,18 @@
   </nav>
 
   <p class='avail-credits'>
-    {{this.creditsAvailable}} available credits
+    {{#if (eq this.creditsTab 1)}}
+      {{this.creditsAvailable}} available credits (next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})
+    {{else}}
+      {{this.creditsAvailable}} available credits (purchase date: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}})
+    {{/if}}
   </p>
   <p class='used-credits'>
-    You have used {{this.creditsUsed}} of {{this.creditsTotal}} your monthly credits
+    {{#if (eq this.creditsTab 1)}}
+      You have used {{this.creditsUsed}} of your {{this.creditsTotal}} monthly credits
+    {{else}}
+      You have used {{this.creditsUsed}} of {{this.creditsTotal}} credits
+    {{/if}}
   </p>
   <div class='credits-bar-bg'>
     {{#if this.isNegativeBalance}}

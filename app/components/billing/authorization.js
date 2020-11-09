@@ -8,6 +8,7 @@ import { computed } from '@ember/object';
 export default Component.extend({
   stripe: service(),
   accounts: service(),
+  store: service(),
 
   stripeElement: null,
   account: null,
@@ -61,6 +62,7 @@ export default Component.extend({
         });
         const { client_secret: clientSecret } = yield this.subscription.chargeUnpaidInvoices.perform();
         yield this.stripe.handleStripePayment.perform(clientSecret);
+        yield this.accounts.fetchV2Subscriptions.perform();
       }
     } catch (error) {
       this.flashes.error('An error occurred when creating your subscription. Please try again.');
@@ -83,6 +85,30 @@ export default Component.extend({
       yield this.accounts.fetchV2Subscriptions.perform();
     }
   }).drop(),
+
+  newV2Subscription: computed(function () {
+    const plan = this.store.createRecord('v2-plan-config');
+    const billingInfo = this.store.createRecord('v2-billing-info');
+    const creditCardInfo = this.store.createRecord('v2-credit-card-info');
+    billingInfo.setProperties({
+      firstName: this.subscription.billingInfo.firstName,
+      lastName: this.subscription.billingInfo.lastName,
+      address: this.subscription.billingInfo.address,
+      city: this.subscription.billingInfo.city,
+      zipCode: this.subscription.billingInfo.zipCode,
+      country: this.subscription.billingInfo.country,
+      billingEmail: this.subscription.billingInfo.billingEmail
+    });
+    creditCardInfo.setProperties({
+      token: 'token',
+      lastDigits: this.subscription.creditCardInfo.lastDigits
+    });
+    return this.store.createRecord('v2-subscription', {
+      billingInfo,
+      plan,
+      creditCardInfo,
+    });
+  }),
 
   actions: {
     complete(stripeElement) {

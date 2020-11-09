@@ -2,12 +2,13 @@
   <LoadingIndicator/>
 {{else}}
   <section class="billing">
-    {{#if this.isEducation}}
+    {{#if (or this.isEducation (not this.isEduProcessCompleted))}}
       <Billing::Education
         @account={{this.account}}
         @selectedPlan={{this.selectedPlan}}
         @subscription={{this.subscription}}
         @newSubscription={{this.newV2Subscription}}
+        @isProcessCompleted={{this.isEduProcessCompleted}}
       />
     {{/if}}
     {{#if this.isManual}}
@@ -17,7 +18,7 @@
         @selectedPlan={{this.selectedPlan}}
       />
     {{/if}}
-    {{#if (or this.isManaged this.hasV2Subscription)}}
+    {{#if this.isSubscription}}
       <Billing::Subscription
         @selectedPlan={{this.selectedPlan}}
         @showPlansSelector={{this.showPlansSelector}}
@@ -25,11 +26,12 @@
         @account={{this.account}}
       />
     {{/if}}
-    {{#if this.isTrial}}
+    {{#if (or this.isTrial (not this.isTrialProcessCompleted))}}
       <Billing::Trial
         @account={{this.account}}
         @selectedPlan={{this.selectedPlan}}
         @newSubscription={{this.newV2Subscription}}
+        @isProcessCompleted={{this.isTrialProcessCompleted}}
       />
     {{/if}}
   </section>
