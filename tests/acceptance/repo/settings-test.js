@@ -3,6 +3,7 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { Response } from 'ember-cli-mirage';
 import { percySnapshot } from 'ember-percy';
 import settingsPage from 'travis/tests/pages/settings';
+import userManagement from 'travis/tests/pages/user-management';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { selectChoose, selectSearch } from 'ember-power-select/test-support';
@@ -150,6 +151,14 @@ module('Acceptance | repo settings', function (hooks) {
     assert.notOk(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to not exist');
     assert.notOk(settingsPage.autoCancelPushes.exists, 'expected no auto-cancel pushes switch when flag not present in API response');
     assert.notOk(settingsPage.autoCancelPullRequests.exists, 'expected no auto-cancel pull requests switch when flag not present in API response');
+  });
+
+  test('view User Management modal', async function (assert) {
+    await settingsPage.visit({ organization: 'org-login', repo: 'repository-name' });
+    await userManagement.visit();
+
+    assert.equal(userManagement.username.text, 'org-login (org-login)');
+    assert.equal(userManagement.role.text, '');
   });
 
   test('change general settings', async function (assert) {

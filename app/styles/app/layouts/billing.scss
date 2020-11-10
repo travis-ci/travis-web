@@ -935,6 +935,9 @@
     margin-bottom: 10px;
     text-align: center;
   }
+  button {
+    background-color: transparent;
+  }
   .option-button {
     width: 120px;
     float: left;
@@ -954,6 +957,26 @@
   }
   .travis-form .travis-form__field .travis-form__field-checkbox .travis-form__field-checkbox-wrapper {
     margin-right: 0;
+  }
+  .sort-button {
+    background: transparent;
+    color: #666;
+    text-transform: uppercase;
+    padding: 10px;
+    border: none;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    .asc,
+    .desc {
+      display: inline-block;
+      width: 11px;
+      height: 6px;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TtVKrDhYUcchQnSyIijhqFYpQIdQKrTqYXPohNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APEydFJ0UVK/F9SaBHrwXE/3t173L0DhGqRaVbbGKDptpmMx8R0ZkUMvKILQfSgA/0ys4xZSUqg5fi6h4+vd1Ge1frcn6NbzVoM8InEM8wwbeJ14qlN2+C8TxxmBVklPiceNemCxI9cVzx+45x3WeCZYTOVnCMOE4v5JlaamBVMjXiSOKJqOuULaY9VzluctWKZ1e/JXxjK6stLXKc5hDgWsAgJIhSUsYEibERp1UmxkKT9WAv/oOuXyKWQawOMHPMoQYPs+sH/4He3Vm5i3EsKxYD2F8f5GAYCu0Ct4jjfx45TOwH8z8CV3vCXqsD0J+mVhhY5Anq3gYvrhqbsAZc7wMCTIZuyK/lpCrkc8H5G35QB+m6B4KrXW30fpw9AirpK3AAHh8BInrLXWry7s7m3f8/U+/sBCjdyfa7jTJgAAAAGYktHRAD/AP8A/6C9p5MAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfkCwoOCBpmSXw5AAAAXklEQVQY042NQQ2EQBAEC/aFnrYBLqBBBTq4nBM0MDrgiwNem5Al4a6+XZVOFNieJK2SzojY7lsqxBFYgAZoJR0REQ/ZtoFPcdRK2nOQXsRMl4PKdg98+c1QAzP/MV/1FyDq6yhLhwAAAABJRU5ErkJggg==');
+    }
+    .desc {
+      transform: rotate(180deg);
+    }
   }
   .manage-users {
     float: left;

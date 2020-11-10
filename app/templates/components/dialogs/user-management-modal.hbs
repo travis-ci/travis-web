@@ -57,13 +57,46 @@
               </form.field>
             </TravisForm>
           </th>
-          <th>Name</th>
-          <th>Permission</th>
-          <th>Active</th>
+          <th>
+            <button onclick={{action "sortList" "user.name"}} class="sort-button">
+              Name
+              {{#if (eq this.sortField 'user.name')}}
+                {{#if (eq this.sortWay 'asc')}}
+                  <span class="asc"></span>
+                {{else}}
+                  <span class="desc"></span>
+                {{/if}}
+              {{/if}}
+            </button>
+          </th>
+          <th>
+            <button onclick={{action "sortList" "role"}} class="sort-button">
+              Permission
+              {{#if (eq this.sortField 'role')}}
+                {{#if (eq this.sortWay 'asc')}}
+                  <span class="asc"></span>
+                {{else}}
+                  <span class="desc"></span>
+                {{/if}}
+              {{/if}}
+            </button>
+          </th>
+          <th>
+            <button onclick={{action "sortList" "permission"}} class="sort-button">
+              Active
+              {{#if (eq this.sortField 'permission')}}
+                {{#if (eq this.sortWay 'asc')}}
+                  <span class="asc"></span>
+                {{else}}
+                  <span class="desc"></span>
+                {{/if}}
+              {{/if}}
+            </button>
+          </th>
         </tr>
       </thead>
       <tbody>
-        {{#each this.filteredBuildPermissions as |perm|}}
+        {{#each this.sortedBuildPermissions as |perm|}}
           <tr data-test-permission='true'>
             <td>              
               <TravisForm

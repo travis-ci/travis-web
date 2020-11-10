@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { reads, sort } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { later } from '@ember/runloop';
 
@@ -11,9 +11,10 @@ export default Component.extend({
   perPage: 10,
   selectedUserIds: {},
   filter: '',
+  sortField: 'user.name',
+  sortWay: 'asc',
   changePermissionsTaskIsRunning: reads('context.changePermissions.isRunning'),
   buildPermissions: reads('context.buildPermissions'),
-  filteredBuildPermissionsCount: reads('filteredBuildPermissions.length'),
   filteredBuildPermissions: computed('buildPermissions', 'filter', function () {
     if (this.filter === '') {
       return this.buildPermissions;
@@ -24,6 +25,11 @@ export default Component.extend({
       }
     });
   }),
+  filteredBuildPermissionsCount: reads('filteredBuildPermissions.length'),
+  sortProps: computed('sortField', 'sortWay', function () {
+    return [`${this.sortField}:${this.sortWay}`];
+  }),
+  sortedBuildPermissions: sort('filteredBuildPermissions', 'sortProps'),
 
   init() {
     this._super(...arguments);
@@ -75,6 +81,16 @@ export default Component.extend({
         this.selectedUserIds[perm.user.id] = newState;
       });
       this.notifyPropertyChange('selectedUserIds');
+    },
+
+    sortList(field) {
+      if (this.sortField === field) {
+        const newSortWay = this.sortWay === 'asc' ? 'desc' : 'asc';
+        this.set('sortWay', newSortWay);
+      } else {
+        this.set('sortField', field);
+        this.set('sortWay', 'asc');
+      }
     }
   },
 
