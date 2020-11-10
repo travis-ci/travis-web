@@ -230,6 +230,7 @@
         cursor: pointer;
         display: block;
         max-width: fit-content;
+        max-width: -moz-fit-content;
         margin: 20px auto 0 auto;
         font-size: 0.7em;
         text-align: center;
@@ -281,6 +282,13 @@
         }
       }
 
+      &--desclink {
+        &:hover {
+          border-bottom: 1px solid;
+          cursor: pointer;
+        }  
+      }
+
       &--help {
         &:hover {
           border-bottom: 1px solid;
@@ -309,6 +317,51 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &-bold {
+          @extend .billing-plans__box-v2--name;
+          font-weight: bolder;
+        }
+      }
+
+      &--button {
+        display: block;
+        max-width: 120px;
+        height: 36px;
+        margin: 25px auto 0 auto;
+      }
+
+      &--cancel {
+        color: $asphalt-grey;
+        font-weight: 500;
+        font-size: 0.8em;
+        text-align: center;
+        margin: 40px 0 0 0;
+      }
+
+      &--link {
+        cursor: pointer;
+        display: block;
+        max-width: fit-content;
+        max-width: -moz-fit-content;
+        margin: 20px auto 0 auto;
+        font-size: 0.7em;
+        text-align: center;
+        border-bottom: 1px solid transparent;
+        color: $oxide-blue;
+
+        &:hover {
+          border-bottom-color: $oxide-blue;
+        }
+      }
+
+      &--link-grey {
+        cursor: pointer;
+        display: inline-block;
+        border-bottom: 1px solid transparent;
+        color: $asphalt-grey;
+        margin: auto 1px;
+        border-bottom-color: $asphalt-grey;
       }
 
       &--button {

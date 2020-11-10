@@ -1,6 +1,6 @@
 <section>
   <section class="billing-subscription">
-    {{#if this.hasV2Subscription}}
+    {{#if (and this.isProcessCompleted this.hasV2Subscription)}}
       <Billing::SummaryV2
         @subscription={{this.v2subscription}}
         @showPlansSelector={{this.showPlansSelector}}
@@ -14,6 +14,7 @@
         @showPlansSelector={{this.showPlansSelector}}
         @selectedPlan={{this.selectedPlan}}
         @account={{this.account}}
+        @isProcessCompleted={{this.isProcessCompleted}}
       />
     {{/if}}
   </section>
@@ -23,6 +24,7 @@
       @showPlansSelector={{true}}
       @subscription={{this.newSubscription}}
       @selectedPlan={{this.selectedPlan}}
+      @isProcessCompleted={{this.isProcessCompleted}}
     />
   {{/if}}
 </section>

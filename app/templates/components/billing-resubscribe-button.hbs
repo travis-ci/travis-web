@@ -15,9 +15,11 @@
       Subscribe to different plan
     </div>
   {{else if this.subscription.isResubscribable}}
-    <button {{on 'click' (action (perform this.resubscribe))}} class='button--green mr-1' data-test-resubscribe-subscription='true'>
-      Resubscribe to plan
-    </button>
+    {{#if this.isV2Subscription}}
+      <button {{on 'click' (action (perform this.resubscribe))}} class='button--green mr-1' data-test-resubscribe-subscription='true'>
+        Resubscribe to plan
+      </button>
+    {{/if}}
     <button {{on 'click' this.openPlansSelector}} class='button--white button--hover' data-test-resubscribe-change-plan='true'>
       Subscribe to different plan
     </button>

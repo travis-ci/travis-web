@@ -23,6 +23,9 @@ export default Component.extend({
   isManual: bool('subscription.isManual'),
   isManaged: bool('subscription.managedSubscription'),
   isEducation: and('isSubscriptionsEmpty', 'isEducationalAccount'),
+  isSubscription: computed('isManaged', 'hasV2Subscription', 'isTrialProcessCompleted', 'isEduProcessCompleted', function () {
+    return (this.isManaged || this.hasV2Subscription) && this.isTrialProcessCompleted && this.isEduProcessCompleted;
+  }),
   showInvoices: computed('showPlansSelector', 'showAddonsSelector', function () {
     return !this.showPlansSelector && !this.showAddonsSelector && this.invoices;
   }),
@@ -31,6 +34,12 @@ export default Component.extend({
 
   showPlansSelector: false,
   showAddonsSelector: false,
+  isTrialProcessCompleted: computed(function () {
+    return !this.isTrial;
+  }),
+  isEduProcessCompleted: computed(function () {
+    return !this.isEducation;
+  }),
 
   newV2Subscription: computed(function () {
     const plan = this.store.createRecord('v2-plan-config');

@@ -81,19 +81,50 @@ export default Component.extend({
       this.set('showSwitchToFreeModal', true);
     } else {
       if (this.selectedAddon) {
+        this.metrics.trackEvent({
+          action: 'Buy Addon Pay Button Clicked',
+          category: 'Subscription',
+        });
         yield this.subscription.buyAddon.perform(this.selectedAddon);
       } else {
-        yield this.subscription.changePlan.perform(this.selectedPlan.id);
+        if (!this.subscription.id && this.v1SubscriptionId) {
+          this.metrics.trackEvent({
+            action: 'Plan upgraded from Legacy Plan',
+            category: 'Subscription',
+          });
+          const { account, subscription, selectedPlan } = this;
+          const organizationId = account.type === 'organization' ? +(account.id) : null;
+          const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
+          const org = organizationId && this.store.peekRecord('organization', organizationId);
+          subscription.setProperties({
+            organization: org,
+            plan: plan,
+            v1SubscriptionId: this.v1SubscriptionId,
+          });
+          const { clientSecret } = yield subscription.save();
+          yield this.stripe.handleStripePayment.perform(clientSecret);
+        } else {
+          this.metrics.trackEvent({
+            action: 'Change Plan Pay Button Clicked',
+            category: 'Subscription',
+          });
+          yield this.subscription.changePlan.perform(this.selectedPlan.id);
+        }
       }
       yield this.accounts.fetchV2Subscriptions.perform();
       yield this.retryAuthorization.perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
       this.set('showAddonsSelector', false);
+      this.set('isProcessCompleted', true);
     }
   }).drop(),
 
   createFreeSubscription: task(function* () {
+    this.metrics.trackEvent({
+      action: 'Free Plan Chosen',
+      category: 'Subscription',
+    });
     const { account, subscription, selectedPlan } = this;
     try {
       const organizationId = account.type === 'organization' ? +(account.id) : null;
@@ -107,6 +138,7 @@ export default Component.extend({
       yield this.accounts.fetchV2Subscriptions.perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
+      this.set('isProcessCompleted', true);
     } catch (error) {
       this.handleError();
     }
@@ -133,7 +165,8 @@ export default Component.extend({
             token: token.id,
             lastDigits: token.card.last4
           });
-          yield subscription.save();
+          const { clientSecret } = yield subscription.save();
+          yield this.stripe.handleStripePayment.perform(clientSecret);
         } else {
           yield this.subscription.creditCardInfo.updateToken.perform({
             subscriptionId: this.subscription.id,
@@ -142,11 +175,13 @@ export default Component.extend({
           });
           yield subscription.save();
           yield subscription.changePlan.perform(selectedPlan.id);
+          yield this.accounts.fetchV2Subscriptions.perform();
+          yield this.retryAuthorization.perform();
         }
-        yield this.accounts.fetchV2Subscriptions.perform();
         this.metrics.trackEvent({ button: 'pay-button' });
         this.storage.clearBillingData();
         this.set('showPlansSelector', false);
+        this.set('isProcessCompleted', true);
       }
     } catch (error) {
       this.handleError();
@@ -168,6 +203,7 @@ export default Component.extend({
     this.set('showSwitchToFreeModal', false);
     this.storage.clearBillingData();
     this.set('showPlansSelector', false);
+    this.set('isProcessCompleted', true);
   },
 
   actions: {
