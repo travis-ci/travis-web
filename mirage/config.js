@@ -684,6 +684,55 @@ export default function () {
     return this.serialize(repository);
   });
 
+  this.get('/v3/repo/:repositoryId/build_permissions', function (schema, request) {
+    const { repositoryId } = request.params;
+    const repository = schema.repositories.find(repositoryId);
+    const owner = repository.owner;
+
+    let response = {
+      '@type': 'build_permissions',
+      '@href': `/v3/repo/${repositoryId}/build_permissions`,
+      '@representation': 'standard',
+      '@pagination': {
+        'limit': 25,
+        'offset': 0,
+        'count': 1,
+        'is_first': true,
+        'is_last': true,
+        'next': null,
+        'prev': null,
+        'first': {
+          '@href': `/v3/repo/${repositoryId}/build_permissions`,
+          'offset': 0,
+          'limit': 25
+        },
+        'last': {
+          '@href': `/v3/repo/${repositoryId}/build_permissions`,
+          'offset': 0,
+          'limit': 25
+        }
+      },
+      'build_permissions': [
+        {
+          '@type': 'build_permission',
+          '@representation': 'standard',
+          'user': {
+            '@type': 'user',
+            '@href': `/user/${owner.id}`,
+            '@representation': 'minimal',
+            'id': owner.id,
+            'login': owner.login,
+            'name': owner.login,
+            'vcs_type': 'GithubUser'
+          },
+          'permission': true,
+          'role': null
+        }
+      ]
+    };
+    return response;
+  });
+
   this.post('/repo/:repositoryId/email_subscription', function ({ repositories }, request) {
     const repo = repositories.find(request.params.repositoryId);
     repo.update({ email_subscribed: true });

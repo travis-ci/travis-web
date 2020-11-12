@@ -85,6 +85,30 @@ const Repo = VcsEntity.extend({
     return yield this.store.queryRecord('allowance', { login: this.owner.login, provider: this.provider });
   }).drop(),
 
+  buildPermissions: reads('fetchBuildPermissions.lastSuccessful.value'),
+
+  fetchBuildPermissions: task(function* () {
+    const url = `/v3/repo/${this.id}/build_permissions`;
+    const result = yield this.api.get(url);
+    if (result && result.build_permissions) {
+      return result.build_permissions.map((perm) => {
+        perm.user.provider = perm.user.vcs_type.toLowerCase().replace('user', '');
+        return perm;
+      });
+    }
+    return [];
+  }).keepLatest(),
+
+  changePermissions: task(function* (userIds, permission) {
+    const usersArray = Array.isArray(userIds) ? userIds : [userIds];
+    const url = `/v3/repo/${this.id}/build_permissions`;
+    const data = {
+      user_ids: usersArray,
+      permission: permission
+    };
+    yield this.api.patch(url, { data: data });
+  }).drop(),
+
   canOwnerBuild: computed('allowance', 'private', 'features.{proVersion,enterpriseVersion}', function () {
     const isPro = this.get('features.proVersion');
     const enterprise = !!this.get('features.enterpriseVersion');

@@ -43,7 +43,7 @@ export default Component.extend({
       }
     },
     setPage(newPage) {
-      this.page = newPage;
+      this.set('page', newPage);
     }
   }
 });
