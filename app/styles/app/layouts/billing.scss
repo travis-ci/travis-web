@@ -980,6 +980,426 @@
   }
 }
 
+.billing-subscription-credits {
+  margin-bottom: 25px;
+
+  nav.travistab-nav--secondary {
+    li {
+      width: 45%;
+      font-size: 14px;
+      text-align: center;
+      padding-right: 1em;
+      cursor: pointer;
+    }
+  }
+
+  .avail-credits {
+    font-size: 14px;
+    font-weight: 600;
+    color: $asphalt-grey;
+  }
+
+  .used-credits {
+    font-size: 14px;
+    color: $asphalt-grey;
+    margin-bottom: 8px;
+  }
+
+  .credits-bar {
+    height: 20px;
+    background-color: $oxide-blue;
+    text-align: center;
+    line-height: 20px;
+    color: $cement-grey;
+    border-radius: 8px;
+  }
+
+  .credits-bar-negative {
+    height: 20px;
+    width: 100%;
+    background-color: $dark-red;
+    text-align: center;
+    line-height: 20px;
+    color: $cement-grey;
+    border-radius: 8px;
+  }
+
+  .credits-bar-bg {
+    background-color: $pebble-grey;
+    border-radius: 8px;
+  }
+
+  .credits-bar-left {
+    font-size: 14px;
+    color: $asphalt-grey;
+    text-align: left;
+    margin-top: 4px;
+  }
+
+  .credits-bar-right {
+    font-size: 14px;
+    color: $asphalt-grey;
+    text-align: right;
+    float: right;
+  }
+
+  h3.with-invoice {
+    display: inline-block;
+    margin: 10px 0;
+  }
+
+  a.invoice-link {
+    float: right;
+    margin-top: 10px;
+    color: $oxide-blue;
+    text-decoration: none;
+    border-bottom: 1px solid $oxide-blue;
+    padding-bottom: 0;
+    transition: color 200ms ease, border 200ms ease;
+  }
+}
+
+.plan-usage {
+  &__header {
+    margin: 0;
+  }
+  &__name {
+    font-weight: 300;
+    font-size: 24px;
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+  strong {
+    font-weight: bold;
+  }
+
+  h3 {
+    color: $oxide-blue;
+  }
+
+  button.button--blue {
+    margin-top: 45px;
+  }
+
+  hr {
+    border: none;
+    background-color: $pebble-grey;
+    height: 2px;
+    width: 100%;
+  }
+
+  h3.usage-statistics {
+    float: left;
+  }
+
+  .repositories-visiblity {
+    clear: both;
+    width: 150px;
+    padding-top: 40px;
+    padding-bottom: 25px;
+  }
+
+  button.download-csv {
+    float: left;
+    clear: both;
+    padding: 0;
+  }
+
+  button.date-picker {
+    border-radius: 2px;
+    border: solid 1px #979797;
+    padding: 10px;
+    svg {
+      margin-left: 10px;
+      fill: #666;
+    }
+  }
+
+  .date-picker-container {
+    position: relative;
+    float: right;
+    margin-top: 1em;
+  }
+
+  .date-picker-calendar {
+    position: absolute;
+    right: 0;
+    z-index: 100;
+    background-color: #fff;
+    border-radius: 2px;
+    border: solid 1px #979797;
+  }
+
+  .calendar-medium .ember-power-calendar-day--selected.ember-power-calendar-day--range-end,
+  .calendar-medium .ember-power-calendar-day--selected.ember-power-calendar-day--range-start {
+    background-color: $oxide-blue;
+  }
+
+  .calendar-medium .ember-power-calendar-nav-control {
+    color: $oxide-blue;
+  }
+  .calendar-medium .ember-power-calendar-day--current-month {
+    background-color: $cream-light;
+  }
+
+  .calendar-medium .ember-power-calendar-day--selected {
+    background: #f2fafa;
+  }
+
+  .minutes-circle-container {
+    width: 100%;
+    display: inline-block;
+    margin-top: 25px;
+    .minutes-circle {
+      &:before {
+        content: '';
+	      float: left;
+        padding-top: 100%;
+      }
+      float: left;
+      position: relative;
+      max-width: 170px;
+      max-height: 170px;
+      border: solid 10px #3eaaaf;
+      border-radius: 50%;
+      margin: 5%;
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      span {
+        vertical-align: middle;
+        display: table-cell;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: center;
+        width: 100%;
+        font-size: $font-size-sm;
+        .icon {
+          height: 20px;
+          width: 20px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+
+  .download-csv {
+    text-decoration: none;
+    border-bottom: 1px solid $asphalt-grey;
+    padding-bottom: 0;
+    transition: color 200ms ease, border 200ms ease;
+  }
+
+  .repository-build-times {
+    font-size: $font-size-s;
+    width: 100%;
+    border-spacing: 0;
+    margin-top: 85px;
+    thead 
+    {
+      background-color: $ansi-white;
+      tr
+      {
+        th {
+          color: $cement-grey;
+          text-transform: uppercase;
+          padding: 10px;
+          border: none;
+          text-align: right;
+          &:first-child {
+            text-align: left;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          @include linkStyle;
+          background-color: #fff;
+          font-weight: normal;
+          color: $asphalt-grey;
+          text-align: right;
+          padding: 10px;
+          &:first-child {
+            text-align: left;
+          }
+        }
+        &:nth-child(even) {
+          td {
+            background-color: #f3f3f3;
+          }
+        }
+        &:last-child {
+          td:first-child {
+            text-align: right;
+            text-transform: uppercase;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+.user-statistics-modal {
+  h2 {
+    font-size: 48px;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .active-users {
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #000;
+    display: block;
+    margin-top: 20px;
+  }
+
+  button.date-picker {
+    border-radius: 2px;
+    border: solid 1px #979797;
+    padding: 10px;
+    svg {
+      margin-left: 10px;
+      fill: #666;
+    }
+  }
+
+  .date-picker-container {
+    position: relative;
+    float: right;
+    margin-top: 0;
+  }
+
+  .date-picker-calendar {
+    position: absolute;
+    right: 0;
+    z-index: 100;
+    background-color: #fff;
+    border-radius: 2px;
+    border: solid 1px #979797;
+  }
+
+  .calendar-medium .ember-power-calendar-day--selected.ember-power-calendar-day--range-end,
+  .calendar-medium .ember-power-calendar-day--selected.ember-power-calendar-day--range-start {
+    background-color: $oxide-blue;
+  }
+
+  .calendar-medium .ember-power-calendar-nav-control {
+    color: $oxide-blue;
+  }
+  .calendar-medium .ember-power-calendar-day--current-month {
+    background-color: $cream-light;
+  }
+
+  .calendar-medium .ember-power-calendar-day--selected {
+    background: #f2fafa;
+  }
+
+  .users-build-times {
+    font-size: $font-size-s;
+    width: 100%;
+    border-spacing: 0;
+    margin-top: 85px;
+    thead 
+    {
+      background-color: $ansi-white;
+      tr
+      {
+        th {
+          color: #666;
+          text-transform: uppercase;
+          padding: 10px;
+          border: none;
+          text-align: right;
+          font-size: 15px;
+          &:first-child {
+            text-align: left;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          @include linkStyle;
+          background-color: #fff;
+          font-weight: normal;
+          color: $asphalt-grey;
+          text-align: right;
+          padding: 5px 10px;
+          font-size: 14px;
+          &:first-child {
+            text-align: left;
+          }
+          .avatar {
+            border-radius: 0;
+            width: 42px;
+            height: 42px;
+            .real-avatar {
+              border-radius: 0;
+            }
+          }
+          .avatar-wrapper {
+            float: left;
+            margin-right: 16px;
+          }
+          .sender {
+            float: left;
+            font-size: 14px;
+          }
+          .sender-name {
+            font-size: 14px;
+            color: #000;
+            font-weight: 600;
+          }
+        }
+        &:nth-child(even) {
+          td {
+            background-color: #f3f3f3;
+          }
+        }
+      }
+    }
+  }
+  div.pagination-links {
+    text-align: center;
+    margin-top: 20px;
+    .pagination-links-current,
+    .pagination-links-page {
+      width: 34px;
+      height: 34px;
+      padding-top: 5px;
+      display: inline-block;
+    }
+    .pagination-links-current {
+      background-color: rgba(182, 214, 217, 0.3);
+      color: $oxide-blue;
+      border-radius: 17px;
+    }
+    .pagination-links-next,
+    .pagination-links-prev {
+      font-size: 14px;
+      color: #666;
+      text-transform: uppercase;
+      border-radius: 2px;
+      border: solid 1px #9d9d9d;
+    }
+    .disabled {
+      display: none;
+    }
+  }
+}
+
 .cancel-subscription-modal,
 .switchtofree-subscription-modal {
 
