@@ -9,7 +9,7 @@
     {{#if (eq this.subscription.plan.planType 'metered')}}
       <span class="notice-banner--white" data-test-plan-notice='true'>
         {{#if this.subscription.plan.isFree}}
-          Please note that your Credit balance will be replenished monthly. Additional add-ons are not available for this plan
+          Please note that additional add-ons are not available for this plan.  Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances in Free Plan.
         {{else}}
           <div>
             Please note that you will ONLY be charged monthly for the 
