@@ -39,6 +39,12 @@ module('Acceptance | plans page', function (hooks) {
     assert.equal(list.items.length, 4);
   });
 
+  test('oss section structure', async function (assert) {
+    const { ossSection } = plansPage;
+
+    assert.ok(ossSection.isPresent);
+  });
+
   test('contact section structure', async function (assert) {
     const { contactSection } = plansPage;
     const { form } = contactSection;
