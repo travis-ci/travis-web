@@ -1046,7 +1046,7 @@
         th {
           color: #666;
           text-transform: uppercase;
-          padding: 10px;
+          padding: 0 10px;
           border: none;
           text-align: left;
           font-size: 15px;
@@ -1065,7 +1065,7 @@
           font-weight: normal;
           color: $asphalt-grey;
           text-align: left;
-          padding: 5px 10px;
+          padding: 6px 10px;
           font-size: 14px;
           &:first-child,
           &:last-child {
