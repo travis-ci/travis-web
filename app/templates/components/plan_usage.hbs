@@ -85,7 +85,7 @@
     <span class="capitalize-text">{{this.repositoriesVisiblity}}</span> total build time:
     <div class="minutes-circle-container">
       {{#each-in this.summarizedMinutesByOs as |osicon minutes|}}
-        <div class="minutes-circle" style="width: {{this.circleWidth}};">
+        <div class="minutes-circle">
           <span class="data-test-plan-usage-os-{{osicon}}-minutes">
             <SvgImage @name={{osicon}} @class="icon" />
             <br />
@@ -106,6 +106,7 @@
         {{#each this.summarizedRepositories as |repository|}}
           <tr data-test-repository='true'>
             <td>
+              {{log repository}}
               <LinkTo @route="repo" @models={{array repository.provider repository.urlOwnerName repository.urlName}}>
                 {{repository.formattedSlug}}
               </LinkTo>

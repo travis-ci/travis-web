@@ -45,12 +45,6 @@ export default Component.extend({
 
   summarizedMinutesByOs: reads('summarizedCalculations.minutesByOs'),
 
-  circleWidth: computed('summarizedMinutesByOs', function () {
-    const oss = Object.keys(this.summarizedMinutesByOs).length;
-    const width = Math.round(100 / (oss === 0 ? 1 : oss));
-    return `${width}%`;
-  }),
-
   totalBuildMinutes: computed('summarizedRepositories', function () {
     return this.summarizedRepositories.reduce((sum, repo) => sum + repo.buildMinutes, 0);
   }),
@@ -66,6 +60,7 @@ export default Component.extend({
     minutesByOs[getOsIconName('linux')] = 0;
     minutesByOs[getOsIconName('osx')] = 0;
     minutesByOs[getOsIconName('windows')] = 0;
+    minutesByOs[getOsIconName('freebsd')] = 0;
 
     if (executions) {
       executions.forEach(async (execution) => {
@@ -88,9 +83,10 @@ export default Component.extend({
           } else {
             repositories[`'${execution.repository_id}'`] = {
               name: repo.name,
-              provider: repo.vcs_type.replace('Repository', ''),
+              provider: repo.vcs_type.replace('Repository', '').toLowerCase(),
               urlOwnerName: repo.owner_name,
               formattedSlug: repo.slug.replace('/', ' / '),
+              urlName: repo.slug.split('/').lastObject,
               buildMinutes: minutes,
               buildCredits: credits
             };
