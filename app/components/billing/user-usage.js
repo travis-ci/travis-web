@@ -8,7 +8,7 @@ export default Component.extend({
 
   usedUsers: reads('subscription.usedUsers'),
 
-  usersUsagePending: reads('account.allowance.isPending'),
+  usersUsageFulfilled: reads('account.allowance.isFulfilled'),
   usersUsage: reads('account.allowance.userUsage'),
   pendingUserLicenses: reads('account.allowance.pendingUserLicenses')
 
