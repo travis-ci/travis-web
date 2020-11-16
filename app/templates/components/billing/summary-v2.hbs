@@ -7,12 +7,12 @@
   {{/if}}
   {{#if this.showPlanInfo}}
     {{#if (eq this.subscription.plan.planType 'metered')}}
-      <span class="notice-banner--white" data-test-plan-notice='true'>
+      <span class="notice-banner--white block" data-test-plan-notice='true'>
         {{#if this.subscription.plan.isFree}}
-          Please note that additional add-ons are not available for this plan.  Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances in Free Plan.
+          Please note that additional add-ons are not available for this plan. Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances in Free Plan.
         {{else}}
           <div>
-            Please note that you will ONLY be charged monthly for the 
+            Please note that you will ONLY be charged monthly for the
             <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} @title="Travis CI Docs">unique users who triggered builds!</ExternalLinkTo>
             You can replenish your Credit balance anytime by Buying add-ons. Credits are timeless and can be used in any month.
             Your OSS Credit balance will be replenished monthly.
