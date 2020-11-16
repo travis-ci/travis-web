@@ -106,7 +106,6 @@
         {{#each this.summarizedRepositories as |repository|}}
           <tr data-test-repository='true'>
             <td>
-              {{log repository}}
               <LinkTo @route="repo" @models={{array repository.provider repository.urlOwnerName repository.urlName}}>
                 {{repository.formattedSlug}}
               </LinkTo>
