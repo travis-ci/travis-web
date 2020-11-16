@@ -120,7 +120,6 @@ export default Component.extend({
     if (executions) {
       executions.forEach(async (execution) => {
         const minutes = calculateMinutes(execution.started_at, execution.finished_at);
-        debugger
         const repo = this.store.peekRecord('repo', execution.repository_id) || (await this.store.findRecord('repo', execution.repository_id));
         const sender = this.store.peekRecord('user', execution.sender_id) || (await this.store.findRecord('user', execution.sender_id));
         data.push([
