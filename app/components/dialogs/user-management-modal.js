@@ -139,4 +139,8 @@ export default Component.extend({
       this.flashes.error('There was an error while saving your permissions. Please try again.');
     }
   }).drop(),
+
+  didUpdateAttrs() {
+    this.set('filter', '');
+  },
 });
