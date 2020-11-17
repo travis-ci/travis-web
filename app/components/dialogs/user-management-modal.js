@@ -141,6 +141,8 @@ export default Component.extend({
   }).drop(),
 
   didUpdateAttrs() {
+    this._super(...arguments);
+    this.page = 1;
     this.set('filter', '');
   },
 });
