@@ -145,7 +145,7 @@ export default Component.extend({
       const fileName = `usage_${startDate}_${endDate}.csv`;
 
       await this.owner.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
-      const header = ['Job Id', 'Started at', 'Finished at', 'OS', 'Credits consumed', 'Minutes consumend', 'Repository', 'Owner', 'Sender'];
+      const header = ['Job Id', 'Started at', 'Finished at', 'OS', 'Credits consumed', 'Minutes consumed', 'Repository', 'Owner', 'Sender'];
       const data = this.get('executionsDataForCsv');
 
       this.download.asCSV(fileName, header, data);
@@ -163,7 +163,7 @@ export default Component.extend({
   }
 });
 
-const calculateMinutes = (start, finish) => (start && finish ? (Date.parse(finish) - Date.parse(start)) / 1000 * 60 : 0);
+const calculateMinutes = (start, finish) => (start && finish ? Math.ceil((Date.parse(finish) - Date.parse(start)) / 1000) : 0);
 
 const getOsIconName = (os) => {
   if (os === 'linux') {
