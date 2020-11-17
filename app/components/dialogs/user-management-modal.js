@@ -20,7 +20,8 @@ export default Component.extend({
       return this.buildPermissions;
     }
     return this.buildPermissions.filter(perm => {
-      if (perm.user.name.indexOf(this.filter) >= 0 || perm.user.login.indexOf(this.filter) >= 0) {
+      if ((perm.user.name && perm.user.name.indexOf(this.filter) >= 0) ||
+          (perm.user.login && perm.user.login.indexOf(this.filter) >= 0)) {
         return true;
       }
     });
