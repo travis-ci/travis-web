@@ -20,7 +20,8 @@ export default Component.extend({
       return this.buildPermissions;
     }
     return this.buildPermissions.filter(perm => {
-      if (perm.user.name.indexOf(this.filter) >= 0 || perm.user.login.indexOf(this.filter) >= 0) {
+      if ((perm.user.name && perm.user.name.indexOf(this.filter) >= 0) ||
+          (perm.user.login && perm.user.login.indexOf(this.filter) >= 0)) {
         return true;
       }
     });
@@ -138,4 +139,10 @@ export default Component.extend({
       this.flashes.error('There was an error while saving your permissions. Please try again.');
     }
   }).drop(),
+
+  didUpdateAttrs() {
+    this._super(...arguments);
+    this.page = 1;
+    this.set('filter', '');
+  },
 });

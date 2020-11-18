@@ -733,6 +733,55 @@ export default function () {
     return response;
   });
 
+  this.get('/v3/org/:organizationId/build_permissions', function (schema, request) {
+    const { organizationId } = request.params;
+    const org = schema.organizations.find(organizationId);
+    const owner = schema.owners.first;
+
+    let response = {
+      '@type': 'build_permissions',
+      '@href': `/v3/${org.id}/10619/build_permissions`,
+      '@representation': 'standard',
+      '@pagination': {
+        'limit': 25,
+        'offset': 0,
+        'count': 1,
+        'is_first': true,
+        'is_last': true,
+        'next': null,
+        'prev': null,
+        'first': {
+          '@href': `/v3/org/${org.id}/build_permissions`,
+          'offset': 0,
+          'limit': 25
+        },
+        'last': {
+          '@href': `/v3/org/${org.id}/build_permissions`,
+          'offset': 0,
+          'limit': 25
+        }
+      },
+      'build_permissions': [
+        {
+          '@type': 'build_permission',
+          '@representation': 'standard',
+          'user': {
+            '@type': 'user',
+            '@href': `/user/${owner.id}`,
+            '@representation': 'minimal',
+            'id': owner.id,
+            'login': owner.login,
+            'name': owner.login,
+            'vcs_type': 'GithubUser'
+          },
+          'permission': true,
+          'role': 'admin'
+        }
+      ]
+    };
+    return response;
+  });
+
   this.post('/repo/:repositoryId/email_subscription', function ({ repositories }, request) {
     const repo = repositories.find(request.params.repositoryId);
     repo.update({ email_subscribed: true });
