@@ -23,7 +23,7 @@
     <div class="flex flex--space-between flex--wrap plan-overview__details">
       <section>
         {{#if this.subscription.isManual}}
-          <div class="info-message">
+          <div class="info-message" data-test-plan-manual-message='true'>
             You are on <b>Manual Plan</b>, you have
             {{#if this.subscription.plan.isUnlimitedUsers}}
               unlimited
@@ -228,7 +228,7 @@
 
 {{#if this.subscription.isManual}}
   <Billing::Address @subscription={{this.subscription}} @account={{this.account}} @hideEdit={{true}}/>
-  <div class="yellow-message">
+  <div class="yellow-message" data-test-plan-yellow-message='true'>
     This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
     <LinkTo @route="help" @query={{hash anchor="form"}}>
       contact our support team.
