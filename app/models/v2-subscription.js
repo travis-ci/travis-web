@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { equal, reads, or } from '@ember/object/computed';
+import { equal, not, reads, or } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -43,6 +43,7 @@ export default Model.extend({
   isStripe: equal('source', 'stripe'),
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
+  isNotManual: not('isManual'),
 
   usedUsers: computed('addons.[].current_usage', function () {
     if (!this.addons) {

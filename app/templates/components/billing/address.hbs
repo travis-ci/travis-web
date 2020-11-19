@@ -1,4 +1,4 @@
-{{#if this.subscription.isStripe}}
+{{#if (or this.subscription.isStripe this.subscription.isManual)}}
   <section class="contact">
     {{#let this.subscription.billingInfo as |info|}}
       <Billing::ContactDetails
@@ -13,6 +13,7 @@
         @account={{this.account}}
         @info={{info}}
         @countries={{countries}}
+        @showEdit={{this.showEdit}}
       />
     {{/let}}
   </section>

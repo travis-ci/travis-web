@@ -788,6 +788,35 @@
   }
 
   .billing-subscription {
+    .info-message {
+      font-size: 13px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.45;
+      letter-spacing: normal;
+      color: #666666;
+      padding: 5px 21px 5.3px;
+      border-radius: 2px;
+      box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+      margin-bottom: 15px;
+    }
+
+    .yellow-message {
+      padding: 8px 14px;
+      background-color: rgba(205, 182, 45, 0.15);
+      font-size: 14px;
+      a {
+        border-bottom: 1px solid #9d9d9d;
+        padding-bottom: 0.1rem;
+        transition: color 200ms ease, border 200ms ease;
+      }
+    }
+
+    .valid-until {
+      font-size: 10px;
+      color: #db4545;
+    }
 
     .grey-badge {
       color: $cement-grey;
@@ -1522,6 +1551,11 @@
       display: none;
     }
   }
+}
+
+.info-message {
+  box-shadow: 0 0 15px 3px $pebble-grey;
+  padding: 0.1em 1.25em .2em 1.25em;
 }
 
 .cancel-subscription-modal,
