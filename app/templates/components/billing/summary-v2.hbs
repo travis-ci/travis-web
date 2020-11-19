@@ -218,7 +218,7 @@
     <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
   {{/if}}
   {{#if (not this.subscription.plan.isFree)}}
-    <Billing::Address @subscription={{this.subscription}} @account={{this.account}} @showEdit={{this.subscription.isNotManual}}/>
+    <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
     {{#if this.subscription.isNotManual}}
       <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
     {{/if}}
@@ -227,7 +227,7 @@
 {{/if}}
 
 {{#if this.subscription.isManual}}
-  <Billing::Address @subscription={{this.subscription}} @account={{this.account}} @showEdit={{false}}/>
+  <Billing::Address @subscription={{this.subscription}} @account={{this.account}} @hideEdit={{true}}/>
   <div class="yellow-message">
     This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
     <LinkTo @route="help" @query={{hash anchor="form"}}>
