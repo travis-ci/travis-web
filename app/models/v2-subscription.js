@@ -93,10 +93,18 @@ export default Model.extend({
       usedCredits: 0,
       remainingCredits: 0,
     });
+    const userLicense = this.addons.reduce(addonReduce('user_license'), {
+      validDate: Date.now(),
+      purchaseDate: Date.now(),
+      totalCredits: 0,
+      usedCredits: 0,
+      remainingCredits: 0,
+    });
 
     return {
       public: publicUsages,
-      private: privateUsages
+      private: privateUsages,
+      user: userLicense
     };
   }),
 
