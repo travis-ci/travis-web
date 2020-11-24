@@ -110,7 +110,7 @@
                     Unlimited unique users
                   {{else}}
                     {{#if this.subscription.isManual}}
-                      {{this.subscription.addonUsage.user.totalCredits}} unique users / {{format-currency this.pricePerUser}} per user
+                      {{this.subscription.addonUsage.user.totalCredits}} unique users
                     {{else}}
                       Up to {{this.subscription.plan.startingUsers}} unique users
                     {{/if}}
