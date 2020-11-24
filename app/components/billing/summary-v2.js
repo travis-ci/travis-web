@@ -30,4 +30,16 @@ export default Component.extend({
     return !this.showPlansSelector && !this.showAddonsSelector;
   }),
   showUserManagementModal: false,
+  pricePerUser: computed('subscription', function () {
+    const subscription = this.get('subscription');
+    const plan = subscription.get('plan');
+    const startingPrice = plan.get('startingPrice');
+    const startingUsers = plan.get('startingUsers');
+
+    if (subscription.isManual && startingPrice && startingUsers) {
+      return (startingPrice / startingUsers).toFixed(2);
+    }
+
+    return 0;
+  }),
 });

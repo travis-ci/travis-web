@@ -254,6 +254,16 @@ export default create({
   billing: {
     visit: clickable('li[data-test-billing-tab] a'),
 
+    planYellowMessage: {
+      scope: '[data-test-plan-yellow-message]',
+      isPresent: isPresent(),
+    },
+
+    planManualMessage: {
+      scope: '[data-test-plan-manual-message]',
+      isPresent: isPresent(),
+    },
+
     manageButton: {
       scope: '.manage-subscription',
       href: attribute('href'),

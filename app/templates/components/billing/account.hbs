@@ -37,11 +37,13 @@
   </section>
   {{#if this.showInvoices}}
     {{#if this.hasV2Subscription}}
-      <Billing::Invoices
-        @account={{this.account}}
-        @invoices={{this.invoices}}
-        @subscription={{this.v2subscription}}
-      />
+      {{#if this.v2subscription.isNotManual}}
+        <Billing::Invoices
+          @account={{this.account}}
+          @invoices={{this.invoices}}
+          @subscription={{this.v2subscription}}
+        />
+      {{/if}}
     {{else}}
       <Billing::Invoices
         @account={{this.account}}

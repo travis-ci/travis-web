@@ -58,7 +58,7 @@
         </section>
       {{/if}}
     </div>
-    {{#if this.account.hasSubscriptionPermissions}}
+    {{#if (and this.account.hasSubscriptionPermissions (not this.hideEdit))}}
       <button class='button--blue billing-subscription__buttons'
         onClick={{action (toggle 'openEditBillingForm' this)}} data-test-edit-billing-address='true'
       >
