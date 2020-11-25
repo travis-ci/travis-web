@@ -28,17 +28,17 @@
             {{#if this.subscription.plan.isUnlimitedUsers}}
               unlimited
             {{else}}
-              {{this.subscription.plan.startingUsers}}
+              {{this.subscription.addonUsage.user.totalCredits}}
             {{/if}}
             users,
             {{#if this.subscription.plan.hasCreditAddons}}
-                {{this.subscription.plan.privateCredits}} private credits
+                {{this.subscription.addonUsage.private.totalCredits}} private credits
             {{/if}}
             {{#if (and this.subscription.plan.hasCreditAddons this.subscription.plan.hasOSSCreditAddons)}}
             , 
             {{/if}}
             {{#if this.subscription.plan.hasOSSCreditAddons}}
-                {{this.subscription.plan.publicCredits}} public credits
+                {{this.subscription.addonUsage.public.totalCredits}} public credits
             {{/if}}
             per month with access
             to Linux, Windows, macOs and FreeBSD builds on the standard infrastructure size.
@@ -110,7 +110,7 @@
                     Unlimited unique users
                   {{else}}
                     {{#if this.subscription.isManual}}
-                      {{this.subscription.plan.startingUsers}} unique users / {{format-currency this.pricePerUser}} per user
+                      {{this.subscription.addonUsage.user.totalCredits}} unique users
                     {{else}}
                       Up to {{this.subscription.plan.startingUsers}} unique users
                     {{/if}}
@@ -119,12 +119,20 @@
               {{/if}}
               {{#if this.subscription.plan.hasCreditAddons}}
                 <p>
-                  {{this.subscription.plan.privateCredits}} Credits
+                  {{#if this.subscription.isManual}}
+                    {{this.subscription.addonUsage.private.totalCredits}} Credits
+                  {{else}}
+                    {{this.subscription.plan.privateCredits}} Credits
+                  {{/if}}
                 </p>
               {{/if}}
               {{#if this.subscription.plan.hasOSSCreditAddons}}
                 <p>
-                  {{this.subscription.plan.publicCredits}} OSS Credits per month
+                  {{#if this.subscription.isManual}}
+                    {{this.subscription.addonUsage.public.totalCredits}} OSS Credits per month
+                  {{else}}
+                    {{this.subscription.plan.publicCredits}} OSS Credits per month
+                  {{/if}}
                 </p>
               {{/if}}
               {{#if (eq this.subscription.plan.planType 'hybrid')}}
