@@ -93,6 +93,9 @@ const Repo = VcsEntity.extend({
     if (result && result.build_permissions) {
       return result.build_permissions.map((perm) => {
         perm.user.provider = perm.user.vcs_type.toLowerCase().replace('user', '');
+        if (!perm.user.name) {
+          perm.user.name = perm.user.login;
+        }
         return perm;
       });
     }
