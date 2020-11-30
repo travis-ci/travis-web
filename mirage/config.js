@@ -126,13 +126,14 @@ export default function () {
     return response;
   });
 
-  this.get('/v3/owner/:login/executions', function (schema, request) {
+  this.get('/v3/owner/:provider/:login/executions', function (schema, request) {
     const from = request.queryParams.from;
     const to = request.queryParams.to;
     const login = request.params.login;
+    const provider = request.params.provider;
     let response = {
       '@type': 'executions',
-      '@href': `/v3/owner/${login}/executions?from=${from}&to=${to}`,
+      '@href': `/v3/owner/${provider}/${login}/executions?from=${from}&to=${to}`,
       '@representation': 'standard',
       'executions': [
         {
@@ -161,13 +162,14 @@ export default function () {
     return response;
   });
 
-  this.get('/v3/owner/:login/executions_per_repo', function (schema, request) {
+  this.get('/v3/owner/:provider/:login/executions_per_repo', function (schema, request) {
     const from = request.queryParams.from;
     const to = request.queryParams.to;
     const login = request.params.login;
+    const provider = request.params.provider;
     let response = {
       '@type': 'executionsperrepo',
-      '@href': `/v3/owner/${login}/executions_per_repo?from=${from}&to=${to}`,
+      '@href': `/v3/owner/${provider}/${login}/executions_per_repo?from=${from}&to=${to}`,
       '@representation': 'standard',
       'executionsperrepo': [
         {
@@ -343,13 +345,14 @@ export default function () {
     return response;
   });
 
-  this.get('/v3/owner/:login/executions_per_sender', function (schema, request) {
+  this.get('/v3/owner/:provider/:login/executions_per_sender', function (schema, request) {
     const from = request.queryParams.from;
     const to = request.queryParams.to;
     const login = request.params.login;
+    const provider = request.params.provider;
     let response = {
       '@type': 'executionspersender',
-      '@href': `/v3/owner/${login}/executions_per_sender?from=${from}&to=${to}`,
+      '@href': `/v3/owner/${provider}/${login}/executions_per_sender?from=${from}&to=${to}`,
       '@representation': 'standard',
       'executionspersender': [
         {
