@@ -2,7 +2,11 @@
   <section>
     <h3 class='plan-usage__header'>Plan information</h3>
     <p class='plan-usage__name flex flex--v-center' data-test-plan-name='true'>
-      {{this.subscription.plan.name}}
+      {{#if this.subscription.isManual}}
+        Manual plan
+      {{else}}
+        {{this.subscription.plan.name}}
+      {{/if}}
     </p>
     <strong>Plan Activation date:</strong>
     {{#if this.subscription.createdAt}}
