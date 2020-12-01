@@ -26,10 +26,12 @@ export default Component.extend({
       }
     });
   }),
+
   filteredBuildPermissionsCount: reads('filteredBuildPermissions.length'),
   sortProps: computed('sortField', 'sortWay', function () {
     return [`${this.sortField}:${this.sortWay}`];
   }),
+
   sortedBuildPermissions: sort('filteredBuildPermissions', 'sortProps'),
 
   init() {
@@ -50,8 +52,8 @@ export default Component.extend({
     return Math.ceil(this.filteredBuildPermissionsCount / this.perPage);
   }),
 
-  buildPermissionsToShow: computed('filteredBuildPermissions', 'page', function () {
-    return this.filteredBuildPermissions.slice((this.page - 1) * this.perPage, this.page * this.perPage);
+  buildPermissionsToShow: computed('sortedBuildPermissions', 'page', function () {
+    return this.sortedBuildPermissions.slice((this.page - 1) * this.perPage, this.page * this.perPage);
   }),
 
   isAllSelected: computed('selectedUserIds', 'buildPermissionsToShow', function () {

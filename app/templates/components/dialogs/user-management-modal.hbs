@@ -96,7 +96,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each this.sortedBuildPermissions as |perm|}}
+        {{#each this.buildPermissionsToShow as |perm|}}
           <tr data-test-permission='true'>
             <td>              
               <TravisForm
@@ -131,7 +131,7 @@
         {{/each}}
       </tbody>
     </table>
-    {{#if (gt this.usersCount this.perPage)}}
+    {{#if (gt this.filteredBuildPermissionsCount this.perPage)}}
       {{pagination-links
         currentPage=this.page
         showFirstAndLast=false

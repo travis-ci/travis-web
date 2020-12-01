@@ -265,7 +265,7 @@
       margin-bottom: 10px;
       width: 208px;
       height: fit-content;
-      max-height: 380px;
+      max-height: 420px;
       flex-basis: auto;
       margin-right: 5px;
 
@@ -1059,6 +1059,12 @@
     .desc {
       transform: rotate(180deg);
     }
+  }
+  .pagination-links {
+    display: block;
+    text-align: center;
+    padding-top: 10px;
+    clear: both;
   }
   .manage-users {
     float: left;
