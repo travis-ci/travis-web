@@ -108,6 +108,14 @@ export default Model.extend({
     };
   }),
 
+  validToFromUserLicenseAddon: computed('addons.[]', function () {
+    const userLicenseAddons = this.addons.filter(addon => addon.type === 'user_license' && addon.current_usage.status !== 'expired');
+    const userLicenseAddon =  userLicenseAddons ? userLicenseAddons[0] : null;
+    if (userLicenseAddon) {
+      return userLicenseAddon.current_usage.valid_to;
+    }
+  }),
+
   hasPublicCredits: computed('addonUsage.public.remainingCredits', function () {
     return this.addonUsage.public.remainingCredits > 0;
   }),

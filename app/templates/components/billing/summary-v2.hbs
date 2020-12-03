@@ -64,7 +64,12 @@
                   </span>
                 {{/if}}
                 <span class="valid-until" data-test-renews='true'>
-                    Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                    Valid until
+                    {{#if this.subscription.validTo}}
+                      {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                    {{else}}
+                      {{moment-format this.subscription.validToFromUserLicenseAddon "MMMM D, YYYY"}}
+                    {{/if}}
                   </span>
               {{else}}
                 {{#if this.subscription.plan}}
