@@ -141,10 +141,11 @@ export default Component.extend({
   actions: {
     async downloadCsv() {
       const startDate = moment(this.dateRange.start).format('YYYY-MM-DD');
-      const endDate = moment(this.dateRange.end).format('YYYY-MM-DD');
+      const endDate = moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD');
       const fileName = `usage_${startDate}_${endDate}.csv`;
 
-      await this.owner.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+      await this.owner.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
+        moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
       const header = ['Job Id', 'Started at', 'Finished at', 'OS', 'Credits consumed', 'Minutes consumed', 'Repository', 'Owner', 'Sender'];
       const data = this.get('executionsDataForCsv');
 
@@ -155,9 +156,9 @@ export default Component.extend({
       this.set('showDatePicker', !this.showDatePicker);
       if (!this.showDatePicker) {
         this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
-          moment(this.dateRange.end).format('YYYY-MM-DD'));
+          moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
         this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
-          moment(this.dateRange.end).format('YYYY-MM-DD'));
+          moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
       }
     }
   }

@@ -44,6 +44,8 @@
         &nbsp;-&nbsp;
         {{#if this.dateRange.end}}
           {{moment-format this.dateRange.end "YYYY-MM-DD"}}
+        {{else}}
+          {{moment-format this.dateRange.start "YYYY-MM-DD"}}
         {{/if}}
         <SvgImage @name="icon-dropdown-arrow" @class="icon" />
       </button>
