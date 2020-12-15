@@ -13,7 +13,7 @@
       You have unpaid Invoice. Please check your invoices
     </p>
   {{else}}
-    {{#if (not this.usersUsage)}}
+    {{#if (and (not this.usersUsage) this.usersUsageReceived (not this.usersUsageRejected))}}
       <p class='warning'>
         You exceeded the number of users allowed for your plan. Please switch to a bigger plan
       </p>
