@@ -15,6 +15,10 @@
     padding: 0.5rem 0.9rem 0.6rem;
     box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
     font-size: 13px;
+
+    &.block {
+      display: block;
+    }
   }
 
   .icon-help {
@@ -286,7 +290,7 @@
         &:hover {
           border-bottom: 1px solid;
           cursor: pointer;
-        }  
+        }
       }
 
       &--help {
@@ -936,7 +940,7 @@
         padding-right: 5px;
         font-size: 14px;
       }
-  
+
       .oss-description {
         flex: 1 1 100%;
         font-style: italic;

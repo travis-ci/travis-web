@@ -12,6 +12,9 @@
 {{#if this.features.enterpriseVersion}}
   <EnterpriseBanner />
 {{/if}}
+{{#unless this.features.proVersion}}
+  <MigrationBanner />
+{{/unless}}
 {{#if hasBlock}}
   {{yield}}
 {{else if this.showCta}}
