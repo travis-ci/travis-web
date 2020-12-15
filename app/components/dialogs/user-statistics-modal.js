@@ -39,7 +39,7 @@ export default Component.extend({
       this.set('showDatePicker', !this.showDatePicker);
       if (!this.showDatePicker) {
         this.account.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
-          moment(this.dateRange.end).format('YYYY-MM-DD'));
+          moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
       }
     },
     setPage(newPage) {
