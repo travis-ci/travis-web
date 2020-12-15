@@ -235,5 +235,29 @@ export default VcsEntity.extend({
   logMultipleSubscriptionsError() {
     const exception = new Error(`Account ${this.login} has more than one active subscription!`);
     this.raven.logException(exception, true);
-  }
+  },
+
+  executions: reads('fetchExecutions.lastSuccessful.value'),
+
+  fetchExecutions: task(function* (from, to) {
+    const url = `/v3/owner/${this.provider}/${this.login}/executions?from=${from}&to=${to}`;
+    const result = yield this.api.get(url);
+    return result ? result.executions : [];
+  }).keepLatest(),
+
+  executionsPerRepo: reads('fetchExecutionsPerRepo.lastSuccessful.value'),
+
+  fetchExecutionsPerRepo: task(function* (from, to) {
+    const url = `/v3/owner/${this.provider}/${this.login}/executions_per_repo?from=${from}&to=${to}`;
+    const result = yield this.api.get(url);
+    return result ? result.executionsperrepo : [];
+  }).keepLatest(),
+
+  executionsPerSender: reads('fetchExecutionsPerSender.lastSuccessful.value'),
+
+  fetchExecutionsPerSender: task(function* (from, to) {
+    const url = `/v3/owner/${this.provider}/${this.login}/executions_per_sender?from=${from}&to=${to}`;
+    const result = yield this.api.get(url);
+    return result ? result.executionspersender : [];
+  }).keepLatest(),
 });

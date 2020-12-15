@@ -14,17 +14,19 @@ export default Component.extend({
   closeButton: false,
   isVisible: true,
   position: 'fixed',
+  lastClickInside: false,
 
   onClose() {
   },
 
   onClickOverlay() {
-    if (this.closeOnClickOverlay) {
+    if (!this.lastClickInside && this.closeOnClickOverlay) {
       this.onClose();
     }
+    this.lastClickInside = false;
   },
 
   onClickModal(event) {
-    event.stopPropagation();
+    this.lastClickInside = true;
   },
 });

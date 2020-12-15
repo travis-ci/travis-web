@@ -1,7 +1,16 @@
 <div class="billing-subscription-credits">
-  <h3>
-    Credits
-  </h3>
+  {{#if this.lastInvoice}}
+    <h3 class="with-invoice">
+      Credits
+    </h3>
+    <a data-test-invoice-url='true' href={{this.lastInvoice.url}} class="invoice-link">
+      Paid by invoice from {{moment-format invoice.createdAt 'YYYY-MM-DD'}}
+    </a>
+  {{else}}
+    <h3>
+      Credits
+    </h3>
+  {{/if}}
   <nav class="travistab-nav--secondary">
     <ul>
       <li>
@@ -37,6 +46,8 @@
   <p class='credits-bar-left'>
     {{this.creditsAvailable}} available <span class='credits-bar-right'>{{this.creditsUsed}} used</span>
   </p>
+  {{#if (not this.hideToggle)}}
   <Billing::OssCreditToggle/>
+  {{/if}}
 </div>
 <hr />

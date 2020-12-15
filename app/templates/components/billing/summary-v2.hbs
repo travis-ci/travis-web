@@ -86,7 +86,7 @@
                 </p>
               {{/if}}
               <p>
-                Linux, Windows, macOS builds
+                Linux, Windows, macOS, FreeBSD builds
               </p>
             </div>
           </div>
@@ -150,6 +150,18 @@
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
   {{#if this.subscription.hasUserLicenseAddons}}
     <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
+    {{#if this.account.isOrganization}}
+      <button class="button--blue" {{on 'click' (fn (mut this.showUserManagementModal) true)}} data-test-plan-show-user-management-modal='true'>
+        User management
+      </button>
+      <Dialogs::UserManagementModal
+        @isOpen={{this.showUserManagementModal}}
+        @onClose={{fn (mut this.showUserManagementModal) false}}
+        @context={{this.account}}
+      />
+    {{/if}}
+    <br />
+    <hr />
   {{/if}}
   {{#if this.subscription.hasCredits}}
     <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>

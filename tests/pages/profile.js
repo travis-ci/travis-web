@@ -367,7 +367,6 @@ export default create({
       scope: '[data-test-billing-info-title]',
     },
 
-
     billingCouponForm: {
       scope: '[data-test-coupon-form]',
       isPresent: isPresent(),
@@ -775,6 +774,55 @@ export default create({
         scope: '[data-test-invoice-select-year]'
       }
     },
+  },
+
+  planUsage: {
+    visit: clickable('li[data-test-plan-usage-tab] a'),
+    page: {
+      uniquUsers: {
+        scope: '[data-test-user-usage-unique-users]',
+        text: text()
+      },
+      macMinutes: {
+        scope: '.data-test-plan-usage-os-icon-mac-minutes',
+        text: text()
+      },
+      windowsMinutes: {
+        scope: '.data-test-plan-usage-os-icon-windows-minutes',
+        text: text()
+      },
+      linuxMinutes: {
+        scope: '.data-test-plan-usage-os-icon-linux-minutes',
+        text: text()
+      },
+      creditsTotal: {
+        scope: '[data-test-plan-usage-credits-total]',
+        text: text()
+      },
+      minutesTotal: {
+        scope: '[data-test-plan-usage-minutes-total]',
+        text: text()
+      }
+    },
+    checkUserActivity: {
+      visit: clickable('[data-test-plan-usage-check-user-activity]'),
+      uniqueUsers: {
+        scope: '[data-test-plan-usage-user-statistics-modal-unique-users]',
+        text: text()
+      },
+      userName: {
+        scope: '[data-test-plan-usage-user-statistics-modal-user-name]',
+        text: text()
+      },
+      minutesConsumed: {
+        scope: '[data-test-plan-usage-user-statistics-modal-minutes-consumed]',
+        text: text()
+      },
+      creditsConsumed: {
+        scope: '[data-test-plan-usage-user-statistics-modal-credits-consumed]',
+        text: text()
+      },
+    }
   },
 
   migrate: {

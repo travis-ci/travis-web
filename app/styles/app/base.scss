@@ -138,6 +138,10 @@ a {
   }
 }
 
+.capitalize-text {
+  text-transform: capitalize;
+}
+
 @media #{$large-up} {
   .flex-md-row {
     flex-direction: row;
@@ -302,4 +306,8 @@ span.emoji.emoji-sizer {
   .height-#{$i} {
     height: $i + 0%;
   }
+}
+
+.calendar-medium {
+  @include ember-power-calendar($cell-size: 50px);
 }
