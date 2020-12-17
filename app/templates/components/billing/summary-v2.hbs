@@ -85,9 +85,15 @@
                   {{pluralize this.subscription.plan.concurrencyLimit "concurrent job"}}
                 </p>
               {{/if}}
-              <p>
-                Linux, Windows, macOS, FreeBSD builds
-              </p>
+              {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                <p>
+                  Linux, Windows, FreeBSD builds
+                </p>
+                {{else}}
+                <p>
+                  Linux, Windows, macOS, FreeBSD builds
+                </p>
+               {{/if}}
             </div>
           </div>
         </div>
