@@ -11,10 +11,15 @@ export default Component.extend({
     return name || login;
   }),
 
-  showUser: computed('nameOrLogin', 'eventType', function () {
+  isBot: computed('user.vcs_id', function () {
+    return this.get('user.vcsId') == '_bot_user';
+  }),
+
+  showUser: computed('nameOrLogin', 'eventType', 'isBot', function () {
     let nameOrLogin = this.nameOrLogin;
     let eventType = this.eventType;
-    return nameOrLogin && eventType !== 'cron';
+    let isBot = this.isBot;
+    return nameOrLogin && eventType !== 'cron' && !isBot;
   }),
 
   userProvider: or('user.provider', 'provider')
