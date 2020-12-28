@@ -12,7 +12,7 @@ export default Component.extend({
   }),
 
   isBot: computed('user.vcs_id', function () {
-    return this.get('user.vcs_id') == '_bot_user';
+    return this.get('user.vcsId') == '_bot_user';
   }),
 
   showUser: computed('nameOrLogin', 'eventType', 'isBot', function () {
