@@ -26,12 +26,10 @@ export default Component.extend({
       }
     });
   }),
-
   filteredBuildPermissionsCount: reads('filteredBuildPermissions.length'),
   sortProps: computed('sortField', 'sortWay', function () {
     return [`${this.sortField}:${this.sortWay}`];
   }),
-
   sortedBuildPermissions: sort('filteredBuildPermissions', 'sortProps'),
 
   init() {

@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 
 export default Component.extend({
@@ -10,7 +11,13 @@ export default Component.extend({
 
   usersUsageReceived: reads('account.allowance.isFulfilled'),
   usersUsageRejected: reads('account.allowance.isRejected'),
-  usersUsage: reads('account.allowance.userUsage'),
+  usersUsage: computed('account.allowance.userUsage', function () {
+    const userUsage = this.get('account').get('allowance').get('userUsage');
+    if (userUsage === undefined) {
+      return true;
+    }
+    return userUsage;
+  }),
   pendingUserLicenses: reads('account.allowance.pendingUserLicenses')
 
 });
