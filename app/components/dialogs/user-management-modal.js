@@ -50,8 +50,8 @@ export default Component.extend({
     return Math.ceil(this.filteredBuildPermissionsCount / this.perPage);
   }),
 
-  buildPermissionsToShow: computed('filteredBuildPermissions', 'page', function () {
-    return this.filteredBuildPermissions.slice((this.page - 1) * this.perPage, this.page * this.perPage);
+  buildPermissionsToShow: computed('sortedBuildPermissions', 'page', function () {
+    return this.sortedBuildPermissions.slice((this.page - 1) * this.perPage, this.page * this.perPage);
   }),
 
   isAllSelected: computed('selectedUserIds', 'buildPermissionsToShow', function () {

@@ -1443,4 +1443,24 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com joe@email.com doe@email.com');
     assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
   });
+
+  test('view plan with manual subscription', async function (assert) {
+    this.v2subscription = this.server.create('v2-subscription', {
+      owner: this.user,
+      status: 'subscribed',
+      valid_to: new Date(),
+      addons: [
+        {name: 'User license addon', type: 'user_license', current_usage: {addon_usage: 1}}
+      ],
+      source: 'manual'
+    });
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    percySnapshot(assert);
+
+    assert.ok(profilePage.billing.planYellowMessage.isPresent);
+    assert.ok(profilePage.billing.planManualMessage.isPresent);
+  });
 });
