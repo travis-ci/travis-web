@@ -328,6 +328,10 @@
         }
       }
 
+      .billing-annual-plans{
+        white-space: inherit;
+      }
+
       &--button {
         display: block;
         max-width: 120px;
@@ -1077,7 +1081,7 @@
     width: 100%;
     border-spacing: 0;
     margin-top: 10px;
-    thead 
+    thead
     {
       background-color: $ansi-white;
       tr
@@ -1362,7 +1366,7 @@
     width: 100%;
     border-spacing: 0;
     margin-top: 85px;
-    thead 
+    thead
     {
       background-color: $ansi-white;
       tr
@@ -1473,7 +1477,7 @@
     width: 100%;
     border-spacing: 0;
     margin-top: 85px;
-    thead 
+    thead
     {
       background-color: $ansi-white;
       tr
