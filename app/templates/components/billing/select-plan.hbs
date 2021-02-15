@@ -29,6 +29,8 @@
                 {{else}}
                   {{#if (eq plan.planType 'hybrid')}}
                     {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/month</span>
+                  {{else if (eq plan.planType 'hybrid annual')}}
+                    {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/year</span>
                   {{else}}
                     <span class='color-asphalt-grey'>
                       Starting at
@@ -58,6 +60,10 @@
                 </p>
               {{/if}}
               {{#if (eq plan.planType 'hybrid')}}
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
+                </p>
+              {{else if (eq plan.planType 'hybrid annual')}}
                 <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
                   <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
                 </p>
