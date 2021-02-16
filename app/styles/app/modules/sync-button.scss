@@ -21,6 +21,11 @@
     &:hover {
       background-color: #229191;
     }
+
+    &:disabled {
+      background-color: #9d9d9d;
+      cursor: not-allowed;
+    }
   }
 
   .sync-last {

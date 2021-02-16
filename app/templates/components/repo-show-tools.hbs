@@ -31,7 +31,7 @@
       </LinkTo>
     </li>
   {{/if}}
-  {{#if (and this.displayTriggerBuildLink this.canOwnerBuild)}}
+  {{#if (and this.displayTriggerBuildLink this.canOwnerBuild (not this.userRoMode))}}
     <li>
       <button
         type="button"

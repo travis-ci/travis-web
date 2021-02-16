@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import {
+  alias,
   reads,
   or,
   and,
@@ -18,12 +19,16 @@ const { billingEndpoint } = config;
 export default Component.extend({
   tagName: '',
 
+  auth: service(),
   accounts: service(),
   features: service(),
   flashes: service(),
 
   activeModel: null,
   model: reads('activeModel'),
+
+  currentUser: alias('auth.currentUser'),
+  userRoMode: reads('currentUser.roMode'),
 
   user: reads('accounts.user'),
   organizations: reads('accounts.organizations'),
@@ -82,6 +87,10 @@ export default Component.extend({
       this.flashes.custom('flashes/pending-user-licenses', { owner: this.model, isUser: this.model.isUser }, 'warning');
     } else if (!allowance.get('userUsage')) {
       this.flashes.custom('flashes/users-limit-exceeded', { owner: this.model, isUser: this.model.isUser }, 'warning');
+    }
+
+    if (this.userRoMode) {
+      this.flashes.custom('flashes/read-only-mode', {}, 'warning');
     }
   },
 

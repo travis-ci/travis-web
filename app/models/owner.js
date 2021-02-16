@@ -36,6 +36,7 @@ export default VcsEntity.extend({
   fullName: or('name', 'login'),
   permissions: attr(),
   type: attr('string'),
+  roMode: attr('boolean'),
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
   isAssembla: match('vcsType', /Assembla\S+$/),

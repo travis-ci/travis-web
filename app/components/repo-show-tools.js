@@ -23,6 +23,7 @@ export default Component.extend({
   },
 
   canOwnerBuild: reads('repo.canOwnerBuild'),
+  userRoMode: reads('currentUser.roMode'),
 
   displaySettingsLink: computed('permissions.all', 'repo', function () {
     let repo = this.repo;

@@ -140,7 +140,7 @@
                 <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
                 </button>
                 <ul class="dropup-list">
-                  {{#if this.canOwnerBuild}}
+                  {{#if (and this.canOwnerBuild (not this.userRoMode))}}
                     <li>
                       <button
                         title="Trigger a build on the default branch"
