@@ -178,11 +178,19 @@
           {{#if this.isTriggering}}
             <LoadingIndicator @inline={{true}}/>
           {{else}}
-            {{#if this.canOwnerBuild}}
+            {{#if (and this.canOwnerBuild (not this.userRoMode))}}
               <button
                 class="button--blue"
                 title="Trigger a build on the default branch"
                 onclick={{action "triggerBuild"}}
+              >
+                Trigger a build
+              </button>
+            {{else if this.userRoMode}}
+              <button
+                class="button--blue"
+                title="Trigger a build on the default branch"
+                disabled="disabled"
               >
                 Trigger a build
               </button>
