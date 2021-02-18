@@ -27,5 +27,18 @@ export default Service.extend({
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
+  },
+
+  asTxt(fileName, content) {
+    const { document, URL } = window;
+    const anchor = document.createElement('a');
+    anchor.download = fileName;
+    anchor.href = URL.createObjectURL(new Blob([content], {
+      type: 'text/txt'
+    }));
+
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
   }
 });

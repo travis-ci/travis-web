@@ -306,7 +306,16 @@ const Repo = VcsEntity.extend({
   unsubscribe: task(function* () {
     yield this.api.delete(this.emailSubscriptionUrl);
     yield this.reload();
-  }).drop()
+  }).drop(),
+
+  buildBackups: reads('fetchBuildBackups.lastSuccessful.value'),
+
+  fetchBuildBackups: task(function* (from, to) {
+    const url = `/v3/build_backups?repository_id=${this.id}&offset=${this.buildBackups ? this.buildBackups.length : 0}`;
+    const result = yield this.api.get(url);
+    const oldArray = this.buildBackups || [];
+    return result ? oldArray.concat(result.build_backups) : [];
+  }).keepLatest(),
 });
 
 Repo.reopenClass({

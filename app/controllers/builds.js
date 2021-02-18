@@ -40,22 +40,7 @@ export default Controller.extend(...mixins, {
     return true;
   }),
 
-  loadExportFiles: task(function* () {
-    yield this.store.query('build', {});
-  }).drop(),
-
-  _constructOptions(type) {
-    let options = {
-      repository_id: this.get('repo.id'),
-      offset: this.get('builds.length'),
-    };
-    if (type != null) {
-      options.event_type = type.replace(/s$/, '');
-      if (options.event_type === 'push') {
-        options.event_type = ['push', 'api', 'cron'];
-      }
-    }
-
-    return options;
-  },
+  loadMoreExportFiles: task(function* () {
+    yield this.repo.fetchBuildBackups.perform();
+  }).drop()
 });
