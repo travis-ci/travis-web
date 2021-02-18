@@ -56,6 +56,8 @@ export default Controller.extend({
     return repositories.filter(repo => !repo.emailSubscribed);
   }),
 
+  // currentUser: computed('')
+
   fetchRepositories: task(function* () {
     yield fetchAll(this.store, 'repo', {});
     return this.store.peekAll('repo');
