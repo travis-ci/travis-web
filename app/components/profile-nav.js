@@ -72,6 +72,10 @@ export default Component.extend({
   didRender() {
     const allowance = this.model.allowance;
 
+    if (this.userRoMode) {
+      this.flashes.custom('flashes/read-only-mode', {}, 'warning');
+    }
+
     if (!allowance || (allowance && allowance.get('subscriptionType') !== 2))
       return;
 
@@ -87,10 +91,6 @@ export default Component.extend({
       this.flashes.custom('flashes/pending-user-licenses', { owner: this.model, isUser: this.model.isUser }, 'warning');
     } else if (!allowance.get('userUsage')) {
       this.flashes.custom('flashes/users-limit-exceeded', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    }
-
-    if (this.userRoMode) {
-      this.flashes.custom('flashes/read-only-mode', {}, 'warning');
     }
   },
 
