@@ -100,7 +100,8 @@ export default Controller.extend({
     },
     sendConfirmationEmail() {
       this.set('confirmationSent', true);
-      this.api.get(`/auth/request_confirmation/${this.auth.currentUser.id}`);
+      const {token, id} = this.auth.currentUser;
+      this.api.get(`/auth/request_confirmation/${token}/${id}`);
     }
   },
 });

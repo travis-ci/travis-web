@@ -5,7 +5,7 @@ module('Unit | Route | confirm-email', function (hooks) {
   setupTest(hooks);
 
   test('it exists', function (assert) {
-    let route = this.owner.lookup('route:confirm-email');
+    let route = this.owner.lookup('route:confirm-user');
     assert.ok(route);
   });
 });

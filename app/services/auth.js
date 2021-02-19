@@ -33,7 +33,7 @@ const STATE = {
   SIGNING_IN: 'signing-in'
 };
 
-const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels', 'vcs_type'];
+const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels', 'vcs_type', 'confirmed_at'];
 
 const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
