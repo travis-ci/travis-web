@@ -10,7 +10,7 @@ export default TravisRoute.extend({
     const { token } = transition.to.params;
     const that = this;
 
-    this.api.get(`/confirm_user/${token}`)
+    this.api.get(`/auth/confirm_user/${token}`)
       .then(_result => {
         if (that.auth.signedOut) {
           that.auth.signIn();

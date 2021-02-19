@@ -6,6 +6,7 @@ export default Component.extend({
   externalLinks: service(),
   features: service(),
   flashes: service(),
+  auth: service(),
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
@@ -43,7 +44,7 @@ export default Component.extend({
   didRender() {
     const repo = this.get('repo');
 
-    if (!repo.canOwnerBuild) {
+    if (!repo.canOwnerBuild && this.auth.currentUser.confirmedAt) {
       const isUser = repo.ownerType === 'user';
       const allowance = repo.get('allowance');
 

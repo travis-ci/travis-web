@@ -22,6 +22,9 @@ export default Component.extend(InViewportMixin, {
   isNavigationOpen: false,
 
   user: reads('auth.currentUser'),
+  isUnconfirmed: computed('user.confirmedAt', function() {
+    return !this.user.confirmedAt;
+  }),
 
   userName: computed('user.{login,name}', function () {
     let login = this.get('user.login');

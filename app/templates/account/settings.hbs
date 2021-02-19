@@ -6,8 +6,13 @@
     <h3>
       Confirm account
     </h3>
-    <a class="disabled action-button--restart" href="/request-email-confirmation" target="_blank">SEND CONFIRMATION TOKEN AGAIN</a>
-    # tutaj rzeczy w kontolerze to spoko app/controllers/account/settings.js
+    <button class={{this.confirmationButtonClass}} {{action 'sendConfirmationEmail'}} >SEND CONFIRMATION TOKEN AGAIN</button>
+    {{#if this.userHasNoEmails}}
+    <div>
+      We don’t have your email address.
+      Please update your email at your Version Control System provider, run Sync Account and try again..
+    </div>
+    {{/if}}
   </section>
   <section>
     <h3>

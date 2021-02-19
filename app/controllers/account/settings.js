@@ -29,6 +29,7 @@ export const INSIGHTS_VIS_OPTIONS = [
 
 export default Controller.extend({
   features: service(),
+  api: service(),
   auth: service(),
   preferences: service(),
   flashes: service(),
@@ -38,6 +39,7 @@ export default Controller.extend({
 
   featureFlags: reads('model.featureFlags'),
   account: reads('model.account'),
+  confirmationSent: false,
 
   scrollToAuth: equal('section', SECTION.AUTH),
   scrollToFeatures: equal('section', SECTION.FEATURES),
@@ -56,7 +58,16 @@ export default Controller.extend({
     return repositories.filter(repo => !repo.emailSubscribed);
   }),
 
-  // currentUser: computed('')
+  userHasNoEmails: computed('auth.currentUser.emails', function () {
+    if (!this.auth.currentUser.emails || this.auth.currentUser.emails.length === 0)
+      return true;
+  }),
+
+  confirmationButtonClass: computed('userHasNoEmails', 'confirmationSent', function () {
+    if (this.confirmationSent || this.userHasNoEmails)
+      return 'button--white-and-teal disabled';
+    return 'button--white-and-teal';
+  }),
 
   fetchRepositories: task(function* () {
     yield fetchAll(this.store, 'repo', {});
@@ -86,6 +97,10 @@ export default Controller.extend({
   actions: {
     setInsightsVis(val) {
       this.setPrivateInsights.perform(val);
+    },
+    sendConfirmationEmail() {
+      this.set('confirmationSent', true);
+      this.api.get(`/auth/request_confirmation/${this.auth.currentUser.id}`);
     }
   },
 });

@@ -9,6 +9,6 @@ export default TravisRoute.extend({
   beforeModel() {
     if (this.auth.signedOut)
       return;
-    this.api.get(`/request_user_confirmation/${this.auth.currentUser.id}`);
+    this.api.get(`/auth/request_confirmation/${this.auth.currentUser.id}`);
   }
 });
