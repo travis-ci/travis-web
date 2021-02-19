@@ -32,15 +32,17 @@
         {{/if}}
       </p>
     {{else}}
-      {{#if this.displayShowExportFiles}}
-        <p>
-          {{#if this.loadMoreExportFiles.isRunning}}
-            <LoadingIndicator />
-          {{else}}
+      <p>
+        {{#if this.loadMoreExportFiles.isRunning}}
+          <LoadingIndicator />
+        {{else}}
+          {{#if this.displayMoreShowExportFiles}}
             <ShowMoreButton @label="Show export files" @click={{perform this.loadMoreExportFiles}} />
+          {{else}}
+            <ShowMoreButton @label="Show more export files" @click={{perform this.loadMoreExportFiles}} />
           {{/if}}
-        </p>
-      {{/if}}
+        {{/if}}
+      </p>
     {{/if}}
   </div>
 {{else}}

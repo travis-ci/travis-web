@@ -53,7 +53,7 @@
     <LoadingIndicator @height={{true}} />
   {{else}}
     <div class="action-button-container">
-      {{#if (and this.canOwnerBuild this.canUserBuild)}}
+      {{#if (and this.canOwnerBuild (not this.userRoMode))}}
         <button
           class="action-button--restart"
           aria-label="Restart {{this.type}}"
@@ -86,7 +86,7 @@
     </div>
     {{#if (and this.features.debugBuilds this.canDebug)}}
       <div class="action-button-container">
-        {{#if (and this.canOwnerBuild this.canUserBuild)}}
+        {{#if (and this.canOwnerBuild (not this.userRoMode))}}
           <button
             data-test-repo-actions-debug-button
             class="action-button--debug"

@@ -36,8 +36,8 @@ export default Controller.extend(...mixins, {
     return tab !== 'branches' && parseInt(lastBuildNumber) > 1;
   }),
 
-  displayShowExportFiles: computed('repo', function () {
-    return true;
+  displayMoreShowExportFiles: computed('repo.buildBackups', function () {
+    return this.repo.buildBackups === undefined;
   }),
 
   loadMoreExportFiles: task(function* () {
