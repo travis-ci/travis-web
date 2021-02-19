@@ -30,7 +30,6 @@ export default VcsEntity.extend({
   isSyncing: attr('boolean'),
   syncedAt: attr('date'),
   createdAt: attr('date'),
-  confirmedAt: attr('date'),
   avatarUrl: attr('string'),
   githubId: attr('string'),
   education: attr('boolean'),

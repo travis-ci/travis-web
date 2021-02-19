@@ -112,8 +112,8 @@ const Repo = VcsEntity.extend({
     yield this.api.patch(url, { data: data });
   }).drop(),
 
-  canOwnerBuild: computed('auth.currentUSer.confirmedAt', 'allowance', 'private', 'features.{proVersion,enterpriseVersion}', function () {
-    if (!this.auth.currentUser.confirmedAt)
+  canOwnerBuild: computed('auth.currentUser.confirmedAt', 'allowance', 'private', 'features.{proVersion,enterpriseVersion}', function () {
+    if (this.auth.currentUser && !this.auth.currentUser.confirmedAt)
       return false;
     const isPro = this.get('features.proVersion');
     const enterprise = !!this.get('features.enterpriseVersion');

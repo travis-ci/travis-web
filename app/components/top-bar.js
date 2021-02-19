@@ -22,7 +22,9 @@ export default Component.extend(InViewportMixin, {
   isNavigationOpen: false,
 
   user: reads('auth.currentUser'),
-  isUnconfirmed: computed('user.confirmedAt', function() {
+  isUnconfirmed: computed('user.confirmedAt', function () {
+    if (!this.user)
+      return false;
     return !this.user.confirmedAt;
   }),
 

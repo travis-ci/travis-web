@@ -1,6 +1,7 @@
 import TravisRoute from 'travis/routes/basic';
 
 import { inject as service } from '@ember/service';
+import Ember from 'ember';
 
 export default TravisRoute.extend({
   api: service(),
@@ -22,6 +23,8 @@ export default TravisRoute.extend({
   },
 
   model() {
+    const { Logger } = Ember;
+    Logger.info(this.auth.signedIn);
     return {
       signedIn: this.auth.signedIn
     };

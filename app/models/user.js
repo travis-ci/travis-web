@@ -23,6 +23,7 @@ export default Owner.extend({
   channels: attr(),
   authToken: attr('string'),
   utmParams: attr(),
+  confirmedAt: attr('date'),
 
   type: 'user',
 

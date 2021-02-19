@@ -44,7 +44,7 @@ export default Component.extend({
   didRender() {
     const repo = this.get('repo');
 
-    if (!repo.canOwnerBuild && this.auth.currentUser.confirmedAt) {
+    if (!repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
       const isUser = repo.ownerType === 'user';
       const allowance = repo.get('allowance');
 
