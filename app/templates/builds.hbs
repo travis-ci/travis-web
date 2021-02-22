@@ -32,7 +32,7 @@
         {{/if}}
       </p>
     {{else}}
-      {{#if this.displayExportFiles}}
+      {{#if (and this.hasBuildBackups this.displayExportFiles)}}
         <p>
           {{#if this.loadMoreExportFiles.isRunning}}
             <LoadingIndicator />

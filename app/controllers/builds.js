@@ -15,6 +15,7 @@ export default Controller.extend(...mixins, {
 
   buildsSorting: ['number:desc'],
   builds: sort('model', 'buildsSorting'),
+  oldBuilds: [],
 
   repoController: controller('repo'),
   repo: alias('repoController.repo'),
@@ -31,10 +32,17 @@ export default Controller.extend(...mixins, {
     return this.externalLinks.orgBuildHistoryLink(this.repo.slug);
   }),
 
-  displayShowMoreButton: computed('tab', 'builds.lastObject.number', function () {
+  hasBuildBackups: reads('repo.hasBuildBackups'),
+
+  displayShowMoreButton: computed('tab', 'loadMoreBuilds.isRunning', 'builds', function () {
+    const builds = this.get('builds');
     let tab = this.tab;
-    let lastBuildNumber = this.get('builds.lastObject.number');
-    return tab !== 'branches' && parseInt(lastBuildNumber) > 1;
+
+    if (this.oldBuilds.length === builds.length) {
+      return false;
+    }
+    this.set('oldBuilds', builds);
+    return tab !== 'branches' && true;
   }),
 
   displayMoreShowExportFiles: computed('repo.buildBackups', function () {
