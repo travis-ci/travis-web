@@ -15,7 +15,7 @@ export default Factory.extend({
   is_syncing: false,
   recently_signed_up: true,
   vcs_type: 'GithubUser',
-  confirmed_at: false,
+  confirmed_at: true,
 
   channels() {
     return `private-user-${this.id}`;

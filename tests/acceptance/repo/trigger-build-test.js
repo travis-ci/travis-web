@@ -27,6 +27,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     this.currentUser = this.server.create('user', {
       name: 'Ada Lovelace',
       login: 'adal',
+      confirmed_at: Date.now()
     });
 
     this.repo = this.server.create('repository', {
@@ -78,6 +79,24 @@ module('Acceptance | repo/trigger build', function (hooks) {
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
     assert.notOk(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
+  });
+
+  test('trigger link is not visible to unconfirmed users', async function (assert) {
+    this.repo.update('migration_status', 'migrated');
+    const thatUser = this.currentUser;
+    this.currentUser = this.server.create('user', {
+      name: 'My user',
+      login: 'myuser',
+      confirmed_at: null
+    });
+    enableFeature('proVersion');
+    signInUser(this.currentUser);
+
+    await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
+
+    this.user = thatUser;
+
+    assert.ok(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is rendered');
   });
 
   test('trigger link is present when user has the proper permissions and has been migrated on com', async function (assert) {
