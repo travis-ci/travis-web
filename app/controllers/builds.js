@@ -1,4 +1,4 @@
-import { sort, alias } from '@ember/object/computed';
+import { sort, alias, reads } from '@ember/object/computed';
 import Controller, { inject as controller } from '@ember/controller';
 import LoadMoreBuildsMixin from 'travis/mixins/builds/load-more';
 import { inject as service } from '@ember/service';
@@ -11,6 +11,7 @@ export default Controller.extend(...mixins, {
   tabStates: service(),
   features: service(),
   externalLinks: service(),
+  permissions: service(),
 
   buildsSorting: ['number:desc'],
   builds: sort('model', 'buildsSorting'),
@@ -40,7 +41,15 @@ export default Controller.extend(...mixins, {
     return this.repo.buildBackups === undefined;
   }),
 
+  lastExportFiles: reads('repo.buildBackupsLast'),
+
   loadMoreExportFiles: task(function* () {
     yield this.repo.fetchBuildBackups.perform();
-  }).drop()
+  }).drop(),
+
+  displayExportFiles: computed('permissions.all', 'repo', function () {
+    let repo = this.repo;
+    return this.permissions.hasPushPermission(repo);
+  }),
+
 });

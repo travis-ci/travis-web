@@ -309,12 +309,17 @@ const Repo = VcsEntity.extend({
   }).drop(),
 
   buildBackups: reads('fetchBuildBackups.lastSuccessful.value'),
+  buildBackupsLast: false,
 
   fetchBuildBackups: task(function* (from, to) {
     const url = `/v3/build_backups?repository_id=${this.id}&offset=${this.buildBackups ? this.buildBackups.length : 0}`;
     const result = yield this.api.get(url);
-    const oldArray = this.buildBackups || [];
-    return result ? oldArray.concat(result.build_backups) : [];
+    if (result && result['@pagination']) {
+      this.set('buildBackupsLast', result['@pagination'].is_last);
+    }
+    const oldBackups = this.buildBackups || [];
+
+    return result ? oldBackups.concat(result.build_backups) : [];
   }).keepLatest(),
 });
 
