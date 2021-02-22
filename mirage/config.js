@@ -945,6 +945,45 @@ export default function () {
     }
   });
 
+  this.get('/v3/build_backups', function (schema, request) {
+    const repository_id = request.queryParams.repository_id;
+
+    let response = {
+      '@type': 'build_backups',
+      '@href': `/v3/build_backups?repository_id=${repository_id}&offset=0`,
+      '@representation': 'standard',
+      '@pagination': {
+        'limit': 25,
+        'offset': 0,
+        'count': 1,
+        'is_first': true,
+        'is_last': true,
+        'next': null,
+        'prev': null,
+        'first': {
+          '@href': `/v3/build_backups?repository_id=${repository_id}&offset=0`,
+          'offset': 0,
+          'limit': 25
+        },
+        'last': {
+          '@href': `/v3/build_backups?repository_id=${repository_id}&offset=0`,
+          'offset': 0,
+          'limit': 25
+        }
+      },
+      'build_backups': [
+        {
+          '@type': 'build_backup',
+          '@href': '/v3/build_backup/120',
+          '@representation': 'standard',
+          'file_name': `repository_${repository_id}_builds_123-456.json`,
+          'created_at': '2021-02-19T13:54:15Z'
+        }
+      ]
+    };
+    return response;
+  });
+
   this.get('/owner/:provider/:login/repos', function (schema, { params, queryParams = {} }) {
     const { login } = params;
     const { sort_by, name_filter } = queryParams;
