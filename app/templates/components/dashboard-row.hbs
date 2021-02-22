@@ -152,6 +152,18 @@
                         </span>
                       </button>
                     </li>
+                  {{else if this.userRoMode}}
+                    <li>
+                      <button
+                        title="Trigger a build on the default branch"
+                        disabled="disabled"
+                      >
+                        <SvgImage @name="icon-restart" @class="icon" />
+                        <span class="label-align">
+                          Trigger a build
+                        </span>
+                      </button>
+                    </li>
                   {{/if}}
                   <li>
                     <LinkTo

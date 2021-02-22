@@ -12,7 +12,7 @@ export default Component.extend({
     async downloadExport() {
       const url = this.build['@href'];
       const fileName = this.build.file_name;
-      const fileContent = await this.api.get(url);
+      const fileContent = await this.api.get(`${url}.txt`);
 
       this.download.asTxt(fileName, fileContent);
     }
