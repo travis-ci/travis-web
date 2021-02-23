@@ -11,6 +11,7 @@ const plans = [
     currency,
     is_enabled: true,
     is_default: false,
+    is_annual: false,
   },
   {
     id: 'one_concurrent',
@@ -22,6 +23,7 @@ const plans = [
     currency,
     is_enabled: true,
     is_default: true,
+    is_annual: false,
   },
   {
     id: 'two_concurrent',
@@ -33,6 +35,7 @@ const plans = [
     currency,
     is_enabled: true,
     is_default: false,
+    is_annual: false,
   },
   {
     id: 'five_concurrent',
@@ -44,6 +47,7 @@ const plans = [
     currency,
     is_enabled: true,
     is_default: false,
+    is_annual: false,
   },
   {
     id: 'one_concurrent_annual',
@@ -51,10 +55,11 @@ const plans = [
     public_credits: 0,
     users: 0,
     price: 75900,
-    name: '1 concurrent job',
+    name: '1 concurrent annual job',
     currency,
     is_enabled: true,
     is_default: false,
+    is_annual: true,
   },
   {
     id: 'two_concurrent_annual',
@@ -62,10 +67,11 @@ const plans = [
     public_credits: 0,
     users: 0,
     price: 141900,
-    name: '2 concurrent jobs',
+    name: '2 concurrent annual jobs',
     currency,
     is_enabled: true,
     is_default: false,
+    is_annual: true,
   },
   {
     id: 'five_concurrent_annual',
@@ -73,10 +79,11 @@ const plans = [
     public_credits: 0,
     users: 0,
     price: 273900,
-    name: '5 concurrent jobs',
+    name: '5 concurrent annual jobs',
     currency,
     is_enabled: true,
     is_default: false,
+    is_annual: true,
   },
 ];
 

@@ -3,7 +3,7 @@
   {{!-- Header section --}}
   <UiKit::Box
     @tag='section'
-    @margin={{hash top=3 bottom=24}}
+    @margin={{hash top=3 bottom=16}}
     @textAlign='center'
     data-test-plans-page-header-section="true"
   >
@@ -15,10 +15,20 @@
       <br />
       No credit card required for Free Plan!
     </UiKit::Text>
-  </UiKit::Box>
+    </UiKit::Box>
 
   {{!-- Product section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=16}} data-test-plans-page-product-section="true" @margin={{hash bottom=48}}>
+    <UiKit::Box
+     @tag='section'
+     @margin={{hash top=0 bottom=4}}
+     @textAlign='center'
+    >
+      <UiKit::Text @tag='h3' @size='3xl' @weight='semibold'>
+         Select monthly plan
+      </UiKit::Text>
+    </UiKit::Box>
+
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}} data-test-plans-page-product-section="true" @margin={{hash bottom=16}}>
     <UiKit::Box @tag='div'>
       <UiKit::Grid
         @base={{1}}
@@ -28,99 +38,214 @@
         as |grid|
       >
         {{#each plans as |plan|}}
-          <grid.item>
-            <UiKit::Box
-              @borderWidth={{hash all='sm'}}
-              @radius='lg'
-              @padding={{hash base=(hash y=8) lg=(hash y=(if plan.isDefault 12 4) )}}
-              @margin={{hash  base=(hash top=6 x=4) lg=(hash x=4 top=(if plan.isDefault 0 8) )}}
-            >
-              <UiKit::Box @margin={{hash bottom=12}} @textAlign={{hash base='center'}}>
-                <UiKit::Box @margin={{hash bottom=10}}>
-                  <UiKit::Text @tag='h3' @size={{if plan.isDefault '2xl' 'lg'}} @weight={{if plan.isDefault 'bold' 'semibold'}}>
-                    {{plan.name}} Plan
-                  </UiKit::Text>
+          {{#unless plan.isAnnual}}
+            <grid.item>
+              <UiKit::Box
+                @borderWidth={{hash all='sm'}}
+                @radius='lg'
+                @padding={{hash base=(hash y=8) lg=(hash y=(if plan.isDefault 12 4) )}}
+                @margin={{hash  base=(hash top=6 x=4) lg=(hash x=4 top=(if plan.isDefault 0 8) )}}
+              >
+                <UiKit::Box @margin={{hash bottom=12}} @textAlign={{hash base='center'}}>
+                  <UiKit::Box @margin={{hash bottom=10}}>
+                    <UiKit::Text @tag='h3' @size={{if plan.isDefault '2xl' 'lg'}} @weight={{if plan.isDefault 'bold' 'semibold'}}>
+                      {{plan.name}} Plan
+                    </UiKit::Text>
+                  </UiKit::Box>
+
+                  <UiKit::Box @margin={{hash bottom=5}}>
+                    <UiKit::Text @tag='h3' @size='2xl' @weight='semibold'>
+                      {{#if plan.isFree}}
+                        Free
+                      {{else}}
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs' @margin={{hash top=-5}} @display='block'>
+                          Starting at
+                        </UiKit::Text>
+                        {{format-currency plan.price floor='true'}}
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
+                          / month
+                        </UiKit::Text>
+                      {{/if}}
+                    </UiKit::Text>
+                  </UiKit::Box>
                 </UiKit::Box>
 
-                <UiKit::Box @margin={{hash bottom=5}}>
-                  <UiKit::Text @tag='h3' @size='2xl' @weight='semibold'>
+                <UiKit::Box @padding={{hash x=10}} @margin={{hash bottom=12}}>
+                  <UiKit::Box @margin={{hash bottom=5}}>
+                    <UiKit::Box @display='inline-block' @width={{3}}>
+                      <SvgImage @name='stage-passed-green' @class="icon" />
+                    </UiKit::Box>
+                    <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                      {{#if plan.isFree}}
+                        {{concat plan.privateCredits ' Credits'}}
+                      {{else}}
+                        Adjustable credits amount
+                      {{/if}}
+                    </UiKit::Text>
+                  </UiKit::Box>
+
+                  <UiKit::Box @margin={{hash bottom=5}}>
+                    <UiKit::Box @display='inline-block' @width={{3}}>
+                      <SvgImage @name='stage-passed-green' @class="icon" />
+                    </UiKit::Box>
+                    <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                      {{#if (eq plan.users 0)}}
+                        Unlimited
+                      {{else}}
+                        {{concat 'Up to ' plan.users}}
+                      {{/if}}
+                      unique users
+                    </UiKit::Text>
+                  </UiKit::Box>
+
+                  <UiKit::Box @margin={{hash bottom=5}}>
+                    <UiKit::Box @display='inline-block' @width={{3}}>
+                      <SvgImage @name='stage-passed-green' @class="icon" />
+                    </UiKit::Box>
+                    <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                      Private &amp; Open-Source Repos
+                    </UiKit::Text>
+                  </UiKit::Box>
+
+                  <UiKit::Box>
+                    <UiKit::Box @display='inline-block' @width={{3}}>
+                      <SvgImage @name='stage-passed-green' @class="icon" />
+                    </UiKit::Box>
+                    <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                      Windows, Linux, MacOS, FreeBSD
+                    </UiKit::Text>
+                  </UiKit::Box>
+                </UiKit::Box>
+
+                <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
+                  <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
                     {{#if plan.isFree}}
-                      Free
+                      Start building for free
                     {{else}}
-                      <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs' @margin={{hash top=-5}} @display='block'>
-                        Starting at
-                      </UiKit::Text>
-                      {{format-currency plan.price floor='true'}}
-                      <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
-                        / month
-                      </UiKit::Text>
+                      Get started
                     {{/if}}
-                  </UiKit::Text>
+                  </UiKit::Button>
                 </UiKit::Box>
               </UiKit::Box>
-
-              <UiKit::Box @padding={{hash x=10}} @margin={{hash bottom=12}}>
-                <UiKit::Box @margin={{hash bottom=5}}>
-                  <UiKit::Box @display='inline-block' @width={{3}}>
-                    <SvgImage @name='stage-passed-green' @class="icon" />
-                  </UiKit::Box>
-                  <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                    {{#if plan.isFree}}
-                      {{concat plan.privateCredits ' Credits'}}
-                    {{else}}
-                      Adjustable credits amount
-                    {{/if}}
-                  </UiKit::Text>
-                </UiKit::Box>
-
-                <UiKit::Box @margin={{hash bottom=5}}>
-                  <UiKit::Box @display='inline-block' @width={{3}}>
-                    <SvgImage @name='stage-passed-green' @class="icon" />
-                  </UiKit::Box>
-                  <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                    {{#if (eq plan.users 0)}}
-                      Unlimited
-                    {{else}}
-                      {{concat 'Up to ' plan.users}}
-                    {{/if}}
-                    unique users
-                  </UiKit::Text>
-                </UiKit::Box>
-
-                <UiKit::Box @margin={{hash bottom=5}}>
-                  <UiKit::Box @display='inline-block' @width={{3}}>
-                    <SvgImage @name='stage-passed-green' @class="icon" />
-                  </UiKit::Box>
-                  <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                    Private &amp; Open-Source Repos
-                  </UiKit::Text>
-                </UiKit::Box>
-
-                <UiKit::Box>
-                  <UiKit::Box @display='inline-block' @width={{3}}>
-                    <SvgImage @name='stage-passed-green' @class="icon" />
-                  </UiKit::Box>
-                  <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                    Windows, Linux, MacOS, FreeBSD
-                  </UiKit::Text>
-                </UiKit::Box>
-              </UiKit::Box>
-
-              <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
-                <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
-                  {{#if plan.isFree}}
-                    Start building for free
-                  {{else}}
-                    Get started
-                  {{/if}}
-                </UiKit::Button>
-              </UiKit::Box>
-            </UiKit::Box>
-          </grid.item>
+            </grid.item>
+          {{/unless}}
         {{/each}}
       </UiKit::Grid>
     </UiKit::Box>
   </UiKit::Box>
+
+    <UiKit::Box
+     @tag='section'
+     @margin={{hash top=0 bottom=0}}
+     @textAlign='center'
+    >
+      <UiKit::Text @tag='h3' @size='3xl' @weight='semibold'>
+         Select annual plan
+      </UiKit::Text>
+    </UiKit::Box>
+
+    <UiKit::Box @tag='section' @margin={{hash bottom=16}} @margin={{hash bottom=16}}>
+      <UiKit::Box @tag='div'>
+        <UiKit::Grid
+          @base={{1}}
+          @md={{2}}
+          @xl={{4}}
+          data-test-plans-page-product-list="true"
+          as |grid|
+        >
+          {{#each plans as |plan|}}
+            {{#if plan.isAnnual }}
+              <grid.item>
+                <UiKit::Box
+                  @borderWidth={{hash all='sm'}}
+                  @radius='lg'
+                  @padding={{hash base=(hash y=8) lg=(hash y=(if plan.isDefault 12 4) )}}
+                  @margin={{hash  base=(hash top=6 x=4) lg=(hash x=4 top=(if plan.isDefault 0 8) )}}
+                >
+                  <UiKit::Box @margin={{hash bottom=12}} @textAlign={{hash base='center'}}>
+                    <UiKit::Box @margin={{hash bottom=10}}>
+                      <UiKit::Text @tag='h3' @size={{if plan.isDefault '2xl' 'lg'}} @weight={{if plan.isDefault 'bold' 'semibold'}}>
+                        {{plan.name}} Plan
+                      </UiKit::Text>
+                    </UiKit::Box>
+
+                    <UiKit::Box @margin={{hash bottom=5}}>
+                      <UiKit::Text @tag='h3' @size='2xl' @weight='semibold'>
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs' @margin={{hash top=-5}} @display='block'>
+                          Starting at
+                        </UiKit::Text>
+                        {{format-currency plan.price floor='true'}}
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
+                          / year
+                        </UiKit::Text>
+                      </UiKit::Text>
+                    </UiKit::Box>
+                  </UiKit::Box>
+
+                  <UiKit::Box @padding={{hash x=10}} @margin={{hash bottom=12}}>
+                    <UiKit::Box @margin={{hash bottom=5}}>
+                      <UiKit::Box @display='inline-block' @width={{3}}>
+                        <SvgImage @name='stage-passed-green' @class="icon" />
+                      </UiKit::Box>
+                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                        {{#if plan.isFree}}
+                          {{concat plan.privateCredits ' Credits'}}
+                        {{else}}
+                          Adjustable credits amount
+                        {{/if}}
+                      </UiKit::Text>
+                    </UiKit::Box>
+
+                    <UiKit::Box @margin={{hash bottom=5}}>
+                      <UiKit::Box @display='inline-block' @width={{3}}>
+                        <SvgImage @name='stage-passed-green' @class="icon" />
+                      </UiKit::Box>
+                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                        {{#if (eq plan.users 0)}}
+                          Unlimited
+                        {{else}}
+                          {{concat 'Up to ' plan.users}}
+                        {{/if}}
+                        unique users
+                      </UiKit::Text>
+                    </UiKit::Box>
+
+                    <UiKit::Box @margin={{hash bottom=5}}>
+                      <UiKit::Box @display='inline-block' @width={{3}}>
+                        <SvgImage @name='stage-passed-green' @class="icon" />
+                      </UiKit::Box>
+                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                        Private &amp; Open-Source Repos
+                      </UiKit::Text>
+                    </UiKit::Box>
+
+                    <UiKit::Box>
+                      <UiKit::Box @display='inline-block' @width={{3}}>
+                        <SvgImage @name='stage-passed-green' @class="icon" />
+                      </UiKit::Box>
+                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                        Windows, Linux, MacOS, FreeBSD
+                      </UiKit::Text>
+                    </UiKit::Box>
+                  </UiKit::Box>
+
+                  <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
+                    <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
+                      {{#if plan.isFree}}
+                        Start building for free
+                      {{else}}
+                        Get started
+                      {{/if}}
+                    </UiKit::Button>
+                  </UiKit::Box>
+                </UiKit::Box>
+              </grid.item>
+            {{/if}}
+          {{/each}}
+        </UiKit::Grid>
+      </UiKit::Box>
+    </UiKit::Box>
+
 
 {{!-- Open Source Section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-oss-section="true">
