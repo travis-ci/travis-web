@@ -36,7 +36,7 @@ module('Acceptance | plans page', function (hooks) {
 
     assert.ok(productSection.isPresent);
     assert.ok(list.isPresent);
-    assert.equal(list.items.length, 7);
+    assert.equal(list.items.length, 4);
   });
 
   test('oss section structure', async function (assert) {
