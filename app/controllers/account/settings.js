@@ -59,8 +59,7 @@ export default Controller.extend({
   }),
 
   userHasNoEmails: computed('auth.currentUser.emails', function () {
-    if (!this.auth.currentUser.emails || this.auth.currentUser.emails.length === 0)
-      return true;
+     return !this.auth.currentUser.emails || this.auth.currentUser.emails.length === 0
   }),
 
   confirmationButtonClass: computed('userHasNoEmails', 'confirmationSent', function () {
