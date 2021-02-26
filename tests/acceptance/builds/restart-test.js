@@ -39,25 +39,4 @@ module('Acceptance | builds/restart', function (hooks) {
     assert.equal(logNumbers[1], '2', 'shows number of second line of log text of single build job');
     assert.equal(logContent[1], 'Second line', 'shows content of second line of log text of single build job');
   });
-
-  test('restarting build when the current user is not confrimed is not allowed', async function (assert) {
-    const currentUser = this.server.create('user', {login: 'travis-ci', confirmed_at: null});
-    this.server.create('allowance', {subscription_type: 1});
-    signInUser(currentUser);
-
-    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1} });
-
-    this.server.create('branch', {});
-
-    let gitUser = this.server.create('git-user', { name: 'Mr T' });
-    let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-    let build = this.server.create('build', { number: '5', repository, state: 'passed', commit });
-    let job = this.server.create('job', { number: '1234.1', repository, state: 'passed', build, commit });
-    this.server.create('log', { id: job.id });
-
-    await buildPage
-      .visit({ owner: 'travis-ci', repo: 'travis-web', build_id: build.id });
-
-    assert.dom('.action-button--restart').doesNotExist();
-  });
 });

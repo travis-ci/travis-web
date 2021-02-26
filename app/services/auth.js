@@ -235,7 +235,7 @@ export default Service.extend({
 
   validateUserData(user, isBecome) {
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
-    user['confirmed_at'] = user['confirmed_at'] || 0;
+    user['confirmed_at'] = user['confirmed_at'] || false;
     const hasAllFields = USER_FIELDS.every(field => isPresent(user[field]) || hasChannelsOnPro(field));
     const hasCorrectScopes = user.correct_scopes || isBecome;
     if (!hasAllFields || !hasCorrectScopes) {
