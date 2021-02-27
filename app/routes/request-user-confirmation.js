@@ -10,6 +10,6 @@ export default TravisRoute.extend({
     if (this.auth.signedOut)
       return;
     const {token, id} = this.auth.currentUser;
-    this.api.get(`/auth/request_confirmation/${token}/${id}`);
+    this.api.get(`/auth/request_confirmation/${token}/${id}`, {'travisApiVersion': null});
   }
 });
