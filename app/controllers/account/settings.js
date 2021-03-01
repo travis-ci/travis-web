@@ -99,8 +99,8 @@ export default Controller.extend({
     },
     sendConfirmationEmail() {
       this.set('confirmationSent', true);
-      const {token, id} = this.auth.currentUser;
-      this.api.get(`/auth/request_confirmation/${token}/${id}`, {'travisApiVersion': null});
+      const { id } = this.auth.currentUser;
+      this.api.get(`/auth/request_confirmation/${id}`, {'travisApiVersion': null});
     }
   },
 });
