@@ -6,6 +6,11 @@
     <h3>
       Confirm account
     </h3>
+    {{#if this.confirmationSent}}
+      <div>
+        The email has been sent. Check your inbox.
+      </div>
+    {{/if}}
     <button class={{this.confirmationButtonClass}} {{action 'sendConfirmationEmail'}} >SEND CONFIRMATION TOKEN AGAIN</button>
     {{#if this.userHasNoEmails}}
     <div>

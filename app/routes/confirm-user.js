@@ -11,7 +11,12 @@ export default TravisRoute.extend({
     const that = this;
     this.api.get(`/auth/confirm_user/${token}`, {'travisApiVersion': null})
       .then(() => {
-        that.auth.sync().then(() => that.transitionTo('/'));
+        if (this.auth.signedIn) {
+          that.auth.sync()
+            .then(() => that.transitionTo('/'));
+        } else {
+          that.transitionTo('/');
+        }
       })
       .catch(_error => _error);
   },
