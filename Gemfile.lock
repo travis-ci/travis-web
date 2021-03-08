@@ -20,15 +20,15 @@ GEM
       nokogiri (~> 1.8, >= 1.8.4)
     power_assert (0.4.1)
     puma (3.12.6)
-    rack (1.6.12)
+    rack (2.1.14)
     rack-mobile-detect (0.4.0)
       rack
-    rack-protection (1.5.5)
+    rack-protection (2.0.8.1)
       rack
     rack-ssl (1.4.1)
       rack
-    rack-test (0.6.3)
-      rack (>= 1.0)
+    rack-test (1.1.0)
+      rack
     rake (12.3.3)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
