@@ -2,23 +2,20 @@
   {{#if this.scrollToAuth}}
     <ScrollHere />
   {{/if}}
-  <section>
-    <h3>
-      Confirm account
-    </h3>
-    {{#if this.confirmationSent}}
+  {{#unless userConfirmedAt}}
+    <section>
+      <h3>
+        Confirm account
+      </h3>
+      <button class={{this.confirmationButtonClass}} {{action 'sendConfirmationEmail'}} >SEND CONFIRMATION TOKEN AGAIN</button>
+      {{#if this.userHasNoEmails}}
       <div>
-        The email has been sent. Check your inbox.
+        We don’t have your email address.
+        Please update your email at your Version Control System provider, run Sync Account and try again..
       </div>
-    {{/if}}
-    <button class={{this.confirmationButtonClass}} {{action 'sendConfirmationEmail'}} >SEND CONFIRMATION TOKEN AGAIN</button>
-    {{#if this.userHasNoEmails}}
-    <div>
-      We don’t have your email address.
-      Please update your email at your Version Control System provider, run Sync Account and try again..
-    </div>
-    {{/if}}
-  </section>
+      {{/if}}
+    </section>
+  {{/unless}}
   <section>
     <h3>
       API authentication

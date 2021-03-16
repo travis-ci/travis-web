@@ -39,7 +39,6 @@ export default Controller.extend({
 
   featureFlags: reads('model.featureFlags'),
   account: reads('model.account'),
-  confirmationSent: false,
 
   scrollToAuth: equal('section', SECTION.AUTH),
   scrollToFeatures: equal('section', SECTION.FEATURES),
@@ -62,9 +61,11 @@ export default Controller.extend({
     return (!this.auth.currentUser.emails || this.auth.currentUser.emails.length === 0);
   }),
 
-  confirmationButtonClass: computed('userHasNoEmails', 'confirmationSent', function () {
-    if (this.confirmationSent || this.userHasNoEmails)
-      return 'button--white-and-teal disabled';
+  userConfirmedAt: reads('this.auth.currentUse.confirmedAt'),
+
+  confirmationButtonClass: computed('userHasNoEmails', function () {
+    if (this.userHasNoEmails) { return 'button--white-and-teal disabled'; }
+
     return 'button--white-and-teal';
   }),
 
@@ -98,8 +99,8 @@ export default Controller.extend({
       this.setPrivateInsights.perform(val);
     },
     sendConfirmationEmail() {
-      this.set('confirmationSent', true);
       const { id } = this.auth.currentUser;
+      this.flashes.success('The email has been sent. Please check your inbox and confirm your account.');
       this.api.get(`/auth/request_confirmation/${id}`, {'travisApiVersion': null});
     }
   },
