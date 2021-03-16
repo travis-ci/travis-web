@@ -61,7 +61,7 @@ export default Controller.extend({
     return (!this.auth.currentUser.emails || this.auth.currentUser.emails.length === 0);
   }),
 
-  userConfirmedAt: reads('this.auth.currentUse.confirmedAt'),
+  userConfirmedAt: reads('auth.currentUse.confirmedAt'),
 
   confirmationButtonClass: computed('userHasNoEmails', function () {
     if (this.userHasNoEmails) { return 'button--white-and-teal disabled'; }
