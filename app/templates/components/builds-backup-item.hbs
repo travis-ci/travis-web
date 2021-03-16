@@ -1,0 +1,19 @@
+<div class="two-line">
+  <div class="row-item build-info">
+    <h2>
+      <SvgImage @name="icon-download" @class="icon--m" />
+      {{this.build.file_name}}
+    </h2>
+  </div>
+  <div class="row-item download">
+    <button class="download-export" onclick={{action "downloadExport"}}>download</button>
+  </div>
+</div>
+<div class="two-line actions">
+  <h3 class="row-item request">
+    <SvgImage @name="icon-calendar" @class="icon" />
+    <time class="label-align" datetime={{this.build.created_at}}>
+      {{format-time this.build.created_at}}
+    </time>
+  </h3>
+</div>

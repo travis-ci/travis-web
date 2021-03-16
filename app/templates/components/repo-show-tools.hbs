@@ -31,12 +31,22 @@
       </LinkTo>
     </li>
   {{/if}}
-  {{#if (and this.displayTriggerBuildLink this.canOwnerBuild)}}
+  {{#if (and this.displayTriggerBuildLink this.canOwnerBuild (not this.userRoMode))}}
     <li>
       <button
         type="button"
         class="trigger-build-anchor"
         onclick={{action "triggerBuildModal"}}
+      >
+        Trigger build
+      </button>
+    </li>
+  {{else if this.userRoMode}}
+    <li>
+      <button
+        type="button"
+        class="trigger-build-anchor"
+        disabled="disabled"
       >
         Trigger build
       </button>

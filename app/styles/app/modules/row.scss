@@ -115,6 +115,10 @@
     white-space: nowrap;
     padding-left: 1em;
 
+    &.download {
+      padding-left: 22px;
+    }
+
     a:hover,
     a:active,
     a:focus {

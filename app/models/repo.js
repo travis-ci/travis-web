@@ -223,6 +223,7 @@ const Repo = VcsEntity.extend({
       let eventTypes = ['push', 'api', 'cron'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
     });
+
     return this._buildObservableArray(builds);
   }),
 
@@ -306,7 +307,30 @@ const Repo = VcsEntity.extend({
   unsubscribe: task(function* () {
     yield this.api.delete(this.emailSubscriptionUrl);
     yield this.reload();
-  }).drop()
+  }).drop(),
+
+  buildBackups: reads('fetchBuildBackups.lastSuccessful.value'),
+  buildBackupsLast: false,
+
+  hasBuildBackups: reads('fetchInitialBuildBackups.lastSuccessful.value'),
+
+  fetchInitialBuildBackups: task(function* () {
+    const url = `/v3/build_backups?repository_id=${this.id}&offset=0&limit=1`;
+    const result = yield this.api.get(url);
+
+    return result && result.build_backups.length > 0;
+  }).keepLatest(),
+
+  fetchBuildBackups: task(function* () {
+    const url = `/v3/build_backups?repository_id=${this.id}&offset=${this.buildBackups ? this.buildBackups.length : 0}`;
+    const result = yield this.api.get(url);
+    if (result && result['@pagination']) {
+      this.set('buildBackupsLast', result['@pagination'].is_last);
+    }
+    const oldBackups = this.buildBackups || [];
+
+    return result ? oldBackups.concat(result.build_backups) : [];
+  }).keepLatest(),
 });
 
 Repo.reopenClass({

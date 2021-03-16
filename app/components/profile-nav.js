@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import {
+  alias,
   reads,
   or,
   and,
@@ -18,12 +19,16 @@ const { billingEndpoint } = config;
 export default Component.extend({
   tagName: '',
 
+  auth: service(),
   accounts: service(),
   features: service(),
   flashes: service(),
 
   activeModel: null,
   model: reads('activeModel'),
+
+  currentUser: alias('auth.currentUser'),
+  userRoMode: reads('currentUser.roMode'),
 
   user: reads('accounts.user'),
   organizations: reads('accounts.organizations'),
@@ -66,6 +71,10 @@ export default Component.extend({
 
   didRender() {
     const allowance = this.model.allowance;
+
+    if (this.userRoMode) {
+      this.flashes.custom('flashes/read-only-mode', {}, 'warning');
+    }
 
     if (!allowance || (allowance && allowance.get('subscriptionType') !== 2))
       return;

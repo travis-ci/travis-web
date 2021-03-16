@@ -1359,6 +1359,7 @@
     border-bottom: 1px solid $asphalt-grey;
     padding-bottom: 0;
     transition: color 200ms ease, border 200ms ease;
+    cursor: pointer;
   }
 
   .repository-build-times {

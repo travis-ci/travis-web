@@ -4,6 +4,7 @@ import { alias, reads } from '@ember/object/computed';
 
 export default Component.extend({
   permissionsService: service('permissions'),
+  auth: service(),
   api: service(),
   flashes: service(),
 
@@ -14,6 +15,8 @@ export default Component.extend({
   dropupIsOpen: false,
 
   canOwnerBuild: reads('repo.canOwnerBuild'),
+  currentUser: alias('auth.currentUser'),
+  userRoMode: reads('currentUser.roMode'),
   currentBuild: alias('repo.currentBuild'),
 
   displayMenuTofu: alias('repo.permissions.create_request'),

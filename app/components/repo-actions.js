@@ -60,6 +60,7 @@ export default Component.extend({
   }),
 
   canOwnerBuild: reads('repo.canOwnerBuild'),
+  userRoMode: reads('user.roMode'),
 
   showPriority: true,
   showPrioritizeBuildModal: false,

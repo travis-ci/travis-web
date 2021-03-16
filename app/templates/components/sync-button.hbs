@@ -9,6 +9,13 @@
       Syncing from {{vcs-name this.user.vcsType}}
     </span>
   </div>
+{{else if this.user.roMode}}
+    <button class="button" disabled="disabled">
+      <SvgImage @name="icon-restart" @class="icon white" />
+        <span class="label-align">
+          Sync account
+        </span>
+    </button>
 {{else}}
   <button
     data-test-start-sync-button
