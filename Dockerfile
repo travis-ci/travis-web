@@ -2,6 +2,13 @@ FROM ruby:2.4
 
 LABEL maintainer Travis CI GmbH <support+travis-web-docker-images@travis-ci.com>
 
+RUN ( \
+   apt-get update ; \
+   # update to deb 10.8
+   apt-get upgrade -y ; \
+   rm -rf /var/lib/apt/lists/* \
+)
+
 RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
