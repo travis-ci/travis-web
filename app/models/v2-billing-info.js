@@ -12,6 +12,7 @@ export default Model.extend({
   country: attr('string'),
   vatId: attr('string'),
   billingEmail: attr('string'),
+  hasLocalRegistration: attr('boolean'),
 
   subscription: belongsTo('v2-subscription')
 });

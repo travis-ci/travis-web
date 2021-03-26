@@ -1,10 +1,15 @@
 import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
-import { countries, zeroVatThresholdCountries, nonZeroVatThresholdCountries } from 'travis/utils/countries';
+import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
 
 export default Component.extend({
   countries,
+  states: computed('country', function () {
+    const { country } = this;
+
+    return states[country];
+  }),
 
   billingInfo: null,
 
@@ -21,6 +26,12 @@ export default Component.extend({
     return !!country && nonZeroVatThresholdCountries.includes(country);
   }),
 
+  isStateCountry: computed('country', function () {
+    const { country } = this;
+
+    return !!country && stateCountries.includes(country);
+  }),
+
   isVatMandatory: computed('isNonZeroVatThresholdCountry', 'hasLocalRegistration', function () {
     const { isNonZeroVatThresholdCountry, isZeroVatThresholdCountry, hasLocalRegistration } = this;
     return isZeroVatThresholdCountry || (isNonZeroVatThresholdCountry ? hasLocalRegistration : false);
@@ -32,5 +43,7 @@ export default Component.extend({
     const { country, isNonZeroVatThresholdCountry, hasLocalRegistration } = this;
     return country && (isNonZeroVatThresholdCountry ? hasLocalRegistration : true);
   }),
+
+  isStateMandatory: reads('isStateCountry'),
 
 });
