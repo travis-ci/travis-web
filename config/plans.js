@@ -78,7 +78,7 @@ const plans = [
     private_credits: 0,
     public_credits: 0,
     users: 0,
-    price: 'Request a Quote',
+    price: 0,
     name: 'Custom',
     currency,
     is_enabled: true,
