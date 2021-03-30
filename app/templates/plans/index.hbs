@@ -165,18 +165,18 @@
                   <UiKit::Box @margin={{hash bottom=12}} @textAlign={{hash base='center'}}>
                     <UiKit::Box @margin={{hash bottom=10}}>
                       <UiKit::Text @tag='h3' @size={{if plan.isDefault '2xl' 'lg'}} @weight={{if plan.isDefault 'bold' 'semibold'}}>
-                        {{plan.name}} Plan
+                        {{plan.name}} 
                       </UiKit::Text>
                     </UiKit::Box>
 
                     <UiKit::Box @margin={{hash bottom=5}}>
                       <UiKit::Text @tag='h3' @size='2xl' @weight='semibold'>
                         <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs' @margin={{hash top=-5}} @display='block'>
-                          Starting at
+                          Request a quote
                         </UiKit::Text>
                         {{format-currency plan.price floor='true'}}
                         <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
-                          / year
+                          
                         </UiKit::Text>
                       </UiKit::Text>
                     </UiKit::Box>
@@ -189,9 +189,9 @@
                       </UiKit::Box>
                       <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
                         {{#if plan.isFree}}
-                          {{concat plan.privateCredits ' Credits'}}
+                          Enterprise-Level Power 
                         {{else}}
-                          Adjustable credits amount
+                          Enterprise-Level Power
                         {{/if}}
                       </UiKit::Text>
                     </UiKit::Box>
@@ -202,11 +202,10 @@
                       </UiKit::Box>
                       <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
                         {{#if (eq plan.users 0)}}
-                          Unlimited
+                          In the Cloud or On-Prem
                         {{else}}
-                          {{concat 'Up to ' plan.users}}
                         {{/if}}
-                        unique users
+                      
                       </UiKit::Text>
                     </UiKit::Box>
 
@@ -215,7 +214,7 @@
                         <SvgImage @name='stage-passed-green' @class="icon" />
                       </UiKit::Box>
                       <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                        Private &amp; Open-Source Repos
+                        Ability to Pay for Usage
                       </UiKit::Text>
                     </UiKit::Box>
 
@@ -224,18 +223,18 @@
                         <SvgImage @name='stage-passed-green' @class="icon" />
                       </UiKit::Box>
                       <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                        Windows, Linux, MacOS, FreeBSD
+                        Customized Monthly or Annual Billing
                       </UiKit::Text>
                     </UiKit::Box>
                   </UiKit::Box>
 
                   <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
-                    <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
-                      {{#if plan.isFree}}
-                        Start building for free
-                      {{else}}
-                        Get started
-                      {{/if}}
+                  <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
+                    {{#if plan.isFree}}
+                      Get a quote 
+                    {{else}}
+                      Getting started
+                    {{/if}}
                     </UiKit::Button>
                   </UiKit::Box>
                 </UiKit::Box>
@@ -289,25 +288,18 @@
     </UiKit::Grid>
   </UiKit::Box>
 
-  {{!-- Enterprise section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-enterprise-section="true">
-    <UiKit::Grid
-      @md={{1}}
-      @lg={{2}}
-      @align='center'
-      @gap={{2}}
-      @justify='between'
-      as |grid|
-    >
+  {{!-- Contact form section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-contact-section="true">
+    <UiKit::Grid  @lg={{2}} @align='center' @gap={{4}} @justify='between' as |grid|>
       <grid.item>
         <UiKit::Box
-          @maxWidth={{hash base='full' md='xl'}}
+          @maxWidth={{hash base='full' sm='md'}}
           @padding={{hash y=4}}
-          @margin={{hash md=(hash x='auto') }}
           @textAlign={{hash base='center' lg='left'}}
+          @margin={{hash md=(hash x='auto') }}
         >
-          <UiKit::Text @tag='h2' @leading='md' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-            Travis CI Enterprise
+         <UiKit::Text @tag='h2' @leading='md' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Looking for a custom solution either in the cloud or on-prem?
           </UiKit::Text>
           <UiKit::Text @margin={{hash bottom=6}} @size='md' @leading='lg' @color='grey-concrete'>
            In the cloud, Travis CI Enterprise allows you to scale build infrastructure up and down based on demand. Whether you have 10 or 1000 developers, you’ll benefit from our experience building and operating a continuous integration service at scale.
@@ -340,31 +332,34 @@
 
   {{#if this.scrollToContact}}<ScrollHere />{{/if}}
 
-  {{!-- Contact form section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-contact-section="true">
-    <UiKit::Grid  @lg={{2}} @align='center' @gap={{4}} @justify='between' as |grid|>
+  {{!-- Enterprise section --}}
+
+   {{!-- Contact form section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-contact-section="true">
+    <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
       <grid.item>
         <UiKit::Box
           @maxWidth={{hash base='full' sm='md'}}
           @padding={{hash y=4}}
-          @textAlign={{hash base='center' lg='left'}}
-          @margin={{hash md=(hash x='auto') }}
+          @textAlign={{hash base='center' sm='left'}}
         >
           <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-            Looking for a custom solution either in the cloud or on-prem?
+            
           </UiKit::Text>
-          <UiKit::Text @color='grey-concrete' @leading='md'>
-            We can create a plan that's customized to your team's size and needs.
-            Just use this form to contact us!
+          <UiKit::Text>
+            
           </UiKit::Text>
         </UiKit::Box>
       </grid.item>
       <grid.item>
-        <SalesContactForm/>
+        <SalesContactForm
+          @referralSource={{this.referralSourceName}}
+          @onSuccess={{action 'contactSuccess'}}
+        />
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
-
+          
   {{!-- FAQ Section --}}
   <UiKit::Box @position={{hash type='relative'}} data-test-plans-page-faq-section="true">
     <UiKit::Box
