@@ -1,8 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { alias, reads } from '@ember/object/computed';
 
 export default Component.extend({
+  auth: service(),
   externalLinks: service(),
   features: service(),
   flashes: service(),
@@ -10,6 +12,8 @@ export default Component.extend({
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
+  currentUser: alias('auth.currentUser'),
+  userRoMode: reads('currentUser.roMode'),
 
   repoUrl: computed('repo.{ownerName,vcsName,vcsType}', function () {
     const owner = this.get('repo.ownerName');
@@ -44,6 +48,10 @@ export default Component.extend({
   didRender() {
     const repo = this.get('repo');
 
+    if (repo.hasBuildBackups === undefined) {
+      repo.fetchInitialBuildBackups.perform();
+    }
+
     if (!repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
       const isUser = repo.ownerType === 'user';
       const allowance = repo.get('allowance');
@@ -59,6 +67,8 @@ export default Component.extend({
       } else if (!allowance.get('userUsage')) {
         this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'warning');
       }
+    } else if (this.userRoMode) {
+      this.flashes.custom('flashes/read-only-mode', {}, 'warning');
     } else {
       this.flashes.removeCustomsByClassName('warning');
     }

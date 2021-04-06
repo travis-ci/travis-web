@@ -131,6 +131,10 @@ $dropdown-button-margin: -9px;
       color: white;
       background-color: $oxide-blue;
     }
+    &:disabled {
+      color: #9d9d9d;
+      cursor: not-allowed;
+    }
   }
 }
 

@@ -35,7 +35,7 @@
                 {{this.subscription.addonUsage.private.totalCredits}} private credits
             {{/if}}
             {{#if (and this.subscription.plan.hasCreditAddons this.subscription.plan.hasOSSCreditAddons)}}
-            , 
+            ,
             {{/if}}
             {{#if this.subscription.plan.hasOSSCreditAddons}}
                 {{this.subscription.addonUsage.public.totalCredits}} public credits
@@ -149,6 +149,10 @@
                 <p>
                   Linux, Windows, FreeBSD builds
                 </p>
+                {{else if (eq this.subscription.plan.planType 'hybrid annual')}}
+                  <p>
+                    Linux, Windows, FreeBSD builds
+                  </p>
                 {{else}}
                 <p>
                   Linux, Windows, macOS, FreeBSD builds

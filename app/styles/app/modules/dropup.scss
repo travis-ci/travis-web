@@ -73,6 +73,9 @@
       background: $oxide-blue;
       color: white;
     }
+    &:disabled {
+      color: $cement-grey;
+    }
   }
 
   @media #{$medium-up} {

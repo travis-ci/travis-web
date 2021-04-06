@@ -12,5 +12,6 @@ export default Model.extend({
   currency: attr('string'),
   isEnabled: attr('boolean'),
   isDefault: attr('boolean'),
+  isAnnual: attr('boolean'),
   isFree: equal('price', 0),
 });

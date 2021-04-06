@@ -328,6 +328,10 @@
         }
       }
 
+      .billing-annual-plans{
+        white-space: inherit;
+      }
+
       &--button {
         display: block;
         max-width: 120px;
@@ -1077,7 +1081,7 @@
     width: 100%;
     border-spacing: 0;
     margin-top: 10px;
-    thead 
+    thead
     {
       background-color: $ansi-white;
       tr
@@ -1355,6 +1359,7 @@
     border-bottom: 1px solid $asphalt-grey;
     padding-bottom: 0;
     transition: color 200ms ease, border 200ms ease;
+    cursor: pointer;
   }
 
   .repository-build-times {
@@ -1362,7 +1367,7 @@
     width: 100%;
     border-spacing: 0;
     margin-top: 85px;
-    thead 
+    thead
     {
       background-color: $ansi-white;
       tr
@@ -1473,7 +1478,7 @@
     width: 100%;
     border-spacing: 0;
     margin-top: 85px;
-    thead 
+    thead
     {
       background-color: $ansi-white;
       tr

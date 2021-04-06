@@ -140,11 +140,23 @@
                 <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
                 </button>
                 <ul class="dropup-list">
-                  {{#if this.canOwnerBuild}}
+                  {{#if (and this.canOwnerBuild (not this.userRoMode))}}
                     <li>
                       <button
                         title="Trigger a build on the default branch"
                         onclick={{action "triggerBuild"}}
+                      >
+                        <SvgImage @name="icon-restart" @class="icon" />
+                        <span class="label-align">
+                          Trigger a build
+                        </span>
+                      </button>
+                    </li>
+                  {{else if this.userRoMode}}
+                    <li>
+                      <button
+                        title="Trigger a build on the default branch"
+                        disabled="disabled"
                       >
                         <SvgImage @name="icon-restart" @class="icon" />
                         <span class="label-align">
@@ -178,11 +190,19 @@
           {{#if this.isTriggering}}
             <LoadingIndicator @inline={{true}}/>
           {{else}}
-            {{#if this.canOwnerBuild}}
+            {{#if (and this.canOwnerBuild (not this.userRoMode))}}
               <button
                 class="button--blue"
                 title="Trigger a build on the default branch"
                 onclick={{action "triggerBuild"}}
+              >
+                Trigger a build
+              </button>
+            {{else if this.userRoMode}}
+              <button
+                class="button--blue"
+                title="Trigger a build on the default branch"
+                disabled="disabled"
               >
                 Trigger a build
               </button>

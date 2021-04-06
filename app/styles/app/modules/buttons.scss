@@ -128,6 +128,11 @@
   &:active {
     background-color: darken($oxide-blue, 10);
   }
+  &:disabled {
+    background-color: $cement-grey;
+    border-color: $cement-grey;
+    cursor: not-allowed;
+  }
 }
 
 .button--white {
@@ -256,6 +261,10 @@
     border-color: $oxide-blue;
     color: $oxide-blue;
     text-decoration: none !important;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
   }
 }
 
