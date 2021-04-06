@@ -8,7 +8,6 @@ export default Component.extend({
   externalLinks: service(),
   features: service(),
   flashes: service(),
-  auth: service(),
 
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
