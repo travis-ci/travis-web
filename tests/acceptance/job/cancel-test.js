@@ -10,7 +10,7 @@ module('Acceptance | jobs/cancel', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = this.server.create('user', {login: 'travis-ci'});
+    const currentUser = this.server.create('user', {login: 'travis-ci', confirmed_at: Date.now()});
     this.server.create('allowance', {subscription_type: 1});
     signInUser(currentUser);
   });

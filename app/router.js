@@ -7,10 +7,13 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function () {
+  this.route('confirm-user', { path: '/confirm-user/:token' });
+  this.route('request-user-confirmation', { path: '/request-user-confirmation'});
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
     this.route('builds', { path: '/builds' });
   });
+
   this.route('features-tracing', { path: '/features/tracing', resetNamespace: true });
 
   this.route('getting_started');

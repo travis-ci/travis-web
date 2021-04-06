@@ -29,6 +29,7 @@ export const INSIGHTS_VIS_OPTIONS = [
 
 export default Controller.extend({
   features: service(),
+  api: service(),
   auth: service(),
   preferences: service(),
   flashes: service(),
@@ -54,6 +55,18 @@ export default Controller.extend({
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
     let repositories = this.repositories || [];
     return repositories.filter(repo => !repo.emailSubscribed);
+  }),
+
+  userHasNoEmails: computed('auth.currentUser.emails', function () {
+    return (!this.auth.currentUser.emails || this.auth.currentUser.emails.length === 0);
+  }),
+
+  userConfirmedAt: reads('auth.currentUser.confirmedAt'),
+
+  confirmationButtonClass: computed('userHasNoEmails', function () {
+    if (this.userHasNoEmails) { return 'button--white-and-teal disabled'; }
+
+    return 'button--white-and-teal';
   }),
 
   fetchRepositories: task(function* () {
@@ -84,6 +97,11 @@ export default Controller.extend({
   actions: {
     setInsightsVis(val) {
       this.setPrivateInsights.perform(val);
+    },
+    sendConfirmationEmail() {
+      const { id } = this.auth.currentUser;
+      this.flashes.success('The email has been sent. Please check your inbox and confirm your account.');
+      this.api.get(`/auth/request_confirmation/${id}`, {'travisApiVersion': null});
     }
   },
 });

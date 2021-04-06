@@ -27,6 +27,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     this.currentUser = this.server.create('user', {
       name: 'Ada Lovelace',
       login: 'adal',
+      confirmed_at: Date.now()
     });
 
     this.repo = this.server.create('repository', {

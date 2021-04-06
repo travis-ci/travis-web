@@ -51,7 +51,7 @@ export default Component.extend({
       repo.fetchInitialBuildBackups.perform();
     }
 
-    if (!repo.canOwnerBuild) {
+    if (!repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
       const isUser = repo.ownerType === 'user';
       const allowance = repo.get('allowance');
 
