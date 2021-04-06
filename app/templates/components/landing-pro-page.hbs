@@ -1,364 +1,478 @@
-<div class="landing-pro">
-  <div id="top" class="top landing-page">
-    <TopBar @landingPage={{true}} />
-  </div>
-  <FlashDisplay />
-  <main>
-    <section class="landing-hero-section section--grey">
-      <div class="landing-hero-container">
-        <div class="landing-hero-text">
-          <h1>
-            The simplest way to test and deploy your projects.
-          </h1>
-          <p>
-            Easily sync your projects with Travis CI and you'll be testing your code in minutes.
-          </p>
-          <p class="mb-10">
-            Start building for free!
-          </p>
-          <div class="cta-container">
+<TravisLayout @layoutName="layouts/center-max" class="tailwind-overrides">
 
-            <LinkTo @route='signup' class='hero-button cta-index-page'>Sign up</LinkTo>
+  {{!-- Header section --}}
+  <UiKit::Box
+    @tag='section'
+    @margin={{hash top=3 bottom=16}}
+    @textAlign='center'
+    data-test-plans-page-header-section="true"
+  >
+    <UiKit::Text @tag='h1' @variant='h1' data-test-plans-page-header-title="true">
+      Built for every team
+    </UiKit::Text>
+    <UiKit::Text data-test-plans-page-header-body="true" @color='grey-concrete' @weight='normal'>
+      Set up your first project in just one minute.
+      <br />
+      No credit card required for Free Plan!
+    </UiKit::Text>
+    </UiKit::Box>
 
-            <p class="mt-10">
-              Already have an account? <LinkTo @route='signin' class="signin-link">Sign in</LinkTo>
-            </p>
-          </div>
-        </div>
-        <div class="landing-hero-image">
-          <img src="../images/pro-landing/hero-header.png" />
-        </div>
-      </div>
-    </section>
-    {{#if this.multiVcs.enableBitbucketLogin}}
-      <section class="section-bitbucket section--white section--center">
-        <div class="inner">
-          <h2 class="text-5xl text-grey-800 mb-8">
-            Now test your
-            <SvgImage @name='bitbucket-full' @width={{220}} />
-            projects with Travis CI
-          </h2>
-          <div class="mb-10">
-            <p class="text-lg inline-block max-w-2xl">
-              Check out our new feature - now you can sign up to Travis CI using your Bitbucket account
-              and connect your repositories!
-            </p>
-          </div>
+  {{!-- Product section --}}
+    <UiKit::Box
+     @tag='section'
+     @margin={{hash top=0 bottom=4}}
+     @textAlign='center'
+    >
+      <UiKit::Text @tag='h3' @size='3xl' @weight='semibold'>
+         
+      </UiKit::Text>
+    </UiKit::Box>
 
-          <LinkTo @route='integration.bitbucket' class="hero-button cta-index-page">
-            Learn More
-          </LinkTo>
-        </div>
-      </section>
-      <div class="spacer"></div>
-    {{/if}}
-    <section class="section-companies section--white section--center">
-      <div class="inner">
-        <h3 class="customers-header">
-          Travis CI is trusted by great companies
-        </h3>
-        <ul class="list--customers">
-          <li>
-            <ExternalLinkTo @href="https://www.zendesk.com/" @title="Zendesk" class="customer">
-              <img src="../images/svg/zendesk.svg" class="customer-zendesk" />
-            </ExternalLinkTo>
-          </li>
-          <li>
-            <ExternalLinkTo @href="https://www.engineyard.com/" @title="Engine Yard" class="customer">
-              <img src="../images/svg/engineyard.svg" class="customer-engineyard" />
-            </ExternalLinkTo>
-          </li>
-          <li>
-            <ExternalLinkTo @href="http://www.heroku.com/" @title="Heroku" class="customer">
-              <img src="../images/svg/customer-logos-heroku.svg" class="customer-heroku" />
-            </ExternalLinkTo>
-          </li>
-          <li>
-            <ExternalLinkTo @href="http://www.bittorrent.com/" @title="BitTorrent" class="customer">
-              <img src="../images/svg/customer-logos-bittorrent.svg" class="customer-bittorrent" />
-            </ExternalLinkTo>
-          </li>
-          <li>
-            <ExternalLinkTo @href="https://moz.com/" @title="moz" class="customer">
-              <img src="../images/svg/moz.svg" class="customer-moz" />
-            </ExternalLinkTo>
-          </li>
-        </ul>
-      </div>
-    </section>
-    <div class="spacer"></div>
-    <section class="section--feature section--white">
-      <h2 class="h2--green" style="text-align:center">
-        Features to help you get the job done
-      </h2>
-      <div class="section-feature-container">
-        <div class="section-list">
-          <ul class="list--features">
-            <li>
-              <div class="feature-image-container pt-6 text-center">
-                <SvgImage @name='cloud' @width={{55}} />
-              </div>
-              <h3 class="h3">
-                Get set up in seconds
-              </h3>
-              <p class="text-small">
-                Login with your Cloud Platform, tell Travis CI to test a project, and then push. Could it be any simpler!
-              </p>
-            </li>
-            <li>
-              <div class="feature-image-container">
-                <img src="../images/landing-page/platform.svg" alt="" />
-              </div>
-              <h3 class="h3">
-                Supports your platform
-              </h3>
-              <p class="text-small">
-                Many databases and services are pre-installed and can be enabled in your build configuration.
-              </p>
-            </li>
-            <li>
-              <div class="feature-image-container">
-                <img src="../images/landing-page/PR.svg" alt="" />
-              </div>
-              <h3 class="h3">
-                Test your pull requests
-              </h3>
-              <p class="text-small">
-                Make sure every Pull Request to your project is tested before it's merged.
-              </p>
-            </li>
-            <li>
-              <div class="feature-image-container">
-                <img src="../images/landing-page/heroku.svg" alt="" />
-              </div>
-              <h3 class="h3">
-                Deploy anywhere
-              </h3>
-              <p class="text-small">
-                Updating staging or production as soon as your tests pass has never been easier!
-              </p>
-            </li>
-          </ul>
-        </div>
-        <div class="list-check-container">
-          <ul class="list-check">
-            <li>
-              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Quick setup
-            </li>
-            <li>
-              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Live build views
-            </li>
-            <li>
-              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Pull request support
-            </li>
-            <li>
-              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Pre-installed database services
-            </li>
-            <li>
-              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Auto deployments on passing builds
-            </li>
-            <li>
-              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Clean VMs for every build
-            </li>
-            <li>
-              <img src="../images/svg/stage-passed.svg" class="checkmark" /> Mac, Linux, and iOS support
-            </li>
-            <li>
-              <SvgImage @name='stage-passed' @class='checkmark' /> Connect with Github, Bitbucket and more
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    <div class="spacer"></div>
-    <section class="section-opensource section--white section--center">
-      <h2>
-        Testing your open source<br />
-        projects is always 100% free!
-      </h2>
-      <p>
-        <em>Seriously. Always.</em>
-        We like to think of it as our way of giving<br />
-        back to a community that gives us so much as well.
-      </p>
-    </section>
-    <section class="section-branch-pr section--grey section--center">
-      <h2 class="build-flow-header">
-        Branch build flow
-      </h2>
-      <div class="branch-pr-container">
-        <div class="build-flow-image"></div>
-        <div class="build-steps-container">
-          <p class="build-step-1 build-steps">
-            Push your code
-            to your cloud platform
-          </p>
-          <p class="build-step-2 build-steps">
-            Travis CI is triggered<br />
-            to build
-          </p>
-          <p class="build-step-3 build-steps">
-            Hooray!<br />
-            Your build passes!
-          </p>
-          <p class="build-step-4 build-steps">
-            Travis CI deploys<br />
-            to Heroku
-          </p>
-          <p class="build-step-5 build-steps">
-            Travis CI tells your<br />
-            team all is well
-          </p>
-        </div>
-      </div>
-      <h2 class="build-flow-header">
-        Pull request build flow
-      </h2>
-      <div class="branch-pr-container">
-        <div class="build-pr-image"></div>
-        <div class="build-steps-container">
-          <p class="build-step-6 build-steps">
-            A pull request<br />
-            is created
-          </p>
-          <p class="build-step-7 build-steps">
-            Travis CI is notified
-            the build is mergeable
-          </p>
-          <p class="build-step-8 build-steps">
-            Hooray!<br />
-            Your build passes!
-          </p>
-          <p class="build-step-9 build-steps">
-            Travis CI updates<br />
-            the PR that it passed
-          </p>
-          <p class="build-step-10 build-steps">
-            Merge in
-            the PR goodness
-          </p>
-        </div>
-      </div>
-    </section>
-    <section class="section-languages section--white section--center">
-      <div class="inner">
-        <div class="section-languages-container">
-          <ul class="list--languages">
-            <li style="padding-bottom: 20px;">
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/clojure/"
-                @title="Read about Clojure at Travis CI"
+  <UiKit::Box @tag='section' @margin={{hash bottom=16}} data-test-plans-page-product-section="true" @margin={{hash bottom=16}}>
+    <UiKit::Box @tag='div'>
+      <UiKit::Grid
+        @base={{1}}
+        @md={{2}}
+        @xl={{4}}
+        data-test-plans-page-product-list="true"
+        as |grid|
+      >
+        {{#each plans as |plan|}}
+          {{#unless plan.isAnnual}}
+            <grid.item>
+              <UiKit::Box
+                @borderWidth={{hash all='sm'}}
+                @radius='lg'
+                @padding={{hash base=(hash y=8) lg=(hash y=(if plan.isDefault 12 4) )}}
+                @margin={{hash  base=(hash top=6 x=4) lg=(hash x=4 top=(if plan.isDefault 0 8) )}}
               >
-                <img src="../images/landing-page/lang-clojure.svg" alt="clojure logo" class="language" /> Clojure
-              </ExternalLinkTo>
-            </li>
-            <li>
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/javascript-with-nodejs/"
-                @title="Read about NodeJS at Travis CI"
-              >
-                <img src="../images/landing-page/lang-node.svg" alt="node logo" class="lang-node language" /> Node
-              </ExternalLinkTo>
-            </li>
-            <li>
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/php/"
-                @title="Read about PHP at Travis CI"
-              >
-                <img src="../images/landing-page/lang-php.svg" alt="php logo" class="lang-php language" /> PHP
-              </ExternalLinkTo>
-            </li>
-            <li>
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/objective-c/"
-                @title="Read about ObjectiveC at Travis CI"
-              >
-                <img src="../images/landing-page/lang-xcode.svg" alt="xcode logo" class="lang-xcode language" /> Xcode
-              </ExternalLinkTo>
-            </li>
-            <li style="padding-bottom: 20px;">
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/ruby/"
-                @title="Read about Ruby at Travis CI"
-              >
-                <img src="../images/landing-page/lang-ruby.svg" alt="ruby logo" class="lang-ruby language" /> Ruby
-              </ExternalLinkTo>
-            </li>
-            <li>
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/python/"
-                @title="Read about Python at Travis CI"
-              >
-                <img src="../images/landing-page/lang-python.svg" alt="python logo" class="lang-python language" /> Python
-              </ExternalLinkTo>
-            </li>
-            <li style="padding-bottom: 20px;">
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/java/"
-                @title="Read about Java at Travis CI"
-              >
-                <img src="../images/landing-page/lang-java.svg" alt="java logo" class="lang-java language" /> Java
-              </ExternalLinkTo>
-            </li>
-            <li>
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/erlang/"
-                @title="Read about Erlang at Travis CI"
-              >
-                <img src="../images/landing-page/lang-erlang.svg" alt="erlang logo" class="lang-erlang language" /> Erlang
-              </ExternalLinkTo>
-            </li>
-            <li>
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/go/"
-                @title="Read about Go at Travis CI"
-              >
-                <img src="../images/landing-page/lang-go.svg" alt="go logo" class="lang-go language" /> Go
-              </ExternalLinkTo>
-            </li>
-            <li>
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/scala/"
-                @title="Read about Scala at Travis CI"
-              >
-                <img src="../images/landing-page/lang-scala.svg" alt="scala logo" class="lang-scala language" /> Scala
-              </ExternalLinkTo>
-            </li>
-            <li>
-              <ExternalLinkTo
-                @href="http://docs.travis-ci.com/user/languages/perl/"
-                @title="Read about Perl at Travis CI"
-              >
-                <img src="../images/landing-page/lang-perl.svg" alt="perl logo" class="lang-perl language" /> Perl
-              </ExternalLinkTo>
-            </li>
-          </ul>
-        </div>
-        <div class="section-languages-text-container">
-          <h2>
-            We support over<br />
-            30 different languages.
-          </h2>
-          <p>
-            These are just a few of our most popular languages,
-            <ExternalLinkTo @href="http://docs.travis-ci.com/user/languages/" @title="Supported languages">
-              check out the full list in our docs
-            </ExternalLinkTo>.
-          </p>
-        </div>
-      </div>
-    </section>
-    <div class="spacer"></div>
-    <section class="section-start-building section--grey section--center">
-      <p class="get-started">
-        So many great features, so let's get you started.
-      </p>
-      <p class="run-test">
-        Run your tests with Travis CI
-      </p>
-      <LinkTo @route='signup' class="start-building-button cta-index-page">
-        Start building now
-      </LinkTo>
-    </section>
-  </main>
-</div>
+                <UiKit::Box @margin={{hash bottom=12}} @textAlign={{hash base='center'}}>
+                  <UiKit::Box @margin={{hash bottom=10}}>
+                    <UiKit::Text @tag='h3' @size={{if plan.isDefault '2xl' 'lg'}} @weight={{if plan.isDefault 'bold' 'semibold'}}>
+                      {{plan.name}} Plan
+                    </UiKit::Text>
+                  </UiKit::Box>
+
+                  <UiKit::Box @margin={{hash bottom=5}}>
+                    <UiKit::Text @tag='h3' @size='2xl' @weight='semibold'>
+                      {{#if plan.isFree}}
+                        Free
+                      {{else}}
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs' @margin={{hash top=-5}} @display='block'>
+                          Starting at
+                        </UiKit::Text>
+                        {{format-currency plan.price floor='true'}}
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
+                          / month or 
+                          
+                        </UiKit::Text>
+                        
+                        {{format-currency plan.price_annual floor='true'}}
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
+                          / year
+                        </UiKit::Text>
+                      {{/if}}
+                    </UiKit::Text>
+                  </UiKit::Box>
+                </UiKit::Box>
+
+                <UiKit::Box @padding={{hash x=10}} @margin={{hash bottom=12}}>
+                  <UiKit::Box @margin={{hash bottom=5}}>
+                    <UiKit::Box @display='inline-block' @width={{3}}>
+                      <SvgImage @name='stage-passed-green' @class="icon" />
+                    </UiKit::Box>
+                    <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                      {{#if plan.isFree}}
+                        {{concat plan.privateCredits ' Credits'}}   
+                        {{else}}
+                        Credits based usage          
+                      {{/if}}
+                    </UiKit::Text>
+                  </UiKit::Box>
+                  <UiKit::Box @margin={{hash bottom=5}}>
+                    <UiKit::Box @display='inline-block' @width={{3}}>
+                      <SvgImage @name='stage-passed-green' @class="icon" />
+                    </UiKit::Box>
+                    <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                      Private &amp; Open-Source Repos
+                    </UiKit::Text>
+                  </UiKit::Box>
+
+                  <UiKit::Box>
+                    <UiKit::Box @display='inline-block' @width={{3}}>
+                      <SvgImage @name='stage-passed-green' @class="icon" />
+                    </UiKit::Box>
+                    <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                      Windows, Linux, MacOS, FreeBSD
+                    </UiKit::Text>
+                  </UiKit::Box>
+                </UiKit::Box>
+
+                <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
+                  <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
+                    {{#if plan.isFree}}
+                      Start building for free
+                    {{else}}
+                      Get started
+                    {{/if}}
+                  </UiKit::Button>
+                </UiKit::Box>
+              </UiKit::Box>
+            </grid.item>
+          {{/unless}}
+        {{/each}}
+      </UiKit::Grid>
+    </UiKit::Box>
+  </UiKit::Box>
+
+    <UiKit::Box
+     @tag='section'
+     @margin={{hash top=0 bottom=0}}
+     @textAlign='center'
+    >
+      <UiKit::Text @tag='h3' @size='3xl' @weight='semibold'>
+      
+      </UiKit::Text>
+    </UiKit::Box>
+
+    <UiKit::Box @tag='section' @margin={{hash bottom=16}} @margin={{hash bottom=16}}>
+      <UiKit::Box @tag='div'>
+        <UiKit::Grid
+          @base={{1}}
+          @md={{2}}
+          @xl={{4}}
+          data-test-plans-page-product-list="true"
+          as |grid|
+        >
+          {{#each plans as |plan|}}
+            {{#if plan.isAnnual }}
+              <grid.item>
+                <UiKit::Box
+                  @borderWidth={{hash all='sm'}}
+                  @radius='lg'
+                  @padding={{hash base=(hash y=8) lg=(hash y=(if plan.isDefault 12 4) )}}
+                  @margin={{hash  base=(hash top=6 x=4) lg=(hash x=4 top=(if plan.isDefault 0 8) )}}
+                >
+                  <UiKit::Box @margin={{hash bottom=12}} @textAlign={{hash base='center'}}>
+                    <UiKit::Box @margin={{hash bottom=10}}>
+                      <UiKit::Text @tag='h3' @size={{if plan.isDefault '2xl' 'lg'}} @weight={{if plan.isDefault 'bold' 'semibold'}}>
+                        {{plan.name}} 
+                      </UiKit::Text>
+                    </UiKit::Box>
+
+                    <UiKit::Box @margin={{hash bottom=5}}>
+                      <UiKit::Text @tag='h3' @size='2xl' @weight='semibold'>
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs' @margin={{hash top=-5}} @display='block'>
+                          Request a quote
+                        </UiKit::Text>
+                        {{format-currency plan.price floor='true'}}
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
+                          
+                        </UiKit::Text>
+                      </UiKit::Text>
+                    </UiKit::Box>
+                  </UiKit::Box>
+
+                  <UiKit::Box @padding={{hash x=10}} @margin={{hash bottom=12}}>
+                    <UiKit::Box @margin={{hash bottom=5}}>
+                      <UiKit::Box @display='inline-block' @width={{3}}>
+                        <SvgImage @name='stage-passed-green' @class="icon" />
+                      </UiKit::Box>
+                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                        {{#if plan.isFree}}
+                          Enterprise-Level Power 
+                        {{else}}
+                          Enterprise-Level Power
+                        {{/if}}
+                      </UiKit::Text>
+                    </UiKit::Box>
+
+                    <UiKit::Box @margin={{hash bottom=5}}>
+                      <UiKit::Box @display='inline-block' @width={{3}}>
+                        <SvgImage @name='stage-passed-green' @class="icon" />
+                      </UiKit::Box>
+                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                        {{#if (eq plan.users 0)}}
+                          In the Cloud or On-Prem
+                        {{else}}
+                        {{/if}}
+                      
+                      </UiKit::Text>
+                    </UiKit::Box>
+
+                    <UiKit::Box @margin={{hash bottom=5}}>
+                      <UiKit::Box @display='inline-block' @width={{3}}>
+                        <SvgImage @name='stage-passed-green' @class="icon" />
+                      </UiKit::Box>
+                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                        Ability to Pay for Usage
+                      </UiKit::Text>
+                    </UiKit::Box>
+
+                    <UiKit::Box>
+                      <UiKit::Box @display='inline-block' @width={{3}}>
+                        <SvgImage @name='stage-passed-green' @class="icon" />
+                      </UiKit::Box>
+                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
+                        Customized Monthly or Annual Billing
+                      </UiKit::Text>
+                    </UiKit::Box>
+                  </UiKit::Box>
+
+                  <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
+                  <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
+                    {{#if plan.isFree}}
+                      Get a quote 
+                    {{else}}
+                      Getting started
+                    {{/if}}
+                    </UiKit::Button>
+                  </UiKit::Box>
+                </UiKit::Box>
+              </grid.item>
+            {{/if}}
+          {{/each}}
+        </UiKit::Grid>
+      </UiKit::Box>
+    </UiKit::Box>
+
+
+{{!-- Open Source Section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-oss-section="true">
+    <UiKit::Grid
+      @md={{1}}
+      @lg={{2}}
+      @align='center'
+      @gap={{2}}
+      @justify='between'
+      as |grid|
+    >
+      <grid.item>
+        <UiKit::Box
+          @margin={{hash x='auto'}}
+          @maxWidth='xs'
+          @padding={{hash base=(hash y=4)}}
+        >
+          <SvgImage @name='always-free' @width='100%'/>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item>
+        <UiKit::Box
+          @maxWidth={{hash base='full' md='xl'}}
+          @padding={{hash y=4}}
+          @margin={{hash md=(hash x='auto') }}
+          @textAlign={{hash base='center' lg='left'}}
+        >
+          <UiKit::Text @tag='h2' @leading='md' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Free for Open Source
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=8}} @size='md' @leading='lg' @color='grey-concrete'>
+            Free for open source. We love the Open Source Community, and to show how much we love it,
+            upon validated request placed with our Support Team you may receive free OSS credits for your public builds.
+          </UiKit::Text>
+
+        </UiKit::Box>
+      </grid.item>
+      {{#if this.scrollToEnterpriseSection}}
+        <ScrollHere />
+      {{/if}}
+    </UiKit::Grid>
+  </UiKit::Box>
+
+  {{!-- Contact form section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-contact-section="true">
+    <UiKit::Grid  @lg={{2}} @align='center' @gap={{4}} @justify='between' as |grid|>
+      <grid.item>
+        <UiKit::Box
+          @maxWidth={{hash base='full' sm='md'}}
+          @padding={{hash y=4}}
+          @textAlign={{hash base='center' lg='left'}}
+          @margin={{hash md=(hash x='auto') }}
+        >
+         <UiKit::Text @tag='h2' @leading='md' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Looking for a custom solution either in the cloud or on-prem?
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}} @size='md' @leading='lg' @color='grey-concrete'>
+           In the cloud, Travis CI Enterprise allows you to scale build infrastructure up and down based on demand. Whether you have 10 or 1000 developers, you’ll benefit from our experience building and operating a continuous integration service at scale.
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}} @size='md' @leading='lg' @color='grey-concrete'>
+             Our on-premises product is perfect for companies who want to keep using the same features of Travis CI with additional on-site security needs. What works best on EC2 is easily possible on your own infrastructure as well.
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=8}} @size='md' @leading='lg' @color='grey-concrete'>
+            We can create a plan that’s customized to your team’s size and needs. Just use this form to contact us!
+          </UiKit::Text>
+
+          <ExternalLinkTo @href='https://enterprise.travis-ci.com/Travis.CI.Enterprise.Information.Sheet.pdf'>
+            <UiKit::Button @color='grey' @invert={{true}} data-test-plans-page-enterprise-button="true">
+              Travis CI Enterprise Fact Sheet
+            </UiKit::Button>
+          </ExternalLinkTo>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item>
+        <SalesContactForm
+          @referralSource={{this.referralSourceName}}
+          @onSuccess={{action 'contactSuccess'}}
+        />
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
+
+{{#if this.scrollToContact}}<ScrollHere />{{/if}}
+
+  {{!-- Enterprise section --}}
+
+   {{!-- Contact form section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-contact-section="true">
+    <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
+      <grid.item>
+        <UiKit::Box
+          @maxWidth={{hash base='full' sm='md'}}
+          @padding={{hash y=4}}
+          @textAlign={{hash base='center' sm='left'}}
+        >
+          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            
+          </UiKit::Text>
+          <UiKit::Text>
+            
+          </UiKit::Text>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item>
+        
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
+          
+  {{!-- FAQ Section --}}
+  <UiKit::Box @position={{hash type='relative'}} data-test-plans-page-faq-section="true">
+    <UiKit::Box
+      @color='white'
+      @layer='10'
+      @margin={{hash bottom=32}}
+      @position={{hash type='relative'}}
+    >
+      <UiKit::Text @tag='h2' @size='5xl' @weight='bold' @padding={{hash bottom=8}}>
+        Frequently asked questions
+      </UiKit::Text>
+
+      <UiKit::Grid
+        @base={{1}}
+        @lg={{2}}
+        data-test-plans-page-faq-list="true"
+        as |grid|
+      >
+        {{!-- FAQ set 1 --}}
+        <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 right=6 left=0)}}>
+          <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
+            Why don't you have a Trial period?
+          </UiKit::Text>
+          <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
+            New customers are assigned the Free plan by default.
+            You will be given 10,000 credits to try out the system.
+            Linux, Windows, macOS, FreeBSD builds all supported.
+          </UiKit::Text>
+        </grid.item>
+
+        <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 left=6 right=0)}}>
+            <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
+              Are there any restrictions on build time?
+            </UiKit::Text>
+            <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
+              A build has 120 minutes to run. Should your build take longer, you can split it up using a
+              <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='sm' @href={{buildMatrixUrl}}>build matrix</UiKit::Link>.
+            </UiKit::Text>
+        </grid.item>
+
+        {{!-- FAQ set 2 --}}
+        <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 right=6 left=0)}}>
+          <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
+            Can I pay annually?
+          </UiKit::Text>
+          <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
+            You most certainly can! And you get 1 month for free &mdash; 12 months for the price of 11!
+            Simply select the annual option when signing up for a subscription, or go to
+            <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='md' @href={{billingUrl}}>{{format-domain billingUrl}}</UiKit::Link>
+            if you want to switch your current plan to annual.
+            For more flexible, usage based Plans please <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
+          </UiKit::Text>
+        </grid.item>
+
+        <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 left=6 right=0)}}>
+            <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
+              Can I cancel anytime?
+            </UiKit::Text>
+            <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
+              Absolutely! You can manage your account on your billing page. Go to
+              <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' @href={{billingUrl}}>{{format-domain billingUrl}}</UiKit::Link>
+              and choose the account you want to cancel. Then switch to 'Free' Plan.
+            </UiKit::Text>
+        </grid.item>
+
+        {{!-- FAQ set 3 --}}
+        <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 right=6 left=0)}}>
+          <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
+            Am I able to upgrade my plan?
+          </UiKit::Text>
+          <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
+            Yes! We have many plans available for your concurrency needs. You can change your plan subscription at any time on the billing page or
+            <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
+            if you’re looking for something custom.
+          </UiKit::Text>
+        </grid.item>
+
+        <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 left=6 right=0)}}>
+            <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
+              Do the listed prices include VAT?
+            </UiKit::Text>
+            <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
+              Prices listed are excluding VAT, which will be added depending on origin (Germany and Europe). Make sure to have your company's
+              VAT ID ready when entering billing details to remove VAT!
+            </UiKit::Text>
+        </grid.item>
+
+        {{!-- FAQ set 4 --}}
+        <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 right=6 left=0)}}>
+          <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
+            Does every commit trigger a build composed of jobs?
+          </UiKit::Text>
+          <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
+            Every commit triggers a build composed of jobs by default.
+            With the new pricing system, job concurrency limits are defined by selected plan or are lifted to a very high threshold (custom usage based plans).
+            With the latter you will be able to run as many jobs at the same time as you would like.
+            All the builds will be executed as soon as possible with no real severe limitations.
+          </UiKit::Text>
+        </grid.item>
+
+        <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 left=6 right=0)}}>
+            <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=2}}>
+              Do you have plans for students?
+            </UiKit::Text>
+            <UiKit::Text @size='md' @color='grey-concrete'>
+              We most certainly do! You can find all details on
+              <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='sm' @href={{config.urls.education}}>
+                {{format-domain config.urls.education}}
+              </UiKit::Link>
+            </UiKit::Text>
+        </grid.item>
+      </UiKit::Grid>
+    </UiKit::Box>
+  </UiKit::Box>
+
+  {{!-- Final message section --}}
+  <UiKit::Box @tag='section' @textAlign='center' data-test-plans-page-message-section="true">
+    <UiKit::Box @margin={{hash bottom=6}}>
+      <UiKit::Text>
+        Have a question you don't see answered above?
+      </UiKit::Text>
+      <UiKit::Text>
+        Our support and sales teams are very happy to help.
+      </UiKit::Text>
+    </UiKit::Box>
+
+    <UiKit::Button {{on 'click' (action 'toggleContactScroll')}} data-test-plans-page-message-button="true">
+      Shoot us a Message
+    </UiKit::Button>
+  </UiKit::Box>
+</TravisLayout>
