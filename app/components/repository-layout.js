@@ -61,7 +61,7 @@ export default Component.extend({
         this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'warning');
       }
 
-      if (allowance.get('pendingUserLicenses')) {
+      if (allowance && allowance.get('pendingUserLicenses')) {
         this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'warning');
       } else if (!allowance.get('userUsage')) {
         this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'warning');
