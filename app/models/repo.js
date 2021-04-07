@@ -117,18 +117,19 @@ const Repo = VcsEntity.extend({
       return false;
     const isPro = this.get('features.proVersion');
     const enterprise = !!this.get('features.enterpriseVersion');
+    const roMode = this.get('owner').ro_mode || false;
 
     if (!isPro || enterprise) {
-      return true;
+      return !roMode;
     }
 
     const allowance = this.allowance;
     const isPrivate = this.private;
 
     if (allowance && allowance.subscriptionType === 1)
-      return true;
+      return !roMode;
     if (!allowance && !this.repoOwnerAllowance) {
-      return true;
+      return !roMode;
     }
     if (!allowance) {
       return false;
@@ -136,7 +137,7 @@ const Repo = VcsEntity.extend({
 
     const buildCredits = isPrivate ? allowance.privateRepos : allowance.publicRepos;
 
-    return buildCredits && allowance.userUsage;
+    return buildCredits && allowance.userUsage && !roMode;
   }),
 
   defaultBranch: belongsTo('branch', { async: false }),

@@ -140,7 +140,7 @@
                 <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
                 </button>
                 <ul class="dropup-list">
-                  {{#if (and this.canOwnerBuild (not this.userRoMode))}}
+                  {{#if (and this.canOwnerBuild (not this.ownerRoMode))}}
                     <li>
                       <button
                         title="Trigger a build on the default branch"
@@ -152,7 +152,7 @@
                         </span>
                       </button>
                     </li>
-                  {{else if this.userRoMode}}
+                  {{else if this.ownerRoMode}}
                     <li>
                       <button
                         title="Trigger a build on the default branch"
@@ -190,7 +190,7 @@
           {{#if this.isTriggering}}
             <LoadingIndicator @inline={{true}}/>
           {{else}}
-            {{#if (and this.canOwnerBuild (not this.userRoMode))}}
+            {{#if (and this.canOwnerBuild (not this.ownerRoMode))}}
               <button
                 class="button--blue"
                 title="Trigger a build on the default branch"
@@ -198,7 +198,7 @@
               >
                 Trigger a build
               </button>
-            {{else if this.userRoMode}}
+            {{else if this.ownerRoMode}}
               <button
                 class="button--blue"
                 title="Trigger a build on the default branch"
