@@ -9,7 +9,7 @@ const plans = [
     price: 0,
     name: 'Free',
     currency,
-    is_enabled: false,
+    is_enabled: true,
     is_default: false,
     is_annual: false,
   },
