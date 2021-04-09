@@ -801,6 +801,10 @@ export default function () {
     return schema.preferences.all();
   });
 
+  this.get('/v3/org/:org_id/preferences', function (schema) {
+    return schema.preferences.all();
+  });
+
   this.get('/v3/preference/:id', function (schema, request) {
     return schema.preferences.findBy({ name: request.params.id });
   });

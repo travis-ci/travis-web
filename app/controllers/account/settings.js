@@ -86,4 +86,9 @@ export default Controller.extend({
       this.setPrivateInsights.perform(val);
     }
   },
+
+  init() {
+    this._super(...arguments);
+    this.preferences.fetchPreferences.perform();
+  },
 });

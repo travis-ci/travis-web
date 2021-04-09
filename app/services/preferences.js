@@ -30,7 +30,7 @@ export default Service.extend({
 
   set(key, value, id = null, isOrganization = null) {
     const record = this.hash[key];
-    var options = {};
+    let options = {};
     if (isOrganization) {
       options.adapterOptions = { organization_id: id };
     }
