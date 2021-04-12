@@ -104,4 +104,9 @@ export default Controller.extend({
       this.api.get(`/auth/request_confirmation/${id}`, {'travisApiVersion': null});
     }
   },
+
+  init() {
+    this._super(...arguments);
+    this.preferences.fetchPreferences.perform();
+  },
 });
