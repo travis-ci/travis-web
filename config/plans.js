@@ -62,7 +62,7 @@ const plans = [
     currency,
     is_enabled: true,
     is_default: false,
-    is_annual: false,
+    is_annual: true,
   },
 ];
 
