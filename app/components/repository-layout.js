@@ -8,7 +8,7 @@ export default Component.extend({
   externalLinks: service(),
   features: service(),
   flashes: service(),
-
+  isProVersion: reads('features.proVersion'),
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
   currentUser: alias('auth.currentUser'),
