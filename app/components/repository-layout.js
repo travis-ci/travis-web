@@ -8,7 +8,7 @@ export default Component.extend({
   externalLinks: service(),
   features: service(),
   flashes: service(),
-
+  isProVersion: reads('features.proVersion'),
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
   currentUser: alias('auth.currentUser'),
@@ -51,22 +51,22 @@ export default Component.extend({
       repo.fetchInitialBuildBackups.perform();
     }
 
-    if (!repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
-      const isUser = repo.ownerType === 'user';
-      const allowance = repo.get('allowance');
+    const allowance = repo.get('allowance');
+    const ownerRoMode = repo.get('owner').ro_mode || false;
 
+    if (this.isProVersion && allowance && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
+      const isUser = repo.ownerType === 'user';
       if (repo.private) {
         this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: isUser }, 'warning');
       } else {
         this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'warning');
       }
-
       if (allowance.get('pendingUserLicenses')) {
         this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'warning');
       } else if (!allowance.get('userUsage')) {
         this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'warning');
       }
-    } else if (this.userRoMode) {
+    } else if (this.userRoMode && ownerRoMode) {
       this.flashes.custom('flashes/read-only-mode', {}, 'warning');
     } else {
       this.flashes.removeCustomsByClassName('warning');
