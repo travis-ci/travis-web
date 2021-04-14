@@ -249,6 +249,24 @@ const countriesMap = {
 
 export const countries = Object.values(countriesMap);
 
+export const states = {};
+states[countriesMap['CA']] = [
+  'Alberta',
+  'British Columbia',
+  'Manitoba',
+  'New Brunswick',
+  'Newfoundland and Labrador',
+  'Northwest Territories',
+  'Nova Scotia',
+  'Nunavut',
+  'Ontario',
+  'Prince Edward Island',
+  'Quebec',
+  'Saskatchewan',
+  'Yukon',
+];
+
+
 export const zeroVatThresholdCountries = [
   countriesMap['AL'],
   countriesMap['BH'],
@@ -271,6 +289,7 @@ export const nonZeroVatThresholdCountries = [
   countriesMap['BS'],
   countriesMap['BD'],
   countriesMap['BR'],
+  countriesMap['CA'],
   countriesMap['CR'],
   countriesMap['EG'],
   countriesMap['GH'],
@@ -282,4 +301,8 @@ export const nonZeroVatThresholdCountries = [
   countriesMap['RU'],
   countriesMap['SG'],
   countriesMap['ZA'],
+];
+
+export const stateCountries = [
+  countriesMap['CA'],
 ];
