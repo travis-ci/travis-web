@@ -95,7 +95,6 @@ module.exports = function (environment) {
       education: 'https://education.travis-ci.com',
       emailSupport: 'mailto:support@travis-ci.com',
       enterprise: 'https://enterprise.travis-ci.com',
-      imprint: 'https://docs.travis-ci.com/imprint.html',
       legal: 'https://ideracorp.com/legal/TravisCI',
       jobs: 'https://travisci.workable.com/',
       languages: 'https://docs.travis-ci.com/user/language-specific/',
