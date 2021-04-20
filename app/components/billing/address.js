@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { countries } from 'travis/utils/countries';
+import { countries, nonZeroVatThresholdCountries } from 'travis/utils/countries';
 
 export default Component.extend({
   countries,
@@ -13,6 +13,13 @@ export default Component.extend({
 
   editContact: task(function* () {
     try {
+      if (
+        nonZeroVatThresholdCountries.includes(this.subscription.billingInfo.country) &&
+        this.subscription.billingInfo.hasLocalRegistration === false
+      ) {
+        this.subscription.billingInfo.set('vatId', null);
+      }
+
       yield this.subscription.save();
       this.closeEditForms();
       this.flashes.clear();
