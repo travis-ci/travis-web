@@ -3,7 +3,7 @@ const currency = '$';
 const plans = [
   {
     id: 'free_plan',
-    private_credits: '10000',
+    private_credits: '10,000',
     public_credits: 0,
     users: 0,
     price: 0,
