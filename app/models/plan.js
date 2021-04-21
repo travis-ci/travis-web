@@ -14,4 +14,5 @@ export default Model.extend({
   isDefault: attr('boolean'),
   isAnnual: attr('boolean'),
   isFree: equal('price', 0),
+  price_annual: attr('number'),
 });
