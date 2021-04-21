@@ -20,7 +20,7 @@ GEM
       nokogiri (~> 1.8, >= 1.8.4)
     power_assert (0.4.1)
     puma (3.12.6)
-    rack (1.6.12)
+    rack (1.6.13)
     rack-mobile-detect (0.4.0)
       rack
     rack-protection (1.5.5)
