@@ -73,10 +73,9 @@ export default Model.extend({
         processed.remainingCredits += addon.current_usage.remaining;
         const validDate = Date.parse(addon.current_usage.valid_to);
         const purchaseDate = Date.parse(addon.current_usage.purchase_date);
-        processed.validDate = validDate < processed.validDate ? validDate : processed.validDate;
-        processed.purchaseDate = purchaseDate > processed.purchaseDate ? purchaseDate : processed.purchaseDate;
+        processed.validDate = validDate;
+        processed.purchaseDate = purchaseDate;
       }
-
       return processed;
     };
     const publicUsages = this.addons.reduce(addonReduce('credit_public'), {
