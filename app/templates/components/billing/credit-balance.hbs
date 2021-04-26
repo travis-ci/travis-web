@@ -47,7 +47,7 @@
     {{this.creditsAvailable}} available <span class='credits-bar-right'>{{this.creditsUsed}} used</span>
   </p>
   {{#if (not this.hideToggle)}}
-  <Billing::OssCreditToggle/>
+    <Billing::OssCreditToggle @account={{this.account}} />
   {{/if}}
 </div>
 <hr />

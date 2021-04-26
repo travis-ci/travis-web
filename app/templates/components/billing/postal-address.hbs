@@ -61,8 +61,28 @@
       </form.field>
     </div>
   </div>
+  {{#if this.isStateMandatory}}
+    <div class='form-elem-half-width inline-form-elem'>
+      <form.field
+        @label='State'
+        @required={{true}}
+        @showRequiredMark={{true}}
+        @value={{this.billingInfo.state}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.billingInfo.state)}}
+        as |Field|
+      >
+        <Field.select
+          @placeholder='Select state'
+          @options={{this.states}} as |state|
+        >
+          {{state}}
+        </Field.select>
+      </form.field>
+    </div>
+  {{/if}}
   {{#if this.showNonZeroVatConfirmation}}
-    <div class='flex justify-between items-center mb-16'>
+    <div class='flex justify-between items-center mb-8'>
       <div class='w-4/6 pr-2'>
         Is your company registered locally for VAT/GST?
       </div>
