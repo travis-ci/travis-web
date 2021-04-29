@@ -316,11 +316,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
 
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation to not be visible');
-    if (typeof config.githubApps.appName === 'string' && config.githubApps.appName.length > 0) {
-      assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/apps/travis-ci-testing/installations/new/permissions?suggested_target_id=1983', 'expected the management link to be organisation-scoped');
-    } else {
-      assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/organizations/org-login/settings/installations/1962', 'expected the management link to be organisation-scoped');
-    }
+    assert.equal(profilePage.manageGithubAppsLink.href, 'https://github.com/organizations/org-login/settings/installations/1962', 'expected the management link to be organisation-scoped');
   });
 
   test('view profiles when GitHub Apps is not present', async function (assert) {
