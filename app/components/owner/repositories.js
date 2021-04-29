@@ -95,12 +95,14 @@ export default Component.extend({
         sourceEndpoint = 'https://github.com';
       }
 
+      Console.log("sp: " + sourceEndpoint);
+
       if (appName && appName.length) {
         return `${config.githubAppsEndpoint}/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
       } else if (isOrganization) {
-        return `${sourceEndpoint}/organizations/${login}/settings/installations/${installationGithubId}`;
+        return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
       } else {
-        return `${sourceEndpoint}/settings/installations/${installationGithubId}`;
+        return `https://github.com/settings/installations/${installationGithubId}`;
       }
     }
   ),
