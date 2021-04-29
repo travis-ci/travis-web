@@ -95,7 +95,7 @@ export default Component.extend({
         sourceEndpoint = 'https://github.com';
       }
 
-      Console.log("sp: " + sourceEndpoint);
+      console.log("sp: " + sourceEndpoint);
 
       if (appName && appName.length) {
         return `${config.githubAppsEndpoint}/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
