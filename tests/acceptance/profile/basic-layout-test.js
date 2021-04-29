@@ -371,6 +371,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
         owner: {
           login: 'org0',
           vcs_type: 'GithubOrganization',
+          installation: false
         },
         active: false,
         permissions: {
