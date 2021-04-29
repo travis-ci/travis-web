@@ -33,7 +33,6 @@ export default Component.extend({
   isMatchGithub: match('owner.vcsType', /Github\S+$/),
   isOwnerVcsTypeEmpty: empty('owner.vcsType'),
   isNotGithubRepository: not('isGithubRepository'),
-  hasGitHubAppsInstallation: notEmpty('owner.installation'),
 
   isEnterprise: reads('features.enterpriseVersion'),
   isNotEnterprise: not('isEnterprise'),
@@ -96,7 +95,10 @@ export default Component.extend({
         sourceEndpoint = 'https://github.com';
       }
 
-      if (isOrganization) {
+      if (!installationGithubId && appName && appName.length) {
+        return `${config.githubAppsEndpoint}/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`
+      }
+      else if (isOrganization) {
         return `${sourceEndpoint}/organizations/${login}/settings/installations/${installationGithubId}`;
       } else {
         return `${sourceEndpoint}/settings/installations/${installationGithubId}`;
@@ -133,5 +135,13 @@ export default Component.extend({
     window.location.href =
       `${config.githubAppsEndpoint}/${appName}/installations/new/permissions` +
       `?suggested_target_id=${this.owner.githubId}&${githubQueryParams}`;
+  }),
+
+  hasGitHubAppsInstallation: computed( function() {
+    if (notEmpty("owner.installation")) {
+      return true;
+    }
+    const installation = this.store.peekAll('installation').findBy('owner.id', this.owner.id) || null;
+    return installation !== null;
   })
 });
