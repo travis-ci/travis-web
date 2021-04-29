@@ -137,6 +137,7 @@ export default Component.extend({
   }),
 
   hasGitHubAppsInstallation: computed(function () {
+    return notEmpty('owner.installation');
     if (notEmpty('owner.installation')) {
       return true;
     }
