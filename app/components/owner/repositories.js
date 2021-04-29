@@ -43,6 +43,7 @@ export default Component.extend({
   isFilteringEnabled: reads('features.repositoryFiltering'),
   isLoadingBetaRequests: reads('owner.fetchBetaMigrationRequestsTask.isRunning'),
   isNotLoadingBetaRequests: not('isLoadingBetaRequests'),
+  hasGitHubAppsInstallation: notEmpty('owner.installation')
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;
@@ -95,8 +96,6 @@ export default Component.extend({
         sourceEndpoint = 'https://github.com';
       }
 
-      console.log("sp: " + sourceEndpoint);
-
       if (appName && appName.length) {
         return `${config.githubAppsEndpoint}/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
       } else if (isOrganization) {
@@ -136,7 +135,8 @@ export default Component.extend({
     window.location.href =
       `${config.githubAppsEndpoint}/${appName}/installations/new/permissions` +
       `?suggested_target_id=${this.owner.githubId}&${githubQueryParams}`;
-  }),
+  })
+                                /*,
 
   hasGitHubAppsInstallation: computed(function () {
     return notEmpty('owner.installation');
@@ -145,5 +145,5 @@ export default Component.extend({
     }
     const installation = this.store.peekAll('installation').findBy('owner.id', this.owner.id) || null;
     return installation !== null;
-  })
+  })*/
 });
