@@ -92,16 +92,16 @@ export default Component.extend({
       let installationGithubId = this.get('owner.installation.githubId');
       let sourceEndpoint = `${config.sourceEndpoint}`;
 
-      if (!sourceEndpoint || sourceEndpoint === 'undefined') {
+      if (sourceEndpoint === 'undefined') {
         sourceEndpoint = 'https://github.com';
       }
 
-      if (appName && appName.length) {
+      if (!installationGithubId && appName && appName.length) {
         return `${config.githubAppsEndpoint}/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
       } else if (isOrganization) {
-        return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
+        return `${sourceEndpoint}/organizations/${login}/settings/installations/${installationGithubId}`;
       } else {
-        return `https://github.com/settings/installations/${installationGithubId}`;
+        return `${sourceEndpoint}/settings/installations/${installationGithubId}`;
       }
     }
   ),
