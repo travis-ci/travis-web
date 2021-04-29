@@ -43,7 +43,7 @@ export default Component.extend({
   isFilteringEnabled: reads('features.repositoryFiltering'),
   isLoadingBetaRequests: reads('owner.fetchBetaMigrationRequestsTask.isRunning'),
   isNotLoadingBetaRequests: not('isLoadingBetaRequests'),
-  hasGitHubAppsInstallation: notEmpty('owner.installation')
+  hasGitHubAppsInstallation: notEmpty('owner.installation'),
 
   get migrationRepositoryCountLimit() {
     return migrationRepositoryCountLimit;
