@@ -137,11 +137,10 @@ export default Component.extend({
   }),
 
   hasGitHubAppsInstallation: computed(function () {
-    return notEmpty('owner.installation');
-    if (notEmpty('owner.installation')) {
+    if (this.get('owner.installation') != null) {
       return true;
     }
-    const installation = this.store.peekAll('installation').findBy('owner.id', this.owner.id) || null;
+    const installation = this.store.peekAll('installation').findBy('owner.id', this.owner.id, 'owner.type', this.owner.type) || null;
     return installation !== null;
   })
 });
