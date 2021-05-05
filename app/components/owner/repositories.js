@@ -140,7 +140,10 @@ export default Component.extend({
     if (this.get('owner.installation') != null) {
       return true;
     }
-    const installation = this.store.peekAll('installation').findBy('owner.id', this.owner.id, 'owner.type', this.owner.type) || null;
+    let ownerId=  this.get('owner.id');
+    let ownerType = this.get('owner.type');
+    const installation = this.store.peekAll('installation').findBy('owner.id', ownerId, 'owner.type', ownerType) || null;
+
     return installation !== null;
   })
 });
