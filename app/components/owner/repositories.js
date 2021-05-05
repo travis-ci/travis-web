@@ -140,7 +140,7 @@ export default Component.extend({
     if (this.get('owner.installation') != null) {
       return true;
     }
-    let ownerId=  this.get('owner.id');
+    let ownerId = this.get('owner.id');
     let ownerType = this.get('owner.type');
     const installation = this.store.peekAll('installation').findBy('owner.id', ownerId, 'owner.type', ownerType) || null;
 
