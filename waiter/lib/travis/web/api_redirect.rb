@@ -5,21 +5,8 @@ class Travis::Web::ApiRedirect < Sinatra::Base
   set api_endpoint: 'https://api.travis-ci.org'
   set redirect_png: ENV['REDIRECT_PNG']
 
-  class NotPublicImages
-    Match = Struct.new(:captures)
-
-    def initialize(pattern, except)
-      @except   = except
-      @pattern  = pattern
-      @captures = Match.new([])
-    end
-
-    def match(str)
-      @captures if str =~ @pattern && str !~ @except
-    end
-  end
-
-  get NotPublicImages.new(%r{^/([^/]+)/([^/]+)\.(png|svg)$}, %r{^/images/}) do
+  get %r{/([^/]+)/([^/]+)\.(png|svg)} do
+    pass if %r{/images/}.match?(request.path_info)
     if settings.redirect_png
       redirect!(request.fullpath.gsub(/\.png$/, '.svg'))
     else
