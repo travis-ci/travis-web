@@ -33,7 +33,6 @@ export default Component.extend({
   isMatchGithub: match('owner.vcsType', /Github\S+$/),
   isOwnerVcsTypeEmpty: empty('owner.vcsType'),
   isNotGithubRepository: not('isGithubRepository'),
-  hasGitHubAppsInstallation: notEmpty('owner.installation'),
 
   isEnterprise: reads('features.enterpriseVersion'),
   isNotEnterprise: not('isEnterprise'),
@@ -90,13 +89,18 @@ export default Component.extend({
       let isOrganization = this.get('owner.isOrganization');
       let ownerGithubId = this.get('owner.githubId');
       let installationGithubId = this.get('owner.installation.githubId');
+      let sourceEndpoint = `${config.sourceEndpoint}`;
 
-      if (appName && appName.length) {
+      if (sourceEndpoint === 'undefined') {
+        sourceEndpoint = 'https://github.com';
+      }
+
+      if (!installationGithubId && appName && appName.length) {
         return `${config.githubAppsEndpoint}/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
       } else if (isOrganization) {
-        return `https://github.com/organizations/${login}/settings/installations/${installationGithubId}`;
+        return `${sourceEndpoint}/organizations/${login}/settings/installations/${installationGithubId}`;
       } else {
-        return `https://github.com/settings/installations/${installationGithubId}`;
+        return `${sourceEndpoint}/settings/installations/${installationGithubId}`;
       }
     }
   ),
@@ -130,5 +134,16 @@ export default Component.extend({
     window.location.href =
       `${config.githubAppsEndpoint}/${appName}/installations/new/permissions` +
       `?suggested_target_id=${this.owner.githubId}&${githubQueryParams}`;
+  }),
+
+  hasGitHubAppsInstallation: computed(function () {
+    if (this.get('owner.installation') != null) {
+      return true;
+    }
+    let ownerId = this.get('owner.id');
+    let ownerType = this.get('owner.type');
+    const installation = this.store.peekAll('installation').findBy('owner.id', ownerId, 'owner.type', ownerType) || null;
+
+    return installation !== null;
   })
 });
