@@ -14,12 +14,14 @@ GEM
     hashr (2.0.0)
     mini_portile2 (2.4.0)
     multi_json (1.12.1)
+    nio4r (2.5.7)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     nokogumbo (2.0.2)
       nokogiri (~> 1.8, >= 1.8.4)
     power_assert (0.4.1)
-    puma (3.12.6)
+    puma (4.3.8)
+      nio4r (~> 2.0)
     rack (1.6.12)
     rack-mobile-detect (0.4.0)
       rack
@@ -64,7 +66,7 @@ PLATFORMS
 DEPENDENCIES
   foreman
   hashr
-  puma (~> 3.12.4)
+  puma (~> 4.3.8)
   rack-mobile-detect
   rack-protection (~> 1.4)
   rack-ssl (~> 1.4)
