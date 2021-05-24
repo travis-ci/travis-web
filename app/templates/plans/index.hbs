@@ -24,7 +24,7 @@
      @textAlign='center'
     >
       <UiKit::Text @tag='h3' @size='3xl' @weight='semibold'>
-         Select monthly plan
+         
       </UiKit::Text>
     </UiKit::Box>
 
@@ -63,7 +63,13 @@
                         </UiKit::Text>
                         {{format-currency plan.price floor='true'}}
                         <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
-                          / month
+                          / month or 
+                          
+                        </UiKit::Text>
+                        
+                        {{format-currency plan.price_annual floor='true'}}
+                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
+                          / year
                         </UiKit::Text>
                       {{/if}}
                     </UiKit::Text>
@@ -77,27 +83,12 @@
                     </UiKit::Box>
                     <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
                       {{#if plan.isFree}}
-                        {{concat plan.privateCredits ' Credits'}}
-                      {{else}}
-                        Adjustable credits amount
+                        {{concat plan.privateCredits ' Credits'}}   
+                        {{else}}
+                        Credits based usage          
                       {{/if}}
                     </UiKit::Text>
                   </UiKit::Box>
-
-                  <UiKit::Box @margin={{hash bottom=5}}>
-                    <UiKit::Box @display='inline-block' @width={{3}}>
-                      <SvgImage @name='stage-passed-green' @class="icon" />
-                    </UiKit::Box>
-                    <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                      {{#if (eq plan.users 0)}}
-                        Unlimited
-                      {{else}}
-                        {{concat 'Up to ' plan.users}}
-                      {{/if}}
-                      unique users
-                    </UiKit::Text>
-                  </UiKit::Box>
-
                   <UiKit::Box @margin={{hash bottom=5}}>
                     <UiKit::Box @display='inline-block' @width={{3}}>
                       <SvgImage @name='stage-passed-green' @class="icon" />
@@ -106,7 +97,6 @@
                       Private &amp; Open-Source Repos
                     </UiKit::Text>
                   </UiKit::Box>
-
                   <UiKit::Box>
                     <UiKit::Box @display='inline-block' @width={{3}}>
                       <SvgImage @name='stage-passed-green' @class="icon" />
@@ -116,7 +106,6 @@
                     </UiKit::Text>
                   </UiKit::Box>
                 </UiKit::Box>
-
                 <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
                   <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
                     {{#if plan.isFree}}
@@ -133,120 +122,6 @@
       </UiKit::Grid>
     </UiKit::Box>
   </UiKit::Box>
-
-    <UiKit::Box
-     @tag='section'
-     @margin={{hash top=0 bottom=0}}
-     @textAlign='center'
-    >
-      <UiKit::Text @tag='h3' @size='3xl' @weight='semibold'>
-         Select annual plan
-      </UiKit::Text>
-    </UiKit::Box>
-
-    <UiKit::Box @tag='section' @margin={{hash bottom=16}} @margin={{hash bottom=16}}>
-      <UiKit::Box @tag='div'>
-        <UiKit::Grid
-          @base={{1}}
-          @md={{2}}
-          @xl={{4}}
-          data-test-plans-page-product-list="true"
-          as |grid|
-        >
-          {{#each plans as |plan|}}
-            {{#if plan.isAnnual }}
-              <grid.item>
-                <UiKit::Box
-                  @borderWidth={{hash all='sm'}}
-                  @radius='lg'
-                  @padding={{hash base=(hash y=8) lg=(hash y=(if plan.isDefault 12 4) )}}
-                  @margin={{hash  base=(hash top=6 x=4) lg=(hash x=4 top=(if plan.isDefault 0 8) )}}
-                >
-                  <UiKit::Box @margin={{hash bottom=12}} @textAlign={{hash base='center'}}>
-                    <UiKit::Box @margin={{hash bottom=10}}>
-                      <UiKit::Text @tag='h3' @size={{if plan.isDefault '2xl' 'lg'}} @weight={{if plan.isDefault 'bold' 'semibold'}}>
-                        {{plan.name}} Plan
-                      </UiKit::Text>
-                    </UiKit::Box>
-
-                    <UiKit::Box @margin={{hash bottom=5}}>
-                      <UiKit::Text @tag='h3' @size='2xl' @weight='semibold'>
-                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs' @margin={{hash top=-5}} @display='block'>
-                          Starting at
-                        </UiKit::Text>
-                        {{format-currency plan.price floor='true'}}
-                        <UiKit::Text @tag='span' @color='grey-concrete' @size='2xs'>
-                          / year
-                        </UiKit::Text>
-                      </UiKit::Text>
-                    </UiKit::Box>
-                  </UiKit::Box>
-
-                  <UiKit::Box @padding={{hash x=10}} @margin={{hash bottom=12}}>
-                    <UiKit::Box @margin={{hash bottom=5}}>
-                      <UiKit::Box @display='inline-block' @width={{3}}>
-                        <SvgImage @name='stage-passed-green' @class="icon" />
-                      </UiKit::Box>
-                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                        {{#if plan.isFree}}
-                          {{concat plan.privateCredits ' Credits'}}
-                        {{else}}
-                          Adjustable credits amount
-                        {{/if}}
-                      </UiKit::Text>
-                    </UiKit::Box>
-
-                    <UiKit::Box @margin={{hash bottom=5}}>
-                      <UiKit::Box @display='inline-block' @width={{3}}>
-                        <SvgImage @name='stage-passed-green' @class="icon" />
-                      </UiKit::Box>
-                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                        {{#if (eq plan.users 0)}}
-                          Unlimited
-                        {{else}}
-                          {{concat 'Up to ' plan.users}}
-                        {{/if}}
-                        unique users
-                      </UiKit::Text>
-                    </UiKit::Box>
-
-                    <UiKit::Box @margin={{hash bottom=5}}>
-                      <UiKit::Box @display='inline-block' @width={{3}}>
-                        <SvgImage @name='stage-passed-green' @class="icon" />
-                      </UiKit::Box>
-                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                        Private &amp; Open-Source Repos
-                      </UiKit::Text>
-                    </UiKit::Box>
-
-                    <UiKit::Box>
-                      <UiKit::Box @display='inline-block' @width={{3}}>
-                        <SvgImage @name='stage-passed-green' @class="icon" />
-                      </UiKit::Box>
-                      <UiKit::Text @tag='span' @margin={{hash left=3}} @size='sm' @weight='semibold'>
-                        Windows, Linux, MacOS, FreeBSD
-                      </UiKit::Text>
-                    </UiKit::Box>
-                  </UiKit::Box>
-
-                  <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
-                    <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
-                      {{#if plan.isFree}}
-                        Start building for free
-                      {{else}}
-                        Get started
-                      {{/if}}
-                    </UiKit::Button>
-                  </UiKit::Box>
-                </UiKit::Box>
-              </grid.item>
-            {{/if}}
-          {{/each}}
-        </UiKit::Grid>
-      </UiKit::Box>
-    </UiKit::Box>
-
-
 {{!-- Open Source Section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-oss-section="true">
     <UiKit::Grid
@@ -280,7 +155,6 @@
             Free for open source. We love the Open Source Community, and to show how much we love it,
             upon validated request placed with our Support Team you may receive free OSS credits for your public builds.
           </UiKit::Text>
-
         </UiKit::Box>
       </grid.item>
       {{#if this.scrollToEnterpriseSection}}
@@ -288,64 +162,6 @@
       {{/if}}
     </UiKit::Grid>
   </UiKit::Box>
-
-  {{!-- Enterprise section --}}
-  <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-enterprise-section="true">
-    <UiKit::Grid
-      @md={{1}}
-      @lg={{2}}
-      @align='center'
-      @gap={{2}}
-      @justify='between'
-      as |grid|
-    >
-      <grid.item>
-        <UiKit::Box
-          @maxWidth={{hash base='full' md='xl'}}
-          @padding={{hash y=4}}
-          @margin={{hash md=(hash x='auto') }}
-          @textAlign={{hash base='center' lg='left'}}
-        >
-          <UiKit::Text @tag='h2' @leading='md' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-            Travis CI Enterprise
-          </UiKit::Text>
-          <UiKit::Text @margin={{hash bottom=6}} @size='md' @leading='lg' @color='grey-concrete'>
-            Our on-premises product is perfect for companies who
-            want to keep using the same features of Travis CI with
-            additional on-site security needs.
-          </UiKit::Text>
-          <UiKit::Text @margin={{hash bottom=6}} @size='md' @leading='lg' @color='grey-concrete'>
-            Travis CI Enterprise allows you to scale build infrastructure up and down based on demand.
-            Whether you have 10 or 1000 developers using it, you'll benefit from our experience
-            building and operating a continuous integration service at scale.
-          </UiKit::Text>
-          <UiKit::Text @margin={{hash bottom=8}} @size='md' @leading='lg' @color='grey-concrete'>
-            Whether you need to run just one build or a thousand builds at the same time,
-            Travis CI gives you the means to scale up capacity based on demand.
-            What works best on EC2 is easily possible on your own infrastructure as well.
-          </UiKit::Text>
-
-          <ExternalLinkTo @href='https://enterprise.travis-ci.com/Travis.CI.Enterprise.Information.Sheet.pdf'>
-            <UiKit::Button @color='grey' @invert={{true}} data-test-plans-page-enterprise-button="true">
-              Download the fact sheet
-            </UiKit::Button>
-          </ExternalLinkTo>
-        </UiKit::Box>
-      </grid.item>
-      <grid.item>
-        <UiKit::Box
-          @margin={{hash x='auto'}}
-          @maxWidth='xs'
-          @padding={{hash base=(hash y=4)}}
-        >
-          <SvgImage @name='travis-enterprise' @width='100%'/>
-        </UiKit::Box>
-      </grid.item>
-    </UiKit::Grid>
-  </UiKit::Box>
-
-  {{#if this.scrollToContact}}<ScrollHere />{{/if}}
-
   {{!-- Contact form section --}}
   <UiKit::Box @tag='section' @margin={{hash bottom=48}} data-test-plans-page-contact-section="true">
     <UiKit::Grid  @lg={{2}} @align='center' @gap={{4}} @justify='between' as |grid|>
@@ -356,21 +172,58 @@
           @textAlign={{hash base='center' lg='left'}}
           @margin={{hash md=(hash x='auto') }}
         >
-          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
-            Looking for something custom or on-prem?
+         <UiKit::Text @tag='h2' @leading='md' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            Looking for a custom solution either in the cloud or on-prem?
           </UiKit::Text>
-          <UiKit::Text @color='grey-concrete' @leading='md'>
-            We can create a plan that's customized to your team's size and needs.
-            Just use this form to contact us!
+          <UiKit::Text @margin={{hash bottom=6}} @size='md' @leading='lg' @color='grey-concrete'>
+           In the cloud, Travis CI Enterprise allows you to scale build infrastructure up and down based on demand. Whether you have 10 or 1000 developers, you’ll benefit from our experience building and operating a continuous integration service at scale.
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=6}} @size='md' @leading='lg' @color='grey-concrete'>
+             Our on-premises product is perfect for companies who want to keep using the same features of Travis CI with additional on-site security needs. What works best on EC2 is easily possible on your own infrastructure as well.
+          </UiKit::Text>
+          <UiKit::Text @margin={{hash bottom=8}} @size='md' @leading='lg' @color='grey-concrete'>
+            We can create a plan that’s customized to your team’s size and needs. Just use this form to contact us!
+          </UiKit::Text>
+          <ExternalLinkTo @href='https://enterprise.travis-ci.com/Travis.CI.Enterprise.Information.Sheet.pdf'>
+            <UiKit::Button @color='grey' @invert={{true}} data-test-plans-page-enterprise-button="true">
+              Travis CI Enterprise Fact Sheet
+            </UiKit::Button>
+          </ExternalLinkTo>
+        </UiKit::Box>
+      </grid.item>
+      <grid.item>
+        <SalesContactForm
+          @referralSource={{this.referralSourceName}}
+          @onSuccess={{action 'contactSuccess'}}
+        />
+      </grid.item>
+    </UiKit::Grid>
+  </UiKit::Box>
+{{#if this.scrollToContact}}<ScrollHere />{{/if}}
+  {{!-- Enterprise section --}}
+   {{!-- Contact form section --}}
+  <UiKit::Box @tag='section' @margin={{hash bottom=20}} data-test-plans-page-contact-section="true">
+    <UiKit::Grid  @sm={{2}} @align='center' @gap={{4}} @justify='around' as |grid|>
+      <grid.item>
+        <UiKit::Box
+          @maxWidth={{hash base='full' sm='md'}}
+          @padding={{hash y=4}}
+          @textAlign={{hash base='center' sm='left'}}
+        >
+          <UiKit::Text @tag='h2' @leading='xs' @margin={{hash bottom=3}} @size='5xl' @weight='bold'>
+            
+          </UiKit::Text>
+          <UiKit::Text>
+            
           </UiKit::Text>
         </UiKit::Box>
       </grid.item>
       <grid.item>
-        <SalesContactForm/>
+        
       </grid.item>
     </UiKit::Grid>
   </UiKit::Box>
-
+          
   {{!-- FAQ Section --}}
   <UiKit::Box @position={{hash type='relative'}} data-test-plans-page-faq-section="true">
     <UiKit::Box
@@ -382,7 +235,6 @@
       <UiKit::Text @tag='h2' @size='5xl' @weight='bold' @padding={{hash bottom=8}}>
         Frequently asked questions
       </UiKit::Text>
-
       <UiKit::Grid
         @base={{1}}
         @lg={{2}}
@@ -400,7 +252,6 @@
             Linux, Windows, macOS, FreeBSD builds all supported.
           </UiKit::Text>
         </grid.item>
-
         <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 left=6 right=0)}}>
             <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
               Are there any restrictions on build time?
@@ -410,7 +261,6 @@
               <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='sm' @href={{buildMatrixUrl}}>build matrix</UiKit::Link>.
             </UiKit::Text>
         </grid.item>
-
         {{!-- FAQ set 2 --}}
         <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 right=6 left=0)}}>
           <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
@@ -424,7 +274,6 @@
             For more flexible, usage based Plans please <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
           </UiKit::Text>
         </grid.item>
-
         <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 left=6 right=0)}}>
             <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
               Can I cancel anytime?
@@ -435,7 +284,6 @@
               and choose the account you want to cancel. Then switch to 'Free' Plan.
             </UiKit::Text>
         </grid.item>
-
         {{!-- FAQ set 3 --}}
         <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 right=6 left=0)}}>
           <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
@@ -447,7 +295,6 @@
             if you’re looking for something custom.
           </UiKit::Text>
         </grid.item>
-
         <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 left=6 right=0)}}>
             <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
               Do the listed prices include VAT?
@@ -457,7 +304,6 @@
               VAT ID ready when entering billing details to remove VAT!
             </UiKit::Text>
         </grid.item>
-
         {{!-- FAQ set 4 --}}
         <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 right=6 left=0)}}>
           <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=4}}>
@@ -470,7 +316,6 @@
             All the builds will be executed as soon as possible with no real severe limitations.
           </UiKit::Text>
         </grid.item>
-
         <grid.item @padding={{hash base=(hash all=5) lg=(hash top=5 bottom=8 left=6 right=0)}}>
             <UiKit::Text @tag='h4' @size='lg' @weight='semibold' @margin={{hash bottom=2}}>
               Do you have plans for students?
@@ -485,7 +330,6 @@
       </UiKit::Grid>
     </UiKit::Box>
   </UiKit::Box>
-
   {{!-- Final message section --}}
   <UiKit::Box @tag='section' @textAlign='center' data-test-plans-page-message-section="true">
     <UiKit::Box @margin={{hash bottom=6}}>
@@ -496,7 +340,6 @@
         Our support and sales teams are very happy to help.
       </UiKit::Text>
     </UiKit::Box>
-
     <UiKit::Button {{on 'click' (action 'toggleContactScroll')}} data-test-plans-page-message-button="true">
       Shoot us a Message
     </UiKit::Button>
