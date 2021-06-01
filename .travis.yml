@@ -15,7 +15,7 @@ dist: xenial
 addons:
   - snaps:
     - name: docker
-      channel: latest/beta
+      channel: edge
   - chrome: stable
 
 cache:
