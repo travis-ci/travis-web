@@ -13,9 +13,6 @@ os: linux
 dist: xenial
 
 addons:
-  - snaps:
-    - name: docker
-      channel: latest/beta
   - chrome: stable
 
 cache:
