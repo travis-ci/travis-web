@@ -68,6 +68,7 @@ export default Component.extend({
     const isEnterprise = this.features.get('enterpriseVersion');
     return !isEnterprise && !isAssemblaUser && !!billingEndpoint;
   }),
+  showPlanUsageTab: and('showSubscriptionTab', 'model.hasCredits'),
 
   didRender() {
     const allowance = this.model.allowance;
