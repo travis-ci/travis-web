@@ -9,7 +9,9 @@ import {
   match,
   notEmpty,
   or,
-  reads
+  reads,
+  empty,
+  not
 } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
@@ -199,6 +201,12 @@ export default VcsEntity.extend({
       }
       return this.accountv2Subscriptions.get('lastObject');
     }),
+
+  isV2SubscriptionEmpty: empty('v2subscription'),
+  hasV2Subscription: not('isV2SubscriptionEmpty'),
+  hasCredits: computed('hasV2Subscription', 'v2subscription', function () {
+    return this.hasV2Subscription ? this.v2subscription.get('hasCredits') : false;
+  }),
 
   trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {
     let trials = this.get('accounts.trials') || [];
