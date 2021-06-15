@@ -49,7 +49,8 @@ module('Acceptance | profile/plan usage', function (hooks) {
       status: 'subscribed',
       valid_to: new Date(),
       addons: [
-        {name: 'User license addon', type: 'user_license', current_usage: {addon_usage: 1}}
+        {name: 'User license addon', type: 'user_license', current_usage: {addon_usage: 1}},
+        {name: 'Private credit addon', type: 'credit_private', current_usage: {addon_usage: 60}}
       ]
     });
 
