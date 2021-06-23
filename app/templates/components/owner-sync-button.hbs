@@ -10,6 +10,8 @@
         Syncing
       </button>
     </p>
+  {{else if this.owner.roMode}}
+    <button class="button" disabled="disabled"></button>
   {{else}}
     <p>
       <button class="button" {{action this.sync}}>

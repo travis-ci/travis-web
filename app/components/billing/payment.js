@@ -81,9 +81,17 @@ export default Component.extend({
       this.set('showSwitchToFreeModal', true);
     } else {
       if (this.selectedAddon) {
+        this.metrics.trackEvent({
+          action: 'Buy Addon Pay Button Clicked',
+          category: 'Subscription',
+        });
         yield this.subscription.buyAddon.perform(this.selectedAddon);
       } else {
         if (!this.subscription.id && this.v1SubscriptionId) {
+          this.metrics.trackEvent({
+            action: 'Plan upgraded from Legacy Plan',
+            category: 'Subscription',
+          });
           const { account, subscription, selectedPlan } = this;
           const organizationId = account.type === 'organization' ? +(account.id) : null;
           const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
@@ -96,6 +104,10 @@ export default Component.extend({
           const { clientSecret } = yield subscription.save();
           yield this.stripe.handleStripePayment.perform(clientSecret);
         } else {
+          this.metrics.trackEvent({
+            action: 'Change Plan Pay Button Clicked',
+            category: 'Subscription',
+          });
           yield this.subscription.changePlan.perform(this.selectedPlan.id);
         }
       }
@@ -109,6 +121,10 @@ export default Component.extend({
   }).drop(),
 
   createFreeSubscription: task(function* () {
+    this.metrics.trackEvent({
+      action: 'Free Plan Chosen',
+      category: 'Subscription',
+    });
     const { account, subscription, selectedPlan } = this;
     try {
       const organizationId = account.type === 'organization' ? +(account.id) : null;

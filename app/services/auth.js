@@ -33,7 +33,7 @@ const STATE = {
   SIGNING_IN: 'signing-in'
 };
 
-const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels', 'vcs_type'];
+const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels', 'vcs_type', 'confirmed_at'];
 
 const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
@@ -235,6 +235,7 @@ export default Service.extend({
 
   validateUserData(user, isBecome) {
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
+    user['confirmed_at'] = user['confirmed_at'] || false;
     const hasAllFields = USER_FIELDS.every(field => isPresent(user[field]) || hasChannelsOnPro(field));
     const hasCorrectScopes = user.correct_scopes || isBecome;
     if (!hasAllFields || !hasCorrectScopes) {

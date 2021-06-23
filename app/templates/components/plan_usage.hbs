@@ -1,0 +1,143 @@
+<div class="plan-usage" data-test-plan-usage-content>
+  <section>
+    <h3 class='plan-usage__header'>Plan information</h3>
+    <p class='plan-usage__name flex flex--v-center' data-test-plan-name='true'>
+      {{#if this.subscription.isManual}}
+        Manual plan
+      {{else}}
+        {{this.subscription.plan.name}}
+      {{/if}}
+    </p>
+    <strong>Plan Activation date:</strong>
+    {{#if this.subscription.createdAt}}
+      {{moment-format this.subscription.createdAt 'MMMM DD, YYYY'}}
+    {{/if}}
+    <br />
+    <strong>Plan Add-ons list:</strong>
+    <br />
+    <ul>
+    {{#each this.subscription.addons as |addon|}}
+      <li>
+      {{#if (eq addon.type 'credit_public')}}
+        Public:
+      {{else if (eq addon.type 'credit_private')}}
+        Private:
+      {{else if (eq addon.type 'user_license')}}
+        User license:
+      {{/if}}
+      {{addon.name}}
+      </li>
+    {{/each}}
+    </ul>
+    <Billing::UserUsage @subscription={{this.v2subscription}} @account={{this.account}}/>
+    <button class="button--blue" {{on 'click' (fn (mut this.showUserStatisticsModals) true)}} data-test-plan-usage-check-user-activity='true'>
+      Check your user activity
+    </button>
+    <hr />
+  </section>
+  <section>
+    <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}} @lastInvoice={{this.lastInvoice}} @hideToggle={{true}}/>
+  </section>
+  <section>
+    <h3 class="usage-statistics">Usage statistics</h3>
+    <div class="date-picker-container">
+      <button class="date-picker" onclick={{action "datePicker"}} >
+        {{#if this.dateRange.start}}
+          {{moment-format this.dateRange.start "YYYY-MM-DD"}}
+        {{/if}}
+        &nbsp;-&nbsp;
+        {{#if this.dateRange.end}}
+          {{moment-format this.dateRange.end "YYYY-MM-DD"}}
+        {{else}}
+          {{moment-format this.dateRange.start "YYYY-MM-DD"}}
+        {{/if}}
+        <SvgImage @name="icon-dropdown-arrow" @class="icon" />
+      </button>
+      {{#if this.showDatePicker}}
+        <PowerCalendarRange
+          class="calendar-medium date-picker-calendar"
+          @center={{this.dateCenter}}
+          @onCenterChange={{action (mut this.dateCenter) value="date"}} 
+          @selected={{this.dateRange}}
+          @maxRange="2 month"
+          @onSelect={{action (mut this.dateRange) value="date"}}
+          as |calendar|>
+          <calendar.Nav/>
+          <calendar.Days/>
+        </PowerCalendarRange>
+      {{/if}}
+    </div>
+    <button class="download-csv" onclick={{action "downloadCsv"}}>Download .csv file for more detailed information about usage</button>
+    <div class="repositories-visiblity">
+      <TravisForm
+        as |form|
+      >
+        <form.field
+          @value={{this.repositoriesVisiblity}}
+          @required={{false}}
+          class="repositories-visiblity-selector"
+          as |field|
+        >
+          <field.select
+            @onchange={{action (mut this.repositoriesVisiblity)}}
+            @options={{this.repositoriesVisiblityOptions}}
+            as |repositoriesVisiblity|
+          >
+            {{repositoriesVisiblity}}
+          </field.select>
+        </form.field>
+      </TravisForm>
+    </div>
+    <span class="capitalize-text">{{this.repositoriesVisiblity}}</span> total build time:
+    <div class="minutes-circle-container">
+      {{#each-in this.summarizedMinutesByOs as |osicon minutes|}}
+        <div class="minutes-circle">
+          <span class="data-test-plan-usage-os-{{osicon}}-minutes">
+            <SvgImage @name={{osicon}} @class="icon" />
+            <br />
+            {{format-number minutes}} min
+          </span>
+        </div>
+      {{/each-in}}
+    </div>
+    <table class="repository-build-times">
+      <thead>
+        <tr data-test-table-header-row='true'>
+          <th>Repository</th>
+          <th>Total build minutes</th>
+          <th>Total credits</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.summarizedRepositories as |repository|}}
+          <tr data-test-repository='true'>
+            <td>
+              <LinkTo @route="repo" @models={{array repository.provider repository.urlOwnerName repository.urlName}}>
+                {{repository.formattedSlug}}
+              </LinkTo>
+            </td>
+            <td>
+              {{format-number repository.buildMinutes}}
+            </td>
+            <td>
+              {{format-number repository.buildCredits}}
+            </td>
+          </tr>
+        {{/each}}
+        <tr>
+          <td>Total</td>
+          <td data-test-plan-usage-minutes-total='true'>{{format-number this.totalBuildMinutes}}</td>
+          <td data-test-plan-usage-credits-total='true'>{{format-number this.totalBuildCredits}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+<Dialogs::UserStatisticsModal
+  @isOpen={{this.showUserStatisticsModals}}
+  @account={{this.account}}
+  @onClose={{fn (mut this.showUserStatisticsModals) false}}
+  @owner={{this.owner}}
+  @dateCenter={{this.dateCenter}}
+  @dateRange={{this.dateRange}}
+/>

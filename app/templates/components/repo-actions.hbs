@@ -53,7 +53,7 @@
     <LoadingIndicator @height={{true}} />
   {{else}}
     <div class="action-button-container">
-      {{#if this.canOwnerBuild}}
+      {{#if (and this.canOwnerBuild (not this.ownerRoMode))}}
         <button
           class="action-button--restart"
           aria-label="Restart {{this.type}}"
@@ -72,7 +72,11 @@
         </button>
       {{else}}
         <a class="disabled action-button--restart">
-          <EmberTooltip @text="Builds have been temporarily disabled for this repository due to a negative credit balance." />
+          {{#if this.ownerRoMode}}
+            <EmberTooltip @text="{{config-get 'defaultTitle'}} is in read-only mode." />
+          {{else}}
+            <EmberTooltip @text="Builds have been temporarily disabled for this repository due to a negative credit balance." />
+          {{/if}}
           <SvgImage @name="icon-restart" @class="icon" />
           <span class="label-align">
             Restart {{this.type}}
@@ -82,7 +86,7 @@
     </div>
     {{#if (and this.features.debugBuilds this.canDebug)}}
       <div class="action-button-container">
-        {{#if this.canOwnerBuild}}
+        {{#if (and this.canOwnerBuild (not this.ownerRoMode))}}
           <button
             data-test-repo-actions-debug-button
             class="action-button--debug"

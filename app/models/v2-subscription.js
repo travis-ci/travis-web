@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { equal, reads, or } from '@ember/object/computed';
+import { equal, not, reads, or } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -44,6 +44,7 @@ export default Model.extend({
   isStripe: equal('source', 'stripe'),
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
+  isNotManual: not('isManual'),
 
   usedUsers: computed('addons.[].current_usage', function () {
     if (!this.addons) {
@@ -73,10 +74,9 @@ export default Model.extend({
         processed.remainingCredits += addon.current_usage.remaining;
         const validDate = Date.parse(addon.current_usage.valid_to);
         const purchaseDate = Date.parse(addon.current_usage.purchase_date);
-        processed.validDate = validDate < processed.validDate ? validDate : processed.validDate;
-        processed.purchaseDate = purchaseDate > processed.purchaseDate ? purchaseDate : processed.purchaseDate;
+        processed.validDate = validDate;
+        processed.purchaseDate = purchaseDate;
       }
-
       return processed;
     };
     const publicUsages = this.addons.reduce(addonReduce('credit_public'), {
@@ -93,11 +93,27 @@ export default Model.extend({
       usedCredits: 0,
       remainingCredits: 0,
     });
+    const userLicense = this.addons.reduce(addonReduce('user_license'), {
+      validDate: Date.now(),
+      purchaseDate: Date.now(),
+      totalCredits: 0,
+      usedCredits: 0,
+      remainingCredits: 0,
+    });
 
     return {
       public: publicUsages,
-      private: privateUsages
+      private: privateUsages,
+      user: userLicense
     };
+  }),
+
+  validToFromUserLicenseAddon: computed('addons.[]', function () {
+    const userLicenseAddons = this.addons.filter(addon => addon.type === 'user_license' && addon.current_usage.status !== 'expired');
+    const userLicenseAddon =  userLicenseAddons ? userLicenseAddons[0] : null;
+    if (userLicenseAddon) {
+      return userLicenseAddon.current_usage.valid_to;
+    }
   }),
 
   hasPublicCredits: computed('addonUsage.public.remainingCredits', function () {

@@ -126,6 +126,279 @@ export default function () {
     return response;
   });
 
+  this.get('/v3/owner/:provider/:login/executions', function (schema, request) {
+    const from = request.queryParams.from;
+    const to = request.queryParams.to;
+    const login = request.params.login;
+    const provider = request.params.provider;
+    let response = {
+      '@type': 'executions',
+      '@href': `/v3/owner/${provider}/${login}/executions?from=${from}&to=${to}`,
+      '@representation': 'standard',
+      'executions': [
+        {
+          '@type': 'execution',
+          '@representation': 'standard',
+          'id': 1,
+          'os': 'linux',
+          'instance_size': 'standard-2',
+          'arch': 'amd64',
+          'virtualization_type': 'vm',
+          'queue': 'builds.gce',
+          'job_id': 1,
+          'repository_id': 1,
+          'owner_id': 1,
+          'owner_type': 'Organization',
+          'plan_id': 1,
+          'sender_id': 1,
+          'credits_consumed': 0,
+          'started_at': '2020-10-22T15:09:38.000Z',
+          'finished_at': '2020-10-22T15:09:58.000Z',
+          'created_at': '2020-10-22T15:09:59.404Z',
+          'updated_at': '2020-10-22T15:09:59.404Z'
+        }
+      ]
+    };
+    return response;
+  });
+
+  this.get('/v3/owner/:provider/:login/executions_per_repo', function (schema, request) {
+    const from = request.queryParams.from;
+    const to = request.queryParams.to;
+    const login = request.params.login;
+    const provider = request.params.provider;
+    let response = {
+      '@type': 'executionsperrepo',
+      '@href': `/v3/owner/${provider}/${login}/executions_per_repo?from=${from}&to=${to}`,
+      '@representation': 'standard',
+      'executionsperrepo': [
+        {
+          'repository_id': 1,
+          'os': 'linux',
+          'credits_consumed': 10,
+          'minutes_consumed': 1,
+          'repository': {
+            '@type': 'repository',
+            '@href': '/repo/1',
+            '@representation': 'standard',
+            '@permissions': {
+              'read': false,
+              'delete_key_pair': false,
+              'create_request': false,
+              'admin': false,
+              'activate': false,
+              'deactivate': false,
+              'migrate': false,
+              'star': false,
+              'unstar': false,
+              'create_cron': false,
+              'create_env_var': false,
+              'create_key_pair': false
+            },
+            'id': 1,
+            'name': 'reponame',
+            'slug': `${login}/reponame`,
+            'description': 'reponame',
+            'github_id': 1,
+            'vcs_id': '1',
+            'vcs_type': 'GithubRepository',
+            'github_language': null,
+            'active': true,
+            'private': true,
+            'owner': {
+              '@type': 'organization',
+              'id': 10619,
+              'login': `${login}`,
+              '@href': '/org/1'
+            },
+            'owner_name': `${login}`,
+            'vcs_name': 'reponame',
+            'default_branch': {
+              '@type': 'branch',
+              '@href': '/repo/1/branch/main',
+              '@representation': 'minimal',
+              'name': 'main'
+            },
+            'starred': false,
+            'managed_by_installation': true,
+            'active_on_org': false,
+            'migration_status': null,
+            'history_migration_status': null,
+            'shared': false,
+            'config_validation': true
+          }
+        },
+        {
+          'repository_id': 2,
+          'os': 'windows',
+          'credits_consumed': 20,
+          'minutes_consumed': 2,
+          'repository': {
+            '@type': 'repository',
+            '@href': '/repo/2',
+            '@representation': 'standard',
+            '@permissions': {
+              'read': false,
+              'delete_key_pair': false,
+              'create_request': false,
+              'admin': false,
+              'activate': false,
+              'deactivate': false,
+              'migrate': false,
+              'star': false,
+              'unstar': false,
+              'create_cron': false,
+              'create_env_var': false,
+              'create_key_pair': false
+            },
+            'id': 1,
+            'name': 'reponame2',
+            'slug': `${login}/reponame2`,
+            'description': 'reponame2',
+            'github_id': 1,
+            'vcs_id': '1',
+            'vcs_type': 'GithubRepository',
+            'github_language': null,
+            'active': true,
+            'private': true,
+            'owner': {
+              '@type': 'organization',
+              'id': 10619,
+              'login': `${login}`,
+              '@href': '/org/1'
+            },
+            'owner_name': `${login}`,
+            'vcs_name': 'reponame',
+            'default_branch': {
+              '@type': 'branch',
+              '@href': '/repo/1/branch/main',
+              '@representation': 'minimal',
+              'name': 'main'
+            },
+            'starred': false,
+            'managed_by_installation': true,
+            'active_on_org': false,
+            'migration_status': null,
+            'history_migration_status': null,
+            'shared': false,
+            'config_validation': true
+          }
+        },
+        {
+          'repository_id': 3,
+          'os': 'osx',
+          'credits_consumed': 30,
+          'minutes_consumed': 3,
+          'repository': {
+            '@type': 'repository',
+            '@href': '/repo/2',
+            '@representation': 'standard',
+            '@permissions': {
+              'read': false,
+              'delete_key_pair': false,
+              'create_request': false,
+              'admin': false,
+              'activate': false,
+              'deactivate': false,
+              'migrate': false,
+              'star': false,
+              'unstar': false,
+              'create_cron': false,
+              'create_env_var': false,
+              'create_key_pair': false
+            },
+            'id': 1,
+            'name': 'reponame3',
+            'slug': `${login}/reponame3`,
+            'description': 'reponame3',
+            'github_id': 1,
+            'vcs_id': '1',
+            'vcs_type': 'GithubRepository',
+            'github_language': null,
+            'active': true,
+            'private': true,
+            'owner': {
+              '@type': 'organization',
+              'id': 10619,
+              'login': `${login}`,
+              '@href': '/org/1'
+            },
+            'owner_name': `${login}`,
+            'vcs_name': 'reponame',
+            'default_branch': {
+              '@type': 'branch',
+              '@href': '/repo/1/branch/main',
+              '@representation': 'minimal',
+              'name': 'main'
+            },
+            'starred': false,
+            'managed_by_installation': true,
+            'active_on_org': false,
+            'migration_status': null,
+            'history_migration_status': null,
+            'shared': false,
+            'config_validation': true
+          }
+        }
+      ]
+    };
+    return response;
+  });
+
+  this.get('/v3/owner/:provider/:login/executions_per_sender', function (schema, request) {
+    const from = request.queryParams.from;
+    const to = request.queryParams.to;
+    const login = request.params.login;
+    const provider = request.params.provider;
+    let response = {
+      '@type': 'executionspersender',
+      '@href': `/v3/owner/${provider}/${login}/executions_per_sender?from=${from}&to=${to}`,
+      '@representation': 'standard',
+      'executionspersender': [
+        {
+          'credits_consumed': 0,
+          'minutes_consumed': 1,
+          'sender_id': 1,
+          'sender': {
+            '@type': 'user',
+            '@href': '/user/1',
+            '@representation': 'standard',
+            '@permissions': {
+              'read': true,
+              'sync': false
+            },
+            'id': 1,
+            'login': `${login}`,
+            'name': `${login}`,
+            'github_id': 1,
+            'vcs_id': '1',
+            'vcs_type': 'GithubUser',
+            'avatar_url': 'https://avatars0.githubusercontent.com/u/1?v=4',
+            'education': false,
+            'allow_migration': false,
+            'allowance': {
+              '@type': 'allowance',
+              '@representation': 'minimal',
+              'subscription_type': 1,
+              'public_repos': true,
+              'private_repos': false,
+              'concurrency_limit': 1,
+              'user_usage': false,
+              'pending_user_licenses': false,
+              'id': 1
+            },
+            'email': null,
+            'is_syncing': false,
+            'synced_at': '2020-10-27T19:30:19Z',
+            'recently_signed_up': false,
+            'secure_user_hash': 'hash'
+          }
+        }
+      ]
+    };
+    return response;
+  });
+
   this.post('/subscriptions', function (schema, request) {
     const attrs = JSON.parse(request.requestBody);
     const owner = attrs.organization_id ? schema.organizations.first() : schema.users.first();
@@ -414,6 +687,104 @@ export default function () {
     return this.serialize(repository);
   });
 
+  this.get('/v3/repo/:repositoryId/build_permissions', function (schema, request) {
+    const { repositoryId } = request.params;
+    const repository = schema.repositories.find(repositoryId);
+    const owner = repository.owner;
+
+    let response = {
+      '@type': 'build_permissions',
+      '@href': `/v3/repo/${repositoryId}/build_permissions`,
+      '@representation': 'standard',
+      '@pagination': {
+        'limit': 25,
+        'offset': 0,
+        'count': 1,
+        'is_first': true,
+        'is_last': true,
+        'next': null,
+        'prev': null,
+        'first': {
+          '@href': `/v3/repo/${repositoryId}/build_permissions`,
+          'offset': 0,
+          'limit': 25
+        },
+        'last': {
+          '@href': `/v3/repo/${repositoryId}/build_permissions`,
+          'offset': 0,
+          'limit': 25
+        }
+      },
+      'build_permissions': [
+        {
+          '@type': 'build_permission',
+          '@representation': 'standard',
+          'user': {
+            '@type': 'user',
+            '@href': `/user/${owner.id}`,
+            '@representation': 'minimal',
+            'id': owner.id,
+            'login': owner.login,
+            'name': owner.login,
+            'vcs_type': 'GithubUser'
+          },
+          'permission': true,
+          'role': null
+        }
+      ]
+    };
+    return response;
+  });
+
+  this.get('/v3/org/:organizationId/build_permissions', function (schema, request) {
+    const { organizationId } = request.params;
+    const org = schema.organizations.find(organizationId);
+    const owner = schema.owners.first;
+
+    let response = {
+      '@type': 'build_permissions',
+      '@href': `/v3/${org.id}/10619/build_permissions`,
+      '@representation': 'standard',
+      '@pagination': {
+        'limit': 25,
+        'offset': 0,
+        'count': 1,
+        'is_first': true,
+        'is_last': true,
+        'next': null,
+        'prev': null,
+        'first': {
+          '@href': `/v3/org/${org.id}/build_permissions`,
+          'offset': 0,
+          'limit': 25
+        },
+        'last': {
+          '@href': `/v3/org/${org.id}/build_permissions`,
+          'offset': 0,
+          'limit': 25
+        }
+      },
+      'build_permissions': [
+        {
+          '@type': 'build_permission',
+          '@representation': 'standard',
+          'user': {
+            '@type': 'user',
+            '@href': `/user/${owner.id}`,
+            '@representation': 'minimal',
+            'id': owner.id,
+            'login': owner.login,
+            'name': owner.login,
+            'vcs_type': 'GithubUser'
+          },
+          'permission': true,
+          'role': 'admin'
+        }
+      ]
+    };
+    return response;
+  });
+
   this.post('/repo/:repositoryId/email_subscription', function ({ repositories }, request) {
     const repo = repositories.find(request.params.repositoryId);
     repo.update({ email_subscribed: true });
@@ -427,6 +798,10 @@ export default function () {
   });
 
   this.get('/v3/preferences', function (schema) {
+    return schema.preferences.all();
+  });
+
+  this.get('/v3/org/:org_id/preferences', function (schema) {
     return schema.preferences.all();
   });
 
@@ -572,6 +947,45 @@ export default function () {
     } else {
       return new Response(404, {}, {});
     }
+  });
+
+  this.get('/v3/build_backups', function (schema, request) {
+    const repository_id = request.queryParams.repository_id;
+
+    let response = {
+      '@type': 'build_backups',
+      '@href': `/v3/build_backups?repository_id=${repository_id}&offset=0`,
+      '@representation': 'standard',
+      '@pagination': {
+        'limit': 25,
+        'offset': 0,
+        'count': 1,
+        'is_first': true,
+        'is_last': true,
+        'next': null,
+        'prev': null,
+        'first': {
+          '@href': `/v3/build_backups?repository_id=${repository_id}&offset=0`,
+          'offset': 0,
+          'limit': 25
+        },
+        'last': {
+          '@href': `/v3/build_backups?repository_id=${repository_id}&offset=0`,
+          'offset': 0,
+          'limit': 25
+        }
+      },
+      'build_backups': [
+        {
+          '@type': 'build_backup',
+          '@href': '/v3/build_backup/120',
+          '@representation': 'standard',
+          'file_name': `repository_${repository_id}_builds_123-456.json`,
+          'created_at': '2021-02-19T13:54:15Z'
+        }
+      ]
+    };
+    return response;
   });
 
   this.get('/owner/:provider/:login/repos', function (schema, { params, queryParams = {} }) {

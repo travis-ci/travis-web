@@ -7,10 +7,13 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function () {
+  this.route('confirm-user', { path: '/confirm-user/:token' });
+  this.route('request-user-confirmation', { path: '/request-user-confirmation'});
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
     this.route('builds', { path: '/builds' });
   });
+
   this.route('features-tracing', { path: '/features/tracing', resetNamespace: true });
 
   this.route('getting_started');
@@ -37,12 +40,14 @@ Router.map(function () {
     this.route('repositories');
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/plan' });
+    this.route('plan_usage', { path: '/plan/usage' });
     this.route('migrate');
   });
   this.route('organization', { path: '/organizations/:login' }, function () {
     this.route('repositories');
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/plan' });
+    this.route('plan_usage', { path: '/plan/usage' });
     this.route('migrate');
   });
   this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });

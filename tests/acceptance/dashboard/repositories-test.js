@@ -25,6 +25,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login',
+      confirmed_at: Date.now()
     });
     this.currentUser = currentUser;
 

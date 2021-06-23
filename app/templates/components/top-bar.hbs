@@ -9,9 +9,15 @@
   <HeaderLinks @isOpen={{this.isNavigationOpen}} />
   <ProfileMenu />
 </div>
+{{#if this.isUnconfirmed}}
+ <UnconfirmedUserBanner />
+{{/if}}
 {{#if this.features.enterpriseVersion}}
   <EnterpriseBanner />
 {{/if}}
+{{#unless this.features.proVersion}}
+  <MigrationBanner />
+{{/unless}}
 {{#if hasBlock}}
   {{yield}}
 {{else if this.showCta}}

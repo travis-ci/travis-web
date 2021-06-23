@@ -11,7 +11,7 @@ module('Acceptance | repo allowance', function (hooks) {
 
   hooks.beforeEach(function () {
     enableFeature('proVersion');
-    const currentUser = this.server.create('user', {login: 'user-login'});
+    const currentUser = this.server.create('user', {login: 'user-login', confirmed_at: Date.now()});
     signInUser(currentUser);
 
     this.server.create('user', {login: 'user-login2'});
