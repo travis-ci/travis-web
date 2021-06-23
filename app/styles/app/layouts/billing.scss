@@ -908,6 +908,24 @@
         font-size: 12px;
         margin: 5px 0 0 5px;
       }
+
+      .auto-refill {
+        margin-top: 35px;
+      }
+
+      .auto-refill-name {
+        flex: 1;
+        white-space: nowrap;
+        padding-right: 5px;
+        font-size: 14px;
+      }
+
+      .auto-refill-description {
+        flex: 1 1 100%;
+        font-style: italic;
+        font-size: 12px;
+        margin: 5px 0 0 5px;
+      }
     }
 
     .plan-overview {

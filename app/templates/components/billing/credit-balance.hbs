@@ -38,5 +38,6 @@
     {{this.creditsAvailable}} available <span class='credits-bar-right'>{{this.creditsUsed}} used</span>
   </p>
   <Billing::OssCreditToggle/>
+  <Billing::AutoRefill @subscription={{this.subscription}} @account={{this.account}}/>
 </div>
 <hr />

@@ -1,0 +1,16 @@
+<div class="auto-refill">
+  <TravisSwitch
+    @active={{this.autoRefillEnabled}}
+    @disabled={{this.toggleAutoRefill.isRunning}}
+    @onToggle={{perform this.toggleAutoRefill}}
+  />
+  <span class="auto-refill-name">
+    Enable Auto-refill
+  </span>
+  <p class="auto-refill-description">
+   Auto-refill tops up your Travis CI credit balance with {{this.autoRefillCredits}} credits when your balance
+falls below {{this.autoRefillMinimumCredits}} credits.
+This ensures you never run out of Travis CI credits and prevents unexpected builds end.
+Auto-refill works with debit/credit cards. Please read the documentation for more details.“
+  </p>
+</div>
