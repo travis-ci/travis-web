@@ -1,3 +1,4 @@
+{{#if this.show }}
 <div class="auto-refill">
   <TravisSwitch
     @active={{this.autoRefillEnabled}}
@@ -14,3 +15,4 @@ This ensures you never run out of Travis CI credits and prevents unexpected buil
 Auto-refill works with debit/credit cards. Please read the documentation for more details.“
   </p>
 </div>
+{{/if}}

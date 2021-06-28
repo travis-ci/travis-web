@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
+import { reads, and } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
@@ -22,6 +22,19 @@ export default Component.extend({
 
   autoRefillMinimumCredits: computed('creditsTotal', 'autoRefillThreshold', function () {
     return this.autoRefillThreshold;
+  }),
+  
+  show: computed('subscription', function () {
+    console.log("this subecription: " + JSON.stringify(this.subscription))
+    ;
+
+    console.log("this subecription.plan.free: " + this.subscription.plan.get('isFree'));
+    console.log("is org: " + this.subscription.owner.get('isOrganization'));
+    console.log("is adm: " + this.subscription.owner.get('permissions').admin);
+    let isOrganization = this.subscription.owner.get('isOrganization');
+    let isAdmin = this.subscription.owner.get('permissions').admin;
+    if (this.subscription.plan.get('isFree') || (isOrganization && !isAdmin)) return false;
+    return true;
   }),
 
   toggleAutoRefill: task(function* (value) {
