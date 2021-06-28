@@ -8,15 +8,16 @@ export default Component.extend({
   account: null,
 
   usedUsers: reads('subscription.usedUsers'),
+  addonUsage: reads('subscription.addonUsage.user'),
 
   usersUsageReceived: reads('account.allowance.isFulfilled'),
   usersUsageRejected: reads('account.allowance.isRejected'),
-  usersUsage: computed('account.allowance.userUsage', function () {
+  usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
     const userUsage = this.get('account').get('allowance').get('userUsage');
     if (userUsage === undefined) {
       return true;
     }
-    return userUsage;
+    return userUsage && (this.addonUsage.usedCredits <= this.addonUsage.totalCredits);
   }),
   pendingUserLicenses: reads('account.allowance.pendingUserLicenses')
 
