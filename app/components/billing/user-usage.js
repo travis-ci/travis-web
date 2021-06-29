@@ -17,7 +17,7 @@ export default Component.extend({
     if (userUsage === undefined) {
       return true;
     }
-    return userUsage && (this.addonUsage.usedCredits <= this.addonUsage.totalCredits);
+    return userUsage && (this.addonUsage.usedCredits < this.addonUsage.totalCredits);
   }),
   pendingUserLicenses: reads('account.allowance.pendingUserLicenses')
 
