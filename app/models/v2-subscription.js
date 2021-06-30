@@ -33,6 +33,7 @@ export default Model.extend({
   owner: belongsTo('owner', { polymorphic: true }),
   plan: belongsTo('v2-plan-config'),
   addons: attr(),
+  auto_refill: attr(),
 
   isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),
@@ -186,5 +187,15 @@ export default Model.extend({
   buyAddon: task(function* (addon) {
     yield this.api.post(`/v2_subscription/${this.id}/addon/${addon.id}`);
     yield this.accounts.fetchV2Subscriptions.perform();
-  }).drop()
+  }).drop(),
+
+  autoRefillToggle: task(function* (ownerId, value) {
+    const data = { enabled: value };
+    yield this.api.patch(`/v2_subscription/${this.id}/auto_refill`, { data });
+
+    yield this.accounts.fetchV2Subscriptions.perform();
+  }).drop(),
+  autoRefillEnabled: reads('auto_refill.enabled'),
+  autoRefillThreshold: reads('auto_refill.threshold'),
+  autoRefillAmount: reads('auto_refill.amount')
 });
