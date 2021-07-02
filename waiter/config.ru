@@ -33,8 +33,8 @@ end
 
 if ENV['TRAVIS_PRO']
   ENV['API_ENDPOINT'] ||= "https://api.travis-ci.com"
-  ENV['PAGES_ENDPOINT'] ||= "https://travis-ci.com/account/plan"
-  ENV['BILLING_ENDPOINT'] ||= "https://travis-ci.com/account/plan"
+  ENV['PAGES_ENDPOINT'] ||= "https://app.travis-ci.com/account/plan"
+  ENV['BILLING_ENDPOINT'] ||= "https://app.travis-ci.com/account/plan"
 
   ENV['SSH_KEY_ENABLED'] = 'true' unless ENV.has_key?('SSH_KEY_ENABLED')
   ENV['CACHES_ENABLED'] = 'true' unless ENV.has_key?('CACHES_ENABLED')

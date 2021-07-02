@@ -86,9 +86,9 @@ module.exports = function (environment) {
       buildConfigValidation: 'https://docs.travis-ci.com/user/build-config-validation/',
       caseStudy: 'https://blog.travis-ci.com/2019-06-5-case-study-ibm-cloud-kubernetes-service',
       changelog: 'https://changelog.travis-ci.com',
-      community: 'https://travis-ci.community',
-      communityEarlyReleases: 'https://travis-ci.community/c/early-releases',
-      dashboard: 'https://travis-ci.com/dashboard',
+      community: 'https://app.travis-ci.community',
+      communityEarlyReleases: 'https://app.travis-ci.community/c/early-releases',
+      dashboard: 'https://app.travis-ci.com/dashboard',
       docker: 'https://docs.travis-ci.com/user/docker/',
       docs: 'https://docs.travis-ci.com',
       gettingStarted: 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
@@ -102,10 +102,10 @@ module.exports = function (environment) {
       multiOS: 'https://docs.travis-ci.com/user/multi-os/',
       node: 'https://docs.travis-ci.com/user/languages/javascript-with-nodejs/',
       noRun: 'https://docs.travis-ci.com/user/common-build-problems/#i-pushed-a-commit-and-cant-fin',
-      plans: 'https://travis-ci.com/plans',
+      plans: 'https://app.travis-ci.com/plans',
       status: 'https://www.traviscistatus.com/',
       support: 'mailto:support@travis-ci.com',
-      travisVsJenkins: 'https://travis-ci.com/travisci-vs-jenkins',
+      travisVsJenkins: 'https://app.travis-ci.com/travisci-vs-jenkins',
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
       pardotHost: 'https://info.travis-ci.com',
@@ -274,8 +274,8 @@ module.exports = function (environment) {
       ENV.apiEndpoint = 'https://api.travis-ci.com';
       ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';
-      ENV.pagesEndpoint = 'https://travis-ci.com/account/plan';
-      ENV.billingEndpoint = 'https://travis-ci.com';
+      ENV.pagesEndpoint = 'https://app.travis-ci.com/account/plan';
+      ENV.billingEndpoint = 'https://app.travis-ci.com';
       ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
       ENV.endpoints = {
         sshKey: true,
@@ -396,7 +396,7 @@ module.exports = function (environment) {
 
     ENV.statusPageStatusUrl = undefined;
 
-    ENV.billingEndpoint = 'https://travis-ci.com';
+    ENV.billingEndpoint = 'https://app.travis-ci.com';
     ENV.apiEndpoint = '';
     ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
   }
