@@ -1,9 +1,10 @@
 <div class="topbar {{if this.isNavigationOpen 'expanded'}} {{if this.showBroadcasts 'expanded'}}" >
   <HeaderBurgerMenu @isOpen={{this.isNavigationOpen}} @onClick={{action 'toggleNavigation'}} />
   <h1 id="logo" class="logo">
-    <LinkTo @route="index">
-      Travis CI
-    </LinkTo>
+    <ExternalLinkTo
+      @content="Travis CI"
+      @href="https://travis-ci.com"
+    />
   </h1>
   <HeaderBroadcasts @showBroadcasts={{this.showBroadcasts}} />
   <HeaderLinks @isOpen={{this.isNavigationOpen}} />
