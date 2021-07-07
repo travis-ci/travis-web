@@ -35,8 +35,8 @@ class Travis::Web::App
 
     def build(options = {})
       builder = Rack::Builder.new
-      if options[:environment] == 'production' ||
-          options[:environment] == 'staging'
+      if (options[:environment] == 'production' ||
+          options[:environment] == 'staging') && !ENV['WITHOUT_RACK_SSL']
         builder.use Rack::SSL, hsts: Travis.config.ssl.hsts
       end
       builder.use Rack::Deflater
