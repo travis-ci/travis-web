@@ -2,7 +2,7 @@ import Model, { attr } from '@ember-data/model';
 import { equal } from '@ember/object/computed';
 
 export default Model.extend({
-  privateCredits: attr('number'),
+  privateCredits: attr('string'),
   publicCredits: attr('number'),
   builds: attr('number'),
   annual: attr('boolean'),
@@ -14,4 +14,5 @@ export default Model.extend({
   isDefault: attr('boolean'),
   isAnnual: attr('boolean'),
   isFree: equal('price', 0),
+  price_annual: attr('number'),
 });
