@@ -10,16 +10,20 @@ GEM
     diff-lcs (1.4.4)
     foreman (0.87.2)
     hashr (2.0.1)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.5.3)
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.10.10)
-      mini_portile2 (~> 2.4.0)
+    nio4r (2.5.7)
+    nokogiri (1.11.7)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
     nokogumbo (2.0.5)
       nokogiri (~> 1.8, >= 1.8.4)
     power_assert (2.0.0)
-    puma (3.12.6)
+    puma (4.3.8)
+      nio4r (~> 2.0)
+    racc (1.5.2)
     rack (2.2.3)
     rack-mobile-detect (0.4.0)
       rack
@@ -62,7 +66,7 @@ PLATFORMS
 DEPENDENCIES
   foreman
   hashr
-  puma (~> 3.12.4)
+  puma (~> 4)
   rack (~> 2)
   rack-mobile-detect
   rack-protection
@@ -76,7 +80,7 @@ DEPENDENCIES
   travis-web!
 
 RUBY VERSION
-   ruby 2.4.2p198
+   ruby 2.6.8p205
 
 BUNDLED WITH
    1.17.3

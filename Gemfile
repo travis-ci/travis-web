@@ -1,9 +1,9 @@
-ruby "~> 2.4.2"
+ruby "~> 2.6"
 
 source 'https://rubygems.org'
 
 gem 'travis-web', path: 'waiter'
-gem 'puma', '~> 3.12.4'
+gem 'puma', '~> 4'
 gem 'rack', '~> 2'
 gem 'rack-ssl'
 gem 'rack-protection'
