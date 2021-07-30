@@ -20,6 +20,10 @@ export default Component.extend({
     return this.autoRefillAmount;
   }),
 
+  autoRefillPrice: computed('autoRefillAmount', function () {
+    return Math.ceil(this.autoRefillAmount * 0.0006);
+  }),
+
   autoRefillMinimumCredits: computed('creditsTotal', 'autoRefillThreshold', function () {
     return this.autoRefillThreshold;
   }),
