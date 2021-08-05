@@ -11,10 +11,13 @@ export default Model.extend({
   concurrencyLimit: attr('number'),
   planType: attr('string'),
   availableStandaloneAddons: attr(),
+  annual: attr('boolean'),
 
   isFree: equal('startingPrice', 0),
 
   isUnlimitedUsers: equal('startingUsers', 999999),
+
+  isAnnual: equal('annual', true),
 
   addonConfigs: attr(),
   hasCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
