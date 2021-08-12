@@ -12,16 +12,22 @@
         @showCancelButton={{this.showCancelButton}}
       />
     {{else}}
-      <Billing::SelectPlan
-        @title="Edit plan"
-        @selectedPlan={{this.selectedPlan}}
-        @subscription={{this.subscription}}
-        @account={{this.account}}
-        @showPlansSelector={{this.showPlansSelector}}
-        @showAddonsSelector={{this.showAddonsSelector}}
-        @next={{action 'next'}}
-        @showCancelButton={{this.showCancelButton}}
-      />
+      <Modal
+        @isVisible={{this.showPlansSelector}}
+        @closeButton={{true}}
+        @onClose={{action 'closePlansModal'}}
+      >
+        <Billing::SelectPlan
+          @title="Edit plan"
+          @selectedPlan={{this.selectedPlan}}
+          @subscription={{this.subscription}}
+          @account={{this.account}}
+          @showPlansSelector={{this.showPlansSelector}}
+          @showAddonsSelector={{this.showAddonsSelector}}
+          @next={{action 'next'}}
+          @showCancelButton={{this.showCancelButton}}
+        />
+      </Modal>
     {{/if}}
   {{else if this.isStepTwo}}
     <Billing::Information

@@ -15,6 +15,7 @@ export default Component.extend({
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
+  showAnnual: true,
 
   displayedPlans: reads('availablePlans'),
 
@@ -34,6 +35,14 @@ export default Component.extend({
     selectAndSubmit(plan, form) {
       this.set('selectedPlan', plan);
       later(() => form.submit(), 500);
+    },
+
+    showAnnualPlans() {
+      this.set('showAnnual', true);
+    },
+
+    showMonthlyPlans() {
+      this.set('showAnnual', false);
     }
   }
 });

@@ -14,6 +14,7 @@ export default Model.extend({
   annual: attr('boolean'),
 
   isFree: equal('startingPrice', 0),
+  isTrial: equal('id', 'trial_plan'),
 
   isUnlimitedUsers: equal('startingUsers', 999999),
 

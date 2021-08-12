@@ -6,7 +6,7 @@
     </span>
   {{/if}}
   {{#if this.showPlanInfo}}
-    {{#if (and this.subscription.isNotManual (eq this.subscription.plan.planType 'metered'))}}
+    {{#if (and (not this.subscription.plan.isTrial) (and this.subscription.isNotManual (eq this.subscription.plan.planType 'metered')))}}
       <span class="notice-banner--white block" data-test-plan-notice='true'>
         {{#if this.subscription.plan.isFree}}
           Please note that additional add-ons are not available for this plan. Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances in Free Plan.
@@ -162,7 +162,7 @@
           </div>
         </div>
       </section>
-      {{#if this.subscription.isNotManual}}
+      {{#if (and this.subscription.isNotManual (not this.subscription.plan.isTrial))}}
         <section>
           <div class='selected-plan__price'>
             <h6 class='selected-plan__price--total' data-test-plan-total='true'>
