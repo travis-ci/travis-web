@@ -21,7 +21,7 @@ export default Component.extend({
   isLoading: false,
 
   vcsType: computed('provider', function () {
-    return `${this.provider.capitalize()}User`;
+    return `${this.provider.replace('-', '').capitalize()}User`;
   }),
 
   isPrimaryProvider: computed('provider', function () {
