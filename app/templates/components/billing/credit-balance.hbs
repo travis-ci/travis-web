@@ -24,7 +24,7 @@
 
   <p class='avail-credits'>
     {{#if (eq this.creditsTab 1)}}
-      {{this.creditsAvailable}} available credits (next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})
+      {{this.creditsAvailable}} available credits {{if (eq this.creditsAvailable 0) "" "(next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})"}}
     {{else}}
       {{this.creditsAvailable}} available credits (purchase date: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}})
     {{/if}}

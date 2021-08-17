@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { equal, not, reads, or } from '@ember/object/computed';
+import { equal, not, reads, or, alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -23,6 +23,7 @@ export default Model.extend({
   coupon: attr('string'),
   clientSecret: attr('string'),
   paymentIntent: attr(),
+  scheduledPlanName: attr('string'),
 
   v1SubscriptionId: attr('number'),
 
@@ -107,11 +108,16 @@ export default Model.extend({
     };
   }),
 
-  validToFromUserLicenseAddon: computed('addons.[]', function () {
-    const userLicenseAddons = this.addons.filter(addon => addon.type === 'user_license' && addon.current_usage.status !== 'expired');
-    const userLicenseAddon =  userLicenseAddons ? userLicenseAddons[0] : null;
-    if (userLicenseAddon) {
-      return userLicenseAddon.current_usage.valid_to;
+  recurringAddon: computed('addons.[]', function () {
+    const recurringAddons = this.addons.filter(addon => addon.recurring);
+    return recurringAddons ? recurringAddons[0] : null;
+  }),
+
+  validToFromAddon: computed('addons.[]', function () {
+    const addons = this.addons.filter(addon => (addon.type === 'user_license' || addon.recurring) && addon.current_usage.status !== 'expired');
+    const addon =  addons ? addons[0] : null;
+    if (addon) {
+      return addon.current_usage.valid_to;
     }
   }),
 
@@ -164,6 +170,13 @@ export default Model.extend({
   sourceWords: computed('source', function () {
     let source = this.source;
     return sourceToWords[source];
+  }),
+
+  account: alias('accounts.user'),
+  availablePlans: reads('account.eligibleV2Plans'),
+
+  scheduledPlan: computed('scheduledPlanName', 'availablePlans', function () {
+    return this.availablePlans.filter(plan => plan.id === this.scheduledPlanName)[0];
   }),
 
   chargeUnpaidInvoices: task(function* () {

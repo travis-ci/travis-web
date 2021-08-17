@@ -63,12 +63,12 @@
                     {{this.subscription.status}}
                   </span>
                 {{/if}}
-                <span class="valid-until" data-test-renews='true'>
+                  <span class="valid-until" data-test-renews='true'>
                     Valid until
                     {{#if this.subscription.validTo}}
                       {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{else}}
-                      {{moment-format this.subscription.validToFromUserLicenseAddon "MMMM D, YYYY"}}
+                      {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
                     {{/if}}
                   </span>
               {{else}}
@@ -103,6 +103,29 @@
                       Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
                     {{else if (and this.isComplete this.isExpired)}}
                       Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                    {{/if}}
+                  </span>
+                {{else if this.subscription.recurringAddon}}
+                  {{#if (eq this.subscription.recurringAddon.current_usage.status 'subscribed')}}
+                    <span class="badge green square" data-test-active-status='true'>
+                      active
+                    </span>
+                  {{else if (eq this.subscription.recurringAddon.current_usage.status 'expired')}}
+                    <span class="badge red square" data-test-expired-status='true'>
+                      expired
+                    </span>
+                  {{else}}
+                    <span class="badge grey square grey-badge" data-test-grey-status='true'>
+                      {{this.subscription.recurringAddon.current_usage.status}}
+                    </span>
+                  {{/if}}
+                  <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
+                    {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
+                  >
+                    {{#if (eq this.subscription.recurringAddon.current_usage.status 'subscribed')}}
+                      Valid until {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
+                    {{else if (eq this.subscription.recurringAddon.current_usage.status 'expired')}}
+                      Expired {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
                     {{/if}}
                   </span>
                 {{/if}}
