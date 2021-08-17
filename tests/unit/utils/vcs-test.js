@@ -18,6 +18,10 @@ module('Unit | Utils | vcsName', function () {
     assert.equal(vcsName('BitbucketRepository'), 'Bitbucket');
   });
 
+  test('it handles Travisproxy', function (assert) {
+    assert.equal(vcsName('TravisproxyRepository'), 'Travisproxy');
+  });
+
   test('it returns default provider when vcs is not found in providers', function (assert) {
     assert.equal(vcsName('OtherVcs'), 'GitHub');
   });
@@ -27,8 +31,10 @@ module('Unit | Utils | vcsVocab', function () {
   test('it returns the vocabulary key', function (assert) {
     assert.equal(vcsVocab('GithubRepository', 'pullRequest'), 'Pull Request');
     assert.equal(vcsVocab('AssemblaRepository', 'pullRequest'), 'Merge Request');
+    assert.equal(vcsVocab('TravisproxyRepository', 'pullRequest'), 'Merge Request');
     assert.equal(vcsVocab('GithubRepository', 'organization'), 'Organization');
     assert.equal(vcsVocab('AssemblaRepository', 'organization'), 'Space');
+    assert.equal(vcsVocab('TravisproxyRepository', 'organization'), 'VCS Server');
   });
 
   test('throws if key is invalid', function (assert) {
@@ -40,6 +46,7 @@ module('Unit | Utils | vcsIcon', function () {
   test('it returns the icon', function (assert) {
     assert.equal(vcsIcon('GithubRepository'), 'icon-repooctocat');
     assert.equal(vcsIcon('AssemblaRepository'), 'icon-assembla');
+    assert.equal(vcsIcon('TravisproxyRepository'), 'icon-travis-proxy');
   });
 });
 
@@ -58,6 +65,6 @@ module('Unit | Utils | vcsUrl', function () {
 
 module('Unit | Utils | availableProviders', function () {
   test('returns the list of providers', function (assert) {
-    assert.deepEqual(availableProviders, ['assembla', 'bitbucket', 'gitlab', 'github']);
+    assert.deepEqual(availableProviders, ['assembla', 'bitbucket', 'gitlab', 'github', 'travisproxy']);
   });
 });

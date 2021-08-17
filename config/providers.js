@@ -28,6 +28,11 @@ const VCS_TYPES = {
     ORG: 'GithubOrganization',
     REPO: 'GithubRepository',
     USER: 'GithubUser'
+  },
+  TRAVIS_PROXY: {
+    ORG: 'TravisproxyOrganization',
+    REPO: 'TravisproxyRepository',
+    USER: 'TravisproxyUser'
   }
 };
 
@@ -146,6 +151,34 @@ module.exports = deepFreeze({
     colors: {
       main: 'grey-dark',
       light: 'grey',
+    },
+  },
+
+  travisproxy: {
+    isDefault: DEFAULT_PROVIDER === 'travisproxy',
+    isBeta: true,
+    vcsTypes: [VCS_TYPES.TRAVIS_PROXY.ORG, VCS_TYPES.TRAVIS_PROXY.REPO, VCS_TYPES.TRAVIS_PROXY.USER],
+    endpoint: 'https://travis-vcs-proxy.travis-ci.com',
+    icon: 'icon-travis-proxy',
+    name: 'Travis CI VCS Proxy',
+    urlPrefix: 'travisproxy',
+    paths: {
+      branch: '/:owner/:repo/-/tree/:branch',
+      commit: '/:owner/:repo/-/tree/:commit',
+      file: '/:owner/:repo/-/blob/:branch/:file',
+      issue: '/:owner/:repo/-/issues/:issue',
+      profile: '/:owner',
+      repo: '/:owner/:repo',
+      tag: '/:owner/:repo/-/tree/:tag',
+      accessSettings: '/',
+    },
+    vocabulary: {
+      organization: 'VCS Server',
+      pullRequest: 'Merge Request',
+    },
+    colors: {
+      main: 'red-300',
+      light: 'red-300',
     },
   },
 });
