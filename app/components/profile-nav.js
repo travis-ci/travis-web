@@ -77,8 +77,13 @@ export default Component.extend({
       this.flashes.custom('flashes/read-only-mode', {}, 'warning');
     }
 
-    if (!allowance || (allowance && allowance.get('subscriptionType') !== 2))
+    if (!allowance) {
       return;
+    }
+
+    if (allowance.get('subscriptionType') !== 2) {
+      return;
+    }
 
     if (!allowance.get('privateRepos') && !allowance.get('publicRepos')) {
       this.flashes.custom('flashes/negative-balance-private-and-public', { owner: this.model, isUser: this.model.isUser }, 'warning');

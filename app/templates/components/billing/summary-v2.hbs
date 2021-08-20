@@ -169,7 +169,7 @@
               Total:
             </h6>
             {{#if this.subscription.plan }}
-              {{#if this.subscription.plan.isFree}}
+              {{#if (or this.subscription.plan.isFree this.subscription.plan.isTrial)}}
                 <p class='selected-plan__price--large' data-test-price>
                   Free
                 </p>

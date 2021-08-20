@@ -25,7 +25,7 @@
                   {{/if}}
                 </p>
                 <p class='billing-plans__box-v2--price' data-test-selected-plan-price="true">
-                  {{#if plan.isFree}}
+                  {{#if (or plan.isFree plan.isTrial)}}
                     Free
                   {{else}}
                     {{#if (eq plan.planType 'hybrid')}}
@@ -75,6 +75,9 @@
                 <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
                   <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
                 </p>
+                {{#if plan.isTrial}}
+                  <p class='billing-plans__box-v2--desc'>As part of the trial offer for credits, we require credit card authorization. Upon entering your payment details you will see a charge for $1 show up on your credit card statement. This charge will be placed on a temporary hold and will be removed within a week.</p>
+                {{/if}}
                 {{#if (eq plan.id this.subscription.plan.id)}}
                   <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
                 {{else}}
