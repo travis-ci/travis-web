@@ -23,6 +23,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       privateCredits: 25000,
       publicCredits: 40000,
       isFree: false,
+      isAnnual: true,
       isUnlimitedUsers: false,
       hasCreditAddons: true,
       hasOSSCreditAddons: true,
@@ -38,6 +39,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       privateCredits: 500000,
       publicCredits: 40000,
       isFree: false,
+      isAnnual: true,
       isUnlimitedUsers: false,
       hasCreditAddons: true,
       hasOSSCreditAddons: true,
@@ -62,7 +64,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan1.name}`);
     assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan1.startingUsers} unique users`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan1.startingPrice / 100}`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan1.startingPrice / 100}/${this.plan1.isAnnual ? 'annualy' : 'monthly'}`);
   });
 
   test('changing selected plan should highlight new plan', async function (assert) {
@@ -77,6 +79,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan2.name}`);
     assert.dom(profilePage.billing.selectedPlan.users.scope).hasText(`Up to ${this.plan2.startingUsers} unique users`);
-    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`Starting at $${this.plan2.startingPrice / 100}`);
+    assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan2.startingPrice / 100}/${this.plan2.isAnnual ? 'annualy' : 'monthly'}`);
   });
 });
