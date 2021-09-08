@@ -93,7 +93,7 @@
           {{/if}}
         </div>
         <div class='billing-subscription__buttons--cancel'>
-          {{#if (and this.canCancelSubscription (not this.isV2Subscription))}}
+          {{#if this.canCancelSubscription}}
             <button {{on 'click' (fn (mut this.showCancelModal) true)}} class='button--white button--hover' data-test-open-cancel-subscription-modal='true'>
               Cancel subscription
             </button>

@@ -36,7 +36,6 @@ export default Model.extend({
   addons: attr(),
   auto_refill: attr(),
 
-  isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),
   isExpired: equal('status', 'expired'),
   isPending: equal('status', 'pending'),
@@ -46,6 +45,10 @@ export default Model.extend({
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
   isNotManual: not('isManual'),
+
+  isSubscribed: computed('status', function () {
+    return this.status === null || this.status == 'subscribed';
+  }),
 
   usedUsers: computed('addons.[].current_usage', function () {
     if (!this.addons) {
@@ -210,5 +213,12 @@ export default Model.extend({
   }).drop(),
   autoRefillEnabled: reads('auto_refill.enabled'),
   autoRefillThreshold: reads('auto_refill.threshold'),
-  autoRefillAmount: reads('auto_refill.amount')
+  autoRefillAmount: reads('auto_refill.amount'),
+
+  cancelSubscription: task(function* (data) {
+    yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
+      data
+    });
+    yield this.accounts.fetchSubscriptions.perform();
+  }).drop(),
 });
