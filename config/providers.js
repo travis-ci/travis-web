@@ -5,7 +5,8 @@ const deepFreeze = require('deep-freeze');
 
 const {
   GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL,
-  DEFAULT_PROVIDER
+  DEFAULT_PROVIDER,
+  VCS_PROXY_PROVIDER_URL,
 } = process && process.env || {};
 
 const VCS_TYPES = {
@@ -154,7 +155,7 @@ module.exports = deepFreeze({
     isDefault: DEFAULT_PROVIDER === 'travisproxy',
     isBeta: true,
     vcsTypes: [VCS_TYPES.TRAVIS_PROXY.ORG, VCS_TYPES.TRAVIS_PROXY.REPO, VCS_TYPES.TRAVIS_PROXY.USER],
-    endpoint: 'https://travis-vcs-proxy.travis-ci.com',
+    endpoint: VCS_PROXY_PROVIDER_URL,
     icon: 'icon-travis-proxy',
     name: 'Travis CI VCS Proxy',
     urlPrefix: 'travisproxy',
