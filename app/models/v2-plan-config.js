@@ -12,6 +12,8 @@ export default Model.extend({
   planType: attr('string'),
   availableStandaloneAddons: attr(),
   annual: attr('boolean'),
+  autoRefillThresholds: attr(),
+  autoRefillAmounts: attr(),
 
   isFree: equal('startingPrice', 0),
   isTrial: equal('id', 'trial_plan'),

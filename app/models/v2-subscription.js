@@ -211,14 +211,23 @@ export default Model.extend({
 
     yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
+  autoRefillAddonId: reads('auto_refill.addon_id'),
   autoRefillEnabled: reads('auto_refill.enabled'),
   autoRefillThreshold: reads('auto_refill.threshold'),
   autoRefillAmount: reads('auto_refill.amount'),
+  autoRefillThresholds: reads('plan.autoRefillThresholds'),
+  autoRefillAmounts: reads('plan.autoRefillAmounts'),
+  autoRefillUpdate: task(function* (threshold, amount) {
+    const data = { addon_id: this.autoRefillAddonId, threshold: parseInt(threshold), amount: parseInt(amount) };
+    yield this.api.patch(`/v2_subscription/${this.id}/update_auto_refill`, { data });
+
+    yield this.accounts.fetchV2Subscriptions.perform();
+  }).drop(),
 
   cancelSubscription: task(function* (data) {
     yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
       data
     });
-    yield this.accounts.fetchSubscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
 });

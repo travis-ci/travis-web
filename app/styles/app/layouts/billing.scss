@@ -454,6 +454,48 @@
     }
   }
 
+  .billing-refill-title {
+    font-size: 14px;
+    color: $asphalt-grey;
+    margin-top: 28px;
+  }
+
+  .billing-refill {
+    display: flex;
+
+    &__box {
+      width: 119px;
+      height: 56px;
+      margin-top: 10px;
+      margin-right: 25px;
+      border-radius: 3px;
+      border: solid 1px #d0d0d0;
+      text-align: center;
+
+      &--value {
+        font-size: 14px;
+        margin-top: 10px;
+        margin-bottom: 0;
+      }
+  
+      &--description {
+        font-size: 10px;
+        font-style: italic;
+        margin: 0;
+      }
+    }
+
+    &__apply {
+      margin-top: 28px;
+    }
+
+    .highlight {
+      color: $oxide-blue;
+      border: 1px solid $oxide-blue;
+      box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+    }
+  }
+
   .travis-modal {
     .billing-select-plan {
       h3 {
