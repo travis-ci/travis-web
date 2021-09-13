@@ -133,6 +133,7 @@ export default Component.extend({
       subscription.setProperties({
         organization: org,
         plan: plan,
+        v1SubscriptionId: this.v1SubscriptionId,
       });
       yield subscription.save();
       yield this.accounts.fetchV2Subscriptions.perform();
@@ -159,6 +160,7 @@ export default Component.extend({
         subscription.setProperties({
           organization: org,
           plan: plan,
+          v1SubscriptionId: this.v1SubscriptionId,
         });
         if (!this.subscription.id) {
           subscription.creditCardInfo.setProperties({
