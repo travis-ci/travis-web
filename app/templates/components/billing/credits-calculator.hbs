@@ -1,0 +1,121 @@
+<div class='credits-calculator'>
+  <div class='body'>
+    <div class='calculator-header'>
+      <h2>Credits Calculator</h2>
+
+      <button
+        type='button'
+        title='Close modal'
+        class='absolute cursor-pointer top-0 right-0 p-0 mt-8 mr-8'
+        onclick={{action 'close'}}
+      >
+        <SvgImage @name='icon-failed' @class='w-5 h-5' />
+      </button>
+    </div>
+
+    <div>
+      You are not sure about your needs?
+    </div>
+    <div class='credits-calculator-button bold'>
+      Load most commonly used configuration
+    </div>
+
+    <TravisForm
+      class='edit-form'
+      @onSubmit={{perform this.calculate}}
+      as |form|
+    >
+      <div class='form-elem'>
+        <form.field
+          @label='Users'
+          @value={{this.users}}
+          @onChange={{action 'setUsers'}}
+          as |field|
+        >
+          <field.input name='users' placeholder='How many users do you need?' />
+        </form.field>
+      </div>
+      {{#each this.builds as |build index|}}
+        <div class='flex flex--col flex-md-row'>
+          <div class='inline-form-elem form-elem-half-width'>
+            <form.field
+              @label='OS'
+              @value={{build.os}}
+              @onChange={{action 'updateAttribute' index 'os'}}
+              as |field|
+            >
+              <field.select
+                name='os'
+                @placeholder='Select OS'
+                @options={{this.os}} as |os|
+              >
+                {{os.name}}
+              </field.select>
+            </form.field>
+          </div>
+          <div class='inline-form-elem form-elem-half-width'>
+            <form.field
+              @label='VM Size'
+              @onChange={{action 'updateAttribute' index 'vmSize'}}
+              @value={{build.vmSize}}
+              as |field|
+            >
+              <field.select
+                name='vm_size'
+                @placeholder='Select VM Size'
+                @options={{this.vmSizes}} as |vmSize|
+              >
+                {{vmSize.name}}
+              </field.select>
+            </form.field>
+          </div>
+          <div class='form-elem'>
+            <form.field
+              @label='Minutes'
+              @value={{build.minutes}}
+              @onChange={{action 'updateAttribute' index 'minutes'}}
+              as |field|
+            >
+              <field.input name='minutes' placeholder='Estimated builds time' />
+            </form.field>
+          </div>
+        </div>
+      {{/each}}
+    </TravisForm>
+
+    <div class='credits-calculator-button bold' onclick={{action 'addBuild'}}>+ Need builds on another OS?</div>
+
+    {{#if this.configurations.length}}
+      <div class='configurations'>
+        <div class='selected-config-header'>Selected configuration:</div>
+        {{#each this.configurations as |configuration|}}
+          <div class='config-row'>
+            <div class='name'>
+              {{configuration.name}}:
+            </div>
+            <div class='price'>
+               ({{format-currency configuration.price}})
+            </div>
+            <div class='credits'>
+              {{configuration.credits}}
+            </div>
+          </div>
+        {{/each}}
+
+        <div class='total-separator'></div>
+
+        <div class='total'>
+          <div class='name'>
+              TOTAL
+            </div>
+            <div class='price'>
+               ({{format-currency this.totalPrice}})
+            </div>
+            <div class='credits'>
+              {{this.totalCredits}}
+            </div>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>

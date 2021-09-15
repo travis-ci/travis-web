@@ -16,6 +16,7 @@ export default Component.extend({
   defaultPlanName: reads('defaultPlans.firstObject.name'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
   showAnnual: true,
+  showCalculator: false,
 
   displayedPlans: reads('availablePlans'),
 
@@ -43,6 +44,14 @@ export default Component.extend({
 
     showMonthlyPlans() {
       this.set('showAnnual', false);
+    },
+
+    showCalculator() {
+      this.set('showCalculator', true);
+    },
+
+    hideCalculator() {
+      this.set('showCalculator', false);
     }
   }
 });

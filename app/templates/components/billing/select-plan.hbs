@@ -7,7 +7,7 @@
         Select Plan
       </h3>
       <h2>
-        You can use our Calculator to establish what plan do you need 
+        You can use our <a class='credits-calculator-button' onclick={{action 'showCalculator'}}>Calculator</a> to establish what plan do you need
       </h2>
       <nav class="travistab-nav">
         <ul>
@@ -102,4 +102,10 @@
       </h2>
     </TravisForm>
   </section>
+{{/if}}
+
+{{#if this.showCalculator}}
+  <Billing::CreditsCalculator
+    @hideCalculator={{action 'hideCalculator'}}
+  />
 {{/if}}
