@@ -63,14 +63,6 @@
                     {{this.subscription.status}}
                   </span>
                 {{/if}}
-                <span class="valid-until" data-test-renews='true'>
-                    Valid until
-                    {{#if this.subscription.validTo}}
-                      {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
-                    {{else}}
-                      {{moment-format this.subscription.validToFromUserLicenseAddon "MMMM D, YYYY"}}
-                    {{/if}}
-                  </span>
               {{else}}
                 {{#if this.subscription.plan}}
                   {{this.subscription.plan.name}}
