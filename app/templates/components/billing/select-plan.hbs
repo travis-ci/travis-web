@@ -100,12 +100,16 @@
       <h2>
         Looking for more credits, users or VM sizes? Contact our Sales Team
       </h2>
+      {{#if this.showCalculator}}
+        <Billing::CreditsCalculator
+          @hideCalculator={{action 'hideCalculator'}}
+          @plans={{this.displayedPlans}}
+          @form={{form}}
+          @selectedPlan={{this.selectedPlan}}
+          @selectPlan={{this.submitForm}}
+          @isAnnual={{this.showAnnual}}
+        />
+      {{/if}}
     </TravisForm>
   </section>
-{{/if}}
-
-{{#if this.showCalculator}}
-  <Billing::CreditsCalculator
-    @hideCalculator={{action 'hideCalculator'}}
-  />
 {{/if}}

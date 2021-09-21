@@ -32,10 +32,18 @@ export default Component.extend({
     }
   }).drop(),
 
+  selectAndSubmit(plan, form) {
+    this.set('selectedPlan', plan);
+    later(form.submit, 500);
+  },
+
+  submitForm(form) {
+    later(form.submit, 500);
+  },
+
   actions: {
     selectAndSubmit(plan, form) {
-      this.set('selectedPlan', plan);
-      later(() => form.submit(), 500);
+      this.selectAndSubmit(plan, form);
     },
 
     showAnnualPlans() {

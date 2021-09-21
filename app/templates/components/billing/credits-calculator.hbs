@@ -16,7 +16,7 @@
     <div>
       You are not sure about your needs?
     </div>
-    <div class='credits-calculator-button bold'>
+    <div class='credits-calculator-button bold' onclick={{action 'loadDefaultConfig'}}>
       Load most commonly used configuration
     </div>
 
@@ -86,6 +86,12 @@
     <div class='credits-calculator-button bold' onclick={{action 'addBuild'}}>+ Need builds on another OS?</div>
 
     {{#if this.configurations.length}}
+      {{#if this.bestPlan}}
+        <div class='best-plan bold'>
+          Our <span class='credits-calculator-button' onclick={{action 'selectPlan'}}>{{this.bestPlan.name}} Plan</span> is the best match for the provided configuration.
+        </div>
+      {{/if}}
+
       <div class='configurations'>
         <div class='selected-config-header'>Selected configuration:</div>
         {{#each this.configurations as |configuration|}}

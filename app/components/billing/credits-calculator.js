@@ -9,10 +9,17 @@ export default Component.extend({
   os,
   vmSizes,
   users: '',
+  plans: [],
   builds: [
     { os: {}, vmSize: {}, minutes: '' }
   ],
   configurations: [],
+  form: null,
+  selectPlan: null,
+
+  bestPlan: computed('totalCredits', 'plans.[]', function () {
+    return this.get('plans').find(item => item.annual === this.get('isAnnual') && item.get('privateCredits') > this.get('totalCredits'));
+  }),
 
   totalPrice: computed('configurations.[]', function () {
     let sum = 0;
@@ -37,8 +44,8 @@ export default Component.extend({
       users: this.users,
       executions: []
     };
-    for (const build of this.builds) {
-      if (build.os.value !== undefined && build.vmSize.value !== undefined && build.minutes.length > 0) {
+    for (const build of this.get('builds')) {
+      if (build.os.value !== undefined && build.vmSize.value !== undefined && parseInt(build.minutes) > 0) {
         data.executions.push({
           os: build.os.value,
           instance_size: build.vmSize.value,
@@ -87,8 +94,42 @@ export default Component.extend({
       });
   },
 
+  loadDefaultConfig() {
+    this.api.get('/credits_calculator')
+      .then((result) => {
+        let selectedOs = {};
+        for (const system of os) {
+          if (system.value === result.os) {
+            selectedOs = { name: system.name, value: system.value };
+            break;
+          }
+        }
+
+        let selectedVmSize = {};
+        for (const size of vmSizes) {
+          if (size.value === result.instance_size) {
+            selectedVmSize = { name: size.name, value: size.value };
+            break;
+          }
+        }
+
+        this.get('builds').clear();
+        this.get('builds').pushObject({ os: selectedOs, vmSize: selectedVmSize, minutes: result.minutes });
+        this.set('users', result.users);
+        this.calculate();
+      });
+  },
+
   addBuild() {
     this.get('builds').pushObject({ os: {}, vmSize: {}, minutes: '' });
+  },
+
+  close() {
+    this.hideCalculator();
+    this.get('builds').clear();
+    this.addBuild();
+    this.set('users', '');
+    this.get('configurations').clear();
   },
 
   actions: {
@@ -106,12 +147,18 @@ export default Component.extend({
       this.addBuild();
     },
 
-    close() {
-      this.hideCalculator();
-      this.get('builds').clear();
-      this.addBuild();
-      this.set('users', '');
+    loadDefaultConfig() {
+      this.loadDefaultConfig();
     },
 
+    selectPlan() {
+      this.set('selectedPlan', this.get('bestPlan'));
+      this.close();
+      this.selectPlan(this.form);
+    },
+
+    close() {
+      this.close();
+    },
   },
 });
