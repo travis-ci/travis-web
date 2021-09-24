@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, not, equal, and, or } from '@ember/object/computed';
+import { reads, not, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { computed } from '@ember/object';
