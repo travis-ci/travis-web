@@ -25,15 +25,17 @@ export default Component.extend({
   retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
   hasSubscriptionPermissions: reads('account.hasSubscriptionPermissions'),
   notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
+  freeV2Plan: equal('subscription.plan.startingPrice', 0),
   isSubscribed: reads('subscription.isSubscribed'),
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
-  canCancelSubscription: and('isSubscribed', 'hasSubscriptionPermissions'),
+  canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', function () {
+    return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan;
+  }),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
-  freeV2Plan: equal('subscription.plan.startingPrice', 0),
   canBuyAddons: not('freeV2Plan'),
 
   handleError: reads('stripe.handleError'),
