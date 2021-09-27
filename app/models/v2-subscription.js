@@ -24,6 +24,7 @@ export default Model.extend({
   clientSecret: attr('string'),
   paymentIntent: attr(),
   scheduledPlanName: attr('string'),
+  canceledAt: attr('date'),
 
   v1SubscriptionId: attr('number'),
 

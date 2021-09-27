@@ -26,7 +26,11 @@
     {{#if (eq this.creditsTab 1)}}
       {{this.creditsAvailable}} available credits {{if (eq this.creditsAvailable 0) "" "(next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})"}}
     {{else}}
+      {{#if this.subscription.isCanceled}}
+      {{this.creditsAvailable}} available credits (expiry date: {{moment-format this.creditsValidityDate 'MMMM DD, YYYY'}})
+      {{else}}
       {{this.creditsAvailable}} available credits (purchase date: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}})
+      {{/if}}
     {{/if}}
   </p>
   <p class='used-credits'>

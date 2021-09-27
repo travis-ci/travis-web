@@ -127,7 +127,7 @@
                     {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
                   >
                     {{#if (and this.isComplete this.isCanceled)}}
-                      Expires {{moment-from-now this.subscription.validToFromAddon}} on {{moment-format this.subscription.validToFromAddon "MMMM DD"}}
+                      Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
                     {{else if (eq this.subscription.recurringAddon.current_usage.status 'subscribed')}}
                       Valid until {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
                     {{else if (eq this.subscription.recurringAddon.current_usage.status 'expired')}}
