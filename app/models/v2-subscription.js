@@ -195,8 +195,8 @@ export default Model.extend({
     yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
 
-  changePlan: task(function* (plan) {
-    const data = { plan };
+  changePlan: task(function* (plan, coupon) {
+    const data = { plan, coupon };
     yield this.api.patch(`/v2_subscription/${this.id}/plan`, { data });
     yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
