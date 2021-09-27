@@ -15,6 +15,7 @@
     />
     <Billing::WarningMessage
       @selectedPlan={{this.selectedPlan}}
+      @isReactivation={{this.isReactivation}}
       @subscription={{this.subscription}}
     />
   {{/if}}
@@ -119,7 +120,11 @@
             <LoadingIndicator/>
           {{else}}
             <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
+              {{#if this.isReactivation}}
+              Reactivate plan payments
+              {{else}}
               Pay {{this.discountedPrice}} to complete order
+              {{/if}}
             </button>
           {{/if}}
         </div>
@@ -144,7 +149,11 @@
           <LoadingIndicator/>
         {{else}}
           <button class='button--green' {{on 'click' (perform this.updatePlan)}} data-test-complete-payment='true'>
+            {{#if this.isReactivation}}
+            Reactivate plan payments
+            {{else}}
             Pay {{this.discountedPrice}} to complete order
+            {{/if}}
           </button>
         {{/if}}
       </div>

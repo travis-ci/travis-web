@@ -32,6 +32,12 @@ export default Component.extend({
     }
   }).drop(),
 
+  reactivatePlan(plan, form) {
+    this.set('selectedPlan', plan);
+    this.set('isReactivation', true);
+    later(form.submit, 500);
+  },
+
   selectAndSubmit(plan, form) {
     this.set('selectedPlan', plan);
     later(form.submit, 500);
@@ -44,6 +50,10 @@ export default Component.extend({
   actions: {
     selectAndSubmit(plan, form) {
       this.selectAndSubmit(plan, form);
+    },
+
+    reactivatePlan(plan, form) {
+      this.reactivatePlan(plan, form);
     },
 
     showAnnualPlans() {

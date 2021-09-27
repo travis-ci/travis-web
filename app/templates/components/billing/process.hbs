@@ -20,6 +20,7 @@
         <Billing::SelectPlan
           @title="Edit plan"
           @selectedPlan={{this.selectedPlan}}
+          @isReactivation={{this.isReactivation}}
           @subscription={{this.subscription}}
           @account={{this.account}}
           @showPlansSelector={{this.showPlansSelector}}
@@ -43,6 +44,7 @@
       @subscription={{this.subscription}}
       @v1SubscriptionId={{this.v1SubscriptionId}}
       @selectedPlan={{this.selectedPlan}}
+      @isReactivation={{this.isReactivation}}
       @account={{this.account}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @retryAuthorization={{this.retryAuthorization}}
