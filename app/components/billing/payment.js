@@ -165,6 +165,9 @@ export default Component.extend({
             token: token.id,
             lastDigits: token.card.last4
           });
+          subscription.setProperties({
+            coupon: this.couponId
+          });
           const { clientSecret } = yield subscription.save();
           yield this.stripe.handleStripePayment.perform(clientSecret);
         } else {
