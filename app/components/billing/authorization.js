@@ -36,7 +36,9 @@ export default Component.extend({
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
-  canBuyAddons: not('freeV2Plan'),
+  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', function () {
+    return !this.freeV2Plan && !this.subscription.isCanceled;
+  }),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,
