@@ -50,7 +50,7 @@
                 </p>
                 {{#if plan.hasCreditAddons}}
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} class='billing-plans__box-v2--desclink'>{{plan.privateCredits}} Credits</ExternalLinkTo>
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} class='billing-plans__box-v2--desclink'>{{plan.privateCreditsTotal}} Credits</ExternalLinkTo>
                   </p>
                 {{/if}}
                 {{#if plan.hasOSSCreditAddons}}

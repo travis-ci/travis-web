@@ -22,6 +22,10 @@ export default Model.extend({
 
   isAnnual: equal('annual', true),
 
+  privateCreditsTotal: computed('privateCredits', 'isAnnual', function () {
+    return this.isAnnual ? this.privateCredits * 12 : this.privateCredits;
+  }),
+
   addonConfigs: attr(),
   hasCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addonConfigs.filter(addon => addon.type === 'credit_private').length > 0;
