@@ -29,15 +29,6 @@
         {{else}}
           <li>
             <ExternalLinkTo
-              @href={{this.config.urls.about}}
-              @title="Travis CI team"
-              class="navigation-anchor"
-            >
-              About Us
-            </ExternalLinkTo>
-          </li>
-          <li>
-            <ExternalLinkTo
               @href={{this.config.urls.blog}}
               @title="Travis CI Blog"
               class="navigation-anchor"
@@ -92,15 +83,6 @@
           </li>
         {{else}}
           <li>
-            <ExternalLinkTo
-              @href={{this.config.urls.about}}
-              @title="Travis CI team"
-              class="navigation-anchor"
-            >
-              About Us
-            </ExternalLinkTo>
-          </li>
-          <li>
             <LinkTo
               @route="plans"
               @title="Plans and Pricing"
@@ -110,15 +92,6 @@
             </LinkTo>
           </li>
           <li>
-            <LinkTo
-              @route="plans"
-              @query={{hash anchor="enterprise-section"}}
-              @title="Travis CI for Enterprise"
-              class="navigation-anchor"
-            >
-              Enterprise
-            </LinkTo>
-          </li>
         {{/if}}
       {{/if}}
       <li>
