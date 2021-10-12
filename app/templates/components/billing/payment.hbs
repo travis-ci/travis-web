@@ -35,7 +35,7 @@
       {{/if}}
     </div>
     <span class="notice-banner--yellow" data-test-plan-notice='true'>
-      Please note that additional add-ons are not available for this plan. Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances in Free Plan.
+      Trial users and other qualifying users are granted a small allocation of credits. Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances and its possible extension.
     </span>
   {{else}}
     <div class='billing-checkout__details' data-test-contact-details='true'>
@@ -119,7 +119,11 @@
             <LoadingIndicator/>
           {{else}}
             <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
-              Pay {{this.discountedPrice}} to complete order
+              {{#if this.selectedPlan.isTrial}}
+                Validate my account
+              {{else}}
+                Pay {{this.discountedPrice}} to complete order
+              {{/if}}
             </button>
           {{/if}}
         </div>
@@ -144,16 +148,23 @@
           <LoadingIndicator/>
         {{else}}
           <button class='button--green' {{on 'click' (perform this.updatePlan)}} data-test-complete-payment='true'>
-            Pay {{this.discountedPrice}} to complete order
+            {{#if this.selectedPlan.isTrial}}
+              Validate my account
+            {{else}}
+              Pay {{this.discountedPrice}} to complete order
+            {{/if}}
           </button>
         {{/if}}
       </div>
     {{/if}}
     <span class="notice-banner--yellow" data-test-plan-notice='true'>
-      Please note that you will be charged monthly for the <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} @title="Travis CI Docs">unique users who triggered builds.</ExternalLinkTo>
-      You can replenish your credit balance anytime by visiting the plan page and buying credits add-ons from there.
-      Purchased credits do not expire and can be used at any time. Your OSS Credit balance does expire and
-      will be replenished monthly.
+      {{#if this.selectedPlan.isTrial}}
+        After credit authorization (which may result in a small fee being held on your card for a short duration),
+        trial users are granted a small allotment of trial credits which may be used within the first 30 days of their trial. If you need to extend your trial, please contact support.
+      {{else}}
+        Notes about your selected plan: User licenses are charged credits based on <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} @title="Travis CI Docs">monthly unique users.</ExternalLinkTo>.
+        Credits can be replenished during the month by purchasing add-ons. Credits will roll over from month to month as long as your plan remains active.
+      {{/if}}
     </span>
   {{/if}}
 </div>
