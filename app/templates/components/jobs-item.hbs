@@ -28,6 +28,12 @@
         {{this.name}}
       </span>
     </div>
+    <div class="job-server-type">
+      <SvgImage @name="icon-{{this.serverTypeIcon}}" @class="icon--l" />
+      <span class="label-align" aria-label="Server Type">
+        {{this.serverType}}
+      </span>
+    </div>
   {{else}}
     <div class="job-lang">
       <SvgImage @name="icon-language" @class="icon" />
@@ -37,6 +43,12 @@
         {{else}}
           no language set
         {{/if}}
+      </span>
+    </div>
+    <div class="job-server-type">
+      <SvgImage @name="icon-{{this.serverTypeIcon}}" @class="icon--ml" />
+      <span class="label-align" aria-label="Server Type">
+        {{this.serverType}}
       </span>
     </div>
     {{#if this.environment}}

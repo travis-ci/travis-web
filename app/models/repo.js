@@ -44,6 +44,7 @@ const Repo = VcsEntity.extend({
   emailSubscribed: attr('boolean'),
   migrationStatus: attr('string'),
   historyMigrationStatus: attr('string'),
+  serverType: attr('string', { defaultValue: 'git' }),
 
   ownerType: reads('owner.@type'),
 
