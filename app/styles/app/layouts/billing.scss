@@ -886,6 +886,7 @@
 
       &--cancel {
         margin-left: 10px;
+        margin-top: 5px;
       }
 
       &--addons {
@@ -1794,6 +1795,10 @@
       .inline-form-elem {
         width: 35%;
         margin-right: 5px;
+      }
+
+      .inline-form-elem.half-width {
+        width: 50%;
       }
 
       .travis-form__field {

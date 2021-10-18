@@ -45,12 +45,17 @@ export default Component.extend({
       executions: []
     };
     for (const build of this.get('builds')) {
-      if (build.os.value !== undefined && build.vmSize.value !== undefined && parseInt(build.minutes) > 0) {
-        data.executions.push({
+      if (build.os.value !== undefined && parseInt(build.minutes) > 0) {
+        let execution = {
           os: build.os.value,
-          instance_size: build.vmSize.value,
           minutes: build.minutes
-        });
+        };
+
+        if (build.vmSize && build.vmSize.value) {
+          execution.instance_size = build.vmSize.value;
+        }
+
+        data.executions.push(execution);
       }
     }
 
@@ -86,7 +91,10 @@ export default Component.extend({
               }
             }
 
-            config.name = `${creditResult.minutes} Mins, ${selectedOs} Builds, ${selectedVmSize} VM`;
+            config.name = `${creditResult.minutes} Mins, ${selectedOs} Builds`;
+            if (creditResult.os !== 'osx') {
+              config.name += `, ${selectedVmSize} VM`;
+            }
           }
 
           this.get('configurations').pushObject(config);

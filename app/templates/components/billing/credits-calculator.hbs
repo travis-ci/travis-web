@@ -53,22 +53,24 @@
               </field.select>
             </form.field>
           </div>
-          <div class='inline-form-elem form-elem-half-width'>
-            <form.field
-              @label='VM Size'
-              @onChange={{action 'updateAttribute' index 'vmSize'}}
-              @value={{build.vmSize}}
-              as |field|
-            >
-              <field.select
-                name='vm_size'
-                @placeholder='Select VM Size'
-                @options={{this.vmSizes}} as |vmSize|
+          {{#unless (eq build.os.value 'osx')}}
+            <div class='inline-form-elem form-elem-half-width half-width'>
+              <form.field
+                @label='VM Size'
+                @onChange={{action 'updateAttribute' index 'vmSize'}}
+                @value={{build.vmSize}}
+                as |field|
               >
-                {{vmSize.name}}
-              </field.select>
-            </form.field>
-          </div>
+                <field.select
+                  name='vm_size'
+                  @placeholder='Select VM Size'
+                  @options={{this.vmSizes}} as |vmSize|
+                >
+                  {{vmSize.name}}
+                </field.select>
+              </form.field>
+            </div>
+          {{/unless}}
           <div class='form-elem'>
             <form.field
               @label='Minutes'

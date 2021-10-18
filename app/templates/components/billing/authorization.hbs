@@ -94,9 +94,9 @@
         </div>
         <div class='billing-subscription__buttons--cancel'>
           {{#if this.canCancelSubscription}}
-            <button {{on 'click' (fn (mut this.showCancelModal) true)}} class='button--white button--hover' data-test-open-cancel-subscription-modal='true'>
+            <a {{on 'click' (fn (mut this.showCancelModal) true)}} href='javascript: void(0);' class='link' data-test-open-cancel-subscription-modal='true'>
               Cancel subscription
-            </button>
+            </a>
           {{/if}}
         </div>
       {{/if}}
