@@ -11,7 +11,7 @@
         @isProcessCompleted={{this.isEduProcessCompleted}}
       />
     {{/if}}
-    {{#if this.isManual}}
+    {{#if (and this.isManual this.isV2SubscriptionEmpty)}}
       <BillingManual
         @subscription={{this.subscription}}
         @account={{this.account}}
