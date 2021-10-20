@@ -39,7 +39,7 @@
       <p class='selected-plan__price--total' data-test-plan-total='true'>
         Total:
       </p>
-      {{#if this.selectedPlan.isFree}}
+      {{#if (or this.selectedPlan.isFree this.selectedPlan.isTrial)}}
         <p class='selected-plan__price--large' data-test-selected-plan-price>
           Free
         </p>

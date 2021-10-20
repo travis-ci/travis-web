@@ -11,8 +11,10 @@ export default Model.extend({
   concurrencyLimit: attr('number'),
   planType: attr('string'),
   availableStandaloneAddons: attr(),
+  trialPlan: attr(),
 
   isFree: equal('startingPrice', 0),
+  isTrial: equal('trialPlan', true),
 
   isUnlimitedUsers: equal('startingUsers', 999999),
 
