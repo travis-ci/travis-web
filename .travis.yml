@@ -1,6 +1,7 @@
 ---
 language: node_js
 node_js: 10
+group: edge
 
 env:
   global:
@@ -13,9 +14,6 @@ os: linux
 dist: xenial
 
 addons:
-  - snaps:
-    - name: docker
-      channel: latest/stable
   - chrome: stable
 
 cache:
