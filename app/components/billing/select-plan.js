@@ -24,6 +24,10 @@ export default Component.extend({
     return this.displayedPlans.findBy('name', this.defaultPlanName);
   }),
 
+  allowReactivation: computed(function () {
+    return this.subscription.isCanceled && !this.subscription.scheduledPlan;
+  }),
+
   save: task(function* () {
     if (this.next.perform) {
       yield this.next.perform();

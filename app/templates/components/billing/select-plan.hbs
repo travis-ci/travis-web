@@ -74,7 +74,7 @@
                 <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
                   <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
                 </p>
-                {{#if (and (eq plan.id this.subscription.plan.id) this.subscription.isCanceled)}}
+                {{#if (and (eq plan.id this.subscription.plan.id) this.allowReactivation)}}
                   <button data-test-subscribe-button
                     onclick={{action 'reactivatePlan' plan form}}
                     class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
