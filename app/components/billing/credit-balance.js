@@ -17,7 +17,9 @@ export default Component.extend({
   creditsPrivateAvailable: reads('subscription.addonUsage.private.remainingCredits'),
   creditsPrivatePurchaseDate: reads('subscription.addonUsage.private.purchaseDate'),
   creditsValidityDate: computed('subscription.canceledAt', function () {
-    return new Date(this.subscription.canceledAt.setMonth(this.subscription.canceledAt.getMonth() + 1));
+    const date = new Date(this.subscription.canceledAt);
+    date.setMonth(this.subscription.canceledAt.getMonth() + 1);
+    return date;
   }),
 
   creditsTotal: computed('creditsTab', 'creditsPublicTotal', 'creditsPrivateTotal', function () {
