@@ -24,8 +24,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       publicCredits: 40000,
       isFree: false,
       isAnnual: true,
-      isCanceled: false,
-      scheduledPlan: '',
       isUnlimitedUsers: false,
       hasCreditAddons: true,
       hasOSSCreditAddons: true,
@@ -42,8 +40,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       publicCredits: 40000,
       isFree: false,
       isAnnual: true,
-      isCanceled: false,
-      scheduledPlan: '',
       isUnlimitedUsers: false,
       hasCreditAddons: true,
       hasOSSCreditAddons: true,
@@ -53,7 +49,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
     this.setProperties({
       displayedPlans: [plan1, plan2],
-      subscription: plan2,
       selectedPlan: plan1,
     });
   });
@@ -64,7 +59,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       @displayedPlans={{displayedPlans}}
       @selectedPlan={{selectedPlan}}
       @showPlansSelector={{true}}
-      @subscription={{subscription}}
       @next={{action 'next'}}/>`
     );
 
@@ -80,7 +74,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       @displayedPlans={{displayedPlans}}
       @selectedPlan={{selectedPlan}}
       @showPlansSelector={{true}}
-      @subscription={{subscription}}
       @next={{action 'next'}}/>`
     );
 

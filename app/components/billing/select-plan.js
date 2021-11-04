@@ -25,7 +25,11 @@ export default Component.extend({
   }),
 
   allowReactivation: computed(function () {
-    return this.subscription.isCanceled && !this.subscription.scheduledPlan;
+    if (this.subscription) {
+      return this.subscription.isCanceled && !this.subscription.scheduledPlan;
+    } else {
+      return false;
+    }
   }),
 
   save: task(function* () {
