@@ -532,13 +532,13 @@ export default create({
         text: text()
       },
 
-      osscredits: {
-        scope: '.highlight-plan [data-test-selected-plan-oss-credits]',
+      credits: {
+        scope: '.highlight-plan [data-test-selected-plan-credits]',
         text: text()
       },
 
-      users: {
-        scope: '.highlight-plan [data-test-selected-plan-users]',
+      osscredits: {
+        scope: '.highlight-plan [data-test-selected-plan-oss-credits]',
         text: text()
       },
 
