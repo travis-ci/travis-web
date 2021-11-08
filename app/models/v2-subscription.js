@@ -181,6 +181,10 @@ export default Model.extend({
   availablePlans: reads('account.eligibleV2Plans'),
 
   scheduledPlan: computed('scheduledPlanName', 'availablePlans', function () {
+    if (!this.availablePlans) {
+      return null;
+    }
+
     return this.availablePlans.filter(plan => plan.id === this.scheduledPlanName)[0];
   }),
 
