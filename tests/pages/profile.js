@@ -532,11 +532,6 @@ export default create({
         text: text()
       },
 
-      credits: {
-        scope: '.highlight-plan [data-test-selected-plan-credits]',
-        text: text()
-      },
-
       osscredits: {
         scope: '.highlight-plan [data-test-selected-plan-oss-credits]',
         text: text()
