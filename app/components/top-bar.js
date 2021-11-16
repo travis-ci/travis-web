@@ -21,6 +21,9 @@ export default Component.extend(InViewportMixin, {
   landingPage: false,
   isNavigationOpen: false,
 
+  activeModel: null,
+  model: reads('activeModel'),
+
   user: reads('auth.currentUser'),
   isUnconfirmed: computed('user.confirmedAt', function () {
     if (!this.user)
@@ -40,6 +43,10 @@ export default Component.extend(InViewportMixin, {
     let ctaEnabled = this.get('features.landingPageCta');
 
     return !signedIn && !landingPage && ctaEnabled;
+  }),
+
+  hasNoPlan: computed('model.allowance.subscriptionType', 'model.hasV2Subscription', 'model.subscription', function () {
+    return !this.get('model.hasV2Subscription') && this.get('model.subscription') === undefined && this.get('model.allowance.subscriptionType') === 3;
   }),
 
   didInsertElement() {

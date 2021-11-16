@@ -133,6 +133,7 @@ export default Component.extend({
       subscription.setProperties({
         organization: org,
         plan: plan,
+        v1SubscriptionId: this.v1SubscriptionId,
       });
       yield subscription.save();
       yield this.accounts.fetchV2Subscriptions.perform();
@@ -159,6 +160,7 @@ export default Component.extend({
         subscription.setProperties({
           organization: org,
           plan: plan,
+          v1SubscriptionId: this.v1SubscriptionId,
         });
         if (!this.subscription.id) {
           subscription.creditCardInfo.setProperties({
@@ -198,7 +200,9 @@ export default Component.extend({
   }).drop(),
 
   handleError() {
-    let message = 'An error occurred when creating your subscription. Please try again.';
+    let message = this.get('selectedPlan.isTrial')
+      ? 'Credit card verification failed, please try again or use a different card.'
+      : 'An error occurred when creating your subscription. Please try again.';
     this.flashes.error(message);
   },
 

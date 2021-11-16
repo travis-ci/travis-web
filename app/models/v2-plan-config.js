@@ -14,9 +14,10 @@ export default Model.extend({
   annual: attr('boolean'),
   autoRefillThresholds: attr(),
   autoRefillAmounts: attr(),
+  trialPlan: attr(),
 
   isFree: equal('startingPrice', 0),
-  isTrial: equal('id', 'trial_plan'),
+  isTrial: equal('trialPlan', true),
 
   isUnlimitedUsers: equal('startingUsers', 999999),
 

@@ -21,6 +21,7 @@ export default Component.extend({
     date.setMonth(this.subscription.validTo.getMonth() + 1);
     return date;
   }),
+  creditsPrivateValidDate: reads('subscription.addonUsage.private.validDate'),
 
   creditsTotal: computed('creditsTab', 'creditsPublicTotal', 'creditsPrivateTotal', function () {
     if (this.creditsTab === 1)
