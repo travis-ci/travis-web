@@ -53,9 +53,6 @@
                     <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
                   </p>
                 {{/if}}
-                {{#if plan.isTrial}}
-                  <p class='billing-plans__box-v2--desc'>As part of the trial offer for credits, we require credit card authorization. Upon entering your payment details you will see a charge for $1 show up on your credit card statement. This charge will be placed on a temporary hold and will be removed within a week.</p>
-                {{/if}}
                 {{#if (and (eq plan.id this.subscription.plan.id) this.allowReactivation)}}
                   <button data-test-subscribe-button
                     onclick={{action 'reactivatePlan' plan form}}
