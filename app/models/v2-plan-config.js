@@ -13,7 +13,7 @@ export default Model.extend({
   availableStandaloneAddons: attr(),
   trialPlan: attr(),
 
-  isFree: equal('startingPrice', 0),
+  isFree: equal('startingPrice', 100),
   isTrial: equal('trialPlan', true),
 
   isUnlimitedUsers: equal('startingUsers', 999999),
