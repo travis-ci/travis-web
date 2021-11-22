@@ -120,8 +120,6 @@ export default Component.extend({
     if (executions) {
       executions.forEach(async (execution) => {
         const minutes = calculateMinutes(execution.started_at, execution.finished_at);
-        const repo = this.store.peekRecord('repo', execution.repository_id) || (await this.store.findRecord('repo', execution.repository_id));
-        const sender = this.store.peekRecord('user', execution.sender_id) || (await this.store.findRecord('user', execution.sender_id));
         data.push([
           execution.job_id,
           execution.started_at,
@@ -129,9 +127,9 @@ export default Component.extend({
           execution.os,
           execution.credits_consumed,
           minutes,
-          repo.slug,
-          repo.ownerName,
-          sender.login
+          execution.repo_slug,
+          execution.repo_owner_name,
+          execution.sender_login
         ]);
       });
     }
