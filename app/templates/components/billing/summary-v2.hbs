@@ -6,16 +6,19 @@
     </span>
   {{/if}}
   {{#if this.showPlanInfo}}
-    {{#if (and this.subscription.isNotManual (eq this.subscription.plan.planType 'metered'))}}
+    {{#if (and (not this.subscription.plan.isTrial) (and this.subscription.isNotManual (eq this.subscription.plan.planType 'metered')))}}
       <span class="notice-banner--white block" data-test-plan-notice='true'>
         {{#if this.subscription.plan.isFree}}
-          Please note that additional add-ons are not available for this plan. Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances in Free Plan.
+          Trial users and other qualifying users are granted a small allocation of credits. Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances and its possible extension.
         {{else}}
           <div>
-            Please note that you will ONLY be charged monthly for the
-            <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} @title="Travis CI Docs">unique users who triggered builds!</ExternalLinkTo>
-            You can replenish your Credit balance anytime by Buying add-ons. Credits are timeless and can be used in any month.
-            Your OSS Credit balance will be replenished monthly.
+            {{#if this.subscription.plan.isTrial}}
+              After credit authorization (which may result in a small fee being held on your card for a short duration),
+              trial users are granted a small allotment of trial credits which may be used within the first 30 days of their trial. If you need to extend your trial, please contact support.
+            {{else}}
+              Notes about your selected plan: User licenses are charged credits based on <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} @title="Travis CI Docs">monthly unique users.</ExternalLinkTo> You can replenish credits during the month by enabling the auto-refill feature.
+              Credits will roll over from month to month as long as your plan remains active. You can also purchase a user licenses add-on to increase the number of users licenses without reducing your credits.
+            {{/if}}
           </div>
         {{/if}}
       </span>
@@ -63,12 +66,12 @@
                     {{this.subscription.status}}
                   </span>
                 {{/if}}
-                <span class="valid-until" data-test-renews='true'>
+                  <span class="valid-until" data-test-renews='true'>
                     Valid until
                     {{#if this.subscription.validTo}}
                       {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{else}}
-                      {{moment-format this.subscription.validToFromUserLicenseAddon "MMMM D, YYYY"}}
+                      {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
                     {{/if}}
                   </span>
               {{else}}
@@ -105,6 +108,35 @@
                       Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{/if}}
                   </span>
+                {{else if this.subscription.recurringAddon}}
+                  {{#if this.isCanceled}}
+                    <span class="badge grey square grey-badge" data-test-expired-status='true'>
+                      canceled
+                    </span>
+                  {{else if (eq this.subscription.recurringAddon.current_usage.status 'subscribed')}}
+                    <span class="badge green square" data-test-active-status='true'>
+                      active
+                    </span>
+                  {{else if (eq this.subscription.recurringAddon.current_usage.status 'expired')}}
+                    <span class="badge red square" data-test-expired-status='true'>
+                      expired
+                    </span>
+                  {{else}}
+                    <span class="badge grey square grey-badge" data-test-grey-status='true'>
+                      {{this.subscription.recurringAddon.current_usage.status}}
+                    </span>
+                  {{/if}}
+                  <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
+                    {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
+                  >
+                    {{#if (and this.isComplete this.isCanceled)}}
+                      Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                    {{else if (eq this.subscription.recurringAddon.current_usage.status 'subscribed')}}
+                      Valid until {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
+                    {{else if (eq this.subscription.recurringAddon.current_usage.status 'expired')}}
+                      Expired {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
+                    {{/if}}
+                  </span>
                 {{/if}}
               {{/if}}
             </p>
@@ -127,7 +159,7 @@
                   {{#if this.subscription.isManual}}
                     {{this.subscription.addonUsage.private.totalCredits}} Credits
                   {{else}}
-                    {{this.subscription.plan.privateCredits}} Credits
+                    {{this.subscription.plan.privateCreditsTotal}} Credits
                   {{/if}}
                 </p>
               {{/if}}
@@ -162,14 +194,14 @@
           </div>
         </div>
       </section>
-      {{#if this.subscription.isNotManual}}
+      {{#if (and this.subscription.isNotManual (not this.subscription.plan.isTrial))}}
         <section>
           <div class='selected-plan__price'>
             <h6 class='selected-plan__price--total' data-test-plan-total='true'>
               Total:
             </h6>
             {{#if this.subscription.plan }}
-              {{#if this.subscription.plan.isFree}}
+              {{#if (or this.subscription.plan.isFree this.subscription.plan.isTrial)}}
                 <p class='selected-plan__price--large' data-test-price>
                   Free
                 </p>

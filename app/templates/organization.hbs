@@ -1,4 +1,4 @@
-<TravisLayout @layoutName="layouts/profile" class="profile-view">
+<TravisLayout @layoutName="layouts/profile" class="profile-view" @activeModel={{this.model}}>
   <div data-test-account-page></div>
   <ProfileNav @activeModel={{this.model}}>
     {{outlet}}

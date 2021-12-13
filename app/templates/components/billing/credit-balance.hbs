@@ -24,9 +24,20 @@
 
   <p class='avail-credits'>
     {{#if (eq this.creditsTab 1)}}
-      {{this.creditsAvailable}} available credits (next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})
+      {{#if (eq this.creditsAvailable 0)}}
+        {{this.creditsAvailable}} available credits
+      {{else}}
+        {{this.creditsAvailable}} available credits (next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})
+      {{/if}}
     {{else}}
-      {{this.creditsAvailable}} available credits (purchase date: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}})
+      {{#if this.subscription.isCanceled}}
+        {{this.creditsAvailable}} available credits (expiry date: {{moment-format this.creditsValidityDate 'MMMM DD, YYYY'}})
+      {{else}}
+        {{this.creditsAvailable}} available credits (purchase date: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}}
+      {{#if this.creditsPrivateValidDate}}
+        , valid until: {{moment-format this.creditsPrivateValidDate 'MMMM DD, YYYY'}}
+      {{/if}})
+      {{/if}}
     {{/if}}
   </p>
   <p class='used-credits'>
@@ -49,6 +60,8 @@
   {{#if (not this.hideToggle)}}
     <Billing::OssCreditToggle @account={{this.account}} />
   {{/if}}
-  <Billing::AutoRefill @subscription={{this.subscription}} @account={{this.account}}/>
+  {{#if (not this.subscription.plan.isTrial)}}
+    <Billing::AutoRefill @subscription={{this.subscription}} @account={{this.account}}/>
+  {{/if}}
 </div>
 <hr />
