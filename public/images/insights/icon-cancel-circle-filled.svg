@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icon-cancel-circle-filled</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M17.3333333,15.8266667 L15.8266667,17.3333333 L12,13.5066667 L8.17333333,17.3333333 L6.66666667,15.8266667 L10.4933333,12 L6.66666667,8.17333333 L8.17333333,6.66666667 L12,10.4933333 L15.8266667,6.66666667 L17.3333333,8.17333333 L13.5066667,12 L17.3333333,15.8266667 Z M12,1.33333333 C6.10666667,1.33333333 1.33333333,6.10666667 1.33333333,12 C1.33333333,17.8933333 6.10666667,22.6666667 12,22.6666667 C17.8933333,22.6666667 22.6666667,17.8933333 22.6666667,12 C22.6666667,6.10666667 17.8933333,1.33333333 12,1.33333333 L12,1.33333333 Z" id="path-1"></path>
+    </defs>
+    <g id="icon-cancel-circle-filled" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-/-Cancel-/-Filled">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask"></g>
+            <g id="✱-/-Color-/-Icons-/-Selected-/-On-Surface-/-Inactive" mask="url(#mask-2)" fill="#000000" fill-opacity="0.54" fill-rule="evenodd">
+                <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

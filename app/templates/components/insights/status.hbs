@@ -1,0 +1,23 @@
+<div class="doc-all">
+  <section class="doc-main-text">
+    <p class="status-text">
+      Travis Insights collects data provided by the APIs of target products.
+      On this page, you can view system status for API providers.
+      In case you experience disruption when running a scan, please check the particular provider's system health
+      before reaching to our support.
+    </p>
+    <p class="status-text">
+      Click on the link of your product vendor to check their system status.
+    </p>
+    <div class="status-text api-links">
+      {{#each this.urls as |statusProvider|}}
+        <ExternalLinkTo
+          @href={{statusProvider.url}}
+          @title={{statusProvider.name}}
+        >
+          {{statusProvider.name}}
+        </ExternalLinkTo>
+      {{/each}}
+    </div>
+  </section>
+</div>
