@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icon-help</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M10.375,22 L13.625,22 L13.625,18.6666667 L10.375,18.6666667 L10.375,22 Z M12,2 C8.40875,2 5.5,4.98333333 5.5,8.66666667 L8.75,8.66666667 C8.75,6.83333333 10.2125,5.33333333 12,5.33333333 C13.7875,5.33333333 15.25,6.83333333 15.25,8.66666667 C15.25,12 10.375,11.5833333 10.375,17 L13.625,17 C13.625,13.25 18.5,12.8333333 18.5,8.66666667 C18.5,4.98333333 15.59125,2 12,2 Z" id="path-1"></path>
+    </defs>
+    <g id="icon-help" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-/-Database-/-Help">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask" fill-rule="nonzero"></g>
+            <g id="✱-/-Color-/-Icons-/-Selected-/-On-Surface-/-Inactive" mask="url(#mask-2)" fill="#000000" fill-opacity="0.54" fill-rule="evenodd">
+                <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

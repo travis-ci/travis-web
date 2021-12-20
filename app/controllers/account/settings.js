@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import fetchAll from 'travis/utils/fetch-all';
+import moment from 'moment';
 
 export const SECTION = {
   NONE: '',
@@ -94,6 +95,70 @@ export default Controller.extend({
     }
   }).restartable(),
 
+  setNInsightsTimezone: task(function* (val) {
+    try {
+      yield this.preferences.set('insights_time_zone', val);
+      this.flashes.clear();
+      this.flashes.success(`Your insights timezone is now ${val}.`);
+    } catch (err) {
+      this.flashes.clear();
+      this.flashes.error('Something went wrong and your insights settings were not saved.');
+    }
+  }).restartable(),
+
+  setNInsightsDateFormat: task(function* (val) {
+    try {
+      yield this.preferences.set('insights_date_format', val);
+      this.flashes.clear();
+      this.flashes.success(`Your insights date format is now ${val}.`);
+    } catch (err) {
+      this.flashes.clear();
+      this.flashes.error('Something went wrong and your insights settings were not saved.');
+    }
+  }).restartable(),
+
+  setNInsightsTimeFormat: task(function* (val) {
+    try {
+      yield this.preferences.set('insights_time_format', val.value);
+      this.flashes.clear();
+      this.flashes.success(`Your insights time format is now ${val.name}.`);
+    } catch (err) {
+      this.flashes.clear();
+      this.flashes.error('Something went wrong and your insights settings were not saved.');
+    }
+  }).restartable(),
+
+  selectedTimeZone: reads('preferences.insightsTimeZone'),
+  timezoneList: computed(() => {
+    let timeZones = moment.tz.names();
+    let offsetTmz = [];
+
+    for (let i in timeZones) {
+      try {
+        offsetTmz.push(`(GMT${moment.tz(timeZones[i]).format('Z')}) ${timeZones[i]}`);
+      } catch {
+      }
+    }
+
+    return offsetTmz.sort();
+  }),
+  selectedDateFormat: reads('preferences.insightsDateFormat'),
+  dateFormatList: ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY/MM/DD'],
+  selectedTimeFormat: computed('preferences.insightsTimeFormat', function () {
+    return this.timeFormatList.find(fmt => fmt.value === this.preferences.insightsTimeFormat);
+  }),
+  timeFormatList: [{ name: 'h:mm:ss AM/PM', value: 'h:mm:ss A' }, { name: 'hh:mm:ss', value: 'HH:mm:ss' }],
+
+  insightsEmails: reads('preferences.insightsEmails'),
+  toggleInsightsEmails: task(function* (value) {
+    try {
+      yield this.preferences.set('insights_scan_notifications', value);
+    } catch (err) {
+      this.flashes.clear();
+      this.flashes.error('Something went wrong and your email settings were not saved.');
+    }
+  }).restartable(),
+
   actions: {
     setInsightsVis(val) {
       this.setPrivateInsights.perform(val);
@@ -102,6 +167,18 @@ export default Controller.extend({
       const { id } = this.auth.currentUser;
       this.flashes.success('The email has been sent. Please check your inbox and confirm your account.');
       this.api.get(`/auth/request_confirmation/${id}`, {'travisApiVersion': null});
+    },
+    setNewInsightsTimezone(val) {
+      this.set('selectedTimeZone', val);
+      this.setNInsightsTimezone.perform(val);
+    },
+    setNewInsightsDateFormat(val) {
+      this.set('selectedDateFormat', val);
+      this.setNInsightsDateFormat.perform(val);
+    },
+    setNewInsightsTimeFormat(val) {
+      this.set('selectedTimeFormat', val);
+      this.setNInsightsTimeFormat.perform(val);
     }
   },
 
