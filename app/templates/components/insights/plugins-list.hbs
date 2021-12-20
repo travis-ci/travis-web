@@ -1,0 +1,119 @@
+<section class="user-plugins-actions">
+  <div class="user-plugins-actions__items action-items">
+    <a class="waves-effect waves-light action-btn font-medium" id="new-plugin-button" {{on 'click' (fn (mut this.showPluginsModal) true)}}>New Plugin</a>
+    <a class="deactive-plugin-btn action-item waves-effect waves-sre-action action-btn font-medium {{if this.allowToggle '' 'disabled'}}" id="deactivate-plugin-button" {{on 'click' (perform this.toggle)}}>{{this.toggleButtonText}}</a>
+    <div class="action-item waves-effect waves-light action-item action-btn font-medium {{if this.allowToggle '' 'disabled'}}" id="user-plugins-action-delete" {{on 'click' (action 'openDeleteProbeModal')}}>Delete Plugin</div>
+    <div class="refresh-page-button waves-effect waves-sre-action action-btn font-medium" {{on 'click' (action 'reloadPlugins')}}>
+      <SvgImage @name="icon-reload" @class="ico-refresh-page" />
+      Refresh the list
+    </div>
+  </div>
+  <div class="user-plugins-actions__search">
+    <div class="notify-input-search input-search">
+      <SvgImage @name="icon-insights-search" @class="input-search-icon" />
+      <Input
+        @value={{this.query}}
+        class="notify-input-search__input"
+        placeholder="Search Plugin, Product or Category"
+        onKeyUp={{perform this.search}}
+      />
+    </div>
+  </div>
+</section>
+<table class="responsive-table table-default plugins-table" id="plugins_table">
+  <thead>
+    <tr>
+      <th class="checks">
+        <label>
+          <Input
+            id="checkbox-head"
+            class="filled-in"
+            @type="checkbox"
+            @checked={{this.isAllSelectedChecked}}
+            {{on 'change' (action 'toggleAll')}}
+          />
+          <span></span>
+        </label>
+      </th>
+      <th class="sort-btn {{if (eq 'name' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'name')}} scope="col"> Plugin</th>
+      <th class="key-id" scope="col"> Key ID</th>
+      <th class="sort-btn {{if (eq 'plugin_type' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'plugin_type')}} scope="col"> Product</th>
+      <th class="sort-btn {{if (eq 'plugin_category' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'plugin_category')}} scope="col"> Category</th>
+      <th class="last-scan sort-btn {{if (eq 'last_scan_end' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'last_scan_end')}} scope="col"> Last Scan</th>
+      <th class="scan-status sort-btn {{if (eq 'status' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'status')}} scope="col"> Scan Status</th>
+      <th class="scan-details" scope="col">Scan Details</th>
+      {{#if (eq this.pluginsFilter 'all')}}
+        <th class="plugin-status sort-btn {{if (eq 'active' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'active')}} scope="col"> Plugin Status</th>
+      {{else}}
+        <th class="plugin-status" scope="col"> Plugin Status</th>
+      {{/if}}
+    </tr>
+  </thead>
+  <tbody id="plugins-table-body">
+    {{#each this.plugins as |plugin|}}
+    <tr class="tableRow" id="plugin-{{plugin.id}}">
+      <td>
+        <label>
+          <input
+            class="checkbox-table filled-in"
+            id="{{plugin.id}}"
+            type="checkbox"
+            checked={{contains plugin.id this.selectedPluginIds}}
+            onChange={{action "togglePlugin" plugin.id}}
+          />
+          <span></span>
+        </label>
+      </td>
+      <td title="{{plugin.name}}">
+        {{truncate plugin.name 30}}
+      </td>
+      <td>
+        {{plugin.publicId}}
+      </td>
+      <td>
+        {{plugin.pluginType}}
+      </td>
+      <td>
+        {{plugin.pluginCategory}}
+      </td>
+      <td>
+        {{format-time-timezone plugin.lastScanEnd this.momentFormat this.timeZone}}
+      </td>
+      <td>
+        <div class="icon-scan-status icon-scan-{{plugin.scanStatus}}"></div>
+        <span>{{plugin.scanStatus}}</span>
+      </td>
+      <td>
+        <a class="scanDetailsLink modal-trigger" data-user_plugin_id="{{plugin.id}}" {{on 'click' (action 'openScanLogModal' plugin)}} id="{{plugin.name}}">Scan Log</a>
+      </td>
+      <td>
+        {{plugin.pluginStatus}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<PaginationNavigation
+  @collection={{this.plugins}}
+  @tagName="div"
+  @route="insights.plugins"
+  @queryParam="page"
+  @inner={{4}}
+  @outer={{0}}
+/>
+<Insights::PluginsModal
+  @isOpen={{this.showPluginsModal}}
+  @onClose={{fn (mut this.showPluginsModal) false}}
+  @reloadPlugins={{action 'reloadPlugins'}}
+/>
+<Insights::ScanLogModal
+  @isOpen={{this.showScanLogModal}}
+  @onClose={{fn (mut this.showScanLogModal) false}}
+  @plugin={{this.scanLogPlugin}}
+/>
+<Insights::DeletePluginModal
+  @isOpen={{this.showRemovePluginModal}}
+  @onClose={{fn (mut this.showRemovePluginModal) false}}
+  @selectedPluginIds={{this.selectedPluginIds}}
+  @reloadPlugins={{action 'reloadPlugins'}}
+/>

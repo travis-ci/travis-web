@@ -26,6 +26,8 @@ $cement-grey: #9d9d9d;
 $dry-cement: lighten($cement-grey, 30);
 $asphalt-grey: #666666;
 $pebble-grey: #f1f1f1;
+$med-grey: #d0d0d0;
+$med-grey-2: #cccccc;
 
 $brick-orange: #ed7d5b;
 $brick-red: #db4545;
@@ -36,6 +38,8 @@ $agate-blue: #b6d6d9;
 
 $cream-light: #FAFAF8;
 $cream-dark: #EFF0EC;
+
+$color-white: #FFFFFF;
 
 // log
 $log-header-bg: #444444;
@@ -72,3 +76,35 @@ $error-bg-gradient: rgba(204, 235, 247, 1);
 $maintenance-grass: #8cad7d;
 $error-hill-grey: #bbcac6;
 $error-sand: #dcc682;
+
+// New Insights
+
+//Borders
+$component-border: $med-grey;
+$component-border-disabled: $med-grey-2;
+$component-border-focus-overlay: #D8EEEF;
+$component-border-error: $brick-red;
+
+// Breakpoints
+$xxl-min: 1921px;
+$xl-min: 1201px;
+$lg-max: $xl-min - 1px;
+$lg-min: 993px;
+$md-max: $lg-min - 1px;
+$md-min: 601px;
+$sm-max: 600px;
+$md-min: $sm-max + 1px;
+$sm-min: 321px;
+
+// Spacings 16px Base
+$spacing-4: 0.25rem;
+$spacing-8: 0.5rem;
+$spacing-12: 0.75rem;
+$spacing-16: 1rem;
+$spacing-20: 1.25rem;
+$spacing-24: 1.5rem;
+$spacing-28: 1.75rem;
+$spacing-32: 2rem;
+
+// Radius 16px Base
+$raius-5: 0.313rem;
