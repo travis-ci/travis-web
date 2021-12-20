@@ -961,6 +961,10 @@ header.space-between {
         font-style: italic;
         color: $cement-grey;
       }
+
+      &.email-notifications .description {
+        width: 100%;
+	  }
     }
 
     button {
