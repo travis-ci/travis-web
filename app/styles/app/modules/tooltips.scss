@@ -30,3 +30,8 @@ body > .ember-tooltip {
   // Tweaks “View branch on GitHub” in components:my-build
   top: 6px !important;
 }
+
+.insights .modal-content .ember-tooltip {
+  max-width: 120px;
+  top: -20px !important;
+}

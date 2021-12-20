@@ -38,6 +38,19 @@ export default Component.extend({
     }
   }),
 
+  isInsights: computed(() => {
+    if (window && window.location) {
+      const pathname = window.location.pathname;
+      if (pathname.indexOf('insights') === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }),
+
   actions: {
 
     goToHelp() {

@@ -269,4 +269,53 @@ export default VcsEntity.extend({
     const result = yield this.api.get(url);
     return result ? result.executionspersender : [];
   }).keepLatest(),
+
+  insightsNotifications: dynamicQuery(function* ({
+    page = 1,
+    filter = '',
+    customOptions = {},
+  }) {
+    const activeOptions = { 'yes': true, 'no': false, 'all': undefined };
+    customOptions = Object.assign({ active: 'no', sort: 'probe_severity', sortDirection: 'desc' }, customOptions);
+
+    return yield this.store.paginated('insights-notification', {
+      limit,
+      page,
+      offset: (page - 1) * limit,
+      sort_by: customOptions.sort,
+      sort_direction: customOptions.sortDirection,
+      active: activeOptions[customOptions.active],
+      filter,
+    }, { live: false });
+  }),
+
+  insightsPlugins: dynamicQuery(function* ({ page = 1, filter = '', customOptions = {} }) {
+    const activeOptions = { 'yes': true, 'no': false, 'all': undefined };
+    customOptions = Object.assign({ active: 'yes', sort: 'name', sortDirection: 'asc' }, customOptions);
+
+    return yield this.store.paginated('insights-plugin', {
+      limit,
+      page,
+      offset: (page - 1) * limit,
+      sort_by: customOptions.sort,
+      sort_direction: customOptions.sortDirection,
+      active: activeOptions[customOptions.active],
+      filter,
+    }, { live: false });
+  }),
+
+  insightsProbes: dynamicQuery(function* ({ page = 1, filter = '', customOptions = {} }) {
+    const activeOptions = { 'yes': true, 'no': false, 'all': undefined };
+    customOptions = Object.assign({ active: 'yes', sort: 'plugin_type', sortDirection: 'asc' }, customOptions);
+
+    return yield this.store.paginated('insights-probe', {
+      limit,
+      page,
+      offset: (page - 1) * limit,
+      sort_by: customOptions.sort,
+      sort_direction: customOptions.sortDirection,
+      active: activeOptions[customOptions.active],
+      filter,
+    }, { live: false });
+  }),
 });
