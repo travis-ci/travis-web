@@ -1,0 +1,125 @@
+@import "variables.scss";
+@import "colors.scss";
+
+#sandbox-modal {
+  width: 80%;
+  max-width: 80%;
+  height: 70%;
+
+  .modal-content {
+    .modal-h6 {
+      margin-bottom: 0;
+      padding: 1.14285rem 0 1.71428rem;
+    }
+
+    padding: 0 1.71428rem 0;
+
+    .plugin-select-container {
+      max-width: 100%;
+      margin-bottom: $spacing-24;
+    }
+
+    .modal-field {
+      .select-wrapper {
+        .dropdown-content li {
+          min-height: 1.14285rem;
+          line-height: 1.14285rem;
+
+          span {
+            line-height: 1.14285rem;
+            padding: 5px 16px;
+            color: $asphalt-gray;
+          }
+        }
+      }
+    }
+
+    .cols {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      .col-left,
+      .col-right {
+        width: 100%;
+        margin-bottom: 1.14285rem;
+      }
+    }
+
+    .cols {
+      margin: 0;
+      max-height: calc(100% - 52px);
+
+      pre {
+        margin: 0;
+      }
+
+      .sample-json-container,
+      .probe-output-container {
+        border: 1px solid $med-gray;
+        border-radius: 4px;
+        padding: $spacing-16;
+        overflow-y: auto;
+
+        .label {
+          font-size: 1rem;
+          line-height: 1.43;
+          color: $asphalt-gray;
+          margin-bottom: $spacing-16;
+        }
+
+        &.error {
+          border: 1px solid $brick-red;
+        }
+      }
+
+      .sample-json-container {
+        height: 430px;
+        min-height: 430px;
+        max-height: 100%;
+        overflow-x: auto;
+        position: relative;
+
+      }
+
+      .probe-output-container {
+        height: 300px;
+        min-height: 300px;
+        max-height: calc(100% - 114px);
+        margin-bottom: 1.14285rem;
+
+        .spinner {
+          margin-top: 100px;
+          text-align: center;
+        }
+      }
+
+      .query-buttons {
+        display: flex;
+        justify-content: start;
+        margin-top: 1.14285rem;
+      }
+    }
+  }
+
+}
+
+@media all and (min-width: $lg-min) {
+  #sandbox-modal {
+    .modal-content {
+      .plugin-select-container {
+        width: 185px;
+        max-width: 100%;
+      }
+
+      .cols {
+        flex-direction: row;
+
+        .col-left,
+        .col-right {
+          width: 49%;
+        }
+      }
+    }
+  }
+}

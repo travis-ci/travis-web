@@ -335,3 +335,83 @@ $nav-line-height: 35px;
 nav.navigation-anchor:hover {
   text-decoration: underline;
 }
+
+.insights-btn {
+  @import "../layouts/insights/colors.scss";
+
+  font-size: 1.02083rem;
+  line-height: 1.166rem;
+  font-weight: 500;
+  letter-spacing: 1.25px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 10px 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-left: 30px;
+  display: block;
+
+  &.btn-primary {
+    background-color: $normal-btn-bg !important;
+    color: $color-white !important;
+
+    &:hover {
+      color: $color-white;
+      background-color: $normal-btn-hover-bg !important;
+    }
+
+    &:focus {
+      color: $color-white;
+      background-color: $normal-btn-focus-bg !important;
+    }
+
+    &:disabled,
+    &.disabled {
+      color: $cement-gray;
+      background: $normal-btn-disabled-bg !important;
+    }
+  }
+
+  &.btn-danger {
+    background-color: $destroy-btn-bg;
+    color: $color-white;
+
+    &:hover {
+      color: $color-white;
+      background-color: $destroy-btn-hover-bg;
+    }
+
+    &:focus {
+      color: $color-white;
+      background-color: $destroy-btn-focus-bg;
+    }
+
+    &:disabled,
+    &.disabled {
+      color: $cement-gray;
+      background: $destroy-btn-disabled-bg;
+    }
+  }
+
+  &.btn-link {
+    background-color: $cancel-btn-bg;
+    color: $cancel-btn-color;
+    box-shadow: none;
+
+    &:hover {
+      color: $cancel-btn-hover-bg;
+      background-color: $cancel-btn-bg;
+    }
+
+    &:focus {
+      color: $cancel-btn-focus-bg;
+      background-color: $cancel-btn-bg;
+    }
+
+    &:disabled,
+    &.disabled {
+      color: $cancel-btn-disabled-bg;
+      background: $cancel-btn-bg;
+    }
+  }
+}

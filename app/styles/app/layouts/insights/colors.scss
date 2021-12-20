@@ -1,0 +1,92 @@
+// Font colors
+$color-font-black-60: rgba(0, 0, 0, 0.6);
+
+// Icons light background
+$color-icon-light-active: rgba(0, 0, 0, 0.87);
+
+//Table rows
+$color-table-row-even: rgba(228, 229, 234, 0.25);
+$color-table-row-odd: #ffffff;
+
+// New colors
+$color-white: #FFF;
+$oxide-blue: #3EAAAF;
+
+// Grayscale
+$pebble-gray: #F1F1F1;
+$gray: #EAEAEA;
+$med-gray: #d0d0d0;
+$med-gray-2: #cccccc;
+$cement-gray: #9d9d9d;
+$asphalt-gray: #666666;
+
+// Alerts font colors
+$brick-red: #DB4545;
+$dozer-yellow: #CDB62C;
+$turf-green: #39AA56;
+$information-blue: #3eaaaf;
+
+// Alerts background colors
+$quartz-red: #FCE8E2;
+$haze-yellow: #FAF6DB;
+$seed-green: #DEECDC;
+$agate-blue: #B6D6D9;
+
+// Text links
+$link-color: $oxide-blue;
+$link-hover-color: #31969B;
+$link-active-color: #31969B;
+
+// Icons Light Background
+$icon-light-bg-active: $color-white;
+$icon-light-bg-inactive: rgba(255, 255, 255, 0.5);
+$icon-light-bg-disabled: rgba(255, 255, 255, 0.3);
+
+
+// Icons Light Background
+$icon-dark-bg-active: $cement-gray;
+$icon-dark-bg-inactive: #CECECE;
+$icon-dark-bg-disabled: #E1E1E1;
+
+// Components
+// Fonts
+$component-font-color: $asphalt-gray;
+$component-font-disabled-color: $asphalt-gray;
+$component-font-focus-color: $asphalt-gray;
+$component-font-error-color: $asphalt-gray;
+
+//Borders
+$component-border: $med-gray;
+$component-border-disabled: $med-gray-2;
+$component-border-focus-overlay: #D8EEEF;
+$component-border-error: $brick-red;
+
+// Background:
+$component-background: $color-white;
+$component-background-disabled: $med-gray-2;
+$component-background-hover: rgba(62, 170, 175, 0.2);
+$component-background-focus: rgba(62, 170, 175, 0.2);
+$component-background-pressed: rgba(62, 170, 175, 0.2);
+
+// Buttons
+// Normal button
+$normal-btn-bg: $oxide-blue;
+$normal-btn-disabled-bg: $med-gray-2;
+$normal-btn-hover-bg: #4DB0B5;
+$normal-btn-focus-bg: #6CBEC2;
+$normal-btn-pressed-bg: #A2D6D9;
+
+// Destroy button
+$destroy-btn-bg: $brick-red;
+$destroy-btn-disabled-bg: $med-gray-2;
+$destroy-btn-hover-bg: #DD5353;
+$destroy-btn-focus-bg: #E37171;
+$destroy-btn-pressed-bg: #E68080;
+
+// Cancel button
+$cancel-btn-color: $asphalt-gray;
+$cancel-btn-bg: $color-white;
+$cancel-btn-disabled-bg: #D1D1D1;
+$cancel-btn-hover-bg: $oxide-blue;
+$cancel-btn-focus-bg: $oxide-blue;
+$cancel-btn-pressed-bg: $asphalt-gray;
