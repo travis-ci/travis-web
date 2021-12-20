@@ -67,29 +67,57 @@
       {{/unless}}
       {{#if this.features.proVersion}}
         {{#if this.auth.signedIn}}
-          <li>
-            <LinkTo @route="dashboard" class="navigation-anchor">
-              Dashboard
-            </LinkTo>
-          </li>
-          <li>
-            <ExternalLinkTo
-              @href={{this.config.urls.changelog}}
-              @title="Travis CI Changelog"
-              class="navigation-anchor"
-            >
-              Changelog
-            </ExternalLinkTo>
-          </li>
-          <li>
-            <ExternalLinkTo
-              @href={{this.config.urls.docs}}
-              @title="Travis CI Documentation"
-              class="navigation-anchor"
-            >
-              Documentation
-            </ExternalLinkTo>
-          </li>
+         {{#unless this.isInsights}}
+            <li>
+              <LinkTo @route="dashboard" class="navigation-anchor">
+                Dashboard
+              </LinkTo>
+            </li>
+            <li>
+              <LinkTo @route="insights" class="navigation-anchor">
+                Insights
+              </LinkTo>
+            </li>
+            <li>
+              <ExternalLinkTo
+                @href={{this.config.urls.changelog}}
+                @title="Travis CI Changelog"
+                class="navigation-anchor"
+              >
+                Changelog
+              </ExternalLinkTo>
+            </li>
+            <li>
+              <ExternalLinkTo
+                @href={{this.config.urls.docs}}
+                @title="Travis CI Documentation"
+                class="navigation-anchor"
+              >
+                Documentation
+              </ExternalLinkTo>
+            </li>
+          {{else}}
+            <li>
+              <LinkTo @route="insights" class="navigation-anchor">
+                Insights
+              </LinkTo>
+            </li>
+            <li>
+              <LinkTo @route="insights.notifications" class="navigation-anchor">
+                Notifications
+              </LinkTo>
+            </li>
+            <li>
+              <LinkTo @route="insights.probes" class="navigation-anchor">
+                Probes
+              </LinkTo>
+            </li>
+            <li>
+              <LinkTo @route="insights.plugins" class="navigation-anchor">
+                Plugins
+              </LinkTo>
+            </li>
+          {{/unless}}
         {{else}}
           <li>
             <ExternalLinkTo
@@ -121,11 +149,13 @@
           </li>
         {{/if}}
       {{/if}}
-      <li>
-        <a class="navigation-anchor pointer" title="Help" {{action "goToHelp"}}>
-          Help
-        </a>
-      </li>
+      {{#unless this.isInsights}}
+        <li>
+          <a class="navigation-anchor pointer" title="Help" {{action "goToHelp"}}>
+            Help
+          </a>
+        </li>
+      {{/unless}}
       {{#if this.deploymentVersion}}
         <li>
           <span class="deployment-version">

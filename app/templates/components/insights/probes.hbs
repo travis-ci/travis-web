@@ -1,0 +1,23 @@
+<div class="user-tests" id="user-tests">
+  <section class="user-tests__content">
+    {{#basic-dropdown as |dd|}}
+      {{#dd.trigger class='modal-field active-probe-filter browser-default probe-input-filter dropdown-trigger'}}
+        <span id="active-probe-text">{{this.probeFilterLabel}}</span>
+      {{/dd.trigger}}
+      {{#dd.content class='dropdown-content'}}
+        <li>
+          <a {{on 'click' (action 'setFilter' 'all' dd)}} class='{{if (eq this.probeFilter 'all') 'dropdown-selected'}} dropdown-list-elements' id="all-probe-filter">All Probe</a>
+        </li>
+        <li>
+          <a {{on 'click' (action 'setFilter' 'active' dd)}} class='{{if (eq this.probeFilter 'active') 'dropdown-selected'}} dropdown-list-elements'>Active Probe</a>
+        </li>
+        <li>
+          <a {{on 'click' (action 'setFilter' 'inactive' dd)}} class='{{if (eq this.probeFilter 'inactive') 'dropdown-selected'}} dropdown-list-elements'>Inactive Probe</a>
+        </li>
+      {{/dd.content}}
+    {{/basic-dropdown}}
+    <Insights::ProbesList
+      @probes={{this.probes}}
+    />
+  </section>
+</div>

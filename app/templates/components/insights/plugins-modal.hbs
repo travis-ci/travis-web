@@ -1,0 +1,233 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+>
+  <div id='plugins-modal' class='modal modal-fixed-footer'>
+    <TravisForm
+      @onSubmit={{perform this.save}}
+      @id='plugins-modal-form'
+      @class='modal-form'
+      as |form|
+    >
+      <div id='testsOverlayPatchInput'></div>
+      {{#unless this.kubeKeyGenerated}}
+      <div id='myContentModel' class='modal-content'>
+        <h6 class='modal-h6'>
+          Add New Plugin
+        </h6>
+        <fieldset class="modal-field" id="user_plugin_name_form_group">
+          <legend class="tooltipped modal-field-legend">
+             Account Name *
+            <EmberTooltip @text="This is the account name for the Plugin" @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.pluginName}}
+            @required={{true}}
+            @onChange={{action (mut this.pluginName)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input class="modal-input" placeholder="Enter unique name for this integration" />
+          </form.field>
+        </fieldset>
+        <fieldset class="modal-field" id="user_plugin_plugin_type_form_group">
+          <legend class="tooltipped modal-field-legend">
+             Product
+            <EmberTooltip @text="This is the product for the Plugin" @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.selectedPlugin}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.select
+              class="modal-input"
+              @searchEnabled={{false}}
+              @searchField="name"
+              @placeholder="Select plugin type"
+              @selected={{this.selectedPlugin}}
+              @options={{this.pluginTypes}}
+              @onchange={{action (mut this.selectedPlugin)}}
+              as |plugin|
+            >
+              {{plugin.name}}
+            </field.select>
+          </form.field>
+        </fieldset>
+        {{#unless this.isExternalPlugin}}
+        {{#if this.pluginHasPublicKey}}
+        <fieldset class="modal-field" id="user_plugin_public_id_form_group">
+          <legend class="tooltipped modal-field-legend">
+             {{this.pluginPublicKeyLabel}}
+            <EmberTooltip @text={{this.pluginPublicKeyTooltip}} @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.publicId}}
+            @onChange={{action (mut this.publicId)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input class="modal-input" placeholder="{{this.pluginPublicKeyPlaceholder}}" />
+          </form.field>
+        </fieldset>
+        {{/if}}
+        {{#if (eq this.selectedPlugin.id 'sonarqube')}}
+          <div class="modal-text"> Enter Your Sonarqube installation domain (i.e. https://sonarqube.example.com)</div>
+        {{else if (or (eq this.selectedPlugin.id 'datadog') (eq this.selectedPlugin.id 'sre'))}}
+          <div class="modal-text"> Where do I find my key?</div>
+        {{/if}}
+        <fieldset class="modal-field" id="user_plugin_private_key_form_group">
+          <legend class="tooltipped modal-field-legend">
+             {{this.pluginPrivateKeyLabel}}
+             <EmberTooltip @text={{this.pluginPrivateKeyTooltip}} @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.privateKey}}
+            @onChange={{action (mut this.privateKey)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input class="modal-input" placeholder="{{this.pluginPrivateKeyPlaceholder}}" />
+          </form.field>
+        </fieldset>
+        <div class="modal-text">
+          {{{this.pluginHelpTextHeader}}}
+          <div class='tooltip'>
+            {{{this.pluginHelpText}}}
+          </div>
+        </div>
+        {{/unless}}
+        <fieldset class="modal-field hide" id="user_plugin_account_name_form_group">
+          <legend class="tooltipped modal-field-legend">
+             Account Name
+            <EmberTooltip @text="This is the account name for the Plugin" @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.accountName}}
+            @onChange={{action (mut this.accountName)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input class="modal-input" />
+          </form.field>
+        </fieldset>
+        {{#if this.isThreePartPlugin}}
+        <fieldset class="modal-field" id="user_plugin_app_key_form_group">
+          <legend class="tooltipped modal-field-legend">
+             App Key
+            <EmberTooltip @text="This is the app key of Plugin" @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.appKey}}
+            @onChange={{action (mut this.appKey)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input class="modal-input" />
+          </form.field>
+        </fieldset>
+        {{/if}}
+        {{#if this.isUrlPlugin}}
+        <fieldset class="modal-field" id="user_plugin_domain_form_group">
+          <legend class="tooltipped modal-field-legend">
+             {{this.pluginUrlLabel}}
+             <EmberTooltip @text={{this.pluginUrlTooltip}} @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.domain}}
+            @onChange={{action (mut this.domain)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input class="modal-input" placeholder="{{this.pluginUrlPlaceholder}}" />
+          </form.field>
+        </fieldset>
+        {{#if (eq this.selectedPlugin.id 'gitlab')}}
+        <div class="modal-text modal-text_domain_gitlab"> Enter Your Gitlab installation domain (i.e. https://gitlab.example.com) or leave empty for gitlab.com</div>
+        {{/if}}
+        {{/if}}
+        <div class="modal-checkbox hide" id="user_subplugin_form_group">
+          <label></label>
+          <form.field
+            @disableFrame={{true}}
+            @value={{this.useForSubplugins}}
+            @onChange={{action (mut this.useForSubplugins)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.checkbox>
+              <span>Use same keys for related plugins?</span>
+            </field.checkbox>
+          </form.field>
+        </div>
+        {{#if this.isExternalPlugin}}
+        <div class="modal-generate-link">
+          <a class="btn {{if this.isFormValid '' 'disabled'}}" id="generateLink" {{on 'click' (action (perform this.generateKubeKey))}}>Generate Key</a>
+          <div class="modal-text">
+            {{{this.pluginHelpTextHeader}}}
+            <div class='tooltip'>
+              {{{this.pluginHelpText}}}
+            </div>
+          </div>
+        </div>
+        {{/if}}
+        {{#unless (eq this.selectedPlugin.id 'kube')}}
+        <div class="test-connect" id="new-plugin-authenticate">
+          <a class="a test-connection" id="test-connection" {{on 'click' (perform this.testConnection)}}>Test connection</a>
+          {{#if this.isTestRunning}}
+            <div class="container" id="test-load-icon">
+              <div class="dot-container">
+                <div class="dot dot-1"></div>
+                <div class="dot dot-2"></div>
+                <div class="dot dot-3"></div>
+              </div>
+            </div>
+          {{/if}}
+        </div>
+        {{/unless}}
+        {{#if this.isTestCompleted}}
+          {{#if this.isTestPassed}}
+            <div class="test-connect" id="test-success">
+              <div class="test-connection-success-icon"></div>
+              <div class="test-connection-success-message">Connection Succeeded!</div>
+            </div>
+          {{else}}
+            <div class="test-connect" id="test-fail">
+              <div class="test-connection-fail-icon"></div>
+              <div class="test-connection-fail-message">Connection Failed.</div>
+              <div class="test-connection-fail-body" id="test-fail-message">{{this.testFailMessage}}</div>
+            </div>
+          {{/if}}
+        {{/if}}
+        {{#if this.isTestRunning}}
+          <div class="test-connection-loading-message" id="test-load">Testing connection...</div>
+        {{/if}}
+      </div>
+      {{else}}
+      <div style="margin:10px">
+        <h4>Your plugin was successfully created!</h4>
+        <h6>Make sure you save your private ID somewhere safe because you will not be able to see it again.</h6>
+        <h6>You will also need it to configure your new plugin.</h6>
+        <p>
+          PUBLIC ID:<br>{{this.kubeGeneratedPublicId}}<br>PRIVATE KEY:<br>{{this.kubeGeneratedPrivateKey}}<br>
+          <a class="btn btn-sre" {{on 'click' (action 'closeCreateKubePlugin')}}>Done</a>
+        </p>
+      </div>
+      {{/unless}}
+      <div class="modal-footer" id="myModelFooter">
+        <a class="modal-close waves-effect waves-light btn btn-link" {{on 'click' (fn @onClose)}}>Cancel</a>
+        {{#unless (eq this.selectedPlugin.id 'kube')}}
+        <button class="new-plugin-save modal-save waves-effect waves-sre-contain btn btn-primary form-submit {{if this.isTestPassed '' 'disabled'}}" id="save-plugin" onclick={{form.submit}}> Save</button>
+        {{/unless}}
+      </div>
+    </TravisForm>
+  </div>
+</Modal>

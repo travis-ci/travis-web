@@ -1,0 +1,242 @@
+@import "variables.scss";
+@import "colors.scss";
+
+::-moz-selection {
+  color: $asphalt-gray;
+  background: rgba(62, 172, 175, 0.2);
+}
+
+::selection {
+  color: $asphalt-gray;
+  background: rgba(62, 172, 175, 0.2);
+}
+
+a {
+  color: $oxide-blue;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-shrink: 0;
+  background-color: transparent;
+  flex-direction: row;
+  justify-content: center;
+}
+
+nav {
+  padding: 0 1.166rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Roboto, sans-serif;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  margin: 0 0 1.166rem 0;
+}
+
+h1, h2 {
+  font-weight: 100;
+}
+
+h3, h4, h5 {
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 7rem;
+  letter-spacing: -1.5px;
+}
+
+h2 {
+  font-size: 4.375rem;
+  letter-spacing: -0.5px;
+}
+
+h3 {
+  font-size: 3.5rem;
+  letter-spacing: normal;
+}
+
+h4 {
+  font-size: 2.47916rem;
+  letter-spacing: 0.25px;
+}
+
+h5 {
+  font-size: 1.75rem;
+  letter-spacing: normal;
+  color: $oxide-blue;
+}
+
+h6 {
+  font-size: 1.4583rem;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  color: $oxide-blue;
+}
+
+.body-1 {
+  line-height: 2.0416rem;
+  letter-spacing: 0.5px;
+}
+
+.body-2 {
+  font-size: 1.02083rem;
+  line-height: 2.0416rem;
+  letter-spacing: 0.25px;
+}
+
+.subtitle-1 {
+  line-height: 1.75rem;
+  letter-spacing: 0.15px;
+}
+
+.subtitle-2 {
+  font-size: 1.02083rem;
+  font-weight: 500;
+  line-height: 1.75rem;
+  letter-spacing: 0.1px;
+}
+
+.overline {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.166rem;
+  letter-spacing: 2px;
+}
+
+caption {
+  font-size: 0.875rem;
+  line-height: 1.166rem;
+  letter-spacing: 0.4px;
+}
+
+.dropdown-content {
+  border-radius: 0.2916rem;
+  display: block;
+  opacity: 100%;
+  width: 235px;
+
+  li {
+    list-style-type: none;
+  }
+
+  li > a {
+    color: $asphalt-gray !important;
+    text-decoration: none;
+  }
+
+  li:hover {
+    background-color: #f2fafa !important;
+  }
+
+  li:hover > a {
+    color: $oxide-blue !important;
+  }
+}
+
+.sidenav .collapsible-header:hover {
+  background-color: transparent;
+}
+
+.material-tooltip {
+  width: 14.583rem;
+}
+
+.filtered-out {
+  display: none !important;
+}
+
+@media all and (min-width: $md-min) {
+  nav, footer {
+    padding: 0 1.75rem;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 1.75rem 0;
+  }
+
+  .user-tests__header, .user-tests__content, .user-plugins__header, .user-plugins__content, #notification-first-col, #notificationCol {
+    padding: 1.75rem;
+  }
+
+  .user-tests__header header, .user-tests-actions, .user-plugins-actions, .notify-actions {
+    margin-bottom: 1.75rem;
+  }
+}
+
+.pagination-navigation {
+  a.pagination-link {
+    color: $asphalt-gray;
+
+    &.active {
+      background-color: $oxide-blue;
+      color: $color-white;
+    }
+  }
+}
+
+.pagin-body {
+  display: inline;
+}
+
+.pagination-body {
+  display: inline;
+}
+
+.center {
+  text-align: center;
+}
+
+.justify {
+  text-align: justify;
+}
+
+.list-lower-alpha {
+  list-style-type: lower-alpha;
+}
+
+.red {
+  color: red;
+}
+
+.well > * {
+  transition: all 0.5s;
+}
+
+.hide-well {
+  height: 0px !important;
+  max-height: 0px !important;
+  min-height: 0px !important;
+  padding: 0px !important;
+  display: none;
+}
+
+.hide-well * {
+  height: 0px !important;
+  max-height: 0px !important;
+  min-height: 0px !important;
+  line-height: 0px !important;
+  margin: 0px !important;
+  border: 0px !important;
+  padding: 0px !important;
+}
+
+.hide-well label {
+  // Not needed if we remove the labels.
+  display: none;
+}
+
+.well {
+  background: rgb(250, 250, 250);
+}
+
+.modal-notification-input {
+  word-break: break-word;
+}

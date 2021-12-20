@@ -3,6 +3,10 @@
 @tailwind utilities;
 @import "tailwind/utilities";
 
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap");
+
 @import "app/power-select-vars";
 @import "ember-power-select";
 @import "ember-power-calendar";
@@ -90,6 +94,7 @@
 @import "app/layouts/features";
 @import "app/layouts/striped";
 @import "app/layouts/insights";
+@import "app/layouts/insights/insights";
 @import "app/layouts/billing";
 
 @import "app/pages/landing";

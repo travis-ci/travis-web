@@ -83,6 +83,24 @@
         </div>
       </div>
     </div>
+    <div class="build-emails">
+      <div class="row">
+        <div class="name" data-test-insights-email-settings-title>
+          Scan notifications
+        </div>
+        <div class="description" data-test-insights-email-settings-description>
+          Get emails after completion of Insights scan
+        </div>
+        <div class="controls">
+          <TravisSwitch
+            @active={{this.insightsEmails}}
+            @disabled={{this.toggleInsightsEmails.isRunning}}
+            @onToggle={{perform this.toggleInsightsEmails}}
+            data-test-insights-email-settings-toggle="true"
+          />
+        </div>
+      </div>
+    </div>
     {{#if this.showResubscribeList}}
       <div
         class="unsubscribed-emails"
@@ -131,7 +149,11 @@
     {{/if}}
     <section class="insights-visibility-settings" data-test-insights-settings>
       <h3 data-test-insights-settings-title>
-        Insights Visibility Settings
+        Old Insights Visibility Settings
+        <span>
+          <EmberTooltip @text="Old Insights will be going away soon. We will notify you when that is planned." />
+          <SvgImage @name="icon-help" @class="icon-help" />
+        </span>
       </h3>
       <div class="insights-settings">
         <p class="description" data-test-insights-settings-description>
@@ -149,6 +171,53 @@
           @initialKey={{this.privateInsightsVisibility}}
           @onConfirm={{action "setInsightsVis"}}
         />
+      </div>
+    </section>
+    <section>
+      <h3 data-test-new-insights-settings-title>New Travis CI Insights</h3>
+      <div class="new-insights-settings">
+        <p data-test-new-insights-settings-description>
+          Date &amp; Time Preferences
+        </p>
+        <label class="new-insights-label">
+          Time Zone
+        </label>
+        <PowerSelect
+          @searchEnabled={{false}}
+          @placeholder="Select time zone"
+          @selected={{this.selectedTimeZone}}
+          @onchange={{action 'setNewInsightsTimezone'}}
+          @options={{this.timezoneList}}
+          as |timezone|
+        >
+          {{timezone}}
+        </PowerSelect>
+        <label class="new-insights-label">
+          Date Format
+        </label>
+        <PowerSelect
+          @searchEnabled={{false}}
+          @placeholder="Select date format"
+          @selected={{this.selectedDateFormat}}
+          @onchange={{action 'setNewInsightsDateFormat'}}
+          @options={{this.dateFormatList}}
+          as |dateFormat|
+        >
+          {{dateFormat}}
+        </PowerSelect>
+        <label class="new-insights-label">
+          Time Format
+        </label>
+        <PowerSelect
+          @searchEnabled={{false}}
+          @placeholder="Select time format"
+          @selected={{this.selectedTimeFormat}}
+          @onchange={{action 'setNewInsightsTimeFormat'}}
+          @options={{this.timeFormatList}}
+          as |timeFormat|
+        >
+          {{timeFormat}}
+        </PowerSelect>
       </div>
     </section>
   {{/if}}

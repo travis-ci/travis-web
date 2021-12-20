@@ -4,6 +4,7 @@
 const providers = require('./providers');
 const { plans } = require('./plans.js');
 const { screens } = require('./screens.js');
+const newInsights = require('./new-insights');
 
 const tailwindConfig = require('./tailwind.js');
 const resolveTwConfig = require('tailwindcss/resolveConfig');
@@ -41,6 +42,7 @@ module.exports = function (environment) {
     providers,
     plans,
     screens,
+    newInsights,
     tailwind,
     EmberENV: {
       FEATURES: {
@@ -162,6 +164,36 @@ module.exports = function (environment) {
         }
       }
     },
+
+    insightsStatusUrls: [
+      { name: '1Password', url: 'https://1password.statuspage.io' },
+      { name: 'Amazon Web Services', url: 'https://status.aws.amazon.com' },
+      { name: 'Artifactory', url: 'https://status.jfrog.io' },
+      { name: 'Assembla', url: 'https://status.assembla.com' },
+      { name: 'Azure', url: 'https://status.azure.com/en-us/status' },
+      { name: 'Bamboo', url: 'https://status.atlassian.com' },
+      { name: 'Bitbucket', url: 'https://bitbucket.status.atlassian.com' },
+      { name: 'CircleCI', url: 'https://status.circleci.com' },
+      { name: 'Cloudbees', url: 'https://www.cloudbeesstatus.com' },
+      { name: 'Cloudflare', url: 'https://www.cloudflarestatus.com' },
+      { name: 'Codeclimate', url: 'https://statusgator.com/services/code-climate' },
+      { name: 'Datadog', url: 'https://status.datadoghq.com' },
+      { name: 'GitHub', url: 'https://www.githubstatus.com' },
+      { name: 'GitLab', url: 'https://status.gitlab.com' },
+      { name: 'Godaddy', url: 'https://statusgator.com/services/godaddy' },
+      { name: 'Google Cloud Platform', url: 'https://status.cloud.google.com' },
+      { name: 'Heroku', url: 'https://status.heroku.com' },
+      { name: 'New Relic', url: 'https://status.newrelic.com' },
+      { name: 'Okta', url: 'https://status.okta.com/' },
+      { name: 'Onelogin', url: 'https://www.onelogin.com/status' },
+      { name: 'Pagerduty', url: 'https://status.pagerduty.com' },
+      { name: 'Pingdom', url: 'https://status.pingdom.com' },
+      { name: 'Rollbar', url: 'https://status.rollbar.com' },
+      { name: 'Sentry', url: 'https://status.sentry.io' },
+      { name: 'TeamCity', url: 'https://status.jetbrains.com' },
+      { name: 'Travis CI', url: 'https://www.traviscistatus.com' },
+      { name: 'Zendesk', url: 'https://status.zendesk.com' },
+    ],
   };
 
   ENV.metricsAdapters = [];

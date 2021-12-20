@@ -1,0 +1,43 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+>
+  <div class="modal modal-fixed-footer" id="scandetails-modal">
+    <div class="scan-details-modal modal-content" id="scan-details-modal-content">
+      <div class="scanlog-plugin modal-scan-log-input">
+        Scan Log for {{plugin.name}}
+      </div>
+      <div class="last-scan-label">
+        Only details from the last scan is shown.
+      </div>
+      <div class="scan-log-result">
+        {{#each this.scanLogsPresentable as |node index|}}
+          <div class="heading-rectangle">
+            <span class="collapse-btn" id="{{node.key}}-collapse-button-{{index}}" {{on 'click' (action 'collapseSection')}}></span>
+            <span class="head-number-count"></span>
+            <span class="text-style-bold text-style-capitalized">{{node.key}}</span>
+          </div>
+          <div class="scan-section {{node.key}}-section" id="{{node.key}}-section" style="display: block;">
+            {{#each node.value as |scanLog|}}
+              <div class="scan-section">
+                <span class="number-count"></span>
+                {{#if scanLog.text}}
+                <span class="key">{{scanLog.text}}</span>
+                {{/if}}
+                {{#if scanLog.additional_text}}
+                <span class="{{if scanLog.additional_text_type scanLog.additional_text_type 'info'}}">{{scanLog.additional_text}}</span>
+                {{/if}}
+              </div>
+            {{/each}}
+            <div class="scan-section">
+              <span class="number-count"></span>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="modal-footer" id="scanFooter">
+      <a class="modal-close waves-effect waves-light btn btn-primary" id="closeScanLogModal" {{on 'click' (fn @onClose)}}>Close</a>
+    </div>
+  </div>
+</Modal>

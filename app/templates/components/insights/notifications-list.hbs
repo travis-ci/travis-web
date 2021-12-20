@@ -1,0 +1,95 @@
+<section class="notify-actions">
+  <div class="notify-actions__items action-items">
+    <div class="waves-effect waves-light action-btn notify-input-filter {{if this.allowToggle '' 'snooze-disabled'}} snooze-button" {{on 'click' (perform this.toggleNoifications)}} id="notify-snooze-button">Snooze Notifications</div>
+    <div class="refresh-page-button waves-effect waves-light action-btn" {{on 'click' (action 'reloadNotifications')}}>
+      <SvgImage @name="icon-reload" @class="ico-refresh-page" />
+      Refresh the list
+    </div>
+  </div>
+  <div class="notify-actions__search">
+    <div class="notify-input-search input-search">
+      <SvgImage @name="icon-insights-search" @class="input-search-icon" />
+      <Input
+        @value={{this.query}}
+        class="notify-input-search__input"
+        placeholder="Search Type, Plugin, Product, Category, Message"
+        onKeyUp={{perform this.search}}
+      />
+    </div>
+  </div>
+</section>
+<table class="responsive-table table-default notification-table" id="user_notifications_table">
+  <thead id="table-head">
+    <tr>
+      <th>
+        <label>
+          <input class="filled-in" id="checkbox-head" type="checkbox" checked={{this.isAllSelected}} onChange={{action "toggleAll"}} />
+          <span></span>
+        </label>
+      </th>
+      <th class="sort-btn {{if (eq 'weight' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'weight')}}>Alert</th>
+      <th class="sort-btn {{if (eq 'type' this.sortField) this.sortDirection ''}}"  {{on 'click' (action 'applySort' 'type')}}>Type</th>
+      <th class="sort-btn {{if (eq 'user_plugins.name' this.sortField) this.sortDirection ''}}"  {{on 'click' (action 'applySort' 'user_plugins.name')}}>Plugin</th>
+      <th class="sort-btn {{if (eq 'user_plugins.plugin_type' this.sortField) this.sortDirection ''}}"  {{on 'click' (action 'applySort' 'user_plugins.plugin_type')}}>Product</th>
+      <th class="sort-btn {{if (eq 'user_plugins.plugin_category' this.sortField) this.sortDirection ''}}"  {{on 'click' (action 'applySort' 'user_plugins.plugin_category')}}>Category</th>
+      <th>Message</th>
+      <th>Details</th>
+      <th class="notification-status">Status</th>
+    </tr>
+  </thead>
+  <tbody class="table-body" id="table-body">
+    {{#each this.notifications as |notification|}}
+      <tr class="tableRow" id="notification-{{notification.id}}">
+        <td>
+          <label>
+            <input
+              class="checkbox-table filled-in"
+              id="{{notification.id}}"
+              type="checkbox"
+              checked={{contains notification.id this.selectedNotificationIds}}
+              onChange={{action "toggleNotification" notification.id}}
+            />
+            <span></span>
+          </label>
+        </td>
+        <td>
+          <div class="icon-alert-{{notification.probeSeverity}}"></div>
+        </td>
+        <td>
+          {{notification.type}}
+        </td>
+        <td>
+          {{notification.pluginName}}
+        </td>
+        <td>
+          {{notification.pluginType}}
+        </td>
+        <td>
+          {{notification.pluginCategory}}
+        </td>
+        <td>
+          {{notification.message}}
+        </td>
+        <td>
+          <a class="detailsLink modal-trigger" id="{{notification.id}}" {{on 'click' (action 'openModal' notification)}}>Learn More</a>
+        </td>
+        <td>
+          {{notification.activeStatus}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<PaginationNavigation
+  @collection={{this.notifications}}
+  @tagName="div"
+  @route="insights.notifications"
+  @queryParam="page"
+  @inner={{4}}
+  @outer={{0}}
+/>
+<Insights::NotificationModal
+  @isOpen={{this.showNotificationModal}}
+  @onClose={{fn (mut this.showNotificationModal) false}}  
+  @notification={{this.selectedNotification}}
+/>
