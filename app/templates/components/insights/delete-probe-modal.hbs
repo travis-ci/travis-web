@@ -1,0 +1,19 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+>
+  <div class="modal modal-fixed-footer" id="user-test-modal-action-delete">
+    <div class="modal-content">
+      <h6 class="modal-h6">Delete probe</h6>
+      <div>
+        You are about to permanently delete a probe.
+        You will not be able to retrieve the probe data after deletion.
+        Please confirm you want to delete the probe.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-close waves-effect waves-light btn btn-link" {{on 'click' (fn @onClose)}}>Cancel</a>
+      <a class="modal-save waves-effect waves-light btn btn-danger" {{on 'click' (perform this.deleteProbes)}} id="modal-confirm-delete">Delete</a>
+    </div>
+  </div>
+</Modal>
