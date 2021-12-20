@@ -141,6 +141,16 @@
         <li>
           <TravisStatus @showDescription={{false}} />
         </li>
+        <li>
+          <div class='travis-status none'>
+            <div class="status-circle">
+              ●
+            </div>
+            <LinkTo @route="insights.status" class="status-link">
+              Travis Insights Status
+            </LinkTo>
+          </div>
+        </li>
       </ul>
     </div>
   {{/unless}}

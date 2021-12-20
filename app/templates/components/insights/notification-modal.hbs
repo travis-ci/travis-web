@@ -1,0 +1,61 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+>
+  <div class="modal notification-modal modal-fixed-footer" id="modal1">
+    <div class="modal-content notification-modal-content">
+      <h6>Notifications Details</h6>
+      <fieldset class="modal-field notification-modal-field">
+        <legend class='tooltipped modal-field-legend'>
+           Plugin Source
+          <EmberTooltip @text="The plugin source is the name of the database you linked to Travis Insights such as AWS, Azure, etc..." @side="bottom" />
+        </legend>
+        <p class="modal-input modal-notification-input" id="notificationPluginSource" type="text">{{@notification.pluginType}}</p>
+      </fieldset>
+      <fieldset class="modal-field notification-modal-field">
+        <legend class='tooltipped modal-field-legend'>
+           Alert Status
+          <EmberTooltip @text="The alert status shows the last run scan probe result. Probe results can be critical, warning or okay." @side="bottom" />
+        </legend>
+        <p class="modal-input modal-notification-input" id="notificationAlertStatus" type="text">{{@notification.alertMessage}}</p>
+      </fieldset>
+      <fieldset class="modal-field notification-modal-field">
+        <legend class='tooltipped modal-field-legend'>
+           Notification Message
+          <EmberTooltip @text="The notification message displays the predefined or custom probe message." @side="bottom" />
+        </legend>
+        <p class="modal-input modal-notification-input" id="notificationMessage" type="text">{{@notification.message}}</p>
+      </fieldset>
+      <fieldset class="modal-field notification-modal-field">
+        <legend class='tooltipped modal-field-legend'>
+           Instance Name
+          <EmberTooltip @text="This is the name of the database instance name." @side="bottom" />
+        </legend>
+        <p class="modal-input modal-notification-input" id="notificationInstanceName" type="text">
+          {{#if @notification.affectedItems}}
+            {{@notification.affectedItems}}
+          {{else}}
+            None
+          {{/if}}
+        </p>
+      </fieldset>
+      <fieldset class="modal-field notification-modal-field">
+        <legend class="modal-field-legend"> Description</legend>
+        <p class="modal-input modal-notification-input" id="notificationDescription" type="text">{{if @notification.description @notification.description 'None'}}</p>
+      </fieldset>
+      <fieldset class="modal-field notification-modal-field">
+        <legend class="modal-field-legend"> Further Reading</legend>
+        <p class="modal-input modal-notification-input" id="notificationReading" type="text">
+          {{#if @notification.descriptionLink}}
+            <ExternalLinkTo @href="{{@notification.descriptionLink}}" @title="Link">Link</ExternalLinkTo>
+          {{else}}
+            None
+          {{/if}}
+        </p>
+      </fieldset>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-close waves-effect waves-light btn btn-primary" {{on 'click' (fn @onClose)}}> Cancel</a>
+    </div>
+  </div>
+</Modal>
