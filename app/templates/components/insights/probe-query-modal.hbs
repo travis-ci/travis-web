@@ -1,0 +1,99 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn (action 'onCloseModal')}}
+>
+  <div class="modal modal-fixed-footer" id="sandbox-modal">
+    <TravisForm
+      @onSubmit={{perform this.save}}
+      @id='plugins-modal-form'
+      @class='sandbox-modal-form modal-form'
+      as |form|
+    >
+      <div class='modal-content'>
+        <h6 class='modal-h6'>
+          Probe Editor
+        </h6>
+        <div class="plugin-select-container">
+          <fieldset class="modal-field">
+            <legend class="tooltipped modal-field-legend">
+               Plugin
+              <EmberTooltip @text="This is the plugin" @side="bottom" />
+            </legend>
+            <form.field
+              @value={{this.selectedPlugin}}
+              @onChange={{action (mut this.selectedPlugin)}}
+              @showValidationStatusIcons={{false}}
+              @showValidationStatusMessage={{false}}
+              as |field|
+            >
+              <field.select
+                class="modal-input"
+                @searchEnabled={{false}}
+                @placeholder="Select plugin..."
+                @selected={{this.selectedPlugin}}
+                @onchange={{action 'onPluginChange'}}
+                @options={{this.pluginOptions}}
+                as |plugin|
+              >
+                {{plugin.name}}
+              </field.select>
+            </form.field>
+          </fieldset>
+        </div>
+        <div class="cols">
+          <div class="col-left">
+            <div class="sample-json-container">
+              <span class="label">Sample JSON</span>
+              <pre class="sample-json">{{this.sampleJson}}</pre>
+            </div>
+          </div>
+          <div class="col-right">
+            <div class="probe-output-container">
+              <span class="label">Output</span>
+              {{#if this.isQueryRunning}}
+              <div class="spinner">
+                <img src="/images/insights/spinner.gif" />
+              </div>
+              {{/if}}
+              <div class="probe-output">{{{this.probeOutput}}}</div>
+            </div>
+            <fieldset class="modal-field">
+              <legend class="tooltipped modal-field-legend">
+                 Query
+                <EmberTooltip @text="Query" @side="bottom" />
+              </legend>
+              <form.field
+                @value={{this.query}}
+                @onChange={{action (mut this.query)}}
+                @showValidationStatusIcons={{false}}
+                @showValidationStatusMessage={{false}}
+                as |field|
+              >
+                <field.input class="modal-input" id="query" name="query" placeholder="Enter the query" />
+              </form.field>
+            </fieldset>
+            <div class="query-buttons">
+              <a class="clear-query btn action-btn" {{on 'click' (action 'clearQuery')}}>
+                Clear
+              </a>
+              <ExternalLinkTo @class="btn action-btn" @href="http://docs.srenity.io/docs/probes/#configure-your-probes" @title="Help">
+                Help
+              </ExternalLinkTo>
+              <a class="run-query btn action-btn {{if this.isRunAllowed '' 'disabled'}}" {{on 'click' (action (perform this.runQuery))}}>
+                Run Query
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </TravisForm>
+    <div class="modal-footer">
+      <a class="btn btn-link" id="sandbox-cancel" {{on 'click' (action 'onCloseModal')}}>
+        Cancel
+      </a>
+      <a class="btn btn-primary {{if this.isSaveAllowed '' 'disabled'}}" id="sandbox-save" {{on 'click' (action 'onSaveQuery')}}>
+        Save and Close
+      </a>
+    </div>
+  </div>
+</Modal>
