@@ -1,0 +1,283 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn (action 'closeModal')}}
+>
+  <div class="modal modal-fixed-footer" id="tests-modal">
+    <TravisForm
+      @onSubmit={{perform this.save}}
+      @id='tests-modal-form'
+      @class='modal-form'
+      as |form|
+    >
+      <div class="modal-content">
+        <h6 class="modal-h6">
+          {{#if this.editMode}}
+            Edit Probe
+          {{else}}
+            {{if (eq probeType 'native') 'Add new Built-in Probe' 'Add new Custom Probe'}}
+          {{/if}}
+        </h6>
+
+        <fieldset class="modal-field">
+          <legend class="tooltipped modal-field-legend">
+             Product
+            <EmberTooltip @text="This is the product of plugin" @side="bottom" />
+          </legend>
+          {{#if this.editMode}}
+            {{this.probe.pluginTypeName}}
+          {{else}}
+            <form.field
+              @value={{this.selectedPlugin}}
+              @onChange={{action (mut this.selectedPlugin)}}
+              @showValidationStatusIcons={{false}}
+              @showValidationStatusMessage={{false}}
+              as |field|
+            >
+              <field.select
+                class="modal-input"
+                @searchEnabled={{false}}
+                @placeholder="Select product"
+                @selected={{this.selectedPlugin}}
+                @onchange={{action 'getProbeOptions'}}
+                @options={{this.pluginOptions}}
+                @renderInPlace={{true}}
+                as |plugin|
+              >
+                {{plugin.name}}
+              </field.select>
+            </form.field>
+          {{/if}}
+          <div id="testsOverlayDisplayLabels">
+            {{#if this.pluginCategory}}
+              <span id="testCategoryKey" class='label-key'> Category:</span>
+              <span id="testCategoryVal" class='label-val'> {{this.pluginCategory}}</span>
+            {{/if}}
+            <span id="testTypeKey" class='label-key'> Type:</span>
+            {{#if (eq probeType 'native')}}
+              <span id="testTypeVal" class='label-val'>Native</span>
+              {{#if this.sponsorName}}
+                <span id="testLabel" class='label-val'>CREATED BY {{this.sponsorName}}</span>
+              {{/if}}
+            {{else if (eq probeType 'custom')}}
+              <span id="testTypeVal" class='label-val'>Custom</span>
+              {{#if this.sponsorName}}
+                <span id="testLabel" class='label-val'>BASED ON {{this.sponsorName}}</span>
+              {{/if}}
+            {{/if}}
+          </div>
+        </fieldset>
+        {{#if (eq probeType 'native')}}
+        <fieldset class="modal-field probe-dropdown" id="testsOverlayProbe">
+          <legend class="tooltipped modal-field-legend">
+             Probe
+            <EmberTooltip @text="This is the probe" @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.selectedProbe}}
+            @onChange={{action (mut this.selectedProbe)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.select
+              class="modal-input"
+              @searchEnabled={{false}}
+              @placeholder="Select probe"
+              @selected={{this.selectedProbe}}
+              @onchange={{action 'getProbeData'}}
+              @options={{this.probeOptions}}
+              @renderInPlace={{true}}
+              as |probe|
+            >
+              {{probe.name}}
+            </field.select>
+          </form.field>
+        </fieldset>
+        {{/if}}
+        <fieldset class="modal-field">
+          <legend class="tooltipped modal-field-legend">
+             Notification
+            <EmberTooltip @text="This is the notification text for the Probe" @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.notification}}
+            @required={{true}}
+            @onChange={{action (mut this.notification)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input id="testsOverlayNotification" class="modal-input" placeholder="Enter probe notification text" />
+          </form.field>
+        </fieldset>
+        <fieldset class="modal-field">
+          <legend class="tooltipped modal-field-legend">
+             Description
+            <EmberTooltip @text="This is the description of Probe" @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.description}}
+            @required={{true}}
+            @onChange={{action (mut this.description)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.textarea id="testsOverlayDescription" class="modal-input" placeholder="Enter probe description">{{this.description}}</field.textarea>
+          </form.field>
+        </fieldset>
+        <fieldset class="modal-field">
+          <legend class="tooltipped modal-field-legend">
+             Query
+            <EmberTooltip @text="Probe query" @side="bottom" />
+          </legend>
+          <form.field
+            @value={{this.query}}
+            @onChange={{action (mut this.query)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.textarea id="testsOverlayTest" class="modal-input" placeholder="Probe query" disabled='disabled'>{{this.query}}</field.textarea>
+          </form.field>
+          {{#if (eq probeType 'custom')}}
+            <span id="openQueryEditor" {{on 'click' (action 'openQueryEditor')}}>
+              Open Query Editor
+            </span>
+          {{else if (eq probeType 'native')}}
+            <span id="editQuery" {{on 'click' (action 'openQueryEditor')}}>
+              Edit Query
+            </span>
+          {{/if}}
+        </fieldset>
+        <fieldset class="modal-field">
+          <form.field
+            @value={{this.overlayType}}
+            @onChange={{action (mut this.overlayType)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input id="testsOverlayType" class="modal-input" />
+          </form.field>
+          <form.field
+            @value={{this.overlayLabelsName}}
+            @onChange={{action (mut this.overlayLabelsName)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input id="testsOverlayLabelsName" class="modal-input" />
+          </form.field>
+          <form.field
+            @value={{this.overlaysLabelsUrl}}
+            @onChange={{action (mut this.overlaysLabelsUrl)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            as |field|
+          >
+            <field.input id="testsOverlayLabelsUrl" class="modal-input" />
+          </form.field>
+          <legend class="tooltipped modal-field-legend">
+             Tags
+            <EmberTooltip @text="These are the tags" @side="bottom" />
+          </legend>
+          <div class="chips-input chips-autocomplete">
+            <Input
+              id='tagInput'
+              class='tags modal-input'
+              maxlength=20
+              type='text'
+              autocomplete='off'
+              disabled={{this.maxTagsPresent}}
+              onkeypress={{action 'checkTagInput'}}
+              onpaste={{action 'checkTagPaste'}}
+            />
+            {{#if this.maxTagsPresent}}
+              <EmberTooltip @text="You can create only 10 tags per probe" @side="bottom" />
+            {{/if}}
+          </div>
+        </fieldset>
+        <div class="category-section">
+          <span class="category">
+            <span>
+              <SvgImage @name="icon-info" @class="icon-insights-info" />
+              <EmberTooltip @text="This is the Probe Category" @side="right" />
+            </span>
+            Category:
+          </span>
+          <span id="testsOverlayCategory">{{this.pluginCategory}}</span>
+
+          <div class="action-items pull-right help-link" {{on 'click' (fn (mut this.showHelpLinkInput) (not this.showHelpLinkInput))}}>
+            <span id="addHelpLink">
+              Add help link
+            </span>
+          </div>
+        </div>
+        {{#if this.showHelpLinkInput}}
+        <div id="helpLinkInput">
+          <fieldset class="modal-field">
+            <legend class="tooltipped modal-field-legend">
+               Further Reading
+              <EmberTooltip @text="Insert relevant link from documentation" @side="bottom" />
+            </legend>
+            <form.field
+              @value={{this.furtherReadingLink}}
+              @onChange={{action (mut this.furtherReadingLink)}}
+              @showValidationStatusIcons={{false}}
+              @showValidationStatusMessage={{false}}
+              as |field|
+            >
+              <field.input class="modal-input" placeholder="Insert relevant link from documentation" type="text" />
+            </form.field>
+          </fieldset>
+          <div class="modal-text">
+            You can add a relevant link from the vendor (service provider) which corresponds to the probe’s scope, to shed more light to the purpose of the tests for future reference.
+          </div>
+        </div>
+        {{/if}}
+        <fieldset class="modal-field">
+          <legend class="tooltipped modal-field-legend">
+             Severity
+            <EmberTooltip @text="This is the information of Probe" @side="bottom" />
+          </legend>
+          <div class='probes-slider'>
+          <ul>
+            <li>Info</li>
+            <li>Low</li>
+            <li>Med</li>
+            <li>High</li>
+          </ul>
+          <form.field
+            @value={{this.probeSeverity}}
+            @onChange={{action (mut this.probeSeverity)}}
+            @showValidationStatusIcons={{false}}
+            @showValidationStatusMessage={{false}}
+            @showFrame={{false}}
+            as |field|
+          >
+            <field.slider
+              @min=0
+              @max=3
+              @step=1
+            />
+          </form.field>
+          </div>
+          <div class='probes-slider-icon'>
+            <SvgImage @name="icon-alert-{{this.probeSeverityLabel}}" @class="icon-insights-alert" />
+          </div>
+        </fieldset>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-close waves-effect waves-light btn btn-link" {{on 'click' (action 'closeModal')}}>Cancel</a>
+        <a class="modal-save waves-effect waves-light btn btn-primary {{if this.isSaveAllowed '' 'disabled'}}" onclick={{form.submit}} id="probe-submit-btn">{{if this.editMode 'Update' 'Add'}}</a>
+      </div>
+    </TravisForm>
+  </div>
+</Modal>
+<Insights::ProbeQueryModal
+  @isOpen={{this.probeQueryEditorModal}}
+  @onClose={{fn (mut this.probeQueryEditorModal) false}}
+  @selectedPluginType={{this.selectedPlugin.id}}
+  @query={{this.query}}
+/>
