@@ -1,0 +1,49 @@
+<div class="row notification-row">
+  <div id="notificationCol">
+    <div class="notification-second-row">
+      {{#basic-dropdown as |dd|}}
+        {{#dd.trigger class='modal-field active-notification-filter browser-default notify-input-filter dropdown-trigger'}}
+          <span id="active-notifications-span">{{this.notificationFilterLabel}}</span>
+        {{/dd.trigger}}
+
+        {{#dd.content class='dropdown-content'}}
+          <li>
+            <a id="AllNotifications" {{on 'click' (action 'setFilter' 'all' dd)}} class='{{if (eq this.notificationFilter 'all') 'dropdown-selected'}} dropdown-list-elements'>All Notifications</a>
+          </li>
+          <li>
+            <a id="ActiveNotifications" {{on 'click' (action 'setFilter' 'active' dd)}} class='{{if (eq this.notificationFilter 'active') 'dropdown-selected'}} dropdown-list-elements'>Active Notifications</a>
+          </li>
+          <li>
+            <a id="SnoozeNotifications" {{on 'click' (action 'setFilter' 'snooze' dd)}} class='{{if (eq this.notificationFilter 'snooze') 'dropdown-selected'}} dropdown-list-elements'>Snoozed Notifications</a>
+          </li>
+        {{/dd.content}}
+      {{/basic-dropdown}}
+      <div class="notifications-tiles">
+        <div class="notification-tile tile-high">
+          <p class="notification-type">High</p>
+          <span class="notification-count">{{this.notificationCount.high}}</span>
+        </div>
+        <div class="notification-tile tile-low">
+          <p class="notification-type">Low</p>
+          <span class="notification-count">{{this.notificationCount.low}}</span>
+        </div>
+        <div class="notification-tile tile-med">
+          <p class="notification-type">Med</p>
+          <span class="notification-count">{{this.notificationCount.med}}</span>
+        </div>
+        <div class="notification-tile tile-info">
+          <p class="notification-type">Info</p>
+          <span class="notification-count">{{this.notificationCount.info}}</span>
+        </div>
+        <div class="notification-tile tile-total">
+          <p class="notification-type">Total</p>
+          <span class="notification-count">{{this.notificationCount.total}}</span>
+        </div>
+      </div>
+    </div>
+    <Insights::NotificationsList
+      @notifications={{this.notifications}}
+      @notificationFilter={{this.notificationFilter}}
+    />
+  </div>
+</div>
