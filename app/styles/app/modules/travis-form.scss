@@ -475,3 +475,19 @@ $select-multiple-spacing: 5px;
   font-size: 1.1em;
   max-width: calc(100% - 25px);
 }
+
+.new-insights-settings {
+  .new-insights-label {
+    color: $cement-grey;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    margin-top: 20px;
+  }
+  
+  .ember-power-select-trigger {
+    padding: 4px 20px 4px 4px;
+  }
+}

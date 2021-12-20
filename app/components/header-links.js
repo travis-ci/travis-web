@@ -13,6 +13,8 @@ export default Component.extend({
   config,
 
   auth: service(),
+  api: service(),
+  flashes: service(),
   router: service(),
   features: service(),
   externalLinks: service(),
@@ -38,6 +40,19 @@ export default Component.extend({
     }
   }),
 
+  isInsights: computed(() => {
+    if (window && window.location) {
+      const pathname = window.location.pathname;
+      if (pathname.indexOf('insights') === 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }),
+
   actions: {
 
     goToHelp() {
@@ -45,6 +60,14 @@ export default Component.extend({
         const page = encodeURI(window.location.href);
         this.router.transitionTo('help', { queryParams: { page } });
       }
+    },
+
+    runInsightsScan() {
+      this.api.get('/insights_plugins/run_scan').then(() => {
+        this.flashes.success('New scan started.');
+      }).catch(() => {
+        this.flashes.error('New scan failed to start.');
+      });
     }
 
   }

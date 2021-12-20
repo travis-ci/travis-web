@@ -1,0 +1,32 @@
+#ember-basic-dropdown-wormhole,
+.insights .main {
+  @import "../../../materialize/materialize.scss";
+  @import "base.scss";
+  @import "components.scss";
+  @import "notifications.scss";
+  @import "plugins.scss";
+  @import "probes.scss";
+  @import "docs.scss";
+  @import "status.scss";
+  @import "modals.scss";
+  @import "sandbox.scss";
+  @import "scan-details.scss";
+}
+
+.insights .main {
+  font-size: 16px;
+  line-height: 20px;
+
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  background-color: $color-white;
+  color: $cement-gray;
+  font-family: Roboto, sans-serif;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+}
