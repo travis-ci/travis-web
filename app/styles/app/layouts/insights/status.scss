@@ -1,0 +1,12 @@
+.status-text {
+  width: 60%;
+
+  &p {
+    text-align: justify;
+  }
+
+  &.api-links a {
+    display: inline-block;
+    width: 33%;
+  }
+}
