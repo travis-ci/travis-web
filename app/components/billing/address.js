@@ -22,6 +22,7 @@ export default Component.extend({
       }
 
       yield this.subscription.save();
+      yield this.subscription.billingInfo.save();
       this.closeEditForms();
       this.flashes.clear();
     } catch (error) {
