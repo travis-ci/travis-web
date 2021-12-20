@@ -1,0 +1,147 @@
+<section class="user-tests-actions">
+  <div class="user-tests-actions__items action-items">
+    {{#basic-dropdown as |dd|}}
+      {{#dd.trigger class='waves-effect waves-sre-action action-btn font-medium user-tests-input-filter dropdown-trigger'}}
+        <span id="new-probe-span">New Probe</span>
+      {{/dd.trigger}}
+      {{#dd.content class='dropdown-content'}}
+        <li>
+          <a href="#!" id="newBuiltinProbe" {{on 'click' (action 'openNormalProbeModal' dd)}}> New built-in probe</a>
+        </li>
+        <li>
+          <a href="#!" id="newCustomProbe" {{on 'click' (action 'openCustomProbeModal' dd)}}> New custom probe</a>
+        </li>
+      {{/dd.content}}
+    {{/basic-dropdown}}
+    <a class="action-item waves-effect waves-light action-btn font-medium edit-btn {{if this.allowEdit '' 'disabled'}}"  {{on 'click' (action 'openEditProbeModal')}} id="user-tests-button-edit">Edit Probe</a>
+    <a class="deactive-test-btn action-item waves-effect waves-light action-btn font-medium {{if this.allowToggle '' 'disabled'}}" {{on 'click' (perform this.toggle)}} id="user-tests-button-toggle">{{this.toggleButtonText}}</a>
+    <div class="action-item waves-effect waves-light action-btn font-medium {{if this.allowToggle '' 'disabled'}}" {{on 'click' (action 'openDeleteProbeModal')}} id="user-test-action-delete">Delete Probe</div>
+    <div class="refresh-page-button waves-effect waves-light action-btn font-medium" {{on 'click' (action 'reloadProbes')}}>
+      <SvgImage @name="icon-reload" @class="ico-refresh-page" />
+      Refresh the list
+    </div>
+  </div>
+  <div class="user-tests-actions__search">
+    <div class="notify-input-search input-search">
+      <SvgImage @name="icon-insights-search" @class="input-search-icon" />
+      <Input
+        @value={{this.query}}
+        class="notify-input-search__input"
+        placeholder="Search Product, Type, Category, Message or Tag"
+        onKeyUp={{perform this.search}}
+      />
+    </div>
+  </div>
+</section>
+<table class="user-tests__table table-default responsive-table" id="tests_table">
+  <thead>
+    <tr>
+      <th>
+        <label>
+          <Input
+            id="checkbox-head"
+            class="filled-in"
+            @type="checkbox"
+            @checked={{this.isAllSelectedChecked}}
+            {{on 'change' (action 'toggleAll')}}
+          />
+          <span></span>
+        </label>
+      </th>
+      <th class="sort-btn {{if (eq 'plugin_type' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'plugin_type')}} scope="col"> Product</th>
+      <th class="sort-btn {{if (eq 'type' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'type')}} scope="col"> Type</th>
+      <th class="sort-btn {{if (eq 'plugin_category' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'plugin_category')}} scope="col"> Category</th>
+      <th scope="col"> Message</th>
+      <th scope="col"> Tags</th>
+      {{#if (eq this.probeFilter 'all')}}
+        <th class="template-status sort-btn {{if (eq 'active' this.sortField) this.sortDirection ''}}" {{on 'click' (action 'applySort' 'active')}} scope="col"> Status</th>
+      {{else}}
+        <th class="template-status" scope="col"> Status</th>
+      {{/if}}
+    </tr>
+  </thead>
+  <tbody id="test-table-body">
+    {{#each this.probes as |probe|}}
+    <tr class="tableRow" id="test-{{probe.id}}">
+      <td>
+        <label>
+          <input
+            class="checkbox-table filled-in"
+            id="{{probe.id}}"
+            type="checkbox"
+            checked={{contains probe.id this.selectedProbeIds}}
+            onChange={{action "toggleProbe" probe.id}}
+          />
+          <span></span>
+        </label>
+      </td>
+      <td>
+        <span>{{probe.pluginTypeName}}</span>
+        <span></span>
+        {{#if probe.labels}}
+          {{#if (and probe.sponsorName (eq probe.type 'native'))}}
+            <ExternalLinkTo
+              @href={{probe.sponsorUrl}}
+              class="action-label"
+            >
+              Created by {{probe.sponsorName}}
+            </ExternalLinkTo>
+          {{/if}}
+          {{#if (and probe.sponsorName (eq probe.type 'custom'))}}
+            <ExternalLinkTo
+              @href={{probe.sponsorUrl}}
+              class="action-label"
+            >
+              Based on {{probe.sponsorName}}
+            </ExternalLinkTo>
+          {{/if}}
+        {{/if}}
+      </td>
+      <td class='capitalize-text'>
+        {{probe.type}}
+      </td>
+      <td>
+        {{probe.pluginCategory}}
+      </td>
+      <td>
+        {{probe.notification}}
+      </td>
+      <td class="chipCell{{probe.id}} {{if probe.showMoreTags 'show-all-tags'}}">
+        {{#each probe.tagList as |tag|}}
+          <div class='chip tag-cell'>
+            {{tag.name}}
+          </div>
+        {{/each}}
+        {{#if (and probe.tagListMore (not probe.showMoreTags))}}
+          <a class='more-tags' {{on 'click' (fn (mut probe.showMoreTags) true)}}>{{probe.tagMoreCount}} more</a>
+        {{/if}}
+      </td>
+      <td>
+        {{probe.status}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<PaginationNavigation
+  @collection={{this.probes}}
+  @tagName="div"
+  @route="insights.probes"
+  @queryParam="page"
+  @inner={{4}}
+  @outer={{0}}
+/>
+<Insights::ProbesModal
+  @isOpen={{this.showProbesModal}}
+  @onClose={{fn (mut this.showProbesModal) false}}
+  @probeType={{this.probeType}}
+  @reloadProbes={{action 'reloadProbes'}}
+  @probe={{this.selectedProbe}}
+  @editMode={{this.probeModalEditMode}}
+/>
+<Insights::DeleteProbeModal
+  @isOpen={{this.showRemoveProbeModal}}
+  @onClose={{fn (mut this.showRemoveProbeModal) false}}
+  @selectedProbeIds={{this.selectedProbeIds}}
+  @reloadProbes={{action 'reloadProbes'}}
+/>
