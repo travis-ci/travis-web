@@ -50,6 +50,52 @@
       </li>
     </ul>
   </section>
+  <section class="settings-section">
+    <h2 class="small-title">
+      Security settings
+    </h2>
+    <p>
+      Settings are applicable for {{vcs-vocab this.repo.vcsType 'pullRequest' plural=true lower=true}} ({{vcs-vocab this.repo.vcsType 'pr' plural=true}}) from forks of this repository filed against this repository.
+      Sharing your secrets allow more comfortable collaboration when using forks, but gives builds initiated by {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} from forks access to your decrypted environmental variables and or/code.
+      Not sharing the secrets is more secure, but makes it much less convenient to collaborate using forks.
+    </p>
+    <ul class="settings-list--columns">
+      <li>
+        <SettingsSwitch
+          @active={{this.model.settings.share_encrypted_env_with_forks}}
+          @repo={{this.repo}}
+          @description="Share encrypted env variables with forks ({{vcs-vocab this.repo.vcsType 'pr' plural=true}})"
+          @key="share_encrypted_env_with_forks"
+        />
+        <ExternalLinkTo
+          href="https://docs.travis-ci.com/user/web-ui/#share-encrypted-variables-with-forks-pull-request"
+          title="about sharing encrypted environmental variables with forks ({{vcs-vocab this.repo.vcsType 'pullRequest' plural=true lower=true}})"
+          class="settings-tooltip"
+        >
+          <EmberTooltip @text="Read more about sharing encrypted environmental variables with forks ({{vcs-vocab this.repo.vcsType 'pullRequest' plural=true lower=true}})" />
+          <SvgImage @name="icon-help" @class="icon-help" />
+        </ExternalLinkTo>
+      </li>
+      {{#if this.repo.private}}
+        <li>
+          <SettingsSwitch
+            @active={{this.model.settings.share_ssh_keys_with_forks}}
+            @repo={{this.repo}}
+            @description="Share SSH keys with forks ({{vcs-vocab this.repo.vcsType 'pr' plural=true}})"
+            @key="share_ssh_keys_with_forks"
+          />
+          <ExternalLinkTo
+            href="https://docs.travis-ci.com/user/web-ui/#share-ssh-keys-with-forks-pull-request"
+            title="about sharing SSH keys with forks ({{vcs-vocab this.repo.vcsType 'pullRequest'}})"
+            class="settings-tooltip"
+          >
+            <EmberTooltip @text="Read more about sharing SSH keys with forks ({{vcs-vocab this.repo.vcsType 'pullRequest' plural=true lower=true}})" />
+            <SvgImage @name="icon-help" @class="icon-help" />
+          </ExternalLinkTo>
+        </li>
+      {{/if}}
+    </ul>
+  </section>
   {{#if this.showAutoCancellationSwitches}}
     <section class="settings-section auto-cancellation">
       <h2 class="small-title display-inline">
