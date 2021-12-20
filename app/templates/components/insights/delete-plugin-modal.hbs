@@ -1,0 +1,19 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+>
+  <div class="modal modal-fixed-footer" id="plugins-modal-action-delete">
+    <div class="modal-content">
+      <h6 class="modal-h6">Delete plugin</h6>
+      <div>
+        You are about to permanently delete a plugin.
+        You will not be able to retrieve the plugin information or probe data after deletion.
+        Please confirm you want to delete the plugin.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-close waves-effect waves-light btn btn-link" {{on 'click' (fn @onClose)}}>Cancel</a>
+      <a class="modal-save waves-effect waves-sre-contain btn btn-danger" {{on 'click' (perform this.deletePlugins)}} id="delete-plugin">Delete</a>
+    </div>
+  </div>
+</Modal>
