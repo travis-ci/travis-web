@@ -57,7 +57,7 @@
         <PowerCalendarRange
           class="calendar-medium date-picker-calendar"
           @center={{this.dateCenter}}
-          @onCenterChange={{action (mut this.dateCenter) value="date"}} 
+          @onCenterChange={{action (mut this.dateCenter) value="date"}}
           @selected={{this.dateRange}}
           @maxRange="2 month"
           @onSelect={{action (mut this.dateRange) value="date"}}
@@ -68,6 +68,7 @@
       {{/if}}
     </div>
     <button class="download-csv" onclick={{action "downloadCsv"}}>Download .csv file for more detailed information about usage</button>
+    <button class="download-csv" onclick={{action "downloadUserLicenseCsv"}}>Download .csv file for more detailed information about user license usage</button>
     <div class="repositories-visiblity">
       <TravisForm
         as |form|
