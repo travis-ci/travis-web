@@ -542,11 +542,6 @@ export default create({
         text: text()
       },
 
-      users: {
-        scope: '.highlight-plan [data-test-selected-plan-users]',
-        text: text()
-      },
-
       repos: {
         scope: '.highlight-plan [data-test-selected-plan-repos]',
         text: text()
