@@ -13,18 +13,8 @@ export default Component.extend({
   autoRefillEnabled: reads('subscription.autoRefillEnabled'),
   autoRefillThreshold: reads('subscription.autoRefillThreshold'),
   autoRefillAmount: reads('subscription.autoRefillAmount'),
-  autoRefillThresholds: reads('subscription.autoRefillThresholds'),
-  autoRefillAmounts: reads('subscription.autoRefillAmounts'),
 
   creditsTotal: reads('subscription.addonUsage.private.totalCredits'),
-
-  selectedThreshold: computed('autoRefillThreshold', function () {
-    return this.autoRefillThreshold;
-  }),
-
-  selectedAmount: computed('autoRefillAmount', function () {
-    return this.autoRefillAmount;
-  }),
 
   autoRefillCredits: computed('creditsTotal', 'autoRefillAmount', function () {
     return this.autoRefillAmount;
@@ -41,7 +31,7 @@ export default Component.extend({
   show: computed('subscription', function () {
     let isOrganization = this.subscription.owner.get('isOrganization');
     let isAdmin = this.subscription.owner.get('permissions').admin;
-    return !((this.subscription.plan.id === 'free_tier_plan' || this.subscription.plan.id === 'starter_plan' || this.subscription.get('isManual')) || (isOrganization && !isAdmin));
+    return !(this.subscription.plan.get('id') === 'free_tier_plan' || this.subscription.plan.get('id') === 'starter_plan' || this.subscription.get('isManual') || isOrganization && !isAdmin);
   }),
 
   toggleAutoRefill: task(function* (value) {
@@ -52,13 +42,4 @@ export default Component.extend({
       this.flashes.error('Something went wrong and your Auto Refill settings were not saved.');
     }
   }).restartable(),
-
-  updateAutoRefill: task(function* () {
-    try {
-      yield this.subscription.autoRefillUpdate.perform(this.selectedThreshold, this.selectedAmount);
-    } catch (err) {
-      this.flashes.clear();
-      this.flashes.error('Something went wrong and your Auto Refill settings were not saved.');
-    }
-  }).restartable()
 });
