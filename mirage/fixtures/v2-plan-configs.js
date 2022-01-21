@@ -91,5 +91,37 @@ export default [
         type: 'user_license'
       }
     ]
+  },
+  {
+    id: 'yearly_small_plan',
+    name: 'Small',
+    starting_price: 30000,
+    starting_users: 10000,
+    private_credits: 500000,
+    public_credits: 40000,
+    annual: true,
+    addon_configs: [
+      {
+        id: 'oss_tier_credits',
+        name: 'Free 40 000 credits (renewed monthly)',
+        price: 0,
+        quantity: 40000,
+        type: 'credit_public'
+      },
+      {
+        id: 'free_tier_credits',
+        name: 'Free 10 000 credits (renewed monthly)',
+        price: 0,
+        quantity: 10000,
+        type: 'credit_private'
+      },
+      {
+        id: 'users_free',
+        name: 'Unlimited users',
+        price: 0,
+        quantity: 999999,
+        type: 'user_license'
+      }
+    ]
   }
 ];
