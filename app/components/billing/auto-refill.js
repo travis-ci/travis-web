@@ -41,7 +41,8 @@ export default Component.extend({
   show: computed('subscription', function () {
     let isOrganization = this.subscription.owner.get('isOrganization');
     let isAdmin = this.subscription.owner.get('permissions').admin;
-    return !(this.subscription.plan.get('isFree') || this.subscription.get('isManual') || (isOrganization && !isAdmin));
+    return !(this.subscription.plan.get('id') === 'free_tier_plan' || this.subscription.plan.get('id') === 'starter_plan'
+        || this.subscription.get('isManual') || isOrganization && !isAdmin);
   }),
 
   toggleAutoRefill: task(function* (value) {
