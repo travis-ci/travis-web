@@ -22,7 +22,12 @@ module Travis
         token, svg_token, user, storage = request.params.values_at('token', 'svg_token', 'user', 'storage')
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
           storage = 'sessionStorage' if storage != 'localStorage'
+          puts 'xx-xx'
+          puts svg_token
           info = [storage, token, svg_token, user, request.fullpath]
+          puts '---'
+          puts template % info
+          puts '---'
           Rack::Response.new(template % info).finish
         end
       end
