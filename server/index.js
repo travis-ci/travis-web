@@ -38,6 +38,7 @@ module.exports = function (app) {
           storage.setItem('travis.token', '${token}');
           storage.setItem('travis.user', ${user});
           storage['travis-logs'] += ' | user set in index'
+          debugger
           storage.setItem('travis.become', true);
           window.location = '${req.path}';
         </script>

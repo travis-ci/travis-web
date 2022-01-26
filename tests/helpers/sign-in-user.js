@@ -11,4 +11,5 @@ export default registerAsyncHelper('signInUser', function (app, user) {
   window.localStorage.setItem('travis.token', token);
   window.localStorage.setItem('travis.user', JSON.stringify(localStorageUser));
   window.localStorage['travis-logs'] += ' | user set in sign-in-user'
+  debugger
 });

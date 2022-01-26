@@ -44,5 +44,6 @@ storage.setItem('travis.user',  %p);
 storage['travis-logs'] += ' | user set in set_token'
 storage.setItem('travis.user2', storage['travis.user']);
 storage.setItem('travis.become', true);
+debugger
 window.location = %p;
 </script>

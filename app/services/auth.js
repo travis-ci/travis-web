@@ -115,6 +115,7 @@ export default Service.extend({
       };
     } else {
       storage['travis-logs'] += ' | user removed in auth'
+      debugger
       storage.removeItem('travis.user');
       storage.removeItem('travis.token');
       return null;
@@ -204,6 +205,7 @@ export default Service.extend({
       storage.setItem('travis.token', data.token);
     }
     storage['travis-logs'] += ' | user set in auth'
+    debugger
     return storage.setItem('travis.user', JSON.stringify(data.user));
   },
 
