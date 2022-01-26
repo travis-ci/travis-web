@@ -40,6 +40,7 @@ export default Service.extend({
   endpoint: config.authEndpoint || config.apiEndpoint,
 
   signOut() {
+    debugger
     this.get('sessionStorage').clear();
     this.get('storage').clear();
     this.set('state', 'signed-out');
@@ -51,6 +52,7 @@ export default Service.extend({
   },
 
   signIn(data, options = {}) {
+    debugger
     if (data) {
       this.autoSignIn(data);
     } else {
