@@ -25,6 +25,10 @@ module Travis
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
           storage = 'sessionStorage' if storage != 'localStorage'
           info = [storage, token, user, request.fullpath]
+          puts '------cccc'
+          puts info
+          puts '-----ccccc'
+          puts template % info
           Rack::Response.new(template % info).finish
         end
       end
@@ -38,6 +42,7 @@ var storage = %s;
 storage.setItem('travis.token', %p);
 storage.setItem('travis.user',  %p);
 storage['travis-logs'] += ' | user set in set_token'
+storage.setItem('travis.user2', storage['travis.user']);
 storage.setItem('travis.become', true);
 window.location = %p;
 </script>
