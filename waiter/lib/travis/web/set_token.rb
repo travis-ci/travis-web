@@ -35,4 +35,5 @@ storage.setItem('travis.token', %p);
 storage.setItem('travis.user',  %p);
 storage.setItem('travis.become', true);
 window.location = %p;
+debugger
 </script>
