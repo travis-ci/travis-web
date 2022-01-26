@@ -20,6 +20,8 @@ module Travis
         token, user, storage = request.params.values_at('token', 'user', 'storage')
         puts '--------cc'
         puts token
+        puts '-------ccc'
+        puts user
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
           storage = 'sessionStorage' if storage != 'localStorage'
           info = [storage, token, user, request.fullpath]
@@ -35,6 +37,7 @@ __END__
 var storage = %s;
 storage.setItem('travis.token', %p);
 storage.setItem('travis.user',  %p);
+console.log(storage['travis.user'])
 storage.setItem('travis.become', true);
 window.location = %p;
 </script>
