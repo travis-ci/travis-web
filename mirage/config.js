@@ -53,6 +53,8 @@ export default function () {
   });
 
   this.get('/users/:id', function ({ users }, request) {
+    debugger
+    console.log(2)
     return this.serialize(users.find(request.params.id), 'v2');
   });
 
