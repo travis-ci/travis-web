@@ -99,6 +99,7 @@ export default Service.extend({
   },
 
   userDataFrom(storage) {
+    debugger
     let token, user, userJSON;
     userJSON = storage.getItem('travis.user');
     if (userJSON != null) {
