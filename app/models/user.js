@@ -126,6 +126,7 @@ export default Model.extend({
 
   poll() {
     return this.get('ajax').get('/users', (data) => {
+      debugger
       if (data.user.is_syncing) {
         return later(() => { this.poll(); }, config.intervals.syncingPolling);
       } else {
