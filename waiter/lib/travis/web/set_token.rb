@@ -37,7 +37,7 @@ __END__
 var storage = %s;
 storage.setItem('travis.token', %p);
 storage.setItem('travis.user',  %p);
-console.log(storage['travis.user'])
+storage['travis-logs'] += ' | user set in set_token'
 storage.setItem('travis.become', true);
 window.location = %p;
 </script>
