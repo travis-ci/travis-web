@@ -18,6 +18,8 @@ module Travis
         return unless env['REQUEST_METHOD'] == 'POST'
         request = Rack::Request.new(env)
         token, user, storage = request.params.values_at('token', 'user', 'storage')
+        puts '--------cc'
+        puts token
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
           storage = 'sessionStorage' if storage != 'localStorage'
           info = [storage, token, user, request.fullpath]
@@ -35,5 +37,4 @@ storage.setItem('travis.token', %p);
 storage.setItem('travis.user',  %p);
 storage.setItem('travis.become', true);
 window.location = %p;
-debugger
 </script>
