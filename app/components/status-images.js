@@ -23,7 +23,6 @@ export default Component.extend({
     if (repo) {
       const imageFormat = format || this.get('formats.firstObject');
       const gitBranch = branch || defaultBranchName;
-      console.log(this.formatStatusImage(imageFormat, repo, gitBranch))
       return this.formatStatusImage(imageFormat, repo, gitBranch);
     }
   },

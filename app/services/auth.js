@@ -40,7 +40,6 @@ export default Service.extend({
   endpoint: config.authEndpoint || config.apiEndpoint,
 
   signOut() {
-    debugger
     this.get('sessionStorage').clear();
     this.get('storage').clear();
     this.set('state', 'signed-out');
@@ -52,7 +51,6 @@ export default Service.extend({
   },
 
   signIn(data, options = {}) {
-    debugger
     if (data) {
       this.autoSignIn(data);
     } else {
@@ -101,7 +99,6 @@ export default Service.extend({
   },
 
   userDataFrom(storage) {
-    debugger
     let token, user, userJSON;
     userJSON = storage.getItem('travis.user');
     if (userJSON != null) {
@@ -117,8 +114,6 @@ export default Service.extend({
         token
       };
     } else {
-      storage['travis-logs'] += ' | user removed in auth'
-      debugger
       storage.removeItem('travis.user');
       storage.removeItem('travis.token');
       return null;
@@ -207,8 +202,6 @@ export default Service.extend({
     if (data.token) {
       storage.setItem('travis.token', data.token);
     }
-    storage['travis-logs'] += ' | user set in auth'
-    debugger
     return storage.setItem('travis.user', JSON.stringify(data.user));
   },
 

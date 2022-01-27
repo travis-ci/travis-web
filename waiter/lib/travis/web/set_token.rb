@@ -17,20 +17,11 @@ module Travis
       def set_info(env)
         return unless env['REQUEST_METHOD'] == 'POST'
         request = Rack::Request.new(env)
-        puts '!!---!!'
-        puts request.params
         token, user, storage = request.params.values_at('token', 'user', 'storage')
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
           storage = 'sessionStorage' if storage != 'localStorage'
-          # puts 'xx-xx'
-          # puts svg_token
-          puts '-uu-----------'
-          puts JSON.parse(user)['svg_token']
           svg_token = JSON.parse(user)['svg_token']
           info = [storage, token, svg_token, user, request.fullpath]
-          # puts '---'
-          # puts template % info
-          # puts '---'
           Rack::Response.new(template % info).finish
         end
       end

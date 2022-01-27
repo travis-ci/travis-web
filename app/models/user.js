@@ -126,8 +126,6 @@ export default Model.extend({
 
   poll() {
     return this.get('ajax').get('/users', (data) => {
-      debugger
-      console.log(1)
       if (data.user.is_syncing) {
         return later(() => { this.poll(); }, config.intervals.syncingPolling);
       } else {
@@ -146,8 +144,6 @@ export default Model.extend({
     this.set(name, value);
     user = JSON.parse(this.get('sessionStorage').getItem('travis.user'));
     user[name.underscore()] = this.get(name);
-    this.get('sessionStorage')['travis-logs'] += ' | user set in user.js'
-    debugger
     return this.get('sessionStorage').setItem('travis.user', JSON.stringify(user));
   }
 });

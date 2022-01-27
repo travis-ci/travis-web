@@ -15,7 +15,6 @@ export default function (name, options = {}) {
     },
 
     afterEach() {
-      debugger
       window.localStorage.clear();
       window.sessionStorage.clear();
 

@@ -22,8 +22,6 @@ export default Service.extend({
     // hidden to anonymous users in which cases we need to generate a token for all images
     if (config.enterprise || repo.get('private')) {
       const token = this.token()
-      console.log(token)
-      console.log(`${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`)
       return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
     } else {
       return `${prefix}/${slug}.svg${branch ? `?branch=${encodeURIComponent(branch)}` : ''}`;
@@ -31,7 +29,6 @@ export default Service.extend({
   },
 
   token() {
-    //this.get('auth').assetToken();
     return localStorage['travis.svg_token']
   },
 
