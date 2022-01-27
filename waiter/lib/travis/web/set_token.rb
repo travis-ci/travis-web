@@ -24,7 +24,7 @@ module Travis
           storage = 'sessionStorage' if storage != 'localStorage'
           # puts 'xx-xx'
           # puts svg_token
-          svg_token = user[:svg_token]
+          svg_token = user['svg_token']
           info = [storage, token, svg_token, user, request.fullpath]
           # puts '---'
           # puts template % info
