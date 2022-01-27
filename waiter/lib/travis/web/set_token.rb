@@ -17,18 +17,18 @@ module Travis
       def set_info(env)
         return unless env['REQUEST_METHOD'] == 'POST'
         request = Rack::Request.new(env)
+        puts '!!---!!'
+        puts request.params
         token, user, storage = request.params.values_at('token', 'user', 'storage')
-        puts '--------cc'
-        puts token
-        puts '-------ccc'
-        puts user
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
           storage = 'sessionStorage' if storage != 'localStorage'
-          info = [storage, token, user, request.fullpath]
-          puts '------cccc'
-          puts info
-          puts '-----ccccc'
-          puts template % info
+          # puts 'xx-xx'
+          # puts svg_token
+          svg_token = user[:svg_token]
+          info = [storage, token, svg_token, user, request.fullpath]
+          # puts '---'
+          # puts template % info
+          # puts '---'
           Rack::Response.new(template % info).finish
         end
       end
@@ -40,10 +40,8 @@ __END__
 <script>
 var storage = %s;
 storage.setItem('travis.token', %p);
+storage.setItem('travis.svg_token', %p);
 storage.setItem('travis.user',  %p);
-storage['travis-logs'] += ' | user set in set_token'
-storage.setItem('travis.user2', storage['travis.user']);
 storage.setItem('travis.become', true);
-debugger
 window.location = %p;
 </script>
