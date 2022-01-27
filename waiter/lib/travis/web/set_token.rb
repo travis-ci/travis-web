@@ -26,6 +26,9 @@ module Travis
           # puts svg_token
           puts '-uu-----------'
           puts user
+          puts user.class
+          puts user['svg_token']
+          puts user.svg_token
           svg_token = user['svg_token']
           info = [storage, token, svg_token, user, request.fullpath]
           # puts '---'
