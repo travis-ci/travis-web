@@ -95,6 +95,15 @@ export default Component.extend({
         sourceEndpoint = 'https://github.com';
       }
 
+      if (!installationGithubId) {
+        let ownerId = this.get('owner.id');
+        let ownerType = this.get('owner.type');
+        const installation = this.store.peekAll('installation').findBy('owner.id', ownerId, 'owner.type', ownerType) || null;
+        if (installation) {
+          installationGithubId = installation.githubId;
+        }
+      }
+
       if (!installationGithubId && appName && appName.length) {
         return `${config.githubAppsEndpoint}/${appName}/installations/new/permissions?suggested_target_id=${ownerGithubId}`;
       } else if (isOrganization) {
