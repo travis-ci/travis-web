@@ -9,11 +9,6 @@
             </LinkTo>
           </li>
           <li>
-            <LinkTo @route="travis-ci-insights" class="navigation-anchor">
-              Travis CI Insights
-            </LinkTo>
-          </li>
-          <li>
             <ExternalLinkTo
               @href={{this.config.urls.changelog}}
               @title="Travis CI Changelog"
@@ -30,6 +25,11 @@
             >
               Documentation
             </ExternalLinkTo>
+          </li>
+          <li>
+            <LinkTo @route="travis-ci-insights" class="navigation-anchor">
+              Travis CI Insights
+            </LinkTo>
           </li>
         {{else}}
           <li>
@@ -79,11 +79,6 @@
               </LinkTo>
             </li>
             <li>
-              <LinkTo @route="travis-ci-insights" class="navigation-anchor">
-                Travis CI Insights
-              </LinkTo>
-            </li>
-            <li>
               <LinkTo @route="insights" class="navigation-anchor">
                 Insights
               </LinkTo>
@@ -105,6 +100,11 @@
               >
                 Documentation
               </ExternalLinkTo>
+            </li>
+            <li>
+              <LinkTo @route="travis-ci-insights" class="navigation-anchor">
+                Travis CI Insights
+              </LinkTo>
             </li>
           {{else}}
             <li>
