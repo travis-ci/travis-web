@@ -99,6 +99,7 @@ Router.map(function () {
 
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
+  
 });
 
 export default Router;
