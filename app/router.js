@@ -8,6 +8,7 @@ const Router = EmberRouter.extend({
 
 Router.map(function () {
   this.route('confirm-user', { path: '/confirm-user/:token' });
+  this.route('travis-ci-insights');
   this.route('request-user-confirmation', { path: '/request-user-confirmation'});
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
@@ -88,6 +89,13 @@ Router.map(function () {
   this.route('legacy-repo-url', { path: '/:owner/:repo/:method' });
   this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id' });
   this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id/:view' });
+
+  this.route('insights', { resetNamespace: true }, function () {
+    this.route('notifications');
+    this.route('probes');
+    this.route('plugins');
+    this.route('status');
+  });
 
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
