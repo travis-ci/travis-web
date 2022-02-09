@@ -78,6 +78,7 @@ export default Component.extend({
             }
           });
           this.set('heatmapData', data);
+          // eslint-disable-next-line no-use-before-define
           let cal = new CalHeatMap();
           cal.init({
             itemSelector: '#insights-heatmap',
@@ -132,6 +133,7 @@ export default Component.extend({
             }
           });
           this.set('heatmapData', data);
+          // eslint-disable-next-line no-use-before-define
           let cal = new CalHeatMap();
           cal.init({
             itemSelector: '#insights-heatmap',
@@ -182,6 +184,7 @@ export default Component.extend({
           }
         });
         this.set('heatmapData', data);
+        // eslint-disable-next-line no-use-before-define
         let cal = new CalHeatMap();
         cal.init({
           itemSelector: '#insights-heatmap',
