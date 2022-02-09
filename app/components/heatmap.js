@@ -104,7 +104,9 @@ export default Component.extend({
             data: this.heatmapData,
           });
         })
-        .catch((error) => console.log('error', error));
+        .catch((error) => {
+          throw new Error(error);
+        });
     },
     setBuildYear(filter, dropdown) {
       document.getElementById('insights-heatmap').innerHTML = '';
@@ -156,7 +158,9 @@ export default Component.extend({
             data: this.heatmapData,
           });
         })
-        .catch((error) => console.log('error', error));
+        .catch((error) => {
+          throw new Error(error);
+        });
     },
   },
   didInsertElement() {
@@ -204,6 +208,8 @@ export default Component.extend({
           data: this.heatmapData,
         });
       })
-      .catch((error) => console.log('error', error));
+      .catch((error) => {
+        throw new Error(error);
+      });
   },
 });
