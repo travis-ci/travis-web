@@ -2,45 +2,45 @@ import Component from "@ember/component";
 import { inject as service } from "@ember/service";
 
 const BUILDS_FILTER_LABELS = {
-  all: "All Builds",
-  failed: "Failed Builds",
-  success: "Successful Builds",
-  error: "Errored Builds",
-  cancel: "Canceled Builds",
+  all: 'All Builds',
+  failed: 'Failed Builds',
+  success: 'Successful Builds',
+  error: 'Errored Builds',
+  cancel: 'Canceled Builds',
 };
 
 const BUILDS_MAX_COLOR = {
-  all: "#04c2bf",
-  failed: "#fc0303",
-  success: "#03fc4e",
-  error: "#db5c07",
-  cancel: "#4f4f4f",
+  all: '04c2bf',
+  failed: '#fc0303',
+  success: '#03fc4e',
+  error: '#db5c07',
+  cancel: '#4f4f4f',
 };
 
 const BUILDS_MIN_COLOR = {
-  all: "#D7F0E6",
-  failed: "#FF7F7F",
-  success: "#90EE90",
-  error: "#efebd6",
-  cancel: "#efebd6",
+  all: '#D7F0E6',
+  failed: '#FF7F7F',
+  success: '#90EE90',
+  error: '#efebd6',
+  cancel: '#efebd6',
 };
 
 const BUILDS_QUERY_PARAMS = {
-  all: "all",
-  failed: "failed",
-  success: "successful",
-  error: "errored",
-  cancel: "canceled",
+  all: 'all',
+  failed: 'failed',
+  success: 'successful',
+  error: 'errored',
+  cancel: 'canceled',
 };
 
 export default Component.extend({
   api: service(),
-  buildFilterLabel: "All Builds",
+  buildFilterLabel: 'All Builds',
   buildYear: new Date().getFullYear(),
-  buildMinColor: BUILDS_MIN_COLOR["all"],
-  buildMaxColor: BUILDS_MAX_COLOR["all"],
-  buildEmptyColor: "#efefef",
-  buildStatus: BUILDS_QUERY_PARAMS["all"],
+  buildMinColor: BUILDS_MIN_COLOR['all'],
+  buildMaxColor: BUILDS_MAX_COLOR['all'],
+  buildEmptyColor: '#efefef',
+  buildStatus: BUILDS_QUERY_PARAMS['all'],
   heatmapData: {},
   buildYears: [
     new Date().getFullYear(),
@@ -52,12 +52,12 @@ export default Component.extend({
   ],
   actions: {
     setBuildFilter(filter, dropdown) {
-      document.getElementById("insights-heatmap").innerHTML = "";
+      document.getElementById('insights-heatmap').innerHTML = '';
       dropdown.actions.close();
-      this.set("buildFilterLabel", BUILDS_FILTER_LABELS[filter]);
-      this.set("buildMaxColor", BUILDS_MAX_COLOR[filter]);
-      this.set("buildMinColor", BUILDS_MIN_COLOR[filter]);
-      this.set("buildStatus", BUILDS_QUERY_PARAMS[filter]);
+      this.set('buildFilterLabel', BUILDS_FILTER_LABELS[filter]);
+      this.set('buildMaxColor', BUILDS_MAX_COLOR[filter]);
+      this.set('buildMinColor', BUILDS_MIN_COLOR[filter]);
+      this.set('buildStatus', BUILDS_QUERY_PARAMS[filter]);
       let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
       if (this.buildStatus !== "all") {
         url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
@@ -77,22 +77,22 @@ export default Component.extend({
               data[dateConverted] = total;
             }
           });
-          this.set("heatmapData", data);
+          this.set('heatmapData', data);
           let cal = new CalHeatMap();
           cal.init({
-            itemSelector: "#insights-heatmap",
-            domain: "month",
+            itemSelector: '#insights-heatmap',
+            domain: 'month',
             range: 12,
             start: new Date(this.buildYear, 0, 1),
-            subDomain: "day",
-            itemName: ["Build"],
+            subDomain: 'day',
+            itemName: ['Build'],
             cellSize: 14,
             cellRadius: 0,
             cellPadding: 1,
             displayLegend: true,
             tooltip: true,
             domainMargin: [1, 1, 1, 1],
-            legendHorizontalPosition: "right",
+            legendHorizontalPosition: 'right',
             legendColors: {
               min: this.buildMinColor,
               max: this.buildMaxColor,
@@ -104,12 +104,12 @@ export default Component.extend({
             data: this.heatmapData,
           });
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     },
     setBuildYear(filter, dropdown) {
-      document.getElementById("insights-heatmap").innerHTML = "";
+      document.getElementById('insights-heatmap').innerHTML = '';
       dropdown.actions.close();
-      this.set("buildYear", filter);
+      this.set('buildYear', filter);
       let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
       if (this.buildStatus !== "all") {
         url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
@@ -129,22 +129,22 @@ export default Component.extend({
               data[dateConverted] = total;
             }
           });
-          this.set("heatmapData", data);
+          this.set('heatmapData', data);
           let cal = new CalHeatMap();
           cal.init({
-            itemSelector: "#insights-heatmap",
-            domain: "month",
+            itemSelector: '#insights-heatmap',
+            domain: 'month',
             range: 12,
             start: new Date(this.buildYear, 0, 1),
-            subDomain: "day",
-            itemName: ["Build"],
+            subDomain: 'day',
+            itemName: ['Build'],
             cellSize: 14,
             cellRadius: 0,
             cellPadding: 1,
             displayLegend: true,
             tooltip: true,
             domainMargin: [1, 1, 1, 1],
-            legendHorizontalPosition: "right",
+            legendHorizontalPosition: 'right',
             legendColors: {
               min: this.buildMinColor,
               max: this.buildMaxColor,
@@ -156,7 +156,7 @@ export default Component.extend({
             data: this.heatmapData,
           });
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     },
   },
   didInsertElement() {
@@ -177,22 +177,22 @@ export default Component.extend({
             data[dateConverted] = total;
           }
         });
-        this.set("heatmapData", data);
+        this.set('heatmapData', data);
         let cal = new CalHeatMap();
         cal.init({
-          itemSelector: "#insights-heatmap",
-          domain: "month",
+          itemSelector: '#insights-heatmap',
+          domain: 'month',
           range: 12,
           start: new Date(this.buildYear, 0, 1),
-          subDomain: "day",
-          itemName: ["Build"],
+          subDomain: 'day',
+          itemName: ['Build'],
           cellSize: 14,
           cellRadius: 0,
           cellPadding: 1,
           displayLegend: true,
           tooltip: true,
           domainMargin: [1, 1, 1, 1],
-          legendHorizontalPosition: "right",
+          legendHorizontalPosition: 'right',
           legendColors: {
             min: this.buildMinColor,
             max: this.buildMaxColor,
@@ -204,6 +204,6 @@ export default Component.extend({
           data: this.heatmapData,
         });
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   },
 });
