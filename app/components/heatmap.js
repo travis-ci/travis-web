@@ -1,5 +1,5 @@
-import Component from "@ember/component";
-import { inject as service } from "@ember/service";
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 
 const BUILDS_FILTER_LABELS = {
   all: 'All Builds',
@@ -59,7 +59,7 @@ export default Component.extend({
       this.set('buildMinColor', BUILDS_MIN_COLOR[filter]);
       this.set('buildStatus', BUILDS_QUERY_PARAMS[filter]);
       let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
-      if (this.buildStatus !== "all") {
+      if (this.buildStatus !== 'all') {
         url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
       }
       this.api
@@ -111,7 +111,7 @@ export default Component.extend({
       dropdown.actions.close();
       this.set('buildYear', filter);
       let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
-      if (this.buildStatus !== "all") {
+      if (this.buildStatus !== 'all') {
         url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
       }
       this.api
