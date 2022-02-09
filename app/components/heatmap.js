@@ -10,7 +10,7 @@ const BUILDS_FILTER_LABELS = {
 };
 
 const BUILDS_MAX_COLOR = {
-  all: '04c2bf',
+  all: '#04c2bf',
   failed: '#fc0303',
   success: '#03fc4e',
   error: '#db5c07',
