@@ -72,7 +72,7 @@ export default Component.extend({
     const timeStart = encodeURIComponent(this.timeStart);
     const timeEnd = encodeURIComponent(this.timeEnd);
 
-    const path = `/insights_spotlight_summary`;
+    const path = '/insights_spotlight_summary';
     const params = `?time_start=${timeStart}&time_end=${timeEnd}`;
     const url = `${path}${params}`;
 
