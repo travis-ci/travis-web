@@ -1,0 +1,26 @@
+<div class="container">
+    <p class="travis-main" style="display:inline">Travis CI Insights</p>
+
+    <input type="month" id="start" name="start" min="2018-03" value="2018-05" style="float:right">
+    <div class="flex-container aggregate-value">
+        <div class="builds col-md-2">
+            <div>Builds</div>
+            <div class="heading">{{this.currentBuildTotal}}</div>
+            <div>{{this.percentageBuildDiff}}%</div>
+        </div>
+        <div class="minutes col-md-2">
+            <div>Minutes</div>
+            <div class="heading">{{this.currentMinutesTotal}}</div>
+            <div>{{this.percentageMinutesDiff}}%</div>
+        </div>
+        <div class="credits col-md-2">
+            <div>Credits</div>
+            <div class="heading">{{this.currentCreditsTotal}}</div>
+            <div>{{this.percentageCreditsDiff}}%</div>
+        </div>
+
+    </div>
+
+
+</div>
+{{yield}}
