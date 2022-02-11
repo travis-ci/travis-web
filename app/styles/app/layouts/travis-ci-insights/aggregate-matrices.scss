@@ -1,176 +1,27 @@
-.travis-ci-insights{
-    display: block;
-    background-color: white;
+.travis-ci-insights {
+  display: block;
+  background-color: white;
 }
 
-.travis-main{
-    color: rgb(57, 170, 208);
-    font-size: x-large;
-    margin-left: 1rem;
+.travis-main {
+  color: rgb(57, 170, 208);
+  font-size: x-large;
+  margin-left: 1rem;
 }
 
-
-.flex-container{
-    display: flex;
-    margin: 1rem 0rem 1rem 1rem;
-    column-gap: 15rem;
-    justify-content: flex-start;
-    font-weight: bold;
+.flex-container {
+  display: flex;
+  margin: 1rem 0rem 1rem 1rem;
+  column-gap: 15rem;
+  justify-content: flex-start;
+  font-weight: bold;
 }
 
-
-
-.border-color{
-    border-color: #CCE1FF;
+.border-color {
+  border-color: #cce1ff;
 }
 
-.heading{
-    font-weight: bolder;
-    font-size: x-large;
+.heading {
+  font-weight: bolder;
+  font-size: x-large;
 }
-
-// .timeframe{
-//     float: right;
-// }
-
-// .aggregate-value{
-//     color: gray;
-// }
-
-
-// // for calendar
-// .mrp-container{
-//     margin-top:10px;
-//   }
-  
-//   .mrp-icon{
-//     border: solid 1px #ddd;
-//     border-radius: 5px 0px 0px 5px;
-//     color: #40667A;
-//     background: #eee;
-//     padding: 7px;
-//     margin-right:0px;
-//   }
-  
-//   .mrp-monthdisplay{
-//     display:inline-block!important;
-//     border: solid 1px #ddd;
-//     padding: 5px 12px 5px 8px;
-//     border-radius: 0px 5px 5px 0px;
-//     background-color: #fff;
-//     cursor:pointer;
-//     margin-left: -5px;
-//   }
-  
-//   .mrp-lowerMonth, .mrp-upperMonth{
-//     color: #40667A;
-//     font-weight:bold;
-//     font-size: 11px;
-//     text-transform:uppercase;
-//   }
-  
-//   .mrp-to{
-//     color: #aaa;
-//     margin-right: 0px;
-//     margin-left: 0px;
-//     font-size: 11px;
-//     text-transform: uppercase;
-//     /* background-color: #eee; */
-//     padding: 5px 3px 5px 3px;
-//   }
-  
-//   .mpr-calendar{
-//     display:inline-block;
-//     padding: 3px 5px;
-//     border-right: solid #999 1px;
-//   }
-  
-//   .mpr-calendar::last-child{
-//     border-right: none;  
-//   }
-  
-//   .mpr-month{
-//     padding: 20px;
-//     text-transform: uppercase;
-//     font-size: 12px;
-//   }
-  
-//   .mpr-calendar h5{
-//     width:100%;
-//     text-align:center;
-//     font-weight:bold;
-//     font-size:18px
-//   }
-  
-//   .mpr-selected{
-//     background: rgba(64, 102, 122, 0.75);;
-//     color: #fff;
-//   }
-  
-//   .mpr-month:hover{
-//     border-radius: 5px;
-//     box-shadow: 0 0 0 1px #ddd inset;
-//     cursor:pointer;
-//   }
-  
-//   .mpr-selected.mpr-month:hover{
-//     border-radius: 0px;
-//     box-shadow: none;
-//   }
-  
-//   .mpr-calendarholder .col-xs-6 {
-//     max-width: 250px;
-//     min-width: 250px;
-//   }
-  
-//   .mpr-calendarholder .col-xs-1 {
-//     max-width: 150px;
-//     min-width: 150px;
-//   }
-  
-//   .mpr-calendarholder .btn-info{
-//     background-color: #40667A;
-//     border-color: #406670;
-//     width:100%;
-//     margin-bottom: 10px;
-//     text-transform: uppercase;
-//     font-size: 10px;
-//     padding: 10px 0px;
-//   }
-  
-//   .mpr-quickset{
-//     color: #666;
-//     text-transform: uppercase;
-//     text-align: center;
-//   }
-  
-//   .mpr-yeardown, .mpr-yearup{
-//     margin-left: 5px;
-//     cursor: pointer;
-//     color: #666;
-//   }
-  
-//   .mpr-yeardown{
-//     float:left;
-//   }
-  
-//   .mpr-yearup{
-//     float:right;
-//   }
-  
-//   .mpr-yeardown:hover,.mpr-yearup:hover{
-//     color: #40667A;
-//   }
-  
-//   .mpr-calendar:first .mpr-selected:first{
-//       background-color: #40667A;
-//   }
-  
-//   .mpr-calendar:last .mpr-selected:last{
-//       background-color: #40667A;
-//   }
-  
-//   .popover{
-//     max-width: 1920px!important;
-//   }
-  
