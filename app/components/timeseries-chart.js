@@ -56,8 +56,8 @@ export default Component.extend({
   },
 
   renderTimeSeries: function (dataSource, container) {
-    FusionCharts.ready(() => {
-      new FusionCharts({
+    FusionCharts.ready(() => {  // eslint-disable-line
+      new FusionCharts({  // eslint-disable-line
         type: this.type,
         width: this.width,
         height: this.height,
@@ -107,7 +107,7 @@ export default Component.extend({
         },
       };
 
-      const fusionDataStore = new FusionCharts.DataStore();
+      const fusionDataStore = new FusionCharts.DataStore();  // eslint-disable-line
       const fusionDataTable = fusionDataStore.createDataTable(graphData, [
         schema.time,
         schema.builds,
