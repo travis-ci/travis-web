@@ -1,4 +1,4 @@
-import Route from '@ember/routing/route';
-
-export default Route.extend({
+import TravisRoute from 'travis/routes/basic';
+export default TravisRoute.extend({
+  needsAuth: true,
 });
