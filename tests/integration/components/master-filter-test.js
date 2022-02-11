@@ -12,7 +12,7 @@ module('Integration | Component | master-filter', function (hooks) {
 
     await render(hbs`<MasterFilter />`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), 'All builds');
 
     // Template block usage:
     await render(hbs`
