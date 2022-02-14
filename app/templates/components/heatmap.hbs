@@ -1,5 +1,5 @@
-<div class="heatmap-container">
-  <div class="range-selector-heatmap">
+<div class="heatmap-container" data-test-heatmap-container>
+  <div class="range-selector-heatmap" data-test-range-selector-heatmap>
     <div>
       {{#basic-dropdown as |dd|}}
         {{#dd.trigger class="build-filter-label"}}
@@ -7,7 +7,7 @@
           <span class="caret down"></span>
         {{/dd.trigger}}
         {{#dd.content class="dropdown-content"}}
-          <li>
+          <li data-test-build-filter-all>
             <a
               class="dropdown-list-elements"
               {{on "click" (action "setBuildFilter" "all" dd)}}
@@ -18,7 +18,7 @@
               </div>
             </a>
           </li>
-          <li>
+          <li data-test-build-filter-success>
             <a
               class="dropdown-list-elements"
               {{on "click" (action "setBuildFilter" "success" dd)}}
@@ -29,7 +29,7 @@
               </div>
             </a>
           </li>
-          <li>
+          <li data-test-build-filter-failed>
             <a
               class="dropdown-list-elements"
               {{on "click" (action "setBuildFilter" "failed" dd)}}
@@ -40,7 +40,7 @@
               </div>
             </a>
           </li>
-          <li>
+          <li data-test-build-filter-error>
             <a
               class="dropdown-list-elements"
               {{on "click" (action "setBuildFilter" "error" dd)}}
@@ -51,7 +51,7 @@
               </div>
             </a>
           </li>
-          <li>
+          <li data-test-build-filter-cancel>
             <a
               class="dropdown-list-elements"
               {{on "click" (action "setBuildFilter" "cancel" dd)}}
@@ -87,14 +87,14 @@
     </div>
   </div>
   <div class="day-label-heatmap-container">
-    <div class="day-label-container">
-      <span class="day-label">Mon</span>
-      <span class="day-label">Tue</span>
-      <span class="day-label">Wed</span>
-      <span class="day-label">Thu</span>
-      <span class="day-label">Fri</span>
-      <span class="day-label">Sat</span>
-      <span class="day-label">Sun</span>
+    <div class="day-label-container" data-test-day-label-container>
+      <span class="day-label" data-test-day-label-mon>Mon</span>
+      <span class="day-label" data-test-day-label-tue>Tue</span>
+      <span class="day-label" data-test-day-label-wed>Wed</span>
+      <span class="day-label" data-test-day-label-thu>Thu</span>
+      <span class="day-label" data-test-day-label-fri>Fri</span>
+      <span class="day-label" data-test-day-label-sat>Sat</span>
+      <span class="day-label" data-test-day-label-sun>Sun</span>
     </div>
     <div id="insights-heatmap"></div>
   </div>
