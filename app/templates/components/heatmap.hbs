@@ -4,7 +4,7 @@
       {{#basic-dropdown as |dd|}}
         {{#dd.trigger class="build-filter-label"}}
           {{this.buildFilterLabel}}
-          <span class="caret down"></span>
+          <span class="caret down" data-test-down-arrow></span>
         {{/dd.trigger}}
         {{#dd.content class="dropdown-content"}}
           <li data-test-build-filter-all>
@@ -13,7 +13,7 @@
               {{on "click" (action "setBuildFilter" "all" dd)}}
             >
               <div class="dropdown-list-builds">
-                <div class="box all"></div>
+                <div class="box all" data-test-box-all></div>
                 <span>All Builds</span>
               </div>
             </a>
@@ -24,7 +24,7 @@
               {{on "click" (action "setBuildFilter" "success" dd)}}
             >
               <div class="dropdown-list-builds">
-                <div class="box successful"></div>
+                <div class="box successful" data-test-box-success></div>
                 <span>Successful Builds</span>
               </div>
             </a>
@@ -32,10 +32,11 @@
           <li data-test-build-filter-failed>
             <a
               class="dropdown-list-elements"
+              data-test-click-failed
               {{on "click" (action "setBuildFilter" "failed" dd)}}
             >
               <div class="dropdown-list-builds">
-                <div class="box failed"></div>
+                <div class="box failed" data-test-box-failed></div>
                 <span>Failed Builds</span>
               </div>
             </a>
@@ -46,7 +47,7 @@
               {{on "click" (action "setBuildFilter" "error" dd)}}
             >
               <div class="dropdown-list-builds">
-                <div class="box errored"></div>
+                <div class="box errored" data-test-box-error></div>
                 <span>Errored Builds</span>
               </div>
             </a>
@@ -57,7 +58,7 @@
               {{on "click" (action "setBuildFilter" "cancel" dd)}}
             >
               <div class="dropdown-list-builds">
-                <div class="box canceled"></div>
+                <div class="box canceled" data-test-box-cancel></div>
                 <span>Canceled Builds</span>
               </div>
             </a>
@@ -65,9 +66,9 @@
         {{/dd.content}}
       {{/basic-dropdown}}
     </div>
-    <div>
+    <div data-test-build-year-dropdown-container>
       {{#basic-dropdown as |dd|}}
-        {{#dd.trigger class="build-filter-label"}}
+        {{#dd.trigger class="build-filter-label build-year"}}
           {{this.buildYear}}
           <span class="caret down"></span>
         {{/dd.trigger}}
