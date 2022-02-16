@@ -29,9 +29,9 @@ const BUILDS_MIN_COLOR = {
 const BUILDS_QUERY_PARAMS = {
   all: 'all',
   failed: 'failed',
-  success: 'successful',
-  error: 'errored',
-  cancel: 'canceled',
+  passed: 'passed',
+  errored: 'errored',
+  canceled: 'canceled',
 };
 
 export default Component.extend({
