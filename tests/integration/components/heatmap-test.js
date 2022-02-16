@@ -147,4 +147,43 @@ module('Integration | Component | heatmap', function (hooks) {
       .dom('#insights-heatmap')
       .exists('Should exits heatmap node container for rendering heatmap');
   });
+
+  test('it render selected successful build from the dropdown', async function (assert) {
+    await render(hbs`<Heatmap />`);
+    await click('[data-test-down-arrow]');
+    await click('[data-test-box-success]');
+    assert.dom('.build-filter-label').hasText('Successful Builds');
+  });
+
+  test('it render selected failed build from the dropdown', async function (assert) {
+    await render(hbs`<Heatmap />`);
+    await click('[data-test-down-arrow]');
+    await click('[data-test-box-failed]');
+    assert.dom('.build-filter-label').hasText('Failed Builds');
+  });
+
+  test('it render selected errored build from the dropdown', async function (assert) {
+    await render(hbs`<Heatmap />`);
+    await click('[data-test-down-arrow]');
+    await click('[data-test-box-error]');
+    assert.dom('.build-filter-label').hasText('Errored Builds');
+  });
+
+  test('it render selected canceled build from the dropdown', async function (assert) {
+    await render(hbs`<Heatmap />`);
+    await click('[data-test-down-arrow]');
+    await click('[data-test-box-cancel]');
+    assert.dom('.build-filter-label').hasText('Canceled Builds');
+  });
+
+  test('it render selected all builds from the dropdown after selecting other builds', async function (assert) {
+    await render(hbs`<Heatmap />`);
+    await click('[data-test-down-arrow]');
+    await click('[data-test-box-cancel]');
+    assert.dom('.build-filter-label').hasText('Canceled Builds');
+
+    await click('[data-test-down-arrow]');
+    await click('[data-test-box-all]');
+    assert.dom('.build-filter-label').hasText('All Builds');
+  });
 });

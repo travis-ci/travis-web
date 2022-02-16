@@ -1324,6 +1324,26 @@ export default function () {
       return new Response(404, {}, {});
     }
   });
+
+  this.get('/insights_spotlight_summary/', (schema, { queryParams: { event_type: eventType } }) => {
+    const response={
+      "@type": "insights_spotlight_summary",
+      "data": [
+        {
+          "id": 7,
+          "user_id": 7,
+          "repo_id": "23",
+          "build_status": "canceled",
+          "repo_name": "myrepo2",
+          "builds": 25,
+          "minutes": 345,
+          "credits": 34,
+          "time": "2022-05-04T00:00:00.000Z"
+        }
+      ]
+    }
+    return response;
+  });
 }
 
 /*
