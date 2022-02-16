@@ -12,6 +12,9 @@
 {{#if this.features.enterpriseVersion}}
   <EnterpriseBanner />
 {{/if}}
+{{#if this.user}}
+  <RepositorySecurityBanner />
+{{/if}}
 {{#if hasBlock}}
   {{yield}}
 {{else if this.showCta}}
