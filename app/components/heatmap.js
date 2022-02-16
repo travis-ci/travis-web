@@ -36,7 +36,7 @@ const BUILDS_QUERY_PARAMS = {
 
 export default Component.extend({
   api: service(),
-  buildFilterLabel: 'All Builds',
+  buildFilterLabel: BUILDS_FILTER_LABELS['all'],
   buildYear: new Date().getFullYear(),
   buildMinColor: BUILDS_MIN_COLOR['all'],
   buildMaxColor: BUILDS_MAX_COLOR['all'],
