@@ -36,7 +36,7 @@ const BUILDS_QUERY_PARAMS = {
 
 export default Component.extend({
   api: service(),
-  buildFilterLabel: 'All Builds',
+  buildFilterLabel: BUILDS_FILTER_LABELS['all'],
   buildYear: new Date().getFullYear(),
   buildMinColor: BUILDS_MIN_COLOR['all'],
   buildMaxColor: BUILDS_MAX_COLOR['all'],
@@ -124,7 +124,7 @@ export default Component.extend({
     },
   },
   didInsertElement() {
-    let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
-    this.fetchHeatMapData.perform(url);
+    // let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+    // this.fetchHeatMapData.perform(url);
   },
 });
