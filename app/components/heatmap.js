@@ -124,7 +124,7 @@ export default Component.extend({
     },
   },
   didInsertElement() {
-    // let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
-    // this.fetchHeatMapData.perform(url);
+    let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+    this.fetchHeatMapData.perform(url);
   },
 });
