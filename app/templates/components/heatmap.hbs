@@ -21,7 +21,7 @@
           <li data-test-build-filter-success>
             <a
               class="dropdown-list-elements"
-              {{on "click" (action "setBuildFilter" "success" dd)}}
+              {{on "click" (action "setBuildFilter" "passed" dd)}}
             >
               <div class="dropdown-list-builds">
                 <div class="box successful" data-test-box-success></div>
@@ -44,7 +44,7 @@
           <li data-test-build-filter-error>
             <a
               class="dropdown-list-elements"
-              {{on "click" (action "setBuildFilter" "error" dd)}}
+              {{on "click" (action "setBuildFilter" "errored" dd)}}
             >
               <div class="dropdown-list-builds">
                 <div class="box errored" data-test-box-error></div>
@@ -55,7 +55,7 @@
           <li data-test-build-filter-cancel>
             <a
               class="dropdown-list-elements"
-              {{on "click" (action "setBuildFilter" "cancel" dd)}}
+              {{on "click" (action "setBuildFilter" "canceled" dd)}}
             >
               <div class="dropdown-list-builds">
                 <div class="box canceled" data-test-box-cancel></div>
