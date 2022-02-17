@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-// import EmberObject from '@ember/object';
 
 module('Integration | Component | master-filter', function (hooks) {
   setupRenderingTest(hooks);
