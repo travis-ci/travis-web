@@ -3,6 +3,7 @@
     {{#unless this.features.enterpriseVersion}}
       {{#unless this.features.proVersion}}
         {{#if this.auth.signedIn}}        
+             
           <li>
               <LinkTo @route="travis-ci-insights" class="navigation-anchor">
                 Travis CI Insights

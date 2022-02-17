@@ -18,6 +18,38 @@ export default function () {
     return _defaultHandler.apply(this, arguments);
   };
 
+  this.get('/insights_spotlight_summary/', (schema, { queryParams: { event_type: eventType } }) => {
+    const response = {
+      '@type': 'insights_spotlight_summary',
+      'data': [
+        {
+          'id': 7,
+          'user_id': 7,
+          'repo_id': '23',
+          'build_status': 'canceled',
+          'repo_name': 'myrepo2',
+          'builds': 10,
+          'minutes': 100,
+          'credits': 30,
+          'time': '2022-05-04T00:00:00.000Z'
+        },
+        {
+          'id': 8,
+          'user_id': 8,
+          'repo_id': '23',
+          'build_status': 'canceled',
+          'repo_name': 'myrepo2',
+          'builds': 20,
+          'minutes': 200,
+          'credits': 40,
+          'time': '2022-05-04T00:00:00.000Z'
+        }
+
+      ]
+    };
+    return response;
+  });
+
   this.get('https://pnpcptp8xh9k.statuspage.io/api/v2/status.json', function () {
     return {
       'page': {

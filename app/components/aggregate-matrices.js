@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import moment from 'moment';
-
+const timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
 export default Component.extend({
   api: service(),
   preferences: service(),
@@ -12,8 +12,8 @@ export default Component.extend({
       return this.preferences.insightsTimeZone.substr(this.preferences.insightsTimeZone.indexOf(')') + 2);
     } else return '';
   }),
-  startTime: '2022-01-01',
-  endTime: '2022-01-31',
+  startTime: moment().startOf('month').format(timeFormat),
+  endTime: moment().endOf('month').format(timeFormat),
   currentBuildTotal: 0,
   currentCreditsTotal: 0,
   currentMinutesTotal: 0,
@@ -37,21 +37,22 @@ export default Component.extend({
     if (current && past) {
       const change = ((current - past) / past);
       const percent = change * 100;
-      return (Math.round(percent * 10) / 10);
+      let perChange = (Math.round(percent * 10) / 10);
+      perChange = perChange > 0 ? `+${perChange}` : perChange;
+      return perChange;
     }
   },
   fxProportionalDuration(startDate, endDate) {
-    let prevEndTime = moment(startDate).subtract(1, 'days').format('YYYY-MM-DDTHH:mm:ss.SSS');
+    let prevEndTime = moment(startDate).subtract(1, 'days').format(timeFormat);
     let monthdiff = moment(endDate).diff(moment(startDate), 'months');
-    let prevStartTime = moment(startDate).subtract(monthdiff + 1, 'months').format('YYYY-MM-DDTHH:mm:ss.SSS');
+    let prevStartTime = moment(startDate).subtract(monthdiff + 1, 'months').format(timeFormat);
     return {
       'prevStartTime': prevStartTime,
       'prevEndTime': prevEndTime
     };
   },
   toTimeZone(time, zone) {
-    let format = 'YYYY-MM-DDTHH:mm:ss.SSS';
-    return moment(time, format).tz(zone).format(format);
+    return moment(time, timeFormat).tz(zone).format(timeFormat);
   },
   currentDurationData(data) {
     this.set('currentBuildTotal', this.fxTotal(data, 'builds'));
@@ -69,15 +70,17 @@ export default Component.extend({
   updateAggregate: task(function* () {
     let startTime = `${this.startTime}T00:00:00.000`;
     let endTime = `${this.endTime}T00:00:00.000`;
-    if (this.timeZone != '') {
-      startTime = this.toTimeZone(startTime, this.timeZone);
-      endTime = this.toTimeZone(endTime, this.timeZone);
+    if (moment(startTime.split('T')[0]).isBefore(endTime.split('T')[0])) {
+      if (this.timeZone != '') {
+        startTime = this.toTimeZone(startTime, this.timeZone);
+        endTime = this.toTimeZone(endTime, this.timeZone);
+      }
+      let ProportionalDuration = this.fxProportionalDuration(startTime, endTime);
+      let currentResponseData = yield this.fetchData.perform(startTime, endTime);
+      let proportionalResponseData = yield this.fetchData.perform(ProportionalDuration.prevStartTime, ProportionalDuration.prevEndTime);
+      this.currentDurationData(currentResponseData.data);
+      this.proportionalDurationData(proportionalResponseData.data);
     }
-    let ProportionalDuration = this.fxProportionalDuration(startTime, endTime);
-    let currentResponseData = yield this.fetchData.perform(startTime, endTime);
-    let proportionalResponseData = yield this.fetchData.perform(ProportionalDuration.prevStartTime, ProportionalDuration.prevEndTime);
-    this.currentDurationData(currentResponseData.data);
-    this.proportionalDurationData(proportionalResponseData.data);
   }),
   init() {
     this._super(...arguments);
@@ -85,9 +88,16 @@ export default Component.extend({
     this.updateAggregate.perform();
   },
   actions: {
-    setBuildFilter(filter, dropdown) {
+    setStartMonth(month) {
+      let startDateVal = document.querySelector('.startDate').value;
+      this.set('startTime', `${startDateVal}-01`);
+      this.updateAggregate.perform();
+    },
+    setEndMonth(month) {
+      let endDateVal = document.querySelector('.endDate').value;
+      endDateVal = moment(`${endDateVal}-01`).endOf('month').format(timeFormat);
+      this.set('endTime', `${endDateVal}`);
+      this.updateAggregate.perform();
     }
-  },
-  didInsertElement() {
   },
 });
