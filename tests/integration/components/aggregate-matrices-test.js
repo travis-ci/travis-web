@@ -21,8 +21,9 @@ module('Integration | Component | aggregate-matrices', function (hooks) {
     assert
       .dom('[data-test-builds]')
       .exists('Aggregate Matrices Build Exists');
-    assert.dom('[data-test-builds-label]').exists('Build label present');
+    assert.dom('[data-test-builds-label]').hasText('Builds');
     assert.dom('[data-test-builds-count]').exists('Build count present');
+    assert.dom('[data-test-builds-count]').hasText('30');
     assert.dom('[data-test-builds-percent]').exists('Build percentage exits');
   });
 
@@ -31,8 +32,9 @@ module('Integration | Component | aggregate-matrices', function (hooks) {
     assert
       .dom('[data-test-minutes]')
       .exists('Aggregate Matrices minute Exists');
-    assert.dom('[data-test-minutes-label]').exists('minute label present');
+    assert.dom('[data-test-minutes-label]').hasText('Minutes');
     assert.dom('[data-test-minutes-count]').exists('minute count present');
+    assert.dom('[data-test-minutes-count]').hasText('300');
     assert.dom('[data-test-minutes-percent]').exists('minute percentage exits');
   });
 
@@ -41,8 +43,9 @@ module('Integration | Component | aggregate-matrices', function (hooks) {
     assert
       .dom('[data-test-credits]')
       .exists('Aggregate Matrices credit Exists');
-    assert.dom('[data-test-credits-label]').exists('credit label present');
+    assert.dom('[data-test-credits-label]').hasText('Credits');
     assert.dom('[data-test-credits-count]').exists('credit count present');
+    assert.dom('[data-test-credits-count]').hasText('70');
     assert.dom('[data-test-credits-percent]').exists('credit percentage exits');
   });
 
