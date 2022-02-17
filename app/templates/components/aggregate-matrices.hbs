@@ -1,23 +1,19 @@
-<div class="container">
-    <div class="flex-container aggregate-value">
-        <div class="builds col-md-2">
-            <div>Builds</div>
-            <div class="heading">{{this.currentBuildTotal}}</div>
-            <div>{{this.percentageBuildDiff}}%</div>
+<div class="container" data-test-aggregate-matrices-container>
+   <div class="flex-container aggregate-value">
+        <div class="builds col-md-2" data-test-builds>
+            <div data-test-builds-label>Builds</div>
+            <div class="heading" data-test-builds-count>{{this.currentBuildTotal}}</div>
+            <div data-test-builds-percent>{{this.percentageBuildDiff}}%</div>
         </div>
-        <div class="minutes col-md-2">
-            <div>Minutes</div>
-            <div class="heading">{{this.currentMinutesTotal}}</div>
-            <div>{{this.percentageMinutesDiff}}%</div>
+        <div class="minutes col-md-2" data-test-minutes>
+            <div data-test-minutes-label>Minutes</div>
+            <div class="heading" data-test-minutes-count>{{this.currentMinutesTotal}}</div>
+            <div data-test-minutes-percent>{{this.percentageMinutesDiff}}%</div>
         </div>
-        <div class="credits col-md-2">
-            <div>Credits</div>
-            <div class="heading">{{this.currentCreditsTotal}}</div>
-            <div>{{this.percentageCreditsDiff}}%</div>
+        <div class="credits col-md-2" data-test-credits>
+            <div data-test-credits-label>Credits</div>
+            <div class="heading" data-test-credits-count>{{this.currentCreditsTotal}}</div>
+            <div data-test-credits-percent>{{this.percentageCreditsDiff}}%</div>
         </div>
-
     </div>
-
-
 </div>
-{{yield}}
