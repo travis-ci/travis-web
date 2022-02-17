@@ -22,7 +22,6 @@
 @import "app/base";
 @import "app/z-index";
 @import "app/typography";
-@import "app/heatmap";
 
 @import "app/modules/logo";
 @import "app/modules/travis-status";
@@ -98,6 +97,7 @@
 @import "app/layouts/insights";
 @import "app/layouts/insights/insights";
 @import "app/layouts/billing";
+@import "app/layouts/travis-ci-insights/travis-ci-insights";
 
 @import "app/pages/landing";
 @import "app/pages/home-pro";

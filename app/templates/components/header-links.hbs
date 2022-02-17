@@ -4,6 +4,11 @@
       {{#unless this.features.proVersion}}
         {{#if this.auth.signedIn}}        
           <li>
+              <LinkTo @route="travis-ci-insights" class="navigation-anchor">
+                Travis CI Insights
+              </LinkTo>
+          </li>        
+          <li>
             <LinkTo @route="dashboard" class="navigation-anchor">
               Dashboard
             </LinkTo>
@@ -25,11 +30,6 @@
             >
               Documentation
             </ExternalLinkTo>
-          </li>
-          <li>
-            <LinkTo @route="travis-ci-insights" class="navigation-anchor">
-              Travis CI Insights
-            </LinkTo>
           </li>
         {{else}}
           <li>
@@ -74,6 +74,11 @@
         {{#if this.auth.signedIn}}
          {{#unless this.isInsights}}
             <li>
+              <LinkTo @route="travis-ci-insights" class="navigation-anchor">
+                Travis CI Insights
+              </LinkTo>
+            </li>
+            <li>
               <LinkTo @route="dashboard" class="navigation-anchor">
                 Dashboard
               </LinkTo>
@@ -100,11 +105,6 @@
               >
                 Documentation
               </ExternalLinkTo>
-            </li>
-            <li>
-              <LinkTo @route="travis-ci-insights" class="navigation-anchor">
-                Travis CI Insights
-              </LinkTo>
             </li>
           {{else}}
             <li>

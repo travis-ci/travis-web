@@ -32,6 +32,7 @@ export default Component.extend({
       } else {
         this.selectedRepos.pushObject(repository);
       }
+
       this.getRepoData(this.selectedRepos.join(','));
     }
   },
