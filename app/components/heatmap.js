@@ -5,38 +5,38 @@ import { task } from 'ember-concurrency';
 const BUILDS_FILTER_LABELS = {
   all: 'All Builds',
   failed: 'Failed Builds',
-  success: 'Successful Builds',
-  error: 'Errored Builds',
-  cancel: 'Canceled Builds',
+  passed: 'Successful Builds',
+  errored: 'Errored Builds',
+  canceled: 'Canceled Builds',
 };
 
 const BUILDS_MAX_COLOR = {
   all: '#04c2bf',
   failed: '#fc0303',
-  success: '#03fc4e',
-  error: '#db5c07',
-  cancel: '#4f4f4f',
+  passed: '#03fc4e',
+  errored: '#db5c07',
+  canceled: '#4f4f4f',
 };
 
 const BUILDS_MIN_COLOR = {
   all: '#D7F0E6',
   failed: '#FF7F7F',
-  success: '#90EE90',
-  error: '#efebd6',
-  cancel: '#efebd6',
+  passed: '#90EE90',
+  errored: '#efebd6',
+  canceled: '#efebd6',
 };
 
 const BUILDS_QUERY_PARAMS = {
   all: 'all',
   failed: 'failed',
-  success: 'successful',
-  error: 'errored',
-  cancel: 'canceled',
+  passed: 'passed',
+  errored: 'errored',
+  canceled: 'canceled',
 };
 
 export default Component.extend({
   api: service(),
-  buildFilterLabel: 'All Builds',
+  buildFilterLabel: BUILDS_FILTER_LABELS['all'],
   buildYear: new Date().getFullYear(),
   buildMinColor: BUILDS_MIN_COLOR['all'],
   buildMaxColor: BUILDS_MAX_COLOR['all'],
