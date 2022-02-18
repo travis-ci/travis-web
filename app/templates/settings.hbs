@@ -80,7 +80,6 @@
           <SvgImage @name="icon-help" @class="icon-help" />
         </ExternalLinkTo>
       </li>
-      {{#if this.repo.private}}
         <li>
           <SettingsSwitch
             @active={{this.model.settings.share_ssh_keys_with_forks}}
@@ -97,7 +96,6 @@
             <SvgImage @name="icon-help" @class="icon-help" />
           </ExternalLinkTo>
         </li>
-      {{/if}}
     </ul>
   </section>
   {{#if this.showAutoCancellationSwitches}}
