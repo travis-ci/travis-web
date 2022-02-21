@@ -37,6 +37,7 @@ module('Acceptance | layouts/pro', function (hooks) {
     assert.ok(proLayout.headerWrapperWhenAuthenticated, 'Header is wrapped within proper DOM');
     assert.ok(proHeader.logoPresent, 'Pro header has logo');
     assert.ok(proHeader.broadcastsPresent, 'Pro header shows broadcasts tower');
+
     assert.equal(proHeader.navigationLinks[0].title, 'Travis CI Insights');
     assert.equal(proHeader.navigationLinks[1].title, 'Dashboard');
     assert.equal(proHeader.navigationLinks[2].title, 'Insights');

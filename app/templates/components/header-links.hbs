@@ -185,5 +185,12 @@
         </ExternalLinkTo>
       </li>
     {{/unless}}
+    {{#if this.isInsights}}
+      <li>
+        <a class="waves-effect waves-light insights-btn btn-primary pointer" title="Run new scan" {{action "runInsightsScan"}}>
+          Run New Scan
+        </a>
+      </li>
+    {{/if}}
   </ul>
 </nav>
