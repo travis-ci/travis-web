@@ -4,18 +4,35 @@
   <section class='billing-select-plan'>
     <TravisForm @onSubmit={{perform this.save}} as |form|>
       <h3 data-test-billing-info-title>
-        Select monthly plan
+        Select Plan
       </h3>
+      <h2>
+        You can use our <a class='credits-calculator-button' onclick={{action 'showCalculator'}}>Calculator</a> to establish what plan do you need
+      </h2>
+      <nav class="travistab-nav">
+        <ul>
+          <li>
+            <a class={{if this.showAnnual 'active'}} onclick={{action 'showAnnualPlans'}}>
+              Annual Plans
+            </a>
+          </li>
+          <li>
+            <a class={{if (not this.showAnnual) 'active'}} onclick={{action 'showMonthlyPlans'}}>
+              Monthly Plans
+            </a>
+          </li>
+        </ul>
+      </nav>
       <div class='plan-selector'>
         <div class='billing-plans flex flex--wrap' data-test-billing-plan-choices>
           {{#each this.displayedPlans as |plan|}}
-            {{#unless (eq plan.planType 'hybrid annual')}}
+            {{#if (or (and plan.isAnnual this.showAnnual) (and (not plan.isAnnual) (not this.showAnnual)))}}
               <div
                 data-test-plan-box='true'
                 class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
                 onclick={{action (mut this.selectedPlan) plan}}
               >
-                <p class='{{if (eq plan.id 'standard_tier_plan') 'billing-plans__box-v2--name-bold' 'billing-plans__box-v2--name' }}' data-test-selected-plan-name="true">
+                <p class='billing-plans__box-v2--name billing-annual-plans' data-test-selected-plan-name="true">
                   {{plan.name}}
                   {{#if plan.isFree}}
                     <span>
@@ -28,58 +45,25 @@
                   {{#if (or plan.isFree plan.isTrial)}}
                     Free
                   {{else}}
-                    {{#if (eq plan.planType 'hybrid')}}
-                      {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/month</span>
-                    {{else if (eq plan.planType 'hybrid annual')}}
-                      {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/year</span>
-                    {{else}}
-                      <span class='color-asphalt-grey'>
-                        Starting at
-                      </span>
-                      {{format-currency plan.startingPrice floor="true"}}
-                    {{/if}}
+                    {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>{{if plan.isAnnual '/annualy' '/monthly'}}</span>
                   {{/if}}
                 </p>
-                {{#if plan.hasCreditAddons}}
-                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} class='billing-plans__box-v2--desclink'>{{plan.privateCredits}} Credits</ExternalLinkTo>
-                  </p>
-                {{/if}}
                 {{#if plan.hasOSSCreditAddons}}
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
                     <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
                   </p>
                 {{/if}}
-                {{#if plan.hasUserLicenseAddons}}
-                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" />
-                    {{#if plan.isUnlimitedUsers}}
-                      <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Unlimited unique users</ExternalLinkTo>
-                    {{else}}
-                      <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Up to {{plan.startingUsers}} unique users</ExternalLinkTo>
-                    {{/if}}
-                  </p>
-                {{/if}}
-                {{#if (eq plan.planType 'hybrid')}}
-                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
-                  </p>
-                {{else if (eq plan.planType 'hybrid annual')}}
-                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
-                  </p>
-                {{/if}}
-                <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
-                </p>
-                <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
-                </p>
-                {{#if plan.isTrial}}
-                  <p class='billing-plans__box-v2--desc'>As part of the trial offer for credits, we require credit card authorization. Upon entering your payment details you will see a charge for $1 show up on your credit card statement. This charge will be placed on a temporary hold and will be removed within a week.</p>
-                {{/if}}
-                {{#if (eq plan.id this.subscription.plan.id)}}
+                {{#if (and (eq plan.id this.subscription.plan.id) this.allowReactivation)}}
+                  <button data-test-subscribe-button
+                    onclick={{action 'reactivatePlan' plan form}}
+                    class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
+                  >
+                    Reactivate plan
+                  </button>
+                {{else if (eq plan.id this.subscription.plan.id)}}
                   <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
+                {{else if (eq plan.id this.subscription.scheduledPlanName)}}
+                  <h4 class='billing-plans' data-test-scheduled-plan-text>Your scheduled plan</h4>
                 {{else}}
                   <button data-test-subscribe-button
                     onclick={{action 'selectAndSubmit' plan form}}
@@ -95,99 +79,23 @@
                   Learn more
                 </ExternalLinkTo>
               </div>
-            {{/unless}}
+            {{/if}}
           {{/each}}
         </div>
       </div>
+      <h2>
+        Looking for more credits, users or VM sizes? <a class='credits-calculator-button' href="mailto:sales@travis-ci.com">Contact our Sales Team</a>
+      </h2>
+      {{#if this.showCalculator}}
+        <Billing::CreditsCalculator
+          @hideCalculator={{action 'hideCalculator'}}
+          @plans={{this.displayedPlans}}
+          @form={{form}}
+          @selectedPlan={{this.selectedPlan}}
+          @selectPlan={{this.submitForm}}
+          @isAnnual={{this.showAnnual}}
+        />
+      {{/if}}
     </TravisForm>
   </section>
-  <hr>
-  <section class='billing-select-plan'>
-      <TravisForm @onSubmit={{perform this.save}} as |form|>
-        <h3 data-test-billing-info-title>
-          Select annual plan
-        </h3>
-        <div class='plan-selector'>
-          <div class='billing-plans flex flex--wrap' data-test-billing-annual-plan-choices>
-            {{#each this.displayedPlans as |plan|}}
-              {{#if (eq plan.planType 'hybrid annual')}}
-                <div
-                  data-test-plan-box='true'
-                  class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
-                  onclick={{action (mut this.selectedPlan) plan}}
-                >
-                  <p class='billing-plans__box-v2--name billing-annual-plans' data-test-selected-plan-name="true">
-                    {{plan.name}}
-                  </p>
-                  <p class='billing-plans__box-v2--price' data-test-selected-plan-price="true">
-                    {{#if (eq plan.planType 'hybrid annual')}}
-                       {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/year</span>
-                    {{/if}}
-                  </p>
-                  {{#if plan.hasCreditAddons}}
-                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} class='billing-plans__box-v2--desclink'>{{plan.privateCredits}} Credits</ExternalLinkTo>
-                    </p>
-                  {{/if}}
-                  {{#if plan.hasOSSCreditAddons}}
-                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
-                    </p>
-                  {{/if}}
-                  {{#if plan.hasUserLicenseAddons}}
-                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
-                      <SvgImage @name="stage-passed" @class="icon icon-desc" />
-                      {{#if plan.isUnlimitedUsers}}
-                        <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Unlimited unique users</ExternalLinkTo>
-                      {{else}}
-                        <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Up to {{plan.startingUsers}} unique users</ExternalLinkTo>
-                      {{/if}}
-                    </p>
-                  {{/if}}
-                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
-                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
-                    </p>
-                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
-                  </p>
-                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
-                  </p>
-                  {{#if (eq plan.id this.subscription.plan.id)}}
-                    <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
-                  {{else}}
-                    <button data-test-subscribe-button
-                      onclick={{action 'selectAndSubmit' plan form}}
-                      class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
-                    >
-                      Select plan
-                    </button>
-                  {{/if}}
-                  <ExternalLinkTo
-                    @href={{config-get 'urls.planDocs'}}
-                    class='billing-plans__box-v2--link'
-                  >
-                    Learn more
-                  </ExternalLinkTo>
-                </div>
-              {{/if}}
-            {{/each}}
-          </div>
-        </div>
-        <div class='billing-plans__box-v2--cancel'>
-          {{#if this.isLoading}}
-            <LoadingIndicator/>
-          {{else}}
-            {{#if this.showCancelButton}}
-              I changed my mind, take me
-              <a data-test-cancel-button
-                onClick={{action (toggle 'showPlansSelector' this)}} class="billing-plans__box-v2--link-grey"
-              >
-                back to Plan page
-              </a>
-            {{/if}}
-          {{/if}}
-        </div>
-      </TravisForm>
-    </section>
 {{/if}}

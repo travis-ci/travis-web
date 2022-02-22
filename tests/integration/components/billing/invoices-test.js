@@ -51,7 +51,8 @@ module('Integration | Component | billing-invoices', function (hooks) {
       presentableStatus: 'Paid',
       amountDue: 6900,
       year: 1919,
-      isUnpaid: false
+      isUnpaid: false,
+      ccLastDigits: '1919'
     }, {
       id: '20102',
       createdAt: new Date(2010, 2, 14),
@@ -59,7 +60,8 @@ module('Integration | Component | billing-invoices', function (hooks) {
       presentableStatus: 'Unpaid',
       amountDue: 6900,
       year: 2010,
-      isUnpaid: true
+      isUnpaid: true,
+      ccLastDigits: '1920'
     }, {
       id: '2010',
       createdAt: new Date(2010, 1, 14),
@@ -67,7 +69,8 @@ module('Integration | Component | billing-invoices', function (hooks) {
       presentableStatus: 'Paid',
       amountDue: 6900,
       year: 2010,
-      isUnpaid: false
+      isUnpaid: false,
+      ccLastDigits: '1921'
     }];
 
     this.setProperties({ subscription, invoices });
@@ -80,8 +83,8 @@ module('Integration | Component | billing-invoices', function (hooks) {
     this.set('account', account);
 
     await render(hbs`
-      <Billing::Invoices 
-        @invoices={{this.invoices}} 
+      <Billing::Invoices
+        @invoices={{this.invoices}}
         @subscription={{this.subscription}}
         @account={{this.account}}
       />`
@@ -103,7 +106,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
     profilePage.billing.invoices.items[0].as(march2010 => {
       assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
       assert.equal(march2010.invoiceDate, 'March 14, 2010');
-      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1920');
       assert.equal(march2010.invoiceCardPrice, '$69.00');
       assert.equal(march2010.invoiceCardStatus, 'Unpaid');
     });
@@ -111,7 +114,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
     profilePage.billing.invoices.items[1].as(february2010 => {
       assert.equal(february2010.invoiceUrl.href, 'https://example.com/2010.pdf');
       assert.equal(february2010.invoiceDate, 'February 14, 2010');
-      assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1921');
       assert.equal(february2010.invoiceCardPrice, '$69.00');
       assert.equal(february2010.invoiceCardStatus, 'Paid');
     });
@@ -124,8 +127,8 @@ module('Integration | Component | billing-invoices', function (hooks) {
     this.set('account', account);
 
     await render(hbs`
-      <Billing::Invoices 
-        @invoices={{this.invoices}} 
+      <Billing::Invoices
+        @invoices={{this.invoices}}
         @subscription={{this.subscription}}
         @account={{this.account}}
       />`
@@ -146,7 +149,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
     profilePage.billing.invoices.items[0].as(march2010 => {
       assert.ok(march2010.invoiceUrl.isDisabled, 'invoice download should be disabled');
       assert.equal(march2010.invoiceDate, 'March 14, 2010');
-      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(march2010.invoiceCardDigits, '•••• •••• •••• 1920');
       assert.equal(march2010.invoiceCardPrice, '$69.00');
       assert.equal(march2010.invoiceCardStatus, 'Unpaid');
     });
@@ -154,7 +157,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
     profilePage.billing.invoices.items[1].as(february2010 => {
       assert.ok(february2010.invoiceUrl.isDisabled, 'invoice download should be disabled');
       assert.equal(february2010.invoiceDate, 'February 14, 2010');
-      assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1919');
+      assert.equal(february2010.invoiceCardDigits, '•••• •••• •••• 1921');
       assert.equal(february2010.invoiceCardPrice, '$69.00');
       assert.equal(february2010.invoiceCardStatus, 'Paid');
     });

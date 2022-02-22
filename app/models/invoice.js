@@ -6,6 +6,7 @@ export default Model.extend({
   url: attr('string'),
   status: attr('string'),
   amountDue: attr('number'),
+  ccLastDigits: attr('string'),
 
   subscription: belongsTo('subscription'),
 
