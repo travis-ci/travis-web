@@ -23,11 +23,21 @@ export default Component.extend({
   percentageBuildDiff: 0,
   percentageMinutesDiff: 0,
   percentageCreditDiff: 0,
+  selectedRepos: [],
   fetchData: task(function* (startTime, endTime) {
-    return yield this.api
-      .get(
-        `/insights_spotlight_summary?time_start=${startTime}&time_end=${endTime}`
-      ) || [];
+    let repoId = '';
+    repoId = this.get('selectedRepos').join(',');
+    if (repoId != '') {
+      return yield this.api
+        .get(
+          `/insights_spotlight_summary?time_start=${startTime}&time_end=${endTime}&repo_id=${repoId}`
+        ) || [];
+    } else {
+      return yield this.api
+        .get(
+          `/insights_spotlight_summary?time_start=${startTime}&time_end=${endTime}`
+        ) || [];
+    }
   }),
   fxTotal(data, prop) {
     let num = data.map((prev) => prev[prop]).reduce((curr, prev) => curr + prev, 0);
@@ -83,6 +93,18 @@ export default Component.extend({
     }
   }),
   init() {
+    this._super(...arguments);
+    this.set('startTime', '2022-01-01T00:00:00.000');
+    this.set('endTime', '2022-01-31T23:59:59.000');
+    this.preferences.fetchPreferences.perform();
+    this.updateAggregate.perform();
+  },
+  didReceiveAttrs() {
+    this._super(...arguments);
+    let selectedRepos = this.get('selectedReposAg');
+    this.set('selectedRepos', selectedRepos);
+  },
+  didRender() {
     this._super(...arguments);
     this.preferences.fetchPreferences.perform();
     this.updateAggregate.perform();
