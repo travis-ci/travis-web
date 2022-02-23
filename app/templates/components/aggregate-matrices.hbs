@@ -1,4 +1,4 @@
-<div class="container" data-test-aggregate-matrices-container>
+<div class="container" data-test-aggregate-matrices-container repo={{ selectedReposAg}}>
    <div class="flex-container aggregate-value">
         <div class="builds col-md-2" data-test-builds>
             <div data-test-builds-label>Builds</div>
@@ -17,3 +17,7 @@
         </div>
     </div>
 </div>
+{{#each selectedReposAg as |repo|}}
+  {{yield repo}}
+{{/each}}
+

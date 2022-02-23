@@ -1,1 +1,4 @@
-<div id="time-series-container" class="chart-container" data-test-timeseries-chart-container></div>
+<div id="time-series-container" class="chart-container" repo={{selectedReposAg}} data-test-timeseries-chart-container></div>
+{{#each selectedReposAg as |repo|}}
+  {{yield repo}}
+{{/each}}
