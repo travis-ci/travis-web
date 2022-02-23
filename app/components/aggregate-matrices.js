@@ -26,7 +26,7 @@ export default Component.extend({
   selectedRepos: [],
   fetchData: task(function* (startTime, endTime) {
     let repoId = '';
-    repoId = this.get('selectedRepos').join(',');
+    repoId = this.get('selectedRepos');
     if (repoId != '') {
       return yield this.api
         .get(
