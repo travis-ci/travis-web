@@ -27,58 +27,186 @@
         <div class='billing-plans flex flex--wrap' data-test-billing-plan-choices>
           {{#each this.displayedPlans as |plan|}}
             {{#if (or (and plan.isAnnual this.showAnnual) (and (not plan.isAnnual) (not this.showAnnual)))}}
-              <div
-                data-test-plan-box='true'
-                class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
-                onclick={{action (mut this.selectedPlan) plan}}
-              >
-                <p class='billing-plans__box-v2--name billing-annual-plans' data-test-selected-plan-name="true">
-                  {{plan.name}}
-                  {{#if plan.isFree}}
-                    <span>
-                      <SvgImage @name="icon-help" @class="icon-help" />
-                      <EmberTooltip @text="Free Plan is trial plan. The credits will be not replenished. Switch to Free Plan if you wish to cancel your subscription." />
-                    </span>
-                  {{/if}}
-                </p>
-                <p class='billing-plans__box-v2--price' data-test-selected-plan-price="true">
-                  {{#if (or plan.isFree plan.isTrial)}}
-                    Free
-                  {{else}}
-                    {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>{{if plan.isAnnual '/annualy' '/monthly'}}</span>
-                  {{/if}}
-                </p>
-                {{#if plan.hasOSSCreditAddons}}
-                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
-                  </p>
-                {{/if}}
-                {{#if (and (eq plan.id this.subscription.plan.id) this.allowReactivation)}}
-                  <button data-test-subscribe-button
-                    onclick={{action 'reactivatePlan' plan form}}
-                    class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
-                  >
-                    Reactivate plan
-                  </button>
-                {{else if (eq plan.id this.subscription.plan.id)}}
-                  <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
-                {{else if (eq plan.id this.subscription.scheduledPlanName)}}
-                  <h4 class='billing-plans' data-test-scheduled-plan-text>Your scheduled plan</h4>
-                {{else}}
-                  <button data-test-subscribe-button
-                    onclick={{action 'selectAndSubmit' plan form}}
-                    class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
-                  >
-                    Select plan
-                  </button>
-                {{/if}}
-                <ExternalLinkTo
-                  @href={{config-get 'urls.planDocs'}}
-                  class='billing-plans__box-v2--link'
+              {{#if (eq plan.planType 'hybrid annual')}}
+                <div
+                   data-test-plan-box='true'
+                   class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
+                   onclick={{action (mut this.selectedPlan) plan}}
                 >
-                  Learn more
-                </ExternalLinkTo>
-              </div>
+                  <p class='billing-plans__box-v2--name billing-annual-plans' data-test-selected-plan-name="true">
+                     {{plan.name}}
+                  </p>
+                  <p class='billing-plans__box-v2--price' data-test-selected-plan-price="true">
+                    {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/annualy</span>
+                  </p>
+                  {{#if plan.hasCreditAddons}}
+                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} class='billing-plans__box-v2--desclink'>{{plan.privateCredits}} Credits</ExternalLinkTo>
+                    </p>
+                  {{/if}}
+                    {{#if plan.hasOSSCreditAddons}}
+                      <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
+                        <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/monthly</span>
+                      </p>
+                    {{/if}}
+                    {{#if plan.hasUserLicenseAddons}}
+                      <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
+                        <SvgImage @name="stage-passed" @class="icon icon-desc" />
+                        {{#if plan.isUnlimitedUsers}}
+                          <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Unlimited unique users</ExternalLinkTo>
+                        {{else}}
+                          <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Up to {{plan.startingUsers}} unique users</ExternalLinkTo>
+                        {{/if}}
+                      </p>
+                    {{/if}}
+                    {{#if (eq plan.id this.subscription.plan.id)}}
+                      <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
+                    {{else}}
+                      <button data-test-subscribe-button
+                        onclick={{action 'selectAndSubmit' plan form}}
+                        class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
+                      >
+                        Select plan
+                      </button>
+                    {{/if}}
+                    <ExternalLinkTo
+                      @href={{config-get 'urls.planDocs'}}
+                      class='billing-plans__box-v2--link'
+                    >
+                      Learn more
+                    </ExternalLinkTo>
+                </div>
+              {{/if}}
+              {{#if (eq plan.planType 'hybrid')}}
+                <div
+                  data-test-plan-box='true'
+                  class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
+                  onclick={{action (mut this.selectedPlan) plan}}
+                >
+                  <p class='{{if (eq plan.id 'standard_tier_plan') 'billing-plans__box-v2--name-bold' 'billing-plans__box-v2--name' }}' data-test-selected-plan-name="true">
+                    {{plan.name}}
+                    {{#if plan.isFree}}
+                      <span>
+                        <SvgImage @name="icon-help" @class="icon-help" />
+                        <EmberTooltip @text="Free Plan is trial plan. The credits will be not replenished. Switch to Free Plan if you wish to cancel your subscription." />
+                      </span>
+                    {{/if}}
+                  </p>
+                  <p class='billing-plans__box-v2--price' data-test-selected-plan-price="true">
+                    {{#if plan.isFree}}
+                      Free
+                    {{else}}
+                      {{#if (eq plan.planType 'hybrid')}}
+                        {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/monthly</span>
+                      {{else if (eq plan.planType 'hybrid annual')}}
+                        {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>/annualy</span>
+                      {{else}}
+                        <span class='color-asphalt-grey'>
+                          Free
+                        </span>
+                        {{format-currency plan.startingPrice floor="true"}}
+                      {{/if}}
+                    {{/if}}
+                  </p>
+                  {{#if plan.hasCreditAddons}}
+                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} class='billing-plans__box-v2--desclink'>{{plan.privateCredits}} Credits</ExternalLinkTo>
+                    </p>
+                  {{/if}}
+                  {{#if plan.hasOSSCreditAddons}}
+                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
+                    </p>
+                  {{/if}}
+                  {{#if plan.hasUserLicenseAddons}}
+                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" />
+                      {{#if plan.isUnlimitedUsers}}
+                        <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Unlimited unique users</ExternalLinkTo>
+                      {{else}}
+                        <ExternalLinkTo @href={{config-get 'urls.planUsersDocs'}} class='billing-plans__box-v2--desclink'>Up to {{plan.startingUsers}} unique users</ExternalLinkTo>
+                      {{/if}}
+                    </p>
+                  {{/if}}
+                  {{#if (eq plan.id this.subscription.plan.id)}}
+                    <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
+                  {{else}}
+                    <button data-test-subscribe-button
+                      onclick={{action 'selectAndSubmit' plan form}}
+                      class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
+                    >
+                      Select plan
+                    </button>
+                  {{/if}}
+                  <ExternalLinkTo
+                    @href={{config-get 'urls.planDocs'}}
+                    class='billing-plans__box-v2--link'
+                  >
+                    Learn more
+                  </ExternalLinkTo>
+                </div>
+              {{/if}}
+            {{/if}}
+          {{/each}}
+        </div>
+        <hr>
+        <div class='billing-plans flex flex--wrap' data-test-billing-plan-choices>
+          {{#each this.displayedPlans as |plan|}}
+            {{#if (or (and plan.isAnnual this.showAnnual) (and (not plan.isAnnual) (not this.showAnnual)))}}
+              {{#if (eq plan.planType 'metered')}}
+                <div
+                  data-test-plan-box='true'
+                  class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
+                  onclick={{action (mut this.selectedPlan) plan}}
+                >
+                  <p class='billing-plans__box-v2--name billing-annual-plans' data-test-selected-plan-name="true">
+                    {{plan.name}}
+                    {{#if plan.isFree}}
+                      <span>
+                        <SvgImage @name="icon-help" @class="icon-help" />
+                        <EmberTooltip @text="Free Plan is trial plan. The credits will be not replenished. Switch to Free Plan if you wish to cancel your subscription." />
+                      </span>
+                    {{/if}}
+                  </p>
+                  <p class='billing-plans__box-v2--price' data-test-selected-plan-price="true">
+                    {{#if (or plan.isFree plan.isTrial)}}
+                      Free
+                    {{else}}
+                      {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>{{if plan.isAnnual '/annualy' '/monthly'}}</span>
+                    {{/if}}
+                  </p>
+                  {{#if plan.hasOSSCreditAddons}}
+                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
+                    </p>
+                  {{/if}}
+                  {{#if (and (eq plan.id this.subscription.plan.id) this.allowReactivation)}}
+                    <button data-test-subscribe-button
+                      onclick={{action 'reactivatePlan' plan form}}
+                      class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
+                    >
+                      Reactivate plan
+                    </button>
+                  {{else if (eq plan.id this.subscription.plan.id)}}
+                    <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
+                  {{else if (eq plan.id this.subscription.scheduledPlanName)}}
+                    <h4 class='billing-plans' data-test-scheduled-plan-text>Your scheduled plan</h4>
+                  {{else}}
+                    <button data-test-subscribe-button
+                      onclick={{action 'selectAndSubmit' plan form}}
+                      class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
+                    >
+                      Select plan
+                    </button>
+                  {{/if}}
+                  <ExternalLinkTo
+                    @href={{config-get 'urls.planDocs'}}
+                    class='billing-plans__box-v2--link'
+                  >
+                    Learn more
+                  </ExternalLinkTo>
+                </div>
+              {{/if}}
             {{/if}}
           {{/each}}
         </div>
