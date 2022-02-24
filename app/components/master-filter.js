@@ -37,7 +37,7 @@ export default Component.extend({
     }
   },
   getRepoData(selectedRepos) {
-    const path = '/insights_spotlight_summary';
+    const path = '/spotlight_summary';
     const repositories =
       selectedRepos.length > 0
         ? `&repo_id=${encodeURIComponent(selectedRepos)}`

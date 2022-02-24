@@ -26,7 +26,7 @@ export default Component.extend({
   fetchData: task(function* (startTime, endTime) {
     return yield this.api
       .get(
-        `/insights_spotlight_summary?time_start=${startTime}&time_end=${endTime}`
+        `/spotlight_summary?time_start=${startTime}&time_end=${endTime}`
       ) || [];
   }),
   fxTotal(data, prop) {
@@ -56,12 +56,12 @@ export default Component.extend({
   },
   currentDurationData(data) {
     this.set('currentBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('currentMinutesTotal', this.fxTotal(data, 'minutes'));
+    this.set('currentMinutesTotal', this.fxTotal(data, 'duration'));
     this.set('currentCreditsTotal', this.fxTotal(data, 'credits'));
   },
   proportionalDurationData(data) {
     this.set('pastBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('pastMinutesTotal', this.fxTotal(data, 'minutes'));
+    this.set('pastMinutesTotal', this.fxTotal(data, 'duration'));
     this.set('pastCreditsTotal', this.fxTotal(data, 'credits'));
     this.set('percentageBuildDiff', this.fxPercentChange(this.currentBuildTotal, this.pastBuildTotal));
     this.set('percentageMinutesDiff', this.fxPercentChange(this.currentMinutesTotal, this.pastMinutesTotal));
