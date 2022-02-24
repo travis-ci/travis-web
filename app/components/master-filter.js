@@ -11,6 +11,7 @@ export default Component.extend({
   isAllSelected: false,
   allRepositories: [],
   selectedRepos: [],
+  repoIds: '',
   repoData: [],
   query: '',
 
@@ -32,7 +33,9 @@ export default Component.extend({
       } else {
         this.selectedRepos.pushObject(repository);
       }
-
+      let repoIds = '';
+      repoIds = this.get('selectedRepos').join(',');
+      this.set('repoIds', repoIds);
       this.getRepoData(this.selectedRepos.join(','));
     }
   },

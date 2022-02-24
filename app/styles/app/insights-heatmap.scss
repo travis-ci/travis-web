@@ -1,12 +1,9 @@
 .heatmap-container {
-  // margin-left: 50px;
   display: flex;
   flex-direction: column;
   gap: 5px;
-  // width: 1050px;
   background-color: white;
   line-height: 1.25;
-  // padding:25px;
 }
 .range-selector-heatmap {
   display: flex;
@@ -39,7 +36,6 @@
   background-color: #fff;
   outline: none;
 }
-
 .build-filter-label:hover {
   background-color: #d4d4d4;
   border-color: #8c8c8c;
@@ -59,19 +55,19 @@
   width: 15px;
   height: 15px;
 }
-.failed{
+.failed {
   background-color: #fc0303;
 }
-.all{
+.all {
   background-color: #04c2bf;
 }
-.successful{
+.successful {
   background-color: #03fc4e;
 }
-.errored{
+.errored {
   background-color: #db5c07;
 }
-.canceled{
+.canceled {
   background-color: #4f4f4f;
 }
 .dropdown-list-builds {
@@ -80,6 +76,7 @@
   align-items: center;
   gap: 10px;
 }
-.cal-heatmap-container .graph, .cal-heatmap-container .graph-legend rect{
+.cal-heatmap-container .graph,
+.cal-heatmap-container .graph-legend rect {
   cursor: pointer;
 }
