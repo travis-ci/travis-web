@@ -100,4 +100,6 @@
     <div id="insights-heatmap"></div>
   </div>
 </div>
-{{yield}}
+{{#each selectedReposAg as |repo|}}
+ {{yield repo}}
+{{/each}}

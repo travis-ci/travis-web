@@ -1,6 +1,35 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import EmberObject, { computed } from '@ember/object';
+
+const result = {
+  '@type': 'insights_spotlight_summary',
+  'data': [
+    {
+      'id': 3,
+      'user_id': 1,
+      'repo_id': '1',
+      'build_status': 'complete',
+      'repo_name': 'myrepo',
+      'builds': 30,
+      'minutes': 90,
+      'credits': 6,
+      'time': '2022-01-03T00:00:00.000Z'
+    },
+    {
+      'id': 4,
+      'user_id': 1,
+      'repo_id': '2',
+      'build_status': 'complete',
+      'repo_name': 'yourRepo',
+      'builds': 40,
+      'minutes': 80,
+      'credits': 8,
+      'time': '2022-01-04T00:00:00.000Z'
+    }
+  ]
+};
 
 const BUILDS_FILTER_LABELS = {
   all: 'All Builds',
@@ -51,52 +80,109 @@ export default Component.extend({
     new Date().getFullYear() - 4,
     new Date().getFullYear() - 5,
   ],
+  createGraph: computed('selectedRepos', function () {
+    console.log('selected repos from computed Grah ', this.selectedRepos);
+  }),
+  selectedRepos: [],
   fetchHeatMapData: task(function* (url) {
-    return yield this.api
-      .get(url)
-      .then((result) => {
-        let data = {};
-        result.data.map((r) => {
-          let dateConverted = Date.parse(r.time) / 1000;
-          let prev = data[dateConverted];
-          if (data[dateConverted] === undefined) {
-            data[dateConverted] = r.builds;
-          } else {
-            let current = r.builds;
-            let total = prev + current;
-            data[dateConverted] = total;
-          }
-        });
-        this.set('heatmapData', data);
-        let cal = new CalHeatMap(); // eslint-disable-line
-        cal.init({
-          itemSelector: '#insights-heatmap',
-          domain: 'month',
-          range: 12,
-          start: new Date(this.buildYear, 0, 1),
-          subDomain: 'day',
-          itemName: ['Build'],
-          cellSize: 14,
-          cellRadius: 0,
-          cellPadding: 1,
-          displayLegend: true,
-          tooltip: true,
-          domainMargin: [1, 1, 1, 1],
-          legendHorizontalPosition: 'right',
-          legendColors: {
-            min: this.buildMinColor,
-            max: this.buildMaxColor,
-            empty: this.buildEmptyColor,
-          },
-          considerMissingDataAsZero: true,
-          legend: [25, 50, 75, 100],
-          legendCellSize: 14,
-          data: this.heatmapData,
-        });
-      })
-      .catch((error) => {
-        throw new Error(error);
+    let repoId = '';
+    repoId = this.get('selectedRepos').join(',');
+    if (repoId != '') {
+      url = `${url}&repo_id=${repoId}`;
+    }
+    console.log('heatmap ', url);
+
+    let generateGraph = (result) => {
+      let data = {};
+      result.data.map((r) => {
+        let dateConverted = Date.parse(r.time) / 1000;
+        let prev = data[dateConverted];
+        if (data[dateConverted] === undefined) {
+          data[dateConverted] = r.builds;
+        } else {
+          let current = r.builds;
+          let total = prev + current;
+          data[dateConverted] = total;
+        }
       });
+      this.set('heatmapData', data);
+      console.log('Inside Generate Graph Heatmap ', this.get('heatmapData'));
+      document.getElementById('insights-heatmap').innerHTML = '';
+      let cal = new CalHeatMap(); // eslint-disable-line
+      cal.init({
+        itemSelector: '#insights-heatmap',
+        domain: 'month',
+        range: 12,
+        start: new Date(this.buildYear, 0, 1),
+        subDomain: 'day',
+        itemName: ['Build'],
+        cellSize: 14,
+        cellRadius: 0,
+        cellPadding: 1,
+        displayLegend: true,
+        tooltip: true,
+        domainMargin: [1, 1, 1, 1],
+        legendHorizontalPosition: 'right',
+        legendColors: {
+          min: this.buildMinColor,
+          max: this.buildMaxColor,
+          empty: this.buildEmptyColor,
+        },
+        considerMissingDataAsZero: true,
+        legend: [25, 50, 75, 100],
+        legendCellSize: 14,
+        data: this.heatmapData,
+      });
+    };
+    // let result = yield this.api.get(url);
+    generateGraph(result);
+    yield 'hello';
+    // return yield this.api
+    //   .get(url)
+    //   .then((result) => {
+    //     let data = {};
+    //     result.data.map((r) => {
+    //       let dateConverted = Date.parse(r.time) / 1000;
+    //       let prev = data[dateConverted];
+    //       if (data[dateConverted] === undefined) {
+    //         data[dateConverted] = r.builds;
+    //       } else {
+    //         let current = r.builds;
+    //         let total = prev + current;
+    //         data[dateConverted] = total;
+    //       }
+    //     });
+    //     this.set('heatmapData', data);
+    //     document.getElementById('insights-heatmap').innerHTML = '';
+    //     let cal = new CalHeatMap(); // eslint-disable-line
+    //     cal.init({
+    //       itemSelector: '#insights-heatmap',
+    //       domain: 'month',
+    //       range: 12,
+    //       start: new Date(this.buildYear, 0, 1),
+    //       subDomain: 'day',
+    //       itemName: ['Build'],
+    //       cellSize: 14,
+    //       cellRadius: 0,
+    //       cellPadding: 1,
+    //       displayLegend: true,
+    //       tooltip: true,
+    //       domainMargin: [1, 1, 1, 1],
+    //       legendHorizontalPosition: 'right',
+    //       legendColors: {
+    //         min: this.buildMinColor,
+    //         max: this.buildMaxColor,
+    //         empty: this.buildEmptyColor,
+    //       },
+    //       considerMissingDataAsZero: true,
+    //       legend: [25, 50, 75, 100],
+    //       legendCellSize: 14,
+    //       data: this.heatmapData,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     throw new Error(error);
+    //   });
   }),
   actions: {
     setBuildFilter(filter, dropdown) {
@@ -123,8 +209,15 @@ export default Component.extend({
       this.fetchHeatMapData.perform(url);
     },
   },
-  didInsertElement() {
+  didRender() {
     let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+    console.log('heatmap repoid ', this.get('selectedRepos'));
     this.fetchHeatMapData.perform(url);
+  },
+  didReceiveAttrs() {
+    this._super(...arguments);
+    let selectedRepos = this.get('selectedReposAg');
+    this.set('selectedRepos', selectedRepos);
+    console.log('selectedRepos ', this.get('selectedRepos'));
   },
 });
