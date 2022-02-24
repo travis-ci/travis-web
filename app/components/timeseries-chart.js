@@ -46,8 +46,8 @@ export default Component.extend({
   type: 'timeseries',
   dataFormat: null,
   dataSource: null,
-  timeStart: '2022-01-01',
-  timeEnd: '2022-01-31',
+  timeStart: '2022-02-01',
+  timeEnd: '2022-02-27',
   selectedRepos: [],
   init() {
     this._super(...arguments);
@@ -96,7 +96,7 @@ export default Component.extend({
       const graphData = data.map((item, index) => [
         moment(item.time).format('DD-MMM-YY'),
         item.builds,
-        item.duration,
+        (item.duration/60),
         item.credits,
         index,
       ]);

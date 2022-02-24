@@ -66,12 +66,12 @@ export default Component.extend({
   },
   currentDurationData(data) {
     this.set('currentBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('currentMinutesTotal', this.fxTotal(data, 'duration'));
+    this.set('currentMinutesTotal', (this.fxTotal(data, 'duration')/60));
     this.set('currentCreditsTotal', this.fxTotal(data, 'credits'));
   },
   proportionalDurationData(data) {
     this.set('pastBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('pastMinutesTotal', this.fxTotal(data, 'duration'));
+    this.set('pastMinutesTotal', (this.fxTotal(data, 'duration')/60));
     this.set('pastCreditsTotal', this.fxTotal(data, 'credits'));
     this.set('percentageBuildDiff', this.fxPercentChange(this.currentBuildTotal, this.pastBuildTotal));
     this.set('percentageMinutesDiff', this.fxPercentChange(this.currentMinutesTotal, this.pastMinutesTotal));
@@ -94,8 +94,8 @@ export default Component.extend({
   }),
   init() {
     this._super(...arguments);
-    this.set('startTime', '2022-01-01T00:00:00.000');
-    this.set('endTime', '2022-01-31T23:59:59.000');
+    this.set('startTime', '2022-02-01T00:00:00.000');
+    this.set('endTime', '2022-02-27T23:59:59.000');
     this.preferences.fetchPreferences.perform();
     this.updateAggregate.perform();
   },
