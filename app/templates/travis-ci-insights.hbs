@@ -1,7 +1,6 @@
 <TravisLayout @layoutName="layouts/center" class="travis-ci-insights">
-  <MasterFilter selectedRepos=repoIds as |repos|>
-  {{aggregate-matrices selectedReposAg=repos }}
-  {{timeseries-chart selectedReposAg=repos }}
-  {{heatmap selectedReposAg=repos }}
-  </MasterFilter>
+<MasterFilter @selectedRepoIds={{this.selectedRepoIds}} @setSelectedRepoIds={{action "setSelectedRepoIds"}}/>
+<AggregateMatrices  @selectedRepoIds={{this.selectedRepoIds}}/>
+<TimeseriesChart @selectedRepoIds={{this.selectedRepoIds}}/>
+<Heatmap @selectedRepoIds={{this.selectedRepoIds}}/>
 </TravisLayout>

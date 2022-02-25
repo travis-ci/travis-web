@@ -48,7 +48,7 @@ export default Component.extend({
   dataSource: null,
   timeStart: '2022-01-01',
   timeEnd: '2022-01-31',
-  selectedRepos: [],
+  selectedRepoIds: '',
   init() {
     this._super(...arguments);
     this.set('dataFormat', 'json');
@@ -56,14 +56,9 @@ export default Component.extend({
   },
   didReceiveAttrs() {
     this._super(...arguments);
-    let selectedRepos = this.get('selectedReposAg');
-    this.set('selectedRepos', selectedRepos);
-  },
-  didRender() {
-    this._super(...arguments);
+    this.set('selectedRepoIds', this.selectedRepoIds);
     this.showGraph();
   },
-
   renderTimeSeries: function (dataSource, container) {
     FusionCharts.ready(() => {  // eslint-disable-line
       new FusionCharts({  // eslint-disable-line
@@ -86,7 +81,7 @@ export default Component.extend({
     let url = `${path}${params}`;
 
     let repoId = '';
-    repoId = this.get('selectedRepos').join(',');
+    repoId = this.get('selectedRepoIds');
     if (repoId != '') {
       url = `${url}&repo_id=${repoId}`;
     }
