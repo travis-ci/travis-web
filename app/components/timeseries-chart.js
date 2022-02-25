@@ -46,8 +46,8 @@ export default Component.extend({
   type: 'timeseries',
   dataFormat: null,
   dataSource: null,
-  timeStart: '2022-02-01',
-  timeEnd: '2022-02-27',
+  timeStart: '2022-01-01',
+  timeEnd: '2022-01-31',
   selectedRepos: [],
   init() {
     this._super(...arguments);

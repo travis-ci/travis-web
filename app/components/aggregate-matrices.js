@@ -23,19 +23,19 @@ export default Component.extend({
   percentageBuildDiff: 0,
   percentageMinutesDiff: 0,
   percentageCreditDiff: 0,
-  selectedRepos: [],
+  selectedRepoIds: '',
   fetchData: task(function* (startTime, endTime) {
     let repoId = '';
-    repoId = this.get('selectedRepos');
+    repoId = this.get('selectedRepoIds');
     if (repoId != '') {
       return yield this.api
         .get(
-          `/spotlight_summary?time_start=${startTime}&time_end=${endTime}&repo_id=${repoId}`
+          `/insights_spotlight_summary?time_start=${startTime}&time_end=${endTime}&repo_id=${repoId}`
         ) || [];
     } else {
       return yield this.api
         .get(
-          `/spotlight_summary?time_start=${startTime}&time_end=${endTime}`
+          `/insights_spotlight_summary?time_start=${startTime}&time_end=${endTime}`
         ) || [];
     }
   }),
@@ -66,12 +66,12 @@ export default Component.extend({
   },
   currentDurationData(data) {
     this.set('currentBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('currentMinutesTotal', (this.fxTotal(data, 'duration')/60));
+    this.set('currentMinutesTotal', this.fxTotal(data, 'minutes'));
     this.set('currentCreditsTotal', this.fxTotal(data, 'credits'));
   },
   proportionalDurationData(data) {
     this.set('pastBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('pastMinutesTotal', (this.fxTotal(data, 'duration')/60));
+    this.set('pastMinutesTotal', this.fxTotal(data, 'minutes'));
     this.set('pastCreditsTotal', this.fxTotal(data, 'credits'));
     this.set('percentageBuildDiff', this.fxPercentChange(this.currentBuildTotal, this.pastBuildTotal));
     this.set('percentageMinutesDiff', this.fxPercentChange(this.currentMinutesTotal, this.pastMinutesTotal));
@@ -94,18 +94,14 @@ export default Component.extend({
   }),
   init() {
     this._super(...arguments);
-    this.set('startTime', '2022-02-01T00:00:00.000');
-    this.set('endTime', '2022-02-27T23:59:59.000');
+    this.set('startTime', '2022-01-01T00:00:00.000');
+    this.set('endTime', '2022-01-31T23:59:59.000');
     this.preferences.fetchPreferences.perform();
     this.updateAggregate.perform();
   },
   didReceiveAttrs() {
     this._super(...arguments);
-    let selectedRepos = this.get('selectedReposAg');
-    this.set('selectedRepos', selectedRepos);
-  },
-  didRender() {
-    this._super(...arguments);
+    this.set(this.selectedRepoIds);
     this.preferences.fetchPreferences.perform();
     this.updateAggregate.perform();
   },
