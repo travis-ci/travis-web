@@ -116,7 +116,7 @@ export default Component.extend({
       this.set('buildStatus', BUILDS_QUERY_PARAMS[filter]);
       let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
       if (this.buildStatus !== 'all') {
-        url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
+        url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
       }
       this.fetchHeatMapData.perform(url);
     },
@@ -124,21 +124,21 @@ export default Component.extend({
       document.getElementById('insights-heatmap').innerHTML = '';
       dropdown.actions.close();
       this.set('buildYear', filter);
-      let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+      let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
       if (this.buildStatus !== 'all') {
-        url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
+        url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
       }
       this.fetchHeatMapData.perform(url);
     },
   },
   didInsertElement() {
-    let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+    let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
     this.fetchHeatMapData.perform(url);
   },
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('selectedReposIds', this.selectedRepoIds);
-    let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+    let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
     this.fetchHeatMapData.perform(url);
   },
 });

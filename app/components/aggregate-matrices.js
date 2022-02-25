@@ -30,12 +30,12 @@ export default Component.extend({
     if (repoId != '') {
       return yield this.api
         .get(
-          `/insights_spotlight_summary?time_start=${startTime}&time_end=${endTime}&repo_id=${repoId}`
+          `/spotlight_summary?time_start=${startTime}&time_end=${endTime}&repo_id=${repoId}`
         ) || [];
     } else {
       return yield this.api
         .get(
-          `/insights_spotlight_summary?time_start=${startTime}&time_end=${endTime}`
+          `/spotlight_summary?time_start=${startTime}&time_end=${endTime}`
         ) || [];
     }
   }),
@@ -66,12 +66,12 @@ export default Component.extend({
   },
   currentDurationData(data) {
     this.set('currentBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('currentMinutesTotal', this.fxTotal(data, 'minutes'));
+    this.set('currentMinutesTotal', (this.fxTotal(data, 'duration')/60));
     this.set('currentCreditsTotal', this.fxTotal(data, 'credits'));
   },
   proportionalDurationData(data) {
     this.set('pastBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('pastMinutesTotal', this.fxTotal(data, 'minutes'));
+    this.set('pastMinutesTotal', (this.fxTotal(data, 'duration')/60));
     this.set('pastCreditsTotal', this.fxTotal(data, 'credits'));
     this.set('percentageBuildDiff', this.fxPercentChange(this.currentBuildTotal, this.pastBuildTotal));
     this.set('percentageMinutesDiff', this.fxPercentChange(this.currentMinutesTotal, this.pastMinutesTotal));
