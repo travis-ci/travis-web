@@ -3,33 +3,6 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 
-const result = {
-  '@type': 'insights_spotlight_summary',
-  'data': [
-    {
-      'id': 3,
-      'user_id': 1,
-      'repo_id': '1',
-      'build_status': 'complete',
-      'repo_name': 'myrepo',
-      'builds': 30,
-      'minutes': 90,
-      'credits': 6,
-      'time': '2022-01-03T00:00:00.000Z'
-    },
-    {
-      'id': 4,
-      'user_id': 1,
-      'repo_id': '2',
-      'build_status': 'complete',
-      'repo_name': 'yourRepo',
-      'builds': 40,
-      'minutes': 80,
-      'credits': 8,
-      'time': '2022-01-04T00:00:00.000Z'
-    }
-  ]
-};
 
 const BUILDS_FILTER_LABELS = {
   all: 'All Builds',
@@ -80,9 +53,7 @@ export default Component.extend({
     new Date().getFullYear() - 4,
     new Date().getFullYear() - 5,
   ],
-  createGraph: computed('selectedRepos', function () {
-    console.log('selected repos from computed Grah ', this.selectedRepos);
-  }),
+
   selectedRepoIds: '',
   fetchHeatMapData: task(function* (url) {
     let repoId = '';
