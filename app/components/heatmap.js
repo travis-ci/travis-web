@@ -114,7 +114,7 @@ export default Component.extend({
       this.set('buildMaxColor', BUILDS_MAX_COLOR[filter]);
       this.set('buildMinColor', BUILDS_MIN_COLOR[filter]);
       this.set('buildStatus', BUILDS_QUERY_PARAMS[filter]);
-      let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+      let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
       if (this.buildStatus !== 'all') {
         url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
       }
