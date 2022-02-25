@@ -268,7 +268,7 @@
       padding: 6px 13px;
       border: 1px solid $pebble-grey;
       margin-bottom: 10px;
-      width: 190px;
+      width: 230px;
       height: fit-content;
       max-height: 550px;
       flex-basis: auto;
@@ -458,7 +458,7 @@
   .travis-modal {
     .billing-select-plan {
       h3 {
-        font-size: 38px;
+        font-size: 48px;
         font-weight: 300;
         text-align: center;
       }
@@ -477,7 +477,7 @@
 
     h3 {
       margin-bottom: 0;
-      margin-top: 0;
+      margin-top: 24px;
     }
 
     h2 {
