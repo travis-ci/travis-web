@@ -1,7 +1,8 @@
 
 <div class="wrapper-all-filters" data-test-filter-container>
   {{#basic-dropdown as |dd|}}
-    {{#dd.trigger class="build-filter-label"}}
+    {{#dd.trigger class="repo-filter-label"}}
+      <SvgImage @name="icon-notification-filter" @class="icon-notification-filter"  />
       {{this.buildFilterLabel}}
       <span class="caret down" data-test-down-caret></span>
     {{/dd.trigger}}
@@ -12,8 +13,8 @@
           <Input
             @value={{this.query}}
             class="notify-input-search__input"
-            placeholder="Repositories"
-            onKeyUp={{perform  this.search}}
+            placeholder="Filter repositories"
+            onKeyUp={{perform this.search}}
           />
         </div>
       </div>
