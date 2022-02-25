@@ -46,15 +46,19 @@ export default Component.extend({
   type: 'timeseries',
   dataFormat: null,
   dataSource: null,
-  timeStart: '2022-01-28',
+  timeStart: '2022-01-01',
   timeEnd: '2022-01-31',
-
+  selectedRepoIds: '',
   init() {
     this._super(...arguments);
     this.set('dataFormat', 'json');
     this.showGraph();
   },
-
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.set('selectedRepoIds', this.selectedRepoIds);
+    this.showGraph();
+  },
   renderTimeSeries: function (dataSource, container) {
     FusionCharts.ready(() => {  // eslint-disable-line
       new FusionCharts({  // eslint-disable-line
@@ -74,8 +78,13 @@ export default Component.extend({
 
     const path = '/insights_spotlight_summary';
     const params = `?time_start=${timeStart}&time_end=${timeEnd}`;
-    const url = `${path}${params}`;
+    let url = `${path}${params}`;
 
+    let repoId = '';
+    repoId = this.get('selectedRepoIds');
+    if (repoId != '') {
+      url = `${url}&repo_id=${repoId}`;
+    }
     return Promise.all([this.api.get(url)]).then((res) => {
       const data = res[0].data;
 
