@@ -23,10 +23,10 @@ export default Component.extend({
   percentageBuildDiff: 0,
   percentageMinutesDiff: 0,
   percentageCreditDiff: 0,
-  selectedRepos: [],
+  selectedRepoIds: '',
   fetchData: task(function* (startTime, endTime) {
     let repoId = '';
-    repoId = this.get('selectedRepos');
+    repoId = this.get('selectedRepoIds');
     if (repoId != '') {
       return yield this.api
         .get(
@@ -101,11 +101,7 @@ export default Component.extend({
   },
   didReceiveAttrs() {
     this._super(...arguments);
-    let selectedRepos = this.get('selectedReposAg');
-    this.set('selectedRepos', selectedRepos);
-  },
-  didRender() {
-    this._super(...arguments);
+    this.set(this.selectedRepoIds);
     this.preferences.fetchPreferences.perform();
     this.updateAggregate.perform();
   },

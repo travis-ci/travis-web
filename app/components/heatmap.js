@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { computed } from '@ember/object';
 
 
 const BUILDS_FILTER_LABELS = {
@@ -52,10 +53,11 @@ export default Component.extend({
     new Date().getFullYear() - 4,
     new Date().getFullYear() - 5,
   ],
-  selectedRepos: [],
+
+  selectedRepoIds: '',
   fetchHeatMapData: task(function* (url) {
     let repoId = '';
-    repoId = this.get('selectedRepos').join(',');
+    repoId = this.get('selectedRepoIds');
     if (repoId != '') {
       url = `${url}&repo_id=${repoId}`;
     }
@@ -129,13 +131,14 @@ export default Component.extend({
       this.fetchHeatMapData.perform(url);
     },
   },
-  didRender() {
+  didInsertElement() {
     let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
     this.fetchHeatMapData.perform(url);
   },
   didReceiveAttrs() {
     this._super(...arguments);
-    let selectedRepos = this.get('selectedReposAg');
-    this.set('selectedRepos', selectedRepos);
+    this.set('selectedReposIds', this.selectedRepoIds);
+    let url = `/insights_spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+    this.fetchHeatMapData.perform(url);
   },
 });

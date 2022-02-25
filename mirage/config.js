@@ -18,9 +18,9 @@ export default function () {
     return _defaultHandler.apply(this, arguments);
   };
 
-  this.get('/insights_spotlight_summary/', (schema, { queryParams: { event_type: eventType } }) => {
+  this.get('/spotlight_summary/', (schema, { queryParams: { event_type: eventType } }) => {
     const response = {
-      '@type': 'insights_spotlight_summary',
+      '@type': 'spotlight_summary',
       'data': [
         {
           'id': 7,
@@ -29,19 +29,21 @@ export default function () {
           'build_status': 'canceled',
           'repo_name': 'myrepo2',
           'builds': 10,
-          'minutes': 100,
+          'duration': 100,
           'credits': 30,
+          'user_license_credits_consumed': 20,
           'time': '2022-05-04T00:00:00.000Z'
         },
         {
           'id': 8,
           'user_id': 8,
-          'repo_id': '23',
+          'repo_id': '24',
           'build_status': 'canceled',
-          'repo_name': 'myrepo2',
+          'repo_name': 'myrepo3',
           'builds': 20,
-          'minutes': 200,
+          'duration': 200,
           'credits': 40,
+          'user_license_credits_consumed': 10,
           'time': '2022-05-04T00:00:00.000Z'
         }
 
@@ -1356,29 +1358,6 @@ export default function () {
       return new Response(404, {}, {});
     }
   });
-
-  this.get(
-    '/insights_spotlight_summary/',
-    (schema, { queryParams: { event_type: eventType } }) => {
-      const response = {
-        '@type': 'insights_spotlight_summary',
-        data: [
-          {
-            id: 7,
-            user_id: 7,
-            repo_id: '23',
-            build_status: 'canceled',
-            repo_name: 'myrepo2',
-            builds: 25,
-            minutes: 345,
-            credits: 34,
-            time: '2022-05-04T00:00:00.000Z',
-          },
-        ],
-      };
-      return response;
-    }
-  );
 }
 
 /*

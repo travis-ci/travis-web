@@ -81,7 +81,7 @@ export default Component.extend({
     const timeStart = encodeURIComponent(this.timeStart);
     const timeEnd = encodeURIComponent(this.timeEnd);
 
-    const path = '/insights_spotlight_summary';
+    const path = '/spotlight_summary';
     const params = `?time_start=${timeStart}&time_end=${timeEnd}`;
     let url = `${path}${params}`;
 
@@ -96,7 +96,7 @@ export default Component.extend({
       const graphData = data.map((item, index) => [
         moment(item.time).format('DD-MMM-YY'),
         item.builds,
-        item.minutes,
+        (item.duration/60),
         item.credits,
         index,
       ]);
@@ -111,7 +111,7 @@ export default Component.extend({
           name: 'Builds',
           type: 'number',
         },
-        minutes: {
+        duration: {
           name: 'Minutes',
           type: 'number',
         },
@@ -125,7 +125,7 @@ export default Component.extend({
       const fusionDataTable = fusionDataStore.createDataTable(graphData, [
         schema.time,
         schema.builds,
-        schema.minutes,
+        schema.duration,
         schema.credits,
       ]);
 
