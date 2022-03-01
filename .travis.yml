@@ -22,6 +22,7 @@ cache:
 before_install:
   - npm config set spin false
   - npm install -g greenkeeper-lockfile@1
+  - gem install bundler:2.3.7
 
 install:
   - npm ci

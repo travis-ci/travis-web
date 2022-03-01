@@ -1,4 +1,4 @@
-ruby "~> 2.6"
+ruby '2.7.5'
 
 source 'https://rubygems.org'
 
@@ -11,6 +11,7 @@ gem 'rack-mobile-detect'
 gem 'sinatra'
 gem 'hashr'
 gem 'sanitize'
+gem 'nokogiri', '~> 1.13.3'
 
 group :development, :test do
   gem 'rake'
