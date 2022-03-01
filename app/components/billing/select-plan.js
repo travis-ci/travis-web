@@ -15,7 +15,7 @@ export default Component.extend({
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
-  showAnnual: false,
+  showAnnual: true,
   showCalculator: false,
 
   displayedPlans: reads('availablePlans'),
