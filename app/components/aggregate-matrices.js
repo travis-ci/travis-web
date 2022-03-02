@@ -92,8 +92,6 @@ export default Component.extend({
   }),
   init() {
     this._super(...arguments);
-    this.set('startTime', '2022-01-01T00:00:00.000');
-    this.set('endTime', '2022-01-31T23:59:59.000');
     this.preferences.fetchPreferences.perform();
     this.updateAggregate.perform();
   },

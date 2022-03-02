@@ -1,6 +1,12 @@
 <TravisLayout @layoutName="layouts/center" class="travis-ci-insights">
-<MasterFilter @selectedRepoIds={{this.selectedRepoIds}} @setSelectedRepoIds={{action "setSelectedRepoIds"}}/>
-<AggregateMatrices  @selectedRepoIds={{this.selectedRepoIds}}/>
-<TimeseriesChart @selectedRepoIds={{this.selectedRepoIds}}/>
+<div style="position: relative; display:flex; justify-content: space-between">
+<MasterFilter @selectedRepoIds={{this.selectedRepoIds}} @setSelectedRepoIds={{action "setSelectedRepoIds"}} />
+ <div style="margin-top: 1%;">
+ <input class="endDate" type="month" id="end" name="end" min="2018-03" value="2018-05" style="float:right" {{on 'input' (action "setEndMonth" )}}>
+ <input class="startDate" type="month" id="start" name="start" min="2018-03" value="2018-05" style="float:right" {{on 'input' (action "setStartMonth")}}>
+ </div>
+</div>
+<AggregateMatrices @selectedRepoIds={{this.selectedRepoIds}} @startTime={{this.startTime}} @endTime={{this.endTime}}/>
+<TimeseriesChart @selectedRepoIds={{this.selectedRepoIds}} @timeStart={{this.startTime}} @timeEnd={{this.endTime}}/>
 <Heatmap @selectedRepoIds={{this.selectedRepoIds}}/>
 </TravisLayout>
