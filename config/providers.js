@@ -54,6 +54,7 @@ module.exports = deepFreeze({
     vocabulary: {
       organization: 'Space',
       pullRequest: 'Merge Request',
+      pr: 'MR',
     },
     colors: {
       main: 'grey',
@@ -82,6 +83,7 @@ module.exports = deepFreeze({
     vocabulary: {
       organization: 'Team',
       pullRequest: 'Pull Request',
+      pr: 'PR',
     },
     colors: {
       main: 'blue',
@@ -110,6 +112,7 @@ module.exports = deepFreeze({
     vocabulary: {
       organization: 'Group',
       pullRequest: 'Merge Request',
+      pr: 'MR',
     },
     colors: {
       main: 'red-300',
@@ -138,6 +141,7 @@ module.exports = deepFreeze({
     vocabulary: {
       organization: 'Organization',
       pullRequest: 'Pull Request',
+      pr: 'PR',
     },
     colors: {
       main: 'grey-dark',
