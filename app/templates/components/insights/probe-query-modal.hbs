@@ -76,7 +76,7 @@
               <a class="clear-query btn action-btn" {{on 'click' (action 'clearQuery')}}>
                 Clear
               </a>
-              <ExternalLinkTo @class="btn action-btn" @href="http://docs.srenity.io/docs/getting-started/#our-object-path" @title="Help">
+              <ExternalLinkTo @class="btn action-btn" @href="http://docs.srenity.io/docs/probes/#configure-your-probes" @title="Help">
                 Help
               </ExternalLinkTo>
               <a class="run-query btn action-btn {{if this.isRunAllowed '' 'disabled'}}" {{on 'click' (action (perform this.runQuery))}}>
