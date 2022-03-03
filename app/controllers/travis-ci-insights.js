@@ -9,12 +9,10 @@ export default Controller.extend({
     setSelectedRepoIds(val) {
       this.set('selectedRepoIds', val);
     },
-    setStartMonth() {
-      let startDateVal = document.querySelector('.startDate').value;
+    setStartMonth(startDateVal) {
       this.set('startTime', `${startDateVal}-01`);
     },
-    setEndMonth() {
-      let endDateVal = document.querySelector('.endDate').value;
+    setEndMonth(endDateVal) {
       endDateVal = moment(`${endDateVal}-01`).endOf('month').format(timeFormat);
       this.set('endTime', `${endDateVal}`);
     }

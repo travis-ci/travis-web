@@ -1,0 +1,11 @@
+{{#if hasBlock}}
+  {{yield}}
+{{else}}
+  {{#if label}}
+    <label class={{labelClass}}>{{label}}</label>
+  {{/if}}
+ <div class="month-picker-label">
+          {{input value=rangeText class=inputClasses placeholder=placeholder}}
+          <span class="caret down"></span>
+  </div>
+{{/if}}
