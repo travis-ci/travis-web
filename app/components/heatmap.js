@@ -12,19 +12,20 @@ const BUILDS_FILTER_LABELS = {
 
 const BUILDS_MAX_COLOR = {
   all: '#04c2bf',
-  failed: '#fc0303',
-  passed: '#03fc4e',
+  failed: '#db4545',
+  passed: '#32ab52',
   errored: '#db5c07',
   canceled: '#4f4f4f',
 };
 
 const BUILDS_MIN_COLOR = {
   all: '#D7F0E6',
-  failed: '#FF7F7F',
-  passed: '#90EE90',
+  failed: '#ffe0e0',
+  passed: '#c1f5ca',
   errored: '#efebd6',
   canceled: '#efebd6',
 };
+
 
 const BUILDS_QUERY_PARAMS = {
   all: 'all',
