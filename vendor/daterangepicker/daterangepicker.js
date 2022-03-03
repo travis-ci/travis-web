@@ -894,9 +894,7 @@
                     var col = title.substr(3, 1);
                     var cal = $(el).parents('.drp-calendar');
                     var dt = cal.hasClass('left') ? leftCalendar.calendar[row][col] : rightCalendar.calendar[row][col];
-                    console.log(startDate);
-                    console.log(dt);
-                    console.log(date);
+                   
                     
                     if ((dt.isAfter(startDate) && dt.isBefore(date))) {
                         $(el).addClass('in-range');
