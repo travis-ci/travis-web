@@ -53,6 +53,7 @@ export default Component.extend({
       let repoIds = '';
       repoIds = this.get('selectedRepos').join(',');
       this.set('repoIds', repoIds);
+      this.setSelectedRepoIds(repoIds);
     }
   }
 });

@@ -37,8 +37,6 @@ export default Component.extend({
       return moment(start, serverFormat).format(format) + this.get('separator') +
         moment(end, serverFormat).format(format);
     }
-    console.log('start ', start);
-    console.log('end ', end);
     return '';
   }),
   opens: null,
@@ -173,7 +171,6 @@ export default Component.extend({
   },
 
   _setupPicker() {
-    debugger;
     this.$('.daterangepicker-input').daterangepicker(this.getOptions());
     this.attachPickerEvents();
   },
@@ -211,6 +208,8 @@ export default Component.extend({
     } else {
       if (!this.isDestroyed) {
         this.setProperties({ start, end });
+        this.setStartMonth(start);
+        this.setEndMonth(end);
       }
     }
   }

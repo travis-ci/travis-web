@@ -1,9 +1,7 @@
 <TravisLayout @layoutName="layouts/center" class="travis-ci-insights">
- <div style=" display:flex; justify-content: space-between"> 
 <MasterFilter @selectedRepoIds={{this.selectedRepoIds}} @setSelectedRepoIds={{action "setSelectedRepoIds"}} />
-        <DateRangePicker @setStartMonth={{action "setStartMonth"}} @setEndMonth={{action "setEndMonth"}}/>
-</div> 
+<DateRangePicker @setStartMonth={{action "setStartMonth"}} @setEndMonth={{action "setEndMonth"}}/>
 <AggregateMatrices @selectedRepoIds={{this.selectedRepoIds}} @startTime={{this.startTime}} @endTime={{this.endTime}}/>
-{{!-- <TimeseriesChart @selectedRepoIds={{this.selectedRepoIds}} @timeStart={{this.startTime}} @timeEnd={{this.endTime}}/>
-<Heatmap @selectedRepoIds={{this.selectedRepoIds}}/> --}}
+<TimeseriesChart @selectedRepoIds={{this.selectedRepoIds}} @timeStart={{this.startTime}} @timeEnd={{this.endTime}}/>
+<Heatmap @selectedRepoIds={{this.selectedRepoIds}}/>
 </TravisLayout>
