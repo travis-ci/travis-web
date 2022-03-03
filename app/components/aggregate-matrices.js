@@ -22,7 +22,7 @@ export default Component.extend({
   pastMinutesTotal: 0,
   percentageBuildDiff: 0,
   percentageMinutesDiff: 0,
-  percentageCreditDiff: 0,
+  percentageCreditsDiff: 0,
   selectedRepoIds: '',
   fetchData: task(function* (startTime, endTime) {
     let repoId = '';
@@ -44,13 +44,11 @@ export default Component.extend({
     return num;
   },
   fxPercentChange: function fxPercentChange(current, past) {
-    if (current && past) {
-      const change = ((current - past) / past);
-      const percent = change * 100;
-      let perChange = (Math.round(percent * 10) / 10);
-      perChange = perChange > 0 ? `+${perChange}` : perChange;
-      return perChange;
-    }
+    const change = ((current - past) / past);
+    const percent = change * 100;
+    let perChange = (Math.round(percent * 10) / 10);
+    perChange = perChange > 0 ? `+${perChange}` : perChange;
+    return perChange;
   },
   fxProportionalDuration(startDate, endDate) {
     let prevEndTime = moment(startDate).subtract(1, 'days').format(timeFormat);
@@ -66,12 +64,12 @@ export default Component.extend({
   },
   currentDurationData(data) {
     this.set('currentBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('currentMinutesTotal', (this.fxTotal(data, 'duration') / 60));
+    this.set('currentMinutesTotal', parseInt((this.fxTotal(data, 'duration') / 60)));
     this.set('currentCreditsTotal', this.fxTotal(data, 'credits'));
   },
   proportionalDurationData(data) {
     this.set('pastBuildTotal', this.fxTotal(data, 'builds'));
-    this.set('pastMinutesTotal', (this.fxTotal(data, 'duration') / 60));
+    this.set('pastMinutesTotal', parseInt((this.fxTotal(data, 'duration') / 60)));
     this.set('pastCreditsTotal', this.fxTotal(data, 'credits'));
     this.set('percentageBuildDiff', this.fxPercentChange(this.currentBuildTotal, this.pastBuildTotal));
     this.set('percentageMinutesDiff', this.fxPercentChange(this.currentMinutesTotal, this.pastMinutesTotal));
@@ -94,28 +92,15 @@ export default Component.extend({
   }),
   init() {
     this._super(...arguments);
-    this.set('startTime', '2022-01-01T00:00:00.000');
-    this.set('endTime', '2022-01-31T23:59:59.000');
     this.preferences.fetchPreferences.perform();
     this.updateAggregate.perform();
   },
   didReceiveAttrs() {
     this._super(...arguments);
-    this.set(this.selectedRepoIds);
+    this.set('selectedRepoIds', this.selectedRepoIds);
+    this.set('startTime', this.startTime);
+    this.set('endTime', this.endTime);
     this.preferences.fetchPreferences.perform();
     this.updateAggregate.perform();
-  },
-  actions: {
-    setStartMonth(month) {
-      let startDateVal = document.querySelector('.startDate').value;
-      this.set('startTime', `${startDateVal}-01`);
-      this.updateAggregate.perform();
-    },
-    setEndMonth(month) {
-      let endDateVal = document.querySelector('.endDate').value;
-      endDateVal = moment(`${endDateVal}-01`).endOf('month').format(timeFormat);
-      this.set('endTime', `${endDateVal}`);
-      this.updateAggregate.perform();
-    }
-  },
+  }
 });

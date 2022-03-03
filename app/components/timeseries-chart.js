@@ -57,6 +57,8 @@ export default Component.extend({
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('selectedRepoIds', this.selectedRepoIds);
+    this.set('timeStart', this.timeStart);
+    this.set('timeEnd', this.timeEnd);
     this.showGraph();
   },
   renderTimeSeries: function (dataSource, container) {

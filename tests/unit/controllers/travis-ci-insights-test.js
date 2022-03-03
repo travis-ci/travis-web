@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Controller | travis-ci-insights', function(hooks) {
+module('Unit | Controller | travis-ci-insights', function (hooks) {
   setupTest(hooks);
 
   // Replace this with your real tests.

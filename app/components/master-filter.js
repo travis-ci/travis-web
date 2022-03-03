@@ -3,7 +3,6 @@ import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 
-
 export default Component.extend({
   api: service(),
   store: service(),
@@ -23,7 +22,7 @@ export default Component.extend({
 
   didInsertElement() {
     return this.api.get('/repos').then((result) => {
-      this.set('allRepositories', result.repositories);
+      // this.set('allRepositories', result.repositories);
     });
   },
 
@@ -37,6 +36,7 @@ export default Component.extend({
       let repoIds = '';
       repoIds = this.get('selectedRepos').join(',');
       this.set('repoIds', repoIds);
+      this.setSelectedRepoIds(repoIds);
     }
   }
 });
