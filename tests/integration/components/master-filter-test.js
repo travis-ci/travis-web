@@ -20,10 +20,10 @@ module('Integration | Component | master-filter', function (hooks) {
       .dom('[data-test-filter-container]')
       .exists('All Repositories are exist');
     assert
-      .dom('.build-filter-label')
+      .dom('.repo-filter-label')
       .exists('Contain All Repo Name');
-    assert.dom('.build-filter-label').hasText('All Builds');
+    assert.dom('.repo-filter-label').hasText('All Builds');
 
-    await click('.build-filter-label');
+    await click('.repo-filter-label');
   });
 });
