@@ -31,7 +31,7 @@ export default function () {
           'builds': 10,
           'duration': 100,
           'credits': 30,
-          'user_license_credits_consumed': 20,
+          'license_credits': 20,
           'time': '2022-05-04T00:00:00.000Z'
         },
         {
@@ -43,7 +43,7 @@ export default function () {
           'builds': 20,
           'duration': 200,
           'credits': 40,
-          'user_license_credits_consumed': 10,
+          'license_credits': 10,
           'time': '2022-05-04T00:00:00.000Z'
         }
 
