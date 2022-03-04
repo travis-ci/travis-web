@@ -3,7 +3,7 @@ ruby '2.7.5'
 source 'https://rubygems.org'
 
 gem 'travis-web', path: 'waiter'
-gem 'puma', '~> 4'
+gem 'puma', '~> 5.6.2'
 gem 'rack', '~> 2'
 gem 'rack-ssl'
 gem 'rack-protection'

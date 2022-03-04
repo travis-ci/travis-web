@@ -14,14 +14,14 @@ GEM
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nio4r (2.5.7)
+    nio4r (2.5.8)
     nokogiri (1.13.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     nokogumbo (2.0.5)
       nokogiri (~> 1.8, >= 1.8.4)
     power_assert (2.0.0)
-    puma (4.3.8)
+    puma (5.6.2)
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
@@ -67,7 +67,7 @@ DEPENDENCIES
   foreman
   hashr
   nokogiri (~> 1.13.3)
-  puma (~> 4)
+  puma (~> 5.6.2)
   rack (~> 2)
   rack-mobile-detect
   rack-protection
