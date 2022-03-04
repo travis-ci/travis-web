@@ -76,8 +76,8 @@ export default Component.extend({
     this.set('percentageCreditsDiff', this.fxPercentChange(this.currentCreditsTotal, this.pastCreditsTotal));
   },
   updateAggregate: task(function* () {
-    let startTime = `${this.startTime}T00:00:00.000`;
-    let endTime = `${this.endTime}T00:00:00.000`;
+    let startTime = this.startTime.includes('T') ? `${this.startTime}` : `${this.startTime}T00:00:00.000`;
+    let endTime = this.endTime.includes('T') ? `${this.endTime}` : `${this.endTime}T00:00:00.000`;
     if (moment(startTime.split('T')[0]).isBefore(endTime.split('T')[0])) {
       if (this.timeZone != '') {
         startTime = this.toTimeZone(startTime, this.timeZone);
