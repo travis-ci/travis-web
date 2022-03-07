@@ -191,18 +191,18 @@ export default Component.extend({
 
   handleDateRangePickerEvent(actionName, picker, isCancel = false) {
     let action = this.get(actionName);
-    let start;
-    let end;
+    let start = this.start;
+    let end = this.end;
 
     if (!isCancel) {
       start = picker.startDate.format(this.get('serverFormat'));
       end = picker.endDate.format(this.get('serverFormat'));
     }
 
-    if (actionName) {
+    if (action) {
       if (actionName === 'cancelAction') {
-        this.setStartMonth(this.start);
-        this.setEndMonth(this.end);
+        this.setStartMonth(start);
+        this.setEndMonth(end);
       }
       assert(
         `${actionName} for date-range-picker must be a function`,
