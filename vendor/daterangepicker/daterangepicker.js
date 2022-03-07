@@ -485,7 +485,7 @@
         },
 
         updateMonthsInView: function() {
-            if (this.endDate) {
+            if (this.endDate && this.leftCalendar.month===undefined) {
                 //if both dates are visible already, do nothing
                 if (!this.singleDatePicker && this.leftCalendar.month && this.rightCalendar.month &&
                     (this.startDate.format('YYYY-MM') == this.leftCalendar.month.format('YYYY-MM') || this.startDate.format('YYYY-MM') == this.rightCalendar.month.format('YYYY-MM'))
@@ -502,17 +502,8 @@
                     this.rightCalendar.month = this.startDate.clone().date(2).add(1, 'year');
                 }
 
-            } else {
-                if (this.leftCalendar.month.format('YYYY-MM') != this.startDate.format('YYYY-MM') && this.rightCalendar.month.format('YYYY-MM') != this.startDate.format('YYYY-MM')) {
-                    var a = this.startDate.clone().date(2);
-                    this.leftCalendar.month = this.startDate.clone().date(2);
-                    this.rightCalendar.month = this.startDate.clone().date(2).add(1, 'year');
-                }
-            }
-            if (this.maxDate && this.linkedCalendars && !this.singleDatePicker && this.rightCalendar.month > this.maxDate) {
-              this.rightCalendar.month = this.maxDate.clone().date(2);
-              this.leftCalendar.month = this.maxDate.clone().date(2).subtract(1, 'year');
-            }
+            } 
+          
         },
 
         updateCalendars: function() {

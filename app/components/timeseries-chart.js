@@ -18,6 +18,12 @@ const dataSource = {
         value: 'Builds',
         type: 'line',
         aggregation: 'Sum',
+        connectNullData: true,
+        style: {
+          'plot.null': {
+            'stroke-dasharray': '-1'
+          }
+        }
       },
     },
     {
@@ -25,6 +31,12 @@ const dataSource = {
         value: 'Minutes',
         type: 'line',
         aggregation: 'Sum',
+        connectNullData: true,
+        style: {
+          'plot.null': {
+            'stroke-dasharray': '-1'
+          }
+        }
       },
     },
     {
@@ -32,7 +44,14 @@ const dataSource = {
         value: 'Credits',
         type: 'line',
         aggregation: 'Sum',
+        connectNullData: true,
+        style: {
+          'plot.null': {
+            'stroke-dasharray': '-1'
+          }
+        }
       },
+      connectNullData: true,
     },
   ],
 };

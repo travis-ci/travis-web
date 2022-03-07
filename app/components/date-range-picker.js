@@ -185,7 +185,7 @@ export default Component.extend({
     });
 
     this.$('.daterangepicker-input').on('cancel.daterangepicker', () => {
-      this.handleDateRangePickerEvent('cancelAction', undefined, true);
+      this.handleDateRangePickerEvent('cancelAction', this, true);
     });
   },
 
@@ -199,7 +199,11 @@ export default Component.extend({
       end = picker.endDate.format(this.get('serverFormat'));
     }
 
-    if (action) {
+    if (actionName) {
+      if (actionName === 'cancelAction') {
+        this.setStartMonth(this.start);
+        this.setEndMonth(this.end);
+      }
       assert(
         `${actionName} for date-range-picker must be a function`,
         typeof action === 'function'
