@@ -13,8 +13,10 @@ export default Component.extend({
   layout,
   classNameBindings: ['containerClass'],
   attributeBindings: ['start', 'end', 'serverFormat'],
-  start: moment().toDate(),
-  end: moment().toDate(),
+  start: moment().startOf('day'),
+  end: moment().endOf('day'),
+  oldStart: moment().startOf('day'),
+  oldEnd: moment().endOf('day'),
   minDate: undefined,
   maxDate: undefined,
   timePicker: false,
@@ -37,8 +39,8 @@ export default Component.extend({
       return moment(start, serverFormat).format(format) + this.get('separator') +
         moment(end, serverFormat).format(format);
     }
-    return  moment(moment().toDate(), serverFormat).format(format) + this.get('separator') +
-    moment(moment().toDate(), serverFormat).format(format);
+    return moment(this.oldStart, serverFormat).format(format) + this.get('separator') +
+    moment(this.oldEnd, serverFormat).format(format);
   }),
   opens: null,
   drops: null,
@@ -198,6 +200,8 @@ export default Component.extend({
     if (!isCancel) {
       start = picker.startDate.format(this.get('serverFormat'));
       end = picker.endDate.format(this.get('serverFormat'));
+      this.oldStart = picker.startDate.format(this.get('serverFormat'));
+      this.oldEnd = picker.endDate.format(this.get('serverFormat'));
     }
 
     if (action) {

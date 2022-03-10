@@ -21,6 +21,10 @@
   }
   .wrapper-all-filters{
     display: inline-block;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 31px;
   }
   .checkbox-label{
     width: 100%;

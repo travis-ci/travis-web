@@ -29,16 +29,19 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin: 0 0 2px 296px;
   padding: 5px 8px;
   border-radius: 4px;
   border: solid 1px #d0d0d0;
   background-color: #fff;
-  float: right;
-  margin-top: -40px;
 }
 
+.month-picker-label:hover {
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
+}
 
-.main-filter{
-  padding-top: 64px;
+.Main-Filter {
+  display: flex;
+  justify-content: space-between;
+  margin: 51px 0px 30px 2px;
 }

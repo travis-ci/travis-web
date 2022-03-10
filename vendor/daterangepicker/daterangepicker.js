@@ -443,7 +443,7 @@
                this.endDate = moment(endDate);
 
             const monthDifference =  moment(new Date(this.endDate)).diff(new Date(this.startDate), 'months', true);
-            if (monthDifference>=12)
+            if (monthDifference>=12 || monthDifference<0)
             {
                 this.endDate=null;
                 return;
@@ -701,8 +701,8 @@
 
             if (this.opens == 'left') {
                 this.container.css({
-                    top: containerTop+6,
-                    right: parentRightEdge - this.element.offset().left - this.element.outerWidth()-23,
+                    top: containerTop-2,
+                    right: parentRightEdge - this.element.offset().left - this.element.outerWidth(),
                     left: 'auto'
                 });
                 if (this.container.offset().left < 0) {
