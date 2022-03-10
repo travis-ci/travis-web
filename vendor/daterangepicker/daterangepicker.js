@@ -701,8 +701,8 @@
 
             if (this.opens == 'left') {
                 this.container.css({
-                    top: containerTop,
-                    right: parentRightEdge - this.element.offset().left - this.element.outerWidth(),
+                    top: containerTop+6,
+                    right: parentRightEdge - this.element.offset().left - this.element.outerWidth()-23,
                     left: 'auto'
                 });
                 if (this.container.offset().left < 0) {

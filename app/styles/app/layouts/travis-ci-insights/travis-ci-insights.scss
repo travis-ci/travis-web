@@ -3,9 +3,25 @@
 @import "master-filter.scss";
 @import "timeseries-chart.scss";
 
+.Travis-CI-Insights {
+  width: 183px;
+  height: 28px;
+  flex-grow: 0;
+  margin: 0 59px 51px 1px;
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #3eaaaf;
+}
+
 .month-picker-label
 {
-  width: 207px;
+  width: 197px;
   height: 31px;
   flex-grow: 0;
   display: flex;
@@ -20,4 +36,9 @@
   background-color: #fff;
   float: right;
   margin-top: -40px;
+}
+
+
+.main-filter{
+  padding-top: 64px;
 }

@@ -48,10 +48,12 @@
 
 .daterangepicker.opensleft:before {
   right: 9px;
+  display: none;
 }
 
 .daterangepicker.opensleft:after {
   right: 10px;
+  display: none;
 }
 
 .daterangepicker.openscenter:before {
@@ -199,20 +201,27 @@
 .next
 {
   background-color: transparent !important;
+  position: absolute;
+  right: 8px;
+  top: 9px;
 }
+
 
 .next.available:hover
 {
-  background-color: transparent !important;
+  background-color: #eee !important;
+  position: absolute;
 }
 .prev.available:hover
 {
-  background-color: transparent !important;
+  background-color: #eee !important;
 }
 
 .daterangepicker .calendar-table .next span {
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
+  margin: 1px;
+  margin-left: 15px;
 }
 
 .daterangepicker .calendar-table .prev span {
@@ -230,7 +239,7 @@
   line-height: 24px;
   font-size: 12px;
   border-radius: 4px;
-  border: 1px solid transparent;
+  border: 1px solid #fff;
   white-space: nowrap;
   cursor: pointer;
   padding-left: 20px;
@@ -284,7 +293,7 @@
 
 .daterangepicker td.in-range {
   background-color: #ebf4f8;
-  border-color: transparent;
+  border: 1px solid #fff;
   color: #000;
   border-radius: 0;
   width: 71px;
@@ -301,6 +310,7 @@
   margin: 1.2px 0 1.2px 1.2px;
   padding: 4.4px 20.1px 0.4px 21.3px;
   background-color: #f1f1f1;
+  border: 1px solid #fff;
 }
 .daterangepicker td.start-date {
   border-radius: 4px 0 0 4px;
@@ -316,7 +326,7 @@
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
   /* background-color: #357ebd; */
-  border-color: transparent;
+  border: 1px solid #fff;
   color: #fff;
   width: 71px;
   height: 30.8px;

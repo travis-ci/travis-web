@@ -13,8 +13,8 @@ export default Component.extend({
   layout,
   classNameBindings: ['containerClass'],
   attributeBindings: ['start', 'end', 'serverFormat'],
-  start: undefined,
-  end: undefined,
+  start: moment().toDate(),
+  end: moment().toDate(),
   minDate: undefined,
   maxDate: undefined,
   timePicker: false,
@@ -37,7 +37,8 @@ export default Component.extend({
       return moment(start, serverFormat).format(format) + this.get('separator') +
         moment(end, serverFormat).format(format);
     }
-    return '';
+    return  moment(moment().toDate(), serverFormat).format(format) + this.get('separator') +
+    moment(moment().toDate(), serverFormat).format(format);
   }),
   opens: null,
   drops: null,

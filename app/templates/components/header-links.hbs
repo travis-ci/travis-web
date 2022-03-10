@@ -4,7 +4,7 @@
       {{#unless this.features.proVersion}}
         {{#if this.auth.signedIn}}                   
           <li>
-              <LinkTo @route="travis-ci-insights" class="navigation-anchor">
+              <LinkTo @route="travis-ci-insights" class="label">
                 Travis CI Insights
               </LinkTo>
           </li>        
@@ -74,7 +74,7 @@
         {{#if this.auth.signedIn}}
          {{#unless this.isInsights}}
             <li>
-              <LinkTo @route="travis-ci-insights" class="navigation-anchor">
+              <LinkTo @route="travis-ci-insights" class="label">
                 Travis CI Insights
               </LinkTo>
            </li>   
