@@ -2,12 +2,7 @@
   <ul>
     {{#unless this.features.enterpriseVersion}}
       {{#unless this.features.proVersion}}
-        {{#if this.auth.signedIn}}                   
-          <li>
-              <LinkTo @route="travis-ci-insights" class="label">
-                Travis CI Insights
-              </LinkTo>
-          </li>        
+        {{#if this.auth.signedIn}}                                  
           <li>
             <LinkTo @route="dashboard" class="navigation-anchor">
               Dashboard
@@ -72,12 +67,7 @@
       {{/unless}}
       {{#if this.features.proVersion}}
         {{#if this.auth.signedIn}}
-         {{#unless this.isInsights}}
-            <li>
-              <LinkTo @route="travis-ci-insights" class="label">
-                Travis CI Insights
-              </LinkTo>
-           </li>   
+         {{#unless this.isInsights}}  
             <li>
               <LinkTo @route="dashboard" class="navigation-anchor">
                 Dashboard
@@ -107,6 +97,11 @@
               </ExternalLinkTo>
             </li>
           {{else}}
+             <li>
+              <LinkTo @route="travis-ci-insights" class="navigation-anchor">
+                Travis CI Insights
+              </LinkTo>
+            </li>
             <li>
               <LinkTo @route="insights" class="navigation-anchor">
                 Insights
