@@ -82,7 +82,7 @@
   cursor: pointer;
 }
 
-.heatmap-year{
+.heatmap-year {
   height: 31px;
   flex-grow: 0;
   display: flex;
@@ -91,4 +91,6 @@
   align-items: center;
   gap: 10px;
   background-color: #fff;
+  position: relative;
+  left: 11px;
 }
