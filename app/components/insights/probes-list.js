@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { map, equal, gt } from '@ember/object/computed';
+import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { EVENTS } from 'travis/utils/dynamic-query';
@@ -24,7 +25,11 @@ export default Component.extend({
 
   allowEdit: equal('selectedProbeIds.length', 1),
   allowToggle: gt('selectedProbeIds.length', 0),
-  isAllSelected: false,
+
+  isAllSelected: computed('selectedProbeIds', 'probes', function () {
+    return this.selectedProbeIds.length > 0 && this.selectedProbeIds.length === this.probes.length;
+  }),
+  
   selectedProbeIds: [],
   selectedProbe: null,
   selectableProbeIds: map('probes', (probe) => probe.id),
@@ -36,7 +41,6 @@ export default Component.extend({
         const self = this;
         this.probes.on(RELOADED, () => {
           self.set('selectedProbeIds', []);
-          self.set('isAllSelected', false);
         });
       }
 
@@ -62,9 +66,9 @@ export default Component.extend({
       const self = this;
 
       yield this.api.patch('/insights_probes/toggle_active', { data: data }).then(() => {
+        this.flashes.success('Probes toggled successfully!');
         self.probes.reload();
         self.set('selectedProbeIds', []);
-        self.set('isAllSelected', false);
       });
     }
   }).drop(),
@@ -121,7 +125,6 @@ export default Component.extend({
 
     reloadProbes() {
       this.set('selectedProbeIds', []);
-      this.set('isAllSelected', false);
       this.probes.reload();
     },
 
@@ -139,13 +142,10 @@ export default Component.extend({
     },
 
     toggleAll() {
-      const { isAllSelected, selectableProbeIds, selectedProbeIds } = this;
-
-      if (isAllSelected) {
-        this.set('isAllSelected', false);
+      const { selectableProbeIds, selectedProbeIds } = this;
+      if (selectedProbeIds.length > 0) {
         selectedProbeIds.removeObjects(selectableProbeIds.toArray());
       } else {
-        this.set('isAllSelected', true);
         selectedProbeIds.addObjects(selectableProbeIds.toArray());
       }
 

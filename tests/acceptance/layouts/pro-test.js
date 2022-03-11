@@ -44,6 +44,7 @@ module('Acceptance | layouts/pro', function (hooks) {
     assert.equal(proHeader.navigationLinks[3].title, 'Changelog', 'Shows link to changelog');
     assert.equal(proHeader.navigationLinks[4].title, 'Documentation', 'Shows link to documentation');
 
+
     assert.ok(proHeader.profileLinkPresent, 'Pro header shows profile links');
   });
 });

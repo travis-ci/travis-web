@@ -65,15 +65,17 @@
     <h3>
       Email notifications
     </h3>
-    <div class="build-emails">
-      <div class="row">
-        <div class="name" data-test-email-settings-title>
-          Build emails
+    <ul class="features-list">
+      <li class="feature email-notifications">
+        <div>
+          <span class="name" data-test-email-settings-title>
+            Build Emails
+          </span>
+          <p class="description" data-test-email-settings-description>
+            The status of your builds straight to your inbox
+          </p>
         </div>
-        <div class="description" data-test-email-settings-description>
-          The status of your builds straight to your inbox
-        </div>
-        <div class="controls">
+        <div>
           <TravisSwitch
             @active={{this.buildEmails}}
             @disabled={{this.toggleBuildEmails.isRunning}}
@@ -81,17 +83,17 @@
             data-test-email-settings-toggle="true"
           />
         </div>
-      </div>
-    </div>
-    <div class="build-emails">
-      <div class="row">
-        <div class="name" data-test-insights-email-settings-title>
-          Scan notifications
+      </li>
+      <li class="feature email-notifications">
+        <div>
+          <span class="name" data-test-insights-email-settings-title>
+            Scan Notifications
+          </span>
+          <p class="description" data-test-insights-email-settings-description>
+            Get emails after completion of Insights scan
+          </p>
         </div>
-        <div class="description" data-test-insights-email-settings-description>
-          Get emails after completion of Insights scan
-        </div>
-        <div class="controls">
+        <div>
           <TravisSwitch
             @active={{this.insightsEmails}}
             @disabled={{this.toggleInsightsEmails.isRunning}}
@@ -99,8 +101,8 @@
             data-test-insights-email-settings-toggle="true"
           />
         </div>
-      </div>
-    </div>
+      </li>
+    </ul>
     {{#if this.showResubscribeList}}
       <div
         class="unsubscribed-emails"

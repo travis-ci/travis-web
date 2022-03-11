@@ -12,7 +12,7 @@
       <Input
         @value={{this.query}}
         class="notify-input-search__input"
-        placeholder="Search Type, Plugin, Product, Category, Message"
+        placeholder="Search Plugin, Product, Category or Message"
         onKeyUp={{perform this.search}}
       />
     </div>
@@ -68,7 +68,7 @@
           {{notification.pluginCategory}}
         </td>
         <td>
-          {{notification.message}}
+          {{truncate notification.message 50}}
         </td>
         <td>
           <a class="detailsLink modal-trigger" id="{{notification.id}}" {{on 'click' (action 'openModal' notification)}}>Learn More</a>
@@ -90,6 +90,6 @@
 />
 <Insights::NotificationModal
   @isOpen={{this.showNotificationModal}}
-  @onClose={{fn (mut this.showNotificationModal) false}}  
+  @onClose={{fn (mut this.showNotificationModal) false}}
   @notification={{this.selectedNotification}}
 />

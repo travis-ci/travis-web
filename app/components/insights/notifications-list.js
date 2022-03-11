@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { map, gt } from '@ember/object/computed';
+import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { EVENTS } from 'travis/utils/dynamic-query';
@@ -16,7 +17,9 @@ export default Component.extend({
 
   toggleButtonText: 'Snooze Notifications',
 
-  isAllSelected: false,
+  isAllSelected: computed('selectedNotificationIds', 'notifications', function () {
+    return this.selectedNotificationIds.length > 0 && this.selectedNotificationIds.length === this.notifications.length;
+  }),
   allowToggle: gt('selectedNotificationIds.length', 0),
   selectedNotificationIds: [],
   selectableNotificationIds: map('notifications', (notification) => notification.id),
@@ -31,7 +34,6 @@ export default Component.extend({
         const self = this;
         this.notifications.on(RELOADED, () => {
           self.set('selectedNotificationIds', []);
-          self.set('isAllSelected', false);
         });
       }
 
@@ -54,9 +56,9 @@ export default Component.extend({
             notification_ids: this.selectedNotificationIds
           }
         }).then(() => {
+          this.flashes.success('Notifications toggled successfully!');
           self.notifications.reload();
           self.set('selectedNotificationIds', []);
-          self.set('isAllSelected', false);
         });
       } catch (e) {
         this.flashes.error('There was an error toggling notifications. Please try again.');
@@ -110,13 +112,11 @@ export default Component.extend({
     },
 
     toggleAll() {
-      const { isAllSelected, selectableNotificationIds, selectedNotificationIds } = this;
+      const { selectableNotificationIds, selectedNotificationIds } = this;
 
-      if (isAllSelected) {
-        this.set('isAllSelected', false);
+      if (selectedNotificationIds.length > 0) {
         selectedNotificationIds.removeObjects(selectableNotificationIds.toArray());
       } else {
-        this.set('isAllSelected', true);
         selectedNotificationIds.addObjects(selectableNotificationIds.toArray());
       }
 

@@ -34,7 +34,9 @@ export default Component.extend({
   sortDirection: 'asc',
   query: '',
 
-  isAllSelected: false,
+  isAllSelected: computed('selectedPluginIds', 'plugins', function () {
+    return this.selectedPluginIds.length > 0 && this.selectedPluginIds.length === this.plugins.length;
+  }),
   allowToggle: gt('selectedPluginIds.length', 0),
   selectedPluginIds: [],
   selectablePluginIds: map('plugins', (plugin) => plugin.id),
@@ -46,7 +48,6 @@ export default Component.extend({
         const self = this;
         this.plugins.on(RELOADED, () => {
           self.set('selectedPluginIds', []);
-          self.set('isAllSelected', false);
         });
       }
 
@@ -80,7 +81,6 @@ export default Component.extend({
     reloadPlugins() {
       this.plugins.reload();
       this.set('selectedPluginIds', []);
-      this.set('isAllSelected', false);
     },
 
     togglePlugin(pluginId) {
@@ -97,13 +97,12 @@ export default Component.extend({
     },
 
     toggleAll() {
-      const { isAllSelected, selectablePluginIds, selectedPluginIds } = this;
 
-      if (isAllSelected) {
-        this.set('isAllSelected', false);
+      const { selectablePluginIds, selectedPluginIds } = this;
+
+      if (selectedPluginIds.length > 0) {
         selectedPluginIds.removeObjects(selectablePluginIds.toArray());
       } else {
-        this.set('isAllSelected', true);
         selectedPluginIds.addObjects(selectablePluginIds.toArray());
       }
 
@@ -139,9 +138,9 @@ export default Component.extend({
       const self = this;
 
       yield this.api.patch('/insights_plugins/toggle_active', { data: data }).then(() => {
+        this.flashes.success('Plugins toggled successfully!');
         self.plugins.reload();
         self.set('selectedPluginIds', []);
-        self.set('isAllSelected', false);
       });
     }
   }).drop(),

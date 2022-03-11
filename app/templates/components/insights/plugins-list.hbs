@@ -14,7 +14,7 @@
       <Input
         @value={{this.query}}
         class="notify-input-search__input"
-        placeholder="Search Plugin, Product, Category"
+        placeholder="Search Plugin, Product or Category"
         onKeyUp={{perform this.search}}
       />
     </div>
@@ -59,7 +59,7 @@
         </label>
       </td>
       <td>
-        {{plugin.name}}
+        {{truncate plugin.name 30}}
       </td>
       <td>
         {{plugin.publicId}}

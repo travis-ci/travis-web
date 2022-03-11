@@ -19,12 +19,26 @@
         {{/dd.content}}
       {{/basic-dropdown}}
       <div class="notifications-tiles">
-        {{#each-in this.notificationCount as |type count|}}
-          <div class="notification-tile tile-{{type}}">
-            <p class="notification-type">{{type}}</p>
-            <span class="notification-count">{{count}}</span>
-          </div>
-        {{/each-in}}
+        <div class="notification-tile tile-high">
+          <p class="notification-type">High</p>
+          <span class="notification-count">{{this.notificationCount.high}}</span>
+        </div>
+        <div class="notification-tile tile-low">
+          <p class="notification-type">Low</p>
+          <span class="notification-count">{{this.notificationCount.low}}</span>
+        </div>
+        <div class="notification-tile tile-med">
+          <p class="notification-type">Med</p>
+          <span class="notification-count">{{this.notificationCount.med}}</span>
+        </div>
+        <div class="notification-tile tile-info">
+          <p class="notification-type">Info</p>
+          <span class="notification-count">{{this.notificationCount.info}}</span>
+        </div>
+        <div class="notification-tile tile-total">
+          <p class="notification-type">Total</p>
+          <span class="notification-count">{{this.notificationCount.total}}</span>
+        </div>
       </div>
     </div>
     <Insights::NotificationsList
