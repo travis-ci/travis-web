@@ -1,7 +1,7 @@
 import { helper } from '@ember/component/helper';
 
 export function truncate([value, truncateTo]) {
-  if (!value || value.length <= 3) {
+  if (!value || value.length <= 3 || value.length <= truncateTo - 3) {
     return value;
   }
 

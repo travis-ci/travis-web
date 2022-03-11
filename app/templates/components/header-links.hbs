@@ -2,12 +2,12 @@
   <ul>
     {{#unless this.features.enterpriseVersion}}
       {{#unless this.features.proVersion}}
-        {{#if this.auth.signedIn}}                   
+        {{#if this.auth.signedIn}}
           <li>
               <LinkTo @route="travis-ci-insights" class="label">
                 Travis CI Insights
               </LinkTo>
-          </li>        
+          </li>
           <li>
             <LinkTo @route="dashboard" class="navigation-anchor">
               Dashboard
@@ -77,7 +77,7 @@
              <LinkTo @route="travis-ci-insights" class="label">
                 Travis CI Insights
               </LinkTo>
-           </li>   
+           </li>
             <li>
               <LinkTo @route="dashboard" class="navigation-anchor">
                 Dashboard

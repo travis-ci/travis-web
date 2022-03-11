@@ -97,7 +97,6 @@ export default Component.extend({
     },
 
     toggleAll() {
-
       const { selectablePluginIds, selectedPluginIds } = this;
 
       if (selectedPluginIds.length > 0) {

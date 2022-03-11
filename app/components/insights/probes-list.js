@@ -25,11 +25,9 @@ export default Component.extend({
 
   allowEdit: equal('selectedProbeIds.length', 1),
   allowToggle: gt('selectedProbeIds.length', 0),
-
   isAllSelected: computed('selectedProbeIds', 'probes', function () {
     return this.selectedProbeIds.length > 0 && this.selectedProbeIds.length === this.probes.length;
   }),
-  
   selectedProbeIds: [],
   selectedProbe: null,
   selectableProbeIds: map('probes', (probe) => probe.id),
@@ -143,6 +141,7 @@ export default Component.extend({
 
     toggleAll() {
       const { selectableProbeIds, selectedProbeIds } = this;
+
       if (selectedProbeIds.length > 0) {
         selectedProbeIds.removeObjects(selectableProbeIds.toArray());
       } else {
