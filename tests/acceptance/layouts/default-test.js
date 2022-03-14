@@ -31,10 +31,9 @@ module('Acceptance | layouts/default', function (hooks) {
     assert.ok(defaultLayout.headerWrapperWhenAuthenticated, 'Header is wrapped within proper DOM');
     assert.ok(defaultHeader.logoPresent, 'Default header has logo');
     assert.ok(defaultHeader.broadcastsPresent, 'Default header shows broadcasts tower');
-    assert.equal(defaultHeader.navigationLinks[0].title, 'Travis CI Insights');
-    assert.equal(defaultHeader.navigationLinks[1].title, 'Dashboard');
-    assert.equal(defaultHeader.navigationLinks[2].title, 'Changelog', 'Shows link to changelog');
-    assert.equal(defaultHeader.navigationLinks[3].title, 'Documentation', 'Shows link to documentation');
+    assert.equal(defaultHeader.navigationLinks[0].title, 'Dashboard');
+    assert.equal(defaultHeader.navigationLinks[1].title, 'Changelog', 'Shows link to changelog');
+    assert.equal(defaultHeader.navigationLinks[2].title, 'Documentation', 'Shows link to documentation');
     assert.ok(defaultHeader.profileLinkPresent, 'Default header shows profile links');
   });
 });
