@@ -119,6 +119,12 @@ module.exports = function () {
   importNpmDependency(app, 'node_modules/jsencrypt/bin/jsencrypt.min.js');
   importNpmDependency(app, 'node_modules/materialize-css/dist/js/materialize.min.js');
 
+  app.import('node_modules/fusioncharts/fusioncharts.js');
+  app.import('node_modules/fusioncharts/fusioncharts.charts.js');
+  app.import('node_modules/fusioncharts/themes/fusioncharts.theme.fusion.js');
+  app.import('node_modules/fusioncharts/fusioncharts.timeseries.js');
+  app.import('vendor/daterangepicker/daterangepicker.js');
+  app.import('vendor/daterangepicker/daterangepicker.css');
   return app.toTree(emojiAssets);
 };
 
