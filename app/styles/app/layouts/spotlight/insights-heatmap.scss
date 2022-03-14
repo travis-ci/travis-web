@@ -1,0 +1,213 @@
+.heatmap-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: white;
+  line-height: 1.25;
+}
+
+.heatmap-range-selector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.day-label-container {
+  margin-right: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.day-label {
+  margin-bottom: 1px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #555;
+}
+
+.heatmap-cal-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+
+  &.visibility-hidden {
+    visibility: hidden;
+  }
+}
+
+.build-filter-label {
+  height: 31px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  line-height: 18px;
+  border-radius: 4px;
+  color: #666666;
+  background-color: #fff;
+  outline: none;
+  font-size: 14px;
+  letter-spacing: 0.15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.build-year {
+  font-weight: bold;
+}
+
+.build-filter-label:hover {
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
+}
+
+.caret-heatmap {
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border: 5px solid transparent;
+  margin-bottom: -6px;
+}
+
+.caret-heatmap.down-heatmap {
+  border-top-color: black;
+}
+
+.box-dropdown-heatmap {
+  width: 15px;
+  height: 15px;
+}
+
+.all-dropdown-heatmap {
+  background-color: #04c2bf;
+}
+
+.successful-dropdown-heatmap {
+  background-color: #32ab52;
+}
+
+.failed-dropdown-heatmap {
+  background-color: #db4545;
+}
+
+.errored-dropdown-heatmap {
+  background-color: #db5c07;
+}
+
+.canceled-dropdown-heatmap {
+  background-color: #4f4f4f;
+}
+
+.dropdown-list-builds {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.insights-heatmap-scroll {
+  width: 100%;
+  padding-bottom: 1rem;
+  display: flex;
+}
+
+.cal-heatmap-container .graph,
+.cal-heatmap-container .graph-legend rect {
+  cursor: pointer;
+}
+
+.cal-heatmap-container .graph .graph-label {
+  fill: #555555;
+  font-size: 12px;
+  font-family: Roboto;
+}
+
+span.heatmap-legend-less,
+span.heatmap-legend-more {
+  margin-top: 170px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #555;
+}
+
+span.heatmap-legend-less {
+  margin-left: -140px;
+}
+
+span.heatmap-legend-more {
+  margin-left: 86px;
+}
+
+.heatmap-cal-container::-webkit-scrollbar {
+  display: inherit;
+}
+
+.heatmap-cal-container:hover::-webkit-scrollbar {
+  height: 8px;
+}
+
+.heatmap-cal-container:hover::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(200, 200, 200, 1);
+  box-shadow: inset 0 0 6px rgba(200, 200, 200, 1);
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+.heatmap-cal-container:hover::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(100, 100, 100, 0.8);
+  -webkit-box-shadow: inset 0 0 6px rgba(200, 200, 200, 1);
+  box-shadow: inset 0 0 6px rgba(200, 200, 200, 1);
+}
+
+.dropdown-content-heatmap {
+  min-width: 0 !important;
+}
+
+.dropdown-list-elements-heatmap {
+  font-family: Roboto;
+}
+
+.dropdown-list-elements-heatmap-year {
+  padding: 14px 16px !important;
+}
+
+rect.future {
+  pointer-events: none;
+}
+
+.icon-heatmap-year {
+  background: url(/images/insights/icon-heatmap-year.svg) no-repeat right 6px;
+  width: 16px;
+  height: 30px;
+}
+
+span.heatmap-spinner {
+  background: url(/images/insights/spinner.gif) right no-repeat;
+  background-size: 30px;
+  width: 10px;
+  height: 30px;
+  position: absolute;
+  top: 85%;
+  padding-left: 50%;
+  display: none;
+}
+
+@media only screen and (max-width: 1279px) {
+  .insights-heatmap-scroll {
+    overflow-x: auto;
+  }
+  .ch-tooltip {
+    width: 150px !important;
+    margin-top: 85px !important;
+  }
+  .ch-tooltip::after {
+    bottom: 52px !important;
+    transform: rotate(180deg) !important;
+  }
+}

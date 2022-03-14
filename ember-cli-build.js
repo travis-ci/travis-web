@@ -118,6 +118,13 @@ module.exports = function () {
   importNpmDependency(app, 'node_modules/crypto-js/index.js');
   importNpmDependency(app, 'node_modules/jsencrypt/bin/jsencrypt.min.js');
   importNpmDependency(app, 'node_modules/materialize-css/dist/js/materialize.min.js');
+  importNpmDependency(app, 'node_modules/cal-heatmap/cal-heatmap.js')
+  importNpmDependency(app, 'node_modules/cal-heatmap/cal-heatmap.css')
+
+  app.import('node_modules/fusioncharts/fusioncharts.js');
+  app.import('node_modules/fusioncharts/fusioncharts.charts.js');
+  app.import('node_modules/fusioncharts/themes/fusioncharts.theme.fusion.js');
+  app.import('node_modules/fusioncharts/fusioncharts.timeseries.js');
 
   return app.toTree(emojiAssets);
 };
