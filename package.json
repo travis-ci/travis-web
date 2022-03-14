@@ -115,6 +115,8 @@
   "dependencies": {
     "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
     "deep-freeze": "0.0.1",
+    "ember-fusioncharts": "^2.1.0",
+    "fusioncharts": "^3.18.0",
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.1"
   },
