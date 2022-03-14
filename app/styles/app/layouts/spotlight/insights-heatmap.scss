@@ -1,0 +1,103 @@
+.heatmap-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: white;
+  line-height: 1.25;
+}
+.range-selector-heatmap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.day-label-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: -10px;
+  margin-right: 7px;
+}
+.day-label {
+  color: black;
+  opacity: 0.8;
+  font-size: 18px;
+  padding: 1.5px;
+}
+.day-label-heatmap-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+}
+.build-filter-label {
+  height: 31px;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  color: #333;
+  background-color: #fff;
+  outline: none;
+}
+.build-filter-label:hover {
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
+}
+.caret-heatmap {
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border: 5px solid transparent;
+  margin-left: 10px;
+  margin-bottom: -2px;
+}
+.caret-heatmap.down-heatmap {
+  border-top-color: black;
+}
+.box-dropdown-heatmap {
+  width: 15px;
+  height: 15px;
+}
+.failed-dropdown-heatmap {
+  background-color: #db4545;
+}
+.all-dropdown-heatmap {
+  background-color: #04c2bf;
+}
+.successful-dropdown-heatmap {
+  background-color: #32ab52;
+}
+.errored-dropdown-heatmap {
+  background-color: #db5c07;
+}
+.canceled-dropdown-heatmap {
+  background-color: #4f4f4f;
+}
+.dropdown-list-builds {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.cal-heatmap-container .graph,
+.cal-heatmap-container .graph-legend rect {
+  cursor: pointer;
+}
+.cal-heatmap-container .graph .graph-label {
+  fill: #555555;;
+  font-size: 16px;
+}
+.heatmap-year {
+  height: 31px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff;
+  position: relative;
+  left: 11px;
+}

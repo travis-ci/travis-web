@@ -1,0 +1,57 @@
+  .caret {
+    width: 0;
+    height: 0;
+    display: inline-block;
+    border: 5px solid transparent;
+    margin-left: 10px;
+    margin-bottom: -2px;
+  }
+  .caret.down {
+    border-top-color: black;
+  }
+  .box {
+    width: 15px;
+    height: 15px;
+  }
+  .dropdown-list-builds {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+  .wrapper-all-filters{
+    display: inline-block;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 31px;
+  }
+  .checkbox-label{
+    width: 100%;
+    display: inline-block;
+    padding: 0.5rem;
+  }
+  .checkbox-title{
+    width: 100%;
+  }
+
+  .repo-filter-label {
+    display: inline-flex;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    color: #333;
+    background-color: #fff;
+    outline: none;
+  }
+
+  .icon-notification-filter {
+    width: 20px;
+    height: 20px;
+    flex-grow: 0;
+    margin-right: 3px;
+  }
