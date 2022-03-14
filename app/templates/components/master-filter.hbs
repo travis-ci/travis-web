@@ -1,0 +1,46 @@
+<div class="wrapper-all-filters" data-test-filter-container>
+  {{#basic-dropdown as |dd|}}
+    {{#dd.trigger class="repo-filter-label"}}
+      <SvgImage @name="icon-notification-filter" @class="icon-notification-filter"  />
+      {{this.buildFilterLabel}}
+      <span class="caret down" data-test-down-caret></span>
+    {{/dd.trigger}}
+    {{#dd.content class="dropdown-content"}}
+      <div class="notify-actions__search">
+        <div class="notify-input-search input-search" data-test-search-icon>
+          <SvgImage @name="icon-insights-search" @class="input-search-icon"  />
+          <Input
+            @value={{this.query}}
+            class="notify-input-search__input"
+            placeholder="Filter repositories"
+            onKeyUp={{perform this.search}}
+          />
+        </div>
+      </div>
+      <div>
+        <label class="checkbox-label" data-test-checkbox-label>
+          <input
+            class="checkbox-table filled-in"
+            type="checkbox"
+            checked={{this.isEmpty}}
+            onChange={{action "allRepoSelection"}}
+          />
+          <span class="checkbox-title" data-test-repo-label>All builds</span>
+        </label>
+      </div>
+      {{#each this.allRepositories as |repository|}}
+        <label class="checkbox-label" data-test-checkbox-label>
+          <input
+            class="checkbox-table filled-in"
+            id="{{repository.id}}"
+            type="checkbox"
+            checked={{contains repository.id this.selectedRepos}}
+            onChange={{action "toggleRepoCheck" repository.id}}
+          />
+          <span class="checkbox-title" data-test-repo-label>{{repository.name}}</span>
+        </label>
+      {{/each}}
+    {{/dd.content}}
+  {{/basic-dropdown}}
+</div>
+{{yield selectedRepos}}
