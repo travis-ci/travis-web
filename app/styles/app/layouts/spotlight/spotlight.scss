@@ -3,6 +3,10 @@
 @import "master-filter.scss";
 @import "timeseries-chart.scss";
 
+.spotlight{
+  margin: 12px 24px 0px 24px;
+}
+
 .Travis-CI-Insights {
   width: 183px;
   height: 28px;
@@ -35,6 +39,7 @@
   background-color: #fff;
   position: relative;
   left: 11px;
+  font-size: 14px;
 }
 
 .month-picker-label:hover {

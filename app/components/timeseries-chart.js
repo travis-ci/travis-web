@@ -60,7 +60,7 @@ export default Component.extend({
   api: service(),
 
   title: 'Spotlight TimeSeries',
-  width: '90%',
+  width: '100%',
   height: 600,
   type: 'timeseries',
   dataFormat: null,

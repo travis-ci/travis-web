@@ -4,11 +4,6 @@
       {{#unless this.features.proVersion}}
         {{#if this.auth.signedIn}}
           <li>
-              <LinkTo @route="travis-ci-insights" class="label">
-                Travis CI Insights
-              </LinkTo>
-          </li>
-          <li>
             <LinkTo @route="dashboard" class="navigation-anchor">
               Dashboard
             </LinkTo>
@@ -74,11 +69,6 @@
         {{#if this.auth.signedIn}}
          {{#unless this.isInsights}}
             <li>
-             <LinkTo @route="travis-ci-insights" class="label">
-                Travis CI Insights
-              </LinkTo>
-           </li>
-            <li>
               <LinkTo @route="dashboard" class="navigation-anchor">
                 Dashboard
               </LinkTo>
@@ -110,6 +100,11 @@
             <li>
               <LinkTo @route="insights" class="navigation-anchor">
                 Insights
+              </LinkTo>
+            </li>
+              <li>
+              <LinkTo @route="insights.spotlight" class="navigation-anchor">
+                Spotlight
               </LinkTo>
             </li>
             <li>

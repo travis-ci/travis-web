@@ -8,7 +8,6 @@ const Router = EmberRouter.extend({
 
 Router.map(function () {
   this.route('confirm-user', { path: '/confirm-user/:token' });
-  this.route('travis-ci-insights');
   this.route('request-user-confirmation', { path: '/request-user-confirmation'});
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
@@ -91,6 +90,7 @@ Router.map(function () {
   this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id/:view' });
 
   this.route('insights', { resetNamespace: true }, function () {
+    this.route('spotlight');
     this.route('notifications');
     this.route('probes');
     this.route('plugins');

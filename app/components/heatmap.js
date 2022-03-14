@@ -84,7 +84,7 @@ export default Component.extend({
         start: new Date(this.buildYear, 0, 1),
         subDomain: 'day',
         itemName: ['Build'],
-        cellSize: 14,
+        cellSize: 20,
         cellRadius: 0,
         cellPadding: 1,
         displayLegend: true,
