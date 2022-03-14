@@ -1,0 +1,102 @@
+<div class="heatmap-container" data-test-heatmap-container>
+  <div class="range-selector-heatmap" data-test-range-selector-heatmap>
+    <div>
+      {{#basic-dropdown as |dd|}}
+        {{#dd.trigger class="build-filter-label"}}
+          {{this.buildFilterLabel}}
+          <span class="caret down" data-test-down-arrow></span>
+        {{/dd.trigger}}
+        {{#dd.content class="dropdown-content"}}
+          <li data-test-build-filter-all>
+            <a
+              class="dropdown-list-elements"
+              {{on "click" (action "setBuildFilter" "all" dd)}}
+            >
+              <div class="dropdown-list-builds">
+                <div class="box all" data-test-box-all></div>
+                <span>All Builds</span>
+              </div>
+            </a>
+          </li>
+          <li data-test-build-filter-success>
+            <a
+              class="dropdown-list-elements"
+              {{on "click" (action "setBuildFilter" "passed" dd)}}
+            >
+              <div class="dropdown-list-builds">
+                <div class="box successful" data-test-box-success></div>
+                <span>Successful Builds</span>
+              </div>
+            </a>
+          </li>
+          <li data-test-build-filter-failed>
+            <a
+              class="dropdown-list-elements"
+              data-test-click-failed
+              {{on "click" (action "setBuildFilter" "failed" dd)}}
+            >
+              <div class="dropdown-list-builds">
+                <div class="box failed" data-test-box-failed></div>
+                <span>Failed Builds</span>
+              </div>
+            </a>
+          </li>
+          <li data-test-build-filter-error>
+            <a
+              class="dropdown-list-elements"
+              {{on "click" (action "setBuildFilter" "errored" dd)}}
+            >
+              <div class="dropdown-list-builds">
+                <div class="box errored" data-test-box-error></div>
+                <span>Errored Builds</span>
+              </div>
+            </a>
+          </li>
+          <li data-test-build-filter-cancel>
+            <a
+              class="dropdown-list-elements"
+              {{on "click" (action "setBuildFilter" "canceled" dd)}}
+            >
+              <div class="dropdown-list-builds">
+                <div class="box canceled" data-test-box-cancel></div>
+                <span>Canceled Builds</span>
+              </div>
+            </a>
+          </li>
+        {{/dd.content}}
+      {{/basic-dropdown}}
+    </div>
+    <div class="heatmap-year" data-test-build-year-dropdown-container>
+      {{#basic-dropdown as |dd|}}
+        {{#dd.trigger class="build-filter-label build-year"}}
+          {{this.buildYear}}
+          <span class="caret down"></span>
+        {{/dd.trigger}}
+        {{#dd.content class="dropdown-content"}}
+          {{#each this.buildYears as |buildYear|}}
+            <li>
+              <a
+                class="dropdown-list-elements"
+                {{on "click" (action "setBuildYear" buildYear dd)}}
+              >
+                {{{buildYear}}}
+              </a>
+            </li>
+          {{/each}}
+        {{/dd.content}}
+      {{/basic-dropdown}}
+    </div>
+  </div>
+  <div class="day-label-heatmap-container">
+    <div class="day-label-container" data-test-day-label-container>
+      <span class="day-label" data-test-day-label-mon>Mon</span>
+      <span class="day-label" data-test-day-label-tue>Tue</span>
+      <span class="day-label" data-test-day-label-wed>Wed</span>
+      <span class="day-label" data-test-day-label-thu>Thu</span>
+      <span class="day-label" data-test-day-label-fri>Fri</span>
+      <span class="day-label" data-test-day-label-sat>Sat</span>
+      <span class="day-label" data-test-day-label-sun>Sun</span>
+    </div>
+    <div id="insights-heatmap"></div>
+  </div>
+</div>
