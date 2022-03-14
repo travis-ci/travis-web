@@ -1,0 +1,91 @@
+<div class="heatmap-container" data-test-heatmap-container>
+  <div class="heatmap-range-selector">
+    <div class="heatmap-builds">
+      {{#basic-dropdown verticalPosition="below" as |dd|}}
+        {{#dd.trigger class="build-filter-label"}}
+          {{this.buildFilterLabel}}
+          <span class="caret-heatmap down-heatmap" data-test-down-arrow></span>
+        {{/dd.trigger}}
+        {{#dd.content class="dropdown-content"}}
+          <li data-test-build-filter-all>
+            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "all" dd)}}>
+              <div class="dropdown-list-builds">
+                <div class="box-dropdown-heatmap all-dropdown-heatmap" data-test-box-all></div>
+                <span>All Builds</span>
+              </div>
+            </a>
+          </li>
+          <li data-test-build-filter-success>
+            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "passed" dd)}}>
+              <div class="dropdown-list-builds">
+                <div class="box-dropdown-heatmap successful-dropdown-heatmap" data-test-box-success></div>
+                <span>Successful Builds</span>
+              </div>
+            </a>
+          </li>
+          <li data-test-build-filter-failed>
+            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "failed" dd)}} data-test-click-failed>
+              <div class="dropdown-list-builds">
+                <div class="box-dropdown-heatmap failed-dropdown-heatmap" data-test-box-failed></div>
+                <span>Failed Builds</span>
+              </div>
+            </a>
+          </li>
+          <li data-test-build-filter-error>
+            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "errored" dd)}}>
+              <div class="dropdown-list-builds">
+                <div class="box-dropdown-heatmap errored-dropdown-heatmap" data-test-box-error></div>
+                <span>Errored Builds</span>
+              </div>
+            </a>
+          </li>
+          <li data-test-build-filter-cancel>
+            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "canceled" dd)}}>
+              <div class="dropdown-list-builds">
+                <div class="box-dropdown-heatmap canceled-dropdown-heatmap" data-test-box-cancel></div>
+                <span>Canceled Builds</span>
+              </div>
+            </a>
+          </li>
+        {{/dd.content}}
+      {{/basic-dropdown}}
+    </div>
+
+    <div class="heatmap-year" data-test-build-year-dropdown-container>
+      {{#basic-dropdown matchTriggerWidth=true verticalPosition="below" as |dd|}}
+        {{#dd.trigger class="build-filter-label build-year"}}
+          {{this.buildYear}}
+          <span class="caret-heatmap down-heatmap"></span>
+        {{/dd.trigger}}
+        {{#dd.content class="dropdown-content"}}
+          {{#each this.buildYears as |buildYear|}}
+            <li>
+              <a class="dropdown-list-elements" {{on "click" (action "setBuildYear" buildYear dd)}}>
+                {{{buildYear}}}
+              </a>
+            </li>
+          {{/each}}
+        {{/dd.content}}
+      {{/basic-dropdown}}
+    </div>
+  </div>
+
+  <div class="heatmap-cal-container">
+    <div class="day-label-container" data-test-day-label-container>
+      <span class="day-label" data-test-day-label-mon>Mon</span>
+      <span class="day-label" data-test-day-label-tue>Tue</span>
+      <span class="day-label" data-test-day-label-wed>Wed</span>
+      <span class="day-label" data-test-day-label-thu>Thu</span>
+      <span class="day-label" data-test-day-label-fri>Fri</span>
+      <span class="day-label" data-test-day-label-sat>Sat</span>
+      <span class="day-label" data-test-day-label-sun>Sun</span>
+    </div>
+
+    <div id="insights-heatmap-scroll" class="insights-heatmap-scroll">
+      <div id="insights-heatmap"></div>
+
+      <span class="heatmap-legend-less">Less</span>
+      <span class="heatmap-legend-more">More</span>
+    </div>
+  </div>
+</div>
