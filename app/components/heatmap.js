@@ -84,12 +84,12 @@ export default Component.extend({
         start: new Date(this.buildYear, 0, 1),
         subDomain: 'day',
         itemName: ['Build'],
-        cellSize: 20,
-        cellRadius: 0,
+        cellSize: 24,
+        cellRadius: 3,
         cellPadding: 1,
         displayLegend: true,
         tooltip: true,
-        domainMargin: [1, 1, 1, 1],
+        domainMargin: [1, 10, 1, 10],
         legendHorizontalPosition: 'right',
         legendColors: {
           min: this.buildMinColor,
@@ -98,8 +98,9 @@ export default Component.extend({
         },
         considerMissingDataAsZero: true,
         legend: [25, 50, 75, 100],
-        legendCellSize: 14,
+        legendCellSize: 24,
         data: this.heatmapData,
+        legendMargin: [10, 5, 0, 0]
       });
     };
     let result = yield this.api.get(url);

@@ -1,7 +1,7 @@
 <div class="heatmap-container" data-test-heatmap-container>
   <div class="range-selector-heatmap" data-test-range-selector-heatmap>
     <div>
-      {{#basic-dropdown as |dd|}}
+      {{#basic-dropdown verticalPosition="below" as |dd|}}
         {{#dd.trigger class="build-filter-label"}}
           {{this.buildFilterLabel}}
           <span class="caret down" data-test-down-arrow></span>
@@ -67,7 +67,7 @@
       {{/basic-dropdown}}
     </div>
     <div class="heatmap-year" data-test-build-year-dropdown-container>
-      {{#basic-dropdown as |dd|}}
+      {{#basic-dropdown matchTriggerWidth=true verticalPosition="below" as |dd|}}
         {{#dd.trigger class="build-filter-label build-year"}}
           {{this.buildYear}}
           <span class="caret down"></span>

@@ -13,15 +13,19 @@
 .day-label-container {
   display: flex;
   flex-direction: column;
+  margin-left: -10px;
+  margin-right: 7px;
 }
 .day-label {
   color: black;
   opacity: 0.8;
-  font-size: 12px;
+  font-size: 18px;
+  padding: 1.5px;
 }
 .day-label-heatmap-container {
   display: flex;
   flex-direction: row;
+  margin-top: 16px;
 }
 .build-filter-label {
   height: 31px;
@@ -81,7 +85,10 @@
 .cal-heatmap-container .graph-legend rect {
   cursor: pointer;
 }
-
+.cal-heatmap-container .graph .graph-label {
+  fill: #555555;;
+  font-size: 16px;
+}
 .heatmap-year {
   height: 31px;
   flex-grow: 0;
