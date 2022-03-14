@@ -1,1 +1,15 @@
-<Insights::Notifications />
+<div class="spotlight">
+  <span class="insights-title">
+    Travis CI Insights
+  </span>
+
+  <div class="insights-filter">
+    <InsightsFilter @selectedRepoIds={{this.selectedRepoIds}} @setSelectedRepoIds={{action "setSelectedRepoIds"}} />
+    <DateRangePicker @setStartMonth={{action "setStartMonth"}} @setEndMonth={{action "setEndMonth"}} @timeZone={{this.timeZone}} @browserTimeZone={{this.browserTimeZone}} />
+  </div>
+
+  <AggregateMatrices @selectedRepoIds={{this.selectedRepoIds}} @startTime={{this.startTime}} @endTime={{this.endTime}} @setCurrentRepos={{action "setCurrentRepos"}} @timeZone={{this.timeZone}} @browserTimeZone={{this.browserTimeZone}} />
+  <TimeseriesChart @selectedRepoIds={{this.selectedRepoIds}} @currentRepos={{this.currentRepos}} />
+
+  <Heatmap @selectedRepoIds={{this.selectedRepoIds}} @timeZone={{this.timeZone}} @browserTimeZone={{this.browserTimeZone}} />
+</div>
