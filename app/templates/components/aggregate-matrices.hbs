@@ -1,0 +1,19 @@
+<div data-test-aggregate-matrices-container>
+   <div class="flex-container ">
+        <div class="builds col-md-2" data-test-builds>
+            <div class="aggregate-header" data-test-builds-label>Builds</div>
+            <div class="aggregate-value" data-test-builds-count>{{this.currentBuildTotal}}</div>
+            <div class="aggregate-percentage" data-test-builds-percent>{{this.percentageBuildDiff}}%</div>
+        </div>
+        <div class="minutes col-md-2" data-test-minutes>
+            <div class="aggregate-header" data-test-minutes-label>Minutes</div>
+            <div class="aggregate-value" data-test-minutes-count>{{this.currentMinutesTotal}}</div>
+            <div class="aggregate-percentage" data-test-minutes-percent>{{this.percentageMinutesDiff}}%</div>
+        </div>
+        <div class="credits col-md-2" data-test-credits>
+            <div class="aggregate-header" data-test-credits-label>Credits</div>
+            <div class="aggregate-value" data-test-credits-count>{{this.currentCreditsTotal}}</div>
+            <div class="aggregate-percentage" data-test-credits-percent>{{this.percentageCreditsDiff}}%</div>
+        </div>
+    </div>
+</div>
