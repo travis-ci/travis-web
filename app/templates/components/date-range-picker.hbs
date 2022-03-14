@@ -1,0 +1,90 @@
+<div>
+{{#basic-dropdown verticalPosition="below" as |dd|}}
+ {{#dd.trigger class='trigger-month-calendar'}}
+    {{#if this.isDateSelected}}
+      <span class='date-range-selected'>
+        {{this.selectedStartMonth}},
+        {{this.selectedStartYear}}
+        -
+        {{this.selectedEndMonth}},
+        {{this.selectedEndYear}}</span>
+    {{else}}
+      <span class='date-range-selected'>
+        {{this.currentMonth}},
+        {{this.currentYear}}
+        -
+        {{this.currentMonth}},
+        {{this.currentYear}}</span>
+    {{/if}}
+    <span class='caret down'></span>
+  {{/dd.trigger}}
+  {{#dd.content class='content-month-calendar'}}
+    <div class='month-picker-wrapper'>
+      <div class='month-picker-child'>
+        <div class='year-title'>
+          <span
+            class='prev-arrow'
+            onclick={{action 'previousYearSelection'}}
+          ></span>
+          <span class='prev-year'>{{this.previousYear}}</span>
+        </div>
+        <div class='year-cal'>
+          {{#each this.months as |calendar|}}
+            <div
+              class='month-card
+                {{month-range
+                  calendar
+                  this.previousYear
+                  this.startMonth
+                  this.endMonth
+                  this.startYear
+                  this.endYear
+                }}'
+              onclick={{action 'onSelectHandler' calendar this.previousYear}}
+            >{{calendar}}</div>
+          {{/each}}
+        </div>
+      </div>
+      <div class='month-picker-child'>
+        <div class='year-title'>
+          <span class='next-year'>{{this.nextYear}}</span>
+          {{#if this.renderRightArrow}}
+            <span
+              class='next-arrow'
+              onclick={{action 'nextYearSelection'}}
+            ></span>
+          {{/if}}
+        </div>
+        <div class='year-cal'>
+          {{#each this.months as |calendar|}}
+            <div
+              class='month-card
+                {{month-range
+                  calendar
+                  this.nextYear
+                  this.startMonth
+                  this.endMonth
+                  this.startYear
+                  this.endYear
+                }}'
+              onclick={{action 'onSelectHandler' calendar this.nextYear}}
+            >{{calendar}}</div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div class='calendar-wrapper-button'>
+      <button
+        class='calendar-cancel-button'
+        type='button'
+        onclick={{action 'monthCancelation' dd}}
+      >CANCEL</button>
+      <button
+        class='calendar-apply-button'
+        type='button'
+        onclick={{action 'monthApplyClicked' dd}}
+      >APPLY</button>
+    </div>
+   {{/dd.content}}
+{{/basic-dropdown}}
+</div>
