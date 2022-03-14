@@ -1,0 +1,248 @@
+.caret {
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border: 5px solid transparent;
+  margin-left: 10px;
+  margin-bottom: -2px;
+}
+
+.caret.down {
+  border-top-color: black;
+}
+
+.trigger-month-calendar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 205px;
+  height: 31px;
+  cursor: pointer;
+  border: 1px solid #d0d0d0;
+  padding: 5px 8px;
+  border-radius: 4px;
+  color: #333;
+  background-color: #ffffff;
+}
+
+.trigger-month-calendar:hover {
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
+}
+
+.date-range-selected {
+  font-size: 14px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0.15px;
+  color: #666666;
+}
+
+.content-month-calendar {
+  width: 493px;
+  height: 251px;
+  background: #ffffff;
+  border: 1px solid #d7d7d7;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.month-picker-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  padding: 17px;
+}
+
+.year-title {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.prev-arrow {
+  color: #fff;
+  border: solid #666666;
+  border-width: 0 2px 2px 0;
+  border-radius: 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  cursor: pointer;
+  user-select: none;
+}
+
+.prev-year {
+  margin-left: 76px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  color: #666666;
+  cursor: pointer;
+  user-select: none;
+}
+
+.next-year {
+  margin-left: 80px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  color: #666666;
+  cursor: pointer;
+  user-select: none;
+}
+
+.next-arrow {
+  margin-left: 75px;
+  color: #fff;
+  border: solid #666666;
+  border-width: 0 2px 2px 0;
+  border-radius: 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  cursor: pointer;
+  user-select: none;
+}
+
+.year-cal {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.month-card {
+  background-color: #fff;
+  font-family: "Roboto";
+  transition: all 250ms;
+  width: 71px;
+  height: 30.8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  color: #666666;
+}
+
+.month-card:hover {
+  cursor: pointer;
+  background-color: #f1f1f1;
+}
+
+.month-picker-child {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.current-month {
+  border: 1px solid #3eaaaf;
+  box-sizing: border-box;
+}
+
+.in-between-month {
+  border: 1px solid #fff;
+  background-color: #cfeaeb;
+  font-weight: 700;
+  color: #666666;
+  border-bottom: none;
+}
+
+.calendar-wrapper-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 30px;
+  gap: 15px;
+}
+
+.calendar-cancel-button,
+.calendar-cancel-button:focus {
+  width: 71px;
+  height: 24px;
+  padding: 1px 17px;
+  border-radius: 2px;
+  border: none;
+  font-weight: 500;
+  font-size: 11px !important;
+  font-family: "Roboto" !important;
+  text-transform: uppercase !important;
+  color: #666666;
+  line-height: 22px !important;
+  letter-spacing: 1.25px;
+  cursor: pointer;
+  background-color: #ffffff !important;
+}
+
+.calendar-apply-button {
+  width: 71px;
+  height: 24px;
+  padding: 1px 17px;
+  border-radius: 2px;
+  border: none;
+  font-weight: 500;
+  font-size: 11px !important;
+  font-family: "Roboto" !important;
+  text-transform: uppercase !important;
+  background-color: #3eaaaf !important;
+  color: #fff;
+  line-height: 22px !important;
+  letter-spacing: 1.25px;
+  cursor: pointer;
+}
+
+.future-months {
+  color: #8c8c8c;
+  pointer-events: none;
+}
+
+.selected-month {
+  border: 1px solid #fff;
+  font-weight: 700;
+  color: #000;
+  background: #3eaaaf;
+}
+
+.selected-month:hover {
+  border: 1px solid #fff;
+  font-weight: 700;
+  color: #000;
+  background: #3eaaaf;
+}
+
+.offset-month {
+  border: 1px solid #fff;
+  font-weight: 700;
+  background: #f1f1f1;
+}
+
+@media only screen and (max-width: 767px) {
+  .content-month-calendar {
+    width: 255px;
+    height: 430px;
+  }
+  .month-picker-wrapper {
+    flex-direction: column;
+    gap: 0;
+  }
+  .next-arrow {
+    margin-top: -355px;
+    margin-left: 85px;
+  }
+}
