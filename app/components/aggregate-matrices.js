@@ -44,10 +44,13 @@ export default Component.extend({
     return num;
   },
   fxPercentChange: function fxPercentChange(current, past) {
-    const change = ((current - past) / past);
-    const percent = change * 100;
-    let perChange = (Math.round(percent * 10) / 10);
-    perChange = perChange > 0 ? `+${perChange}` : perChange;
+    let perChange = 0;
+    if (past != 0) {
+      const change = ((current - past) / past);
+      const percent = change * 100;
+      perChange = (Math.round(percent * 10) / 10);
+      perChange = perChange > 0 ? `+${perChange}` : perChange;
+    }
     return perChange;
   },
   fxProportionalDuration(startDate, endDate) {
