@@ -45,7 +45,7 @@
   background-color: #d4d4d4;
   border-color: #8c8c8c;
 }
-.caret {
+.caret-heatmap {
   width: 0;
   height: 0;
   display: inline-block;
@@ -53,26 +53,26 @@
   margin-left: 10px;
   margin-bottom: -2px;
 }
-.caret.down {
+.caret-heatmap.down-heatmap {
   border-top-color: black;
 }
-.box {
+.box-dropdown-heatmap {
   width: 15px;
   height: 15px;
 }
-.failed {
+.failed-dropdown-heatmap {
   background-color: #db4545;
 }
-.all {
+.all-dropdown-heatmap {
   background-color: #04c2bf;
 }
-.successful {
+.successful-dropdown-heatmap {
   background-color: #32ab52;
 }
-.errored {
+.errored-dropdown-heatmap {
   background-color: #db5c07;
 }
-.canceled {
+.canceled-dropdown-heatmap {
   background-color: #4f4f4f;
 }
 .dropdown-list-builds {

@@ -25,8 +25,8 @@ module('Integration | Component | heatmap', function (hooks) {
       .exists('Heatmap should contain build label');
     assert.dom('.build-filter-label').hasText('All Builds');
     assert.dom('.build-filter-label').hasClass('build-filter-label');
-    assert.dom('[data-test-down-arrow]').hasClass('caret');
-    assert.dom('[data-test-down-arrow]').hasClass('down');
+    assert.dom('[data-test-down-arrow]').hasClass('caret-heatmap');
+    assert.dom('[data-test-down-arrow]').hasClass('down-heatmap');
 
     await click('.build-filter-label');
 
@@ -37,8 +37,8 @@ module('Integration | Component | heatmap', function (hooks) {
     assert
       .dom('[data-test-box-all]')
       .exists('All Builds dropdown should contain color box container');
-    assert.dom('[data-test-box-all]').hasClass('box');
-    assert.dom('[data-test-box-all]').hasClass('all');
+    assert.dom('[data-test-box-all]').hasClass('box-dropdown-heatmap');
+    assert.dom('[data-test-box-all]').hasClass('all-dropdown-heatmap');
 
     assert
       .dom('[data-test-build-filter-success]')
@@ -47,8 +47,8 @@ module('Integration | Component | heatmap', function (hooks) {
     assert
       .dom('[data-test-box-success]')
       .exists('Success Builds dropdown should contain color box container');
-    assert.dom('[data-test-box-success]').hasClass('box');
-    assert.dom('[data-test-box-success]').hasClass('successful');
+    assert.dom('[data-test-box-success]').hasClass('box-dropdown-heatmap');
+    assert.dom('[data-test-box-success]').hasClass('successful-dropdown-heatmap');
 
     assert
       .dom('[data-test-build-filter-failed]')
@@ -57,8 +57,8 @@ module('Integration | Component | heatmap', function (hooks) {
     assert
       .dom('[data-test-box-failed]')
       .exists('Failed Builds dropdown should contain color box container');
-    assert.dom('[data-test-box-failed]').hasClass('box');
-    assert.dom('[data-test-box-failed]').hasClass('failed');
+    assert.dom('[data-test-box-failed]').hasClass('box-dropdown-heatmap');
+    assert.dom('[data-test-box-failed]').hasClass('failed-dropdown-heatmap');
 
     assert
       .dom('[data-test-build-filter-error]')
@@ -67,8 +67,8 @@ module('Integration | Component | heatmap', function (hooks) {
     assert
       .dom('[data-test-box-error]')
       .exists('Error Builds dropdown should contain color box container');
-    assert.dom('[data-test-box-error]').hasClass('box');
-    assert.dom('[data-test-box-error]').hasClass('errored');
+    assert.dom('[data-test-box-error]').hasClass('box-dropdown-heatmap');
+    assert.dom('[data-test-box-error]').hasClass('errored-dropdown-heatmap');
 
     assert
       .dom('[data-test-build-filter-cancel]')
@@ -77,8 +77,8 @@ module('Integration | Component | heatmap', function (hooks) {
     assert
       .dom('[data-test-box-cancel]')
       .exists('Cancel Builds dropdown should contain color box container');
-    assert.dom('[data-test-box-cancel]').hasClass('box');
-    assert.dom('[data-test-box-cancel]').hasClass('canceled');
+    assert.dom('[data-test-box-cancel]').hasClass('box-dropdown-heatmap');
+    assert.dom('[data-test-box-cancel]').hasClass('canceled-dropdown-heatmap');
   });
 
   test('it renders build year dropdown', async function (assert) {
