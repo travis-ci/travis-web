@@ -84,12 +84,12 @@ export default Component.extend({
         start: new Date(this.buildYear, 0, 1),
         subDomain: 'day',
         itemName: ['Build'],
-        cellSize: 24,
+        cellSize: 18,
         cellRadius: 3,
         cellPadding: 1,
         displayLegend: true,
         tooltip: true,
-        domainMargin: [1, 10, 1, 10],
+        domainMargin: [1, 3, 1, 3],
         legendHorizontalPosition: 'right',
         legendColors: {
           min: this.buildMinColor,
@@ -98,7 +98,7 @@ export default Component.extend({
         },
         considerMissingDataAsZero: true,
         legend: [25, 50, 75, 100],
-        legendCellSize: 24,
+        legendCellSize: 18,
         data: this.heatmapData,
         legendMargin: [10, 5, 0, 0]
       });

@@ -22,7 +22,7 @@ export default Component.extend({
 
   didInsertElement() {
     return this.api.get('/repos').then((result) => {
-      // this.set('allRepositories', result.repositories);
+      this.set('allRepositories', result.repositories);
     });
   },
 

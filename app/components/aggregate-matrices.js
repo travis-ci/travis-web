@@ -93,11 +93,6 @@ export default Component.extend({
       this.proportionalDurationData(proportionalResponseData.data);
     }
   }),
-  init() {
-    this._super(...arguments);
-    this.preferences.fetchPreferences.perform();
-    this.updateAggregate.perform();
-  },
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('selectedRepoIds', this.selectedRepoIds);

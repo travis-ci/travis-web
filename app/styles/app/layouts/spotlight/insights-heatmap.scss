@@ -13,14 +13,13 @@
 .day-label-container {
   display: flex;
   flex-direction: column;
-  margin-left: -10px;
-  margin-right: 7px;
+  margin-left: 0%;
 }
 .day-label {
   color: black;
   opacity: 0.8;
-  font-size: 18px;
-  padding: 1.5px;
+  font-size: 14px;
+  padding: 1px;
 }
 .day-label-heatmap-container {
   display: flex;
@@ -87,7 +86,7 @@
 }
 .cal-heatmap-container .graph .graph-label {
   fill: #555555;;
-  font-size: 16px;
+  font-size: 12px;
 }
 .heatmap-year {
   height: 31px;
@@ -100,4 +99,9 @@
   background-color: #fff;
   position: relative;
   left: 11px;
+}
+@media only screen and (max-width: 1200px) {
+  .heatmap-container {
+    overflow-y: auto;
+  }
 }
