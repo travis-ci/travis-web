@@ -67,11 +67,6 @@ export default Component.extend({
   timeStart: '2022-01-01',
   timeEnd: '2022-01-31',
   selectedRepoIds: '',
-  init() {
-    this._super(...arguments);
-    this.set('dataFormat', 'json');
-    this.showGraph();
-  },
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('selectedRepoIds', this.selectedRepoIds);
