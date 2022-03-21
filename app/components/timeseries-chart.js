@@ -62,7 +62,7 @@ export default Component.extend({
   width: '95%',
   height: 600,
   type: 'timeseries',
-  dataFormat: null,
+  dataFormat: 'json',
   dataSource: null,
   timeStart: '2022-01-01',
   timeEnd: '2022-01-31',
