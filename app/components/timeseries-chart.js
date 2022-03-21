@@ -9,7 +9,7 @@ const dataSource = {
       enabled: '0',
     },
     customRangeSelector: {
-      enabled: '0',
+      enabled: '1',
     },
   },
   yAxis: [
@@ -51,7 +51,6 @@ const dataSource = {
           }
         }
       },
-      connectNullData: true,
     },
   ],
 };
@@ -60,14 +59,19 @@ export default Component.extend({
   api: service(),
 
   title: 'Spotlight TimeSeries',
-  width: '100%',
+  width: '95%',
   height: 600,
   type: 'timeseries',
-  dataFormat: 'json',
+  dataFormat: null,
   dataSource: null,
   timeStart: '2022-01-01',
   timeEnd: '2022-01-31',
   selectedRepoIds: '',
+  init() {
+    this._super(...arguments);
+    this.set('dataFormat', 'json');
+    this.showGraph();
+  },
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('selectedRepoIds', this.selectedRepoIds);
