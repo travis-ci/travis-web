@@ -6,10 +6,10 @@ const dataSource = {
   data: null,
   extensions: {
     standardRangeSelector: {
-      enabled: '0',
+      enabled: '1',
     },
     customRangeSelector: {
-      enabled: '1',
+      enabled: '0',
     },
   },
   yAxis: [
