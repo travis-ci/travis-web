@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 
 export default Component.extend({
   api: service(),
@@ -14,6 +15,7 @@ export default Component.extend({
   repoIds: '',
   repoData: [],
   query: '',
+  isEmpty: true,
 
   search: task(function* () {
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
@@ -37,12 +39,15 @@ export default Component.extend({
       repoIds = this.get('selectedRepos').join(',');
       this.set('repoIds', repoIds);
       this.setSelectedRepoIds(repoIds);
+
+      if (!isEmpty(this.selectedRepos)) {
+        this.set('isEmpty', false);
+      }
     },
     allRepoSelection() {
-      if (this.selectedRepos.length != 0) {
-        this.set('selectedRepos', []);
-        this.setSelectedRepoIds('');
-      }
+      this.set('selectedRepos', []);
+      this.setSelectedRepoIds('');
+      this.set('isEmpty', true);
     }
   }
 });
