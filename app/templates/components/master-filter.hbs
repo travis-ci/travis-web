@@ -20,7 +20,7 @@
       <div>
         <label class="checkbox-label" data-test-checkbox-label>
           <input
-            class="checkbox-table filled-in" 
+            class="checkbox-table filled-in"
             type="checkbox"
             checked={{this.isEmpty}}
             onChange={{action "allRepoSelection"}}
@@ -31,7 +31,7 @@
       {{#each this.filteredRepositories as |repository|}}
         <label class="checkbox-label" data-test-checkbox-label>
           <input
-            class="checkbox-table filled-in" 
+            class="checkbox-table filled-in"
             id="{{repository.id}}"
             type="checkbox"
             checked={{contains repository.id this.selectedRepos}}
