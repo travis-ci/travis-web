@@ -269,7 +269,7 @@
       margin-bottom: 10px;
       width: 208px;
       height: fit-content;
-      max-height: 420px;
+      max-height: 550px;
       flex-basis: auto;
       margin-right: 5px;
 
@@ -334,9 +334,10 @@
 
       &--button {
         display: block;
-        max-width: 120px;
-        height: 36px;
+        width: 122px;
+        height: 32px;
         margin: 25px auto 0 auto;
+        border-radius: 5px;
       }
 
       &--cancel {
@@ -453,6 +454,16 @@
     }
   }
 
+  .travis-modal {
+    .billing-select-plan {
+      h3 {
+        font-size: 48px;
+        font-weight: 300;
+        text-align: center;
+      }
+    }
+  }
+
   .billing-select-plan {
     h4 {
       margin: 35px 0 28px 0;
@@ -466,6 +477,13 @@
     h3 {
       margin-bottom: 0;
       margin-top: 24px;
+    }
+
+    h2 {
+      font-size: 16px;
+      font-weight: normal;
+      color: $asphalt-grey;
+      text-align: center;
     }
 
     .switch {
@@ -501,6 +519,22 @@
       color: $oxide-blue;
       border: 1px solid $oxide-blue;
       box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+    }
+
+    .travistab-nav {
+      width: 530px;
+      margin-left: auto;
+      margin-right: auto;
+
+      a {
+        cursor: pointer;
+      }
+
+      li {
+        width: 250px;
+        font-size: 14px;
+        text-align: center;
+      }
     }
   }
 
@@ -852,6 +886,7 @@
 
       &--cancel {
         margin-left: 10px;
+        margin-top: 5px;
       }
 
       &--addons {
@@ -1432,6 +1467,51 @@
   }
 }
 
+.billing,
+.plan-usage {
+  .billing-refill-title {
+    font-size: 14px;
+    color: $asphalt-grey;
+    margin-top: 28px;
+  }
+
+  .billing-refill {
+    display: flex;
+
+    &__box {
+      width: 119px;
+      height: 56px;
+      margin-top: 10px;
+      margin-right: 25px;
+      border-radius: 3px;
+      border: solid 1px #d0d0d0;
+      text-align: center;
+
+      &--value {
+        font-size: 14px;
+        margin-top: 10px;
+        margin-bottom: 0;
+      }
+
+      &--description {
+        font-size: 10px;
+        font-style: italic;
+        margin: 0;
+      }
+    }
+
+    &__apply {
+      margin-top: 28px;
+    }
+
+    .highlight {
+      color: $oxide-blue;
+      border: 1px solid $oxide-blue;
+      box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
 .user-statistics-modal {
   h2 {
     font-size: 48px;
@@ -1671,5 +1751,108 @@
       margin-right: 0;
     }
 
+  }
+}
+
+.credits-calculator-button {
+  color: #3eaaaf;
+  cursor: pointer;
+
+  &.bold {
+    font-weight: bold;
+  }
+}
+
+.credits-calculator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 457px;
+  height: 680px;
+  background: white;
+  z-index: 2;
+  overflow-y: scroll;
+
+  .body {
+    margin-left: 30px;
+    margin-right: 50px;
+    font-size: 14px;
+
+    .calculator-header {
+      h2 {
+        font-size: 24px;
+        height: 19px;
+        font-weight: normal;
+      }
+
+      margin-top: 5px;
+      margin-bottom: 120px;
+    }
+
+    .travis-form {
+      margin-top: 20px;
+
+      .inline-form-elem {
+        width: 35%;
+        margin-right: 5px;
+      }
+
+      .inline-form-elem.half-width {
+        width: 50%;
+      }
+
+      .travis-form__field {
+        flex-basis: 90%;
+        padding-right: 0px;
+      }
+
+      .form-elem-last {
+        .travis-form__field {
+          flex-basis: 100%;
+        }
+      }
+    }
+
+    .best-plan {
+      margin-top: 20px;
+    }
+
+    .configurations {
+      .selected-config-header {
+        margin-top: 40px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .config-row {
+        clear: both;
+      }
+
+      .name {
+        float: left;
+        font-weight: 600;
+      }
+
+      .price, .credits {
+        float: right;
+      }
+
+      .price {
+        width: 60px;
+        text-align: right;
+      }
+
+      .total-separator {
+        padding-bottom: 20px;
+        clear: both;
+      }
+
+      .total {
+        @extend .config-row;
+        padding-top: 10px;
+        border-top: 1px solid #d9d9d9;
+      }
+    }
   }
 }

@@ -13,8 +13,14 @@
 {{#if this.isUnconfirmed}}
  <UnconfirmedUserBanner />
 {{/if}}
+{{#if this.hasNoPlan}}
+  <NoPlan @model={{this.model}} />
+{{/if}}
 {{#if this.features.enterpriseVersion}}
   <EnterpriseBanner />
+{{/if}}
+{{#if this.user}}
+  <RepositorySecurityBanner />
 {{/if}}
 {{#unless this.features.proVersion}}
   <MigrationBanner />

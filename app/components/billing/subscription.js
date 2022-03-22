@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
   store: service(),
+  flashes: service(),
 
   account: null,
   newSubscriptionProcess: false,
@@ -42,4 +43,17 @@ export default Component.extend({
       creditCardInfo,
     });
   }),
+
+  didRender() {
+    const date = new Date();
+    if (this.v2subscription && this.v2subscription.scheduledPlanName) {
+      this.flashes.custom('flashes/scheduled-plan-change',
+        {
+          scheduledPlan: this.v2subscription.scheduledPlan,
+          date: new Date(date.getFullYear(), date.getMonth() + 1, 1)
+        },
+        'warning'
+      );
+    }
+  }
 });

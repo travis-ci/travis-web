@@ -16,19 +16,19 @@
             @value={{this.year}}
             class='margin-top-0'
             @onChange={{action (mut this.year)}}
-            @showValidationStatusIcons={{false}} 
+            @showValidationStatusIcons={{false}}
             as |field|
           >
             <field.select
               @searchEnabled={{false}}
-              @options={{this.invoiceYears}} 
+              @options={{this.invoiceYears}}
               as |year|
             >
               {{year}}
             </field.select>
           </form.field>
         </div>
-      </TravisForm>      
+      </TravisForm>
     </div>
   </div>
   <div class='invoice-table'>
@@ -51,13 +51,17 @@
                 {{moment-format invoice.createdAt 'MMMM DD, YYYY'}}
               </span>
             </td>
-            <td> 
-              <SvgImage @name="icon-credit-card" @class="icon--color" />
-              •••• •••• ••••
-              {{this.subscription.creditCardInfo.lastDigits}} 
+            <td>
+              {{#if invoice.ccLastDigits}}
+                <SvgImage @name="icon-credit-card" @class="icon--color" />
+                •••• •••• ••••
+                {{invoice.ccLastDigits}}
+              {{else}}
+                -
+              {{/if}}
             </td>
             <td> {{format-currency invoice.amountDue }} </td>
-            <td>              
+            <td>
               <span class={{if invoice.isUnpaid 'bad-invoice' 'invoice-status'}}>
                 {{ invoice.presentableStatus }}
               </span>
