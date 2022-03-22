@@ -6,25 +6,24 @@ import { isEmpty } from '@ember/utils';
 
 export default Component.extend({
   api: service(),
-  store: service(),
 
   buildFilterLabel: 'All Builds',
-  isAllSelected: false,
   allRepositories: [],
+  filteredRepositories: [],
   selectedRepos: [],
-  repoIds: '',
-  repoData: [],
   query: '',
   isEmpty: true,
 
   search: task(function* () {
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
-    this.allRepositories.filter(item => item.name.indexOf(this.query) !== -1);
+    let filteredRepos = this.allRepositories.filter(item => item.name.indexOf(this.query) !== -1);
+    this.set('filteredRepositories', filteredRepos);
   }).restartable(),
 
   didInsertElement() {
     return this.api.get('/repos').then((result) => {
       this.set('allRepositories', result.repositories);
+      this.set('filteredRepositories', result.repositories);
     });
   },
 

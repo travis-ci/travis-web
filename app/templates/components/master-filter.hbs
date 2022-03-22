@@ -28,7 +28,7 @@
           <span class="checkbox-title" data-test-repo-label>All builds</span>
         </label>
       </div>
-      {{#each this.allRepositories as |repository|}}
+      {{#each this.filteredRepositories as |repository|}}
         <label class="checkbox-label" data-test-checkbox-label>
           <input
             class="checkbox-table filled-in" 
