@@ -17,6 +17,17 @@
           />
         </div>
       </div>
+      <div>
+        <label class="checkbox-label" data-test-checkbox-label>
+          <input
+            class="checkbox-table filled-in" 
+            type="checkbox"
+            checked={{this.selectedRepos.isDrop}}
+            onChange={{action "allRepoSelection"}}
+          />
+          <span class="checkbox-title" data-test-repo-label>All builds</span>
+        </label>
+      </div>
       {{#each this.allRepositories as |repository|}}
         <label class="checkbox-label" data-test-checkbox-label>
           <input

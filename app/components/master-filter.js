@@ -17,7 +17,7 @@ export default Component.extend({
 
   search: task(function* () {
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
-    yield this.allRepositories.applyFilter(this.query);
+    this.allRepositories.filter(item => item.name.indexOf(this.query) !== -1);
   }).restartable(),
 
   didInsertElement() {
@@ -37,6 +37,12 @@ export default Component.extend({
       repoIds = this.get('selectedRepos').join(',');
       this.set('repoIds', repoIds);
       this.setSelectedRepoIds(repoIds);
+    },
+    allRepoSelection() {
+      if (this.selectedRepos.length != 0) {
+        this.set('selectedRepos', []);
+        this.setSelectedRepoIds('');
+      }
     }
   }
 });
