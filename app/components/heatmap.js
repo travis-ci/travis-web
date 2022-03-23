@@ -84,7 +84,7 @@ export default Component.extend({
         start: new Date(this.buildYear, 0, 1),
         subDomain: 'day',
         itemName: ['Build'],
-        cellSize: 18,
+        cellSize: 16.6,
         cellRadius: 3,
         cellPadding: 1,
         displayLegend: true,
@@ -98,9 +98,9 @@ export default Component.extend({
         },
         considerMissingDataAsZero: true,
         legend: [25, 50, 75, 100],
-        legendCellSize: 18,
+        legendCellSize: 16.6,
         data: this.heatmapData,
-        legendMargin: [10, 5, 0, 0]
+        legendMargin: [20, 60, 0, 0]
       });
     };
     let result = yield this.api.get(url);
