@@ -7,7 +7,7 @@ import { isEmpty } from '@ember/utils';
 export default Component.extend({
   api: service(),
 
-  buildFilterLabel: 'All Builds',
+  buildFilterLabel: 'All builds',
   allRepositories: [],
   filteredRepositories: [],
   selectedRepos: [],

@@ -29,7 +29,7 @@
   .checkbox-label{
     width: 100%;
     display: inline-block;
-    padding: 0.5rem;
+    padding: 7px 12px;
   }
   .checkbox-title{
     width: 100%;
@@ -47,6 +47,7 @@
     color: #333;
     background-color: #fff;
     outline: none;
+    font-size: 14px;
   }
 
   .icon-notification-filter {
@@ -54,4 +55,37 @@
     height: 20px;
     flex-grow: 0;
     margin-right: 3px;
+  }
+
+  .input-inline {
+    border: none !important;
+  }
+
+  .input-search-border {
+    display: flex;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.14);
+    height: 45px;
+    margin: 7px 12px;
+    border-radius: 4px;
+  
+    .input-search-icon {
+      padding: 10px;
+      width: 48px;
+      height: 48px;
+      text-align: center;
+      transform: rotate(90deg);
+    }
+
+    ::placeholder {
+      color: rgba(157, 157, 157, 0.5);
+      opacity: 1;
+    }
+  
+    :-ms-input-placeholder {
+      color: rgba(157, 157, 157, 0.5);
+    }
+  
+    ::-ms-input-placeholder {
+      color: rgba(157, 157, 157, 0.5);
+    }
   }

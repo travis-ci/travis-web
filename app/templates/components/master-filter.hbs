@@ -1,5 +1,5 @@
 <div class="wrapper-all-filters" data-test-filter-container>
-  {{#basic-dropdown as |dd|}}
+  {{#basic-dropdown verticalPosition="below" as |dd|}}
     {{#dd.trigger class="repo-filter-label"}}
       <SvgImage @name="icon-notification-filter" @class="icon-notification-filter"  />
       {{this.buildFilterLabel}}
@@ -7,11 +7,11 @@
     {{/dd.trigger}}
     {{#dd.content class="dropdown-content"}}
       <div class="notify-actions__search">
-        <div class="notify-input-search input-search" data-test-search-icon>
+        <div class="notify-input-search input-search-border" data-test-search-icon>
           <SvgImage @name="icon-insights-search" @class="input-search-icon"  />
           <Input
             @value={{this.query}}
-            class="notify-input-search__input"
+            class="notify-input-search__input input-inline"
             placeholder="Filter repositories"
             onKeyUp={{perform this.search}}
           />
