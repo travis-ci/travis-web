@@ -76,6 +76,9 @@ export default Component.extend({
       });
       this.set('heatmapData', data);
       document.getElementById('insights-heatmap').innerHTML = '';
+      document.getElementsByClassName('heatmap-legend-less')[0].style.visibility='hidden'
+      document.getElementsByClassName('heatmap-legend-more')[0].style.visibility='hidden'
+      document.getElementsByClassName('day-label-container')[0].style.visibility='hidden'
       let cal = new CalHeatMap(); // eslint-disable-line
       cal.init({
         itemSelector: '#insights-heatmap',
@@ -102,6 +105,9 @@ export default Component.extend({
         data: this.heatmapData,
         legendMargin: [20, 60, 0, 0]
       });
+      document.getElementsByClassName('heatmap-legend-less')[0].style.visibility='visible'
+      document.getElementsByClassName('heatmap-legend-more')[0].style.visibility='visible'
+      document.getElementsByClassName('day-label-container')[0].style.visibility='visible'
     };
     let result = yield this.api.get(url);
     generateGraph(result);
@@ -109,6 +115,9 @@ export default Component.extend({
   actions: {
     setBuildFilter(filter, dropdown) {
       document.getElementById('insights-heatmap').innerHTML = '';
+      document.getElementsByClassName('heatmap-legend-less')[0].style.visibility='hidden'
+      document.getElementsByClassName('heatmap-legend-more')[0].style.visibility='hidden'
+      document.getElementsByClassName('day-label-container')[0].style.visibility='hidden'
       dropdown.actions.close();
       this.set('buildFilterLabel', BUILDS_FILTER_LABELS[filter]);
       this.set('buildMaxColor', BUILDS_MAX_COLOR[filter]);
@@ -122,6 +131,9 @@ export default Component.extend({
     },
     setBuildYear(filter, dropdown) {
       document.getElementById('insights-heatmap').innerHTML = '';
+      document.getElementsByClassName('heatmap-legend-less')[0].style.visibility='hidden'
+      document.getElementsByClassName('heatmap-legend-more')[0].style.visibility='hidden'
+      document.getElementsByClassName('day-label-container')[0].style.visibility='hidden'
       dropdown.actions.close();
       this.set('buildYear', filter);
       let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
