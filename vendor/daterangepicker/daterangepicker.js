@@ -54,6 +54,7 @@
         this.linkedCalendars = true;
         this.autoUpdateInput = true;
         this.alwaysShowCalendars = false;
+        this.singleClick = false;
         this.ranges = {};
 
         this.opens = 'left';
@@ -72,8 +73,8 @@
             direction: 'ltr',
             format: moment.localeData().longDateFormat('L'),
             separator: ' - ',
-            applyLabel: 'Apply',
-            cancelLabel: 'Cancel',
+            applyLabel: 'APPLY',
+            cancelLabel: 'CANCEL',
             weekLabel: 'W',
             customRangeLabel: 'Custom Range',
             daysOfWeek: moment.weekdaysMin(),
@@ -916,13 +917,23 @@
             // * if single date picker mode, and time picker isn't enabled, apply the selection immediately
             // * if one of the inputs above the calendars was focused, cancel that manual input
             //
-            if(this.endDate ==null)
+            if(this.singleClick)
             {
                 this.setEndDate(date);
+                if(this.endDate==null)
+                {
+                    this.setStartDate(date);
+                    this.singleClick = true;
+                }
+                else{
+                    this.singleClick = false;
+                }
+               
             }
             else if (this.endDate ||(date!=null &&date > this.startDate.format('YYYY-MM'))) { //picking start
-                this.endDate = null;
+                this.endDate = null;              
                 this.setStartDate(date);
+                this.singleClick = true;
             } else if (!this.endDate && date>(this.startDate.format('YYYY-MM'))) {
                 //special case: clicking the same date for start/end,
                 //but the time of the end date is before the start date
@@ -930,7 +941,10 @@
             } else { // picking end
                 this.setEndDate(date);
             }
-
+            if(this.singleClick)
+            {
+                this.setEndDate(date);
+            }
             this.updateView();
 
             //This is to cancel the blur event handler if the mouse was in one of the inputs
@@ -971,11 +985,13 @@
         },
 
         clickApply: function(e) {
+            this.singleClick=false;
             this.hide();
             this.element.trigger('apply.daterangepicker', this);
         },
 
         clickCancel: function(e) {
+            this.singleClick=false;
             this.startDate = this.oldStartDate;
             this.endDate = this.oldEndDate;
             this.hide();

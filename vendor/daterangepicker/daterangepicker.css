@@ -127,7 +127,7 @@
   background-color: #3eaaaf !important;
   border: none;
   color: white;
-  font-family: Robot;
+  font-family: 'Roboto';
   font-weight: 500 !important;
   font-stretch: normal;
   font-style: normal;
@@ -148,7 +148,7 @@
     background-color: white !important;
     border: none;
     color: var(--brownish-grey);
-    font-family: Robot;
+    font-family: 'Roboto';
     font-weight: 500 !important;
     font-stretch: normal;
     font-style: normal;
