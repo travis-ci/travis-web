@@ -3,5 +3,27 @@ services:
   web:
     build:
       context: .
+      dockerfile: Dockerfile
     ports:
     - 4000:4000
+    env_file:
+      - .env
+
+  api:
+    build:
+      context: ../travis-api
+      dockerfile: Dockerfile
+    ports:
+    - 9292:9292
+    env_file:
+      - ../travis-api/.env
+
+  vcs:
+    build:
+      context: ../travis-vcs
+      dockerfile: Dockerfile
+    ports:
+    - 3030:3030
+    env_file:
+      - ../travis-vcs/.env
+
