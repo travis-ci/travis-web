@@ -183,11 +183,11 @@ export default Component.extend({
     this.set('probeSeverity', 0);
   },
 
-  keyPress: function(evt) {
-    return /[A-Za-z\d\s]/.test(event.key);
-  },
-
   actions: {
+    checkTagInput: function(evt) {
+      return /[A-Za-z\d\s]/.test(event.key);
+    },
+
     openQueryEditor() {
       if (this.isQueryEditAllowed) {
         this.set('probeQueryEditorModal', true);

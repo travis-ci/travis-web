@@ -182,7 +182,7 @@
         {{/if}}
         {{#unless (eq this.selectedPlugin.id 'kube')}}
         <div class="test-connect" id="new-plugin-authenticate">
-          <a class="a test-connection" id="test-connection" {{on 'click' (perform this.testConnection)}}>Check connection</a>
+          <a class="a {{if this.isTestPassed 'test-connection-disable' 'test-connection'}}" id="test-connection" {{on 'click' (perform this.testConnection)}}>Check connection</a>
           {{#if this.isTestRunning}}
             <div class="container" id="test-load-icon">
               <div class="dot-container">
