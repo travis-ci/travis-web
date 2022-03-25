@@ -1,0 +1,7 @@
+version: "2"
+services:
+  web:
+    build:
+      context: .
+    ports:
+    - 4000:4000
