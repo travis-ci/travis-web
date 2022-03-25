@@ -179,15 +179,16 @@
           </legend>
           <div class="chips-input chips-autocomplete">
             <Input
-              id='tagInput' 
+              id='tagInput'
               class='tags modal-input'
               maxlength=20
               type='text'
               autocomplete='off'
               disabled={{this.maxTagsPresent}}
+              onkeypress={{action 'checkTagInput'}}
             />
             {{#if this.maxTagsPresent}}
-              <EmberTooltip @text="You can only create 10 tags per probe" @side="bottom" />
+              <EmberTooltip @text="You can create only 10 tags per probe" @side="bottom" />
             {{/if}}
           </div>
         </fieldset>
