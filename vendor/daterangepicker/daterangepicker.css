@@ -135,6 +135,7 @@
   line-height: 2;
   letter-spacing: 1.25px;
   text-align: left;
+  cursor: pointer;
 
 }
 
@@ -156,6 +157,7 @@
     line-height: 2;
     letter-spacing: 1.25px;
     text-align: left;
+    cursor: pointer;
  
 }
 
