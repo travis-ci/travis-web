@@ -25,7 +25,7 @@
             checked={{this.isEmpty}}
             onChange={{action "allRepoSelection"}}
           />
-          <span class="checkbox-title" data-test-repo-label>All builds</span>
+          <span class="multiselect-checkbox-title" data-test-repo-label>All builds</span>
         </label>
       </div>
       {{#each this.filteredRepositories as |repository|}}
@@ -37,7 +37,7 @@
             checked={{contains repository.id this.selectedRepos}}
             onChange={{action "toggleRepoCheck" repository.id}}
           />
-          <span class="checkbox-title" data-test-repo-label>{{repository.name}}</span>
+          <span class="multiselect-checkbox-title" data-test-repo-label>{{repository.name}}</span>
         </label>
       {{/each}}
     {{/dd.content}}
