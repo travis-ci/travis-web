@@ -59,13 +59,13 @@ export default Component.extend({
   api: service(),
 
   title: 'Spotlight TimeSeries',
-  width: '95%',
+  width: '100%',
   height: 600,
   type: 'timeseries',
   dataFormat: 'json',
   dataSource: null,
-  timeStart: '2022-01-01',
-  timeEnd: '2022-01-31',
+  timeStart: '',
+  timeEnd: '',
   selectedRepoIds: '',
   didReceiveAttrs() {
     this._super(...arguments);

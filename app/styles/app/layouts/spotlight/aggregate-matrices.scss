@@ -3,8 +3,8 @@ $brownish-grey: #666666;
 
 .flex-container {
   display: flex;
-  margin: 1rem 0rem 1rem 1rem;
-  column-gap: 30%;
+  margin: 1rem 0rem 1rem 0;
+  column-gap: 16vw;
   justify-content: flex-start;
   font-family: Roboto;
 }
