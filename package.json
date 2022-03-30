@@ -109,6 +109,7 @@
   "dependencies": {
     "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
     "deep-freeze": "0.0.1",
+    "minimist": "^1.2.6",
     "path-parse": "^1.0.7",
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.1"
