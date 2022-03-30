@@ -1,6 +1,6 @@
 <section class="notify-actions">
   <div class="notify-actions__items action-items">
-    <div class="waves-effect waves-light action-btn notify-input-filter font-medium {{if this.allowToggle '' 'snooze-disabled'}} snooze-button" {{on 'click' (perform this.toggleNoifications)}} id="notify-snooze-button">{{this.toggleButtonText}}</div>
+    <div class="waves-effect waves-light action-btn notify-input-filter font-medium {{if this.allowToggle '' 'snooze-disabled'}} snooze-button" {{on 'click' (perform this.toggleNotifications)}} id="notify-snooze-button">{{this.toggleButtonText}}</div>
     <div class="refresh-page-button waves-effect waves-light action-btn font-medium" {{on 'click' (action 'reloadNotifications')}}>
       <SvgImage @name="icon-reload" @class="ico-refresh-page" />
       Refresh the list
@@ -23,7 +23,13 @@
     <tr>
       <th>
         <label>
-          <input class="filled-in" id="checkbox-head" type="checkbox" checked={{this.isAllSelected}} onChange={{action "toggleAll"}} />
+          <Input
+            id="checkbox-head"
+            class="filled-in"
+            @type="checkbox"
+            @checked={{this.isAllSelectedChecked}}
+            {{on 'change' (action 'toggleAll')}}
+          />
           <span></span>
         </label>
       </th>
@@ -58,7 +64,7 @@
         <td>
           <div class="icon-alert-{{notification.probeSeverity}}"></div>
         </td>
-        <td>
+        <td title="{{notification.pluginName}}">
           {{truncate notification.pluginName 30}}
         </td>
         <td>
@@ -67,7 +73,7 @@
         <td>
           {{notification.pluginCategory}}
         </td>
-        <td>
+        <td title="{{notification.message}}">
           {{truncate notification.message 50}}
         </td>
         <td>

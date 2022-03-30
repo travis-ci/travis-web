@@ -25,9 +25,10 @@ export default Component.extend({
 
   allowEdit: equal('selectedProbeIds.length', 1),
   allowToggle: gt('selectedProbeIds.length', 0),
-  isAllSelected: computed('selectedProbeIds', 'probes', function () {
+  isAllSelected: computed('selectedProbeIds.[]', 'probes.[]', function () {
     return this.selectedProbeIds.length > 0 && this.selectedProbeIds.length === this.probes.length;
   }),
+  isAllSelectedChecked: false,
   selectedProbeIds: [],
   selectedProbe: null,
   selectableProbeIds: map('probes', (probe) => probe.id),
@@ -49,6 +50,7 @@ export default Component.extend({
         this.set('sortDirection', this.probes.customOptions.sortDirection);
       }
     }
+    this.set('isAllSelectedChecked', this.isAllSelected);
   },
 
   search: task(function* () {
@@ -137,18 +139,20 @@ export default Component.extend({
       }
 
       this.setToggleButtonName(selectedProbeIds);
+      this.set('isAllSelectedChecked', this.isAllSelected);
     },
 
-    toggleAll() {
+    toggleAll(evt) {
       const { selectableProbeIds, selectedProbeIds } = this;
 
       if (selectedProbeIds.length > 0) {
         selectedProbeIds.removeObjects(selectableProbeIds.toArray());
-      } else {
+      } else if (selectableProbeIds.length > 0) {
         selectedProbeIds.addObjects(selectableProbeIds.toArray());
       }
 
       this.setToggleButtonName(selectedProbeIds);
+      this.set('isAllSelectedChecked', this.isAllSelected);
     },
 
     applySort(field) {
