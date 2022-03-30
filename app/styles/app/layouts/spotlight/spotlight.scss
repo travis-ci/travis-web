@@ -1,13 +1,13 @@
 @import "aggregate-matrices.scss";
-@import "insights-heatmap.scss";
-@import "master-filter.scss";
+@import "insights-filter.scss";
 @import "timeseries-chart.scss";
+@import "insights-heatmap.scss";
 
 .spotlight {
   margin: 12px 24px 0px 24px;
 }
 
-.Travis-CI-Insights {
+.insights-title {
   width: 183px;
   height: 28px;
   flex-grow: 0;
@@ -52,7 +52,7 @@
   border-color: #8c8c8c;
 }
 
-.Main-Filter {
+.insights-filter {
   display: flex;
   justify-content: space-between;
   margin: 51px 0px 30px 0;

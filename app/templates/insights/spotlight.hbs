@@ -1,12 +1,15 @@
 <div class="spotlight">
-<span class="Travis-CI-Insights">
-  Travis CI Insights
-</span>
-<div class="Main-Filter">
-  <MasterFilter @selectedRepoIds={{this.selectedRepoIds}} @setSelectedRepoIds={{action "setSelectedRepoIds"}} />
-  <DateRangePicker @setStartMonth={{action "setStartMonth"}} @setEndMonth={{action "setEndMonth"}}/>
-</div>
-<AggregateMatrices @selectedRepoIds={{this.selectedRepoIds}} @startTime={{this.startTime}} @endTime={{this.endTime}}/>
-<TimeseriesChart @selectedRepoIds={{this.selectedRepoIds}} @timeStart={{this.startTime}} @timeEnd={{this.endTime}}/>
-<Heatmap @selectedRepoIds={{this.selectedRepoIds}}/>
+  <span class="insights-title">
+    Travis CI Insights
+  </span>
+
+  <div class="insights-filter">
+    <InsightsFilter @selectedRepoIds={{this.selectedRepoIds}} @setSelectedRepoIds={{action "setSelectedRepoIds"}} />
+    <DateRangePicker @setStartMonth={{action "setStartMonth"}} @setEndMonth={{action "setEndMonth"}}/>
+  </div>
+
+  <AggregateMatrices @selectedRepoIds={{this.selectedRepoIds}} @startTime={{this.startTime}} @endTime={{this.endTime}}/>
+  <TimeseriesChart @selectedRepoIds={{this.selectedRepoIds}} @timeStart={{this.startTime}} @timeEnd={{this.endTime}}/>
+
+  <Heatmap @selectedRepoIds={{this.selectedRepoIds}}/>
 </div>

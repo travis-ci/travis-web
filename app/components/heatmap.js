@@ -4,32 +4,32 @@ import { task } from 'ember-concurrency';
 
 const BUILDS_FILTER_LABELS = {
   all: 'All Builds',
-  failed: 'Failed Builds',
   passed: 'Successful Builds',
+  failed: 'Failed Builds',
   errored: 'Errored Builds',
   canceled: 'Canceled Builds',
 };
 
 const BUILDS_MAX_COLOR = {
-  all: '#04c2bf',
-  failed: '#db4545',
+  all: '#3eaaaf',
   passed: '#32ab52',
-  errored: '#db5c07',
-  canceled: '#4f4f4f',
+  failed: '#db4545',
+  errored: '#ed7d5b',
+  canceled: '#666666',
 };
 
 const BUILDS_MIN_COLOR = {
-  all: '#D7F0E6',
-  failed: '#ffe0e0',
-  passed: '#c1f5ca',
-  errored: '#efebd6',
-  canceled: '#efebd6',
+  all: '#cfeaeb',
+  passed: '#ccead4',
+  failed: '#f6d1d0',
+  errored: '#fbdfd6',
+  canceled: '#d9d9d9',
 };
 
 const BUILDS_QUERY_PARAMS = {
   all: 'all',
-  failed: 'failed',
   passed: 'passed',
+  failed: 'failed',
   errored: 'errored',
   canceled: 'canceled',
 };
@@ -40,7 +40,7 @@ export default Component.extend({
   buildYear: new Date().getFullYear(),
   buildMinColor: BUILDS_MIN_COLOR['all'],
   buildMaxColor: BUILDS_MAX_COLOR['all'],
-  buildEmptyColor: '#efefef',
+  buildEmptyColor: '#f1f1f1',
   buildStatus: BUILDS_QUERY_PARAMS['all'],
   heatmapData: {},
   buildYears: [
@@ -53,123 +53,111 @@ export default Component.extend({
   ],
 
   selectedRepoIds: '',
+
   fetchHeatMapData: task(function* (url) {
-    let repoId = '';
-    repoId = this.get('selectedRepoIds');
+    document.getElementById('insights-heatmap').innerHTML = '';
+    document.getElementsByClassName('heatmap-cal-container')[0].classList.add('visibility-hidden');
+
+    let repoId = this.get('selectedRepoIds');
     if (repoId != '') {
       url = `${url}&repo_id=${repoId}`;
     }
 
     let generateGraph = (result) => {
-      let data = {};
+      let maxBuilds = 0;
+      let heatmapData = {};
+
       result.data.map((r) => {
-        let dateConverted = Date.parse(r.time) / 1000;
-        let prev = data[dateConverted];
-        if (data[dateConverted] === undefined) {
-          data[dateConverted] = r.builds;
-        } else {
-          let current = r.builds;
-          let total = prev + current;
-          data[dateConverted] = total;
+        let buildDate = Date.parse(r.time) / 1000;
+        if (heatmapData[buildDate] === undefined) {
+          heatmapData[buildDate] = 0;
+        }
+        heatmapData[buildDate] = heatmapData[buildDate] + r.builds;
+        if (maxBuilds < heatmapData[buildDate]) {
+          maxBuilds = heatmapData[buildDate];
         }
       });
-      this.set('heatmapData', data);
-      document.getElementById('insights-heatmap').innerHTML = '';
-      document.getElementsByClassName(
-        'heatmap-legend-less'
-      )[0].style.visibility = 'hidden';
-      document.getElementsByClassName(
-        'heatmap-legend-more'
-      )[0].style.visibility = 'hidden';
-      document.getElementsByClassName(
-        'day-label-container'
-      )[0].style.visibility = 'hidden';
+      this.set('heatmapData', heatmapData);
+
       let cal = new CalHeatMap(); // eslint-disable-line
       cal.init({
         itemSelector: '#insights-heatmap',
         domain: 'month',
-        range: 12,
-        start: new Date(this.buildYear, 0, 1),
         subDomain: 'day',
-        itemName: ['Build'],
-        cellSize: 16.6,
-        cellRadius: 3,
+        range: 12,
+        cellSize: 16,
         cellPadding: 1,
-        displayLegend: true,
+        cellRadius: 3.2,
+        domainGutter: 10,
         tooltip: true,
-        domainMargin: [1, 3, 1, 3],
+
+        start: new Date(this.buildYear, 0, 1),
+        data: this.heatmapData,
+        considerMissingDataAsZero: true,
+
+        legend: [Math.ceil(maxBuilds / 4), Math.ceil(maxBuilds / 2), Math.ceil(maxBuilds * 3 / 4)],
+        displayLegend: true,
+        legendCellSize: 16,
+        legendCellPadding: 1,
+        legendMargin: [20, 38, 0, 0],
         legendHorizontalPosition: 'right',
         legendColors: {
           min: this.buildMinColor,
           max: this.buildMaxColor,
           empty: this.buildEmptyColor,
         },
-        considerMissingDataAsZero: true,
-        legend: [25, 50, 75, 100],
-        legendCellSize: 16.6,
-        data: this.heatmapData,
-        legendMargin: [20, 60, 0, 0],
+
+        itemName: 'build',
+        subDomainDateFormat: '%b %d, %Y',
+
+        animationDuration: 0
       });
-      document.getElementsByClassName(
-        'heatmap-legend-less'
-      )[0].style.visibility = 'visible';
-      document.getElementsByClassName(
-        'heatmap-legend-more'
-      )[0].style.visibility = 'visible';
-      document.getElementsByClassName(
-        'day-label-container'
-      )[0].style.visibility = 'visible';
+
+      document.getElementsByClassName('heatmap-cal-container')[0].classList.remove('visibility-hidden');
+      let heatmapScroll = document.getElementById('insights-heatmap-scroll');
+      heatmapScroll.scrollLeft = heatmapScroll.scrollWidth;
     };
+
     let result = yield this.api.get(url);
+
     generateGraph(result);
   }),
   actions: {
     setBuildFilter(filter, dropdown) {
-      document.getElementById('insights-heatmap').innerHTML = '';
-      document.getElementsByClassName(
-        'heatmap-legend-less'
-      )[0].style.visibility = 'hidden';
-      document.getElementsByClassName(
-        'heatmap-legend-more'
-      )[0].style.visibility = 'hidden';
-      document.getElementsByClassName(
-        'day-label-container'
-      )[0].style.visibility = 'hidden';
       dropdown.actions.close();
+
       this.set('buildFilterLabel', BUILDS_FILTER_LABELS[filter]);
       this.set('buildMaxColor', BUILDS_MAX_COLOR[filter]);
       this.set('buildMinColor', BUILDS_MIN_COLOR[filter]);
       this.set('buildStatus', BUILDS_QUERY_PARAMS[filter]);
+
       let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
       if (this.buildStatus !== 'all') {
         url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
       }
+
       this.fetchHeatMapData.perform(url);
     },
+
     setBuildYear(filter, dropdown) {
-      document.getElementById('insights-heatmap').innerHTML = '';
-      document.getElementsByClassName(
-        'heatmap-legend-less'
-      )[0].style.visibility = 'hidden';
-      document.getElementsByClassName(
-        'heatmap-legend-more'
-      )[0].style.visibility = 'hidden';
-      document.getElementsByClassName(
-        'day-label-container'
-      )[0].style.visibility = 'hidden';
       dropdown.actions.close();
+
       this.set('buildYear', filter);
+
       let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
       if (this.buildStatus !== 'all') {
         url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
       }
+
       this.fetchHeatMapData.perform(url);
     },
   },
+
   didInsertElement() {
     let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
     this.fetchHeatMapData.perform(url);
   },
+
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('selectedReposIds', this.selectedRepoIds);

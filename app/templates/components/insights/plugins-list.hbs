@@ -25,7 +25,13 @@
     <tr>
       <th class="checks">
         <label>
-          <input class="filled-in" id="checkbox-head" type="checkbox" checked={{this.isAllSelected}} onChange={{action "toggleAll"}} />
+          <Input
+            id="checkbox-head"
+            class="filled-in"
+            @type="checkbox"
+            @checked={{this.isAllSelectedChecked}}
+            {{on 'change' (action 'toggleAll')}}
+          />
           <span></span>
         </label>
       </th>
@@ -58,8 +64,8 @@
           <span></span>
         </label>
       </td>
-      <td>
-        {{plugin.name}}
+      <td title="{{plugin.name}}">
+        {{truncate plugin.name 30}}
       </td>
       <td>
         {{plugin.publicId}}

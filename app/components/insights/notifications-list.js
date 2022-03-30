@@ -17,9 +17,10 @@ export default Component.extend({
 
   toggleButtonText: 'Snooze Notifications',
 
-  isAllSelected: computed('selectedNotificationIds', 'notifications', function () {
+  isAllSelected: computed('selectedNotificationIds.[]', 'notifications.[]', function () {
     return this.selectedNotificationIds.length > 0 && this.selectedNotificationIds.length === this.notifications.length;
   }),
+  isAllSelectedChecked: false,
   allowToggle: gt('selectedNotificationIds.length', 0),
   selectedNotificationIds: [],
   selectableNotificationIds: map('notifications', (notification) => notification.id),
@@ -44,9 +45,10 @@ export default Component.extend({
         this.set('sortDirection', this.notifications.customOptions.sortDirection);
       }
     }
+    this.set('isAllSelectedChecked', this.isAllSelected);
   },
 
-  toggleNoifications: task(function* () {
+  toggleNotifications: task(function* () {
     if (this.selectedNotificationIds.length) {
       const self = this;
 
@@ -108,6 +110,7 @@ export default Component.extend({
         selectedNotificationIds.addObject(notificationId);
       }
 
+      this.set('isAllSelectedChecked', this.isAllSelected);
       this.setToggleButtonName(selectedNotificationIds);
     },
 
@@ -120,6 +123,7 @@ export default Component.extend({
         selectedNotificationIds.addObjects(selectableNotificationIds.toArray());
       }
 
+      this.set('isAllSelectedChecked', this.isAllSelected);
       this.setToggleButtonName(selectedNotificationIds);
     },
 

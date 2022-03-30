@@ -18,7 +18,7 @@ module('Integration | Component | heatmap', function (hooks) {
   test('it renders heatmap dropdowns builds', async function (assert) {
     await render(hbs`<Heatmap />`);
     assert
-      .dom('[data-test-range-selector-heatmap]')
+      .dom('[data-test-heatmap-range-selector]')
       .exists('Heatmap Builds and Year Dropdown Exist');
     assert
       .dom('.build-filter-label')

@@ -1,12 +1,11 @@
 $brownish-grey: #666666;
 
-
-.flex-container {
-  display: flex;
+.aggregate-matrices-container {
   margin: 1rem 0rem 1rem 0;
-  column-gap: 16vw;
-  justify-content: flex-start;
+  display: flex;
+  justify-content: space-between;
   font-family: Roboto;
+  max-width: 600px;
 }
 
 .aggregate-header{
@@ -16,7 +15,6 @@ $brownish-grey: #666666;
   text-align: left;
   color: $brownish-grey;
 }
-
 
 .aggregate-value {
   font-family: Roboto;

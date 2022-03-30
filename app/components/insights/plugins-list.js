@@ -34,9 +34,10 @@ export default Component.extend({
   sortDirection: 'asc',
   query: '',
 
-  isAllSelected: computed('selectedPluginIds', 'plugins', function () {
+  isAllSelected: computed('selectedPluginIds.[]', 'plugins.[]', function () {
     return this.selectedPluginIds.length > 0 && this.selectedPluginIds.length === this.plugins.length;
   }),
+  isAllSelectedChecked: false,
   allowToggle: gt('selectedPluginIds.length', 0),
   selectedPluginIds: [],
   selectablePluginIds: map('plugins', (plugin) => plugin.id),
@@ -58,6 +59,7 @@ export default Component.extend({
         this.set('sortDirection', this.plugins.customOptions.sortDirection);
       }
     }
+    this.set('isAllSelectedChecked', this.isAllSelected);
   },
 
   setToggleButtonName(selectedIds) {
@@ -94,6 +96,7 @@ export default Component.extend({
       }
 
       this.setToggleButtonName(selectedPluginIds);
+      this.set('isAllSelectedChecked', this.isAllSelected);
     },
 
     toggleAll() {
@@ -106,6 +109,7 @@ export default Component.extend({
       }
 
       this.setToggleButtonName(selectedPluginIds);
+      this.set('isAllSelectedChecked', this.isAllSelected);
     },
 
     applySort(field) {
