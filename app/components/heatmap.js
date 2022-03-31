@@ -52,6 +52,9 @@ export default Component.extend({
     new Date().getFullYear() - 5,
   ],
 
+  startDate: new Date(new Date().setMonth(new Date().getMonth() - 11)),
+  endDate: new Date(),
+
   selectedRepoIds: '',
 
   fetchHeatMapData: task(function* (url) {
@@ -91,7 +94,7 @@ export default Component.extend({
         domainGutter: 10,
         tooltip: true,
 
-        start: new Date(this.buildYear, 0, 1),
+        start: this.startDate,
         data: this.heatmapData,
         considerMissingDataAsZero: true,
 
@@ -131,9 +134,11 @@ export default Component.extend({
       this.set('buildMinColor', BUILDS_MIN_COLOR[filter]);
       this.set('buildStatus', BUILDS_QUERY_PARAMS[filter]);
 
-      let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+      let sDate = this.startDate.toISOString().split('T')[0];
+      let eDate = this.endDate.toISOString().split('T')[0];
+      let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
       if (this.buildStatus !== 'all') {
-        url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
+        url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}&build_status=${this.buildStatus}`;
       }
 
       this.fetchHeatMapData.perform(url);
@@ -144,9 +149,21 @@ export default Component.extend({
 
       this.set('buildYear', filter);
 
-      let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+      let sDate =
+      this.buildYear !== new Date().getFullYear()
+        ? new Date(this.buildYear, 0, 1)
+        : new Date(new Date().setMonth(new Date().getMonth() - 11));
+      let eDate =
+        this.buildYear !== new Date().getFullYear()
+          ? new Date(this.buildYear, 11, 31)
+          : new Date();
+      this.set('startDate', sDate);
+      this.set('endDate', eDate);
+
+      let url = `/spotlight_summary?time_start=${this.startDate}&time_end=${this.endDate}`;
+
       if (this.buildStatus !== 'all') {
-        url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31&build_status=${this.buildStatus}`;
+        url = `/spotlight_summary?time_start=${this.startDate}&time_end=${this.endDate}&build_status=${this.buildStatus}`;
       }
 
       this.fetchHeatMapData.perform(url);
@@ -154,14 +171,18 @@ export default Component.extend({
   },
 
   didInsertElement() {
-    let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+    let sDate = this.startDate.toISOString().split('T')[0];
+    let eDate = this.endDate.toISOString().split('T')[0];
+    let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
     this.fetchHeatMapData.perform(url);
   },
 
   didReceiveAttrs() {
     this._super(...arguments);
+    let sDate = this.startDate.toISOString().split('T')[0];
+    let eDate = this.endDate.toISOString().split('T')[0];
     this.set('selectedReposIds', this.selectedRepoIds);
-    let url = `/spotlight_summary?time_start=${this.buildYear}-01-01&time_end=${this.buildYear}-12-31`;
+    let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
     this.fetchHeatMapData.perform(url);
   },
 });
