@@ -184,7 +184,7 @@ export default Component.extend({
   },
 
   actions: {
-    checkTagInput: function(evt) {
+    checkTagInput: function (evt) {
       return /[A-Za-z\d\s]/.test(event.key);
     },
 
