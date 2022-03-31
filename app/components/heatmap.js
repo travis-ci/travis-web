@@ -98,7 +98,14 @@ export default Component.extend({
         data: this.heatmapData,
         considerMissingDataAsZero: true,
 
-        legend: [Math.ceil(maxBuilds / 4), Math.ceil(maxBuilds / 2), Math.ceil(maxBuilds * 3 / 4)],
+        legend:
+        maxBuilds !== 0
+          ? [
+              Math.ceil(maxBuilds / 4),
+              Math.ceil(maxBuilds / 2),
+              Math.ceil((maxBuilds * 3) / 4),
+            ]
+          : [1, 2, 3],
         displayLegend: true,
         legendCellSize: 16,
         legendCellPadding: 1,
@@ -150,7 +157,7 @@ export default Component.extend({
       this.set('buildYear', filter);
 
       let sDate =
-      this.buildYear !== new Date().getFullYear()
+        this.buildYear !== new Date().getFullYear()
         ? new Date(this.buildYear, 0, 1)
         : new Date(new Date().setMonth(new Date().getMonth() - 11));
       let eDate =
