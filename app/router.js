@@ -90,7 +90,6 @@ Router.map(function () {
   this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id/:view' });
 
   this.route('insights', { resetNamespace: true }, function () {
-    this.route('spotlight');
     this.route('notifications');
     this.route('probes');
     this.route('plugins');
