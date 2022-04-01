@@ -61,6 +61,10 @@ export default Component.extend({
     document.getElementById('insights-heatmap').innerHTML = '';
     document.getElementsByClassName('heatmap-cal-container')[0].classList.add('visibility-hidden');
 
+    if (this.buildStatus !== 'all') {
+      url = `/spotlight_summary?time_start=${this.startDate}&time_end=${this.endDate}&build_status=${this.buildStatus}`;
+    }
+
     let repoId = this.get('selectedRepoIds');
     if (repoId != '') {
       url = `${url}&repo_id=${repoId}`;
@@ -101,10 +105,10 @@ export default Component.extend({
         legend:
         maxBuilds !== 0
           ? [
-              Math.ceil(maxBuilds / 4),
-              Math.ceil(maxBuilds / 2),
-              Math.ceil((maxBuilds * 3) / 4),
-            ]
+            Math.ceil(maxBuilds / 4),
+            Math.ceil(maxBuilds / 2),
+            Math.ceil((maxBuilds * 3) / 4),
+          ]
           : [1, 2, 3],
         displayLegend: true,
         legendCellSize: 16,
@@ -144,9 +148,6 @@ export default Component.extend({
       let sDate = this.startDate.toISOString().split('T')[0];
       let eDate = this.endDate.toISOString().split('T')[0];
       let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
-      if (this.buildStatus !== 'all') {
-        url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}&build_status=${this.buildStatus}`;
-      }
 
       this.fetchHeatMapData.perform(url);
     },
@@ -158,8 +159,8 @@ export default Component.extend({
 
       let sDate =
         this.buildYear !== new Date().getFullYear()
-        ? new Date(this.buildYear, 0, 1)
-        : new Date(new Date().setMonth(new Date().getMonth() - 11));
+          ? new Date(this.buildYear, 0, 1)
+          : new Date(new Date().setMonth(new Date().getMonth() - 11));
       let eDate =
         this.buildYear !== new Date().getFullYear()
           ? new Date(this.buildYear, 11, 31)
@@ -168,10 +169,6 @@ export default Component.extend({
       this.set('endDate', eDate);
 
       let url = `/spotlight_summary?time_start=${this.startDate}&time_end=${this.endDate}`;
-
-      if (this.buildStatus !== 'all') {
-        url = `/spotlight_summary?time_start=${this.startDate}&time_end=${this.endDate}&build_status=${this.buildStatus}`;
-      }
 
       this.fetchHeatMapData.perform(url);
     },
