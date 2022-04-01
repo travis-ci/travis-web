@@ -23,6 +23,7 @@
   border-radius: 4px;
   border: solid 1px #d7d7d7;
   background-color: #fff;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 
 .daterangepicker:before, .daterangepicker:after {
@@ -119,22 +120,27 @@
   display: none;
 }
 .active-button{
-  width: 71px;
-  height: 28px;
-  margin: 20.4px 2.4px 0 0;
-  padding: 1px 16px 1px 17px !important;
-  border-radius: 2px;
-  background-color: #3eaaaf !important;
-  border: none;
-  color: white;
-  font-family: 'Roboto';
-  font-weight: 500 !important;
-  font-stretch: normal;
-  font-style: normal;
-  /* font-size: 11px !important; */
-  line-height: 2;
-  letter-spacing: 1.25px;
-  text-align: left;
+  position: absolute;
+   width: 71px;
+   height: 24px;
+   border-radius: 2px;
+   border: none;
+   font-stretch: normal;
+   text-align: left;
+   padding: 1px 14px 1px 17px !important;
+   background-color: rgb(62, 170, 175) !important;
+   left: 80%;
+   right: 0%;
+   top: 80%;
+   bottom: 0%;
+   font-size: 11px !important;
+   font-family: 'Roboto';
+   font-style: normal;
+   font-weight: 500 !important;
+   line-height: 22px;
+   letter-spacing: 1.25px;
+   text-transform: uppercase;
+   color: #FFFFFF;
   cursor: pointer;
 
 }
@@ -142,22 +148,25 @@
 .cancel-button
 {
   width: 71px;
-    height: 24px;
-    margin: 20.4px 2.4px 0 0;
-    padding: 1px 16px 1px 17px !important;
-    border-radius: 2px;
-    background-color: white !important;
-    border: none;
-    color: var(--brownish-grey);
-    font-family: 'Roboto';
-    font-weight: 500 !important;
-    font-stretch: normal;
-    font-style: normal;
-    /* font-size: 11px !important; */
-    line-height: 2;
-    letter-spacing: 1.25px;
-    text-align: left;
+   border-radius: 2px;
+   border: none;
+   text-align: left;
+   background-color: white !important;
+   font-weight: 500 !important;
+   position: absolute;
+   height: 22px;
+   left: 65.81%;
+   right: 16.44%;
+   top: calc(50% - 22px/2 + 84px);
+   font-family: 'Roboto';
+   font-style: normal;
+   font-size: 11px !important;
+   line-height: 22px;
+   letter-spacing: 1.25px;
+   text-transform: uppercase;
+   color: #666666;
     cursor: pointer;
+    
  
 }
 
@@ -241,7 +250,7 @@
   line-height: 24px;
   font-size: 12px;
   border-radius: 4px;
-  border: 1px solid #fff;
+  /* border: 1px solid #fff; */
   white-space: nowrap;
   cursor: pointer;
   padding-left: 20px;
@@ -296,7 +305,6 @@
 .daterangepicker td.in-range {
   background-color: #ebf4f8;
   border: 1px solid #fff;
-  color: #000;
   border-radius: 0;
   width: 71px;
   height: 30.8px;
@@ -304,6 +312,13 @@
   margin: 5.9px 1.2px 1.2px 0;
   padding: 4.4px 20.1px 0.4px 21.3px;
   background-color: #cfeaeb;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  color: #666666;
 }
 .daterangepicker td.offset-range {
   width: 71px;
@@ -337,9 +352,9 @@
   padding: 4.4px 15.4px 0.4px 20.1px;
   background-color: #3eaaaf;
   flex-grow: 0;
-  font-family: Roboto;
+  font-family: 'Roboto';
   font-size: 14px;
-  font-weight: normal;
+  font-weight: 400;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.57;
@@ -440,6 +455,17 @@
   text-align: left;
   margin: 0;
 }
+.daterangepicker td.future-month-disabled
+{
+   pointer-events:none;
+   color:#999;
+ }
+ .daterangepicker td.current-month {
+  border: 1px solid #3EAAAF;
+  box-sizing: border-box;
+}
+
+
 
 .daterangepicker.show-calendar .ranges {
   margin-top: 8px;

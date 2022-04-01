@@ -642,6 +642,15 @@
                         
                     
                 }
+                if(calendar[row][col]==moment().startOf('day').format('YYYY-MM'))
+                {
+                    classes.push('current-month');
+                } 
+               
+                if(moment(calendar[row][col]).isAfter(moment().endOf('day')))
+                {
+                    classes.push('future-month-disabled');
+                } 
                     //apply custom classes for this date
                     var isCustom = this.isCustomDate(calendar[row][col]);
                     if (isCustom !== false) {
