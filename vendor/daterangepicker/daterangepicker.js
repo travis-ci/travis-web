@@ -639,6 +639,10 @@
                         {
                             classes.push('offset-range');
                         }
+                        else if(this.startDate.format('YYYY-MM')==this.endDate.format('YYYY-MM') && calendar[row][col]==moment().startOf('day').subtract('months',1).format('YYYY-MM'))
+                        {
+                            classes.push('offset-range');
+                        }  
                         
                     
                 }
