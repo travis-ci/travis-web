@@ -20,7 +20,6 @@
   flex-grow: 0;
   margin: 2px 0 0;
   padding: 10px 0.6px 12px 16px;
-  border-radius: 4px;
   border: solid 1px #d7d7d7;
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
@@ -249,7 +248,6 @@
   height: 24px;
   line-height: 24px;
   font-size: 12px;
-  border-radius: 4px;
   /* border: 1px solid #fff; */
   white-space: nowrap;
   cursor: pointer;
@@ -305,7 +303,6 @@
 .daterangepicker td.in-range {
   background-color: #ebf4f8;
   border: 1px solid #fff;
-  border-radius: 0;
   width: 71px;
   height: 30.8px;
   flex-grow: 0;
@@ -319,6 +316,7 @@
   line-height: 22px;
   letter-spacing: 0.5px;
   color: #666666;
+  border-bottom: none;
 }
 .daterangepicker td.offset-range {
   width: 71px;
@@ -328,17 +326,7 @@
   padding: 4.4px 20.1px 0.4px 21.3px;
   background-color: #f1f1f1;
   border: 1px solid #fff;
-}
-.daterangepicker td.start-date {
-  border-radius: 4px 0 0 4px;
-}
-
-.daterangepicker td.end-date {
-  border-radius: 0 4px 4px 0;
-}
-
-.daterangepicker td.start-date.end-date {
-  border-radius: 4px;
+  border-bottom: none;
 }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
