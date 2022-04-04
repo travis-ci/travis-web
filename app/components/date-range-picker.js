@@ -203,12 +203,12 @@ export default Component.extend({
       this.oldStart = picker.startDate.format(this.get('serverFormat'));
       this.oldEnd = picker.endDate.format(this.get('serverFormat'));
     }
+    if (actionName === 'applyAction') {
+      this.setStartMonth(start);
+      this.setEndMonth(end);
+    }
 
     if (action) {
-      if (actionName === 'cancelAction') {
-        this.setStartMonth(start);
-        this.setEndMonth(end);
-      }
       assert(
         `${actionName} for date-range-picker must be a function`,
         typeof action === 'function'
@@ -217,8 +217,6 @@ export default Component.extend({
     } else {
       if (!this.isDestroyed) {
         this.setProperties({ start, end });
-        this.setStartMonth(start);
-        this.setEndMonth(end);
       }
     }
   }
