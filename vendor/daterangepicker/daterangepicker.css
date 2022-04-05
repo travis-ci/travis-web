@@ -136,7 +136,7 @@
   top: 80%;
   bottom: 0%;
   font-size: 11px !important;
-  font-family: "Roboto";
+  font-family: Roboto;
   font-style: normal;
   font-weight: 500 !important;
   line-height: 22px;
@@ -158,7 +158,7 @@
   left: 65.81%;
   right: 16.44%;
   top: calc(50% - 22px / 2 + 84px);
-  font-family: "Roboto";
+  font-family: Roboto;
   font-style: normal;
   font-size: 11px !important;
   line-height: 22px;
@@ -307,7 +307,7 @@
   height: 30.8px;
   flex-grow: 0;
   background-color: #cfeaeb;
-  font-family: "Roboto";
+  font-family: Roboto;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -335,7 +335,7 @@
   flex-grow: 0;
   background-color: #3eaaaf;
   flex-grow: 0;
-  font-family: "Roboto";
+  font-family: Roboto;
   font-size: 14px;
   font-weight: 400;
   font-stretch: normal;
