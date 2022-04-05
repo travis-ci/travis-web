@@ -5,7 +5,7 @@ export function truncate([value, truncateTo]) {
     return value;
   }
 
-  return value.substring(0, truncateTo - 3) + '...';
+  return `${value.substring(0, truncateTo - 3)}...`;
 }
 
 export default helper(truncate);

@@ -51,6 +51,7 @@
               @selected={{this.selectedPlugin}}
               @options={{this.pluginTypes}}
               @onchange={{action "setSelectedPlugin"}}
+              @renderInPlace={{true}}
               as |plugin|
             >
               {{plugin.name}}

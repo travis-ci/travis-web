@@ -106,7 +106,6 @@ module.exports = function () {
   const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {
     destDir: '/images/emoji'
   });
-  app.import('vendor/cal-heatmap/d3.js')
 
   importNpmDependency(app, 'node_modules/fuzzysort/fuzzysort.js');
   importNpmDependency(app, 'node_modules/pusher-js/dist/web/pusher.js');
@@ -124,12 +123,13 @@ module.exports = function () {
   app.import('node_modules/fusioncharts/fusioncharts.charts.js');
   app.import('node_modules/fusioncharts/themes/fusioncharts.theme.fusion.js');
   app.import('node_modules/fusioncharts/fusioncharts.timeseries.js');
+
   app.import('vendor/daterangepicker/daterangepicker.js');
   app.import('vendor/daterangepicker/daterangepicker.css');
 
+  app.import('vendor/cal-heatmap/d3.js')
   app.import('vendor/cal-heatmap/cal-heatmap.js')
   app.import('vendor/cal-heatmap/cal-heatmap.css')
-
 
   return app.toTree(emojiAssets);
 };

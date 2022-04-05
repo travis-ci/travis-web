@@ -190,6 +190,7 @@
           @selected={{this.selectedTimeZone}}
           @onchange={{action 'setNewInsightsTimezone'}}
           @options={{this.timezoneList}}
+          @renderInPlace={{true}}
           as |timezone|
         >
           {{timezone}}
@@ -203,6 +204,7 @@
           @selected={{this.selectedDateFormat}}
           @onchange={{action 'setNewInsightsDateFormat'}}
           @options={{this.dateFormatList}}
+          @renderInPlace={{true}}
           as |dateFormat|
         >
           {{dateFormat}}
@@ -216,6 +218,7 @@
           @selected={{this.selectedTimeFormat}}
           @onchange={{action 'setNewInsightsTimeFormat'}}
           @options={{this.timeFormatList}}
+          @renderInPlace={{true}}
           as |timeFormat|
         >
           {{timeFormat.name}}

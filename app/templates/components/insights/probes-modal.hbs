@@ -38,6 +38,7 @@
               @selected={{this.selectedPlugin}}
               @onchange={{action 'getProbeOptions'}}
               @options={{this.pluginOptions}}
+              @renderInPlace={{true}}
               as |plugin|
             >
               {{plugin.name}}
@@ -82,6 +83,7 @@
               @selected={{this.selectedProbe}}
               @onchange={{action 'getProbeData'}}
               @options={{this.probeOptions}}
+              @renderInPlace={{true}}
               as |probe|
             >
               {{probe.name}}

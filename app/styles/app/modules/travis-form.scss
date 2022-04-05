@@ -191,7 +191,7 @@ $select-multiple-spacing: 5px;
         background: #d3d3d3;
         outline: none;
         position: relative;
-        opacity: 0.7; 
+        opacity: 0.7;
         transition: opacity .2s;
 
         &:hover {
@@ -486,8 +486,12 @@ $select-multiple-spacing: 5px;
     margin-bottom: 5px;
     margin-top: 20px;
   }
-  
+
   .ember-power-select-trigger {
     padding: 4px 20px 4px 4px;
+  }
+
+  .ember-basic-dropdown-content {
+    margin-top: 3px;
   }
 }
