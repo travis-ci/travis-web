@@ -174,21 +174,21 @@
 }
 
 .daterangepicker .drp-calendar.left {
-  padding: 8px 0 8px 8px;
   width: 215.4px;
-  height: 158.6px;
+  height: 159.6px;
   flex-grow: 0;
-  margin: 2px 32.6px 34.4px 0;
-  padding: 0 0 0px;
+  position: absolute;
+  left: 18px;
+  top: 20px;
 }
 
 .daterangepicker .drp-calendar.right {
-  padding: 8px;
   width: 215.4px;
-  height: 158.6px;
-  flex-grow: 0;
-  margin: 2px 0.6px 20.4px 0;
-  padding: 0 43px 0px;
+   height: 159.6px;
+   position: absolute;
+   left: 259px;
+   top: 20px;
+
 }
 
 .daterangepicker .drp-calendar.single .calendar-table {
@@ -210,8 +210,8 @@
 .next {
   background-color: transparent !important;
   position: absolute;
-  right: 9px;
-  top: 8px;
+  right: 2px;
+  top: -5px;
 }
 
 .next.available:hover {
@@ -244,7 +244,8 @@
   height: 24px;
   line-height: 24px;
   font-size: 12px;
-  /* border: 1px solid #fff; */
+  border: 1px solid #fff;
+  border-bottom: none;
   white-space: nowrap;
   cursor: pointer;
   padding-left: 20px;
@@ -305,8 +306,6 @@
   width: 71px;
   height: 30.8px;
   flex-grow: 0;
-  margin: 5.9px 1.2px 1.2px 0;
-  padding: 4.4px 20.1px 0.4px 21.3px;
   background-color: #cfeaeb;
   font-family: "Roboto";
   font-style: normal;
@@ -321,8 +320,6 @@
   width: 71px;
   height: 30.8px;
   flex-grow: 0;
-  margin: 1.2px 0 1.2px 1.2px;
-  padding: 4.4px 20.1px 0.4px 21.3px;
   background-color: #f1f1f1;
   border: 1px solid #fff;
   border-bottom: none;
@@ -336,8 +333,6 @@
   width: 71px;
   height: 30.8px;
   flex-grow: 0;
-  margin: 1.2px 0 1.2px 1.2px;
-  padding: 4.4px 15.4px 0.4px 20.1px;
   background-color: #3eaaaf;
   flex-grow: 0;
   font-family: "Roboto";
@@ -349,6 +344,7 @@
   letter-spacing: 0.5px;
   text-align: left;
   color: #000;
+  border-bottom: none;
 }
 
 .daterangepicker th.month {
@@ -615,7 +611,7 @@
   .next {
     background-color: transparent !important;
     position: absolute;
-    right: -30px;
+    right: 6px;
     top: -1px;
   }
   .cancel-button {
@@ -637,7 +633,7 @@
     margin-left: 0;
     position: absolute;
     top: 190px;
-    left: -23px;
+    left: 14px;
   }
   .daterangepicker.ltr .drp-calendar.right .calendar-table {
     border-left: none;
