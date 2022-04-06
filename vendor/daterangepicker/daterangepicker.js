@@ -37,7 +37,7 @@
         this.startDate = moment().startOf('day');
         this.endDate = moment().endOf('day');
         this.minDate = false;
-        this.maxDate = false;
+        this.maxDate = moment().endOf('day');
         this.maxSpan = false;
         this.autoApply = false;
         this.singleDatePicker = false;
@@ -421,13 +421,13 @@
             if (typeof startDate === 'object')
                 this.startDate = moment(startDate);
 
-            if (this.minDate && this.startDate.format('YYYY-MM').isBefore(this.minDate.format('YYYY-MM'))) {
-                this.startDate = this.minDate.clone().format('YYYY-MM');
-            }
-
-            if (this.maxDate && this.startDate.format('YYYY-MM').isAfter(this.maxDate.format('YYYY-MM'))) {
-                this.startDate = this.maxDate.clone().format('YYYY-MM');
-            }
+                if (this.minDate &&  moment(this.startDate).isBefore(this.minDate)) {
+                    this.startDate = this.minDate.clone().format('YYYY-MM');
+                }
+    
+                if (this.maxDate && moment(this.startDate).isAfter(this.maxDate)) {
+                    this.startDate = this.maxDate.clone().format('YYYY-MM');
+                }
 
             if (!this.isShowing)
                 this.updateElement();
@@ -496,11 +496,12 @@
                     return;
                 }
 
-                this.leftCalendar.month = this.startDate.clone().date(2);
+                this.leftCalendar.month =  this.startDate.clone().date(2).subtract(1, 'year');
                 if (!this.linkedCalendars && (this.endDate.year() != this.startDate.year())) {
                     this.rightCalendar.month = this.endDate.clone().date(2);
                 } else {
-                    this.rightCalendar.month = this.startDate.clone().date(2).add(1, 'year');
+                    this.rightCalendar.month = this.startDate.clone().date(2);
+                    
                 }
 
             } 
@@ -582,10 +583,10 @@
 
             var dateHtml =  year;
             html += '<th colspan="5" class="month">' + dateHtml + '</th>';
-            if ((!maxDate || maxDate.isAfter(calendar.lastDay)) &&  side == 'right') {
+            if ((!maxDate || maxDate.year()>year) &&  side == 'right') {
                 html += '<th class="next available"><span></span></th>';
             } else {
-                html += '<th></th>';
+                html += '<th class="next not-available"></th>';
             }
 
             html += '</tr>';

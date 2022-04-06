@@ -145,7 +145,12 @@
   color: #ffffff;
   cursor: pointer;
 }
-
+.not-available
+{
+  border: none !important;
+  background-color: transparent !important;
+  pointer-events: none;
+}
 .cancel-button {
   width: 71px;
   border-radius: 2px;
