@@ -186,7 +186,9 @@ export default Component.extend({
     let sDate = this.startDate.toISOString().split('T')[0];
     let eDate = this.endDate.toISOString().split('T')[0];
     this.set('selectedReposIds', this.selectedRepoIds);
-    let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
-    this.fetchHeatMapData.perform(url);
+    if(this.selectedRepoIds!==''){
+      let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
+      this.fetchHeatMapData.perform(url);
+    }
   },
 });
