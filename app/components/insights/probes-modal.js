@@ -76,7 +76,7 @@ export default Component.extend({
           this.api.get('/insights_plugins/template_plugin_tests',
             {
               data: {
-                plugin_type: this.selectedPlugin.id
+                plugin_type: this.probe.pluginType
               }
             }
           ).then((response) => {

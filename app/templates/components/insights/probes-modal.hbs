@@ -23,27 +23,30 @@
              Product
             <EmberTooltip @text="This is the product of plugin" @side="bottom" />
           </legend>
-          <form.field
-            @disabled={{this.editMode}}
-            @value={{this.selectedPlugin}}
-            @onChange={{action (mut this.selectedPlugin)}}
-            @showValidationStatusIcons={{false}}
-            @showValidationStatusMessage={{false}}
-            as |field|
-          >
-            <field.select
-              class="modal-input"
-              @searchEnabled={{false}}
-              @placeholder="Select product"
-              @selected={{this.selectedPlugin}}
-              @onchange={{action 'getProbeOptions'}}
-              @options={{this.pluginOptions}}
-              @renderInPlace={{true}}
-              as |plugin|
+          {{#if this.editMode}}
+            {{this.probe.pluginTypeName}}
+          {{else}}
+            <form.field
+              @value={{this.selectedPlugin}}
+              @onChange={{action (mut this.selectedPlugin)}}
+              @showValidationStatusIcons={{false}}
+              @showValidationStatusMessage={{false}}
+              as |field|
             >
-              {{plugin.name}}
-            </field.select>
-          </form.field>
+              <field.select
+                class="modal-input"
+                @searchEnabled={{false}}
+                @placeholder="Select product"
+                @selected={{this.selectedPlugin}}
+                @onchange={{action 'getProbeOptions'}}
+                @options={{this.pluginOptions}}
+                @renderInPlace={{true}}
+                as |plugin|
+              >
+                {{plugin.name}}
+              </field.select>
+            </form.field>
+          {{/if}}
           <div id="testsOverlayDisplayLabels">
             {{#if this.pluginCategory}}
               <span id="testCategoryKey" class='label-key'> Category:</span>
