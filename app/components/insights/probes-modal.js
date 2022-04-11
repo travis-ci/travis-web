@@ -76,7 +76,7 @@ export default Component.extend({
           this.api.get('/insights_plugins/template_plugin_tests',
             {
               data: {
-                plugin_type: this.selectedPlugin.id
+                plugin_type: this.probe.pluginType
               }
             }
           ).then((response) => {
@@ -185,7 +185,13 @@ export default Component.extend({
 
   actions: {
     checkTagInput: function (evt) {
-      return /[A-Za-z\d\s]/.test(event.key);
+      return /[A-Za-z\d@#_\-\.]/.test(evt.key);
+    },
+
+    checkTagPaste: function(evt) {
+      setTimeout(function() {
+        evt.target.value = evt.target.value.replaceAll(/[^A-Za-z\d@#_\-\.]/g, '');
+      }, 10);
     },
 
     openQueryEditor() {

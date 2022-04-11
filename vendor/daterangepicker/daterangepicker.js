@@ -240,8 +240,6 @@
         if (typeof options.showCustomRangeLabel === 'boolean')
             this.showCustomRangeLabel = options.showCustomRangeLabel;
 
-
-      
         if (typeof options.autoApply === 'boolean')
             this.autoApply = options.autoApply;
 
@@ -352,7 +350,6 @@
             this.container.find('.calendar-time').hide();
         }
 
-        
         if (typeof options.ranges === 'object')
             this.container.addClass('show-ranges');
 
@@ -416,15 +413,15 @@
 
         setStartDate: function(startDate) {
             if (typeof startDate === 'string')
-                this.startDate =moment(startDate);
+                this.startDate = moment(startDate);
 
             if (typeof startDate === 'object')
                 this.startDate = moment(startDate);
 
-                if (this.minDate &&  moment(this.startDate).isBefore(this.minDate)) {
+                if (this.minDate && moment(this.startDate).isBefore(this.minDate)) {
                     this.startDate = this.minDate.clone().format('YYYY-MM');
                 }
-    
+
                 if (this.maxDate && moment(this.startDate).isAfter(this.maxDate)) {
                     this.startDate = this.maxDate.clone().format('YYYY-MM');
                 }
@@ -436,7 +433,6 @@
         },
 
         setEndDate: function(endDate) {
-
             if (typeof endDate === 'string')
             this.endDate = moment(endDate);
 
@@ -496,20 +492,16 @@
                     return;
                 }
 
-                this.leftCalendar.month =  this.startDate.clone().date(2).subtract(1, 'year');
+                this.leftCalendar.month = this.startDate.clone().date(2).subtract(1, 'year');
                 if (!this.linkedCalendars && (this.endDate.year() != this.startDate.year())) {
                     this.rightCalendar.month = this.endDate.clone().date(2);
                 } else {
                     this.rightCalendar.month = this.startDate.clone().date(2);
-                    
                 }
-
-            } 
-          
+            }
         },
 
         updateCalendars: function() {
-
             this.renderCalendar('left');
             this.renderCalendar('right');
 
@@ -528,8 +520,7 @@
             var calendar = side == 'left' ? this.leftCalendar : this.rightCalendar;
             var month = 0;
             var year = calendar.month.year();
-           
-            
+
             //initialize a 4 rows x 3 columns array for the calendar
             var calendar = [];
             for (var i = 0; i < 4; i++) {
@@ -607,7 +598,6 @@
             {
                 monthDifference =  moment(new Date(this.endDate)).diff(new Date(this.startDate), 'months', true)+1;
             }
-           
 
             for (var row = 0; row < 4; row++) {
                 html += '<tr>';
@@ -643,19 +633,17 @@
                         else if(this.startDate.format('YYYY-MM')==this.endDate.format('YYYY-MM') && calendar[row][col]==moment().startOf('day').subtract('months',1).format('YYYY-MM'))
                         {
                             classes.push('offset-range');
-                        }  
-                        
-                    
+                        }
                 }
                 if(calendar[row][col]==moment().startOf('day').format('YYYY-MM'))
                 {
                     classes.push('current-month');
-                } 
-               
+                }
+
                 if(moment(calendar[row][col]).isAfter(moment().endOf('day')))
                 {
                     classes.push('future-month-disabled');
-                } 
+                }
                     //apply custom classes for this date
                     var isCustom = this.isCustomDate(calendar[row][col]);
                     if (isCustom !== false) {
@@ -900,21 +888,17 @@
                     var col = title.substr(3, 1);
                     var cal = $(el).parents('.drp-calendar');
                     var dt = cal.hasClass('left') ? leftCalendar.calendar[row][col] : rightCalendar.calendar[row][col];
-                   
-                    
+
                     if ((dt.isAfter(startDate) && dt.isBefore(date))) {
                         $(el).addClass('in-range');
                     } else {
                         $(el).removeClass('in-range');
                     }
-
                 });
             }
-
         },
 
         clickDate: function(e) {
-
             if (!$(e.target).hasClass('available')) return;
 
             var title = $(e.target).attr('data-title');
@@ -942,10 +926,9 @@
                 else{
                     this.singleClick = false;
                 }
-               
             }
             else if (this.endDate ||(date!=null &&date > this.startDate.format('YYYY-MM'))) { //picking start
-                this.endDate = null;              
+                this.endDate = null;
                 this.setStartDate(date);
                 this.singleClick = true;
             } else if (!this.endDate && date>(this.startDate.format('YYYY-MM'))) {
@@ -963,7 +946,6 @@
 
             //This is to cancel the blur event handler if the mouse was in one of the inputs
             e.stopPropagation();
-
         },
 
         calculateChosenLabel: function () {

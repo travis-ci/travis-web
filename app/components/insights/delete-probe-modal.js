@@ -4,6 +4,7 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
   api: service(),
+  flashes: service(),
 
   selectedProbeIds: [],
 
@@ -14,6 +15,7 @@ export default Component.extend({
     const self = this;
 
     yield this.api.delete('/insights_probes/delete_many', { data: data }).then(() => {
+      this.flashes.success('Probes deleted successfully!');
       self.set('selectedProbeIds', []);
       self.reloadProbes();
       self.onClose();
