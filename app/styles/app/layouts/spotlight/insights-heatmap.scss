@@ -145,6 +145,9 @@
   .dropdown-list-elements-heatmap {
     padding: 14px 16px !important;
   }
+  rect.future {
+    pointer-events: none;
+  }
   @media only screen and (max-width: 1279px) {
     .insights-heatmap-scroll {
       overflow-x: auto;

@@ -34,6 +34,8 @@ const BUILDS_QUERY_PARAMS = {
   canceled: 'canceled',
 };
 
+const START_DATE = new Date(new Date().setMonth(new Date().getMonth() - 11))
+
 export default Component.extend({
   api: service(),
   buildFilterLabel: BUILDS_FILTER_LABELS['all'],
@@ -51,14 +53,12 @@ export default Component.extend({
     new Date().getFullYear() - 4,
     new Date().getFullYear() - 5,
   ],
-
-  startDate: new Date(new Date().setMonth(new Date().getMonth() - 11)),
+  startDate: new Date(START_DATE.getFullYear(), START_DATE.getMonth(), 1),
   endDate: new Date(),
 
   selectedRepoIds: '',
 
   fetchHeatMapData: task(function* (url) {
-    document.getElementById('insights-heatmap').innerHTML = '';
     document.getElementsByClassName('heatmap-cal-container')[0].classList.add('visibility-hidden');
 
     if (this.buildStatus !== 'all') {
@@ -85,7 +85,7 @@ export default Component.extend({
         }
       });
       this.set('heatmapData', heatmapData);
-
+      document.getElementById('insights-heatmap').innerHTML = '';
       let cal = new CalHeatMap(); // eslint-disable-line
       cal.init({
         itemSelector: '#insights-heatmap',
@@ -103,13 +103,13 @@ export default Component.extend({
         considerMissingDataAsZero: true,
 
         legend:
-        maxBuilds !== 0
-          ? [
-            Math.ceil(maxBuilds / 4),
-            Math.ceil(maxBuilds / 2),
-            Math.ceil((maxBuilds * 3) / 4),
-          ]
-          : [1, 2, 3],
+          maxBuilds !== 0
+            ? [
+                Math.ceil(maxBuilds / 4),
+                Math.ceil(maxBuilds / 2),
+                Math.ceil((maxBuilds * 3) / 4),
+              ]
+            : [1, 2, 3],
         displayLegend: true,
         legendCellSize: 16,
         legendCellPadding: 1,
@@ -124,7 +124,7 @@ export default Component.extend({
         itemName: 'build',
         subDomainDateFormat: '%b %d, %Y',
 
-        animationDuration: 0
+        animationDuration: 0,
       });
 
       document.getElementsByClassName('heatmap-cal-container')[0].classList.remove('visibility-hidden');
@@ -160,7 +160,7 @@ export default Component.extend({
       let sDate =
         this.buildYear !== new Date().getFullYear()
           ? new Date(this.buildYear, 0, 1)
-          : new Date(new Date().setMonth(new Date().getMonth() - 11));
+          : new Date(START_DATE.getFullYear(), START_DATE.getMonth(), 1);
       let eDate =
         this.buildYear !== new Date().getFullYear()
           ? new Date(this.buildYear, 11, 31)
@@ -186,7 +186,9 @@ export default Component.extend({
     let sDate = this.startDate.toISOString().split('T')[0];
     let eDate = this.endDate.toISOString().split('T')[0];
     this.set('selectedReposIds', this.selectedRepoIds);
-    let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
-    this.fetchHeatMapData.perform(url);
+    if(this.selectedRepoIds!==''){
+      let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
+      this.fetchHeatMapData.perform(url);
+    }
   },
 });
