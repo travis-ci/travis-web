@@ -34,7 +34,7 @@ export default Component.extend({
         }
       ).then((data) => {
         if (data.no_plugins) {
-          this.set('sampleJson', '<Short guide>');
+          this.set('sampleJson', '');
         } else if (data.in_progress) {
           this.set('sampleJson', 'Scan for this plugin is still in progress.\nPlease wait while scan finishes successfully.');
         } else if (data.plugins.length > 0) {
