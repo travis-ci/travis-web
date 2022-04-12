@@ -34,7 +34,7 @@ const BUILDS_QUERY_PARAMS = {
   canceled: 'canceled',
 };
 
-const START_DATE = new Date(new Date().setMonth(new Date().getMonth() - 11))
+const START_DATE = new Date(new Date().setMonth(new Date().getMonth() - 11));
 
 export default Component.extend({
   api: service(),
@@ -186,7 +186,7 @@ export default Component.extend({
     let sDate = this.startDate.toISOString().split('T')[0];
     let eDate = this.endDate.toISOString().split('T')[0];
     this.set('selectedReposIds', this.selectedRepoIds);
-    if(this.selectedRepoIds!==''){
+    if (this.selectedRepoIds !== '') {
       let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
       this.fetchHeatMapData.perform(url);
     }
