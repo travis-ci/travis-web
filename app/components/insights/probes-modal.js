@@ -188,10 +188,11 @@ export default Component.extend({
       return /[A-Za-z\d@#_\-\.]/.test(evt.key);
     },
 
-    checkTagPaste: function(evt) {
-      setTimeout(function() {
-        evt.target.value = evt.target.value.replaceAll(/[^A-Za-z\d@#_\-\.]/g, '');
-      }, 10);
+    checkTagPaste: function (evt) {
+      setTimeout(
+        () => evt.target.value = evt.target.value.replaceAll(/[^A-Za-z\d@#_\-\.]/g, ''),
+        10
+      );
     },
 
     openQueryEditor() {
