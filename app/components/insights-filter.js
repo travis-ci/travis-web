@@ -16,7 +16,7 @@ export default Component.extend({
 
   search: task(function* () {
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
-    let filteredRepos = this.allRepositories.filter(item => item.name.indexOf(this.query) !== -1);
+    let filteredRepos = this.allRepositories.filter(item => item.name.toUpperCase().indexOf(this.query.toUpperCase()) !== -1);
     this.set('filteredRepositories', filteredRepos);
   }).restartable(),
 
@@ -24,6 +24,7 @@ export default Component.extend({
     return this.api.get('/repos').then((result) => {
       this.set('allRepositories', result.repositories);
       this.set('filteredRepositories', result.repositories);
+      this.filteredRepositories.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
     });
   },
 
@@ -44,9 +45,19 @@ export default Component.extend({
       }
     },
     allRepoSelection() {
-      this.set('selectedRepos', []);
-      this.setSelectedRepoIds('');
-      this.set('isEmpty', true);
+      if(this.isEmpty){
+        this.set('selectedRepos', [-1]);
+        this.set('isEmpty', false);
+      }
+      else{
+        this.set('selectedRepos', []);
+        this.setSelectedRepoIds('');
+        this.set('isEmpty', true);
+      }
+      let repoIds = '';
+      repoIds = this.get('selectedRepos').join(',');
+      this.set('repoIds', repoIds);
+      this.setSelectedRepoIds(repoIds);
     }
   }
 });
