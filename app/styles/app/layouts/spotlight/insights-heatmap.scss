@@ -153,6 +153,17 @@
     width: 16px;
     height: 30px;
   }
+  span.heatmap-spinner {
+    background: url(/images/insights/spinner.gif) no-repeat right 138px;
+    background-size: 30px;
+    position: absolute;
+    top: 72%;
+    bottom: 0;
+    left: 0;
+    right: 50%;
+    margin: auto;
+    display: none;
+  }
   @media only screen and (max-width: 1279px) {
     .insights-heatmap-scroll {
       overflow-x: auto;
