@@ -148,6 +148,11 @@
   rect.future {
     pointer-events: none;
   }
+  .icon-heatmap-year {
+    background: url(/images/insights/icon-heatmap-year.svg) no-repeat right 6px;
+    width: 16px;
+    height: 30px;
+  }
   @media only screen and (max-width: 1279px) {
     .insights-heatmap-scroll {
       overflow-x: auto;
