@@ -314,7 +314,7 @@
   background-color: #cfeaeb;
   font-family: Roboto;
   font-style: normal;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 14px;
   line-height: 22px;
   letter-spacing: 0.5px;
@@ -328,6 +328,7 @@
   background-color: #f1f1f1;
   border: 1px solid #fff;
   border-bottom: none;
+  font-weight: bold;
 }
 
 .daterangepicker td.active,
@@ -342,7 +343,7 @@
   flex-grow: 0;
   font-family: Roboto;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.57;

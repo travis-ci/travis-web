@@ -64,6 +64,7 @@
     "ember-export-application-global": "^2.0.0",
     "ember-feature-flags": "^5.0.0",
     "ember-fetch": "^6.0.0",
+    "ember-fusioncharts": "^2.1.0",
     "ember-in-viewport": "^3.0.0",
     "ember-inflector": "^3.0.1",
     "ember-intercom-io": "^1.2.0",
@@ -94,6 +95,7 @@
     "emoji-js": "^3.4.0",
     "eslint-plugin-ember": "^7.1.0",
     "eslint-plugin-node": "^10.0.0",
+    "fusioncharts": "^3.18.0",
     "fuzzysort": "^1.0.1",
     "jsencrypt": "^3.2.1",
     "loader.js": "^4.7.0",
@@ -115,8 +117,6 @@
   "dependencies": {
     "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
     "deep-freeze": "0.0.1",
-    "ember-fusioncharts": "^2.1.0",
-    "fusioncharts": "^3.18.0",
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.1"
   },

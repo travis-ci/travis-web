@@ -58,8 +58,8 @@ export default Component.extend({
   probeOptions: [],
   selectedProbe: null,
 
-  isQueryEditAllowed: computed('probeType', 'selectedPlugin', 'selectedProbe', 'description', 'notification', function () {
-    return ((this.probeType === 'custom' && this.selectedPlugin) || (this.probeType === 'native' && this.selectedPlugin && this.selectedProbe))
+  isQueryEditAllowed: computed('probeType', 'probe', 'selectedProbe', 'description', 'notification', function () {
+    return this.probe.pluginType && (this.probeType === 'custom' || this.selectedProbe)
       && this.description.length > 0 && this.notification.length > 0;
   }),
   isSaveAllowed: computed('isQueryEditAllowed', 'query', function () {
@@ -188,10 +188,11 @@ export default Component.extend({
       return /[A-Za-z\d@#_\-\.]/.test(evt.key);
     },
 
-    checkTagPaste: function(evt) {
-      setTimeout(function() {
-        evt.target.value = evt.target.value.replaceAll(/[^A-Za-z\d@#_\-\.]/g, '');
-      }, 10);
+    checkTagPaste: function (evt) {
+      setTimeout(
+        () => evt.target.value = evt.target.value.replaceAll(/[^A-Za-z\d@#_\-\.]/g, ''),
+        10
+      );
     },
 
     openQueryEditor() {
