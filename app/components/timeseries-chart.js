@@ -2,18 +2,54 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
 
+const fontRobotoStyleObj = {
+  'font-family': 'roboto',
+};
+
 const dataSource = {
   data: null,
   extensions: {
     standardRangeSelector: {
       enabled: '1',
+      style: {
+        'button-text': fontRobotoStyleObj,
+        'button-text:hover': fontRobotoStyleObj,
+        'button-text:active': fontRobotoStyleObj,
+      },
     },
     customRangeSelector: {
       enabled: '0',
     },
   },
+  chart: {
+    showLegend: true,
+    legendItemFont: 'roboto',
+    outCnvBaseFont: 'roboto',
+  },
+  tooltip: {
+    enabled: true,
+    style: {
+      container: fontRobotoStyleObj,
+      text: fontRobotoStyleObj,
+      header: fontRobotoStyleObj,
+      body: fontRobotoStyleObj,
+    },
+  },
+  xAxis: {
+    style: {
+      title: fontRobotoStyleObj,
+      label: fontRobotoStyleObj,
+      'label-major': fontRobotoStyleObj,
+      'label-minor': fontRobotoStyleObj,
+      'label-context': fontRobotoStyleObj,
+    },
+  },
   yAxis: [
     {
+      style: {
+        title: fontRobotoStyleObj,
+        label: fontRobotoStyleObj,
+      },
       plot: {
         value: 'Builds',
         type: 'line',
@@ -21,12 +57,16 @@ const dataSource = {
         connectNullData: true,
         style: {
           'plot.null': {
-            'stroke-dasharray': '-1'
-          }
-        }
+            'stroke-dasharray': '-1',
+          },
+        },
       },
     },
     {
+      style: {
+        title: fontRobotoStyleObj,
+        label: fontRobotoStyleObj,
+      },
       plot: {
         value: 'Minutes',
         type: 'line',
@@ -34,12 +74,16 @@ const dataSource = {
         connectNullData: true,
         style: {
           'plot.null': {
-            'stroke-dasharray': '-1'
-          }
-        }
+            'stroke-dasharray': '-1',
+          },
+        },
       },
     },
     {
+      style: {
+        title: fontRobotoStyleObj,
+        label: fontRobotoStyleObj,
+      },
       plot: {
         value: 'Credits',
         type: 'line',
@@ -47,9 +91,9 @@ const dataSource = {
         connectNullData: true,
         style: {
           'plot.null': {
-            'stroke-dasharray': '-1'
-          }
-        }
+            'stroke-dasharray': '-1',
+          },
+        },
       },
     },
   ],
@@ -106,7 +150,7 @@ export default Component.extend({
       const graphData = data.map((item, index) => [
         moment(item.time).format('DD-MMM-YY'),
         item.builds,
-        (item.duration / 60),
+        item.duration / 60,
         item.credits,
         index,
       ]);
