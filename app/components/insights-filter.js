@@ -16,7 +16,7 @@ export default Component.extend({
 
   search: task(function* () {
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
-    let filteredRepos = this.allRepositories.filter(item => item.name.toUpperCase().indexOf(this.query.toUpperCase()) !== -1);
+    let filteredRepos = this.allRepositories.filter(item => item.name.toLowerCase().indexOf(this.query.toLowerCase()) !== -1);
     this.set('filteredRepositories', filteredRepos);
   }).restartable(),
 

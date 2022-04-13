@@ -8,7 +8,7 @@
         {{/dd.trigger}}
         {{#dd.content class="dropdown-content"}}
           <li data-test-build-filter-all>
-            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "all" dd)}}>
+            <a class="dropdown-list-elements dropdown-list-elements-heatmap" {{on "click" (action "setBuildFilter" "all" dd)}}>
               <div class="dropdown-list-builds">
                 <div class="box-dropdown-heatmap all-dropdown-heatmap" data-test-box-all></div>
                 <span>All Builds</span>
@@ -16,7 +16,7 @@
             </a>
           </li>
           <li data-test-build-filter-success>
-            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "passed" dd)}}>
+            <a class="dropdown-list-elements dropdown-list-elements-heatmap" {{on "click" (action "setBuildFilter" "passed" dd)}}>
               <div class="dropdown-list-builds">
                 <div class="box-dropdown-heatmap successful-dropdown-heatmap" data-test-box-success></div>
                 <span>Successful Builds</span>
@@ -24,7 +24,7 @@
             </a>
           </li>
           <li data-test-build-filter-failed>
-            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "failed" dd)}} data-test-click-failed>
+            <a class="dropdown-list-elements dropdown-list-elements-heatmap" {{on "click" (action "setBuildFilter" "failed" dd)}} data-test-click-failed>
               <div class="dropdown-list-builds">
                 <div class="box-dropdown-heatmap failed-dropdown-heatmap" data-test-box-failed></div>
                 <span>Failed Builds</span>
@@ -32,7 +32,7 @@
             </a>
           </li>
           <li data-test-build-filter-error>
-            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "errored" dd)}}>
+            <a class="dropdown-list-elements dropdown-list-elements-heatmap" {{on "click" (action "setBuildFilter" "errored" dd)}}>
               <div class="dropdown-list-builds">
                 <div class="box-dropdown-heatmap errored-dropdown-heatmap" data-test-box-error></div>
                 <span>Errored Builds</span>
@@ -40,7 +40,7 @@
             </a>
           </li>
           <li data-test-build-filter-cancel>
-            <a class="dropdown-list-elements" {{on "click" (action "setBuildFilter" "canceled" dd)}}>
+            <a class="dropdown-list-elements dropdown-list-elements-heatmap" {{on "click" (action "setBuildFilter" "canceled" dd)}}>
               <div class="dropdown-list-builds">
                 <div class="box-dropdown-heatmap canceled-dropdown-heatmap" data-test-box-cancel></div>
                 <span>Canceled Builds</span>
@@ -61,7 +61,7 @@
         {{#dd.content class="dropdown-content dropdown-content-heatmap"}}
           {{#each this.buildYears as |buildYear|}}
             <li>
-              <a class="dropdown-list-elements dropdown-list-elements-heatmap" {{on "click" (action "setBuildYear" buildYear dd)}}>
+              <a class="dropdown-list-elements dropdown-list-elements-heatmap dropdown-list-elements-heatmap-year" {{on "click" (action "setBuildYear" buildYear dd)}}>
                 {{{buildYear}}}
               </a>
             </li>
