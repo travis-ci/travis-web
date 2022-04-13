@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { equal, not, reads, or } from '@ember/object/computed';
+import { equal, not, reads, or, alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
@@ -23,6 +23,8 @@ export default Model.extend({
   coupon: attr('string'),
   clientSecret: attr('string'),
   paymentIntent: attr(),
+  scheduledPlanName: attr('string'),
+  canceledAt: attr('date'),
 
   v1SubscriptionId: attr('number'),
 
@@ -35,7 +37,6 @@ export default Model.extend({
   addons: attr(),
   auto_refill: attr(),
 
-  isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),
   isExpired: equal('status', 'expired'),
   isPending: equal('status', 'pending'),
@@ -45,6 +46,10 @@ export default Model.extend({
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
   isNotManual: not('isManual'),
+
+  isSubscribed: computed('status', function () {
+    return this.status === null || this.status == 'subscribed';
+  }),
 
   usedUsers: computed('addons.[].current_usage', function () {
     if (!this.addons) {
@@ -108,11 +113,16 @@ export default Model.extend({
     };
   }),
 
-  validToFromUserLicenseAddon: computed('addons.[]', function () {
-    const userLicenseAddons = this.addons.filter(addon => addon.type === 'user_license' && addon.current_usage.status !== 'expired');
-    const userLicenseAddon =  userLicenseAddons ? userLicenseAddons[0] : null;
-    if (userLicenseAddon) {
-      return userLicenseAddon.current_usage.valid_to;
+  recurringAddon: computed('addons.[]', function () {
+    const recurringAddons = this.addons.filter(addon => addon.recurring);
+    return recurringAddons ? recurringAddons[0] : null;
+  }),
+
+  validToFromAddon: computed('addons.[]', function () {
+    const addons = this.addons.filter(addon => (addon.type === 'user_license' || addon.recurring) && addon.current_usage.status !== 'expired');
+    const addon =  addons ? addons[0] : null;
+    if (addon) {
+      return addon.current_usage.valid_to;
     }
   }),
 
@@ -167,6 +177,17 @@ export default Model.extend({
     return sourceToWords[source];
   }),
 
+  account: alias('accounts.user'),
+  availablePlans: reads('account.eligibleV2Plans'),
+
+  scheduledPlan: computed('scheduledPlanName', 'availablePlans', function () {
+    if (!this.availablePlans) {
+      return null;
+    }
+
+    return this.availablePlans.filter(plan => plan.id === this.scheduledPlanName)[0];
+  }),
+
   chargeUnpaidInvoices: task(function* () {
     return yield this.api.post(`/v2_subscription/${this.id}/pay`);
   }).drop(),
@@ -178,8 +199,8 @@ export default Model.extend({
     yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
 
-  changePlan: task(function* (plan) {
-    const data = { plan };
+  changePlan: task(function* (plan, coupon) {
+    const data = { plan, coupon };
     yield this.api.patch(`/v2_subscription/${this.id}/plan`, { data });
     yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
@@ -195,7 +216,23 @@ export default Model.extend({
 
     yield this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
+  autoRefillAddonId: reads('auto_refill.addon_id'),
   autoRefillEnabled: reads('auto_refill.enabled'),
   autoRefillThreshold: reads('auto_refill.threshold'),
-  autoRefillAmount: reads('auto_refill.amount')
+  autoRefillAmount: reads('auto_refill.amount'),
+  autoRefillThresholds: reads('plan.autoRefillThresholds'),
+  autoRefillAmounts: reads('plan.autoRefillAmounts'),
+  autoRefillUpdate: task(function* (threshold, amount) {
+    const data = { addon_id: this.autoRefillAddonId, threshold: parseInt(threshold), amount: parseInt(amount) };
+    yield this.api.patch(`/v2_subscription/${this.id}/update_auto_refill`, { data });
+
+    yield this.accounts.fetchV2Subscriptions.perform();
+  }).drop(),
+
+  cancelSubscription: task(function* (data) {
+    yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
+      data
+    });
+    yield this.accounts.fetchV2Subscriptions.perform();
+  }).drop(),
 });

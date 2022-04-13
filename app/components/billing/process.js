@@ -102,5 +102,9 @@ export default Component.extend({
       this.set('currentStep', STEPS.ONE);
       this.updateBillingQueryParams(STEPS.ONE);
     },
+
+    closePlansModal() {
+      this.set('showPlansSelector', false);
+    }
   }
 });

@@ -108,7 +108,7 @@ export default Component.extend({
             action: 'Change Plan Pay Button Clicked',
             category: 'Subscription',
           });
-          yield this.subscription.changePlan.perform(this.selectedPlan.id);
+          yield this.subscription.changePlan.perform(this.selectedPlan.id, this.couponId);
         }
       }
       yield this.accounts.fetchV2Subscriptions.perform();
@@ -167,6 +167,9 @@ export default Component.extend({
             token: token.id,
             lastDigits: token.card.last4
           });
+          subscription.setProperties({
+            coupon: this.couponId
+          });
           const { clientSecret } = yield subscription.save();
           yield this.stripe.handleStripePayment.perform(clientSecret);
         } else {
@@ -176,7 +179,7 @@ export default Component.extend({
             tokenCard: token.card
           });
           yield subscription.save();
-          yield subscription.changePlan.perform(selectedPlan.id);
+          yield subscription.changePlan.perform(selectedPlan.id, this.couponId);
           yield this.accounts.fetchV2Subscriptions.perform();
           yield this.retryAuthorization.perform();
         }

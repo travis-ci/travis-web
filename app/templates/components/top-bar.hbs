@@ -19,6 +19,9 @@
 {{#if this.features.enterpriseVersion}}
   <EnterpriseBanner />
 {{/if}}
+{{#if this.user}}
+  <RepositorySecurityBanner />
+{{/if}}
 {{#unless this.features.proVersion}}
   <MigrationBanner />
 {{/unless}}

@@ -72,14 +72,14 @@
     width: 15px;
     height: 15px;
   }
-  .failed-dropdown-heatmap {
-    background-color: #db4545;
-  }
   .all-dropdown-heatmap {
     background-color: #04c2bf;
   }
   .successful-dropdown-heatmap {
     background-color: #32ab52;
+  }
+  .failed-dropdown-heatmap {
+    background-color: #db4545;
   }
   .errored-dropdown-heatmap {
     background-color: #db5c07;
@@ -143,6 +143,9 @@
     min-width: 0px !important ;
   }
   .dropdown-list-elements-heatmap {
+    font-family: Roboto;
+  }
+  .dropdown-list-elements-heatmap-year {
     padding: 14px 16px !important;
   }
   rect.future {
