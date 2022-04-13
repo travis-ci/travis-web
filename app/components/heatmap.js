@@ -60,7 +60,7 @@ export default Component.extend({
 
   fetchHeatMapData: task(function* (url) {
     document.getElementsByClassName('heatmap-cal-container')[0].classList.add('visibility-hidden');
-    document.getElementsByClassName('heatmap-spinner')[0].style.display = 'block'
+    document.getElementsByClassName('heatmap-spinner')[0].style.display = 'block';
 
     if (this.buildStatus !== 'all') {
       url = `/spotlight_summary?time_start=${this.startDate}&time_end=${this.endDate}&build_status=${this.buildStatus}`;
@@ -105,11 +105,12 @@ export default Component.extend({
 
         legend:
           maxBuilds !== 0
-            ? [
-                Math.ceil(maxBuilds / 4),
-                Math.ceil(maxBuilds / 2),
-                Math.ceil((maxBuilds * 3) / 4),
-              ]
+            ?
+            [
+              Math.ceil(maxBuilds / 4),
+              Math.ceil(maxBuilds / 2),
+              Math.ceil((maxBuilds * 3) / 4),
+            ]
             : [1, 2, 3],
         displayLegend: true,
         legendCellSize: 16,
@@ -129,7 +130,7 @@ export default Component.extend({
       });
 
       document.getElementsByClassName('heatmap-cal-container')[0].classList.remove('visibility-hidden');
-      document.getElementsByClassName('heatmap-spinner')[0].style.display = 'none'
+      document.getElementsByClassName('heatmap-spinner')[0].style.display = 'none';
       let heatmapScroll = document.getElementById('insights-heatmap-scroll');
       heatmapScroll.scrollLeft = heatmapScroll.scrollWidth;
     };

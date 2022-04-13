@@ -45,11 +45,10 @@ export default Component.extend({
       }
     },
     allRepoSelection() {
-      if(this.isEmpty){
+      if (this.isEmpty) {
         this.set('selectedRepos', [-1]);
         this.set('isEmpty', false);
-      }
-      else{
+      } else {
         this.set('selectedRepos', []);
         this.setSelectedRepoIds('');
         this.set('isEmpty', true);
