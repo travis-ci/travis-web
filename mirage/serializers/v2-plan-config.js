@@ -22,7 +22,8 @@ export default Serializer.extend({
             private_credits: plan.attrs.privateCredits,
             public_credits: plan.attrs.publicCredits,
             addon_configs: plan.attrs.addonConfigs,
-            plan_type: plan.attrs.planType
+            plan_type: plan.attrs.planType,
+            annual: plan.attrs.isAnnual
           };
         })
       };
