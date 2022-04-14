@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
@@ -53,7 +53,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     });
   });
 
-  test('it renders default selected plan', async function (assert) {
+  skip('it renders default selected plan', async function (assert) {
 
     await render(hbs`<Billing::SelectPlan
       @displayedPlans={{displayedPlans}}
@@ -66,7 +66,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan1.startingPrice / 100}/${this.plan1.isAnnual ? 'annualy' : 'monthly'}`);
   });
 
-  test('changing selected plan should highlight new plan', async function (assert) {
+  skip('changing selected plan should highlight new plan', async function (assert) {
     this.set('selectedPlan', this.plan2);
 
     await render(hbs`<Billing::SelectPlan
