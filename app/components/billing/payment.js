@@ -20,6 +20,7 @@ export default Component.extend({
   couponId: null,
   options: config.stripeOptions,
   showSwitchToFreeModal: false,
+  showPlanSwitchWarning: false,
 
   firstName: reads('subscription.billingInfo.firstName'),
   lastName: reads('subscription.billingInfo.lastName'),
@@ -87,11 +88,16 @@ export default Component.extend({
         });
         yield this.subscription.buyAddon.perform(this.selectedAddon);
       } else {
+        if (this.subscription.plan.get('planType') == 'metered' && this.selectedPlan.get('planType') == 'hybrid' && !this.showPlanSwitchWarning) {
+          this.set('showPlanSwitchWarning', true);
+          return;
+        }
         if (!this.subscription.id && this.v1SubscriptionId) {
           this.metrics.trackEvent({
             action: 'Plan upgraded from Legacy Plan',
             category: 'Subscription',
           });
+          this.set('showPlanSwitchWarning', false);
           const { account, subscription, selectedPlan } = this;
           const organizationId = account.type === 'organization' ? +(account.id) : null;
           const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
@@ -211,6 +217,10 @@ export default Component.extend({
     this.storage.clearBillingData();
     this.set('showPlansSelector', false);
     this.set('isProcessCompleted', true);
+  },
+
+  closePlanSwitchWarning: function () {
+    this.set('showPlanSwitchWarning', false);
   },
 
   actions: {

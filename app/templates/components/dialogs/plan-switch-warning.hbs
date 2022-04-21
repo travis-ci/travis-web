@@ -1,0 +1,23 @@
+<Modal
+  @isVisible={{this.isOpen}}
+  @closeOnClickOverlay={{false}}
+  @closeButton={{true}}
+  @onClose={{fn @onClose}}
+>
+  <div class="migrate-beta-dialog">
+    <h2 class="h2--teal align-center">
+      Warning!
+    </h2>
+    <p>
+      You will switch to a plan that does not include credits.
+    </p>
+    <div class="modal-controls">
+      <button
+        class="button--green"
+        {{on 'click' (perform this.updatePlan)}} 
+      >
+        Pay to complete order
+      </button>
+    </div>
+  </div>
+</Modal>
