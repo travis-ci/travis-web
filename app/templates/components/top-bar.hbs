@@ -8,6 +8,9 @@
 {{#if features.enterpriseVersion}}
   {{enterprise-banner}}
 {{/if}}
+{{#if this.user}}
+  <RepositorySecurityBanner />
+{{/if}}
 
 {{#if showCta}}
   <div class="cta">
