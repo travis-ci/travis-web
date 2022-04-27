@@ -126,7 +126,6 @@ module.exports = function () {
   app.import('node_modules/fusioncharts/themes/fusioncharts.theme.fusion.js');
   app.import('node_modules/fusioncharts/fusioncharts.timeseries.js');
 
-  
   return app.toTree(emojiAssets);
 };
 

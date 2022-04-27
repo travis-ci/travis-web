@@ -6,19 +6,23 @@
   margin-left: 10px;
   margin-bottom: -2px;
 }
+
 .caret.down {
   border-top-color: black;
 }
+
 .box {
   width: 15px;
   height: 15px;
 }
+
 .dropdown-list-builds {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
 }
+
 .wrapper-all-filters {
   display: inline-block;
   flex-direction: row;
@@ -26,11 +30,13 @@
   align-items: center;
   height: 31px;
 }
+
 .checkbox-label {
   width: 100%;
   display: inline-block;
   padding: 7px 12px;
 }
+
 .multiselect-checkbox-title {
   position: relative;
   padding-left: 35px;
@@ -59,6 +65,7 @@
   background-color: #fff;
   outline: none;
   font-size: 14px;
+  height: 31px;
 }
 
 .icon-notification-filter {
