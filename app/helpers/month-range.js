@@ -1,27 +1,13 @@
 import { helper } from '@ember/component/helper';
 import moment from 'moment';
 
-export default helper(function monthChecker([
-  month,
-  year,
-  startMonth,
-  endMonth,
-  startYear,
-  endYear,
-]) {
+export default helper(function monthChecker(month, year, startMonth, endMonth, startYear, endYear) {
   var classes = '';
   var today = new Date();
-  let previousMonth = moment(new Date(`${startMonth} ${startYear}`)).subtract(
-    1,
-    'months'
-  );
+  let previousMonth = moment(new Date(`${startMonth} ${startYear}`)).subtract(1, 'months');
   previousMonth = new Date(previousMonth);
 
-  const monthDifference = moment(new Date(`${endMonth} ${endYear}`)).diff(
-    new Date(`${startMonth} ${startYear}`),
-    'months',
-    true
-  );
+  const monthDifference = moment(new Date(`${endMonth} ${endYear}`)).diff(new Date(`${startMonth} ${startYear}`), 'months', true);
 
   if (startMonth === month && startYear === year) {
     classes += ' selected-month';
@@ -30,9 +16,7 @@ export default helper(function monthChecker([
   if (previousMonth.getTime() === new Date(`${month}${year}`).getTime()) {
     classes += ' offset-month';
   }
-  const offsetStartMonth = moment(
-    new Date(`${startMonth} ${startYear}`)
-  ).subtract(monthDifference + 1, 'months');
+  const offsetStartMonth = moment(new Date(`${startMonth} ${startYear}`)).subtract(monthDifference + 1, 'months');
 
   if (startMonth === month && startYear === year) {
     classes += ' selected-month';
@@ -42,29 +26,18 @@ export default helper(function monthChecker([
     classes += 'future-months';
   }
 
-  if (
-    `${month} ${year}`.toUpperCase() ===
-    moment(new Date()).format('MMM YYYY').toUpperCase()
-  ) {
+  if (`${month} ${year}`.toUpperCase() === moment(new Date()).format('MMM YYYY').toUpperCase()) {
     classes += ' current-month';
   }
 
   if (![startMonth, endMonth, startYear, endYear].includes(undefined)) {
     classes += '';
 
-    if (
-      new Date(`${startMonth} ${startYear}`) < new Date(`${month} ${year}`) &&
-      new Date(`${endMonth} ${endYear}`) > new Date(`${month} ${year}`)
-    ) {
+    if (new Date(`${startMonth} ${startYear}`) < new Date(`${month} ${year}`) && new Date(`${endMonth} ${endYear}`) > new Date(`${month} ${year}`)) {
       classes += ' in-between-month';
     }
 
-    if (
-      new Date(offsetStartMonth).getTime() <=
-        new Date(`${month} ${year}`).getTime() &&
-      new Date(`${month} ${year}`).getTime() <
-        new Date(`${startMonth} ${startYear}`).getTime()
-    ) {
+    if (new Date(offsetStartMonth).getTime() <= new Date(`${month} ${year}`).getTime() && new Date(`${month} ${year}`).getTime() < new Date(`${startMonth} ${startYear}`).getTime()) {
       classes += ' offset-month';
     }
 

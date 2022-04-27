@@ -6,9 +6,11 @@
   margin-left: 10px;
   margin-bottom: -2px;
 }
+
 .caret.down {
   border-top-color: black;
 }
+
 .trigger-month-calendar {
   display: flex;
   flex-direction: row;
@@ -23,10 +25,12 @@
   color: #333;
   background-color: #ffffff;
 }
+
 .trigger-month-calendar:hover {
   background-color: #d4d4d4;
   border-color: #8c8c8c;
 }
+
 .date-range-selected {
   font-size: 14px;
   font-family: "Roboto";
@@ -36,21 +40,23 @@
   letter-spacing: 0.15px;
   color: #666666;
 }
+
 .content-month-calendar {
   width: 493px;
   height: 251px;
   background: #ffffff;
   border: 1px solid #d7d7d7;
   border-radius: 4px;
-  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
-    0 1px 5px 0 rgb(0 0 0 / 20%);
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
+
 .month-picker-wrapper {
   display: flex;
   flex-direction: row;
   gap: 32px;
   padding: 17px;
 }
+
 .year-title {
   margin-top: 18px;
   display: flex;
@@ -58,6 +64,7 @@
   align-items: center;
   padding-left: 10px;
 }
+
 .prev-arrow {
   color: #fff;
   border: solid #666666;
@@ -70,6 +77,7 @@
   cursor: pointer;
   user-select: none;
 }
+
 .prev-year {
   margin-left: 76px;
   font-family: "Roboto";
@@ -82,6 +90,7 @@
   cursor: pointer;
   user-select: none;
 }
+
 .next-year {
   margin-left: 80px;
   font-family: "Roboto";
@@ -94,6 +103,7 @@
   cursor: pointer;
   user-select: none;
 }
+
 .next-arrow {
   margin-left: 75px;
   color: #fff;
@@ -107,10 +117,12 @@
   cursor: pointer;
   user-select: none;
 }
+
 .year-cal {
   display: grid;
   grid-template-columns: auto auto auto;
 }
+
 .month-card {
   background-color: #fff;
   font-family: "Roboto";
@@ -127,19 +139,23 @@
   letter-spacing: 0.5px;
   color: #666666;
 }
+
 .month-card:hover {
   cursor: pointer;
   background-color: #f1f1f1;
 }
+
 .month-picker-child {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
+
 .current-month {
   border: 1px solid #3eaaaf;
   box-sizing: border-box;
 }
+
 .in-between-month {
   border: 1px solid #fff;
   background-color: #cfeaeb;
@@ -147,6 +163,7 @@
   color: #666666;
   border-bottom: none;
 }
+
 .calendar-wrapper-button {
   display: flex;
   flex-direction: row;
@@ -154,6 +171,7 @@
   margin-right: 30px;
   gap: 15px;
 }
+
 .calendar-cancel-button,
 .calendar-cancel-button:focus {
   width: 71px;
@@ -171,6 +189,7 @@
   cursor: pointer;
   background-color: #ffffff !important;
 }
+
 .calendar-apply-button {
   width: 71px;
   height: 24px;
@@ -187,29 +206,32 @@
   letter-spacing: 1.25px;
   cursor: pointer;
 }
+
 .future-months {
   color: #8c8c8c;
   pointer-events: none;
 }
+
 .selected-month {
   border: 1px solid #fff;
-  background-color: #cfeaeb;
   font-weight: 700;
   color: #000;
   background: #3eaaaf;
 }
+
 .selected-month:hover {
   border: 1px solid #fff;
-  background-color: #cfeaeb;
   font-weight: 700;
   color: #000;
   background: #3eaaaf;
 }
+
 .offset-month {
   border: 1px solid #fff;
   font-weight: 700;
   background: #f1f1f1;
 }
+
 @media only screen and (max-width: 767px) {
   .content-month-calendar {
     width: 255px;
@@ -217,7 +239,7 @@
   }
   .month-picker-wrapper {
     flex-direction: column;
-    gap: 0px;
+    gap: 0;
   }
   .next-arrow {
     margin-top: -355px;

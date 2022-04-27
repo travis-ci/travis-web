@@ -5,7 +5,7 @@
 @import "insights-calendar.scss";
 
 .spotlight {
-  margin: 12px 24px 0px 24px;
+  margin: 12px 24px 0 24px;
 }
 
 .insights-title {
@@ -35,7 +35,6 @@
   border-radius: 4px;
   border: 1px solid #d0d0d0;
   position: relative;
-  font-size: 14px;
   font-family: Roboto;
   font-size: 14px;
   font-stretch: normal;
@@ -56,5 +55,5 @@
 .insights-filter {
   display: flex;
   justify-content: space-between;
-  margin: 51px 0px 30px 0;
+  margin: 51px 0 30px 0;
 }

@@ -1,14 +1,14 @@
 $brownish-grey: #666666;
 
 .aggregate-matrices-container {
-  margin: 1rem 0rem 1rem 0;
+  margin: 1rem 0 1rem 0;
   display: flex;
   justify-content: space-between;
   font-family: Roboto;
   max-width: 600px;
 }
 
-.aggregate-header{
+.aggregate-header {
   font-size: 14px;
   line-height: 1.43;
   letter-spacing: 0.1px;
@@ -28,7 +28,7 @@ $brownish-grey: #666666;
   color: #717171;
 }
 
-.aggregate-percentage{
+.aggregate-percentage {
   font-size: 14px;
   line-height: 1.43;
   letter-spacing: 0.1px;

@@ -30,28 +30,11 @@ export default Component.extend({
       months: computed('months'),
     },
   ],
-  months: [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ],
+  months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 
   actions: {
     onSelectHandler(month, year) {
-      const monthDifference = moment(new Date(`${month} ${year}`)).diff(
-        new Date(`${this.startMonth} ${this.startYear}`),
-        'months',
-        true
-      );
+      const monthDifference = moment(new Date(`${month} ${year}`)).diff(new Date(`${this.startMonth} ${this.startYear}`), 'months', true);
       if (monthDifference >= 12 || monthDifference < 0) {
         this.set('endMonth', undefined);
         this.set('endYear', undefined);
@@ -61,14 +44,7 @@ export default Component.extend({
       if (this.startMonth === undefined && this.startYear === undefined) {
         this.set('startMonth', month);
         this.set('startYear', year);
-      } else if (
-        ![
-          this.startMonth,
-          this.startYear,
-          this.endMonth,
-          this.endYear,
-        ].includes(undefined)
-      ) {
+      } else if (![this.startMonth, this.startYear, this.endMonth, this.endYear].includes(undefined)) {
         this.set('endMonth', undefined);
         this.set('endYear', undefined);
         this.set('startMonth', month);
@@ -98,32 +74,16 @@ export default Component.extend({
     },
     monthApplyClicked(dropdown) {
       dropdown.actions.close();
-      if (
-        this.endMonth === undefined &&
-        this.endYear === undefined &&
-        this.startMonth === undefined &&
-        this.startYear === undefined
-      ) {
+      if (this.endMonth === undefined && this.endYear === undefined && this.startMonth === undefined && this.startYear === undefined) {
         this.set('isDateSelected', false);
-      } else if (
-        this.endMonth === undefined &&
-        this.endYear === undefined &&
-        this.startMonth &&
-        this.startYear
-      ) {
+      } else if (this.endMonth === undefined && this.endYear === undefined && this.startMonth && this.startYear) {
         this.set('isDateSelected', true);
         this.set('selectedStartMonth', this.startMonth);
         this.set('selectedStartYear', this.startYear);
         this.set('selectedEndMonth', this.startMonth);
         this.set('selectedEndYear', this.startYear);
-        let selectedStartDateFormat = `${this.selectedStartYear}-${(this.months.indexOf(this.selectedStartMonth)+1).toLocaleString('en-US', {
-          minimumIntegerDigits: 2,
-          useGrouping: false
-        })}`
-        let selectedEndDateFormat =`${this.selectedEndYear}-${(this.months.indexOf(this.selectedEndMonth)+1).toLocaleString('en-US', {
-          minimumIntegerDigits: 2,
-          useGrouping: false
-        })}`
+        let selectedStartDateFormat = `${this.selectedStartYear}-${(this.months.indexOf(this.selectedStartMonth) + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
+        let selectedEndDateFormat = `${this.selectedEndYear}-${(this.months.indexOf(this.selectedEndMonth) + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
         this.setStartMonth(selectedStartDateFormat);
         this.setEndMonth(selectedEndDateFormat);
       } else {
@@ -132,14 +92,8 @@ export default Component.extend({
         this.set('selectedEndMonth', this.endMonth);
         this.set('selectedEndYear', this.endYear);
         this.set('isDateSelected', true);
-        let selectedStartDateFormat = `${this.selectedStartYear}-${(this.months.indexOf(this.selectedStartMonth)+1).toLocaleString('en-US', {
-          minimumIntegerDigits: 2,
-          useGrouping: false
-        })}`
-        let selectedEndDateFormat =`${this.selectedEndYear}-${(this.months.indexOf(this.selectedEndMonth)+1).toLocaleString('en-US', {
-          minimumIntegerDigits: 2,
-          useGrouping: false
-        })}`
+        let selectedStartDateFormat = `${this.selectedStartYear}-${(this.months.indexOf(this.selectedStartMonth) + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
+        let selectedEndDateFormat = `${this.selectedEndYear}-${(this.months.indexOf(this.selectedEndMonth) + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
         this.setStartMonth(selectedStartDateFormat);
         this.setEndMonth(selectedEndDateFormat);
       }
