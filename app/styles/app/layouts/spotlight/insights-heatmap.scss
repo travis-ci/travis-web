@@ -157,14 +157,13 @@
     height: 30px;
   }
   span.heatmap-spinner {
-    background: url(/images/insights/spinner.gif) no-repeat right 138px;
+    background: url(/images/insights/spinner.gif) right no-repeat;
     background-size: 30px;
+    width: 10px;
+    height: 30px;
     position: absolute;
-    top: 72%;
-    bottom: 0;
-    left: 0;
-    right: 50%;
-    margin: auto;
+    top: 85%;
+    padding-left: 50%;
     display: none;
   }
   @media only screen and (max-width: 1279px) {
