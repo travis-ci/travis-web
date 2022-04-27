@@ -3,11 +3,7 @@
   color: inherit;
   background-color: #fff;
   border-radius: 4px;
-  border: 1px solid #ddd;
-  width: 278px;
   max-width: none;
-  padding: 0;
-  margin-top: 7px;
   top: 100px;
   left: 20px;
   z-index: 3001;
@@ -21,9 +17,7 @@
   margin: 2px 0 0;
   padding: 10px 0.6px 12px 16px;
   border: solid 1px #d7d7d7;
-  background-color: #fff;
-  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
-    0 1px 5px 0 rgb(0 0 0 / 20%);
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 
 .daterangepicker:before,
@@ -132,9 +126,9 @@
   padding: 1px 14px 1px 17px !important;
   background-color: rgb(62, 170, 175) !important;
   left: 80%;
-  right: 0%;
+  right: 0;
   top: 80%;
-  bottom: 0%;
+  bottom: 0;
   font-size: 11px !important;
   font-family: Roboto;
   font-style: normal;
@@ -242,30 +236,22 @@
 .daterangepicker .calendar-table th,
 .daterangepicker .calendar-table td {
   white-space: nowrap;
-  text-align: center;
   vertical-align: middle;
   min-width: 32px;
-  width: 32px;
-  height: 24px;
-  line-height: 24px;
-  font-size: 12px;
-  border: 1px solid #fff;
-  border-bottom: none;
-  white-space: nowrap;
-  cursor: pointer;
-  padding-left: 20px;
   width: 71px;
   height: 30.8px;
+  line-height: 1.57;
+  border: 1px solid #fff;
+  border-bottom: none;
+  cursor: pointer;
   flex-grow: 0;
   margin: 5.9px 1.2px 1.2px 0;
   padding: 4.4px 20.1px 0.4px 21.3px;
-  flex-grow: 0;
   font-family: Roboto;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.57;
   letter-spacing: 0.5px;
   text-align: left;
 }
@@ -306,7 +292,6 @@
 }
 
 .daterangepicker td.in-range {
-  background-color: #ebf4f8;
   border: 1px solid #fff;
   width: 71px;
   height: 30.8px;
@@ -335,12 +320,10 @@
 .daterangepicker td.active:hover {
   /* background-color: #357ebd; */
   border: 1px solid #fff;
-  color: #fff;
   width: 71px;
   height: 30.8px;
   flex-grow: 0;
   background-color: #3eaaaf;
-  flex-grow: 0;
   font-family: Roboto;
   font-size: 14px;
   font-weight: bold;
@@ -582,7 +565,6 @@
 
 @media (max-width: 500px) {
   .daterangepicker {
-    width: auto;
     width: 255px !important;
     height: 412px;
   }
@@ -627,7 +609,7 @@
   }
   .active-button {
     left: 56%;
-    right: 0%;
+    right: 0;
     top: 91%;
   }
   .daterangepicker.ltr .drp-calendar.left .calendar-table {
