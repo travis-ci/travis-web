@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import CalHeatMap from 'cal-heatmap';
 
 const BUILDS_FILTER_LABELS = {
   all: 'All Builds',
@@ -36,6 +37,8 @@ const BUILDS_QUERY_PARAMS = {
 
 const START_DATE = new Date(new Date().setMonth(new Date().getMonth() - 11));
 
+let initialRenderHeatmap = true;
+
 export default Component.extend({
   api: service(),
   buildFilterLabel: BUILDS_FILTER_LABELS['all'],
@@ -67,6 +70,7 @@ export default Component.extend({
     }
 
     let repoId = this.get('selectedRepoIds');
+
     if (repoId != '') {
       url = `${url}&repo_id=${repoId}`;
     }
@@ -189,9 +193,10 @@ export default Component.extend({
     let sDate = this.startDate.toISOString().split('T')[0];
     let eDate = this.endDate.toISOString().split('T')[0];
     this.set('selectedReposIds', this.selectedRepoIds);
-    if (this.selectedRepoIds !== '') {
+    if (!initialRenderHeatmap) {
       let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
       this.fetchHeatMapData.perform(url);
     }
+    initialRenderHeatmap = false;
   },
 });
