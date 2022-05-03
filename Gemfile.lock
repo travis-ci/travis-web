@@ -6,29 +6,28 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    backports (3.6.8)
     crass (1.0.6)
     diff-lcs (1.2.5)
     foreman (0.82.0)
       thor (~> 0.19.1)
     hashr (2.0.0)
     mini_portile2 (2.4.0)
-    multi_json (1.12.1)
+    multi_json (1.15.0)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     nokogumbo (2.0.2)
       nokogiri (~> 1.8, >= 1.8.4)
     power_assert (0.4.1)
     puma (3.12.6)
-    rack (1.6.12)
+    rack (2.2.3)
     rack-mobile-detect (0.4.0)
       rack
-    rack-protection (1.5.5)
+    rack-protection (2.2.0)
       rack
     rack-ssl (1.4.1)
       rack
-    rack-test (0.6.3)
-      rack (>= 1.0)
     rake (12.3.3)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
@@ -38,25 +37,26 @@ GEM
     rspec-expectations (2.99.2)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.99.4)
+    ruby2_keywords (0.0.5)
     sanitize (5.2.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
       nokogumbo (~> 2.0)
-    sinatra (1.4.8)
-      rack (~> 1.5)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
-    sinatra-contrib (1.4.7)
-      backports (>= 2.0)
+    sinatra (2.2.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.2.0)
+      tilt (~> 2.0)
+    sinatra-contrib (2.2.0)
       multi_json
-      rack-protection
-      rack-test
-      sinatra (~> 1.4.0)
-      tilt (>= 1.3, < 3)
+      mustermann (~> 1.0)
+      rack-protection (= 2.2.0)
+      sinatra (= 2.2.0)
+      tilt (~> 2.0)
     test-unit (3.2.3)
       power_assert
     thor (0.19.1)
-    tilt (2.0.8)
+    tilt (2.0.10)
 
 PLATFORMS
   ruby
@@ -66,7 +66,7 @@ DEPENDENCIES
   hashr
   puma (~> 3.12.4)
   rack-mobile-detect
-  rack-protection (~> 1.4)
+  rack-protection (~> 2.2)
   rack-ssl (~> 1.4)
   rake
   rspec (~> 2.11)
