@@ -21,11 +21,15 @@ export default Service.extend({
     // In Enterprise you can toggle enforce authentication where even "public" repositories are
     // hidden to anonymous users in which cases we need to generate a token for all images
     if (config.enterprise || repo.get('private')) {
-      const token = this.get('auth').assetToken();
+      const token = this.token()
       return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
     } else {
       return `${prefix}/${slug}.svg${branch ? `?branch=${encodeURIComponent(branch)}` : ''}`;
     }
+  },
+
+  token() {
+    return localStorage['travis.svg_token']
   },
 
   repositoryUrl(repo) {
@@ -74,7 +78,7 @@ export default Service.extend({
       url = `${url}?branch=${branch}`;
     }
     if (repo.get('private')) {
-      const token = this.get('auth').assetToken();
+      const token = this.token();
       const delimiter = url.indexOf('?') === -1 ? '?' : '&';
       url = `${url}${delimiter}token=${token}`;
     }
