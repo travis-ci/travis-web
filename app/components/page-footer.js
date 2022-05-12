@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
 export default Component.extend({
+  router: service(),
   features: service(),
 
   config,

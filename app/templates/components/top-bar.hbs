@@ -7,7 +7,9 @@
     />
   </h1>
   <HeaderBroadcasts @showBroadcasts={{this.showBroadcasts}} />
-  <HeaderLinks @isOpen={{this.isNavigationOpen}} />
+  {{#unless (and (or (eq this.router.currentRouteName 'signin') (eq this.router.currentRouteName 'signup') ) this.features.proVersion)}}
+    <HeaderLinks @isOpen={{this.isNavigationOpen}} />
+  {{/unless}}
   <ProfileMenu />
 </div>
 {{#if this.isUnconfirmed}}
