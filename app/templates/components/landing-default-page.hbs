@@ -6,24 +6,10 @@
   <div class="row hero z-1">
     <section class="landing-centered-wrapper">
       <div class="large-12 columns" id="hero-copy">
-        <h1>
-          Test and Deploy with Confidence
-        </h1>
-        <p>
-          Easily sync your projects with Travis CI
-          <br class="mobile-break" />
-          and you’ll be testing your code in minutes!
-        </p>
+        <h2>
+          <a href='https://app.travis-ci.com/signin'>Visit https://travis-ci.com</a>
+        </h2>
         {{#if this.auth.signedOut}}
-          {{#if this.multiVcs.disabled}}
-            <button class="hero-button org" {{action "signIn" "github"}}>
-              <SvgImage @name="sign-in-mascot" />
-              <span class="label-align">
-                Sign Up
-              </span>
-            </button>
-          {{/if}}
-
           {{#if this.multiVcs.enabled}}
             <div>
               {{#if this.multiVcs.enableGithubLogin}}

@@ -11,8 +11,8 @@
         &copy;Travis CI, GmbH
       </h3>
       <address>
-        Rigaer Straße 8<br />
-        10247 Berlin, Germany
+        Bonner Strasse 12<br />
+        51379 Leverkusen, Germany
       </address>
       <ul>
         <li>
@@ -88,13 +88,11 @@
         </li>
         {{#if this.features.proVersion}}
           <li>
-            <LinkTo
-              data-test-footer-plans-link="true"
-              @route='plans'
-              @title="Travis CI Plans"
-            >
-              Plans and Pricing
-            </LinkTo>
+          {{#if this.auth.signedIn}}
+            <a href='/account/plan?billingStep=1'>Plans and Pricing</a>
+          {{else}}
+            <a href='https://www.travis-ci.com/pricing/?_gl=1*1cv1tpb*_ga*NTc3MTcxMjQ3LjE2NDkzMzcwNjc.*_ga_XRYGSZFQ0P*MTY1MjM1OTkxMC45LjEuMTY1MjM2MDE5Ni42MA'>Plans and Pricing</a>
+          {{/if}}
           </li>
         {{/if}}
         <li>
@@ -143,5 +141,5 @@
         </li>
       </ul>
     </div>
-  {{/unless}}
+{{/unless}}
 </div>

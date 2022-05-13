@@ -21,15 +21,19 @@
       </UiKit::Box>
     {{/if}}
 
-    {{#if this.account}}
-      {{or this.account.login this.account.fullName}}
+    {{#unless this.features.proVersion}}
+      Visit https://travis-ci.com in order to sign-up!
     {{else}}
-      {{#if this.isLoading}}
-        Signing {{if this.isSignup 'Up' 'In'}}...
+      {{#if this.account}}
+        {{or this.account.login this.account.fullName}}
       {{else}}
-        Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
+        {{#if this.isLoading}}
+          Signing {{if this.isSignup 'Up' 'In'}}...
+        {{else}}
+          Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
+        {{/if}}
       {{/if}}
-    {{/if}}
+    {{/unless}}
 
     {{#if this.isBetaBadgeVisible}}
       <UiKit::Badge

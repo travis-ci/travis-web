@@ -8,6 +8,7 @@ export default Component.extend({
 
   auth: service(),
   multiVcs: service(),
+  features: service(),
 
   account: null,
 
@@ -48,11 +49,15 @@ export default Component.extend({
   }),
 
   signin() {
-    if (this.account) {
-      this.auth.switchAccount(this.account.id, this.auth.redirectUrl || '/');
+    if (this.get('features.proVersion')) {
+      if (this.account) {
+        this.auth.switchAccount(this.account.id, this.auth.redirectUrl || '/');
+      } else {
+        this.set('isLoading', true);
+        this.auth.signInWith(this.provider);
+      }
     } else {
-      this.set('isLoading', true);
-      this.auth.signInWith(this.provider);
+      window.location.href = 'https://app.travis-ci.com/signin';
     }
   },
 });

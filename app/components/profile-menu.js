@@ -15,6 +15,7 @@ export default Component.extend({
   auth: service(),
   multiVcs: service(),
   router: service(),
+  features: service(),
 
   isMenuOpen: false,
 

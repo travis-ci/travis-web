@@ -45,10 +45,12 @@
         <UiKit::ButtonSignin @isSignup={{true}} @provider='assembla' />
       {{/if}}
 
-      <UiKit::Text @margin={{hash y=6}}>
-        Already have an account?
-        <UiKit::Link @route='signin' @color='green-light'>Sign in</UiKit::Link>
-      </UiKit::Text>
+      {{#if this.features.proVersion}}
+        <UiKit::Text @margin={{hash y=6}}>
+          Already have an account?
+          <UiKit::Link @route='signin' @color='green-light'>Sign in</UiKit::Link>
+        </UiKit::Text>
+      {{/if}}
     </UiKit::Box>
 
     <UiKit::Box
