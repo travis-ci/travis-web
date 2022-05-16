@@ -83,7 +83,6 @@ module('Acceptance | builds/prioritize', function (hooks) {
     await visit('/travis-ci/travis-web');
     assert.dom('[data-test-repo-actions-prioritize-button]').exists();
     await click('[data-test-repo-actions-prioritize-button]');
-    assert.dom('[data-test-prioritize-modal-header]').hasText('Prioritize your build');
     assert.dom('[data-test-prioritize-close-button]').exists();
     await click('[data-test-prioritize-close-button]');
     assert.dom('[data-test-prioritize-modal-header]').doesNotExist();

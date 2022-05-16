@@ -48,7 +48,6 @@ module('Acceptance | sign up', function (hooks) {
     assert.dom(SELECTORS.PAGE).exists();
     assert.dom(SELECTORS.BUTTON_PRIMARY).containsText('Sign Up With GitHub');
     assert.dom(SELECTORS.BUTTON_ASSEMBLA).doesNotExist();
-    assert.dom(SELECTORS.BUTTON_BITBUCKET).doesNotExist();
 
     await click(SELECTORS.BUTTON_PRIMARY);
 
