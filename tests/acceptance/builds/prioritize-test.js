@@ -65,7 +65,6 @@ module('Acceptance | builds/prioritize', function (hooks) {
     await visit('/travis-ci/travis-web');
     assert.dom('[data-test-repo-actions-prioritize-button]').exists();
     await click('[data-test-repo-actions-prioritize-button]');
-    assert.dom('[data-test-prioritize-modal-header]').hasText('Prioritize your build');
     assert.dom('[data-test-prioritize-cancel-button]').hasText('Cancel');
     await click('[data-test-prioritize-cancel-button]');
     assert.dom('[data-test-prioritize-modal-header]').doesNotExist();
@@ -100,7 +99,6 @@ module('Acceptance | builds/prioritize', function (hooks) {
     await visit('/travis-ci/travis-web');
     assert.dom('[data-test-repo-actions-prioritize-button]').exists();
     await click('[data-test-repo-actions-prioritize-button]');
-    assert.dom('[data-test-prioritize-modal-header]').hasText('Prioritize your build');
     await triggerKeyEvent('button', 'keydown', 'Escape');
     assert.dom('[data-test-prioritize-modal-header]').doesNotExist();
   });
