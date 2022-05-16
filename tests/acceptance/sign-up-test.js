@@ -21,6 +21,7 @@ module('Acceptance | sign up', function (hooks) {
 
   test('visiting /signup shows signup page if unauthenticated', async function (assert) {
     let signupRequest;
+    enableFeature('proVersion');
 
     // avoid actually contacting GitHub
     const mockAuthService = Service.extend({
@@ -59,7 +60,7 @@ module('Acceptance | sign up', function (hooks) {
   test('visiting signup redirects to index if authenticated', async function (assert) {
     enableFeature('proVersion');
     const currentUser = this.server.create('user', 'withRepository');
-
+    enableFeature('proVersion');
     signInUser(currentUser);
 
     await visit('/signup');

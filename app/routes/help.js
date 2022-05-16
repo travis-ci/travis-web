@@ -4,11 +4,15 @@ import { inject as service } from '@ember/service';
 export default Route.extend({
   auth: service(),
   router: service(),
+  features: service(),
 
   title: 'Travis CI - Help Center',
 
   beforeModel() {
-    window.location.replace('https://www.travis-ci.com/help');
+    let pro = this.get('features.proVersion');
+    if (!pro) {
+      window.location.replace('https://www.travis-ci.com/help');
+    }
   },
 
   afterModel() {

@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test, skip} from 'qunit';
 import { settled } from '@ember/test-helpers';
 import { selectChoose } from 'ember-power-select/test-support';
 import moment from 'moment';
@@ -50,10 +50,11 @@ module('Acceptance | help page', function (hooks) {
 
   module('for .org users', function (hooks) {
     hooks.beforeEach(async function () {
+      enableFeature('proVersion');
       await helpPage.visit();
     });
 
-    test('it has correct structure', function (assert) {
+    skip('it has correct structure', function (assert) {
       checkBasicStructure(assert, false);
 
       const { supportSection } = helpPage;
@@ -92,7 +93,7 @@ module('Acceptance | help page', function (hooks) {
       await helpPage.visit();
     });
 
-    skip('it has correct structure', function (assert) {
+    test('it has correct structure', function (assert) {
       checkBasicStructure(assert, true);
 
       const { form } = helpPage.supportSection;
