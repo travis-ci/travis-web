@@ -1,4 +1,4 @@
-FROM ruby:2.6
+FROM ruby:2.7.5
 
 LABEL maintainer Travis CI GmbH <support+travis-web-docker-images@travis-ci.com>
 
@@ -25,6 +25,8 @@ RUN curl -fSL -o yarn.js "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-legac
   && mv yarn.js /usr/local/bin/yarn \
   && chmod +x /usr/local/bin/yarn
 
+RUN gem install bundler:2.3.7
+
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
 
@@ -44,7 +46,7 @@ RUN npm install --silent -g ember-cli
 
 COPY . /app
 
-RUN npm ci --silent
+RUN npm ci
 RUN ember build --environment=production
 
 RUN cp -a public/* dist/

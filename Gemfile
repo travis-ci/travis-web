@@ -1,9 +1,9 @@
-ruby "~> 2.6"
+ruby '2.7.5'
 
 source 'https://rubygems.org'
 
 gem 'travis-web', path: 'waiter'
-gem 'puma', '~> 4'
+gem 'puma', '~> 5.6.2'
 gem 'rack', '~> 2'
 gem 'rack-ssl'
 gem 'rack-protection'
@@ -11,6 +11,7 @@ gem 'rack-mobile-detect'
 gem 'sinatra'
 gem 'hashr'
 gem 'sanitize'
+gem 'nokogiri', '~> 1.13.3'
 
 group :development, :test do
   gem 'rake'
