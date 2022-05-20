@@ -9,10 +9,7 @@ export default Route.extend({
   title: 'Travis CI - Help Center',
 
   beforeModel() {
-    let pro = this.get('features.proVersion');
-    if (!pro) {
-      window.location.replace('https://www.travis-ci.com/help');
-    }
+    window.location.replace('https://www.travis-ci.com/help');
   },
 
   afterModel() {

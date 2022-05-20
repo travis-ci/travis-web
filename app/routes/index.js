@@ -7,6 +7,12 @@ export default Route.extend({
   repositories: service(),
   features: service(),
 
+  beforeModel() {
+    if (!this.auth.signedIn) {
+      window.location.replace('https://www.travis-ci.com');
+    }
+  },
+
   redirect() {
     if (this.get('auth.signedIn')) {
       if (this.get('features.dashboard')) {
