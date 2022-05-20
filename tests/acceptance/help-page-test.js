@@ -1,4 +1,4 @@
-import { module, skip } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { settled } from '@ember/test-helpers';
 import { selectChoose } from 'ember-power-select/test-support';
 import moment from 'moment';
@@ -70,11 +70,11 @@ module('Acceptance | help page', function (hooks) {
       await helpPage.visit();
     });
 
-    skip('it has correct structure', function (assert) {
+    test('it has correct structure', function (assert) {
       checkBasicStructure(assert, false);
     });
 
-    skip('it shows log in stub', function (assert) {
+    test('it shows log in stub', function (assert) {
       const { logInHeader, logInImage, logInButton } = helpPage.supportSection;
 
       assert.ok(logInHeader.isPresent);
@@ -93,7 +93,7 @@ module('Acceptance | help page', function (hooks) {
       await helpPage.visit();
     });
 
-    skip('it has correct structure', function (assert) {
+    test('it has correct structure', function (assert) {
       checkBasicStructure(assert, true);
 
       const { form } = helpPage.supportSection;
@@ -113,7 +113,7 @@ module('Acceptance | help page', function (hooks) {
       enableFeature('proVersion');
     });
 
-    skip('it has correct structure', async function (assert) {
+    test('it has correct structure', async function (assert) {
       this.trial = this.server.create('trial', {
         has_active_trial: true,
         builds_remaining: 100,
@@ -133,7 +133,7 @@ module('Acceptance | help page', function (hooks) {
       assert.ok(helpPage.supportSection.form.isPresent);
     });
 
-    skip('form not present after trial', async function (assert) {
+    test('form not present after trial', async function (assert) {
       this.trial = this.server.create('trial', {
         has_active_trial: true,
         builds_remaining: 0,
@@ -152,7 +152,7 @@ module('Acceptance | help page', function (hooks) {
       assert.notOk(helpPage.supportSection.form.isPresent);
     });
 
-    skip('form present when subscribed after trial', async function (assert) {
+    test('form present when subscribed after trial', async function (assert) {
       this.trial = this.server.create('trial', {
         has_active_trial: true,
         builds_remaining: 0,
@@ -178,7 +178,7 @@ module('Acceptance | help page', function (hooks) {
       assert.ok(helpPage.supportSection.form.isPresent);
     });
 
-    skip('form present when org subscribed after trial', async function (assert) {
+    test('form present when org subscribed after trial', async function (assert) {
       this.trial = this.server.create('trial', {
         has_active_trial: true,
         builds_remaining: 0,
@@ -221,11 +221,11 @@ module('Acceptance | help page', function (hooks) {
       await helpPage.visit();
     });
 
-    skip('it has correct structure', function (assert) {
+    test('it has correct structure', function (assert) {
       checkBasicStructure(assert, true);
     });
 
-    skip('it shows correct support hours', function (assert) {
+    test('it shows correct support hours', function (assert) {
       const { hours } = helpPage.supportSection;
 
       const startTime = UTC_START_TIME.local().format(DATE_FORMAT);
@@ -236,7 +236,7 @@ module('Acceptance | help page', function (hooks) {
       assert.equal(hours.text, `${startTime} ${timezone} – ${endTime} ${timezone}`);
     });
 
-    skip('it shows request form', function (assert) {
+    test('it shows request form', function (assert) {
       const { form } = helpPage.supportSection;
       const { email, subject, description, submit } = form;
 
@@ -260,7 +260,7 @@ module('Acceptance | help page', function (hooks) {
         });
       });
 
-      skip('succeeds when all fields filled properly', async function (assert) {
+      test('succeeds when all fields filled properly', async function (assert) {
         const { subject, description, submit } = helpPage.supportSection.form;
         const { successImage, successHeader, successMessage } = helpPage.supportSection;
 
@@ -274,7 +274,7 @@ module('Acceptance | help page', function (hooks) {
         assert.ok(successMessage.isPresent);
       });
 
-      skip('contains all necessary data', async function (assert) {
+      test('contains all necessary data', async function (assert) {
         const { subject, description, submit } = helpPage.supportSection.form;
         let data = {};
 
@@ -294,7 +294,7 @@ module('Acceptance | help page', function (hooks) {
         assert.ok(~data.comment.body.indexOf(mockData.description));
       });
 
-      skip('doesn\'t get sent if form is invalid', async function (assert) {
+      test('doesn\'t get sent if form is invalid', async function (assert) {
         const { submit } = helpPage.supportSection.form;
         let requestIsSent = false;
 
@@ -309,7 +309,7 @@ module('Acceptance | help page', function (hooks) {
         assert.equal(requestIsSent, false);
       });
 
-      skip('allows to choose different emails', async function (assert) {
+      test('allows to choose different emails', async function (assert) {
         const { email, subject, description, submit } = helpPage.supportSection.form;
         let data = {};
 
