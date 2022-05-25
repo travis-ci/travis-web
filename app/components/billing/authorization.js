@@ -29,15 +29,16 @@ export default Component.extend({
   isSubscribed: reads('subscription.isSubscribed'),
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
-  canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', function () {
-    return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan;
+  canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', function () {
+    return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial;
   }),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
+  isTrial: reads('subscription.plan.isTrial'),
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
-  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', function () {
-    return !this.freeV2Plan && !this.subscription.isCanceled;
+  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', function () {
+    return !this.freeV2Plan && !this.subscription.isCanceled && !this.isTrial;
   }),
 
   handleError: reads('stripe.handleError'),
