@@ -1,21 +1,11 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import config from 'travis/config/environment';
 
 export default Route.extend({
   auth: service(),
   tabStates: service(),
   repositories: service(),
   features: service(),
-
-  beforeModel() {
-    // non logged in users visiting the roots should be redirected to WP site
-    // to make the redirection change below, a lot of test cases were failing
-    // so the following env check is to prevent test cases failure.
-    if (!this.auth.signedIn && config.environment !== 'test') {
-      window.location.replace('https://www.travis-ci.com');
-    }
-  },
 
   redirect() {
     if (this.get('auth.signedIn')) {
