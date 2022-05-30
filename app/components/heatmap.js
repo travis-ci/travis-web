@@ -2,6 +2,9 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import CalHeatMap from 'cal-heatmap';
+import moment from 'moment';
+
+const TIME_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS';
 
 const BUILDS_FILTER_LABELS = {
   all: 'All Builds',
@@ -34,9 +37,6 @@ const BUILDS_QUERY_PARAMS = {
   errored: 'errored',
   canceled: 'canceled',
 };
-
-const START_DATE = new Date(new Date().setMonth(new Date().getMonth() - 11));
-
 let initialRenderHeatmap = true;
 
 export default Component.extend({
@@ -56,8 +56,8 @@ export default Component.extend({
     new Date().getFullYear() - 4,
     new Date().getFullYear() - 5,
   ],
-  startDate: new Date(START_DATE.getFullYear(), START_DATE.getMonth(), 1),
-  endDate: new Date(),
+  startDate: moment().subtract(11,'months').startOf('month').format(TIME_FORMAT),
+  endDate: moment().format(TIME_FORMAT),
 
   selectedRepoIds: '',
 
@@ -103,7 +103,7 @@ export default Component.extend({
         domainGutter: 10,
         tooltip: true,
 
-        start: this.startDate,
+        start: new Date(this.startDate),
         data: this.heatmapData,
         considerMissingDataAsZero: true,
 
@@ -152,9 +152,7 @@ export default Component.extend({
       this.set('buildMinColor', BUILDS_MIN_COLOR[filter]);
       this.set('buildStatus', BUILDS_QUERY_PARAMS[filter]);
 
-      let sDate = this.startDate.toISOString().split('T')[0];
-      let eDate = this.endDate.toISOString().split('T')[0];
-      let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
+      let url = `/spotlight_summary?time_start=${this.startDate}&time_end=${this.endDate}`;
 
       this.fetchHeatMapData.perform(url);
     },
@@ -166,12 +164,12 @@ export default Component.extend({
 
       let sDate =
         this.buildYear !== new Date().getFullYear()
-          ? new Date(this.buildYear, 0, 1)
-          : new Date(START_DATE.getFullYear(), START_DATE.getMonth(), 1);
+          ? moment().year(this.buildYear).startOf('year').format(TIME_FORMAT)
+          : moment().subtract(11,'months').startOf('month').format(TIME_FORMAT);
       let eDate =
         this.buildYear !== new Date().getFullYear()
-          ? new Date(this.buildYear, 11, 31)
-          : new Date();
+          ? moment().year(this.buildYear).endOf('year').format(TIME_FORMAT)
+          : moment().format(TIME_FORMAT);
       this.set('startDate', sDate);
       this.set('endDate', eDate);
 
@@ -182,19 +180,15 @@ export default Component.extend({
   },
 
   didInsertElement() {
-    let sDate = this.startDate.toISOString().split('T')[0];
-    let eDate = this.endDate.toISOString().split('T')[0];
-    let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
+    let url = `/spotlight_summary?time_start=${this.startDate}&time_end=${this.endDate}`;
     this.fetchHeatMapData.perform(url);
   },
 
   didReceiveAttrs() {
     this._super(...arguments);
-    let sDate = this.startDate.toISOString().split('T')[0];
-    let eDate = this.endDate.toISOString().split('T')[0];
     this.set('selectedReposIds', this.selectedRepoIds);
     if (!initialRenderHeatmap) {
-      let url = `/spotlight_summary?time_start=${sDate}&time_end=${eDate}`;
+      let url = `/spotlight_summary?time_start=${this.startDate}&time_end=${this.endDate}`;
       this.fetchHeatMapData.perform(url);
     }
     initialRenderHeatmap = false;
