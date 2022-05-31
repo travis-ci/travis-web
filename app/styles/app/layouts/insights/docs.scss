@@ -1,0 +1,144 @@
+@import "colors.scss";
+@import "variables.scss";
+
+.doc-all {
+  margin: $spacing-16;
+}
+
+.doc-main-text p {
+  color: $asphalt-gray;
+  line-height: 1.75;
+  letter-spacing: 0.5px;
+}
+
+.doc-main-text ul {
+  color: $asphalt-gray;
+  line-height: 1.75;
+  letter-spacing: 0.5px;
+}
+
+.main-text h5 {
+  color: $oxide-blue;
+}
+
+.main-text hr {
+  background: $med-gray;
+  height: 1px;
+  border: none;
+}
+
+.doc-navigation {
+  margin-bottom: $spacing-24;
+  font-size: 1.5rem;
+  letter-spacing: 0.25px;
+  color: $asphalt-gray;
+
+  a {
+    color: $oxide-blue;
+  }
+}
+
+.doc-sidebar {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.5rem;
+}
+
+.doc-all-links.collection {
+  margin: 0;
+  border: none;
+}
+
+.doc-all-links.collection .collection-item {
+  color: $asphalt-gray;
+  border-bottom: 1px solid $med-gray;
+}
+
+.doc-all-links.collection:last-child {
+  border-bottom: 1px solid $med-gray;
+}
+
+.doc-all-links {
+  display: none;
+}
+
+#dropdown-doc {
+  width: 100%;
+}
+
+#dropdown-doc li {
+  text-align: center;
+}
+
+#doc-menu {
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.15px;
+  text-transform: none;
+  background-color: inherit;
+  color: $asphalt-gray;
+  box-shadow: none;
+  border: solid 1px $med-gray;
+  border-radius: 4px;
+  padding: $spacing-16;
+}
+
+.doc-sidebar {
+  flex: 1 1 0;
+}
+
+.doc-main-text {
+  flex: 3 3 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.doc-table-of-content {
+  margin-top: 2.5rem;
+}
+
+.doc-main-text-content-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-main-text-content-links a {
+  line-height: 1.75;
+  letter-spacing: 0.5px;
+  color: $oxide-blue;
+}
+
+
+@media all and (min-width: $lg-min) {
+
+  .doc-all {
+    margin: $spacing-24;
+  }
+
+  .doc-all-links {
+    display: block;
+  }
+
+  .doc-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+  }
+
+  #doc-menu {
+    display: none;
+  }
+  .doc-sidebar {
+    max-width: 22.5rem;
+    margin-right: 3.25rem;
+  }
+
+  .doc-main-text-content {
+    max-width: 43.75rem;
+  }
+
+}

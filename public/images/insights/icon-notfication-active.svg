@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icon-notfication-active</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M7.55,3.83 L6.12,2.4 C3.72,4.23 2.14,7.05 2,10.25 L4,10.25 C4.15,7.6 5.51,5.28 7.55,3.83 L7.55,3.83 Z M19.94,10.25 L21.94,10.25 C21.79,7.05 20.21,4.23 17.82,2.4 L16.4,3.83 C18.42,5.28 19.79,7.6 19.94,10.25 Z M17.97,10.75 C17.97,7.68 16.33,5.11 13.47,4.43 L13.47,3.75 C13.47,2.92 12.8,2.25 11.97,2.25 C11.14,2.25 10.47,2.92 10.47,3.75 L10.47,4.43 C7.6,5.11 5.97,7.67 5.97,10.75 L5.97,15.75 L3.97,17.75 L3.97,18.75 L19.97,18.75 L19.97,17.75 L17.97,15.75 L17.97,10.75 Z M11.97,21.75 C12.11,21.75 12.24,21.74 12.37,21.71 C13.02,21.57 13.55,21.13 13.81,20.53 C13.91,20.29 13.96,20.03 13.96,19.75 L9.96,19.75 C9.97,20.85 10.86,21.75 11.97,21.75 Z" id="path-1"></path>
+    </defs>
+    <g id="icon-notfication-active" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-/-Database-/-Notification-Active">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask" fill-rule="nonzero"></g>
+            <g id="✱-/-Color-/-Icons-/-Selected-/-On-Surface-/-Inactive" mask="url(#mask-2)" fill="#000000" fill-opacity="0.54" fill-rule="evenodd">
+                <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
