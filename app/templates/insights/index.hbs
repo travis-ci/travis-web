@@ -5,11 +5,11 @@
 
   <div class="insights-filter">
     <InsightsFilter @selectedRepoIds={{this.selectedRepoIds}} @setSelectedRepoIds={{action "setSelectedRepoIds"}} />
-    <DateRangePicker @setStartMonth={{action "setStartMonth"}} @setEndMonth={{action "setEndMonth"}} @timeZone={{this.timeZone}} />
+    <DateRangePicker @setStartMonth={{action "setStartMonth"}} @setEndMonth={{action "setEndMonth"}} @timeZone={{this.timeZone}} @browserTimeZone={{this.browserTimeZone}} />
   </div>
 
   <AggregateMatrices @selectedRepoIds={{this.selectedRepoIds}} @startTime={{this.startTime}} @endTime={{this.endTime}} @setCurrentRepos={{action "setCurrentRepos"}} @timeZone={{this.timeZone}} />
   <TimeseriesChart @selectedRepoIds={{this.selectedRepoIds}} @timeStart={{this.startTime}} @timeEnd={{this.endTime}} @currentRepos={{this.currentRepos}} />
 
-  <Heatmap @selectedRepoIds={{this.selectedRepoIds}} @timeZone={{this.timeZone}} />
+  <Heatmap @selectedRepoIds={{this.selectedRepoIds}} @timeZone={{this.timeZone}} @browserTimeZone={{this.browserTimeZone}} />
 </div>

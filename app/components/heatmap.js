@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import CalHeatMap from 'cal-heatmap';
 import moment from 'moment';
+import { computed } from '@ember/object';
 
 const TIME_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS';
 
@@ -42,44 +43,71 @@ let initialRenderHeatmap = true;
 export default Component.extend({
   api: service(),
   timeZone: '',
-  toEndDateTimeZone(time, zone) {
-    return moment(time, TIME_FORMAT).tz(zone).endOf('day').utc().
-      format(TIME_FORMAT);
+  browserTimeZone: '',
+  convertToTimeZone(time) {
+    if (this.timeZone !== '') {
+      return moment(time, TIME_FORMAT).tz(this.timeZone);
+    } else if (this.browserTimeZone !== '') {
+      return moment(time, TIME_FORMAT).tz(this.browserTimeZone);
+    } else {
+      return moment(time, TIME_FORMAT).utc();
+    }
+  },
+  convertTimeFromUTC(time) {
+    if (this.timeZone !== '') {
+      return moment.utc(time).tz(this.timeZone);
+    } else if (this.browserTimeZone !== '') {
+      return moment.utc(time).tz(this.browserTimeZone);
+    } else {
+      return moment.utc(time);
+    }
   },
   buildFilterLabel: BUILDS_FILTER_LABELS['all'],
-  buildYear: new Date().getFullYear(),
+  currentYear: computed('convertToTimeZone', function () {
+    return this.convertToTimeZone(moment()).startOf('day').format('YYYY');
+  }),
+  buildYear: computed('currentYear', function () {
+    return this.currentYear;
+  }),
   buildMinColor: BUILDS_MIN_COLOR['all'],
   buildMaxColor: BUILDS_MAX_COLOR['all'],
   buildEmptyColor: '#f1f1f1',
   buildStatus: BUILDS_QUERY_PARAMS['all'],
   heatmapData: {},
-  buildYears: [
-    new Date().getFullYear(),
-    new Date().getFullYear() - 1,
-    new Date().getFullYear() - 2,
-    new Date().getFullYear() - 3,
-    new Date().getFullYear() - 4,
-    new Date().getFullYear() - 5,
-  ],
-  startDate: moment().subtract(11, 'months').startOf('month').format(TIME_FORMAT),
-  endDate: moment().endOf('day').format(TIME_FORMAT),
-
+  buildYears: computed('currentYear', function () {
+    return [
+      this.currentYear,
+      this.currentYear - 1,
+      this.currentYear - 2,
+      this.currentYear - 3,
+      this.currentYear - 4,
+      this.currentYear - 5,
+    ];
+  }),
+  endDate: computed('convertToTimeZone', function () {
+    return this.convertToTimeZone(moment()).endOf('day');
+  }),
+  startDate: computed('endDate', function () {
+    return moment(this.endDate).subtract(11, 'months').startOf('month');
+  }),
   selectedRepoIds: '',
 
   fetchHeatMapData: task(function* () {
-    let startTime = this.startDate;
-    let endTime = this.endDate;
-    let isCurrentYear = (new Date().getFullYear() === this.buildYear);
+    let startTime = this.startDate.format(TIME_FORMAT);
+    let endTime = this.endDate.format(TIME_FORMAT);
+    let startTimeInUTC = moment(this.startDate).utc().format(TIME_FORMAT);
+    let endTimeInUTC = moment(this.endDate).utc().format(TIME_FORMAT);
+    let isCurrentYear = (this.currentYear === this.buildYear);
 
-    if (this.timeZone !== '' &&  isCurrentYear) {
-      endTime = this.toEndDateTimeZone(endTime, this.timeZone);
-      startTime = moment(endTime).subtract(11, 'months').startOf('month').format(TIME_FORMAT);
-    }
     if (!isCurrentYear) {
-      startTime = moment().year(this.buildYear).startOf('year').format(TIME_FORMAT);
-      endTime = moment().year(this.buildYear).endOf('year').format(TIME_FORMAT);
+      startTime = this.convertToTimeZone(moment().year(this.buildYear)).startOf('year');
+      endTime = this.convertToTimeZone(moment().year(this.buildYear)).endOf('year');
+      startTimeInUTC = moment(startTime).utc().format(TIME_FORMAT);
+      endTimeInUTC = moment(endTime).utc().format(TIME_FORMAT);
+      startTime = startTime.format(TIME_FORMAT);
+      endTime = endTime.format(TIME_FORMAT);
     }
-    let url = `/spotlight_summary?time_start=${startTime}&time_end=${endTime}`;
+    let url = `/spotlight_summary?time_start=${startTimeInUTC}&time_end=${endTimeInUTC}`;
     document.getElementsByClassName('heatmap-cal-container')[0].classList.add('visibility-hidden');
     document.getElementsByClassName('heatmap-spinner')[0].style.display = 'block';
 
@@ -98,7 +126,8 @@ export default Component.extend({
       let heatmapData = {};
 
       result.data.map((r) => {
-        let buildDate = Date.parse(r.time) / 1000;
+        let utcBuildDate = this.convertTimeFromUTC(r.time).format(TIME_FORMAT);
+        let buildDate = Date.parse(utcBuildDate) / 1000;
         if (heatmapData[buildDate] === undefined) {
           heatmapData[buildDate] = 0;
         }
@@ -190,6 +219,7 @@ export default Component.extend({
     this._super(...arguments);
     this.set('selectedReposIds', this.selectedRepoIds);
     this.set('timeZone', this.timeZone);
+    this.set('browserTimeZone', this.browserTimeZone);
     if (!initialRenderHeatmap) {
       this.fetchHeatMapData.perform();
     }

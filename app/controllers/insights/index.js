@@ -14,6 +14,7 @@ export default Controller.extend({
       return this.preferences.insightsTimeZone.substr(this.preferences.insightsTimeZone.indexOf(')') + 2);
     } else return '';
   }),
+  browserTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   actions: {
     setSelectedRepoIds(val) {
       this.set('selectedRepoIds', val);
