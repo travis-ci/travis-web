@@ -3,9 +3,9 @@ import { computed } from '@ember/object';
 import moment from 'moment';
 
 export default Component.extend({
-  startMonth: undefined,
+  startMonth: new Date().toLocaleString('default', { month: 'short' }),
   endMonth: undefined,
-  startYear: undefined,
+  startYear: new Date().getUTCFullYear(),
   endYear: undefined,
   currentYear: new Date().getUTCFullYear(),
   currentMonth: new Date().toLocaleString('default', { month: 'short' }),
