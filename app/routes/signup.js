@@ -9,11 +9,6 @@ export default Route.extend(TailwindBaseMixin, {
   needsAuth: false,
 
   beforeModel() {
-    let pro = this.get('features.proVersion');
-    if (!pro) {
-      window.location.replace('https://app.travis-ci.com/signup');
-    }
-
     if (this.get('auth.signedIn')) {
       this.transitionTo('index');
     }

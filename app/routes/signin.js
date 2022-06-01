@@ -6,13 +6,6 @@ export default Route.extend(TailwindBaseMixin, {
   auth: service(),
   features: service(),
 
-  beforeModel() {
-    let pro = this.get('features.proVersion');
-    if (!pro) {
-      window.location.replace('https://app.travis-ci.com/signin');
-    }
-  },
-
   queryParams: {
     redirectUrl: {
       refreshModel: true
