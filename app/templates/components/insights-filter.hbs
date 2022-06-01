@@ -32,12 +32,12 @@
         <label class="checkbox-label" data-test-checkbox-label>
           <input
             class="checkbox-table filled-in"
-            id="{{repository.id}}"
+            id="{{repository.repo_id}}"
             type="checkbox"
-            checked={{contains repository.id this.selectedRepos}}
-            onChange={{action "toggleRepoCheck" repository.id}}
+            checked={{contains repository.repo_id this.selectedRepos}}
+            onChange={{action "toggleRepoCheck" repository.repo_id}}
           />
-          <span class="multiselect-checkbox-title" data-test-repo-label>{{repository.name}}</span>
+          <span class="multiselect-checkbox-title" data-test-repo-label>{{repository.repo_name}}</span>
         </label>
       {{/each}}
     {{/dd.content}}
