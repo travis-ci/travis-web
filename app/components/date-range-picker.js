@@ -69,6 +69,13 @@ export default Component.extend({
     },
     monthCancelation(dropdown) {
       dropdown.actions.close();
+      if(this.endMonth === undefined && this.endYear === undefined && this.startMonth && this.startYear){
+        this.set('isDateSelected', true);
+        this.set('selectedStartMonth', this.startMonth);
+        this.set('selectedStartYear', this.startYear);
+        this.set('selectedEndMonth', this.startMonth);
+        this.set('selectedEndYear', this.startYear);
+      }
       this.set('endMonth', this.selectedEndMonth);
       this.set('endYear', this.selectedEndYear);
       this.set('startMonth', this.selectedStartMonth);
