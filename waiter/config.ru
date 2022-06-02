@@ -35,7 +35,7 @@ unless ENV['TRAVIS_PRO']
   use RedirectPages, 'staging.travis-ci.org', 'www.travis-ci.com',  '/'
 end
 
-use use RedirectPages, 'app-staging.travis-ci.com', 'www.travis-ci.com',  '/help' if ENV['TRAVIS_PRO']
+use RedirectPages, 'app-staging.travis-ci.com', 'www.travis-ci.com',  '/help' if ENV['TRAVIS_PRO']
 
 use Rack::MobileDetect, :redirect_to => ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
 
