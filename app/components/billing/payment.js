@@ -88,7 +88,9 @@ export default Component.extend({
         });
         yield this.subscription.buyAddon.perform(this.selectedAddon);
       } else {
-        if (this.subscription.plan.get('planType') == 'metered' && (this.selectedPlan.get('planType') == 'hybrid' || this.selectedPlan.get('planType') == 'hybrid annual') && !this.showPlanSwitchWarning) {
+        if (this.subscription.plan.get('planType') == 'metered' 
+          && (this.selectedPlan.get('planType') == 'hybrid' || this.selectedPlan.get('planType') == 'hybrid annual')
+          && !this.showPlanSwitchWarning) {
           this.set('showPlanSwitchWarning', true);
           return;
         }
