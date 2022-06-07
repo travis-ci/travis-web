@@ -34,9 +34,9 @@ export default Component.extend({
 
   actions: {
     onSelectHandler(month, year) {
-      let monthIndex=this.months.indexOf(month);
-      let startMonthIndex=this.months.indexOf(this.startMonth)
-      const monthDifference = moment(new Date(year,monthIndex)).diff(new Date(this.startYear, startMonthIndex), 'months', true);
+      let monthIndex = this.months.indexOf(month);
+      let startMonthIndex = this.months.indexOf(this.startMonth);
+      const monthDifference = moment(new Date(year, monthIndex)).diff(new Date(this.startYear, startMonthIndex), 'months', true);
       if (monthDifference >= 12 || monthDifference < 0) {
         this.set('endMonth', undefined);
         this.set('endYear', undefined);
@@ -69,7 +69,7 @@ export default Component.extend({
     },
     monthCancelation(dropdown) {
       dropdown.actions.close();
-      if(this.endMonth === undefined && this.endYear === undefined && this.startMonth && this.startYear){
+      if (this.endMonth === undefined && this.endYear === undefined && this.startMonth && this.startYear) {
         this.set('isDateSelected', true);
         this.set('selectedStartMonth', this.startMonth);
         this.set('selectedStartYear', this.startYear);

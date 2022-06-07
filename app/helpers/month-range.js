@@ -21,7 +21,7 @@ export function monthChecker([month, year, startMonth, endMonth, startYear, endY
   if (previousMonth.getTime() === new Date(year, monthIndex).getTime()) {
     classes += ' offset-month';
   }
-  const offsetStartMonth = moment(new Date(startYear,startMonthIndex)).subtract(monthDifference + 1, 'months');
+  const offsetStartMonth = moment(new Date(startYear, startMonthIndex)).subtract(monthDifference + 1, 'months');
 
   if (startMonth === month && startYear === year) {
     classes += ' selected-month';
