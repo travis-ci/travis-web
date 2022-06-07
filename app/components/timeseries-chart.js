@@ -67,12 +67,16 @@ export default Component.extend({
   timeStart: '',
   timeEnd: '',
   selectedRepoIds: '',
+  chartData: null,
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('selectedRepoIds', this.selectedRepoIds);
     this.set('timeStart', this.timeStart);
     this.set('timeEnd', this.timeEnd);
-    this.showGraph();
+    this.set('chartData', this.currentRepos.data);
+    if (this.chartData) {
+      this.showGraph();
+    }
   },
   renderTimeSeries: function (dataSource, container) {
     FusionCharts.ready(() => {  // eslint-disable-line
@@ -88,62 +92,46 @@ export default Component.extend({
   },
 
   showGraph() {
-    const timeStart = encodeURIComponent(this.timeStart);
-    const timeEnd = encodeURIComponent(this.timeEnd);
+    const graphData = this.chartData.map((item, index) => [
+      moment(item.time).format('DD-MMM-YY'),
+      item.builds,
+      (item.duration / 60),
+      item.credits,
+      index,
+    ]);
 
-    const path = '/spotlight_summary';
-    const params = `?time_start=${timeStart}&time_end=${timeEnd}`;
-    let url = `${path}${params}`;
+    const schema = {
+      time: {
+        name: 'Time',
+        type: 'date',
+        format: '%d-%b-%y',
+      },
+      builds: {
+        name: 'Builds',
+        type: 'number',
+      },
+      duration: {
+        name: 'Minutes',
+        type: 'number',
+      },
+      credits: {
+        name: 'Credits',
+        type: 'number',
+      },
+    };
 
-    let repoId = '';
-    repoId = this.get('selectedRepoIds');
-    if (repoId != '') {
-      url = `${url}&repo_id=${repoId}`;
-    }
-    return Promise.all([this.api.get(url)]).then((res) => {
-      const data = res[0].data;
+    const fusionDataStore = new FusionCharts.DataStore();  // eslint-disable-line
+    const fusionDataTable = fusionDataStore.createDataTable(graphData, [
+      schema.time,
+      schema.builds,
+      schema.duration,
+      schema.credits,
+    ]);
 
-      const graphData = data.map((item, index) => [
-        moment(item.time).format('DD-MMM-YY'),
-        item.builds,
-        (item.duration / 60),
-        item.credits,
-        index,
-      ]);
+    dataSource.data = fusionDataTable;
 
-      const schema = {
-        time: {
-          name: 'Time',
-          type: 'date',
-          format: '%d-%b-%y',
-        },
-        builds: {
-          name: 'Builds',
-          type: 'number',
-        },
-        duration: {
-          name: 'Minutes',
-          type: 'number',
-        },
-        credits: {
-          name: 'Credits',
-          type: 'number',
-        },
-      };
+    this.set('dataSource', dataSource);
 
-      const fusionDataStore = new FusionCharts.DataStore();  // eslint-disable-line
-      const fusionDataTable = fusionDataStore.createDataTable(graphData, [
-        schema.time,
-        schema.builds,
-        schema.duration,
-        schema.credits,
-      ]);
-
-      dataSource.data = fusionDataTable;
-
-      this.set('dataSource', dataSource);
-
-      this.renderTimeSeries(this.dataSource, 'time-series-container');
-    });
+    this.renderTimeSeries(this.dataSource, 'time-series-container');
   },
 });

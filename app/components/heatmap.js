@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { computed } from '@ember/object';
 import CalHeatMap from 'cal-heatmap';
 import moment from 'moment';
 
@@ -42,12 +41,7 @@ let initialRenderHeatmap = true;
 
 export default Component.extend({
   api: service(),
-  preferences: service(),
-  timeZone: computed('preferences.insightsTimeZone', function () {
-    if (this.preferences.insightsTimeZone) {
-      return this.preferences.insightsTimeZone.substr(this.preferences.insightsTimeZone.indexOf(')') + 2);
-    } else return '';
-  }),
+  timeZone: '',
   toTimeZone(time, zone) {
     return moment(time, TIME_FORMAT).tz(zone).format(TIME_FORMAT);
   },
@@ -74,16 +68,13 @@ export default Component.extend({
   fetchHeatMapData: task(function* () {
     let startTime = this.startDate.includes('T') ? `${this.startDate}` : `${this.startDate}T00:00:00.000`;
     let endTime = this.endDate.includes('T') ? `${this.endDate}` : `${this.endDate}T00:00:00.000`;
-  
     let isCurrentYear = (new Date().getFullYear() === this.buildYear);
 
     if (this.timeZone !== '' &&  isCurrentYear) {
-      startTime = this.toTimeZone(startTime, this.timeZone);
       endTime = this.toTimeZone(endTime, this.timeZone);
-      startTime = moment(startTime).startOf('month').format(TIME_FORMAT);
-      endTime = moment(startTime).add(11, 'months').endOf('month').format(TIME_FORMAT);
+      startTime = moment(endTime).subtract(11, 'months').startOf('month').format(TIME_FORMAT);
     }
-    if(!isCurrentYear){
+    if (!isCurrentYear) {
       startTime = moment().year(this.buildYear).startOf('year').format(TIME_FORMAT);
       endTime = moment().year(this.buildYear).endOf('year').format(TIME_FORMAT);
     }
@@ -198,14 +189,10 @@ export default Component.extend({
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('selectedReposIds', this.selectedRepoIds);
+    this.set('timeZone', this.timeZone);
     if (!initialRenderHeatmap) {
       this.fetchHeatMapData.perform();
     }
     initialRenderHeatmap = false;
   },
-
-  init() {
-    this._super(...arguments);
-    this.preferences.fetchPreferences.perform();
-  }
 });

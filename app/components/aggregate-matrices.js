@@ -1,17 +1,11 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import moment from 'moment';
 const timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
 export default Component.extend({
   api: service(),
-  preferences: service(),
-  timeZone: computed('preferences.insightsTimeZone', function () {
-    if (this.preferences.insightsTimeZone) {
-      return this.preferences.insightsTimeZone.substr(this.preferences.insightsTimeZone.indexOf(')') + 2);
-    } else return '';
-  }),
+  timeZone: '',
   startTime: moment().startOf('month').format(timeFormat),
   endTime: moment().endOf('month').format(timeFormat),
   currentBuildTotal: 0,
@@ -88,6 +82,7 @@ export default Component.extend({
       }
       let ProportionalDuration = this.fxProportionalDuration(startTime, endTime);
       let currentResponseData = yield this.fetchData.perform(startTime, endTime);
+      this.setCurrentRepos(currentResponseData);
       let proportionalResponseData = yield this.fetchData.perform(ProportionalDuration.prevStartTime, ProportionalDuration.prevEndTime);
       this.currentDurationData(currentResponseData.data);
       this.proportionalDurationData(proportionalResponseData.data);
@@ -98,7 +93,7 @@ export default Component.extend({
     this.set('selectedRepoIds', this.selectedRepoIds);
     this.set('startTime', this.startTime);
     this.set('endTime', this.endTime);
-    this.preferences.fetchPreferences.perform();
+    this.set('timeZone', this.timeZone);
     this.updateAggregate.perform();
-  }
+  },
 });
