@@ -48,16 +48,22 @@ export default Component.extend({
     return perChange;
   },
   fxProportionalDuration(startDate, endDate) {
-    let prevEndTime = moment(startDate).subtract(1, 'days').format(timeFormat);
+    let prevEndTime = moment(startDate).subtract(1, 'millisecond').format(timeFormat);
     let monthdiff = moment(endDate).diff(moment(startDate), 'months');
-    let prevStartTime = moment(startDate).subtract(monthdiff + 1, 'months').format(timeFormat);
+    let prevStartTime = moment(startDate).subtract(monthdiff + 1, 'months').add(1, 'day').format(timeFormat);
     return {
       'prevStartTime': prevStartTime,
       'prevEndTime': prevEndTime
     };
   },
-  toTimeZone(time, zone) {
-    return moment(time, timeFormat).tz(zone).format(timeFormat);
+  toEndDateTimeZone(time, zone) {
+    return moment(time, timeFormat).tz(zone).endOf('day').utc()
+      .format(timeFormat);
+  },
+  toStartDateTimeZone(time, zone) {
+    return moment(time, timeFormat).tz(zone).startOf('day').utc()
+      .add(1, 'day')
+      .format(timeFormat);
   },
   currentDurationData(data) {
     this.set('currentBuildTotal', this.fxTotal(data, 'builds'));
@@ -74,11 +80,11 @@ export default Component.extend({
   },
   updateAggregate: task(function* () {
     let startTime = this.startTime.includes('T') ? `${this.startTime}` : `${this.startTime}T00:00:00.000`;
-    let endTime = this.endTime.includes('T') ? `${this.endTime}` : `${this.endTime}T00:00:00.000`;
+    let endTime = this.endTime.includes('T') ? `${this.endTime}` : `${this.endTime}T23:59:59.999`;
     if (moment(startTime.split('T')[0]).isBefore(endTime.split('T')[0])) {
       if (this.timeZone != '') {
-        startTime = this.toTimeZone(startTime, this.timeZone);
-        endTime = this.toTimeZone(endTime, this.timeZone);
+        startTime = this.toStartDateTimeZone(startTime, this.timeZone);
+        endTime = this.toEndDateTimeZone(endTime, this.timeZone);
       }
       let ProportionalDuration = this.fxProportionalDuration(startTime, endTime);
       let currentResponseData = yield this.fetchData.perform(startTime, endTime);

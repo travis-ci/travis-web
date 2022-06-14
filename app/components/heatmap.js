@@ -42,8 +42,9 @@ let initialRenderHeatmap = true;
 export default Component.extend({
   api: service(),
   timeZone: '',
-  toTimeZone(time, zone) {
-    return moment(time, TIME_FORMAT).tz(zone).format(TIME_FORMAT);
+  toEndDateTimeZone(time, zone) {
+    return moment(time, TIME_FORMAT).tz(zone).endOf('day').utc().
+      format(TIME_FORMAT);
   },
   buildFilterLabel: BUILDS_FILTER_LABELS['all'],
   buildYear: new Date().getFullYear(),
@@ -61,24 +62,23 @@ export default Component.extend({
     new Date().getFullYear() - 5,
   ],
   startDate: moment().subtract(11, 'months').startOf('month').format(TIME_FORMAT),
-  endDate: moment().format(TIME_FORMAT),
+  endDate: moment().endOf('day').format(TIME_FORMAT),
 
   selectedRepoIds: '',
 
   fetchHeatMapData: task(function* () {
     let startTime = this.startDate.includes('T') ? `${this.startDate}` : `${this.startDate}T00:00:00.000`;
-    let endTime = this.endDate.includes('T') ? `${this.endDate}` : `${this.endDate}T00:00:00.000`;
+    let endTime = this.endDate.includes('T') ? `${this.endDate}` : `${this.endDate}T23:59:59.999`;
     let isCurrentYear = (new Date().getFullYear() === this.buildYear);
 
     if (this.timeZone !== '' &&  isCurrentYear) {
-      endTime = this.toTimeZone(endTime, this.timeZone);
+      endTime = this.toEndDateTimeZone(endTime, this.timeZone);
       startTime = moment(endTime).subtract(11, 'months').startOf('month').format(TIME_FORMAT);
     }
     if (!isCurrentYear) {
       startTime = moment().year(this.buildYear).startOf('year').format(TIME_FORMAT);
       endTime = moment().year(this.buildYear).endOf('year').format(TIME_FORMAT);
     }
-
     let url = `/spotlight_summary?time_start=${startTime}&time_end=${endTime}`;
     document.getElementsByClassName('heatmap-cal-container')[0].classList.add('visibility-hidden');
     document.getElementsByClassName('heatmap-spinner')[0].style.display = 'block';
