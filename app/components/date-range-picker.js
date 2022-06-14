@@ -16,10 +16,10 @@ export default Component.extend({
     return this.currentYear !== this.nextYear;
   }),
   isDateSelected: false,
-  selectedStartMonth: undefined,
-  selectedStartYear: undefined,
-  selectedEndMonth: undefined,
-  selectedEndYear: undefined,
+  selectedStartMonth: new Date().toLocaleString('default', { month: 'short' }),
+  selectedStartYear: new Date().getUTCFullYear(),
+  selectedEndMonth: new Date().toLocaleString('default', { month: 'short' }),
+  selectedEndYear: new Date().getUTCFullYear(),
   calendar: [
     {
       year: computed('previousYear'),
@@ -69,13 +69,6 @@ export default Component.extend({
     },
     monthCancelation(dropdown) {
       dropdown.actions.close();
-      if (this.endMonth === undefined && this.endYear === undefined && this.startMonth && this.startYear) {
-        this.set('isDateSelected', true);
-        this.set('selectedStartMonth', this.startMonth);
-        this.set('selectedStartYear', this.startYear);
-        this.set('selectedEndMonth', this.startMonth);
-        this.set('selectedEndYear', this.startYear);
-      }
       this.set('endMonth', this.selectedEndMonth);
       this.set('endYear', this.selectedEndYear);
       this.set('startMonth', this.selectedStartMonth);
