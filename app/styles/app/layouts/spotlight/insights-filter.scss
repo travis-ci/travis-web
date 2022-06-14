@@ -11,18 +11,6 @@
   border-top-color: black;
 }
 
-.box {
-  width: 15px;
-  height: 15px;
-}
-
-.dropdown-list-builds {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-}
-
 .wrapper-all-filters {
   display: inline-block;
   flex-direction: row;
@@ -107,4 +95,14 @@
   ::-ms-input-placeholder {
     color: rgba(157, 157, 157, 0.5);
   }
+}
+.fit-insight-repo {
+  height: auto;
+  overflow: auto;
+  max-height: 300px;
+  min-width: 250px;
+}
+.insight-content {
+  overflow-y: visible !important;
+  width: min-content !important;
 }
