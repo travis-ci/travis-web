@@ -176,6 +176,7 @@ module.exports = deepFreeze({
     vocabulary: {
       organization: 'Organization',
       pullRequest: 'Merge Request',
+      pr: 'MR',
     },
     colors: {
       main: 'red-300',
