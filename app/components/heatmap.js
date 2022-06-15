@@ -67,8 +67,8 @@ export default Component.extend({
   selectedRepoIds: '',
 
   fetchHeatMapData: task(function* () {
-    let startTime = this.startDate.includes('T') ? `${this.startDate}` : `${this.startDate}T00:00:00.000`;
-    let endTime = this.endDate.includes('T') ? `${this.endDate}` : `${this.endDate}T23:59:59.999`;
+    let startTime = this.startDate;
+    let endTime = this.endDate;
     let isCurrentYear = (new Date().getFullYear() === this.buildYear);
 
     if (this.timeZone !== '' &&  isCurrentYear) {
