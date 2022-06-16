@@ -1,14 +1,17 @@
 import { helper } from '@ember/component/helper';
 import moment from 'moment';
 
-export function monthChecker([month, year, startMonth, endMonth, startYear, endYear]) {
+export function monthChecker([month, year, startMonth, endMonth, startYear, endYear, timeZone]) {
   let classes = '';
-  let today = new Date();
+
   let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   let monthIndex = months.indexOf(month);
   let startMonthIndex = months.indexOf(startMonth);
   let endMonthIndex = months.indexOf(endMonth);
+
+  let today = timeZone !== '' ? new Date(moment().tz(timeZone).startOf('day').utc()
+    .format('YYYY-MM-DDTHH:mm:ss.SSS')) : new Date(moment().format('YYYY-MM-DDTHH:mm:ss.SSS'));
 
   let previousMonth = moment(new Date(startYear, startMonthIndex)).subtract(1, 'months');
   previousMonth = new Date(previousMonth);
@@ -31,7 +34,7 @@ export function monthChecker([month, year, startMonth, endMonth, startYear, endY
     classes += 'future-months';
   }
 
-  if (`${month} ${year}`.toUpperCase() === moment(new Date()).format('MMM YYYY').toUpperCase()) {
+  if (`${month} ${year}`.toUpperCase() === moment(today).format('MMM YYYY').toUpperCase()) {
     classes += ' current-month';
   }
 

@@ -3,23 +3,91 @@ import { computed } from '@ember/object';
 import moment from 'moment';
 
 export default Component.extend({
-  startMonth: new Date().toLocaleString('default', { month: 'short' }),
+  timeZone: '',
+  startMonth: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        .format('MMM');
+    }
+    return moment().format('MMM');
+  }),
   endMonth: undefined,
-  startYear: new Date().getUTCFullYear(),
+  startYear: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        .format('YYYY');
+    }
+    return moment().format('YYYY');
+  }),
   endYear: undefined,
-  currentYear: new Date().getUTCFullYear(),
-  currentMonth: new Date().toLocaleString('default', { month: 'short' }),
-  nextYear: new Date().getUTCFullYear(),
-  previousYear: new Date().getUTCFullYear() - 1,
-  nextMonth: new Date().toLocaleString('default', { month: 'short' }),
+  currentYear: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        .format('YYYY');
+    }
+    return moment().format('YYYY');
+  }),
+  currentMonth: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        .format('MMM');
+    }
+    return moment().format('MMM');
+  }),
+  nextYear: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        .format('YYYY');
+    }
+    return moment().format('YYYY');
+  }),
+  previousYear: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').subtract(1, 'year')
+        .utc()
+        .format('YYYY');
+    }
+    return moment().subtract(1, 'year').format('YYYY');
+  }),
+  nextMonth: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        . format('MMM');
+    }
+    return moment().format('MMM');
+  }),
   renderRightArrow: computed('currentYear', 'nextYear', function () {
     return this.currentYear !== this.nextYear;
   }),
   isDateSelected: false,
-  selectedStartMonth: new Date().toLocaleString('default', { month: 'short' }),
-  selectedStartYear: new Date().getUTCFullYear(),
-  selectedEndMonth: new Date().toLocaleString('default', { month: 'short' }),
-  selectedEndYear: new Date().getUTCFullYear(),
+  selectedStartMonth: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        .format('MMM');
+    }
+    return moment().format('MMM');
+  }),
+  selectedStartYear: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        .format('YYYY');
+    }
+    return moment().format('YYYY');
+  }),
+  selectedEndMonth: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        .format('MMM');
+    }
+    return moment().format('MMM');
+  }),
+  selectedEndYear: computed('timezone', function () {
+    if (this.timeZone) {
+      return moment().tz(this.timeZone).startOf('day').utc()
+        .format('YYYY');
+    }
+    return moment().format('YYYY');
+  }),
   calendar: [
     {
       year: computed('previousYear'),
@@ -100,5 +168,9 @@ export default Component.extend({
         this.setEndMonth(selectedEndDateFormat);
       }
     },
+  },
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.set('timeZone', this.timeZone);
   },
 });

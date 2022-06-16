@@ -5,7 +5,7 @@
 
   <div class="insights-filter">
     <InsightsFilter @selectedRepoIds={{this.selectedRepoIds}} @setSelectedRepoIds={{action "setSelectedRepoIds"}} />
-    <DateRangePicker @setStartMonth={{action "setStartMonth"}} @setEndMonth={{action "setEndMonth"}}/>
+    <DateRangePicker @setStartMonth={{action "setStartMonth"}} @setEndMonth={{action "setEndMonth"}} @timeZone={{this.timeZone}} />
   </div>
 
   <AggregateMatrices @selectedRepoIds={{this.selectedRepoIds}} @startTime={{this.startTime}} @endTime={{this.endTime}} @setCurrentRepos={{action "setCurrentRepos"}} @timeZone={{this.timeZone}} />
