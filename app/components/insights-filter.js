@@ -21,10 +21,10 @@ export default Component.extend({
   }).restartable(),
 
   didInsertElement() {
-    return this.api.get('/repos').then((result) => {
-      this.set('allRepositories', result.repositories);
-      this.set('filteredRepositories', result.repositories);
-      this.filteredRepositories.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    return this.api.get('/spotlight_summary/repos').then((result) => {
+      this.set('allRepositories', result.spotlight_summary_repos);
+      this.set('filteredRepositories', result.spotlight_summary_repos);
+      this.filteredRepositories.sort((a, b) => a.repo_name.toLowerCase().localeCompare(b.repo_name.toLowerCase()));
     });
   },
 

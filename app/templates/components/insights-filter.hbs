@@ -5,7 +5,7 @@
       {{this.buildFilterLabel}}
       <span class="caret down" data-test-down-caret></span>
     {{/dd.trigger}}
-    {{#dd.content class="dropdown-content insight-content"}}
+    {{#dd.content class="dropdown-content"}}
       <div class="notify-actions__search">
         <div class="notify-input-search input-search-border" data-test-search-icon>
           <SvgImage @name="icon-insights-search" @class="input-search-icon"  />
@@ -28,20 +28,18 @@
           <span class="multiselect-checkbox-title" data-test-repo-label>All builds</span>
         </label>
       </div>
-      <div class="fit-insight-repo">
-        {{#each this.filteredRepositories as |repository|}}
-          <label class="checkbox-label" data-test-checkbox-label>
-            <input
-              class="checkbox-table filled-in"
-              id="{{repository.id}}"
-              type="checkbox"
-              checked={{contains repository.id this.selectedRepos}}
-              onChange={{action "toggleRepoCheck" repository.id}}
-            />
-            <span class="multiselect-checkbox-title" data-test-repo-label>{{repository.name}}</span>
-          </label>
-        {{/each}}
-      </div>
+      {{#each this.filteredRepositories as |repository|}}
+        <label class="checkbox-label" data-test-checkbox-label>
+          <input
+            class="checkbox-table filled-in"
+            id="{{repository.repo_id}}"
+            type="checkbox"
+            checked={{contains repository.repo_id this.selectedRepos}}
+            onChange={{action "toggleRepoCheck" repository.repo_id}}
+          />
+          <span class="multiselect-checkbox-title" data-test-repo-label>{{repository.repo_name}}</span>
+        </label>
+      {{/each}}
     {{/dd.content}}
   {{/basic-dropdown}}
 </div>
