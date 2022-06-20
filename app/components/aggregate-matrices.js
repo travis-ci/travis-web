@@ -48,15 +48,6 @@ export default Component.extend({
     }
     return perChange;
   },
-  fxProportionalDuration(startDate, endDate) {
-    let daysDiff = moment(endDate).diff(startDate, 'days');
-    let prevStartTime = moment(startDate).subtract(daysDiff, 'days').format(timeFormat);
-    let prevEndTime = moment(endDate).subtract(daysDiff + 1, 'days').format(timeFormat);
-    return {
-      'prevStartTime': prevStartTime,
-      'prevEndTime': prevEndTime
-    };
-  },
   toTimeZone(time) {
     if (this.timeZone !== '') {
       return moment.tz(time, timeFormat, this.timeZone).utc().format(timeFormat);
@@ -82,15 +73,17 @@ export default Component.extend({
   updateAggregate: task(function* () {
     let startTime = moment(this.startTime).startOf('day').format(timeFormat);
     let endTime = moment(this.endTime).endOf('day').format(timeFormat);
+    let monthsDiff = moment(endTime).diff(startTime, 'month');
+    let prevStartTime = moment(startTime).subtract(monthsDiff + 1, 'month').startOf('month').format(timeFormat);
+    let prevEndTime = moment(endTime).subtract(monthsDiff + 1, 'month').endOf('month').format(timeFormat);
     if (moment(startTime.split('T')[0]).isBefore(endTime.split('T')[0])) {
-      if (this.timeZone != '') {
-        startTime = this.toTimeZone(startTime);
-        endTime = this.toTimeZone(endTime);
-      }
-      let ProportionalDuration = this.fxProportionalDuration(startTime, endTime);
+      startTime = this.toTimeZone(startTime);
+      endTime = this.toTimeZone(endTime);
+      prevStartTime = this.toTimeZone(prevStartTime);
+      prevEndTime = this.toTimeZone(prevEndTime);
       let currentResponseData = yield this.fetchData.perform(startTime, endTime);
       this.setCurrentRepos(currentResponseData);
-      let proportionalResponseData = yield this.fetchData.perform(ProportionalDuration.prevStartTime, ProportionalDuration.prevEndTime);
+      let proportionalResponseData = yield this.fetchData.perform(prevStartTime, prevEndTime);
       this.currentDurationData(currentResponseData.data);
       this.proportionalDurationData(proportionalResponseData.data);
     }
