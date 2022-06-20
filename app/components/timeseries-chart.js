@@ -64,15 +64,24 @@ export default Component.extend({
   type: 'timeseries',
   dataFormat: 'json',
   dataSource: null,
-  timeStart: '',
-  timeEnd: '',
   selectedRepoIds: '',
   chartData: null,
+  timeZone: '',
+  browserTimeZone: '',
+  convertTimeFromUTC(time) {
+    if (this.timeZone !== '') {
+      return moment.utc(time).tz(this.timeZone);
+    } else if (this.browserTimeZone !== '') {
+      return moment.utc(time).tz(this.browserTimeZone);
+    } else {
+      return moment.utc(time);
+    }
+  },
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('selectedRepoIds', this.selectedRepoIds);
-    this.set('timeStart', this.timeStart);
-    this.set('timeEnd', this.timeEnd);
+    this.set('timeZone', this.timeZone);
+    this.set('browserTimeZone', this.browserTimeZone);
     this.set('chartData', this.currentRepos.data);
     if (this.chartData) {
       this.showGraph();
@@ -93,7 +102,7 @@ export default Component.extend({
 
   showGraph() {
     const graphData = this.chartData.map((item, index) => [
-      moment(item.time).format('DD-MMM-YY'),
+      this.convertTimeFromUTC(item.time).format('DD-MMM-YY'),
       item.builds,
       (item.duration / 60),
       item.credits,

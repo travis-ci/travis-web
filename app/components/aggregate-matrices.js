@@ -6,8 +6,9 @@ const timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
 export default Component.extend({
   api: service(),
   timeZone: '',
-  startTime: moment().startOf('month').format(timeFormat),
-  endTime: moment().endOf('month').format(timeFormat),
+  browserTimeZone: '',
+  startTime: '',
+  endTime: '',
   currentBuildTotal: 0,
   currentCreditsTotal: 0,
   currentMinutesTotal: 0,
@@ -57,7 +58,13 @@ export default Component.extend({
     };
   },
   toTimeZone(time) {
-    return moment.tz(time, timeFormat, this.timeZone).utc().format(timeFormat);
+    if (this.timeZone !== '') {
+      return moment.tz(time, timeFormat, this.timeZone).utc().format(timeFormat);
+    } else if (this.browserTimeZone !== '') {
+      return moment.tz(time, timeFormat, this.browserTimeZone).utc().format(timeFormat);
+    } else {
+      return moment.utc(time).format(timeFormat);
+    }
   },
   currentDurationData(data) {
     this.set('currentBuildTotal', this.fxTotal(data, 'builds'));
@@ -94,6 +101,7 @@ export default Component.extend({
     this.set('startTime', this.startTime);
     this.set('endTime', this.endTime);
     this.set('timeZone', this.timeZone);
+    this.set('browserTimeZone', this.browserTimeZone);
     this.updateAggregate.perform();
   },
 });

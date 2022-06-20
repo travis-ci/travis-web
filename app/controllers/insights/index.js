@@ -5,8 +5,21 @@ import moment from 'moment';
 const timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
 export default Controller.extend({
   selectedRepoIds: '',
-  startTime: moment().startOf('month').format(timeFormat),
-  endTime: moment().endOf('month').format(timeFormat),
+  convertToTimeZone(time) {
+    if (this.timeZone !== '') {
+      return moment(time, timeFormat).tz(this.timeZone);
+    } else if (this.browserTimeZone !== '') {
+      return moment(time, timeFormat).tz(this.browserTimeZone);
+    } else {
+      return moment(time, timeFormat).utc();
+    }
+  },
+  startTime: computed('convertToTimeZone', function () {
+    return this.convertToTimeZone(moment()).startOf('month').format(timeFormat);
+  }),
+  endTime: computed('convertToTimeZone', function () {
+    return this.convertToTimeZone(moment()).endOf('month').format(timeFormat);
+  }),
   currentRepos: {},
   preferences: service(),
   timeZone: computed('preferences.insightsTimeZone', function () {
