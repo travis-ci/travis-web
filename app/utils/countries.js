@@ -272,7 +272,6 @@ export const zeroVatThresholdCountries = [
   countriesMap['BH'],
   countriesMap['BY'],
   countriesMap['CL'],
-  countriesMap['IN'],
   countriesMap['LI'],
   countriesMap['MA'],
   countriesMap['CH'],
