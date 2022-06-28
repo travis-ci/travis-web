@@ -1,12 +1,14 @@
 {{#if (and this.auth.signedOut this.showSignInButton)}}
 
-  <button
-    class="auth-button signed-out pointer"
-    type="button"
-    {{on 'click' (action 'signIn')}}
-  >
-    Sign in
-  </button>
+  {{#if this.features.proVersion}}
+    <button
+      class="auth-button signed-out pointer"
+      type="button"
+      {{on 'click' (action 'signIn')}}
+    >
+      Sign in
+    </button>
+  {{/if}}
 
 {{else if this.auth.signedIn}}
 

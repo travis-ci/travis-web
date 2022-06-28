@@ -22,6 +22,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
+    enableFeature('proVersion');
     const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login',

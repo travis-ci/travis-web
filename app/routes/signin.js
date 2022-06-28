@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend(TailwindBaseMixin, {
   auth: service(),
+  features: service(),
 
   queryParams: {
     redirectUrl: {
