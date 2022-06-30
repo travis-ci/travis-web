@@ -29,13 +29,13 @@ end
 
 unless ENV['TRAVIS_PRO']
   use RedirectSubdomain, 'secure.travis-ci.org'
-  use RedirectPages, 'staging.travis-ci.org', 'app.travis-ci.com', '/signin'
-  use RedirectPages, 'staging.travis-ci.org', 'app.travis-ci.com', '/signup'
-  use RedirectPages, 'staging.travis-ci.org', 'www.travis-ci.com',  '/help'
-  use RedirectPages, 'staging.travis-ci.org', 'www.travis-ci.com',  '/'
+  use RedirectPages, 'travis-ci.org', 'app.travis-ci.com', '/signin'
+  use RedirectPages, 'travis-ci.org', 'app.travis-ci.com', '/signup'
+  use RedirectPages, 'travis-ci.org', 'www.travis-ci.com',  '/help'
+  use RedirectPages, 'travis-ci.org', 'www.travis-ci.com',  '/'
 end
 
-use RedirectPages, 'app-staging.travis-ci.com', 'www.travis-ci.com',  '/help' if ENV['TRAVIS_PRO']
+use RedirectPages, 'app.travis-ci.com', 'www.travis-ci.com',  '/help' if ENV['TRAVIS_PRO']
 
 use Rack::MobileDetect, :redirect_to => ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
 
