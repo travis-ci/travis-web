@@ -74,6 +74,8 @@
         <a class="disabled action-button--restart">
           {{#if this.ownerRoMode}}
             <EmberTooltip @text="{{config-get 'defaultTitle'}} is in read-only mode." />
+          {{else if (not this.isOwnerConfirmed)}}
+            <EmberTooltip @text="Your account is not confirmed. Please check your email and confirm your account." />
           {{else}}
             <EmberTooltip @text="Builds have been temporarily disabled for this repository due to a negative credit balance." />
           {{/if}}
@@ -106,7 +108,13 @@
           </button>
         {{else}}
          <a class="disabled action-button--debug">
-            <EmberTooltip @text="Builds have been temporarily disabled for this repository due to a negative credit balance." />
+            {{#if this.ownerRoMode}}
+              <EmberTooltip @text="{{config-get 'defaultTitle'}} is in read-only mode." />
+            {{else if (not this.isOwnerConfirmed)}}
+              <EmberTooltip @text="Your account is not confirmed. Please check your email and confirm your account." />
+            {{else}}
+              <EmberTooltip @text="Builds have been temporarily disabled for this repository due to a negative credit balance." />
+            {{/if}}
             <SvgImage @name="icon-debug" @class="icon" />
             <span class="label-align">
               Debug {{this.type}}

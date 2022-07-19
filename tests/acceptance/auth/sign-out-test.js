@@ -4,12 +4,14 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { enableFeature } from 'ember-feature-flags/test-support';
 
 module('Acceptance | auth/sign out', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
+    enableFeature('proVersion');
     const currentUser = this.server.create('user');
     signInUser(currentUser);
   });

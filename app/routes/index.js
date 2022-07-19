@@ -1,11 +1,19 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import config from 'travis/config/environment';
 
 export default Route.extend({
   auth: service(),
   tabStates: service(),
   repositories: service(),
   features: service(),
+
+  beforeModel() {
+    let pro = this.get('features.proVersion');
+    if (!this.auth.signedIn && config.environment !== 'test' && pro) {
+      window.location.replace('https://www.travis-ci.com');
+    }
+  },
 
   redirect() {
     if (this.get('auth.signedIn')) {
