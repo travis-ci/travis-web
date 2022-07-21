@@ -10,7 +10,8 @@ export default Route.extend({
 
   beforeModel() {
     let pro = this.get('features.proVersion');
-    if (!this.auth.signedIn && config.environment !== 'test' && pro) {
+    let redirect = this.get('features.redirect');
+    if (!this.auth.signedIn && config.environment !== 'test' && pro && redirect) {
       window.location.replace('https://www.travis-ci.com');
     }
   },
