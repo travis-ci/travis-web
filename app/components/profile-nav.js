@@ -8,7 +8,7 @@ import {
   not,
   filterBy,
   notEmpty,
-  match,
+  match
 } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
