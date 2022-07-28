@@ -8,7 +8,7 @@ import {
   not,
   filterBy,
   notEmpty,
-  match
+  match,
 } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
@@ -69,6 +69,13 @@ export default Component.extend({
     return !isEnterprise && !isAssemblaUser && !!billingEndpoint;
   }),
   showPlanUsageTab: and('showSubscriptionTab', 'model.hasCredits'),
+  usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
+    const userUsage = this.get('account').get('allowance').get('userUsage');
+    if (userUsage === undefined) {
+      return true;
+    }
+    return userUsage && (this.addonUsage.usedCredits < this.addonUsage.totalCredits);
+  }),
 
   didRender() {
     const allowance = this.model.allowance;
@@ -95,7 +102,7 @@ export default Component.extend({
 
     if (allowance.get('pendingUserLicenses')) {
       this.flashes.custom('flashes/pending-user-licenses', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('userUsage')) {
+    } else if (!this.usersUsage) {
       this.flashes.custom('flashes/users-limit-exceeded', { owner: this.model, isUser: this.model.isUser }, 'warning');
     }
   },
