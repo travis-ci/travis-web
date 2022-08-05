@@ -146,6 +146,15 @@ export default Model.extend(DurationCalculations, {
     return this.api.post(url);
   },
 
+  restartedBy: computed('jobs.@each.restartedBy', function () {
+    let jobs = this.jobs;
+    if (jobs.get('length') == 1) {
+      return jobs.get('firstObject').get('restartedBy');
+    } else {
+      return null;
+    }
+  }),
+
   canDebug: computed('jobs.[]', 'repo.private', function () {
     let jobs = this.jobs;
     let repoPrivate = this.get('repo.private');
