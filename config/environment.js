@@ -11,6 +11,7 @@ const tailwind = resolveTwConfig(tailwindConfig);
 
 const {
   TRAVIS_PRO,
+  REDIRECT,
   TRAVIS_ENTERPRISE,
   SOURCE_ENDPOINT,
   ENABLE_FEATURE_FLAGS,
@@ -210,6 +211,10 @@ module.exports = function (environment) {
     ENV.featureFlags['pro-version'] = true;
     ENV.featureFlags['github-apps'] = true;
     ENV.pro = true;
+  }
+
+  if (REDIRECT) {
+    ENV.featureFlags['redirect'] = true;
   }
 
   if (TRAVIS_ENTERPRISE) {
