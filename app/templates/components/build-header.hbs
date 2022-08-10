@@ -231,6 +231,13 @@
           {{/if}}
         </span>
       </div>
+
+      <div class="detail-repo-server-type {{this.serverType}}">
+        <SvgImage @name="icon-{{this.serverTypeIcon}}" @class="icon--ml" />
+        <span class="label-align" aria-label="Title">
+          {{this.serverType}}
+        </span>
+      </div>
     </div>
     {{#if this.environment}}
       <div class="detail-job-env {{if this.envExpanded 'expandEnv' 'closeEnv'}}"
