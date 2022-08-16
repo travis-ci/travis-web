@@ -27,27 +27,6 @@ class RedirectPages < Struct.new(:app, :from, :to, :page)
   end
 end
 
-unless ENV['TRAVIS_PRO']
-  use RedirectSubdomain, 'secure.travis-ci.org'
-  use RedirectPages, 'travis-ci.org', 'app.travis-ci.com', '/signin'
-  use RedirectPages, 'travis-ci.org', 'app.travis-ci.com', '/signup'
-  use RedirectPages, 'travis-ci.org', 'www.travis-ci.com',  '/help'
-  use RedirectPages, 'travis-ci.org', 'www.travis-ci.com',  '/'
-end
-
-use RedirectPages, 'app.travis-ci.com', 'www.travis-ci.com',  '/help' if ENV['TRAVIS_PRO']
-
-use Rack::MobileDetect, :redirect_to => ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
-
-use Travis::Web::SentryDeployHook
-
-use Travis::Web::SetToken
-use Travis::Web::Allow
-
-use Travis::Web::ApiRedirect do |app|
-  app.settings.api_endpoint = ENV['API_ENDPOINT'] if ENV['API_ENDPOINT']
-end
-
 if ENV['TRAVIS_PRO']
   ENV['API_ENDPOINT'] ||= "https://api.travis-ci.com"
   ENV['PAGES_ENDPOINT'] ||= "https://travis-ci.com/account/plan"
@@ -58,6 +37,33 @@ if ENV['TRAVIS_PRO']
 
   ENV['PUSHER_KEY'] ||= "59236bc0716a551eab40"
   ENV['GA_CODE'] ||= "UA-24868285-5"
+
+  ENV['REDIRECT_FROM'] ||= "travis-ci.org"
+  ENV['REDIRECT_TO'] ||= "app.travis-ci.com"
+  ENV['TRAVIS_WP_SITE'] ||= "www.travis-ci.com"
+end
+
+unless ENV['TRAVIS_PRO']
+  if ENV['REDIRECT']
+    use RedirectSubdomain, 'secure.travis-ci.org'
+    use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signin'
+    use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signup'
+    use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/help'
+    use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/'
+  end
+end
+
+use RedirectPages, ENV['REDIRECT_TO'], ENV['TRAVIS_WP_SITE'],  '/help' if ENV['TRAVIS_PRO'] && ENV['REDIRECT']
+
+use Rack::MobileDetect, :redirect_to => ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
+
+use Travis::Web::SentryDeployHook
+
+use Travis::Web::SetToken
+use Travis::Web::Allow
+
+use Travis::Web::ApiRedirect do |app|
+  app.settings.api_endpoint = ENV['API_ENDPOINT'] if ENV['API_ENDPOINT']
 end
 
 if ENV['TRAVIS_ENTERPRISE']
