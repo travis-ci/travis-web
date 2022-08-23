@@ -70,7 +70,7 @@ export default Component.extend({
   }),
   showPlanUsageTab: and('showSubscriptionTab', 'model.hasCredits'),
   usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
-    const userUsage = this.get('account').get('allowance').get('userUsage');
+    const userUsage = this.model.allowance.get('userUsage');
     if (userUsage === undefined) {
       return true;
     }
