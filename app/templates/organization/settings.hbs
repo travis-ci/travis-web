@@ -26,4 +26,19 @@
       </div>
     </section>
   {{/if}}
+  <section class="settings-section" data-test-custom-key-settings>
+    <h3 data-test-custom-keys-title>
+      SSH Key for build jobs
+    </h3>
+    {{#unless this.organization.permissions.admin}}
+      <p>
+        You don't have sufficient permissons to add or remove ssh keys for build jobs.
+      </p>
+    {{else}}
+      {{#each this.customKeys as |key|}}
+        <CustomKey @key={{key}} @customKeyDeleted={{action "customKeyDeleted"}} />
+      {{/each}}
+      <AddCustomKey @owner={{this.organization}} @ownerType='Organization' @customKeyAdded={{action "customKeyAdded"}} />
+    {{/unless}}
+  </section>
 </section>

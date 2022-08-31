@@ -24,6 +24,7 @@ export default Owner.extend({
   authToken: attr('string'),
   utmParams: attr(),
   confirmedAt: attr('date'),
+  customKeys: attr(),
 
   type: 'user',
 

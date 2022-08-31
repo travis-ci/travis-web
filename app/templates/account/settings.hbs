@@ -152,4 +152,13 @@
       </div>
     </section>
   {{/if}}
+  <section class="settings-section" data-test-custom-key-settings>
+    <h3 data-test-custom-keys-title>
+      SSH Key for build jobs
+    </h3>
+    {{#each this.customKeys as |key|}}
+      <CustomKey @key={{key}} @customKeyDeleted={{action "customKeyDeleted"}} />
+    {{/each}}
+    <AddCustomKey @owner={{this.account}} @ownerType='User' @customKeyAdded={{action "customKeyAdded"}} />
+  </section>
 </section>

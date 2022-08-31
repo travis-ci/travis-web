@@ -52,6 +52,14 @@ export default Controller.extend({
   privateInsightsVisibility: reads('preferences.privateInsightsVisibility'),
   insightsVisibilityOptions: computed(() => INSIGHTS_VIS_OPTIONS),
 
+  customKeysLoaded: computed(function () {
+    return this.auth.currentUser.customKeys;
+  }),
+  customKeys: computed('customKeysLoaded.[]', function () {
+    return this.customKeysLoaded;
+  }),
+
+
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
     let repositories = this.repositories || [];
     return repositories.filter(repo => !repo.emailSubscribed);
@@ -102,6 +110,13 @@ export default Controller.extend({
       const { id } = this.auth.currentUser;
       this.flashes.success('The email has been sent. Please check your inbox and confirm your account.');
       this.api.get(`/auth/request_confirmation/${id}`, {'travisApiVersion': null});
+    },
+    customKeyDeleted(key) {
+      const keys = this.get('customKeysLoaded');
+      this.set('customKeysLoaded', keys.filter(obj => obj.id !== key.id));
+    },
+    customKeyAdded(key) {
+      this.get('customKeysLoaded').pushObject(key);
     }
   },
 
