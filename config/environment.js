@@ -205,6 +205,8 @@ module.exports = function (environment) {
     'enable-bitbucket-login': false,
     'enable-gitlab-login': false,
     'gitlab-login': false,
+    'enable-travisproxy-login': false,
+    'travisproxy-login': false,
   };
 
   if (TRAVIS_PRO) {

@@ -34,6 +34,14 @@
   margin-right: 1px;
 }
 
+.icon--ml {
+  @extend %icon;
+
+  width: 25px;
+  height: 26px;
+  margin-right: 1px;
+}
+
 .icon--l {
   @extend %icon;
 
