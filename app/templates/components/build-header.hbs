@@ -179,6 +179,20 @@
             {{format-time this.item.finishedAt}}
           </time>
         </li>
+        {{#unless this.isJob}}
+          {{#if (eq this.item.eventType 'api')}}
+            <li>
+              <SvgImage @name="icon-builds" @class="icon" />
+              <span class="label-align">Manually triggered by {{this.item.createdBy.login}}</span>
+            </li>
+          {{/if}}
+        {{/unless}}
+        {{#if this.item.restartedBy}}
+          <li>
+            <SvgImage @name="icon-restart" @class="icon" />
+            <span class="label-align">Last restarted by {{this.item.restartedBy.login}}</span>
+          </li>
+        {{/if}}
         {{#if this.item.repo.shared}}
           <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" /> Shared repository
         {{/if}}
