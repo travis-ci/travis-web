@@ -108,11 +108,10 @@
     <ul class="settings-list--columns">
       <li>
         <SettingsSwitch
-          @active={{not this.model.settings.job_log_time_based_limit}}
+          @active={{this.model.settings.job_log_time_based_limit}}
           @repo={{this.repo}}
           @description="Enable access to old build job logs."
           @key="job_log_time_based_limit"
-          @reverse={{true}}
         />
         <ExternalLinkTo
           href="https://docs.travis-ci.com/user/web-ui/#share-encrypted-variables-with-forks-pull-request"
