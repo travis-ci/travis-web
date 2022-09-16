@@ -105,7 +105,7 @@
       being leaked prior to enabling access to old build job logs. If you want to modify the time
       threshold, please contact support.
     </p>
-    <ul class="settings-list--columns">
+    <ul class="settings-list--row">
       <li>
         <SettingsSwitch
           @active={{this.model.settings.job_log_time_based_limit}}
@@ -127,7 +127,7 @@
       Enabling access to build job logs only for users with write/push permissions to this repository will limit access to build job logs via UI and API. When set to OFF, all users with read access to the
       repository can access the build job logs.
     </p>
-    <ul class="settings-list--columns">
+    <ul class="settings-list--row">
       <li>
         <SettingsSwitch
           @active={{this.model.settings.job_log_access_based_limit}}
@@ -181,7 +181,7 @@
       <h2 class="small-title display-inline">
         Clone or Import
       </h2>
-      <ul class="settings-list--columns">
+      <ul class="settings-list--row">
         <li>
           <SettingsSwitch
             @active={{this.model.settings.allow_config_imports}}
@@ -267,7 +267,7 @@
         or lacking, please let us know in the <a href="{{config-get 'urls.communityEarlyReleases'}}">Travis CI community forum</a>
         or email <a href="{{config-get 'urls.emailSupport'}}">support</a>.
       </p>
-      <ul class="settings-list--columns">
+      <ul class="settings-list--row">
         {{#if this.showConfigValidationSwitches}}
           <li>
             <SettingsSwitch
