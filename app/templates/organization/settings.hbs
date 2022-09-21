@@ -30,7 +30,7 @@
     <h3 data-test-custom-keys-title>
       SSH Key for build jobs
     </h3>
-    {{#unless this.organization.permissions.admin}}
+    {{#unless this.showOrganizationSettings}}
       <p>
         You don't have sufficient permissons to add or remove ssh keys for build jobs.
       </p>
