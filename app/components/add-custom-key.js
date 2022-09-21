@@ -64,7 +64,9 @@ export default Component.extend({
           this.set('description', '');
         });
       } catch (errors) {
-        return this.set('valueError', 'This key is not a private key.');
+        errors.clone().json().then((error) => {
+          this.set('valueError', error.error_message);
+        });
       }
     }
   }).drop()
