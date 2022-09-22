@@ -21,7 +21,7 @@ export default Component.extend({
     if (isBlank(this.value)) {
       this.set('valueError', 'Value can\'t be blank.');
       return false;
-    } else if (!/[a-zA-Z_]/.test(this.name)) {
+    } else if (!/^[a-zA-Z_]+$/.test(this.name)) {
       this.set('valueError', 'Only basic letters and underscore allowed in Identifier.');
       return false;
     } else {
