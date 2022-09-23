@@ -59,6 +59,7 @@ export default Controller.extend({
     return this.customKeysLoaded;
   }),
 
+  isShowingAddKeyModal: false,
 
   unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
     let repositories = this.repositories || [];
@@ -110,6 +111,9 @@ export default Controller.extend({
       const { id } = this.auth.currentUser;
       this.flashes.success('The email has been sent. Please check your inbox and confirm your account.');
       this.api.get(`/auth/request_confirmation/${id}`, {'travisApiVersion': null});
+    },
+    toggleAddKeyModal() {
+      this.toggleProperty('isShowingAddKeyModal');
     },
     customKeyDeleted(key) {
       const keys = this.get('customKeysLoaded');

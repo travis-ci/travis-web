@@ -1,18 +1,12 @@
 <div class="ssh-key-name">
   <SvgImage @name="icon-key" @class="icon" />
-  <span>
+  <span class="custom-key-title">
     {{this.key.name}}
   </span>
 </div>
+<div class="ssh-key-value"></div>
 <div class="ssh-key-value">
-  <span>
-    Added by: {{this.key.added_by_login}}
-  </span>
-</div>
-<div class="ssh-key-value">
-  <span>
-    Added on: {{moment-format this.key.created_at 'YYYY-MM-DD'}}
-  </span>
+  <span>Added by: {{this.key.added_by_login}}</span><span class="custom-key-added-on">Added on: {{moment-format this.key.created_at 'YYYY-MM-DD'}}</span>
 </div>
 <div class="ssh-key-value">
   <span>
@@ -25,7 +19,17 @@
     {{this.key.fingerprint}}
   </span>
 </div>
-<div class="ssh-key-action">
+<div class="custom-key-action ssh-key-action">
+  <CopyButton
+    class="no-button ssh-delete"
+    @clipboardText={{this.key.public_key}}
+    @title="Copy to clipboard"
+  >
+    <SvgImage @name="icon-copy" @class="icon" />
+  </CopyButton>
+  <EmberTooltip @text="Copy public key" />
+</div>
+<div class="custom-key-action ssh-key-action">
   {{#if this.delete.isRunning}}
     <LoadingIndicator />
   {{else}}
@@ -38,16 +42,6 @@
     </button>
     <EmberTooltip @text="Delete" />
   {{/if}}
-</div>
-<div class="ssh-key-action">
-  <CopyButton
-    class="no-button ssh-delete"
-    @clipboardText={{this.key.public_key}}
-    @title="Copy to clipboard"
-  >
-    <SvgImage @name="icon-copy" @class="icon" />
-  </CopyButton>
-  <EmberTooltip @text="Copy public key" />
 </div>
 <Modal
   @isVisible={{this.isShowingConfirmationModal}}

@@ -69,9 +69,15 @@ export default Controller.extend({
     }
   }).restartable(),
 
+  isShowingAddKeyModal: false,
+
   actions: {
     setInsightsVis(val) {
       this.setPrivateInsights.perform(val);
+    },
+
+    toggleAddKeyModal() {
+      this.toggleProperty('isShowingAddKeyModal');
     },
 
     customKeyDeleted(key) {
