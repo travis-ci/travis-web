@@ -14,7 +14,7 @@
  <UnconfirmedUserBanner />
 {{/if}}
 {{#if this.hasNoPlan}}
-  {{#unless this.model.isAssembla}}
+  {{#unless (and this.model.isUser this.model.isAssembla)}}
     <NoPlan @model={{this.model}} />
   {{/unless}}
 {{/if}}
