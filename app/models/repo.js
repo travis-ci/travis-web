@@ -252,7 +252,7 @@ const Repo = VcsEntity.extend({
       repository_id: id,
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron'];
-      return this._requestRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
+      return this._requestRepoMatches(b, id) && eventTypes.includes(b.get('event_type'));
     });
 
     return this._requestObservableArray(requests);
