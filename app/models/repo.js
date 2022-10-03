@@ -230,6 +230,33 @@ const Repo = VcsEntity.extend({
     return this._buildObservableArray(builds);
   }),
 
+  _requestRepoMatches(request, id) {
+    return `${request.get('repo.id')}` === `${id}`;
+  },
+
+  _requestObservableArray(requests) {
+    const array = ExpandableRecordArray.create({
+      type: 'request',
+      content: []
+    });
+    array.load(requests);
+    array.observe(requests);
+    return array;
+  },
+
+  requests: computed('id', function () {
+    let id = this.id;
+    const requests = this.store.filter('request', {
+      event_type: ['push', 'api', 'cron'],
+      repository_id: id,
+    }, (b) => {
+      let eventTypes = ['push', 'api', 'cron'];
+      return this._requestRepoMatches(b, id) && eventTypes.includes(b.get('event_type'));
+    });
+
+    return this._requestObservableArray(requests);
+  }),
+
   branches: computed('id', function () {
     let id = this.id;
     return this.store.filter('branch', {

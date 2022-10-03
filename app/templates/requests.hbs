@@ -1,5 +1,5 @@
 <ul class="requests">
-  {{#each this.model as |request|}}
+  {{#each (sort-by "created_at:desc" this.model) as |request|}}
     <RequestsItem @request={{request}} @highlightedRequestId={{this.requestId}} />
   {{else}}
     <MissingNotice @title="No requests for this repository">
