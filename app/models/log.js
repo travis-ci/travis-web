@@ -35,7 +35,7 @@ export default EmberObject.extend({
 
     const id = this.get('job.id');
     const url = `/job/${id}/log`;
-    const json = yield this.api.get(url).catch(err => { throw 'error'; });
+    const json = yield this.api.get(url).catch(err => { throw err; });
 
     if (this.noRendering) {
       let text = "Log rendering is off because localStorage['travis.logRendering'] is `false`.";
