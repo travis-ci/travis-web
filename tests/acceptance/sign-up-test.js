@@ -6,6 +6,7 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { stubService } from 'travis/tests/helpers/stub-service';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
+import { enableFeature } from 'ember-feature-flags/test-support';
 
 const SELECTORS = {
   PAGE: '[data-test-signup-page]',
@@ -20,6 +21,7 @@ module('Acceptance | sign up', function (hooks) {
 
   test('visiting /signup shows signup page if unauthenticated', async function (assert) {
     let signupRequest;
+    enableFeature('proVersion');
 
     // avoid actually contacting GitHub
     const mockAuthService = Service.extend({
@@ -46,7 +48,6 @@ module('Acceptance | sign up', function (hooks) {
     assert.dom(SELECTORS.PAGE).exists();
     assert.dom(SELECTORS.BUTTON_PRIMARY).containsText('Sign Up With GitHub');
     assert.dom(SELECTORS.BUTTON_ASSEMBLA).doesNotExist();
-    assert.dom(SELECTORS.BUTTON_BITBUCKET).doesNotExist();
 
     await click(SELECTORS.BUTTON_PRIMARY);
 
@@ -56,8 +57,9 @@ module('Acceptance | sign up', function (hooks) {
   });
 
   test('visiting signup redirects to index if authenticated', async function (assert) {
+    enableFeature('proVersion');
     const currentUser = this.server.create('user', 'withRepository');
-
+    enableFeature('proVersion');
     signInUser(currentUser);
 
     await visit('/signup');

@@ -29,29 +29,11 @@
         {{else}}
           <li>
             <ExternalLinkTo
-              @href={{this.config.urls.about}}
-              @title="Travis CI team"
-              class="navigation-anchor"
-            >
-              About Us
-            </ExternalLinkTo>
-          </li>
-          <li>
-            <ExternalLinkTo
               @href={{this.config.urls.blog}}
               @title="Travis CI Blog"
               class="navigation-anchor"
             >
               Blog
-            </ExternalLinkTo>
-          </li>
-          <li>
-            <ExternalLinkTo
-              @href={{this.config.urls.status}}
-              @title="Travis CI Status"
-              class="navigation-anchor"
-            >
-              Status
             </ExternalLinkTo>
           </li>
           <li>
@@ -90,41 +72,10 @@
               Documentation
             </ExternalLinkTo>
           </li>
-        {{else}}
-          <li>
-            <ExternalLinkTo
-              @href={{this.config.urls.about}}
-              @title="Travis CI team"
-              class="navigation-anchor"
-            >
-              About Us
-            </ExternalLinkTo>
-          </li>
-          <li>
-            <LinkTo
-              @route="plans"
-              @title="Plans and Pricing"
-              class="navigation-anchor"
-            >
-              Plans &amp; Pricing
-            </LinkTo>
-          </li>
-          <li>
-            <LinkTo
-              @route="plans"
-              @query={{hash anchor="enterprise-section"}}
-              @title="Travis CI for Enterprise"
-              class="navigation-anchor"
-            >
-              Enterprise
-            </LinkTo>
-          </li>
         {{/if}}
       {{/if}}
       <li>
-        <a class="navigation-anchor pointer" title="Help" {{action "goToHelp"}}>
-          Help
-        </a>
+        <a class="navigation-anchor pointer" href='https://www.travis-ci.com/help'>Help</a>
       </li>
       {{#if this.deploymentVersion}}
         <li>

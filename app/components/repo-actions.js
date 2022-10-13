@@ -62,6 +62,9 @@ export default Component.extend({
   canOwnerBuild: reads('repo.canOwnerBuild'),
   ownerRoMode: reads('repo.owner.ro_mode'),
   userRoMode: reads('user.roMode'),
+  isOwnerConfirmed: computed('auth.currentUser.confirmedAt', function () {
+    return this.auth.currentUser && this.auth.currentUser.confirmedAt;
+  }),
 
   showPriority: true,
   showPrioritizeBuildModal: false,

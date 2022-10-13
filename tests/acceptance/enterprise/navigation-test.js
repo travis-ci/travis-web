@@ -9,6 +9,7 @@ module('Acceptance | enterprise/navigation', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
+    enableFeature('proVersion');
     this.server.get('/v3/enterprise_license', (schema, response) => {
       return {
         'license_id': 'ad12345',

@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import existingRepoPage from 'travis/tests/pages/repo-tabs/current';
 import defaultHeader from 'travis/tests/pages/header/default';
@@ -19,7 +19,7 @@ module('Acceptance | layouts/cta', function (hooks) {
     this.server.create('allowance', {subscription_type: 1});
   });
 
-  test('cta is shown on .org when not on landing page and unauthenticated', async function (assert) {
+  skip('cta is shown on .org when not on landing page and unauthenticated', async function (assert) {
     enableFeature('landingPageCta');
     this.server.create('repository', { owner: { login: 'travis-ci', id: 1 }});
     await existingRepoPage.visit();

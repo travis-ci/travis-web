@@ -13,6 +13,7 @@ export default Component.extend(InViewportMixin, {
   externalLinks: service(),
   features: service(),
   flashes: service(),
+  router: service(),
 
   tagName: 'header',
   classNames: ['top'],

@@ -14,7 +14,9 @@
  <UnconfirmedUserBanner />
 {{/if}}
 {{#if this.hasNoPlan}}
-  <NoPlan @model={{this.model}} />
+  {{#unless (and this.model.isUser this.model.isAssembla)}}
+    <NoPlan @model={{this.model}} />
+  {{/unless}}
 {{/if}}
 {{#if this.features.enterpriseVersion}}
   <EnterpriseBanner />
@@ -27,10 +29,4 @@
 {{/unless}}
 {{#if hasBlock}}
   {{yield}}
-{{else if this.showCta}}
-  <div class="cta">
-    <p class="row">
-      Help make Open Source a better place and start building better software today!
-    </p>
-  </div>
 {{/if}}

@@ -178,3 +178,8 @@
   @onClose={{action this.closeSwitchToFreeModal}}
   @subscription={{this.subscription}}
 />
+<Dialogs::PlanSwitchWarning
+  @isOpen={{this.showPlanSwitchWarning}}
+  @onClose={{action this.closePlanSwitchWarning}}
+  @updatePlan={{this.updatePlan}}
+/>

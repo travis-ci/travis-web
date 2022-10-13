@@ -3,6 +3,8 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
   auth: service(),
+  router: service(),
+  features: service(),
 
   title: 'Travis CI - Help Center',
 
