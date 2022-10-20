@@ -27,6 +27,23 @@
       </LinkTo>
     {{/if}}
   </li>
+  <li id="tab_scan_results" class={{this.classScanResults}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="scanResults" @model={{this.repo}}>
+        Log Scans
+      </LinkTo>
+    {{/if}}
+  </li>
+  <li id="tab_scan_result" class={{this.classScanResult}}>
+    {{#if this.scanResult.id}}
+      {{#if this.repo.slug}}
+        <SvgImage @name="icon-arrowtabs" @class="tab-arrow" />
+        <LinkTo @route="scanResult" @models={{array this.repo this.scanResult}}>
+          Scan {{pretty-date this.scanResult.createdAt}}
+        </LinkTo>
+      {{/if}}
+    {{/if}}
+  </li>
   <li id="tab_build" class={{this.classBuild}}>
     {{#if this.build.id}}
       {{#if this.repo.slug}}
