@@ -1,0 +1,166 @@
+.log-scans {
+  h1 {
+    color: $oxide-blue;
+    margin: 0;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .log-scan-list {
+    display: flex;
+    flex-direction: column;
+    column-gap: 8px;
+  }
+
+  .log-scan-list-item {
+    display: flex;
+    padding: 6px;
+    border: 1px solid $pebble-grey;
+    align-content: center;
+    margin-bottom: 8px;
+
+    .errored {
+      @include colorSVG($brick-red);
+      color: $brick-red;
+      margin-left: 0.5rem;
+      margin-right: 0.7rem;
+      margin-top: 0.35rem;
+    }
+  }
+
+  .log-scan-list-item-warning {
+    margin-right: 18px;;
+    width: 20px;
+    height: 20px;
+  }
+
+  .log-scan-list-item-calendar {
+    margin-right: 8px;
+    margin-top: 4px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .log-scan-list-item-time {
+    font-size: 16px;
+    color: $asphalt-grey;
+    padding-right: 32px;
+    border-right: 1px solid $pebble-grey;
+    margin-right: 24px;
+    min-width: 128px;
+  }
+
+  .log-scan-list-item-document {
+    margin-right: 8px;
+    margin-top: 4px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .log-scan-list-item-report {
+    font-size: 16px;
+    color: $asphalt-grey;
+    margin-right: 60px;
+  }
+
+  .log-scan-list-item-build {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    margin-top: 4px;
+  }
+
+  .log-scan-list-item-build-id {
+    font-size: 16px;
+    color: $asphalt-grey;
+    margin-right: 60px;
+  }
+
+  .log-scan-list-item-job {
+    font-size: 16px;
+    color: $asphalt-grey;
+  }
+}
+
+.log-scan-details {
+  .log-scan-details-build {
+    border: 1px solid $pebble-grey;
+    border-left: 8px solid $dark-red;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    padding: 18px;
+  }
+
+  .log-scan-details-header {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+
+  .log-scan-details-header-top {
+    display: flex;
+    flex-direction: row;
+    margin-left: -0.1rem;
+    @include colorSVG($brick-red);
+    color: $brick-red;
+
+    .errored {
+      margin-top: 0.35rem;
+    }
+  }
+
+  .log-scan-details-header-title {
+    font-size: 16px;
+    color: $brick-red;
+
+    .icon {
+      margin-left: 1rem;
+    }
+
+    b {
+      font-weight: 600;
+    }
+  }
+
+  .log-scan-details-information {
+    width: 40%;
+    margin-top: -1.0rem;
+
+    .errored {
+      @include colorSVG($brick-red);
+      color: $brick-red;
+    }
+  }
+
+  .log-scan-details-information-status {
+    display: flex;
+    margin-bottom: 12px;
+  }
+
+  .log-scan-details-information-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .log-scan-details-information-title {
+    font-size: 16px;
+    color: $brick-red;
+  }
+
+  .log-scan-details-information-container-job-id {
+    display: flex;
+    margin-bottom: 4px;
+  }
+
+  .log-scan-details-information-container-time {
+    display: flex;
+    align-content: center;
+  }
+}
+
+.log-scan-container {
+    margin-top: 40px;
+}

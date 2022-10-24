@@ -112,6 +112,7 @@ $border-size: 2px;
 
 .travistab-nav {
   #tab_build,
+  #tab_scan_result,
   #tab_job,
   #tab_request,
   #tab_requests,
@@ -125,7 +126,8 @@ $border-size: 2px;
   }
 }
 
-#tab_build {
+#tab_build,
+#tab_scan_result {
   position: relative;
 
   @media #{$medium-up} {

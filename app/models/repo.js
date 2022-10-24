@@ -44,6 +44,15 @@ const Repo = VcsEntity.extend({
   emailSubscribed: attr('boolean'),
   migrationStatus: attr('string'),
   historyMigrationStatus: attr('string'),
+  scanFailedAt: attr('date'),
+
+  currentScan: computed('scanFailedAt', function () {
+    let scanFailedAt = this.get('scanFailedAt');
+    return {
+      icon: scanFailedAt ? 'errored' : 'passed',
+      state: scanFailedAt ? 'issue' : 'passed'
+    };
+  }),
 
   ownerType: reads('owner.@type'),
 
