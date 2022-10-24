@@ -35,6 +35,20 @@ export default Component.extend({
     }
   }),
 
+  classScanResults: computed('tab', function () {
+    let tab = this.tab;
+    if (tab === 'scan_results') {
+      return 'active';
+    }
+  }),
+
+  classScanResult: computed('tab', function () {
+    let tab = this.tab;
+    if (tab === 'scan_result') {
+      return 'active';
+    }
+  }),
+
   classBranches: computed('tab', function () {
     let tab = this.tab;
     if (tab === 'branches') {

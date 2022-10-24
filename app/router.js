@@ -70,6 +70,8 @@ Router.map(function () {
       this.route('config');
     });
     this.route('pullRequests', { path: '/pull_requests', resetNamespace: true });
+    this.route('scanResults', { path: '/logscans', resetNamespace: true });
+    this.route('scanResult', { path: '/logscans/:scan_result_id', resetNamespace: true });
     this.route('requests', { path: '/requests', resetNamespace: true });
     if (config.endpoints.caches) {
       this.route('caches', { path: '/caches', resetNamespace: true });

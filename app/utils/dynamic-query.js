@@ -138,6 +138,8 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
 
     this.promise = this.task.perform({ page, filter: filterTerm })
       .then((result = []) => {
+        if (!result) return;
+
         if (this.limitPagination) {
           this.set('pagination', this.calcLimitPagination(result));
         } else {
@@ -171,7 +173,18 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
 
   // For use with heuristic pagination, AKA skip_count=true
   // Although now that I think about it, maybe it would be better to update API to do this?
-  calcLimitPagination({ length } = {}) {
+  calcLimitPagination({ length, meta } = {}) {
+    if (meta.pagination) {
+      const total = meta.pagination.count;
+      const isFirst = meta.pagination.is_first;
+      const isLast = meta.pagination.is_last;
+      const limitDiff = meta.pagination.count % meta.pagination.limit;
+      const numberOfPages = Math.floor(meta.pagination.count / meta.pagination.limit) + (limitDiff ? 1 : 0);
+      const currentPage = (meta.pagination.offset / meta.pagination.limit) + 1;
+
+      return { total, numberOfPages, isLast, isFirst, currentPage };
+    }
+
     const { limit, page, total: oldTotal = 0 } = this;
     const limitDiff = length % limit;
     const hasMore = length && limitDiff === 0;
