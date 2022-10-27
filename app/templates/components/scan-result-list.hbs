@@ -4,7 +4,7 @@
     @liveItems={{this.scanResults}}
     as |loader|
   >
-    {{#unless loader.isLoading}}
+    {{#if this.scanResultsLoader.isNotLoading}}
       <div class="log-scans">
         <h1 class="log-scans-title">Job log scan reports</h1>
         <p class="log-scans-description">
