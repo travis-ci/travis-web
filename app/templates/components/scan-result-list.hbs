@@ -4,16 +4,19 @@
     @liveItems={{this.scanResults}}
     as |loader|
   >
-    {{#if loader.isNoneFound}}
-      <MissingNotice @title={{@missingNotice}} />
-    {{else}}
+    {{#unless loader.isLoading}}
       <div class="log-scans">
         <h1 class="log-scans-title">Job log scan reports</h1>
         <p class="log-scans-description">
-          Travis CI <b>detected potential leakage</b> of sensitive data like secret/credentials/token in your build job logs.<br />
-          We <b>preemptively censored</b> the build job log just to limit potential leakage.<br />
-          We may be too suspicious and it may be a false alarm but for your safety please review the list below.<br />
-          Scan reports are available 7 days until last job log scan. <ExternalLinkTo href="https://docs.travis-ci.com/">Learn more</ExternalLinkTo>
+          {{#if loader.isNoneFound}}
+            Travis CI has not detected any issues while scanning your job logs for potential leakage of sensitive data like<br />
+            secret/credential/token.
+          {{else}}
+            Travis CI <b>detected potential leakage</b> of sensitive data like secret/credentials/token in your build job logs.<br />
+            We <b>preemptively censored</b> the build job log just to limit potential leakage.<br />
+            We may be too suspicious and it may be a false alarm but for your safety please review the list below.<br />
+            Scan reports are available 7 days until last job log scan. <ExternalLinkTo href="https://docs.travis-ci.com/">Learn more</ExternalLinkTo>
+          {{/if}}
         </p>
         <div class="log-scans-list">
           {{#each loader.items as |scanResult|}}
@@ -21,7 +24,7 @@
           {{/each}}
         </div>
       </div>
-    {{/if}}
+    {{/unless}}
   </LoadMore>
 {{else}}
   <p class="notice-banner--red">
