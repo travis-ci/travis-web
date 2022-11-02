@@ -34,7 +34,7 @@ export default Component.extend({
   }),
 
   init() {
-    this.set('scanResults', this.store.peekAll('scan_result'));
+    this.set('scanResults', null);
     return this._super(...arguments);
   },
 
