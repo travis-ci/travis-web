@@ -27,5 +27,12 @@
       </span>
     </LinkTo>
   </span>
-  <span class="log-scan-list-item-job">Job #{{this.scanResult.buildNumber}}.{{this.scanResult.jobNumber}}</span>
+  <span class="log-scan-list-item-job">
+    <LinkTo
+      @route="job"
+      @model={{this.scanResult.jobId}}
+    >
+      Job #{{this.scanResult.buildNumber}}.{{this.scanResult.jobNumber}}
+    </LinkTo>
+  </span>
 </div>
