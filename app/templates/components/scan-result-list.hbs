@@ -1,14 +1,9 @@
 {{#if this.userHasPushPermissionForRepo}}
-  <LoadMore
-    @dynamicQuery={{this.scanResultsLoader}}
-    @liveItems={{this.scanResults}}
-    as |loader|
-  >
-    {{#if this.scanResultsLoader.isNotLoading}}
-      <div class="log-scans">
-        <h1 class="log-scans-title">Job log scan reports</h1>
+    <div class="log-scans">
+      <h1 class="log-scans-title">Job log scan reports</h1>
+      {{#if this.repo.scanResults.isNotLoading}}
         <p class="log-scans-description">
-          {{#if loader.isNoneFound}}
+          {{#if (eq this.repo.scanResults.length 0)}}
             Travis CI has not detected any issues while scanning your job logs for potential leakage of sensitive data like<br />
             secret/credential/token.
           {{else}}
@@ -19,13 +14,20 @@
           {{/if}}
         </p>
         <div class="log-scans-list">
-          {{#each loader.items as |scanResult|}}
+          {{#each this.repo.scanResults as |scanResult|}}
             <ScanResultItem @scanResult={{scanResult}} />
           {{/each}}
         </div>
-      </div>
-    {{/if}}
-  </LoadMore>
+        <PaginationNavigation
+          @collection={{this.repo.scanResults}}
+          @route="scanResults"
+          @inner={{6}}
+          @outer={{2}}
+        />
+      {{else}}
+        <LoadingIndicator />
+      {{/if}}
+    </div>
 {{else}}
   <p class="notice-banner--red">
     We’re sorry, but you have insufficient access rights to view this information.

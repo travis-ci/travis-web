@@ -8,6 +8,7 @@ import { task } from 'ember-concurrency';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import { defaultVcsConfig } from 'travis/utils/vcs';
 import { isEmpty } from '@ember/utils';
+import config from 'travis/config/environment';
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
@@ -20,6 +21,10 @@ export const MIGRATION_STATUS = {
 export const HISTORY_MIGRATION_STATUS = {
   MIGRATED: 'migrated'
 };
+
+import dynamicQuery from 'travis/utils/dynamic-query';
+
+const { repoBuildsPerPage: limit } = config.pagination;
 
 const Repo = VcsEntity.extend({
   api: service(),
@@ -343,6 +348,23 @@ const Repo = VcsEntity.extend({
 
     return result ? oldBackups.concat(result.build_backups) : [];
   }).keepLatest(),
+
+  fetchScanResults({ page }) {
+    const { id, store } = this;
+    const offset = (page - 1) * limit;
+
+    return store.query('scan_result', {
+      repository_id: id,
+      limit, offset
+    });
+  },
+
+  scanResults: dynamicQuery(function* ({ page = 1 }) {
+    return yield this.fetchScanResults({ page });
+  }, {
+    limitPagination: true,
+    limit,
+  })
 });
 
 Repo.reopenClass({
