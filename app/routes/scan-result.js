@@ -14,6 +14,13 @@ export default TravisRoute.extend({
     }
   },
 
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    if (!this.auth.currentUser.hasPushAccessToRepo(repo)) {
+      this.transitionTo('scanResults');
+    }
+  },
+
   titleToken() {
     return 'Scan Result';
   }

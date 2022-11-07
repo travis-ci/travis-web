@@ -350,6 +350,9 @@ const Repo = VcsEntity.extend({
   }).keepLatest(),
 
   fetchScanResults({ page }) {
+    if (!this.auth.currentUser.hasPushAccessToRepo(this))
+      return null;
+
     const { id, store } = this;
     const offset = (page - 1) * limit;
 

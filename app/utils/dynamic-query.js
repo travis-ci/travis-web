@@ -138,6 +138,8 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
 
     this.promise = this.task.perform({ page, filter: filterTerm })
       .then((result = []) => {
+        if (!result) return;
+
         if (this.limitPagination) {
           this.set('pagination', this.calcLimitPagination(result));
         } else {
