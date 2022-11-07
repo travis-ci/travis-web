@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 
 export default Component.extend({
+  auth: service(),
   tabStates: service(),
 
   tagName: 'nav',

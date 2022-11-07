@@ -7,6 +7,7 @@ const { PAGE_CHANGED } = EVENTS;
 export default TravisRoute.extend({
   tabStates: service(),
   auth: service(),
+  needsAuth: true,
 
   page: 1,
 

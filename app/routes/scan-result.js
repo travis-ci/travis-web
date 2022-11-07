@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   tabStates: service(),
   auth: service(),
+  needsAuth: true,
 
   activate(...args) {
     this._super(args);
