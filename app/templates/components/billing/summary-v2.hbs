@@ -81,7 +81,7 @@
                   Unknown plan
                 {{/if}}
 
-                {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                {{#if this.subscription.plan.planType}}
                   {{#if this.subscription.isSubscribed}}
                     <span class="badge green square" data-test-active-status='true'>
                       active
