@@ -42,18 +42,20 @@ module('Acceptance | repo | requests', function (hooks) {
 
     this.repo.createRequest({
       result: 'rejected',
-      event_type: 'cron'
+      created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365 * 2),
+      event_type: 'cron',
     });
 
     this.repo.createRequest({
       result: 'pending',
-      event_type: 'api'
+      created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365 * 3),
+      event_type: 'api',
     });
 
     let olderApprovedRequest = this.repo.createRequest({
       result: 'approved',
       message: 'An old request message',
-      created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365 * 2),
+      created_at: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 365 * 4),
       event_type: 'pull_request'
     });
 

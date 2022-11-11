@@ -246,13 +246,10 @@ const Repo = VcsEntity.extend({
 
   requests: computed('id', function () {
     let id = this.id;
-    const requests = this.store.filter('request', {
-      event_type: ['push', 'api', 'cron'],
-      repository_id: id,
-    }, (b) => {
-      let eventTypes = ['push', 'api', 'cron'];
-      return this._requestRepoMatches(b, id) && eventTypes.includes(b.get('event_type'));
-    });
+    const requests = this.store.filter(
+      'request',
+      { repository_id: id },
+      (b) => this._requestRepoMatches(b, id));
 
     return this._requestObservableArray(requests);
   }),
