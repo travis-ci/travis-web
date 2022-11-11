@@ -39,8 +39,7 @@ export default Service.extend({
       this.jobState.peekJobs.perform();
     }
 
-    if (name === 'build' && data.build)
-    {
+    if (name === 'build' && data.build) {
       // This findRecord is needed in order to retrieve the
       // request data for the requests view to be updated.
       store.findRecord('build', data.build.id);
