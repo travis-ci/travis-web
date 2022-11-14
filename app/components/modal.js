@@ -10,7 +10,7 @@ export default Component.extend({
   animationDuration: reads('animation.durations.quick'),
   transition: reads('animation.transitions.fade'),
 
-  closeOnClickOverlay: false,
+  closeOnClickOverlay: true,
   closeButton: false,
   isVisible: true,
   position: 'fixed',
