@@ -39,22 +39,27 @@ export default Service.extend({
       this.jobState.peekJobs.perform();
     }
 
-    if (name === 'build' && data.build && data.build.commit) {
-      build = data.build;
-      commit = {
-        id: build.commit_id,
-        author_email: build.author_email,
-        author_name: build.author_name,
-        branch: build.branch,
-        committed_at: build.committed_at,
-        committer_email: build.committer_email,
-        committer_name: build.committer_name,
-        compare_url: build.compare_url,
-        message: build.message,
-        sha: build.commit
-      };
-      delete data.build.commit;
-      store.push(store.normalize('commit', commit));
+    if (name === 'build' && data.build) {
+      // This findRecord is needed in order to retrieve the
+      // request data for the requests view to be updated.
+      store.findRecord('build', data.build.id);
+      if (data.build.commit) {
+        build = data.build;
+        commit = {
+          id: build.commit_id,
+          author_email: build.author_email,
+          author_name: build.author_name,
+          branch: build.branch,
+          committed_at: build.committed_at,
+          committer_email: build.committer_email,
+          committer_name: build.committer_name,
+          compare_url: build.compare_url,
+          message: build.message,
+          sha: build.commit
+        };
+        delete data.build.commit;
+        store.push(store.normalize('commit', commit));
+      }
     }
 
     if (name === 'branch') {
