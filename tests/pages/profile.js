@@ -69,6 +69,7 @@ export default create({
   name: text('.profile-header h1'),
   nameBadge: { scope: '.profile-header .badge' },
   login: text('.login'),
+  flash: text('[data-test-components-flash-item]'),
 
   avatar: {
     scope: '.profile-header .avatar-wrapper',
@@ -253,6 +254,16 @@ export default create({
   billing: {
     visit: clickable('li[data-test-billing-tab] a'),
 
+    planYellowMessage: {
+      scope: '[data-test-plan-yellow-message]',
+      isPresent: isPresent(),
+    },
+
+    planManualMessage: {
+      scope: '[data-test-plan-manual-message]',
+      isPresent: isPresent(),
+    },
+
     manageButton: {
       scope: '.manage-subscription',
       href: attribute('href'),
@@ -365,7 +376,6 @@ export default create({
     billingFormHeading: {
       scope: '[data-test-billing-info-title]',
     },
-
 
     billingCouponForm: {
       scope: '[data-test-coupon-form]',
@@ -513,7 +523,7 @@ export default create({
       isHighlighted: hasClass('highlight-plan'),
 
       heading: {
-        scope: '.highlight-plan [data-test-selected-plan-heading]',
+        scope: '[data-test-selected-plan-heading]',
         text: text()
       },
 
@@ -522,8 +532,23 @@ export default create({
         text: text()
       },
 
-      jobs: {
-        scope: '.highlight-plan [data-test-selected-plan-jobs]',
+      credits: {
+        scope: '.highlight-plan [data-test-selected-plan-credits]',
+        text: text()
+      },
+
+      osscredits: {
+        scope: '.highlight-plan [data-test-selected-plan-oss-credits]',
+        text: text()
+      },
+
+      repos: {
+        scope: '.highlight-plan [data-test-selected-plan-repos]',
+        text: text()
+      },
+
+      os: {
+        scope: '.highlight-plan [data-test-selected-plan-os]',
         text: text()
       },
 
@@ -533,13 +558,54 @@ export default create({
       },
 
       changePlan: {
-        scope: '.highlight-plan [data-test-change-selected-plan]',
+        scope: '[data-test-change-selected-plan]',
+        text: text()
+      },
+
+      subscribeButton: {
+        scope: '[data-test-subscribe-button]',
+      }
+    },
+
+    warningMessage: {
+      scope: '[data-test-warning-message]',
+      text: text()
+    },
+
+    selectedAddonOverview: {
+      scope: '.selected-plan',
+      name: {
+        scope: '[data-test-selected-addon-name]',
+        text: text()
+      },
+      price: {
+        scope: '[data-test-selected-addon-price]',
+        text: text()
+      },
+      changeAddon: {
+        scope: '[data-test-change-selected-addon]',
+        text: text()
+      }
+    },
+
+    selectedAddon: {
+      scope: '.highlight-plan',
+      price: {
+        scope: '[data-test-selected-addon-price]',
+        text: text()
+      },
+      name: {
+        scope: '[data-test-selected-addon-name]',
+        text: text()
+      },
+      desc: {
+        scope: '[data-test-selected-addon-desc]',
         text: text()
       }
     },
 
     selectedPlanOverview: {
-      scope: '.selected-plan',
+      scope: '[data-test-selected-plan]',
 
       heading: {
         scope: '[data-test-selected-plan-heading]',
@@ -551,8 +617,28 @@ export default create({
         text: text()
       },
 
-      jobs: {
-        scope: '[data-test-selected-plan-jobs]',
+      credits: {
+        scope: '[data-test-selected-plan-credits]',
+        text: text()
+      },
+
+      osscredits: {
+        scope: '[data-test-selected-plan-oss-credits]',
+        text: text()
+      },
+
+      users: {
+        scope: '[data-test-selected-plan-users]',
+        text: text()
+      },
+
+      repos: {
+        scope: '[data-test-selected-plan-repos]',
+        text: text()
+      },
+
+      os: {
+        scope: '[data-test-selected-plan-os]',
         text: text()
       },
 
@@ -564,11 +650,15 @@ export default create({
       changePlan: {
         scope: '[data-test-change-selected-plan]',
         text: text()
+      },
+
+      subscribeButton: {
+        scope: '[data-test-subscribe-button]',
       }
     },
 
-    subscribeButton: {
-      scope: '[data-test-subscribe-button]',
+    freeTierPlan: {
+      scope: '.select-plan-free_tier_plan'
     },
 
     marketplaceButton: {
@@ -580,6 +670,9 @@ export default create({
       name: text('[data-test-plan-name]'),
       concurrency: {
         scope: '[data-test-plan-concurrency]'
+      },
+      description: {
+        scope: '[data-test-plan-description]'
       }
     },
 
@@ -673,6 +766,7 @@ export default create({
         invoiceDate: text('td', { at: 0 }),
         invoiceCardDigits: text('td', { at: 1 }),
         invoiceCardPrice: text('td', { at: 2 }),
+        invoiceCardStatus: text('td', { at: 3 }),
         invoiceUrl: {
           scope: '[data-test-invoice-url]',
           href: attribute('href'),
@@ -685,6 +779,55 @@ export default create({
         scope: '[data-test-invoice-select-year]'
       }
     },
+  },
+
+  planUsage: {
+    visit: clickable('li[data-test-plan-usage-tab] a'),
+    page: {
+      uniquUsers: {
+        scope: '[data-test-user-usage-unique-users]',
+        text: text()
+      },
+      macMinutes: {
+        scope: '.data-test-plan-usage-os-icon-mac-minutes',
+        text: text()
+      },
+      windowsMinutes: {
+        scope: '.data-test-plan-usage-os-icon-windows-minutes',
+        text: text()
+      },
+      linuxMinutes: {
+        scope: '.data-test-plan-usage-os-icon-linux-minutes',
+        text: text()
+      },
+      creditsTotal: {
+        scope: '[data-test-plan-usage-credits-total]',
+        text: text()
+      },
+      minutesTotal: {
+        scope: '[data-test-plan-usage-minutes-total]',
+        text: text()
+      }
+    },
+    checkUserActivity: {
+      visit: clickable('[data-test-plan-usage-check-user-activity]'),
+      uniqueUsers: {
+        scope: '[data-test-plan-usage-user-statistics-modal-unique-users]',
+        text: text()
+      },
+      userName: {
+        scope: '[data-test-plan-usage-user-statistics-modal-user-name]',
+        text: text()
+      },
+      minutesConsumed: {
+        scope: '[data-test-plan-usage-user-statistics-modal-minutes-consumed]',
+        text: text()
+      },
+      creditsConsumed: {
+        scope: '[data-test-plan-usage-user-statistics-modal-credits-consumed]',
+        text: text()
+      },
+    }
   },
 
   migrate: {

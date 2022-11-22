@@ -1,0 +1,86 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+  @closeButton={{true}}
+>
+  <div data-test-user-statistics-modal="true" class="user-statistics-modal">
+    <h2>User statistics</h2>
+    <span class="active-users" data-test-plan-usage-user-statistics-modal-unique-users='true'>{{this.usersCount}} active users</span>
+    <div class="date-picker-container">
+      <button class="date-picker" onclick={{action "datePicker"}} >
+        {{#if this.dateRange.start}}
+          {{moment-format this.dateRange.start "YYYY-MM-DD"}}
+        {{/if}}
+        &nbsp;-&nbsp;
+        {{#if this.dateRange.end}}
+          {{moment-format this.dateRange.end "YYYY-MM-DD"}}
+        {{else}}
+          {{moment-format this.dateRange.start "YYYY-MM-DD"}}
+        {{/if}}
+        <SvgImage @name="icon-dropdown-arrow" @class="icon" />
+      </button>
+      {{#if this.showDatePicker}}
+        <PowerCalendarRange
+          class="calendar-medium date-picker-calendar"
+          @center={{this.dateCenter}}
+          @onCenterChange={{action (mut this.dateCenter) value="date"}} 
+          @selected={{this.dateRange}}
+          @maxRange="2 month"
+          @onSelect={{action (mut this.dateRange) value="date"}}
+          as |calendar|>
+          <calendar.Nav/>
+          <calendar.Days/>
+        </PowerCalendarRange>
+      {{/if}}
+    </div>
+    <table class="users-build-times">
+      <thead>
+        <tr data-test-table-header-row='true'>
+          <th>Name</th>
+          <th>Build minutes</th>
+          <th>Build credits</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.usersToShow as |user|}}
+          <tr data-test-repository='true'>
+            <td>
+               <UserAvatar
+                @url={{user.sender.avatar_url}}
+                @name={{user.sender.name}}
+                @size={{42}}
+              />
+              <div class="sender">
+                <span class="sender-name" data-test-plan-usage-user-statistics-modal-user-name='true'>
+                {{#if user.sender.name}}
+                  {{user.sender.name}}
+                {{else}}
+                  {{user.sender.login}}
+                {{/if}}
+                </span>
+                <br />
+                {{user.sender.email}}
+              </div>
+            </td>
+            <td data-test-plan-usage-user-statistics-modal-minutes-consumed='true'>
+              {{format-number user.minutes_consumed}}
+            </td>
+            <td data-test-plan-usage-user-statistics-modal-credits-consumed='true'>
+              {{format-number user.credits_consumed}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{#if (gt this.usersCount this.perPage)}}
+      {{pagination-links
+        currentPage=this.page
+        showFirstAndLast=false
+        lastPage=this.maxPages
+        prevPageIcon='Prev'
+        nextPageIcon='Next'
+        goToPage=(action 'setPage')
+      }}
+    {{/if}}
+  </div>
+</Modal>

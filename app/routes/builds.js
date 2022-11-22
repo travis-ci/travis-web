@@ -21,4 +21,11 @@ export default TravisRoute.extend({
   model() {
     return this.modelFor('repo').get('builds');
   },
+
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    if (repo && !repo.repoOwnerAllowance) {
+      repo.fetchRepoOwnerAllowance.perform();
+    }
+  }
 });

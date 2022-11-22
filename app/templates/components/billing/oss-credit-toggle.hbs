@@ -1,0 +1,16 @@
+<div class="oss-toggle">
+  <TravisSwitch
+    @active={{this.consumeOSSCredits}}
+    @disabled={{this.toggleOSSCredits.isRunning}}
+    @onToggle={{perform this.toggleOSSCredits}}
+  />
+  <span class="oss-name">
+    Consume paid credits for OSS
+  </span>
+  <p class="oss-description">
+    You can use paid credits both for build jobs run over public and private repositories. 
+    You can use ‘OSS only’ credits only for build jobs run over public repositories. 
+    If the ‘Consume paid credits for OSS’ is set to OFF, paid credits will not be used for build
+    jobs run over public repositories. ‘OSS only credits’ are available and renewed as per terms of selected plan.
+  </p>
+</div>

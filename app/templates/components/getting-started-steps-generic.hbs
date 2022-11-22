@@ -30,6 +30,23 @@
 <GettingStartedStep
   @number={{2}}
   @provider={{@provider}}
+  @title='Select your Plan!'
+>
+  <UiKit::Text @variant='p'>
+    <UiKit::Link @route='account.billing' @variant='link-underlined'>Select a plan</UiKit::Link>
+    (free trial or paid) in order to unlock the building. At free trial we will ask for credit card details
+    and put a small fee on the card in order to verify it. It will be returned to you in several days.
+  </UiKit::Text>
+
+  <UiKit::Text @variant='p'>
+    Read our <UiKit::Link @href={{config-get 'urls.docs'}} @variant='link-underlined'>documentation</UiKit::Link> for more details.
+  </UiKit::Text>
+</GettingStartedStep>
+
+{{!-- Step 3 --}}
+<GettingStartedStep
+  @number={{3}}
+  @provider={{@provider}}
   @title='Add a .travis.yml file to your repository'
 >
   <UiKit::Text @variant='p'>
@@ -50,9 +67,9 @@
   </UiKit::Text>
 </GettingStartedStep>
 
-{{!-- Step 3 --}}
+{{!-- Step 4 --}}
 <GettingStartedStep
-  @number={{3}}
+  @number={{4}}
   @provider={{@provider}}
   @title='Trigger your first build'
 >

@@ -26,9 +26,11 @@ module('Acceptance | job/invalid log', function (hooks) {
 
   test('viewing invalid job shows error', async function (assert) {
     // create incorrect repository as this is resolved first, errors otherwise
-    this.server.create('repository', { slug: 'travis-ci/travis-api' });
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('repository', { slug: 'travis-ci/travis-api', owner: { login: 'travis-ci', id: 1 } });
 
-    const repository = this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    const repository = this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
     const incorrectSlug = 'travis-ci/travis-api';
     const job = this.server.create('job', { repository });
     await visit(`${incorrectSlug}/jobs/${job.id}`);

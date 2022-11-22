@@ -1,3 +1,4 @@
+
 @mixin planBtn($color) {
   display: inline-block;
   padding: 0.5em 1em;
@@ -26,7 +27,7 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: 
 
 .pardot-iframe {
   border: 0;
-  margin-left: -4px;
-  height: 500px;
-  width: 100%;
+  margin-left: 5%;
+  height: 550px;
+  width: 105%;
 }

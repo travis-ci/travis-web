@@ -9,13 +9,12 @@ module('Acceptance | jobs/restart', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
-    signInUser(currentUser);
-  });
-
   test('restarting job', async function (assert) {
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    const currentUser = this.server.create('user', {login: 'travis-ci', confirmed_at: Date.now()});
+    this.server.create('allowance', {subscription_type: 1});
+    signInUser(currentUser);
+
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
     this.server.create('branch', {});
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });

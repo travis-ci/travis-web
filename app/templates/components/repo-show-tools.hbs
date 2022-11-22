@@ -31,12 +31,22 @@
       </LinkTo>
     </li>
   {{/if}}
-  {{#if this.displayTriggerBuildLink}}
+  {{#if (and this.displayTriggerBuildLink this.canOwnerBuild)}}
     <li>
       <button
         type="button"
         class="trigger-build-anchor"
         onclick={{action "triggerBuildModal"}}
+      >
+        Trigger build
+      </button>
+    </li>
+  {{else}}
+    <li>
+      <button
+        type="button"
+        class="trigger-build-anchor"
+        disabled="disabled"
       >
         Trigger build
       </button>

@@ -1,0 +1,145 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+  @closeButton={{true}}
+>
+  <div data-test-user-management-modal="true" class="user-management-modal">
+    <h2>Manage users</h2>
+    <nav
+      class="option-button {{if this.isBulkMenuOpen 'is-open'}}"
+      {{on 'click' (fn (mut this.isBulkMenuOpen) true)}}
+      {{on 'mouseleave' (fn (mut this.isBulkMenuOpen) false)}}
+    >
+      <button class="option-display" type="button" title="Show more options">
+        <span class="label-align">
+          Bulk actions
+          <SvgImage @name="icon-dropdown-arrow" @class="icon" />
+        </span>
+      </button>
+      <ul class="option-dropdown">
+        <li>
+          <button
+            type="button"
+            onclick={{perform this.bulkActivate}}
+          >
+            Activate
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            onclick={{perform this.bulkDeactivate}}
+          >
+            Deactivate
+          </button>
+        </li>
+      </ul>
+    </nav>
+    <Input
+      class="filter-users-input"
+      placeholder="Filter users"
+      onkeyup={{action "setFilter"}}
+    />
+    <table class="manage-users">
+      <thead>
+        <tr data-test-table-header-row='true'>
+          <th>
+            <TravisForm
+              as |form|
+            >
+              <form.field
+                @disableFrame={{true}}
+                @value={{this.isAllSelected}}
+                onclick={{action "setAllUserIds"}}
+                as |field|
+              >
+                <field.checkbox />
+              </form.field>
+            </TravisForm>
+          </th>
+          <th>
+            <button onclick={{action "sortList" "user.name"}} class="sort-button">
+              Name
+              {{#if (eq this.sortField 'user.name')}}
+                {{#if (eq this.sortWay 'asc')}}
+                  <span class="asc"></span>
+                {{else}}
+                  <span class="desc"></span>
+                {{/if}}
+              {{/if}}
+            </button>
+          </th>
+          <th>
+            <button onclick={{action "sortList" "role"}} class="sort-button">
+              Permission
+              {{#if (eq this.sortField 'role')}}
+                {{#if (eq this.sortWay 'asc')}}
+                  <span class="asc"></span>
+                {{else}}
+                  <span class="desc"></span>
+                {{/if}}
+              {{/if}}
+            </button>
+          </th>
+          <th>
+            <button onclick={{action "sortList" "permission"}} class="sort-button">
+              Active
+              {{#if (eq this.sortField 'permission')}}
+                {{#if (eq this.sortWay 'asc')}}
+                  <span class="asc"></span>
+                {{else}}
+                  <span class="desc"></span>
+                {{/if}}
+              {{/if}}
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.buildPermissionsToShow as |perm|}}
+          <tr data-test-permission='true'>
+            <td>              
+              <TravisForm
+                as |form|
+              >
+                <form.field
+                  @disableFrame={{true}}
+                  @value={{get this.selectedUserIds perm.user.id}}
+                  onclick={{action "setUserId" perm.user.id}}
+                  as |field|
+                >
+                  <field.checkbox />
+                </form.field>
+              </TravisForm>
+            </td>
+            <td data-test-permission-username='true'>
+              <LinkTo @route="owner" @models={{array perm.user.provider perm.user.login}} class="login-link">
+                {{perm.user.name}} ({{perm.user.login}})
+              </LinkTo>
+            </td>
+            <td data-test-permission-role='true'>
+              {{perm.role}}
+            </td>
+            <td data-test-permission-active='true'>
+              <TravisSwitch
+                @active={{perm.permission}}
+                @onToggle={{perform this.changePermissions perm.user.id}}
+                @stateful={{true}}
+              />
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{#if (gt this.filteredBuildPermissionsCount this.perPage)}}
+      {{pagination-links
+        currentPage=this.page
+        showFirstAndLast=false
+        lastPage=this.maxPages
+        prevPageIcon='Prev'
+        nextPageIcon='Next'
+        goToPage=(action 'setPage')
+      }}
+    {{/if}}
+  </div>
+</Modal>

@@ -14,6 +14,8 @@ export default Component.extend({
 
   role: 'switch',
 
+  reverse: false,
+
   'aria-checked': computed('active', function () {
     if (this.active) {
       return 'true';
@@ -26,7 +28,7 @@ export default Component.extend({
     try {
       // try saving with the new state, only change local state if successful
       const futureState = !this.active;
-      yield this.repo.saveSetting(this.key, futureState);
+      yield this.repo.saveSetting(this.key, this.reverse ? !futureState : futureState);
       this.toggleProperty('active');
     } catch (e) {
       this.flashes.error('There was an error while saving your settings. Please try again.');

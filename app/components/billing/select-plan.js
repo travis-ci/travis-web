@@ -2,49 +2,82 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import config from 'travis/config/environment';
-import { or, not, reads, filterBy } from '@ember/object/computed';
+import { later } from '@ember/runloop';
+import { or, reads, filterBy } from '@ember/object/computed';
 
 export default Component.extend({
   accounts: service(),
   store: service(),
 
   account: null,
-  showPlansSelector: true,
-  showCancelButton: false,
   title: null,
-  showAnnual: false,
-  showMonthly: not('showAnnual'),
-  monthlyPlans: reads('account.monthlyPlans'),
-  annualPlans: reads('account.annualPlans'),
-  availablePlans: computed(() => config.plans),
+  availablePlans: reads('account.eligibleV2Plans'),
   defaultPlans: filterBy('availablePlans', 'isDefault'),
   defaultPlanName: reads('defaultPlans.firstObject.name'),
-  isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning'),
+  isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
+  showAnnual: false,
+  showCalculator: false,
 
-  displayedPlans: computed('showAnnual', 'annualPlans.[]', 'monthlyPlans.[]', function () {
-    return this.showAnnual ? this.annualPlans : this.monthlyPlans;
-  }),
+  displayedPlans: reads('availablePlans'),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
     return this.displayedPlans.findBy('name', this.defaultPlanName);
   }),
 
-  save: task(function* () {
-    if (this.submit.perform) {
-      yield this.submit.perform();
+  allowReactivation: computed(function () {
+    if (this.subscription) {
+      return (this.subscription.isCanceled || this.subscription.isExpired) && !this.subscription.scheduledPlan;
     } else {
-      const { store } = this;
-      const selectedPlan = store.peekRecord('plan', this.selectedPlan.id) || store.createRecord('plan', { ...this.selectedPlan });
-      this.newSubscription.set('plan', selectedPlan);
-      this.submit();
+      return false;
     }
-    this.set('showPlansSelector', false);
+  }),
+
+  save: task(function* () {
+    if (this.next.perform) {
+      yield this.next.perform();
+    } else {
+      this.next();
+    }
   }).drop(),
 
+  reactivatePlan(plan, form) {
+    this.set('selectedPlan', plan);
+    this.set('isReactivation', true);
+    later(form.submit, 500);
+  },
+
+  selectAndSubmit(plan, form) {
+    this.set('selectedPlan', plan);
+    later(form.submit, 500);
+  },
+
+  submitForm(form) {
+    later(form.submit, 500);
+  },
+
   actions: {
-    togglePlanPeriod() {
-      this.toggleProperty('showAnnual');
+    selectAndSubmit(plan, form) {
+      this.selectAndSubmit(plan, form);
     },
+
+    reactivatePlan(plan, form) {
+      this.reactivatePlan(plan, form);
+    },
+
+    showAnnualPlans() {
+      this.set('showAnnual', true);
+    },
+
+    showMonthlyPlans() {
+      this.set('showAnnual', false);
+    },
+
+    showCalculator() {
+      this.set('showCalculator', true);
+    },
+
+    hideCalculator() {
+      this.set('showCalculator', false);
+    }
   }
 });

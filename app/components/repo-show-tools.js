@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { alias, reads } from '@ember/object/computed';
 
 export default Component.extend({
   auth: service(),
@@ -21,6 +21,9 @@ export default Component.extend({
   toggle() {
     this.set('isOpen', !this.isOpen);
   },
+
+  canOwnerBuild: reads('repo.canOwnerBuild'),
+  userRoMode: reads('currentUser.roMode'),
 
   displaySettingsLink: computed('permissions.all', 'repo', function () {
     let repo = this.repo;

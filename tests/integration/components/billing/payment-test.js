@@ -22,13 +22,9 @@ module('Integration | Component | billing-payment', function (hooks) {
       annual: false
     };
 
-    const paymentInfo = {
-      cardNumber: null,
-      cardName: '',
-      expiryDateMonth: '',
-      expiryDateYear: '',
-      cvc: '',
-      discountCode: ''
+    const creditCardInfo = {
+      token: '',
+      lastDigits: '4242'
     };
 
     const newSubscription = {
@@ -44,7 +40,8 @@ module('Integration | Component | billing-payment', function (hooks) {
         country: '',
         vatId: ''
       },
-      plan: selectedPlan
+      plan: selectedPlan,
+      creditCardInfo: creditCardInfo
     };
 
     this['actions'] = {
@@ -56,7 +53,6 @@ module('Integration | Component | billing-payment', function (hooks) {
 
     this.setProperties({
       selectedPlan,
-      paymentInfo,
       newSubscription
     });
 
@@ -73,14 +69,14 @@ module('Integration | Component | billing-payment', function (hooks) {
   test('billing-payment renders correctly', async function (assert) {
 
     await render(hbs`<Billing::Payment
-      @paymentInfo={{paymentInfo}}
-      @newSubscription={{newSubscription}}
+      @subscription={{newSubscription}}
+      @selectedPlan={{this.selectedPlan}}
       @cancel={{action 'cancel'}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @back={{action 'back'}}
       @selectedPlan={{selectedPlan}}/>`);
 
-    assert.dom('h3').hasText('Payment');
+    assert.dom('h3').hasText('Order Summary');
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();
   });
 });

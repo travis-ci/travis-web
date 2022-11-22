@@ -15,8 +15,11 @@ module('Acceptance | job/log error', function (hooks) {
     assert.expect(5);
 
     let createdBy = this.server.create('user', { login: 'srivera', name: null });
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    this.server.create('allowance', {subscription_type: 1});
 
-    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' }),
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 2 } }),
       branch = this.server.create('branch', { name: 'acceptance-tests' });
 
     let commit = this.server.create('commit', { branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });

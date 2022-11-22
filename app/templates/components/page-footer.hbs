@@ -88,13 +88,9 @@
         </li>
         {{#if this.features.proVersion}}
           <li>
-            <LinkTo
-              data-test-footer-plans-link="true"
-              @route='plans'
-              @title="Travis CI Plans"
-            >
-              Plans and Pricing
-            </LinkTo>
+          {{#if this.auth.signedIn}}
+            <a href='/account/plan?billingStep=1'>Plans and Pricing</a>
+          {{/if}}
           </li>
         {{/if}}
         <li>
@@ -143,5 +139,5 @@
         </li>
       </ul>
     </div>
-  {{/unless}}
+{{/unless}}
 </div>

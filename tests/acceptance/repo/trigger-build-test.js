@@ -14,9 +14,20 @@ module('Acceptance | repo/trigger build', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
+    this.server.create('allowance', {
+      id: 1,
+      subscription_type: 2,
+      public_repos: true,
+      private_repos: true,
+      user_usage: true,
+      pending_user_licenses: false,
+      concurrency_limit: 2
+    }),
+
     this.currentUser = this.server.create('user', {
       name: 'Ada Lovelace',
       login: 'adal',
+      confirmed_at: Date.now()
     });
 
     this.repo = this.server.create('repository', {
@@ -24,6 +35,10 @@ module('Acceptance | repo/trigger build', function (hooks) {
       slug: 'adal/difference-engine',
       permissions: {
         create_request: true
+      },
+      owner: {
+        login: 'adal',
+        id: 1
       }
     });
 
@@ -63,7 +78,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     this.repo.update('permissions', { create_request: false });
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
-    assert.notOk(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
+    assert.ok(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
   });
 
   test('trigger link is present when user has the proper permissions and has been migrated on com', async function (assert) {
@@ -93,7 +108,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     this.repo.update('migration_status', 'migrated');
     signInUser(this.currentUser);
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
-    assert.notOk(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
+    assert.ok(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
   });
 
   test('triggering a custom build via the dropdown', async function (assert) {

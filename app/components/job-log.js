@@ -42,6 +42,10 @@ export default Component.extend({
     try {
       yield job.get('log.fetchTask').perform();
     } catch (e) {
+      e.json().then((data) => {
+        this.set('errorType', data.error_type);
+        this.set('errorMessage', data.error_message);
+      });
       this.set('error', true);
     }
 

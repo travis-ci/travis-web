@@ -1,0 +1,128 @@
+{{#let @form as |form|}}
+  <div class='flex flex--col flex-md-row'>
+    <div class='full-width form-elem inline-form-elem'>
+      <form.field
+        @label='Street Address'
+        @value={{this.billingInfo.address}}
+        @required={{true}}
+        @showRequiredMark={{true}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.billingInfo.address)}}
+        as |Field|
+      >
+        <Field.input @name='address'/>
+      </form.field>
+    </div>
+    <div class='full-width form-elem'>
+      <form.field
+        @label='City'
+        @value={{this.billingInfo.city}}
+        @required={{true}}
+        @showRequiredMark={{true}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.billingInfo.city)}}
+        as |Field|
+      >
+        <Field.input @name='city'/>
+      </form.field>
+    </div>
+  </div>
+  <div class='flex flex--col flex-md-row'>
+    <div class='full-width form-elem inline-form-elem'>
+      <form.field
+        @label='Zip Code'
+        @value={{this.billingInfo.zipCode}}
+        @required={{true}}
+        @showRequiredMark={{true}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.billingInfo.zipCode)}}
+        as |Field|
+      >
+        <Field.input @name='zip'/>
+      </form.field>
+    </div>
+    <div class='form-elem full-width select' data-billing-form-select>
+      <form.field
+        @label='Country'
+        @value={{this.billingInfo.country}}
+        @required={{true}}
+        class='billing-country'
+        @showRequiredMark={{true}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.billingInfo.country)}}
+        as |Field|
+      >
+        <Field.select
+          @placeholder='Select country'
+          @options={{this.countries}} as |country|
+        >
+          {{country}}
+        </Field.select>
+      </form.field>
+    </div>
+  </div>
+  {{#if this.isStateMandatory}}
+    <div class='form-elem-half-width inline-form-elem'>
+      <form.field
+        @label='State'
+        @required={{true}}
+        @showRequiredMark={{true}}
+        @value={{this.billingInfo.state}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.billingInfo.state)}}
+        as |Field|
+      >
+        <Field.select
+          @placeholder='Select state'
+          @options={{this.states}} as |state|
+        >
+          {{state}}
+        </Field.select>
+      </form.field>
+    </div>
+  {{/if}}
+  {{#if this.showNonZeroVatConfirmation}}
+    <div class='flex justify-between items-center mb-8'>
+      <div class='w-4/6 pr-2'>
+        Is your company registered locally for VAT/GST?
+      </div>
+      <div class='w-1/6 text-right'>
+        <form.field
+          @value={{this.billingInfo.hasLocalRegistration}}
+          @showValidationStatusIcons={{false}}
+          @disableFrame={{true}}
+          @onChange={{action (mut this.billingInfo.hasLocalRegistration) true}}
+          as |Field|
+        >
+          <Field.checkbox>Yes</Field.checkbox>
+        </form.field>
+      </div>
+      <div class='w-1/6 text-right'>
+        <form.field
+          @value={{not this.billingInfo.hasLocalRegistration}}
+          @showValidationStatusIcons={{false}}
+          @disableFrame={{true}}
+          @onChange={{action (mut this.billingInfo.hasLocalRegistration) false}}
+          as |Field|
+        >
+          <Field.checkbox>No</Field.checkbox>
+        </form.field>
+      </div>
+    </div>
+  {{/if}}
+  {{#if this.showVatField}}
+    <div class='form-elem-half-width inline-form-elem billing-optional-field'>
+      <form.field
+        @label='Vat Id'
+        @required={{this.isVatMandatory}}
+        @showRequiredMark={{this.isVatMandatory}}
+        @value={{this.billingInfo.vatId}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.billingInfo.vatId)}}
+        as |Field|
+      >
+        <Field.input @name='vat'/>
+      </form.field>
+    </div>
+  {{/if}}
+{{/let}}

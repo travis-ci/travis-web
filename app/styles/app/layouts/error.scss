@@ -20,8 +20,12 @@
 
 .error,
 .maintenance {
-  height: 100vh;
+  height: auto;
   overflow: hidden;
+}
+
+.flash.error {
+  height: inherit;
 }
 
 .error-full-size {

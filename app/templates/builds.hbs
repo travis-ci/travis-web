@@ -6,7 +6,12 @@
       <NoBuilds />
     {{/each}}
   </ul>
-  <div class="flex flex--center flex--space-between flex--v-center">
+  <ul class="build-list">
+    {{#each this.repo.buildBackups as |build|}}
+      <BuildsBackupItem @build={{build}} />
+    {{/each}}
+  </ul>
+  <div class="">
     {{#if this.showBuildHistoryLink}}
       <div>
         Previous build runs are available at
@@ -26,6 +31,20 @@
           <ShowMoreButton @click={{perform this.loadMoreBuilds}} />
         {{/if}}
       </p>
+    {{else}}
+      {{#if (and this.hasBuildBackups this.displayExportFiles)}}
+        <p>
+          {{#if this.loadMoreExportFiles.isRunning}}
+            <LoadingIndicator />
+          {{else}}
+            {{#if this.displayMoreShowExportFiles}}
+              <ShowMoreButton @label="Show export files" @click={{perform this.loadMoreExportFiles}} />
+            {{else if (not this.lastExportFiles)}}
+              <ShowMoreButton @label="Show more export files" @click={{perform this.loadMoreExportFiles}} />
+            {{/if}}
+          {{/if}}
+        </p>
+      {{/if}}
     {{/if}}
   </div>
 {{else}}

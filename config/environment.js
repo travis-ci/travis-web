@@ -11,6 +11,7 @@ const tailwind = resolveTwConfig(tailwindConfig);
 
 const {
   TRAVIS_PRO,
+  REDIRECT,
   TRAVIS_ENTERPRISE,
   SOURCE_ENDPOINT,
   ENABLE_FEATURE_FLAGS,
@@ -109,7 +110,10 @@ module.exports = function (environment) {
       tutorial: 'https://docs.travis-ci.com/user/tutorial/',
       twitter: 'https://twitter.com/travisci',
       pardotHost: 'https://info.travis-ci.com',
-      pardotForm: '/l/845883/2020-02-03/257j'
+      pardotForm: '/l/845883/2020-02-03/257j',
+      planDocs: 'https://docs.travis-ci.com/user/billing-overview/',
+      planCreditDocs: 'https://docs.travis-ci.com/user/billing-overview/#usage---credits',
+      planUsersDocs: 'https://docs.travis-ci.com/user/billing-overview/#usage---user-licenses',
     },
     endpoints: {},
     githubApps: false,
@@ -209,6 +213,10 @@ module.exports = function (environment) {
     ENV.pro = true;
   }
 
+  if (REDIRECT) {
+    ENV.featureFlags['redirect'] = true;
+  }
+
   if (TRAVIS_ENTERPRISE) {
     ENV.featureFlags['enterprise-version'] = true;
     ENV.enterprise = true;
@@ -271,7 +279,7 @@ module.exports = function (environment) {
       ENV.apiEndpoint = 'https://api.travis-ci.com';
       ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';
-      ENV.pagesEndpoint = 'https://travis-ci.com/account/subscription';
+      ENV.pagesEndpoint = 'https://travis-ci.com/account/plan';
       ENV.billingEndpoint = 'https://travis-ci.com';
       ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
       ENV.endpoints = {

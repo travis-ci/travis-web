@@ -10,12 +10,13 @@ module('Acceptance | builds/current tab', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
+    const currentUser = this.server.create('user', {login: 'travis-ci'});
     signInUser(currentUser);
+    this.server.create('allowance', {subscription_type: 1});
   });
 
   test('renders most recent repository without builds', async function (assert) {
-    this.server.create('repository');
+    this.server.create('repository', {owner: {login: 'travis-ci', id: 1}});
 
     await visit('/travis-ci/travis-web');
 
@@ -24,7 +25,7 @@ module('Acceptance | builds/current tab', function (hooks) {
   });
 
   test('renders most recent repository and most recent build when builds present, single-job build shows job status instead', async function (assert) {
-    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: {login: 'travis-ci', id: 1} });
 
     const branch = this.server.create('branch', { name: 'acceptance-tests' });
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -47,7 +48,7 @@ module('Acceptance | builds/current tab', function (hooks) {
   });
 
   test('renders the repository and subscribes to private log channel for a private repository', async function (assert) {
-    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', private: true });
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', private: true, owner: {login: 'travis-ci', id: 1} });
 
     const branch = this.server.create('branch', { name: 'acceptance-tests' });
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -68,7 +69,7 @@ module('Acceptance | builds/current tab', function (hooks) {
   });
 
   test('error message when build jobs array is empty', async function (assert) {
-    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: {login: 'travis-ci', id: 1} });
 
     const branch = this.server.create('branch', { name: 'acceptance-tests' });
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -83,7 +84,7 @@ module('Acceptance | builds/current tab', function (hooks) {
   });
 
   test('shows user link to .com if viewing migrated repository on .org', async function (assert) {
-    this.server.create('repository', { slug: 'travis-ci/travis-web', active: false, migration_status: 'migrated'});
+    this.server.create('repository', { slug: 'travis-ci/travis-web', active: false, migration_status: 'migrated', owner: {login: 'travis-ci', id: 1}});
     await visit('/travis-ci/travis-web');
 
     assert.dom('[data-test-not-active-migrated-subtext]').exists();

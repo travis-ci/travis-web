@@ -11,7 +11,7 @@
       class="travis-modal bg-white p-8 relative rounded-sm"
       data-test-modal
       ...attributes
-      {{on 'click' this.onClickModal}}
+      {{on 'click' (action this.onClickModal)}}
     >
       {{~yield~}}
       {{#if this.closeButton}}

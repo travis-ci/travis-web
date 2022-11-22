@@ -12,6 +12,7 @@ export default Component.extend({
   role: 'switch',
   description: '',
   active: false,
+  stateful: false,
   disabled: false,
 
   'aria-checked': computed('active', function () {
@@ -23,6 +24,9 @@ export default Component.extend({
   click() {
     if (!this.disabled) {
       this.onToggle(!this.active);
+      if (this.stateful) {
+        this.set('active',  !this.active);
+      }
     }
   }
 });

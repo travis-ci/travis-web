@@ -5,6 +5,7 @@ import Service from '@ember/service';
 import { stubService } from 'travis/tests/helpers/stub-service';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
+import { enableFeature } from 'ember-feature-flags/test-support';
 
 const SELECTORS = {
   PAGE: '[data-test-signin-page]',
@@ -19,6 +20,7 @@ module('Acceptance | sign in', function (hooks) {
 
   test('visiting /signin shows signin page if unauthenticated', async function (assert) {
     let signinRequest;
+    enableFeature('proVersion');
 
     // avoid actually contacting GitHub
     const mockAuthService = Service.extend({
@@ -45,7 +47,6 @@ module('Acceptance | sign in', function (hooks) {
     assert.dom(SELECTORS.PAGE).exists();
     assert.dom(SELECTORS.BUTTON_PRIMARY).containsText('GitHub');
     assert.dom(SELECTORS.BUTTON_ASSEMBLA).doesNotExist();
-    assert.dom(SELECTORS.BUTTON_BITBUCKET).doesNotExist();
 
     await click(SELECTORS.BUTTON_PRIMARY);
 

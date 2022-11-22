@@ -15,10 +15,7 @@ module('Acceptance | layouts/logo page', function (hooks) {
     assert.equal(currentURL(), '/logo');
 
     assert.ok(defaultHeader.logoPresent, 'Default header has logo');
-    assert.equal(defaultHeader.navigationLinks[0].title, 'About Us', 'Shows link to About Us');
-    assert.equal(defaultHeader.navigationLinks[1].title, 'Blog', 'Shows link to Blog');
-    assert.equal(defaultHeader.navigationLinks[2].title, 'Status', 'Shows link to Status');
-    assert.equal(defaultHeader.navigationLinks[3].title, 'Documentation', 'Shows link to Documentation');
+    assert.equal(defaultHeader.navigationLinks[1].title, 'Documentation', 'Shows link to Documentation');
 
     assert.ok(defaultHeader.loginLinkPresent, 'Default header has login button');
 

@@ -1,23 +1,57 @@
 {{#if this.account.hasSubscriptionPermissions}}
   {{#if this.isStepOne}}
-    <Billing::SelectPlan
-      @title="Subscribe to a plan"
-      @newSubscription={{this.newSubscription}}
-      @account={{this.account}}
-      @submit={{action 'next'}}
-    />
+    {{#if this.showAddonsSelector}}
+      <Billing::SelectAddon
+        @title="Buy addon"
+        @selectedPlan={{this.selectedPlan}}
+        @selectedAddon={{this.selectedAddon}}
+        @subscription={{this.subscription}}
+        @account={{this.account}}
+        @showAddonsSelector={{this.showAddonsSelector}}
+        @next={{action 'next'}}
+        @showCancelButton={{this.showCancelButton}}
+      />
+    {{else}}
+      <Modal
+        @isVisible={{this.showPlansSelector}}
+        @closeButton={{true}}
+        @onClose={{action 'closePlansModal'}}
+      >
+        <Billing::SelectPlan
+          @title="Edit plan"
+          @selectedPlan={{this.selectedPlan}}
+          @isReactivation={{this.isReactivation}}
+          @subscription={{this.subscription}}
+          @account={{this.account}}
+          @showPlansSelector={{this.showPlansSelector}}
+          @showAddonsSelector={{this.showAddonsSelector}}
+          @next={{action 'next'}}
+          @showCancelButton={{this.showCancelButton}}
+        />
+      </Modal>
+    {{/if}}
   {{else if this.isStepTwo}}
     <Billing::Information
-      @newSubscription={{this.newSubscription}}
+      @subscription={{this.subscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @selectedAddon={{this.selectedAddon}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @next={{action 'next'}}
       @back={{action 'back'}}
     />
   {{else if this.isStepThree}}
     <Billing::Payment
-      @newSubscription={{this.newSubscription}}
+      @subscription={{this.subscription}}
+      @v1SubscriptionId={{this.v1SubscriptionId}}
+      @selectedPlan={{this.selectedPlan}}
+      @isReactivation={{this.isReactivation}}
       @account={{this.account}}
       @goToFirstStep={{action 'goToFirstStep'}}
+      @retryAuthorization={{this.retryAuthorization}}
+      @showPlansSelector={{this.showPlansSelector}}
+      @showAddonsSelector={{this.showAddonsSelector}}
+      @isProcessCompleted={{this.isProcessCompleted}}
+      @selectedAddon={{this.selectedAddon}}
       @back={{action 'back'}}
     />
   {{/if}}

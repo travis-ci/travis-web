@@ -13,7 +13,7 @@ export default Mixin.create({
   setupController(controller) {
     this._super(...arguments);
     this.checkBillingStep();
-    controller.set('newSubscription', this.newSubscription());
+    controller.set('selectedPlan', this.selectedPlan());
   },
 
   deactivate() {
@@ -21,17 +21,16 @@ export default Mixin.create({
     this.controller.set('billingStep', 1);
   },
 
-  newSubscription() {
+  afterModel(model) {
+    if (model && !model.error) {
+      model.account.fetchV2Plans.perform();
+    }
+  },
+
+  selectedPlan() {
     const savedPlan = this.storage.billingPlan;
-    const selectedPlan = savedPlan && savedPlan.id && this.store.peekRecord('plan', savedPlan.id);
-    const plan = selectedPlan || this.store.createRecord('plan', this.storage.billingPlan);
-    const billingInfo = this.store.createRecord('billing-info', this.storage.billingInfo);
-    const creditCardInfo = this.store.createRecord('credit-card-info');
-    return this.store.createRecord('subscription', {
-      billingInfo,
-      plan,
-      creditCardInfo,
-    });
+    const selectedPlan = savedPlan && savedPlan.id && this.store.peekRecord('v2-plan-config', savedPlan.id);
+    return selectedPlan || this.store.createRecord('v2-plan-config', this.storage.billingPlan);
   },
 
   checkBillingStep() {

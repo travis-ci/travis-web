@@ -26,9 +26,11 @@ module('Acceptance | builds/invalid build', function (hooks) {
 
   test('viewing invalid build shows error', async function (assert) {
     // create incorrect repository as this is resolved first, errors otherwise
-    this.server.create('repository', { slug: 'travis-ci/travis-api' });
+    this.server.create('repository', { slug: 'travis-ci/travis-api', owner: { login: 'travis-ci', id: 1} });
 
-    const repository = this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    this.server.create('user', {login: 'travis-ci'});
+    this.server.create('allowance', {subscription_type: 1});
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1} });
     const incorrectSlug = 'travis-ci/travis-api';
     const build = this.server.create('build', { repository });
     await visit(`${incorrectSlug}/builds/${build.id}`);

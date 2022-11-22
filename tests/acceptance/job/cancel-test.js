@@ -10,12 +10,13 @@ module('Acceptance | jobs/cancel', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
+    const currentUser = this.server.create('user', {login: 'travis-ci', confirmed_at: Date.now()});
+    this.server.create('allowance', {subscription_type: 1});
     signInUser(currentUser);
   });
 
   test('restarting job', async function (assert) {
-    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
+    let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
     this.server.create('branch', {});
 
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });

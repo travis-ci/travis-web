@@ -26,6 +26,7 @@ languageConfigKeys = {
   julia: 'Julia',
   lein: 'Lein',
   mono: 'Mono',
+  matlab: 'MATLAB',
   nix: 'Nix',
   node_js: 'Node.js',
   objective_c: 'Objective-C',

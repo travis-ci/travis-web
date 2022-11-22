@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and, not, or } from '@ember/object/computed';
+import { alias, and, not, or, reads } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 
@@ -57,6 +57,13 @@ export default Component.extend({
     if (user && repo) {
       return user.hasPushAccessToRepo(repo);
     }
+  }),
+
+  canOwnerBuild: reads('repo.canOwnerBuild'),
+  ownerRoMode: reads('repo.owner.ro_mode'),
+  userRoMode: reads('user.roMode'),
+  isOwnerConfirmed: computed('auth.currentUser.confirmedAt', function () {
+    return this.auth.currentUser && this.auth.currentUser.confirmedAt;
   }),
 
   showPriority: true,

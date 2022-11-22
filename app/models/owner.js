@@ -9,7 +9,9 @@ import {
   match,
   notEmpty,
   or,
-  reads
+  reads,
+  empty,
+  not
 } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
@@ -36,9 +38,12 @@ export default VcsEntity.extend({
   fullName: or('name', 'login'),
   permissions: attr(),
   type: attr('string'),
+  roMode: attr('boolean', { defaultValue: false }),
   isUser: equal('type', 'user'),
   isOrganization: equal('type', 'organization'),
   isAssembla: match('vcsType', /Assembla\S+$/),
+
+  allowance: belongsTo('allowance', { async: true }),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
@@ -109,6 +114,18 @@ export default VcsEntity.extend({
     return filteredAnnualPlans.sortBy('builds');
   }),
 
+  fetchV2Plans: task(function* () {
+    const { id, type } = this; // owner properties
+    const plans = yield this.store.query('v2-plan-config', { type, orgId: id });
+    if (plans)
+      return plans;
+    return [];
+  }).drop(),
+
+  isFetchV2PlansRunning: reads('fetchV2Plans.isRunning'),
+  eligibleV2Plans: reads('fetchV2Plans.lastSuccessful.value'),
+  availableStandaloneAddons: reads('v2subscription.plan.availableStandaloneAddons'),
+
   fetchBetaMigrationRequests() {
     return this.tasks.fetchBetaMigrationRequestsTask.perform();
   },
@@ -167,6 +184,30 @@ export default VcsEntity.extend({
         this.accountSubscriptions.get('lastObject');
     }),
 
+  v2subscriptions: reads('accounts.v2subscriptions'),
+
+  accountv2Subscriptions: computed(
+    'v2subscriptions.@each.{owner}',
+    'login',
+    function () {
+      let subscriptions = this.v2subscriptions || [];
+      return subscriptions.filterBy('owner.login', this.login);
+    }),
+
+  v2subscription: computed(
+    'accountv2Subscriptions.[]', function () {
+      if (this.accountv2Subscriptions.length > 1) {
+        this.logMultipleSubscriptionsError();
+      }
+      return this.accountv2Subscriptions.get('lastObject');
+    }),
+
+  isV2SubscriptionEmpty: empty('v2subscription'),
+  hasV2Subscription: not('isV2SubscriptionEmpty'),
+  hasCredits: computed('hasV2Subscription', 'v2subscription', function () {
+    return this.hasV2Subscription ? this.v2subscription.get('hasCredits') : false;
+  }),
+
   trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {
     let trials = this.get('accounts.trials') || [];
     let login = this.login;
@@ -203,5 +244,29 @@ export default VcsEntity.extend({
   logMultipleSubscriptionsError() {
     const exception = new Error(`Account ${this.login} has more than one active subscription!`);
     this.raven.logException(exception, true);
-  }
+  },
+
+  executions: reads('fetchExecutions.lastSuccessful.value'),
+
+  fetchExecutions: task(function* (from, to) {
+    const url = `/v3/owner/${this.provider}/${this.login}/executions?from=${from}&to=${to}`;
+    const result = yield this.api.get(url);
+    return result ? result.executions : [];
+  }).keepLatest(),
+
+  executionsPerRepo: reads('fetchExecutionsPerRepo.lastSuccessful.value'),
+
+  fetchExecutionsPerRepo: task(function* (from, to) {
+    const url = `/v3/owner/${this.provider}/${this.login}/executions_per_repo?from=${from}&to=${to}`;
+    const result = yield this.api.get(url);
+    return result ? result.executionsperrepo : [];
+  }).keepLatest(),
+
+  executionsPerSender: reads('fetchExecutionsPerSender.lastSuccessful.value'),
+
+  fetchExecutionsPerSender: task(function* (from, to) {
+    const url = `/v3/owner/${this.provider}/${this.login}/executions_per_sender?from=${from}&to=${to}`;
+    const result = yield this.api.get(url);
+    return result ? result.executionspersender : [];
+  }).keepLatest(),
 });

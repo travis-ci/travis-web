@@ -19,10 +19,6 @@ module('Acceptance | layouts/pro', function (hooks) {
     assert.ok(proLayout.headerWrapperWhenUnauthenticated, 'Header is wrapped within proper DOM');
     assert.ok(proHeader.logoPresent, 'Pro header has logo');
 
-    assert.equal(proHeader.navigationLinks[0].title, 'About Us', 'Shows link to team page');
-    assert.equal(proHeader.navigationLinks[1].title, 'Plans & Pricing', 'Shows link to plans page');
-    assert.equal(proHeader.navigationLinks[2].title, 'Enterprise', 'Shows link to Enterprise offering');
-
     assert.ok(proHeader.loginLinkPresent, 'Pro header has login button');
   });
 

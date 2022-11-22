@@ -115,7 +115,7 @@
           {{#if this.showSubscriptionTab}}
             <li data-test-billing-tab>
               <LinkTo @route="account.billing">
-                Subscription
+                Plan
               </LinkTo>
             </li>
           {{/if}}
@@ -123,6 +123,13 @@
             <li data-test-migrate-tab>
               <LinkTo @route="account.migrate">
                 Migrate
+              </LinkTo>
+            </li>
+          {{/if}}
+          {{#if this.showPlanUsageTab}}
+            <li data-test-plan-usage-tab>
+              <LinkTo @route="account.plan_usage">
+                Plan usage
               </LinkTo>
             </li>
           {{/if}}
@@ -143,7 +150,7 @@
           {{#if this.showSubscriptionTab}}
             <li data-test-billing-tab>
               <LinkTo @route="organization.billing" @model={{this.model}}>
-                Subscription
+                Plan
               </LinkTo>
             </li>
           {{/if}}
@@ -151,6 +158,13 @@
             <li>
               <LinkTo @route="organization.migrate" @model={{this.model}}>
                 Migrate
+              </LinkTo>
+            </li>
+          {{/if}}
+          {{#if this.showPlanUsageTab}}
+            <li data-test-plan-usage-tab>
+              <LinkTo @route="organization.plan_usage" @model={{this.model}}>
+                Plan usage
               </LinkTo>
             </li>
           {{/if}}

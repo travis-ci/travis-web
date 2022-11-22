@@ -1,0 +1,22 @@
+<div class="billing-subscription-user-usage">
+  <h3>
+    Users
+  </h3>
+  <p class='used-users' data-test-user-usage-unique-users='true'>
+    {{this.usedUsers}} Unique users who are running builds
+  </p>
+  <p class='desc'>
+    A user is anyone who triggers the use of the compute resources you will be charged monthly for.
+  </p>
+  {{#if this.pendingUserLicenses}}
+    <p class='warning'>
+      You have unpaid Invoice. Please check your invoices
+    </p>
+  {{else}}
+    {{#if (and (not this.usersUsage) this.usersUsageReceived (not this.usersUsageRejected))}}
+      <p class='warning'>
+        You exceeded the number of users allowed for your plan. Please switch to a bigger plan
+      </p>
+    {{/if}}
+  {{/if}}
+</div>

@@ -1,83 +1,108 @@
-{{#if this.account.isFetchPlansRunning}}
+{{#if this.account.isFetchV2PlansRunning}}
   <LoadingIndicator/>
 {{else if this.showPlansSelector}}
   <section class='billing-select-plan'>
     <TravisForm @onSubmit={{perform this.save}} as |form|>
       <h3 data-test-billing-info-title>
-        {{this.title}}
+        Select Plan
       </h3>
-      <div class='flex form-elem flex--v-center flex--wrap billing-plan-switch'>
-        <div>
-          <form.field
-            @disableFrame={{true}}
-            class='display-value-switch'
-            @value={{this.showAnnual}}
-            @onChange={{action "togglePlanPeriod"}} 
-            as |Field|
-          >
-            <Field.switch 
-              @text={{true}} 
-              @offText='Monthly'
-              @onText='Annual'
-            />
-          </form.field>
-        </div>
-        <div class='m-l-s'>
-          {{#if this.showMonthly}}
-            <h4>billing cycle recommendation:</h4>
-            <p>
-              Switch to annual billing to receive
-              <span class='font--bolder'>one month free!</span>
-            </p>
-          {{else}}
-            <p><span class='font--bolder'>One month free</span> now included!</p>
-          {{/if}}
-        </div>
-      </div>
+      <nav class="travistab-nav">
+        <ul>
+          <li>
+            <a class={{if (not this.showAnnual) 'active'}} onclick={{action 'showMonthlyPlans'}}>
+              Monthly Plans
+            </a>
+          </li>
+          <li>
+            <a class={{if this.showAnnual 'active'}} onclick={{action 'showAnnualPlans'}}>
+              Annual Plans
+            </a>
+          </li>
+        </ul>
+      </nav>
       <div class='plan-selector'>
-        <h4 data-test-choose-plan-heading>Choose number of concurrent jobs</h4>
         <div class='billing-plans flex flex--wrap' data-test-billing-plan-choices>
           {{#each this.displayedPlans as |plan|}}
-            <div
-              data-test-plan-box='true'
-              class='billing-plans__box pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
-              onclick={{action (mut this.selectedPlan) plan}}
-            >
-              <p class='billing-plans__box--price' data-test-selected-plan-price="true">
-                {{format-currency plan.price floor="true"}}
-                <span class='color-asphalt-grey'>
-                  {{if plan.annual '/year' '/month'}}
-                </span>
-              </p>
-              <p class='billing-plans__box--name color-asphalt-grey' data-test-selected-plan-name="true">
-                {{plan.name}}
-              </p>
-              <p class='billing-plans__box--jobs' data-test-selected-plan-jobs="true">
-                {{pluralize plan.builds 'concurrent job'}}
-              </p>
-            </div>
+            {{#if (or (and plan.isAnnual this.showAnnual) (and (not plan.isAnnual) (not this.showAnnual)))}}
+              <div
+                data-test-plan-box='true'
+                class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
+                onclick={{action (mut this.selectedPlan) plan}}
+              >
+                <p class='billing-plans__box-v2--name billing-annual-plans' data-test-selected-plan-name="true">
+                  {{plan.name}}
+                  {{#if plan.isFree}}
+                    <span>
+                      <SvgImage @name="icon-help" @class="icon-help" />
+                      <EmberTooltip @text="Free Plan is trial plan. The credits will be not replenished. Switch to Free Plan if you wish to cancel your subscription." />
+                    </span>
+                  {{/if}}
+                </p>
+                <p class='billing-plans__box-v2--price' data-test-selected-plan-price="true">
+                  {{#if (or plan.isFree plan.isTrial)}}
+                    Free
+                  {{else}}
+                    {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>{{if plan.isAnnual '/annualy' '/monthly'}}</span>
+                  {{/if}}
+                </p>
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
+                </p>
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
+                </p>
+                <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
+                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
+                </p>
+
+                {{#if plan.hasOSSCreditAddons}}
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{plan.publicCredits}} OSS Credits<span class='color-cement-grey'>/month</span>
+                  </p>
+                {{/if}}
+                {{#if (and (eq plan.id this.subscription.plan.id) this.allowReactivation)}}
+                  <button data-test-subscribe-button
+                    onclick={{action 'reactivatePlan' plan form}}
+                    class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
+                  >
+                    Reactivate plan
+                  </button>
+                {{else if (eq plan.id this.subscription.plan.id)}}
+                  <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
+                {{else if (eq plan.id this.subscription.scheduledPlanName)}}
+                  <h4 class='billing-plans' data-test-scheduled-plan-text>Your scheduled plan</h4>
+                {{else}}
+                  <button data-test-subscribe-button
+                    onclick={{action 'selectAndSubmit' plan form}}
+                    class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
+                  >
+                    Select plan
+                  </button>
+                {{/if}}
+                <ExternalLinkTo
+                  @href={{config-get 'urls.planDocs'}}
+                  class='billing-plans__box-v2--link'
+                >
+                  Learn more
+                </ExternalLinkTo>
+              </div>
+            {{/if}}
           {{/each}}
         </div>
       </div>
-      <div>
-        {{#if this.isLoading}}
-          <LoadingIndicator/>
-        {{else}}
-          <button data-test-subscribe-button
-            onclick={{action form.submit}}
-            class='{{if this.showCancelButton 'button--green' 'button--blue'}}'
-          >
-            Subscribe @{{this.account.login}} to {{selectedPlan.builds}} job plan
-          </button>
-          {{#if this.showCancelButton}}
-            <a data-test-cancel-button
-              onClick={{action (toggle 'showPlansSelector' this)}} class="link cancel-link"
-            >
-              Cancel
-            </a>
-          {{/if}}
-        {{/if}}
-      </div>
+      <h2>
+        Looking for more credits, users or VM sizes? <a class='credits-calculator-button' href="mailto:sales@travis-ci.com">Contact our Sales Team</a>
+      </h2>
+      {{#if this.showCalculator}}
+        <Billing::CreditsCalculator
+          @hideCalculator={{action 'hideCalculator'}}
+          @plans={{this.displayedPlans}}
+          @form={{form}}
+          @selectedPlan={{this.selectedPlan}}
+          @selectPlan={{this.submitForm}}
+          @isAnnual={{this.showAnnual}}
+        />
+      {{/if}}
     </TravisForm>
   </section>
 {{/if}}

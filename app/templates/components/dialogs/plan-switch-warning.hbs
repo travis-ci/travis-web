@@ -1,0 +1,23 @@
+<Modal
+  @isVisible={{this.isOpen}}
+  @closeOnClickOverlay={{false}}
+  @closeButton={{true}}
+  @onClose={{fn @onClose}}
+>
+  <div class="migrate-beta-dialog">
+    <h2 class="h2--teal align-center">
+      Warning!
+    </h2>
+    <p>
+      Please confirm switching from credit-based plans to a concurrency-based plan. Your current credits will not be available anymore.
+    </p>
+    <div class="modal-controls">
+      <button
+        class="button--green"
+        {{on 'click' (perform this.updatePlan)}} 
+      >
+        Pay to complete order
+      </button>
+    </div>
+  </div>
+</Modal>

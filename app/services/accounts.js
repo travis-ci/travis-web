@@ -16,7 +16,9 @@ export default Service.extend({
   organizations: reads('fetchOrganizations.lastSuccessful.value'),
 
   subscriptions: reads('fetchSubscriptions.lastSuccessful.value'),
+  v2subscriptions: reads('fetchV2Subscriptions.lastSuccessful.value'),
   subscriptionError: false,
+  v2SubscriptionError: false,
   trials: reads('fetchTrials.lastSuccessful.value'),
 
   all: computed('user', 'organizations.@each', function () {
@@ -45,6 +47,21 @@ export default Service.extend({
     }
   }),
 
+  fetchV2Subscriptions: task(function* () {
+    this.set('v2SubscriptionError', false);
+    try {
+      const subscriptions = yield this.store.findAll('v2-subscription') || [];
+
+      if (subscriptions.any(s => s.isSubscribed && !s.belongsTo('plan').id())) {
+        this.logMissingPlanException();
+      }
+
+      return subscriptions;
+    } catch (e) {
+      this.set('v2SubscriptionError', true);
+    }
+  }),
+
   fetchTrials: task(function* () {
     const trials = yield this.store.findAll('trial') || [];
     return trials.sortBy('created_at');
@@ -55,6 +72,7 @@ export default Service.extend({
     this.fetchOrganizations.perform();
     if (billingEndpoint) {
       this.fetchSubscriptions.perform();
+      this.fetchV2Subscriptions.perform();
       this.fetchTrials.perform();
     }
   },

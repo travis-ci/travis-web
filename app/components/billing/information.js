@@ -1,12 +1,14 @@
 import Component from '@ember/component';
-import { countries } from 'travis/utils/countries';
+import { reads } from '@ember/object/computed';
 
 export default Component.extend({
-  countries,
+  newSubscription: null,
+
+  billingInfo: reads('subscription.billingInfo'),
 
   actions: {
     updateEmails(values) {
-      this.newSubscription.billingInfo.set('billingEmail', values.join(','));
+      this.billingInfo.set('billingEmail', values.join(','));
     },
   }
 });

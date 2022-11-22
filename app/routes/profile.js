@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 
 const SECTION_ROUTE_MAP = {
   preferences: 'settings',
-  subscription: 'billing'
+  plan: 'billing'
 };
 
 export default TravisRoute.extend({

@@ -56,12 +56,14 @@
       <UiKit::ButtonSignin @provider='assembla' />
 
       {{#unless this.hasAccounts}}
-        <UiKit::Text @margin={{hash y=6}}>
-          Don't have an account?
-          <UiKit::Link @route='signup' @color='green-light'>
-            Sign up
-          </UiKit::Link>
-        </UiKit::Text>
+        {{#if this.features.proVersion}}
+          <UiKit::Text @margin={{hash y=6}}>
+            Don't have an account?
+            <UiKit::Link @route='signup' @color='green-light'>
+              Sign up
+            </UiKit::Link>
+          </UiKit::Text>
+        {{/if}}
       {{/unless}}
     </UiKit::Box>
 

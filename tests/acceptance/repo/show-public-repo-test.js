@@ -10,9 +10,18 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
   setupMirage(hooks);
 
   test('viewing public repo results in a repo pusher channel', async function (assert) {
+    const user = this.server.create('user', {
+      name: 'Travis CI',
+      login: 'travisci',
+    });
+    this.server.create('allowance', {subscription_type: 1});
     const repo = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
-      private: false
+      private: false,
+      owner: {
+        login: user.login,
+        id: user.id
+      }
     });
 
     await page.visit({ organization: 'musterfrau', repo: 'a-repo' });
@@ -30,9 +39,14 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
       name: 'Travis CI',
       login: 'travisci',
     });
+    this.server.create('allowance', {subscription_type: 1});
     const repository = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
-      private: false
+      private: false,
+      owner: {
+        login: user.login,
+        id: user.id
+      }
     });
     this.server.create('permission', { user, repository, push: true });
 
@@ -52,9 +66,14 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
       name: 'Travis CI',
       login: 'travisci',
     });
+    this.server.create('allowance', {subscription_type: 1});
     const repository = this.server.create('repository', {
       slug: 'musterfrau/a-repo',
-      private: false
+      private: false,
+      owner: {
+        login: user.login,
+        id: user.id
+      }
     });
     this.server.schema.permissions.all().destroy();
 

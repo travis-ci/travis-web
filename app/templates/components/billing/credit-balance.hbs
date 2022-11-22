@@ -1,0 +1,67 @@
+<div class="billing-subscription-credits">
+  {{#if this.lastInvoice}}
+    <h3 class="with-invoice">
+      Credits
+    </h3>
+    <a data-test-invoice-url='true' href={{this.lastInvoice.url}} class="invoice-link">
+      Paid by invoice from {{moment-format invoice.createdAt 'YYYY-MM-DD'}}
+    </a>
+  {{else}}
+    <h3>
+      Credits
+    </h3>
+  {{/if}}
+  <nav class="travistab-nav--secondary">
+    <ul>
+      <li>
+        <a class="{{if (eq this.creditsTab 0) 'active' ''}}" onclick={{action "setPrivateCreditsTab"}}>Credits</a>
+      </li>
+      <li>
+        <a class="{{if (eq this.creditsTab 1) 'active' ''}}" onclick={{action "setOSSCreditsTab"}}>OSS only credits</a>
+      </li>
+    </ul>
+  </nav>
+
+  <p class='avail-credits'>
+    {{#if (eq this.creditsTab 1)}}
+      {{#if (eq this.creditsAvailable 0)}}
+        {{this.creditsAvailable}} available credits
+      {{else}}
+        {{this.creditsAvailable}} available credits (next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})
+      {{/if}}
+    {{else}}
+      {{#if this.subscription.isCanceled}}
+        {{this.creditsAvailable}} available credits (expiry date: {{moment-format this.creditsValidityDate 'MMMM DD, YYYY'}})
+      {{else}}
+        {{this.creditsAvailable}} available credits (purchase date: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}}
+      {{#if this.creditsPrivateValidDate}}
+        , valid until: {{moment-format this.creditsPrivateValidDate 'MMMM DD, YYYY'}}
+      {{/if}})
+      {{/if}}
+    {{/if}}
+  </p>
+  <p class='used-credits'>
+    {{#if (eq this.creditsTab 1)}}
+      You have used {{this.creditsUsed}} of your {{this.creditsTotal}} monthly credits
+    {{else}}
+      You have used {{this.creditsUsed}} of {{this.creditsTotal}} credits
+    {{/if}}
+  </p>
+  <div class='credits-bar-bg'>
+    {{#if this.isNegativeBalance}}
+      <div class='credits-bar-negative'></div>
+    {{else}}
+      <div class='credits-bar' style='width: {{this.creditsUsedPercentage}}%'></div>
+    {{/if}}
+  </div>
+  <p class='credits-bar-left'>
+    {{this.creditsAvailable}} available <span class='credits-bar-right'>{{this.creditsUsed}} used</span>
+  </p>
+  {{#if (not this.hideToggle)}}
+    <Billing::OssCreditToggle @account={{this.account}} />
+  {{/if}}
+  {{#if (not this.subscription.plan.isTrial)}}
+    <Billing::AutoRefill @subscription={{this.subscription}} @account={{this.account}}/>
+  {{/if}}
+</div>
+<hr />

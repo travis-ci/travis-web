@@ -9,16 +9,16 @@ module('Acceptance | builds/restart', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
-    signInUser(currentUser);
-  });
-
   test('restarting build', async function (assert) {
-    let repository =  this.server.create('repository');
+    const currentUser = this.server.create('user', {login: 'travis-ci', confirmed_at: Date.now()});
+    this.server.create('allowance', {subscription_type: 1});
+    signInUser(currentUser);
+
+    let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1} });
+
     this.server.create('branch', {});
 
-    let  gitUser = this.server.create('git-user', { name: 'Mr T' });
+    let gitUser = this.server.create('git-user', { name: 'Mr T' });
     let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
     let build = this.server.create('build', { number: '5', repository, state: 'passed', commit });
     let job = this.server.create('job', { number: '1234.1', repository, state: 'passed', build, commit });

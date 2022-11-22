@@ -35,8 +35,7 @@
     >
       <UiKit::Text @tag='h1' @variant='h1'>Sign up for Travis CI</UiKit::Text>
       <UiKit::Text @margin={{hash bottom=6}}>
-        Set up your first project in just one minute.<br/>
-        Your first 100 builds are free! No credit card required.
+        Set up your first project in just one minute.
       </UiKit::Text>
 
       <UiKit::ButtonSignin @isSignup={{true}} />
@@ -46,10 +45,12 @@
         <UiKit::ButtonSignin @isSignup={{true}} @provider='assembla' />
       {{/if}}
 
-      <UiKit::Text @margin={{hash y=6}}>
-        Already have an account?
-        <UiKit::Link @route='signin' @color='green-light'>Sign in</UiKit::Link>
-      </UiKit::Text>
+      {{#if this.features.proVersion}}
+        <UiKit::Text @margin={{hash y=6}}>
+          Already have an account?
+          <UiKit::Link @route='signin' @color='green-light'>Sign in</UiKit::Link>
+        </UiKit::Text>
+      {{/if}}
     </UiKit::Box>
 
     <UiKit::Box
