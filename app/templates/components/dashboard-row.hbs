@@ -54,7 +54,10 @@
           {{#if this.repo.defaultBranch.lastBuild.id}}
             <LinkTo
               @route="build"
-              @model={{this.repo.defaultBranch.lastBuild.id}}
+              @models={{array
+                this.repo
+                this.repo.defaultBranch.lastBuild.id
+              }}
               @title="Last build on the default branch"
             >
               {{this.repo.defaultBranch.lastBuild.branch.name}}
