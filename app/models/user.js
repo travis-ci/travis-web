@@ -74,7 +74,8 @@ export default Owner.extend({
     this.set('applyFilterRepos', !isOrganization);
     return this.api
       .post(`/user/${this.id}/sync`)
-      .then(() => this.poll());
+      .then(() => this.poll(),
+        () => this.set('isSyncing', false));
   },
 
   schedulePoll() {
@@ -86,7 +87,7 @@ export default Owner.extend({
 
   poll() {
     return this.reload().then(() => {
-      if (this.isSyncing) {
+      if (!this.isSyncing) {
         this.schedulePoll();
       } else {
         this.permissionsService.fetchPermissions.perform();

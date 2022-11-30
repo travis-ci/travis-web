@@ -70,7 +70,9 @@
       {{/if}}
     </div>
     <button class="download-csv" onclick={{action "downloadCsv"}}>Download .csv file for more detailed information about usage</button>
-    <button class="download-csv" onclick={{action "downloadUserLicenseCsv"}}>Download .csv file for more detailed information about user license usage</button>
+    {{#if this.v2subscription.plan.isNotStandardOrProTier}}
+      <button class="download-csv" onclick={{action "downloadUserLicenseCsv"}}>Download .csv file for more detailed information about user license usage</button>
+    {{/if}}
     <div class="repositories-visiblity">
       <TravisForm
         as |form|
