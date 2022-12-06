@@ -6,6 +6,7 @@ import { task } from 'ember-concurrency';
 export default Owner.extend({
   type: 'organization',
   allowMigration: attr('boolean'),
+  customKeys: attr(),
 
   buildPermissions: reads('fetchBuildPermissions.lastSuccessful.value'),
 

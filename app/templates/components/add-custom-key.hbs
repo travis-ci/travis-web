@@ -1,0 +1,45 @@
+<div data-test-cancel-subscription-modal="true" class="flex flex--col add-custom-key-modal">
+  <h2>Add SSH Key</h2>
+  <p class="add-custom-key-modal__hint-text">Add new SSH key. Private key in PEM format only.</p>
+  <form {{action (perform this.save) on="submit"}}>
+    <div class="form-elem">
+      <Input
+        @value={{this.name}}
+        class="ssh-name"
+        placeholder="Identifier"
+      />
+    </div>
+    <div class="form-elem">
+      <Input
+        @value={{this.description}}
+        class="ssh-description"
+        placeholder="Description"
+      />
+    </div>
+    <div class="form-elem">
+      <Textarea
+        @value={{this.value}}
+        @rows="10"
+        class="ssh-value custom-key-value"
+        placeholder="SSH Key"
+      />
+      {{#if this.valueError}}
+        <p class="form-error-message">
+          {{this.valueError}}
+        </p>
+      {{/if}}
+    </div>
+    <div class="form-elem form-footer custom-keys-footer">
+      {{#if this.save.isRunning}}
+        <LoadingIndicator />
+      {{else}}
+        <div class="form-actions">
+          <input type="submit" value="Add new SSH key" class="form-submit" />
+        </div>
+        <a {{on 'click' (fn @onClose)}} class='link custom-keys-cancel'>
+          Cancel
+        </a>
+      {{/if}}
+    </div>
+  </form>
+</div>
