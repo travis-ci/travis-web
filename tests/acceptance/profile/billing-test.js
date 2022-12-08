@@ -123,7 +123,8 @@ module('Acceptance | profile/billing', function (hooks) {
       type: 'organization',
       login: 'org-login',
       permissions: {
-        createSubscription: false
+        createSubscription: false,
+        admin: true
       }
     });
     this.organization = organization;
@@ -725,7 +726,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('switching to another account’s billing tab loads the subscription form properly', async function (assert) {
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
 
@@ -741,7 +743,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('view billing tab when trial has not started', async function (assert) {
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
 
@@ -756,7 +759,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('view billing tab with no create subscription permissions', async function (assert) {
     this.organization.permissions = {
-      createSubscription: false
+      createSubscription: false,
+      admin: true
     };
     this.organization.save();
 
@@ -770,7 +774,8 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing tab when there is a new trial', async function (assert) {
     this.subscription = null;
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
     let trial = this.server.create('trial', {
@@ -801,7 +806,8 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing tab when trial has started', async function (assert) {
     this.subscription = null;
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
     let trial = this.server.create('trial', {
@@ -833,7 +839,8 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing tab when trial builds are less than 11', async function (assert) {
     this.subscription = null;
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
     let trial = this.server.create('trial', {
@@ -867,7 +874,8 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing tab when trial has ended', async function (assert) {
     this.subscription = null;
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
     let trial = this.server.create('trial', {
@@ -897,7 +905,7 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing tab on education account', async function (assert) {
     this.subscription = null;
     this.organization.attrs.education = true;
-    this.organization.permissions = { createSubscription: true };
+    this.organization.permissions = { createSubscription: true, admin: true };
     this.organization.save();
 
     await profilePage.visitOrganization({ name: 'org-login' });
@@ -922,7 +930,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     this.subscription = null;
     this.organization.attrs.education = true;
-    this.organization.permissions = { createSubscription: true };
+    this.organization.permissions = { createSubscription: true, admin: true };
     this.organization.save();
 
     await profilePage.visitOrganization({ name: 'org-login' });
@@ -1053,7 +1061,8 @@ module('Acceptance | profile/billing', function (hooks) {
     const { owner } = getContext();
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
 
@@ -1103,7 +1112,8 @@ module('Acceptance | profile/billing', function (hooks) {
     const { owner } = getContext();
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
 
@@ -1151,7 +1161,8 @@ module('Acceptance | profile/billing', function (hooks) {
     const { owner } = getContext();
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
 
@@ -1202,7 +1213,8 @@ module('Acceptance | profile/billing', function (hooks) {
     const { owner } = getContext();
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
 
@@ -1321,7 +1333,8 @@ module('Acceptance | profile/billing', function (hooks) {
     const { owner } = getContext();
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
 
@@ -1390,7 +1403,8 @@ module('Acceptance | profile/billing', function (hooks) {
     const { owner } = getContext();
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
-      createSubscription: true
+      createSubscription: true,
+      admin: true
     };
     this.organization.save();
 
