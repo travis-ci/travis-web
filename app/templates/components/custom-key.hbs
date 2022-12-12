@@ -1,0 +1,89 @@
+<div class="ssh-key-name">
+  <SvgImage @name="icon-key" @class="icon" />
+  <span class="custom-key-title">
+    {{this.key.name}}
+  </span>
+</div>
+<div class="ssh-key-value"></div>
+<div class="ssh-key-value">
+  <span>Added by: {{this.key.added_by_login}}</span><span class="custom-key-added-on">Added on: {{moment-format this.key.created_at 'YYYY-MM-DD'}}</span>
+</div>
+<div class="ssh-key-value">
+  <span>
+    {{this.key.description}}
+  </span>
+</div>
+<div class="ssh-key-value">
+  <SvgImage @name="icon-fingerprint" @class="icon" />
+  <span>
+    {{this.key.fingerprint}}
+  </span>
+</div>
+<div class="custom-key-action ssh-key-action">
+  <CopyButton
+    class="no-button ssh-delete"
+    @clipboardText={{this.key.public_key}}
+    @title="Copy to clipboard"
+  >
+    <SvgImage @name="icon-copy" @class="icon" />
+  </CopyButton>
+  <EmberTooltip @text="Copy public key" />
+</div>
+<div class="custom-key-action ssh-key-action">
+  {{#if this.delete.isRunning}}
+    <LoadingIndicator />
+  {{else}}
+    <button
+      type="button"
+      class="no-button ssh-delete"
+      {{action "toggleConfirmationModal"}}
+    >
+      <SvgImage @name="icon-trash" @class="icon" />
+    </button>
+    <EmberTooltip @text="Delete" />
+  {{/if}}
+</div>
+<Modal
+  @isVisible={{this.isShowingConfirmationModal}}
+  class="custom-key-modal"
+  data-test-custom-key-modal="true"
+>
+  <div class="custom-key-modal__top">
+    <h3 class="custom-key-modal__header" data-test-custom-key-modal-title>
+      Confirm
+    </h3>
+    <button
+      type="button"
+      title="Close modal"
+      class="pointer custom-key-modal__close-button"
+      autofocus={{this.focusOnModal}}
+      onclick={{action "toggleConfirmationModal"}}
+      data-test-custom-key-modal-close-button
+    >
+      <SvgImage @name="icon-failed" @class="icon" />
+    </button>
+  </div>
+  <div class="custom-key-modal__body">
+    <p data-test-custom-key-modal-description>
+      This will permanently delete the key. If you want to use it in the future, you will need to upload it again.
+    </p>
+  </div>
+  <div class="custom-key-modal__controls">
+    <button
+      data-test-custom-key-modal-cancel-button
+      role="button"
+      class="button button--red"
+      onclick={{action "toggleConfirmationModal"}}
+    >
+      Cancel
+    </button>
+    <button
+      data-test-custom-key-modal-confirm-button
+      role="button"
+      class="button button--blue"
+      onclick={{action "confirm"}}
+    >
+      Confirm
+    </button>
+  </div>
+</Modal>

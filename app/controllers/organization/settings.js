@@ -35,6 +35,10 @@ export default Controller.extend({
 
   organization: reads('model.organization'),
 
+  customKeys: computed('model.organization.customKeys.[]', function () {
+    return this.model.organization.customKeys;
+  }),
+
   preferences: computed('model.preferences.@each.{name,value}', function () {
     const list = this.model.preferences || [];
     return list.reduce((hash, record) => {
@@ -65,9 +69,24 @@ export default Controller.extend({
     }
   }).restartable(),
 
+  isShowingAddKeyModal: false,
+
   actions: {
     setInsightsVis(val) {
       this.setPrivateInsights.perform(val);
+    },
+
+    toggleAddKeyModal() {
+      this.toggleProperty('isShowingAddKeyModal');
+    },
+
+    customKeyDeleted(key) {
+      const keys = this.get('customKeys');
+      this.set('model.organization.customKeys', keys.filter(obj => obj.id !== key.id));
+    },
+
+    customKeyAdded(key) {
+      this.get('model.organization.customKeys').pushObject(key);
     }
   },
 });
