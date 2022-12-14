@@ -18,13 +18,14 @@ module Travis
       def set_info(env)
         return unless env['REQUEST_METHOD'] == 'POST'
         request = Rack::Request.new(env)
-        token, user, storage, become = request.params.values_at('token', 'user', 'storage', 'become')
+        token, rss_token, user, storage, become = request.params.values_at('token', 'rssToken', 'user', 'storage', 'become')
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
           storage = 'sessionStorage' if storage != 'localStorage'
           become = become ? true : false
           info = [
             storage,
             Sanitize.fragment(token),
+            Sanitize.fragment(rss_token),
             Sanitize.fragment(user),
             become,
             request.fullpath
@@ -40,6 +41,7 @@ __END__
 <script>
 var storage = %s;
 storage.setItem('travis.token', %p);
+storage.setItem('travis.rssToken', %p);
 storage.setItem('travis.user',  %p);
 if (%p) {
   storage.setItem('travis.auth.become', true);
