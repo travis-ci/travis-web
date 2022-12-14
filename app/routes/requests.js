@@ -7,9 +7,7 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.store.query('request', {
-      repository_id: this.modelFor('repo').get('id')
-    });
+    return this.modelFor('repo').get('requests');
   },
 
   beforeModel() {
