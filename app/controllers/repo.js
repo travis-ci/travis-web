@@ -22,12 +22,14 @@ export default Controller.extend({
   jobController: controller('job'),
   buildController: controller('build'),
   buildsController: controller('builds'),
+  scanResultController: controller('scan_result'),
 
   repos: alias('repositories.accessible'),
   currentUser: alias('auth.currentUser'),
   build: alias('buildController.build'),
   builds: alias('buildsController.model'),
   job: alias('jobController.job'),
+  scanResult: alias('scanResultController.scanResult'),
 
   showGitHubApps: alias('features.github-apps'),
 
