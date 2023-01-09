@@ -261,6 +261,13 @@ class Travis::Web::App
         config['providers'][provider]['isDefault'] = true
       end
 
+      if ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
+        config['providers'] ||= {}
+        config['providers']['github'] ||= {}
+        config['providers']['github']['paths'] ||= {}
+        config['providers']['github']['paths']['accessSettings'] = ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
+      end
+
       regexp = %r(<meta name="travis/config/environment"\s+content="([^"]+)")
       string.gsub!(regexp) do
         ember_config = JSON.parse(URI.unescape($1))
