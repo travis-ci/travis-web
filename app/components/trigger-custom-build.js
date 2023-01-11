@@ -128,7 +128,7 @@ export default Component.extend(BranchSearching, {
     if (e.status === 429) {
       message = 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.';
     } else if (e.message !== undefined && e.message === 'Unable to parse.') {
-      message = `Oops, ${e.message}. Parsed Line: ${e.parsedLine}, Snippet: ${e.snippet}`;
+      message = `Oops, ${e.message} Parsed Line: ${e.parsedLine}, Snippet: ${e.snippet}`;
     } else {
       message = 'Oops, something went wrong, please try again.';
     }
