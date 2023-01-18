@@ -126,8 +126,8 @@ strategy” of deploying assets to S3 and `index.html` to a Redis server. You ca
 deploy from your own machine too. First, update your `.env` file with the following variables:
 
 ```
-AWS_KEY=key
-AWS_SECRET=secret
+TRAVIS_S3_ACCESS_KEY_ID=key
+TRAVIS_S3_SECRET_ACCESS_KEY=secret
 ```
 Then run:
 
