@@ -1,0 +1,100 @@
+{{#if this.userHasPushPermissionForRepo}}
+  <div class="log-scan-details">
+    <div class="log-scan-details-build">
+      <div class="log-scan-details-header">
+        <div class="log-scan-details-header-top">
+          <StatusIcon @status="errored" />
+          <span class="log-scan-details-header-title">
+            <b>Scan Report</b> {{pretty-date this.scanResult.createdAt}}
+            <SvgImage @name="icon-api" @class="icon" />
+            #{{this.scanResult.buildNumber}} <b>{{this.scanResult.commitBranch}}</b>
+          </span>
+        </div>
+        <div class="commit-info">
+          <ul class="list-icon">
+            <li>
+              <ExternalLinkTo @href={{this.commitUrl}}>
+                <EmberTooltip @text="{{concat "View commit on " (vcs-name this.repo.vcsType)}}" />
+                <SvgImage @name="icon-commit" @class="icon" />
+                <span class="label-align inner-underline commit-commit">
+                  Commit
+                  <span class="label-align-item monospace">
+                    {{format-sha this.scanResult.commitSha}}
+                  </span>
+                </span>
+                <SvgImage @name="icon-external-link" @class="icon" />
+              </ExternalLinkTo>
+            </li>
+            <li>
+              <ExternalLinkTo @href={{this.scanResult.commitCompareUrl}}>
+                <EmberTooltip @text="{{concat "View diff on " (vcs-name this.repo.vcsType)}}" />
+                <SvgImage @name="icon-compare" @class="icon" />
+                <span class="label-align inner-underline commit-compare">
+                  Compare
+                  <span class="label-align-item monospace">
+                    {{short-compare-shas this.scanResult.commitCompareUrl}}
+                  </span>
+                </span>
+                <SvgImage @name="icon-external-link" @class="icon" />
+              </ExternalLinkTo>
+            </li>
+            <li>
+              <ExternalLinkTo @href={{this.branchUrl}} class="commit-branch-url">
+                <EmberTooltip @text="{{concat "View branch on " (vcs-name this.repo.vcsType)}}" />
+                <SvgImage @name="icon-branch" @class="icon" />
+                <span class="label-align inner-underline">
+                  Branch
+                  <span class="label-align-item monospace">
+                    {{this.scanResult.commitBranch}}
+                  </span>
+                </span>
+                <SvgImage @name="icon-external-link" @class="icon" />
+              </ExternalLinkTo>
+            </li>
+          </ul>
+          <p class="commit-author">
+            <CreatedBy
+              @user={{this.scanResult.buildCreatedBy}}
+            />
+          </p>
+        </div>
+      </div>
+      <div class="log-scan-details-information">
+        <div class="build-info">
+          <h3 class="build-status failed">
+            <StatusIcon @status="errored" />
+            <span class="log-scan-details-information-title">
+              Issues detected
+            </span>
+          </h3>
+          <ul class="list-icon">
+            <li class="commit-stopwatch">
+              <span class="label-align">
+                Job #{{this.scanResult.buildNumber}}.{{this.scanResult.jobNumber}}
+              </span>
+            </li>
+            <li title="Job finished at {{pretty-date this.scanResult.jobFinishedAt}}" class="commit-calendar">
+              <SvgImage @name="icon-clock" @class="icon" />
+              <time class="label-align" datetime={{pretty-date this.scanResult.jobFinishedAt}}>
+                Job finished at {{pretty-date this.scanResult.jobFinishedAt}}
+              </time>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="log-scan-container">
+      <div class="log-main is-visible">
+        <div class="log-header"></div>
+        <div class="log-body">
+          <pre id="log" class="ansi log-body-content"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+{{else}}
+  <p class="notice-banner--red">
+    We’re sorry, but you have insufficient access rights to view this information.
+    Please contact your repository administrators. <ExternalLinkTo href="https://docs.travis-ci.com/">Learn more</ExternalLinkTo>
+  </p>
+{{/if}}

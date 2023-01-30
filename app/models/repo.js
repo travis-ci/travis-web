@@ -8,6 +8,7 @@ import { task } from 'ember-concurrency';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import { defaultVcsConfig } from 'travis/utils/vcs';
 import { isEmpty } from '@ember/utils';
+import config from 'travis/config/environment';
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
@@ -20,6 +21,10 @@ export const MIGRATION_STATUS = {
 export const HISTORY_MIGRATION_STATUS = {
   MIGRATED: 'migrated'
 };
+
+import dynamicQuery from 'travis/utils/dynamic-query';
+
+const { repoBuildsPerPage: limit } = config.pagination;
 
 const Repo = VcsEntity.extend({
   api: service(),
@@ -44,6 +49,15 @@ const Repo = VcsEntity.extend({
   emailSubscribed: attr('boolean'),
   migrationStatus: attr('string'),
   historyMigrationStatus: attr('string'),
+  scanFailedAt: attr('date'),
+
+  currentScan: computed('scanFailedAt', function () {
+    let scanFailedAt = this.get('scanFailedAt');
+    return {
+      icon: scanFailedAt ? 'errored' : 'passed',
+      state: scanFailedAt ? 'issue' : 'passed'
+    };
+  }),
 
   ownerType: reads('owner.@type'),
 
@@ -230,6 +244,30 @@ const Repo = VcsEntity.extend({
     return this._buildObservableArray(builds);
   }),
 
+  _requestRepoMatches(request, id) {
+    return `${request.get('repo.id')}` === `${id}`;
+  },
+
+  _requestObservableArray(requests) {
+    const array = ExpandableRecordArray.create({
+      type: 'request',
+      content: []
+    });
+    array.load(requests);
+    array.observe(requests);
+    return array;
+  },
+
+  requests: computed('id', function () {
+    let id = this.id;
+    const requests = this.store.filter(
+      'request',
+      { repository_id: id },
+      (b) => this._requestRepoMatches(b, id));
+
+    return this._requestObservableArray(requests);
+  }),
+
   branches: computed('id', function () {
     let id = this.id;
     return this.store.filter('branch', {
@@ -334,6 +372,26 @@ const Repo = VcsEntity.extend({
 
     return result ? oldBackups.concat(result.build_backups) : [];
   }).keepLatest(),
+
+  fetchScanResults({ page }) {
+    if (!this.auth.currentUser.hasPushAccessToRepo(this))
+      return null;
+
+    const { id, store } = this;
+    const offset = (page - 1) * limit;
+
+    return store.query('scan_result', {
+      repository_id: id,
+      limit, offset
+    });
+  },
+
+  scanResults: dynamicQuery(function* ({ page = 1 }) {
+    return yield this.fetchScanResults({ page });
+  }, {
+    limitPagination: true,
+    limit,
+  })
 });
 
 Repo.reopenClass({

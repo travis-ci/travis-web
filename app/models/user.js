@@ -25,6 +25,7 @@ export default Owner.extend({
   rssToken: attr('string'),
   utmParams: attr(),
   confirmedAt: attr('date'),
+  customKeys: attr(),
 
   type: 'user',
 

@@ -23,11 +23,12 @@
         <SvgImage @name={{vcs-icon this.repo.vcsType}} />
       </ExternalLinkTo>
       <RepoStatusBadge @repo={{this.repo}} @onClick={{action 'toggleStatusBadgeModal'}} />
+      <LogScanStatusBadge @repo={{this.repo}} />
     </div>
   </header>
   <main class="repo-main">
     <div class="repo-navigation">
-      <RepoShowTabs @repo={{this.repo}} @build={{this.build}} @job={{this.job}} />
+      <RepoShowTabs @repo={{this.repo}} @build={{this.build}} @job={{this.job}} @scanResult={{this.scanResult}} />
       <RepoShowTools
         @repo={{this.repo}}
         @build={{this.build}}

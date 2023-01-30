@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 
 export default Component.extend({
+  auth: service(),
   tabStates: service(),
 
   tagName: 'nav',
@@ -31,6 +32,20 @@ export default Component.extend({
   classPullRequests: computed('tab', function () {
     let tab = this.tab;
     if (tab === 'pull_requests') {
+      return 'active';
+    }
+  }),
+
+  classScanResults: computed('tab', function () {
+    let tab = this.tab;
+    if (tab === 'scan_results') {
+      return 'active';
+    }
+  }),
+
+  classScanResult: computed('tab', function () {
+    let tab = this.tab;
+    if (tab === 'scan_result') {
       return 'active';
     }
   }),

@@ -161,4 +161,30 @@
       </div>
     </section>
   {{/if}}
+  <section class="settings-section" data-test-custom-key-settings>
+    <div class="custom-keys-header">
+      <h3 class="custom-keys-title" data-test-custom-keys-title>
+        SSH Key for build jobs
+      </h3>
+      <button
+        data-test-custom-key-modal-add-button
+        role="button"
+        class="button button--blue custom-keys-add-button"
+        {{action "toggleAddKeyModal"}}
+      >
+        Add new SSH Key
+      </button>
+    </div>
+    {{#each this.customKeys as |key|}}
+      <CustomKey @key={{key}} @customKeyDeleted={{action "customKeyDeleted"}} />
+    {{/each}}
+
+    <Modal
+      @isVisible={{this.isShowingAddKeyModal}}
+      @onClose={{action "toggleAddKeyModal"}}
+      @closeButton={{true}}
+    >
+      <AddCustomKey @owner={{this.account}} @ownerType='User' @customKeyAdded={{action "customKeyAdded"}} @onClose={{action "toggleAddKeyModal"}} />
+    </Modal>
+  </section>
 </section>
