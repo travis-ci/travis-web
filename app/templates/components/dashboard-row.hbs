@@ -70,6 +70,16 @@
           {{/if}}
         </p>
       </section>
+      {{#if (eq this.repo.provider 'assembla')}}
+        <section class="dash-last">
+          <h3 class="label">
+            Repo type
+          </h3>
+          <p class="row-content color">
+            {{this.repositoryType}}
+          </p>
+        </section>
+      {{/if}}
       {{#if this.repo.currentBuild}}
         <section class="dash-last {{this.repo.currentBuild.state}}">
           <h3 class="label">

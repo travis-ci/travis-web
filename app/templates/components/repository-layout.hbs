@@ -22,6 +22,16 @@
       >
         <SvgImage @name={{vcs-icon this.repo.vcsType}} />
       </ExternalLinkTo>
+      {{#if (eq this.repo.provider 'assembla')}}
+      <div class="mr-1_2 inline-block vertical-align">
+        <span class="profile-repo-type">
+          <span class="profile-repo-type-span">
+            {{this.repositoryType}}
+            <EmberTooltip @text="{{this.repositoryProvider}} {{this.repositoryType}} Repository" />
+          </span>
+        </span>
+      </div>
+      {{/if}}
       <RepoStatusBadge @repo={{this.repo}} @onClick={{action 'toggleStatusBadgeModal'}} />
       <LogScanStatusBadge @repo={{this.repo}} />
     </div>
