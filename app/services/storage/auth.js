@@ -19,6 +19,17 @@ export default Service.extend({
     }
   }),
 
+  rssToken: computed({
+    get() {
+      return storage.getItem('travis.rssToken') || null;
+    },
+    set(key, token) {
+      assert('RSS Token storage is read-only', token === null);
+      storage.removeItem('travis.rssToken');
+      return null;
+    }
+  }),
+
   user: computed({
     get() {
       const data = parseWithDefault(storage.getItem('travis.user'), null);

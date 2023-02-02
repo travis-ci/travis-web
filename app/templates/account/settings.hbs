@@ -33,13 +33,22 @@
       Assets authentication
     </h3>
     <p>
-      Assets tokens could be used for embedding status images or getting atom and RSS feeds.
+      Assets tokens could be used for embedding status images.
       To learn more about using our Asset tokens, please head to
       <ExternalLinkTo href="https://docs.travis-ci.com/user/status-images">
         docs
       </ExternalLinkTo>.
     </p>
     <AccountToken @token={{this.auth.assetToken}}/>
+  </section>
+  <section>
+    <h3>
+      Atom and RSS feeds authentication
+    </h3>
+    <p>
+      RSS tokens could be used for getting atom and RSS feeds.
+    </p>
+    <AccountToken @token={{this.auth.rssToken}}/>
   </section>
   {{#if this.features.betaFeatures}}
     {{#if this.scrollToFeatures}}
