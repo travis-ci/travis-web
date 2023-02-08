@@ -1,0 +1,165 @@
+import Component from '@ember/component';
+import { task } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
+import { empty, not, reads, and } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import config from 'travis/config/environment';
+import { underscore } from '@ember/string';
+import { countries, states, stateCountries, nonZeroVatThresholdCountries, zeroVatThresholdCountries } from 'travis/utils/countries';
+
+export default Component.extend({
+  api: service(),
+  stripe: service(),
+  store: service(),
+  flashes: service(),
+  metrics: service(),
+
+  countries,
+  states: computed('country', function () {
+    const { country } = this;
+
+    return states[country];
+  }),
+  account: null,
+  stripeElement: null,
+  stripeLoading: false,
+  couponId: null,
+  options: computed('disableForm', function () {
+    let configStripe = config.stripeOptions;
+    configStripe['disabled'] = this.get('disableForm');
+    return configStripe;
+  }),
+  showSwitchToFreeModal: false,
+  showPlanSwitchWarning: false,
+
+  subscription: reads('account.subscription'),
+  v2subscription: reads('account.v2subscription'),
+  isV2SubscriptionEmpty: empty('v2subscription'),
+  isSubscriptionEmpty: empty('subscription'),
+  isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
+  hasV2Subscription: not('isV2SubscriptionEmpty'),
+  invoices: computed('subscription.id', 'v2subscription.id', function () {
+    const subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');
+    const type = this.isV2SubscriptionEmpty ? 1 : 2;
+    if (subscriptionId) {
+      return this.store.query('invoice', { type, subscriptionId });
+    } else {
+      return [];
+    }
+  }),
+
+  disableForm: computed('account.allowance.paymentChangesBlockCredit', 'account.allowance.paymentChangesBlockCaptcha', function () {
+    const paymentChangesBlockCredit = this.account.allowance.get('paymentChangesBlockCredit');
+    const paymentChangesBlockCaptcha = this.account.allowance.get('paymentChangesBlockCaptcha');
+    return paymentChangesBlockCaptcha || paymentChangesBlockCredit;
+  }),
+
+  billingInfo: reads('v2subscription.billingInfo'),
+
+  country: reads('billingInfo.country'),
+  firstName: reads('billingInfo.firstName'),
+  lastName: reads('billingInfo.lastName'),
+  nameOnCard: computed('firstName', 'lastName', function () {
+    return `${this.firstName} ${this.lastName}`;
+  }),
+
+  isLoading: reads('updatePaymentDetails.isRunning'),
+
+  updatePaymentDetails: task(function* (reCaptchaResponse) {
+    this.metrics.trackEvent({
+      action: 'Pay Button Clicked',
+      category: 'Subscription',
+    });
+    const { stripeElement } = this;
+    const subscription = this.v2subscription;
+    try {
+      let token = null;
+      if (stripeElement) {
+        let res = yield this.stripe.createStripeToken.perform(stripeElement);
+        token = res.token;
+      }
+      const changedInfoAttrs = this.billingInfo.changedAttributes();
+      let paymentDetails = {};
+      paymentDetails['captcha_token'] = reCaptchaResponse;
+      Object.keys(changedInfoAttrs).forEach(key => {
+        paymentDetails[underscore(key)] = changedInfoAttrs[key][1];
+      });
+      if (token) {
+        paymentDetails['token'] = token.id;
+      }
+      yield this.api.patch(`/v2_subscription/${subscription.id}/payment_details`, {
+        data: paymentDetails
+      });
+      if (stripeElement) {
+        this.stripeElement.clear();
+        this.set('stripeElement', null);
+      }
+      this.flashes.success('Successfully updated payment information.');
+      this.billingInfo.save();
+    } catch (error) {
+      if (typeof(error.json) === 'function') {
+        const err = yield error.json();
+        this.account.allowance.reload();
+        this.flashes.error(err['error_message']);
+      }
+    }
+  }).drop(),
+
+  isZeroVatThresholdCountry: computed('country', function () {
+    const { country } = this;
+    return !!country && zeroVatThresholdCountries.includes(country);
+  }),
+
+  isNonZeroVatThresholdCountry: computed('country', function () {
+    const { country } = this;
+    return !!country && nonZeroVatThresholdCountries.includes(country);
+  }),
+
+  isStateCountry: computed('country', function () {
+    const { country } = this;
+
+    return !!country && stateCountries.includes(country);
+  }),
+
+  isVatMandatory: computed('isNonZeroVatThresholdCountry', 'hasLocalRegistration', function () {
+    const { isNonZeroVatThresholdCountry, isZeroVatThresholdCountry, hasLocalRegistration } = this;
+    return isZeroVatThresholdCountry || (isNonZeroVatThresholdCountry ? hasLocalRegistration : false);
+  }),
+
+  showNonZeroVatConfirmation: reads('isNonZeroVatThresholdCountry'),
+
+  showVatField: computed('country', 'isNonZeroVatThresholdCountry', 'hasLocalRegistration', function () {
+    const { country, isNonZeroVatThresholdCountry, hasLocalRegistration } = this;
+    return country && (isNonZeroVatThresholdCountry ? hasLocalRegistration : true);
+  }),
+
+  isStateMandatory: reads('isStateCountry'),
+
+  enableSubmit: computed('stripeElement', 'billingInfo.hasDirtyAttributes', function () {
+    return this.stripeElement || (this.billingInfo && this.billingInfo.hasDirtyAttributes);
+  }),
+
+  actions: {
+    complete(stripeElement) {
+      if (!this.enableSubmit || this.disableForm) {
+        stripeElement.clear();
+        return;
+      }
+      this.set('stripeElement', stripeElement);
+    },
+    modifyNameOnCard(value) {
+      this.set('nameOnCard', value);
+      this.billingInfo.setProperties({
+        firstName: this.nameOnCard.split(' ')[0],
+        lastName: this.nameOnCard.split(' ')[1]
+      });
+    },
+    onCaptchaResolved(reCaptchaResponse) {
+      this.updatePaymentDetails.perform(reCaptchaResponse);
+    },
+    submit() {
+      if (!this.enableSubmit || this.disableForm) return;
+      window.grecaptcha.execute();
+    }
+  }
+});

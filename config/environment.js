@@ -18,6 +18,7 @@ const {
   GOOGLE_ANALYTICS_ID,
   GOOGLE_TAGS_CONTAINER_ID,
   GOOGLE_TAGS_PARAMS,
+  GOOGLE_RECAPTCHA_SITE_KEY,
   STRIPE_PUBLISHABLE_KEY,
   GITHUB_APPS_APP_NAME,
   API_ENDPOINT,
@@ -162,6 +163,10 @@ module.exports = function (environment) {
           iconColor: 'red'
         }
       }
+    },
+
+    gReCaptcha: {
+      siteKey: GOOGLE_RECAPTCHA_SITE_KEY
     },
   };
 
