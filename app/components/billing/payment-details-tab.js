@@ -90,7 +90,8 @@ export default Component.extend({
       if (token) {
         paymentDetails['token'] = token.id;
       }
-      yield this.api.patch(`/v2_subscription/${subscription.id}/payment_details`, {
+      const endpoint = this.isV2SubscriptionEmpty ? 'subscription' : 'v2_subscription';
+      yield this.api.patch(`/${endpoint}/${subscription.id}/payment_details`, {
         data: paymentDetails
       });
       if (stripeElement) {
@@ -144,10 +145,6 @@ export default Component.extend({
 
   actions: {
     complete(stripeElement) {
-      if (!this.enableSubmit || this.disableForm) {
-        stripeElement.clear();
-        return;
-      }
       this.set('stripeElement', stripeElement);
     },
     modifyNameOnCard(value) {

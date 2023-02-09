@@ -68,11 +68,11 @@ export default Component.extend({
     const isEnterprise = this.features.get('enterpriseVersion');
     return !isEnterprise && !isAssemblaUser && !!billingEndpoint;
   }),
-  showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin', 'model.hasV2Subscription', function () {
+  showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin', function () {
     if (this.isOrganization) {
-      return this.showSubscriptionTab && this.model.hasV2Subscription && this.isOrganizationAdmin;
+      return this.showSubscriptionTab && this.isOrganizationAdmin;
     } else {
-      return this.showSubscriptionTab && this.model.hasV2Subscription;
+      return this.showSubscriptionTab;
     }
   }),
   showPlanUsageTab: and('showSubscriptionTab', 'model.hasCredits'),
