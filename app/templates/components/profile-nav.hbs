@@ -154,6 +154,13 @@
               </LinkTo>
             </li>
           {{/if}}
+          {{#if this.showMigrateTab}}
+            <li>
+              <LinkTo @route="organization.migrate" @model={{this.model}}>
+                Migrate
+              </LinkTo>
+            </li>
+          {{/if}}
           {{#if this.showSubscriptionTab}}
             <li data-test-billing-tab>
               <LinkTo @route="organization.billing" @model={{this.model}}>
@@ -161,10 +168,10 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if this.showMigrateTab}}
-            <li>
-              <LinkTo @route="organization.migrate" @model={{this.model}}>
-                Migrate
+          {{#if this.showPaymentDetailsTab}}
+            <li data-test-payment-details-tab>
+              <LinkTo @route="organization.payment_details">
+                Payment details
               </LinkTo>
             </li>
           {{/if}}

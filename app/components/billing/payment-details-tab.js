@@ -32,14 +32,17 @@ export default Component.extend({
   showSwitchToFreeModal: false,
   showPlanSwitchWarning: false,
 
-  subscription: reads('account.subscription'),
+  v1subscription: reads('account.subscription'),
   v2subscription: reads('account.v2subscription'),
   isV2SubscriptionEmpty: empty('v2subscription'),
-  isSubscriptionEmpty: empty('subscription'),
+  isSubscriptionEmpty: empty('v1subscription'),
   isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
   hasV2Subscription: not('isV2SubscriptionEmpty'),
-  invoices: computed('subscription.id', 'v2subscription.id', function () {
-    const subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');
+  subscription: computed('v1subscription', 'v2subscription', function () {
+    return this.isV2SubscriptionEmpty ? this.get('v1subscription') : this.get('v2subscription');
+  }),
+  invoices: computed('v1subscription.id', 'v2subscription.id', function () {
+    const subscriptionId = this.isV2SubscriptionEmpty ? this.get('v1subscription.id') : this.get('v2subscription.id');
     const type = this.isV2SubscriptionEmpty ? 1 : 2;
     if (subscriptionId) {
       return this.store.query('invoice', { type, subscriptionId });
@@ -54,7 +57,7 @@ export default Component.extend({
     return paymentChangesBlockCaptcha || paymentChangesBlockCredit;
   }),
 
-  billingInfo: reads('v2subscription.billingInfo'),
+  billingInfo: reads('subscription.billingInfo'),
 
   country: reads('billingInfo.country'),
   firstName: reads('billingInfo.firstName'),
@@ -71,7 +74,7 @@ export default Component.extend({
       category: 'Subscription',
     });
     const { stripeElement } = this;
-    const subscription = this.v2subscription;
+    const subscription = this.subscription;
     try {
       let token = null;
       if (stripeElement) {
