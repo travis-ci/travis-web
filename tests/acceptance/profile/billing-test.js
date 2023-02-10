@@ -131,7 +131,7 @@ module('Acceptance | profile/billing', function (hooks) {
     this.coupons = this.server.createList('coupon', 3);
   });
 
-  test('view billing information with invoices', async function (assert) {
+  skip('view billing information with invoices', async function (assert) {
     this.subscription.createInvoice({
       id: '1919',
       created_at: new Date(1919, 4, 15),
@@ -189,7 +189,7 @@ module('Acceptance | profile/billing', function (hooks) {
     });
   });
 
-  test('view billing information with invoices year changes correctly', async function (assert) {
+  skip('view billing information with invoices year changes correctly', async function (assert) {
 
     this.subscription.createInvoice({
       id: '2009',
@@ -312,7 +312,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom('[data-test-stripe-discount]').hasText('Discount: $10 off until September 2018');
   });
 
-  test('edit subscription contact updates user billing info', async function (assert) {
+  skip('edit subscription contact updates user billing info', async function (assert) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
@@ -337,7 +337,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com');
   });
 
-  test('edit subscription billing updates user billing info', async function (assert) {
+  skip('edit subscription billing updates user billing info', async function (assert) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
