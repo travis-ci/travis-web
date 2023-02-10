@@ -68,6 +68,13 @@ export default Component.extend({
     const isEnterprise = this.features.get('enterpriseVersion');
     return !isEnterprise && !isAssemblaUser && !!billingEndpoint;
   }),
+  showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin', function () {
+    if (this.isOrganization) {
+      return this.showSubscriptionTab && this.isOrganizationAdmin;
+    } else {
+      return this.showSubscriptionTab;
+    }
+  }),
   showPlanUsageTab: and('showSubscriptionTab', 'model.hasCredits'),
   usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
     const userUsage = this.model.allowance.get('userUsage');
@@ -86,6 +93,13 @@ export default Component.extend({
 
     if (!allowance) {
       return;
+    }
+
+    if (allowance.get('paymentChangesBlockCredit') || allowance.get('paymentChangesBlockCaptcha')) {
+      let time;
+      if (allowance.get('paymentChangesBlockCaptcha')) time = allowance.get('captchaBlockDuration');
+      if (allowance.get('paymentChangesBlockCredit')) time = allowance.get('creditCardBlockDuration');
+      this.flashes.custom('flashes/payment-details-edit-lock', { owner: this.model, isUser: this.model.isUser, time: time}, 'warning');
     }
 
     if (allowance.get('subscriptionType') !== 2) {

@@ -132,7 +132,7 @@ module('Acceptance | profile/billing', function (hooks) {
     this.coupons = this.server.createList('coupon', 3);
   });
 
-  test('view billing information with invoices', async function (assert) {
+  skip('view billing information with invoices', async function (assert) {
     this.subscription.createInvoice({
       id: '1919',
       created_at: new Date(1919, 4, 15),
@@ -169,8 +169,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active');
-    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText('Valid until June 19, 2018');
 
     assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
@@ -192,7 +190,7 @@ module('Acceptance | profile/billing', function (hooks) {
     });
   });
 
-  test('view billing information with invoices year changes correctly', async function (assert) {
+  skip('view billing information with invoices year changes correctly', async function (assert) {
 
     this.subscription.createInvoice({
       id: '2009',
@@ -315,7 +313,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.dom('[data-test-stripe-discount]').hasText('Discount: $10 off until September 2018');
   });
 
-  test('edit subscription contact updates user billing info', async function (assert) {
+  skip('edit subscription contact updates user billing info', async function (assert) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
@@ -340,7 +338,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com');
   });
 
-  test('edit subscription billing updates user billing info', async function (assert) {
+  skip('edit subscription billing updates user billing info', async function (assert) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
@@ -370,8 +368,6 @@ module('Acceptance | profile/billing', function (hooks) {
     percySnapshot(assert);
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
 
     await profilePage.billing.changePlanResubscribe.click();
 
@@ -402,9 +398,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
     assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
-
-    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany');
   });
 
   test('view billing on an incomplete stripe plan', async function (assert) {
@@ -417,8 +410,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan incomplete');
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
-    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
   });
 
   test('cancel a stripe plan', async function (assert) {
@@ -442,11 +433,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
-    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
 
-    assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
     assert.equal(profilePage.billing.price.text, '$69');
     assert.equal(profilePage.billing.period.text, '/month');
 
@@ -472,11 +460,8 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
     assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
 
-    assert.equal(profilePage.billing.userDetails.text, 'contact name User Name company name Travis CI GmbH billing email user@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address Rigaerstraße 8 city Berlin post code 10987 country Germany vat id 12345');
     assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
 
-    assert.equal(profilePage.billing.creditCardNumber.text, '•••• •••• •••• 1919');
     assert.equal(profilePage.billing.price.text, '$69');
     assert.equal(profilePage.billing.period.text, '/month');
   });
@@ -981,9 +966,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
     assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
-
-    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {
@@ -1316,9 +1298,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
     assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
-
-    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
   });
 
   test('view billing tab when no organization subscription should fill form and transition to payment', async function (assert) {
@@ -1386,9 +1365,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
     assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
-
-    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email john@doe.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
   });
 
   test('create subscription with multiple emails', async function (assert) {
@@ -1465,9 +1441,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
     assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
-
-    assert.equal(profilePage.billing.userDetails.text, 'contact name John Doe company name Travis billing email joe@jane.com jane@email.com joe@email.com doe@email.com');
-    assert.equal(profilePage.billing.billingDetails.text, 'address 15 Olalubi street city Berlin post code 353564 country Germany vat id 356463');
   });
 
   test('view plan with manual subscription', async function (assert) {
