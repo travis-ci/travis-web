@@ -278,7 +278,7 @@
   <Billing::Address @subscription={{this.subscription}} @account={{this.account}} @hideEdit={{true}}/>
   <div class="yellow-message" data-test-plan-yellow-message='true'>
     This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
-    <LinkTo @route="help" @query={{hash anchor="form"}}>
+    <LinkTo @route="help" @query={{hash anchor="form" billing=true}}>
       contact our support team.
     </LinkTo>
   </div>
