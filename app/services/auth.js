@@ -16,7 +16,7 @@ import {
 } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
-import { task } from 'ember-concurrency';
+import { task, didCancel } from 'ember-concurrency';
 import { availableProviders, vcsConfigByUrlPrefixOrType } from 'travis/utils/vcs';
 
 const { authEndpoint, apiEndpoint } = config;
@@ -183,7 +183,9 @@ export default Service.extend({
           Travis.trigger('user:refreshed', currentUser);
         })
         .catch(error => {
-          throw new Error(error);
+          if (!didCancel(error)) {
+            throw new Error(error);
+          }
         });
     } catch (error) {
       this.signOut(false);
