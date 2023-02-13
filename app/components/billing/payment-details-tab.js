@@ -57,13 +57,19 @@ export default Component.extend({
     return paymentChangesBlockCaptcha || paymentChangesBlockCredit;
   }),
 
-  billingInfo: reads('subscription.billingInfo'),
+  subscriptionLoaded: computed('subscription', function () {
+    return !!this.subscription;
+  }),
+
+  billingInfo: computed('subscription', 'subscription.billingInfo', function () {
+    return this.subscription ? this.subscription.get('billingInfo') : null;
+  }),
 
   country: reads('billingInfo.country'),
   firstName: reads('billingInfo.firstName'),
   lastName: reads('billingInfo.lastName'),
   nameOnCard: computed('firstName', 'lastName', function () {
-    return `${this.firstName} ${this.lastName}`;
+    return `${this.firstName || ''} ${this.lastName || ''}`;
   }),
 
   isLoading: reads('updatePaymentDetails.isRunning'),

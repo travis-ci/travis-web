@@ -1,4 +1,5 @@
 <div class='billing-checkout' data-test-payment-form='true'>
+  {{#if this.subscriptionLoaded}}
   <p>
     You can update your payment method details here. Your credit card will be validated
     by placing test fee - $1, which will be returned to you within a week.
@@ -222,5 +223,9 @@
         @subscription={{this.subscription}}
       />
     {{/if}}
+  {{/if}}
+
+  {{else}}
+  <LoadingIndicator />
   {{/if}}
 </div>
