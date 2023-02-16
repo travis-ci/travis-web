@@ -71,6 +71,7 @@ export default Component.extend({
   nameOnCard: computed('firstName', 'lastName', function () {
     return `${this.firstName || ''} ${this.lastName || ''}`;
   }),
+  hasLocalRegistration: reads('billingInfo.hasLocalRegistration'),
 
   isLoading: reads('updatePaymentDetails.isRunning'),
 
