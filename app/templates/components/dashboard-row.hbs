@@ -96,6 +96,19 @@
             </LinkTo>
           </p>
         </section>
+        <section class="dash-last {{this.repo.currentScan.icon}}">
+          <h3 class="label">
+            Log Scan
+          </h3>
+          <p class="row-content color">
+            <StatusIcon @status={{this.repo.currentScan.icon}} />
+            <LinkTo @route="scanResults" @model={{this.repo}} @title="Log Scans">
+              <span class="label-align">
+                {{this.repo.currentScan.state}}
+              </span>
+            </LinkTo>
+          </p>
+        </section>
         <section class="dash-commit">
           <h3 class="label">
             Commit

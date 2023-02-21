@@ -1,0 +1,38 @@
+<div class="log-scan-list-item">
+  <StatusIcon @status="errored" />
+  <SvgImage @name="icon-calendar" @class="icon log-scan-list-item-calendar" />
+  <span class="log-scan-list-item-time">
+    {{format-time this.scanResult.createdAt}}
+    <EmberTooltip @text="Scan date: {{pretty-date this.scanResult.createdAt}}" />
+  </span>
+  <SvgImage @name="icon-copy" @class="log-scan-list-item-document" />
+  <span class="log-scan-list-item-report">
+    <LinkTo
+      @route="scanResult"
+      @model={{this.scanResult}}
+      class="inner-underline"
+    >
+        Scan Report
+    </LinkTo>
+  </span>
+  <SvgImage @name="icon-api" @class="icon log-scan-list-item-build" />
+  <span class="log-scan-list-item-build-id">
+    <LinkTo
+      @route="build"
+      @model={{this.scanResult.buildId}}
+      class="inner-underline"
+    >
+      <span class="label-align inner-underline">
+        #{{this.scanResult.buildNumber}}
+      </span>
+    </LinkTo>
+  </span>
+  <span class="log-scan-list-item-job">
+    <LinkTo
+      @route="job"
+      @model={{this.scanResult.jobId}}
+    >
+      Job #{{this.scanResult.buildNumber}}.{{this.scanResult.jobNumber}}
+    </LinkTo>
+  </span>
+</div>
