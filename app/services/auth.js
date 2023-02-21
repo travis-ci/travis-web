@@ -33,7 +33,7 @@ const STATE = {
   SIGNING_IN: 'signing-in'
 };
 
-const USER_FIELDS = ['id', 'login', 'token', 'correct_scopes', 'channels', 'vcs_type', 'confirmed_at'];
+const USER_FIELDS = ['id', 'login', 'token', 'rss_token', 'correct_scopes', 'channels', 'vcs_type', 'confirmed_at'];
 
 const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
@@ -77,6 +77,7 @@ export default Service.extend({
 
   token: or('currentUser.authToken', 'storage.token'),
   assetToken: reads('currentUser.token'),
+  rssToken: reads('currentUser.rssToken'),
 
   userName: reads('currentUser.fullName'),
   gravatarUrl: reads('currentUser.gravatarUrl'),

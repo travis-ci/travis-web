@@ -58,6 +58,7 @@
 <Modal
   @isVisible={{this.isShowingTriggerBuildModal}}
   @onClose={{action "toggleTriggerBuildModal"}}
+  @closeOnClickOverlay={{false}}
 >
   <TriggerCustomBuild
     @repo={{this.repo}}

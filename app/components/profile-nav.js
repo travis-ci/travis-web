@@ -92,11 +92,11 @@ export default Component.extend({
       return;
     }
 
-    if (!allowance.get('privateRepos') && !allowance.get('publicRepos')) {
+    if (!allowance.get('privateRepos') && !allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
       this.flashes.custom('flashes/negative-balance-private-and-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('privateRepos')) {
+    } else if (!allowance.get('privateRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
       this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('publicRepos')) {
+    } else if (!allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
       this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
     }
 
