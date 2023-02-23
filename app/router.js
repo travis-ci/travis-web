@@ -21,6 +21,7 @@ Router.map(function () {
   this.route('search', { path: '/search/:phrase' });
 
   this.route('first_sync');
+  this.route('account_activation');
   this.route('insufficient_oauth_permissions');
   this.route('signin');
   this.route('signup');

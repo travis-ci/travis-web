@@ -12,4 +12,9 @@
       {{this.name}}
     </h3>
   </span>
+  {{#if this.showSync}}
+  <span>
+      <SyncButton @isOrganization={{this.isOrganization}}/>
+  </span>
+  {{/if}}
 </LinkToAccount>

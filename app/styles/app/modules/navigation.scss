@@ -99,6 +99,10 @@ $nav-line-height: 35px;
   }
 }
 
+.disabled {
+  cursor: default;
+}
+
 .navigation-anchor {
   display: block;
   width: 100%;

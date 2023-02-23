@@ -15,6 +15,11 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   featureFlags: service(),
   flashes: service(),
   repositories: service(),
+  storage: service(),
+  wizard: service('wizard-state'),                                       
+  queryParams: {
+    selectedPlanId: null,
+  },
 
   needsAuth: false,
 
@@ -32,8 +37,16 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     return this.auth.autoSignIn();
   },
 
-  model() {
+  afterModel() {
+    console.log("APP AFTER CALLED");
+  },
+
+  model(model, transition) {
+    if(model.selectedPlanId) {
+      this.storage.selectedPlanId = model.selectedPlanId;
+    }
     if (this.auth.signedIn) {
+      this.wizard.fetch.perform().then(() => {this.storage.wizardStep = this.wizard.state;});
       return this.get('featureFlags.fetchTask').perform();
     }
   },

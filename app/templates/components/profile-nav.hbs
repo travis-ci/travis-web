@@ -5,10 +5,9 @@
     </h2>
     <ul class="profile-user">
       <li>
-        <OrgItem @account={{this.user}} />
+        <OrgItem @account={{this.user}} @isOrganization={{this.isOrganization}} @showSync="true" />
       </li>
     </ul>
-    <SyncButton @isOrganization={{this.isOrganization}}/>
   </section>
   {{#if this.showMigrationBetaBanner}}
     <section class="migrate-beta" data-test-sidebar-migrate>

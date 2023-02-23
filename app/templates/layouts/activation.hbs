@@ -1,0 +1,7 @@
+<div class="wrapper layout-activation">
+  <TopBar @isActivation=true/>
+  <FlashDisplay />
+  <div id="main" class="main" role="main">
+    {{yield (hash activation-section=(component "layouts/activation-section"))}}
+  </div>
+</div>

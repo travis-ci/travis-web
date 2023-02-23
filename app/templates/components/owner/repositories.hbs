@@ -1,3 +1,11 @@
+
+<Modal @isVisible={{this.showWizard}}>
+  <Owner::Wizard  @showWizard="{{this.showWizard}}" 
+                  @wizardStep={{this.wizardStep}} 
+                  @onClose={{action 'onWizardClose'}}
+  /> 
+</Modal>
+
 {{#if this.showMigrationStatusBanner}}
   {{#if this.owner.isMigrationBetaAccepted}}
     <PaperBlock

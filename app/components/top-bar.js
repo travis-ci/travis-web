@@ -21,6 +21,7 @@ export default Component.extend(InViewportMixin, {
   isWhite: false,
   landingPage: false,
   isNavigationOpen: false,
+  isActivation: false,
 
   activeModel: null,
   model: reads('activeModel'),

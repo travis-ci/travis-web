@@ -1,0 +1,182 @@
+{{#if this.account.isFetchV2PlansRunning }}
+<LoadingIndicator />
+{{else}}
+<TravisForm data-test-stripe-form='true' class='edit-form' as |form|>
+
+  <Modal @isVisible={{this.showPlansSelector}} @closeButton={{true}} @onClose={{action 'closePlansModal' }}>
+    <Billing::SelectPlan @title="Select plan" @selectedPlan={{this.selectedPlan}} @isReactivation={{false}}
+      @subscription={{this.subscription}} @account={{this.account}} @showPlansSelector={{true}}
+      @showAddonsSelector={{false}} @next={{action 'closePlansModal' }} @showCancelButton={{this.showCancelButton}} />
+  </Modal>
+  <div class='full-width form-elem'>
+    <form.field @label="Name on Card" @value={{this.creditCardOwner}} @onChange={{action (mut this.creditCardOwner)}}
+      onSubmit={{perform this.createSubscription}} @required={{true}} @showRequiredMark={{true}} as |field|>
+      <field.input @type="text" />
+    </form.field>
+  </div>
+
+  <div class='form-elem'>
+
+    <div class='framed-form'>
+
+      <StripeCard @onComplete={{action "complete" }} @options={{this.options}} as |stripeError|>
+        {{#if stripeError}}
+        <p>{{stripeError.message}}</p>
+        {{/if}}
+      </StripeCard>
+    </div>
+
+  </div>
+
+  <div class='full-width form-elem'>
+
+    <form.field @label="Billing e-mail address" 
+      @value={{this.billingEmail}} 
+      @onChange={{action (mut this.billingEmail)}} 
+      @required={{true}}
+      @validator={{form-validator form.validators.email}}
+      @showRequiredMark={{true}} as |field|>
+      <field.input @type="text" />
+    </form.field>
+  </div>
+  <div class='full-width form-elem'>
+    <form.field @label="Company Name" @value="" @required={{false}} as |field|>
+      <field.input @type="text" />
+    </form.field>
+  </div>
+
+  <div class='full-width form-elem'>
+    <form.field @label="Street Address" @value={{this.address}} @onChange={{action (mut this.address)}}
+      @required={{true}} @showRequiredMark={{true}} as |field|>
+      <field.input @type="text" />
+    </form.field>
+  </div>
+
+  <div class='flex flex--col flex-md-row'>
+    <div class='full-width form-elem inline-form-elem'>
+      <form.field @label='Zip Code' @value={{this.zipCode}} @required={{true}} @showRequiredMark={{true}}
+        @showValidationStatusIcons={{false}} @onChange={{action (mut this.zipCode)}} as |Field|>
+        <Field.input @name='zip' />
+      </form.field>
+    </div>
+    <div class='full-width form-elem'>
+      <form.field @label='City' @value={{this.city}} @required={{true}} @showRequiredMark={{true}}
+        @showValidationStatusIcons={{false}} @onChange={{action (mut this.city)}} as |Field|>
+        <Field.input @name='city' />
+      </form.field>
+    </div>
+  </div>
+
+  <div class='form-elem full-width select' data-billing-form-select>
+    <form.field @label='Country' @value={{this.country}} @required={{true}} class='billing-country'
+      @showRequiredMark={{true}} @showValidationStatusIcons={{false}} @onChange={{action 'changeCountry' }} as |Field|>
+      <Field.select @placeholder='Select country' @options={{this.countries}} as |country|>
+        {{country}}
+      </Field.select>
+    </form.field>
+  </div>
+  {{#if this.isStateMandatory}}
+  <div class='form-elem-half-width inline-form-elem'>
+    <form.field @label='State' @required={{true}} @showRequiredMark={{true}} @value={{this.state}}
+      @showValidationStatusIcons={{false}} @onChange={{action (mut this.state)}} as |Field|>
+      <Field.select @placeholder='Select state' @options={{this.states}} as |state|>
+        {{state}}
+      </Field.select>
+    </form.field>
+  </div>
+  {{/if}}
+  {{#if this.showNonZeroVatConfirmation}}
+  <div class='flex justify-between items-center mb-8'>
+    <div class='w-4/6 pr-2'>
+      Is your company registered locally for VAT/GST?
+    </div>
+    <div class='w-1/6 text-right'>
+      <form.field @value={{this.hasLocalRegistration}} @showValidationStatusIcons={{false}} @disableFrame={{true}}
+        @onChange={{action (mut this.hasLocalRegistration) true}} as |Field|>
+        <Field.checkbox>Yes</Field.checkbox>
+      </form.field>
+    </div>
+    <div class='w-1/6 text-right'>
+      <form.field @value={{not this.hasLocalRegistration}} @showValidationStatusIcons={{false}} @disableFrame={{true}}
+        @onChange={{action (mut this.hasLocalRegistration) false}} as |Field|>
+        <Field.checkbox>No</Field.checkbox>
+      </form.field>
+    </div>
+  </div>
+  {{/if}}
+  {{#if this.showVatField}}
+  <div class='form-elem-half-width inline-form-elem billing-optional-field'>
+    <form.field @label='Vat Id' @required={{this.isVatMandatory}} @showRequiredMark={{this.isVatMandatory}}
+      @value={{this.vatId}} @showValidationStatusIcons={{false}} @onChange={{action (mut this.vatId)}} as |Field|>
+      <Field.input @name='vat' />
+    </form.field>
+  </div>
+  {{/if}}
+  <div class="framed-form">
+    <div class='flex flex--col flex-md-row '>
+      <div class='full-width form-elem inline-form-elem'>
+        <h2 class="small-title color-asphalt-grey font-bold"> {{this.selectedPlan.name}} </h2>
+        {{#unless this.isTrial}}
+        <p>{{format-currency this.selectedPlan.startingPrice floor="true"}}{{ if this.selectedPlan.isAnnual '/annualy'
+          '/monthly'}}</p>
+        {{/unless}}
+        <p> {{this.selectedPlan.name}} </p>
+      </div>
+      <div class='full-width form-elem'>
+        <button class="small-title font-bold text-center" {{action 'changePlan' }}>
+          Change Plan </button>
+      </div>
+    </div>
+  </div>
+  <div class="align-center">
+    {{#if this.isTrial}}
+    <span class="nowrap">
+      <b class="font-bold">We will charge you $1 and refund you in 7 days</b>. This is needed to make sure your card
+    </span>
+    <span class="nowrap">
+      is valid. by clicking on "Verify Your Account" you agree to <a href="{{this.travisTermsUrl}}">Travis CI
+        Terms</a>,<a href="{{this.travisPolicyUrl}}">Privacy
+        Policy</a>.
+    </span>
+
+    <span class="nowrap">
+      Your free Trial Plan ends on August 5,2022. If you cancel your free trial by that date you
+    </span>
+    <span class="nowrap">
+      will not be able to use Travis CI features.
+    </span>
+    {{else}}
+    <span class="nowrap">
+      You'll be charged {{format-currency this.selectedPlan.startingPrice floor="true"}} {{ if
+      this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel the subscription. Previous
+    </span>
+    <span class="nowrap">
+      charges won't be refunded when you cancel unless it's legally required. By clicking
+    </span>
+
+    <span class="nowrap">
+      on {{this.getActivateButtonText}} you agree o <a href="{{this.travisTermsUrl}}">Travis CI Terms</a>,<a
+        href="{{this.travisPolicyUrl}}">Privacy
+        Policy</a>.
+    </span>
+    <span class="nowrap">
+      will not be able to use Travis CI features.
+    </span>
+    {{/if}}
+    <br />
+
+    <div class='mt-5 float-right'>
+      {{#if this.isLoading}}
+      <LoadingIndicator />
+      {{else}}
+      <button class="{{if this.canActivate 'button--green' 'button disabled'}}" {{action 'subscribe' }}
+        data-test-complete-payment='true'>
+        {{this.getActivateButtonText}}
+      </button>
+      {{/if}}
+    </div>
+
+  </div>
+
+</TravisForm>
+{{/if}}

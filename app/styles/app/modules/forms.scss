@@ -24,6 +24,10 @@ textarea {
   @extend %input-base;
 }
 
+.framed-form {
+  @extend %input-base;
+}
+
 ::placeholder {
   color: $cement-grey;
 }

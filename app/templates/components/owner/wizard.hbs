@@ -1,0 +1,50 @@
+<section class='billing-select-plan'>
+  <div class='wizard-title'>
+    {{#if (eq this.wizardStep 2)}}
+    <h4 class="color-oxide-blue">Add a .travis.yml file to your repository.</h4>
+    <div>
+    <span class="nowrap">
+    You need to add .travis.yml configuration file to root
+    </span><br/>
+    <span class="nowrap">
+    directory of your repository. If a .travis.yml is not in your
+    </span><br/>
+    <span class="nowrap">
+    repository or is not a valid YAML, Travis CI will ignore.it
+    </span><br/>
+    </div>
+      <p>Here you can find some of our <a href="{{this.travisBasicLanguageExamplesUrl}}"> basic language examples</a></p>
+     <div class="float-left">
+      1 of 2
+    </div>
+    <button onclick={{action 'nextStep' }} class='button--green float-right'>
+      Got It
+    </button>
+    {{else}}
+     <h4 class="color-oxide-blue">Trigger your next build </h4>
+        <div>
+    <span class="nowrap">
+    Once you've added .travis.yml to your repo, all you
+    </span><br/>
+    <span class="nowrap">
+    need to do now is commit your changes and push 
+    </span><br/>
+    <span class="nowrap">
+    them to the repository
+    </span><br/>
+    </div>
+     <p>Want to learn more? <a href="{{this.travisDocsUrl}}"> Learn up on our docs</a></p>
+     <div class="float-left">
+      2 of 2
+    </div>
+     <div class="float-right">
+       <button onclick={{action 'previousStep' }} class='button--white' >
+        Back
+       </button>
+       <button onclick={{action 'nextStep' }} class='button--green'>
+        Got It
+       </button>
+      </div>
+    {{/if}}
+  </div>
+</section>

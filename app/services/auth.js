@@ -49,6 +49,7 @@ export default Service.extend({
   metrics: service(),
   utm: service(),
   permissionsService: service('permissions'),
+  wizardStateService: service('wizard-state'),
 
   state: STATE.SIGNED_OUT,
 
@@ -145,6 +146,18 @@ export default Service.extend({
   signInWith(provider) {
     assert(`Invalid provider to authenticate ${provider}`, availableProviders.includes(provider));
     this.signIn(provider);
+  },
+
+  signUp(provider) {
+    this.set('state', STATE.SIGNING_IN);
+    const url = new URL(this.redirectUrl || window.location.href);
+
+    if (['/signin', '/plans', '/integration/bitbucket'].includes(url.pathname)) {
+      url.pathname = '/';
+    }
+    const providerSegment = provider ? `/${provider}` : '';
+    const path = `/auth/handshake${providerSegment}`;
+    window.location.href = `${authEndpoint || apiEndpoint}${path}?signup=true&redirect_uri=${url}`;
   },
 
   signIn(provider) {

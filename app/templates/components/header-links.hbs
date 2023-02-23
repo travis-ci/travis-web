@@ -50,9 +50,16 @@
       {{#if this.features.proVersion}}
         {{#if this.auth.signedIn}}
           <li>
+            {{#unless this.isActivation}}
             <LinkTo @route="dashboard" class="navigation-anchor">
               Dashboard
             </LinkTo>
+            {{else}}
+            <span  class="navigation-anchor disabled">
+              Dashboard
+              <EmberTooltip @text="For using the Dashboard please activate your account"/>
+            </span>
+            {{/unless}}
           </li>
           <li>
             <ExternalLinkTo

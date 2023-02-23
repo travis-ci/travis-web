@@ -23,6 +23,8 @@ const { appName, migrationRepositoryCountLimit } = config.githubApps;
 export default Component.extend({
   features: service(),
   store: service(),
+  storage: service(),
+  wizard: service('wizard-state'),
 
   owner: null,
 
@@ -77,6 +79,18 @@ export default Component.extend({
     return `https://travis-ci.com/${path}`;
   }),
 
+  wizardStep: reads('storage.wizardStep'),
+  wizardState: reads('wizard.state'),
+
+  showWizard: computed('wizardStep', function () {
+    console.log(`STEP:`);
+    console.log( this.wizardStep);
+    let state = this.wizardStep;
+
+    return state && state <= 3;
+  }),
+
+
   appsActivationURL: computed('owner.githubId', function () {
     let githubId = this.get('owner.githubId');
     return `${config.githubAppsEndpoint}/${appName}/installations/new/permissions?suggested_target_id=${githubId}`;
@@ -130,5 +144,16 @@ export default Component.extend({
     window.location.href =
       `${config.githubAppsEndpoint}/${appName}/installations/new/permissions` +
       `?suggested_target_id=${this.owner.githubId}&${githubQueryParams}`;
-  })
+  }),
+
+  closeWizard: task(function* () {
+    this.set('showWizard', false);
+    yield this.wizard.delete.perform();
+  }).drop(),
+
+  actions: {
+    onWizardClose() {
+      this.closeWizard.perform();
+    }
+  }
 });

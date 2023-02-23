@@ -8,7 +8,7 @@ export default V3Adapter.extend({
 
     assert('Invalid parameters for /user request', isQueryingCurrentUser || isUpdatingCurrentUser);
 
-    return `${this.urlPrefix()}/user`;
+    return `${this.urlPrefix()}/user?include=user.collaborator`;
   },
 
   // This overrides the parent implementation to ignore the query parameters

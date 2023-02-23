@@ -18,6 +18,7 @@ export default Component.extend({
   features: service(),
 
   isMenuOpen: false,
+  isActivation: false,
 
   user: reads('auth.currentUser'),
 
@@ -74,6 +75,7 @@ export default Component.extend({
     },
 
     toggleMenu() {
+      if(this.isActivation) return this.closeMenu();
       if (this.isMenuOpen) {
         this.closeMenu();
       } else {

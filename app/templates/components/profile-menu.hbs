@@ -14,9 +14,13 @@
 
   <div
     data-test-header-account-link="true"
-    class="pointer navigation-anchor navigation-profile-link signed-in"
+    class="pointer navigation-anchor navigation-profile-link signed-in {{if this.isActivation 'disabled' ''}}"
     {{on 'click' (action 'toggleMenu')}}
   >
+   {{#if this.isActivation}}
+    <EmberTooltip @text="Please activate your account"/>
+  {{/if}}
+  
     <UserAvatar
       @url={{this.user.avatarUrl}}
       @name={{this.user.fullName}}
