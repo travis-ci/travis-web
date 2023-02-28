@@ -111,16 +111,19 @@
       <Field.input @name='vat' />
     </form.field>
   </div>
+  <br/>
   {{/if}}
   <div class="framed-form">
     <div class='flex flex--col flex-md-row '>
-      <div class='full-width form-elem inline-form-elem'>
+      <div class='full-width form-elem inline-form-elem margin-left-s'>
         <h2 class="small-title color-asphalt-grey font-bold"> {{this.selectedPlan.name}} </h2>
         {{#unless this.isTrial}}
         <p>{{format-currency this.selectedPlan.startingPrice floor="true"}}{{ if this.selectedPlan.isAnnual '/annualy'
           '/monthly'}}</p>
         {{/unless}}
-        <p> {{this.selectedPlan.name}} </p>
+         {{#if this.isTrial}}
+        <p> Free plan valid one month</p>
+        {{/if}}
       </div>
       <div class='full-width form-elem'>
         <button class="small-title font-bold text-center" {{action 'changePlan' }}>

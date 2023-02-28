@@ -26,6 +26,7 @@ export default Component.extend({
   updateStep: task(function* (val) {
     let step = parseInt(this.wizardStep) + val;
     this.set('wizardStep', step);
+    this.storage.wizardStep = step;
     yield this.wizard.update.perform(step);
     
   }).drop(),
