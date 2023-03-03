@@ -1,6 +1,9 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { alias, reads } from '@ember/object/computed';
+import { task, timeout } from 'ember-concurrency';
+import YAML from 'yamljs';
+import config from 'travis/config/environment';
 
 export default Component.extend({
   permissionsService: service('permissions'),
@@ -30,20 +33,76 @@ export default Component.extend({
     this.set('dropupIsOpen', false);
   },
 
-  triggerBuild() {
-    const self = this;
-    let data = {};
-    data.request = `{ 'branch': '${this.get('repo.defaultBranch.name')}' }`;
+  fetchBuildStatus: task(function* (repoId, requestId) {
+    try {
+      return yield this.api.get(`/repo/${repoId}/request/${requestId}`);
+    } catch (e) {
+      this.displayError(e);
+    }
+  }),
 
-    this.api.post(`/repo/${this.get('repo.id')}/requests`, { data: data })
-      .then(() => {
-        self.set('isTriggering', false);
-        self.get('flashes')
-          .success(`You’ve successfully triggered a build for ${self.get('repo.slug')}.
-                   Hold tight, it might take a moment to show up.`);
-      });
+  showRequestStatus: task(function* (repoId, requestId) {
+    const data = yield this.fetchBuildStatus.perform(repoId, requestId);
+    let { result } = data;
+    let [build] = data.builds;
+
+    if (result === 'rejected') {
+      return this.showFailedRequest(requestId);
+    }
+    return this.showProcessingRequest(requestId);
+  }),
+
+  createBuild: task(function* () {
+    try {
+      this.set('isTriggering', false);
+      let data = {};
+      data.request = `{ 'branch': '${this.get('repo.defaultBranch.name')}' }`;
+      return yield this.api.post(`/repo/${this.repo.id}/requests`, { data: data });
+    } catch (e) {
+      this.displayError(e);
+    }
+  }),
+
+  showProcessingRequest(requestId) {
+    const preamble = 'Hold tight!';
+    const notice = `You successfully triggered a build for ${this.repo.slug}. It might take a moment to show up though.`;
+    this.flashes.notice(notice, preamble);
+    this.onClose();
+    return this.showRequest(requestId);
+  },
+
+  showFailedRequest(requestId) {
+    const errorMsg = `You tried to trigger a build for ${this.repo.slug} but the request was rejected.`;
+    this.flashes.error(errorMsg);
+    this.onClose();
+    return this.showRequest(requestId);
+  },
+
+  triggerBuild: task(function* () {
+    const data = yield this.createBuild.perform();
+
+    if (data) {
+      let requestId = data.request.id;
+
+      let { triggerBuildRequestDelay } = config.intervals;
+      yield timeout(triggerBuildRequestDelay);
+
+      yield this.showRequestStatus.perform(this.repo.id, requestId);
+    }
+    this.set('isTriggering', false);
     this.set('dropupIsOpen', false);
-    this.set('isTriggering', true);
+  }),
+
+  displayError(e) {
+    let message;
+
+    if (e.status === 429) {
+      message = 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.';
+    } else {
+      message = 'Oops, something went wrong, please try again.';
+    }
+
+    this.flashes.error(message);
   },
 
   actions: {
@@ -52,7 +111,7 @@ export default Component.extend({
     },
 
     triggerBuild() {
-      this.triggerBuild();
+      this.triggerBuild.perform();
     },
 
     starRepo() {
