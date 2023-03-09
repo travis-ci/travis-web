@@ -105,6 +105,7 @@ export default Component.extend({
   isStateMandatory: reads('isStateCountry'),
 
   isLoading: false,
+  planDetailsVisible: false,
 
   isNewSubscription: not('subscription.id'),
 
@@ -248,6 +249,9 @@ export default Component.extend({
     changeCountry(country) {
       this.set('country', country);
       this.hasLocalRegistration = false;
+    },
+    togglePlanDetails() {
+     this.set('planDetailsVisible', !this.planDetailsVisible);
     }
 
   }

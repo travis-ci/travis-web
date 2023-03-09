@@ -1,8 +1,8 @@
-<section class='billing-select-plan'>
+<section id="wizard" class='billing-select-plan rounded'>
   <div class='wizard-title'>
     {{#if (eq this.wizardStep 2)}}
-    <h4 class="color-oxide-blue">Add a .travis.yml file to your repository.</h4>
-    <div>
+    <p class="wizard-heading">Add a .travis.yml file to your repository.</p>
+    <div class="wizard-content">
     <span class="nowrap">
     You need to add .travis.yml configuration file to root
     </span><br/>
@@ -13,16 +13,16 @@
     repository or is not a valid YAML, Travis CI will ignore.it
     </span><br/>
     </div>
-      <p>Here you can find some of our <a href="{{this.travisBasicLanguageExamplesUrl}}"> basic language examples</a></p>
+    <p class="wizard-content">Here you can find some of our <a href={{this.travisBasicLanguageExamplesUrl}}  target="_blank"> basic language examples</a></p>
      <div class="float-left">
       1 of 2
     </div>
-    <button onclick={{action 'nextStep' }} class='button--green float-right'>
+    <button onclick={{action 'nextStep' }} class='button--green float-right wizard-button'>
       Got It
     </button>
     {{else}}
-     <h4 class="color-oxide-blue">Trigger your next build </h4>
-        <div>
+     <p class="wizard-heading">Trigger your next build </p>
+        <div class="wizard-content">
     <span class="nowrap">
     Once you've added .travis.yml to your repo, all you
     </span><br/>
@@ -33,11 +33,11 @@
     them to the repository
     </span><br/>
     </div>
-     <p>Want to learn more? <a href="{{this.travisDocsUrl}}"> Learn up on our docs</a></p>
+     <p>Want to learn more? <a href="{{this.travisDocsUrl}}" target="_blank"> Learn up on our docs</a></p>
      <div class="float-left">
       2 of 2
     </div>
-     <div class="float-right">
+     <div class="float-right wizard-button">
        <button onclick={{action 'previousStep' }} class='button--white' >
         Back
        </button>

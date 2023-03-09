@@ -13,6 +13,8 @@ import {
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { vcsLinks } from 'travis/services/external-links';
+import { task } from 'ember-concurrency';
+
 
 const { billingEndpoint } = config;
 
@@ -23,6 +25,8 @@ export default Component.extend({
   accounts: service(),
   features: service(),
   flashes: service(),
+  storage: service(),
+  wizard: service('wizard-state'),
 
   activeModel: null,
   model: reads('activeModel'),
@@ -84,6 +88,13 @@ export default Component.extend({
     return userUsage;
   }),
 
+  wizardStep: reads('storage.wizardStep'),
+  wizardState: reads('wizard.state'),
+  showWizard: computed('wizardStep', function () {
+    let state = this.wizardStep;
+    return state && state <= 3;
+  }),
+
   didRender() {
     const allowance = this.model.allowance;
 
@@ -126,6 +137,17 @@ export default Component.extend({
 
     if (allowance && allowance.get('subscriptionType') === 2) {
       this.flashes.removeCustomsByClassName('warning');
+    }
+  },
+
+  closeWizard: task(function* () {
+    this.set('showWizard', false);
+    yield this.wizard.delete.perform();
+  }).drop(),
+
+  actions: {
+    onWizardClose() {
+      this.closeWizard.perform();
     }
   }
 });

@@ -1,21 +1,21 @@
 <TravisLayout @layoutName="layouts/activation" as |layout|>
+   <h1 class="header-main text-header align-center"
+ > Enable access to CI/CD world </h1>
   <layout.activation-section
-  @hasBackground={{false}}
+  @isHeader={{false}}
   >
-    <h1 class="header-main align-center"> Enable access to CI/CD world </h1>
-    <div class="subheading align-center">
-
-      <span class="nowrap">
+    <div class="subheading text-subheader align-left" >
         We don't like paperwork but to keep Travis CI free from spam and
-      </span>
-      <span class="nowrap">
         cryptocurrency miners, we ask to verify your account with valid Credit Card.
-      </span>
-      <span class="nowrap">
         Until you do this, you will not be able to use all the functionality of Travis CI.
-      </span>
       <br/>
     </div>
+  </layout.activation-section>
+
+   <layout.activation-section
+  @isHeader={{false}}
+  > 
     <Billing::FirstPlan  @user={{this.user}}/>
+    <
   </layout.activation-section>
 </TravisLayout>

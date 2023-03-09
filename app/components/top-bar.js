@@ -14,6 +14,7 @@ export default Component.extend(InViewportMixin, {
   features: service(),
   flashes: service(),
   router: service(),
+  storage: service(),
 
   tagName: 'header',
   classNames: ['top'],
@@ -28,7 +29,7 @@ export default Component.extend(InViewportMixin, {
 
   user: reads('auth.currentUser'),
   isUnconfirmed: computed('user.confirmedAt', function () {
-    if (!this.user)
+    if (!this.user || (this.storage.wizardStep > 0 && this.storage.wizardStep <=3))
       return false;
     return !this.user.confirmedAt;
   }),

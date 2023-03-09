@@ -17,6 +17,11 @@ export default Service.extend({
     return parseInt(this.currentState.value);
   }),
 
+  isEnabled: computed('currentState', function() {
+    let val = parseInt(this.currentState.value);
+    return val>=1 && val<=3;
+  }),
+
   update: task(function* (val) {
     return yield this.api.patch('/storage/billing_wizard_state', { data: {value: val}, travisApiVersion: '3' });
   }).drop(),

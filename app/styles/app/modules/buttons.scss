@@ -155,6 +155,9 @@
   @extend %button;
   background: transparent;
 
+  &:disabled {
+    cursor: not-allowed;
+  }
   &.button--hover {
     transition: all 0.1s linear;
 

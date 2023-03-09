@@ -1,0 +1,41 @@
+#wizard {
+  a {
+    position: relative;
+    display: unset;
+    font-weight: 600;
+    text-decoration: underline;
+
+    &:hover,
+    &:active,
+    &.active {
+      color: black;
+      text-decoration: underline;
+
+    }
+
+    &:after {
+      all: unset;
+    }
+  }
+
+  .wizard-heading {
+    font-size: 18px;
+    color: $oxide-blue;
+    margin-left: 18px;
+    text-align: left;
+    margin-bottom: 14px;
+  }
+
+  .wizard-title {
+    margin-top: 30px;
+  }
+
+  .wizard-content {
+    margin: 18px;
+    margin-top: 14px;
+  }
+
+  .wizard-button {
+    margin-bottom: 14px;
+  }
+}

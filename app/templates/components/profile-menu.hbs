@@ -18,7 +18,7 @@
     {{on 'click' (action 'toggleMenu')}}
   >
    {{#if this.isActivation}}
-    <EmberTooltip @text="Please activate your account"/>
+    <EmberTooltip  @tooltipClass='white-tooltip' @text="Please activate your account"/>
   {{/if}}
   
     <UserAvatar

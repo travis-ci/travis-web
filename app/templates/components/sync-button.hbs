@@ -15,10 +15,13 @@
     data-test-start-sync-button
     class="button--transparent"
     type="button"
+    disabled={{if this.isSyncDisabled true false}}
     onclick={{action "sync"}}
   >
-    <SvgImage @name="sync-icon" @class="icon--sync color-oxide-blue"  />
-    <EmberTooltip @text="Last synced {{format-time this.user.syncedAt}}" @side='right'/>
+    <SvgImage @name="{{if this.isSyncDisabled 'sync-icon-disabled' 'sync-icon'}}" @class="icon--sync "  />
+    <EmberPopover @side='right'>
+      <p> <span class='nowrap'>Last synced</span> <span class='nowrap'> {{format-time this.user.syncedAt}} </span></p>
+      </EmberPopover>
   </button>
   <div class="sync-last-container">
     <span class="sync-last">

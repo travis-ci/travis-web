@@ -3,7 +3,7 @@ import Component from '@ember/component';
 export default Component.extend({
   tagName: 'activation-section',
   classNames: ['layout-activation-section'],
-  classNameBindings: ['hasBackground:layout-activation-section--with-bg'],
+  classNameBindings: ['isHeader:layout-activation-section--header'],
 
-  hasBackground: false
+  isHeader: false
 });

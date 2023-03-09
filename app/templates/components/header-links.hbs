@@ -55,10 +55,9 @@
               Dashboard
             </LinkTo>
             {{else}}
-            <span  class="navigation-anchor disabled">
+            <LinkTo @route="dashboard" @disabled=true class="navigation-anchor" @title="For using the Dashboard please activate your account">
               Dashboard
-              <EmberTooltip @text="For using the Dashboard please activate your account"/>
-            </span>
+            </LinkTo>
             {{/unless}}
           </li>
           <li>

@@ -312,6 +312,17 @@ span.emoji.emoji-sizer {
   }
 }
 
+.ember-popover {
+  border-radius: 10px;
+}
+.underline {
+  text-decoration: underline;
+}
+a.underline:hover {
+  text-decoration: underline;
+  color: black;
+}
+
 .calendar-medium {
   @include ember-power-calendar($cell-size: 50px);
 }

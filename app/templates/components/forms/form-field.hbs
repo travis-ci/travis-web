@@ -94,6 +94,14 @@
       validateMultipleInputs=(action "validateMultipleInputs")
       onInit=(action "setFieldElementId")
     )
+    placeholder=(component "forms/form-placeholder"
+      form=this.form
+      onFocus=(action "handleFocus")
+      onBlur=(action "handleBlur")
+      onChange=(action "handleChange")
+      onInit=(action "setFieldElementId")
+      class="travis-form__field-component"
+    )
   )
 }}
 

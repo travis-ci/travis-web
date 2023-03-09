@@ -2,17 +2,103 @@
 
   @import "billing-plans";
 
-  .layout-activation-section {
-    width: 50%;
 
+
+
+  .layout-activation-section {
+
+    &.layout-activation-section--header {
+      width: 30%;
+    }
     .layout-activation-section__inner {
 
-      width: 50%;
+      width: 440px;
       max-width: $max-width;
       margin: 0 auto;
       padding: $column-gutter/2;
+
     }
 
+  }
+
+  .small-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 10px;
+    color: $asphalt-grey;
+  }
+
+  .plan-desc {
+    font-size: 15px;
+    margin-bottom: 12px;
+    margin-top: 10px;
+    color: $asphalt-grey;
+  }
+
+  .plan-details {
+    font-size: 14px;
+    margin-bottom: 12px;
+    margin-top: 10px;
+    margin-left: 0px;
+    padding-left: 0px;
+    color: $asphalt-grey;
+  }
+
+
+  .plan-change {
+    font-size: 16px;
+    margin:0px;
+    padding: 0px;
+    top: 50%;
+    right: 0%;
+    text-align: right;
+    position: relative;
+    color: $oxide-blue;
+  }
+
+  #first-plan-charge-info {
+    margin-top: 14px;
+    margin-bottom: 44px;
+    font-size: 12px;
+  }
+  #first-plan-activate-button {
+    margin-top: 44px;
+  }
+
+  .not-required-form-elem {
+    width: 100%;
+    margin-bottom: 34px;
+  }
+
+  .form-elem {
+    width: 100%;
+    margin-bottom: 14px;
+  }
+
+  .cc-form-elem {
+    width: 100%;
+    margin-bottom: 44px;
+  }
+
+  .framed-form {
+  width: 100%;
+  padding: 0.4em 0.4em;
+  border: 1px solid #dbdcdc;
+  border-radius: 2px;
+  color: $asphalt-grey;
+  font-size: 14px;
+  font-family: $font-family-sans-serif;
+  background: white;
+  margin-top: 30px;
+  }
+
+  .margin-left-s {
+    margin-left: 16px;
+  }
+
+  .margin-right-s {
+    margin-right: 16px;
   }
 
   .text-center {
@@ -21,4 +107,29 @@
     left: 50%;
   }
 
+  .font-size-s {
+    font-size: $font-size-s;
+  }
+
+  .text-header {
+    font-size: 45px;
+    margin-bottom: 0px;
+  }
+
+  .text-subheader {
+    font-size: 14px;
+    color: #9D9D9D;
+  }
+
+  .cc-form {
+    @extend %input-base;
+ }
+
+  .cc-form-internal {
+    height: 20px;
+  }
+
+  .travis-link {
+    color: #3EAAAF;
+  }
 }

@@ -15,31 +15,28 @@
     </form.field>
   </div>
 
-  <div class='form-elem'>
-
-    <div class='framed-form'>
-
-      <StripeCard @onComplete={{action "complete" }} @options={{this.options}} as |stripeError|>
+  <div class='full-width cc-form-elem'>   
+    <form.field @label="Credit Card details"
+      onSubmit={{perform this.createSubscription}} @required={{true}} @showRequiredMark={{true}} as |field|>
+      <field.placeholder @type="input" class="cc-form"> 
+      <StripeCard  class="cc-form-internal" @onComplete={{action "complete" }} @options={{this.options}} as |stripeError|>
         {{#if stripeError}}
         <p>{{stripeError.message}}</p>
         {{/if}}
       </StripeCard>
-    </div>
-
+      </field.placeholder>
+      </form.field>
   </div>
 
   <div class='full-width form-elem'>
 
-    <form.field @label="Billing e-mail address" 
-      @value={{this.billingEmail}} 
-      @onChange={{action (mut this.billingEmail)}} 
-      @required={{true}}
-      @validator={{form-validator form.validators.email}}
+    <form.field @label="Billing e-mail address" @value={{this.billingEmail}} @onChange={{action (mut
+      this.billingEmail)}} @required={{true}} @validator={{form-validator form.validators.email}}
       @showRequiredMark={{true}} as |field|>
       <field.input @type="text" />
     </form.field>
   </div>
-  <div class='full-width form-elem'>
+  <div class='full-width not-required-form-elem'>
     <form.field @label="Company Name" @value="" @required={{false}} as |field|>
       <field.input @type="text" />
     </form.field>
@@ -52,7 +49,7 @@
     </form.field>
   </div>
 
-  <div class='flex flex--col flex-md-row'>
+  <div class='flex flex--col flex-md-row form-elem'>
     <div class='full-width form-elem inline-form-elem'>
       <form.field @label='Zip Code' @value={{this.zipCode}} @required={{true}} @showRequiredMark={{true}}
         @showValidationStatusIcons={{false}} @onChange={{action (mut this.zipCode)}} as |Field|>
@@ -111,64 +108,94 @@
       <Field.input @name='vat' />
     </form.field>
   </div>
-  <br/>
   {{/if}}
-  <div class="framed-form">
-    <div class='flex flex--col flex-md-row '>
-      <div class='full-width form-elem inline-form-elem margin-left-s'>
-        <h2 class="small-title color-asphalt-grey font-bold"> {{this.selectedPlan.name}} </h2>
+  <div class="framed-form flex flex--col-2 flex--md-row">
+      <div class='inline-form-elem full-width margin-left-s'>
+        <h3 class="small-title"> {{this.selectedPlan.name}} </h3>
         {{#unless this.isTrial}}
-        <p>{{format-currency this.selectedPlan.startingPrice floor="true"}}{{ if this.selectedPlan.isAnnual '/annualy'
+        <p class="plan-desc">{{format-currency this.selectedPlan.startingPrice floor="true"}}{{ if this.selectedPlan.isAnnual '/annualy'
           '/monthly'}}</p>
+        
+         <button class=" no-button plan-details" {{action 'togglePlanDetails' }}>
+          Plan details </button>
+        {{#if this.planDetailsVisible}}
+        <div class='selected-plan__details'>
+          {{#if (eq this.selectedPlan.planType 'hybrid')}}
+          <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+            <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize this.selectedPlan.concurrencyLimit "concurrent job"}}
+          </p>
+          {{/if}}
+          <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
+            <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
+          </p>
+          <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
+            <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
+          </p>
+          
+          {{#if this.selectedPlan.hasOSSCreditAddons}}
+          <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
+            <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{this.selectedPlan.publicCredits}} OSS Credits<span
+              class='color-cement-grey'>/month</span>
+          </p>
+          {{/if}}
+          {{#if this.selectedPlan.hasCreditAddons}}
+          <p class='selected-plan__details--desc' data-test-selected-plan-credits>
+            {{this.selectedPlan.privateCreditsTotal}} Credits
+          </p>
+          {{/if}}
+          {{#if this.selectedPlan.hasOSSCreditAddons}}
+          <p class='selected-plan__details--desc' data-test-selected-plan-oss-credits>
+            {{this.selectedPlan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
+          </p>
+          {{/if}}
+          {{#if this.selectedPlan.hasUserLicenseAddons}}
+          <p class='selected-plan__details--desc' data-test-selected-plan-users>
+            {{#if this.selectedPlan.isUnlimitedUsers}}
+            Unlimited unique users
+            {{else}}
+            Up to {{this.selectedPlan.startingUsers}} unique users
+          <div data-test-selected-plan-period='true' class='selected-plan__period'>
+            Charged monthly per usage - check pricing
+          </div>
+          {{/if}}
+          </p>
+          {{/if}}
+        </div>
+        {{/if}}
         {{/unless}}
-         {{#if this.isTrial}}
+        {{#if this.isTrial}}
         <p> Free plan valid one month</p>
         {{/if}}
       </div>
-      <div class='full-width form-elem'>
-        <button class="small-title font-bold text-center" {{action 'changePlan' }}>
+      <div class='form-elem full-width margin-right-s'>
+        <button class="no-button plan-change  float-right" {{action 'changePlan' }}>
           Change Plan </button>
       </div>
-    </div>
   </div>
-  <div class="align-center">
+  <div class="align-left font-size-s" id="first-plan-charge-info">
     {{#if this.isTrial}}
-    <span class="nowrap">
       <b class="font-bold">We will charge you $1 and refund you in 7 days</b>. This is needed to make sure your card
-    </span>
-    <span class="nowrap">
-      is valid. by clicking on "Verify Your Account" you agree to <a href="{{this.travisTermsUrl}}">Travis CI
-        Terms</a>,<a href="{{this.travisPolicyUrl}}">Privacy
+  
+      is valid. by clicking on "Verify Your Account" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link">Travis CI
+        Terms</a>,<a href="{{this.travisPolicyUrl}}" class="travis-link">Privacy
         Policy</a>.
-    </span>
 
-    <span class="nowrap">
       Your free Trial Plan ends on August 5,2022. If you cancel your free trial by that date you
-    </span>
-    <span class="nowrap">
+
       will not be able to use Travis CI features.
-    </span>
     {{else}}
-    <span class="nowrap">
+  
       You'll be charged {{format-currency this.selectedPlan.startingPrice floor="true"}} {{ if
       this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel the subscription. Previous
-    </span>
-    <span class="nowrap">
+   
       charges won't be refunded when you cancel unless it's legally required. By clicking
-    </span>
-
-    <span class="nowrap">
-      on {{this.getActivateButtonText}} you agree o <a href="{{this.travisTermsUrl}}">Travis CI Terms</a>,<a
-        href="{{this.travisPolicyUrl}}">Privacy
+      on {{this.getActivateButtonText}} you agree o <a href="{{this.travisTermsUrl}}" class="travis-link">Travis CI Terms</a>,<a
+        href="{{this.travisPolicyUrl}}" class="travis-link">Privacy
         Policy</a>.
-    </span>
-    <span class="nowrap">
-      will not be able to use Travis CI features.
-    </span>
     {{/if}}
     <br />
 
-    <div class='mt-5 float-right'>
+    <div class='mt-5 float-right' id="first-plan-activate-button">
       {{#if this.isLoading}}
       <LoadingIndicator />
       {{else}}
