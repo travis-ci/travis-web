@@ -22,7 +22,7 @@ export default SimpleLayoutRoute.extend({
   },
 
   getTransition() {
-    if(this.user.hasV2Subscription || this.user.subscription) return 'account';
+    if(this.user.hasV2Subscription || this.user.subscription || this.user.accountSubscriptions.length > 0 || this.user.accountv2Subscriptions.length > 0) return 'account';
     if(this.storage.wizardStep < 2 && !this.user.colaborator) return 'account_activation';
     if(this.storage.wizardStep >=2 && this.storage.wizardStep <=3) return 'account/repositories';
     return 'account';
@@ -31,10 +31,14 @@ export default SimpleLayoutRoute.extend({
   isSyncingDidChange() {
     const controller = this.controllerFor('firstSync');
     if (!controller.isSyncing) {
-      later(
-        () => this.transitionTo(this.getTransition()),
-        config.timing.syncingPageRedirectionTime
-      );
+      this.accounts.fetchSubscriptions.perform()
+        .then(() => this.accounts.fetchV2Subscriptions.perform())
+        .then(() => {
+          later(
+            () => this.transitionTo(this.getTransition()),
+            config.timing.syncingPageRedirectionTime
+          );
+        });
     }
   }
 
