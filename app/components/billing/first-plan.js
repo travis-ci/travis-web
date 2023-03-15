@@ -149,12 +149,11 @@ export default Component.extend({
       const { token } = yield this.stripe.createStripeToken.perform(stripeElement);
       
       if (token) {
-        const organizationId = null;// account.type === 'organization' ? +(account.id) : null;
+      
         const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
-        const org = organizationId && this.store.peekRecord('organization', organizationId);
 
         this.subscription.setProperties({
-          organization: org,
+          organization: null,
           plan: plan,
           v1SubscriptionId: this.v1SubscriptionId,
         });
@@ -184,8 +183,9 @@ export default Component.extend({
         this.storage.clearSelectedPlanId();
         this.storage.wizardStep = 2;
         this.wizard.update.perform(2);
-        this.router.transitionTo('/account/repositories');
-
+        yield this.accounts.fetchV2Subscriptions.perform().then(() => {
+          this.router.transitionTo('/account/repositories');
+        });
       }
       this.flashes.success("Your account has been successfully activated");
     } catch (error) {

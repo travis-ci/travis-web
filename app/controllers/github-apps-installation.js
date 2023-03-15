@@ -19,7 +19,8 @@ export default Controller.extend({
 
   startPolling() {
     this.initialDelayPromise().then(() => this.fetchPromise().then(() => {
-      this.transitionToRoute('account');
+
+      this.transitionToRoute('first_sync');
     }));
   },
 
