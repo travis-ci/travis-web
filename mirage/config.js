@@ -1269,6 +1269,10 @@ export default function () {
     return new Response(404, {}, {});
   });
 
+  this.get('/storage/billing_wizard_state', function (schema, request) {
+    return new Response(200, {'id': 'billing_wizard_state', 'value': 0}, {});
+  });
+
   this.get('/insights/metrics', function (schema, { queryParams }) {
     const ownerId = parseInt(queryParams.owner_id);
     const names = queryParams.name.split(',');
