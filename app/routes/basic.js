@@ -8,7 +8,7 @@ export default Route.extend({
   storage: service(),
 
   activate() {
-    if(this.storage.wizardStep > 0 && this.storage.wizardStep <=3) {
+    if (this.storage.wizardStep > 0 && this.storage.wizardStep <= 3) {
       if (this.storage.wizardStep == 1) {
         this.transitionTo('account_activation');
       } else {

@@ -29,7 +29,7 @@ export default Component.extend(InViewportMixin, {
 
   user: reads('auth.currentUser'),
   isUnconfirmed: computed('user.confirmedAt', function () {
-    if (!this.user || (this.storage.wizardStep > 0 && this.storage.wizardStep <=3))
+    if (!this.user || (this.storage.wizardStep > 0 && this.storage.wizardStep <= 1))
       return false;
     return !this.user.confirmedAt;
   }),

@@ -48,7 +48,7 @@ export default Controller.extend({
     this._super(...arguments);
     this.router.on('routeDidChange', () => this.handleRouteChange());
     this.router.on('routeWillChange', (transition) => {
-      if(this.selectedPlanId) {
+      if (this.selectedPlanId) {
         this.storage.selectedPlanId = this.selectedPlanId;
       }
     });

@@ -83,8 +83,6 @@ export default Component.extend({
   wizardState: reads('wizard.state'),
 
   showWizard: computed('wizardStep', function () {
-    console.log(`STEP:`);
-    console.log( this.wizardStep);
     let state = this.wizardStep;
 
     return state && state <= 3;

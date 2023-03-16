@@ -18,13 +18,11 @@
   <div class='full-width cc-form-elem'>   
     <form.field @label="Credit Card details"
       onSubmit={{perform this.createSubscription}} @required={{true}} @showRequiredMark={{true}} as |field|>
-      <field.placeholder @type="input" class="cc-form"> 
       <StripeCard  class="cc-form-internal" @onComplete={{action "complete" }} @options={{this.options}} as |stripeError|>
         {{#if stripeError}}
         <p>{{stripeError.message}}</p>
         {{/if}}
       </StripeCard>
-      </field.placeholder>
       </form.field>
   </div>
 
@@ -37,7 +35,7 @@
     </form.field>
   </div>
   <div class='full-width not-required-form-elem'>
-    <form.field @label="Company Name" @value="" @required={{false}} as |field|>
+    <form.field @label="Company Name" @value="" @onChange={{action (mut this.company)}} @required={{false}} as |field|>
       <field.input @type="text" />
     </form.field>
   </div>

@@ -19,7 +19,6 @@ export default Service.extend({
   },
 
   get selectedPlanId() {
-    console.log(this.getItem('travis.billing_selected_plan_id'));
     return this.getItem('travis.billing_selected_plan_id');
   },
   set selectedPlanId(value) {

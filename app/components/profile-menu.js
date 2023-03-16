@@ -75,7 +75,6 @@ export default Component.extend({
     },
 
     toggleMenu() {
-      if(this.isActivation) return this.closeMenu();
       if (this.isMenuOpen) {
         this.closeMenu();
       } else {

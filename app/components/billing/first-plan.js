@@ -1,11 +1,10 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { or, not, reads, filterBy, alias } from '@ember/object/computed';
+import { not, reads, filterBy, alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
-import { typeOf } from '@ember/utils';
 import config from 'travis/config/environment';
-import { countries,states,zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
+import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
 
 export default Component.extend({
   stripe: service(),
@@ -18,12 +17,7 @@ export default Component.extend({
   router: service(),
   wizard: service('wizard-state'),
   countries,
-  states: computed('country', function() {
-    const { country } = this;
-    return states[country];
-  }),
-
-  user: null, 
+  user: null,
   account: alias('accounts.user'),
   stripeElement: null,
   stripeLoading: false,
@@ -35,8 +29,8 @@ export default Component.extend({
   defaultPlans: filterBy('availablePlans', 'trialPlan'),
   defaultPlanId: reads('defaultPlans.firstObject.id'),
   showCancelButton: false,
-  travisTermsUrl: "/terms",
-  travisPolicyUrl: "/policy",
+  travisTermsUrl: '/terms',
+  travisPolicyUrl: '/policy',
   subscription: null,
   vatId: null,
 
@@ -57,13 +51,13 @@ export default Component.extend({
   }),
 
   hasLocalRegistration: false,
-  firstName: "",
-  lastName: "",
-  company: "",
-  address: "",
-  city: "",
-  country: "",
-  billingEmail: "",
+  firstName: '',
+  lastName: '',
+  company: '',
+  address: '',
+  city: '',
+  country: '',
+  billingEmail: '',
   billingEmails: computed('billingEmail', function () {
     return (this.billingEmail || '').split(',');
   }),
@@ -116,44 +110,40 @@ export default Component.extend({
     return !this.creditCardInfo.lastDigits;
   }),
 
-  getPriceInfo: computed('selectedPlan', function() {
+  getPriceInfo: computed('selectedPlan', function () {
     let plan = this.selectedPlan;
-    console.log(plan);
-    return '$' + plan.startingPrice + (plan.isAnnual ? ' annualy' :' monthly');
+    return `$${plan.startingPrice} ${(plan.isAnnual ? ' annualy' : ' monthly')}`;
   }),
 
-  getActivateButtonText: computed('selectedPlan', function() {
-    let text = "Verify Your Account";
+  getActivateButtonText: computed('selectedPlan', function () {
+    let text = 'Verify Your Account';
     let plan = this.selectedPlan;
     if (plan && !plan.isTrial) {
-      text = "Activate " + plan.name;
+      text = `Activate ${plan.name}`;
     }
     return text;
   }),
 
-  canActivate: computed('country','zipCode','address','creditCardOwner','city', 'stripeElement', 'billingEmail', function() {
+  canActivate: computed('country', 'zipCode', 'address', 'creditCardOwner', 'city', 'stripeElement', 'billingEmail', function () {
     return this.billingEmail && this.country && this.zipCode && this.address && this.creditCardOwner && this.stripeElement && this.city;
   }),
-
- 
 
   createSubscription: task(function* () {
     this.metrics.trackEvent({
       action: 'Pay Button Clicked',
       category: 'Subscription',
     });
-    const { stripeElement, account, selectedPlan } = this;
+    const { stripeElement, selectedPlan } = this;
     try {
-      this.set('subscription',this.newV2Subscription());
-      
+      this.set('subscription', this.newV2Subscription());
       const { token } = yield this.stripe.createStripeToken.perform(stripeElement);
-      
       if (token) {
-      
+        const organizationId = null;
         const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
+        const org = organizationId && this.store.peekRecord('organization', organizationId);
 
         this.subscription.setProperties({
-          organization: null,
+          organization: org,
           plan: plan,
           v1SubscriptionId: this.v1SubscriptionId,
         });
@@ -187,7 +177,7 @@ export default Component.extend({
           this.router.transitionTo('/account/repositories');
         });
       }
-      this.flashes.success("Your account has been successfully activated");
+      this.flashes.success('Your account has been successfully activated');
     } catch (error) {
       this.handleError();
     }
@@ -197,11 +187,21 @@ export default Component.extend({
     const plan = this.store.createRecord('v2-plan-config');
     const billingInfo = this.store.createRecord('v2-billing-info');
     const creditCardInfo = this.store.createRecord('v2-credit-card-info');
+    let ownerName = this.creditCardOwner.trim();
+    let idx = ownerName.lastIndexOf(' ');
+    if (idx > 0) {
+      this.firstName = ownerName.substr(0, idx);
+      this.lastName = ownerName.substr(idx + 1);
+    } else {
+      this.firstName = '';
+      this.lastName = ownerName;
+    }
     billingInfo.setProperties({
       firstName: this.firstName,
       lastName: this.lastName,
       address: this.address,
       city: this.city,
+      company: this.company,
       zipCode: this.zipCode,
       country: this.country,
       state: this.state,
@@ -251,7 +251,7 @@ export default Component.extend({
       this.hasLocalRegistration = false;
     },
     togglePlanDetails() {
-     this.set('planDetailsVisible', !this.planDetailsVisible);
+      this.set('planDetailsVisible', !this.planDetailsVisible);
     }
 
   }

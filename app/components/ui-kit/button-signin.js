@@ -54,10 +54,9 @@ export default Component.extend({
         this.auth.switchAccount(this.account.id, this.auth.redirectUrl || '/');
       } else {
         this.set('isLoading', true);
-        if(this.isSignup) {
+        if (this.isSignup) {
           this.auth.signUp(this.provider);
-        }
-        else {
+        } else {
           this.auth.signInWith(this.provider);
         }
       }

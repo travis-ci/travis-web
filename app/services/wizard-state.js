@@ -11,15 +11,13 @@ export default Service.extend({
 
   currentState: reads('fetch.lastSuccessful.value'),
 
-  state: computed('currentState', function() {
-    console.log("STATE!!");
-    console.log(this.currentState.value);
+  state: computed('currentState', function () {
     return parseInt(this.currentState.value);
   }),
 
-  isEnabled: computed('currentState', function() {
+  isEnabled: computed('currentState', function () {
     let val = parseInt(this.currentState.value);
-    return val>=1 && val<=3;
+    return val >= 1 && val <= 3;
   }),
 
   update: task(function* (val) {

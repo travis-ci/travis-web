@@ -1,4 +1,3 @@
-import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import SimpleLayoutRoute from 'travis/routes/simple-layout';
 
@@ -12,13 +11,11 @@ export default SimpleLayoutRoute.extend({
   wizardStateService: service('wizard-state'),
 
   activate() {
-    console.log("activate");
     this.storage.wizardStep = 1;
     this.wizardStateService.update.perform(1);
   },
 
   deactivate() {
-    console.log("deactivate");
     let step = this.storage.wizardStep;
     if (step == 2 || step == 3) this.transitionTo('/account/repositories');
   },

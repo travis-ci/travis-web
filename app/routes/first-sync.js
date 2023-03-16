@@ -22,9 +22,12 @@ export default SimpleLayoutRoute.extend({
   },
 
   getTransition() {
-    if(this.user.hasV2Subscription || this.user.subscription || this.user.accountSubscriptions.length > 0 || this.user.accountv2Subscriptions.length > 0) return 'account';
-    if(this.storage.wizardStep < 2 && !this.user.colaborator) return 'account_activation';
-    if(this.storage.wizardStep >=2 && this.storage.wizardStep <=3) return 'account/repositories';
+    if (this.user.hasV2Subscription ||
+        this.user.subscription ||
+        this.user.accountSubscriptions.length > 0 ||
+        this.user.accountv2Subscriptions.length > 0) return 'account';
+    if (this.storage.wizardStep < 2 && !this.user.colaborator) return 'account_activation';
+    if (this.storage.wizardStep >= 2 && this.storage.wizardStep <= 3) return 'account/repositories';
     return 'account';
   },
 

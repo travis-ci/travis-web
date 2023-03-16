@@ -22,7 +22,7 @@ export default Component.extend({
       return this.user.sync(this.isOrganization);
     },
     updateState() {
-        this.isSyncDisabled();
+      this.isSyncDisabled();
     }
   }
 });
