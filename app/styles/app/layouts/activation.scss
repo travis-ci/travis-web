@@ -75,10 +75,18 @@
     width: 100%;
     margin-bottom: 14px;
   }
+  .travis-form {
+    .travis-form__field {
+
+      .travis-form__label {
+        font-size: 14px;
+      }
+    }
+  }
 
   .cc-form-elem {
     width: 100%;
-    margin-bottom: 44px;
+    margin-bottom: 52px;
   }
 
   .framed-form {

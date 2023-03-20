@@ -123,6 +123,10 @@ $nav-line-height: 35px;
   }
 }
 
+.navigation-anchor-disabled {
+  color: #a7a7a7 !important;
+}
+
 .deployment-version {
   border: 1px solid $cement-grey;
   font-size: 50%;

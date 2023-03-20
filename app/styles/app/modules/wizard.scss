@@ -33,9 +33,31 @@
   .wizard-content {
     margin: 18px;
     margin-top: 14px;
+    color: $asphalt-grey;
   }
 
   .wizard-button {
+    margin-right: 18px;
     margin-bottom: 14px;
+    background-color: $oxide-blue;
+  }
+
+  .wizard-button-white {
+    margin-bottom: 14px;
+  }
+
+
+  .wizard-page-number {
+    margin-left: 18px;
+  }
+
+}
+
+#travis-nav {
+
+  .ember-popover {
+    border: none;
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.15);
+    z-index: 50;
   }
 }

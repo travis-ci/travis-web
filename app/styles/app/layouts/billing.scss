@@ -687,6 +687,15 @@
     }
   }
 
+  .payment-details-header {
+    color: $cement-grey;
+  }
+
+  .no-invoices {
+    font-size: 16px;
+    color: $cement-grey;
+  }
+
   .payment-details-label {
     color: $cement-grey;
     display: block;

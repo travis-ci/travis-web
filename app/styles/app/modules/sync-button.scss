@@ -54,6 +54,27 @@
     vertical-align: middle;
     margin-right: 0.5em;
   }
+
+  .ember-popover {
+    color: white;
+    background-color: $asphalt-grey;
+    border-radius: 0;
+    border: none;
+    padding: 0 0 0 0;
+  }
+  .ember-popover[x-placement^="top"] .ember-popover-arrow {
+    border-top-color: $asphalt-grey;
+    margin-left: -5px;
+    bottom: -13px;
+  }
+  .ember-popover-arrow {
+    border: 15px solid transparent;
+  }
+  .ember-popover-inner {
+    padding: 0px;
+    margin: 2px 10px 2px 10px;
+  }
+
 }
 
 .sync-last-container {

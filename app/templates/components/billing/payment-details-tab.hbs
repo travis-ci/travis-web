@@ -1,6 +1,6 @@
 <div class='billing-checkout' data-test-payment-form='true'>
   {{#if this.subscriptionLoaded}}
-  <p>
+  <p class="payment-details-header">
     You can update your payment method details here. Your credit card will be validated
     by placing test fee - $1, which will be returned to you within a week.
   </p>
@@ -193,7 +193,7 @@
           </form.field>
         </div>
       {{/if}}
-  
+
       <div class='billing-checkout__payment'>
         {{#if this.isLoading}}
           <LoadingIndicator/>
@@ -207,24 +207,27 @@
     </TravisForm>
   </div>
 
-  {{#if this.invoices}}
-    {{#if this.hasV2Subscription}}
-      {{#if this.v2subscription.isNotManual}}
+  {{#if this.isLoading}}
+    {{#if this.invoices}}
+      {{#if this.hasV2Subscription}}
+        {{#if this.v2subscription.isNotManual}}
+          <Billing::Invoices
+            @account={{this.account}}
+            @invoices={{this.invoices}}
+            @subscription={{this.v2subscription}}
+          />
+        {{/if}}
+      {{else}}
         <Billing::Invoices
           @account={{this.account}}
           @invoices={{this.invoices}}
-          @subscription={{this.v2subscription}}
+          @subscription={{this.subscription}}
         />
       {{/if}}
-    {{else}}
-      <Billing::Invoices
-        @account={{this.account}}
-        @invoices={{this.invoices}}
-        @subscription={{this.subscription}}
-      />
     {{/if}}
+  {{else}}
+  <p class="no-invoices">You do not have any invoices yet</p>
   {{/if}}
-
   {{else}}
   <LoadingIndicator />
   {{/if}}

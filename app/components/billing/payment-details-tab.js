@@ -156,9 +156,10 @@ export default Component.extend({
     },
     modifyNameOnCard(value) {
       this.set('nameOnCard', value);
+      let ownerName = this.nameOnCard.trim();
       this.billingInfo.setProperties({
-        firstName: this.nameOnCard.split(' ')[0],
-        lastName: this.nameOnCard.split(' ')[1]
+        firstName: ownerName.split(' ')[0],
+        lastName: ownerName.split(' ')[1]
       });
     },
     onCaptchaResolved(reCaptchaResponse) {

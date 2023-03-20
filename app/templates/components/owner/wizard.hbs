@@ -14,7 +14,7 @@
     </span><br/>
     </div>
     <p class="wizard-content">Here you can find some of our <a href={{this.travisBasicLanguageExamplesUrl}}  target="_blank"> basic language examples</a></p>
-     <div class="float-left">
+     <div class="float-left wizard-page-number">
       1 of 2
     </div>
     <button onclick={{action 'nextStep' }} class='button--green float-right wizard-button'>
@@ -31,17 +31,19 @@
     </span><br/>
     <span class="nowrap">
     them to the repository
-    </span><br/>
+    </span><br/><br/>
+    <span class="nowrap">
+    Want to learn more? <a href="{{this.travisDocsUrl}}" target="_blank"> Learn up on our docs</a>
+    </span>
     </div>
-     <p>Want to learn more? <a href="{{this.travisDocsUrl}}" target="_blank"> Learn up on our docs</a></p>
-     <div class="float-left">
+     <div class="float-left wizard-page-number">
       2 of 2
     </div>
-     <div class="float-right wizard-button">
-       <button onclick={{action 'previousStep' }} class='button--white' >
+     <div class="float-right">
+       <button onclick={{action 'previousStep' }} class='button--white wizard-button-white' >
         Back
        </button>
-       <button onclick={{action 'nextStep' }} class='button--green'>
+       <button onclick={{action 'nextStep' }} class='button--green wizard-button'>
         Got It
        </button>
       </div>

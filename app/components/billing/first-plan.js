@@ -29,8 +29,8 @@ export default Component.extend({
   defaultPlans: filterBy('availablePlans', 'trialPlan'),
   defaultPlanId: reads('defaultPlans.firstObject.id'),
   showCancelButton: false,
-  travisTermsUrl: '/terms',
-  travisPolicyUrl: '/policy',
+  travisTermsUrl: 'https://www.ideracorp.com/Legal/PrivacyShield',
+  travisPolicyUrl: 'https://www.ideracorp.com/Legal/PrivacyShield',
   subscription: null,
   vatId: null,
 
