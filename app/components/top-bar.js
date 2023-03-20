@@ -29,7 +29,10 @@ export default Component.extend(InViewportMixin, {
 
   user: reads('auth.currentUser'),
   isUnconfirmed: computed('user.confirmedAt', function () {
-    if (!this.user || (this.storage.wizardStep > 0 && this.storage.wizardStep <= 1) || this.router.currentRoute == 'first_sync' || this.router.currentRoute == 'github_apps_installation')
+    if (!this.user ||
+        (this.storage.wizardStep > 0 && this.storage.wizardStep <= 1) ||
+        this.router.currentRoute == 'first_sync' ||
+        this.router.currentRoute == 'github_apps_installation')
       return false;
     return !this.user.confirmedAt;
   }),

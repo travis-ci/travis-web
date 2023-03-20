@@ -207,8 +207,8 @@
     </TravisForm>
   </div>
 
-  {{#if this.isLoading}}
     {{#if this.invoices}}
+
       {{#if this.hasV2Subscription}}
         {{#if this.v2subscription.isNotManual}}
           <Billing::Invoices
@@ -224,11 +224,11 @@
           @subscription={{this.subscription}}
         />
       {{/if}}
+
+    {{else}}
+      <p class="no-invoices">You do not have any invoices yet</p>
     {{/if}}
   {{else}}
-  <p class="no-invoices">You do not have any invoices yet</p>
-  {{/if}}
-  {{else}}
-  <LoadingIndicator />
+    <LoadingIndicator />
   {{/if}}
 </div>
