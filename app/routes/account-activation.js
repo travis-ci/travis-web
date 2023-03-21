@@ -8,16 +8,19 @@ export default SimpleLayoutRoute.extend({
   features: service(),
   stripe: service(),
   storage: service(),
+  store: service(),
   wizardStateService: service('wizard-state'),
 
   activate() {
-    this.storage.wizardStep = 1;
-    this.wizardStateService.update.perform(1);
+    if( this.storage.wizardStep < 1) {
+      this.storage.wizardStep = 1;
+      this.wizardStateService.update.perform(1);
+    }
   },
 
   deactivate() {
     let step = this.storage.wizardStep;
-    if (step == 2 || step == 3) this.transitionTo('/account/repositories');
+   // if (step == 2 || step == 3) this.transitionTo('/account/repositories');
   },
 
   title: 'Travis CI - Select Plan',
