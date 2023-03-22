@@ -149,7 +149,7 @@ export default Component.extend({
       this.set('showPlansSelector', false);
       this.set('isProcessCompleted', true);
     } catch (error) {
-      this.handleError();
+      this.handleError(error);
     }
   }).drop(),
 
@@ -173,7 +173,8 @@ export default Component.extend({
         if (!this.subscription.id) {
           subscription.creditCardInfo.setProperties({
             token: token.id,
-            lastDigits: token.card.last4
+            lastDigits: token.card.last4,
+            fingerprint: token.card.fingerprint
           });
           subscription.setProperties({
             coupon: this.couponId
@@ -197,7 +198,7 @@ export default Component.extend({
         this.set('isProcessCompleted', true);
       }
     } catch (error) {
-      this.handleError();
+      this.handleError(error);
     }
   }).drop(),
 
@@ -207,10 +208,16 @@ export default Component.extend({
     } catch {}
   }).drop(),
 
-  handleError() {
+  handleError(error) {
+    let errorReason = '';
+    const hasErrorMessage = error && error.errors && error.errors.length > 0;
+    if (hasErrorMessage) {
+      errorReason = ` Reason: ${error.errors[0].detail}`;
+    }
+
     let message = this.get('selectedPlan.isTrial')
-      ? 'Credit card verification failed, please try again or use a different card.'
-      : 'An error occurred when creating your subscription. Please try again.';
+      ? `Credit card verification failed, please try again or use a different card.${errorReason}`
+      : `An error occurred when creating your subscription. Please try again.${errorReason}`;
     this.flashes.error(message);
   },
 

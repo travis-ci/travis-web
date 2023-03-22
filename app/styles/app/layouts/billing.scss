@@ -454,8 +454,14 @@
     }
   }
 
+  .travis-modal-overlay {
+    padding: 0 50px;
+  }
+
   .travis-modal {
     .billing-select-plan {
+      max-height: 600px;
+      overflow: scroll;
       h3 {
         font-size: 48px;
         font-weight: 300;
