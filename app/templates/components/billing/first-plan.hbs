@@ -100,13 +100,49 @@
   </div>
   {{/if}}
   {{#if this.showVatField}}
-  <div class='form-elem-half-width inline-form-elem billing-optional-field'>
+  <div class='form-elem-half-width inline-form-elem billing-optional-field form-vatid'>
     <form.field @label='Vat Id' @required={{this.isVatMandatory}} @showRequiredMark={{this.isVatMandatory}}
       @value={{this.vatId}} @showValidationStatusIcons={{false}} @onChange={{action (mut this.vatId)}} as |Field|>
       <Field.input @name='vat' />
     </form.field>
   </div>
   {{/if}}
+  <span data-test-coupon-code='true' class="form-label">coupon code</span>
+    <div class="pb-3">
+      <TravisForm @onSubmit={{perform this.validateCoupon}} as |form|>
+        <div data-test-coupon-form='true' class="coupon-validation flex flex--left flex-v-center">
+          <form.field
+            class="coupon-validation__input"
+            @value={{this.couponId}}
+            @showValidationStatusIcons={{false}}
+            @onFocus={{action 'handleCouponFocus'}}
+            @onChange={{action (mut this.couponId)}}
+            as |Field|
+          >
+            <Field.input @name='couponId' @placeholder='Coupon code'/>
+          </form.field>
+          <div class="coupon-validation__validate-button-wrapper {{if this.validateCoupon.isRunning 'coupon-loading'}}">
+            {{#if this.validateCoupon.isRunning}}
+              <LoadingIndicator/>
+            {{else if this.isValidCoupon}}
+              <p data-test-valid-coupon class="coupon-validation__valid-coupon">
+                <SvgImage @name="icon-passed" @class="icon icon-passed" />
+                Coupon applied
+              </p>
+            {{else if this.couponHasError}}
+              <p data-test-invalid-coupon="true" class="coupon-validation__invalid-coupon">
+                <SvgImage @name="form-error-icon" @class="icon icon-warn" />
+                Coupon invalid
+              </p>
+            {{else}}
+              <button class='button--white coupon-validation__validate-button' {{on 'click' form.submit}} data-test-coupon-button='true'>
+                Validate coupon
+              </button>
+            {{/if}}
+          </div>
+        </div>
+      </TravisForm>
+    </div>
   <div class="framed-form framed-form-plan flex flex--col-2 flex--md-row">
       <div class='inline-form-elem full-width margin-left-s'>
         <h3 class="small-title"> {{this.selectedPlan.name}} </h3>

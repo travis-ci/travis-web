@@ -236,9 +236,30 @@ export default Component.extend({
     this.flashes.error(message);
   },
 
+  validateCoupon: task(function* () {
+    return yield this.store.findRecord('coupon', this.couponId, {
+      reload: true,
+    });
+  }).drop(),
+
+  coupon: reads('validateCoupon.last.value'),
+  couponError: reads('validateCoupon.last.error'),
+  isValidCoupon: reads('coupon.valid'),
+  couponHasError: computed('couponError', {
+    get() {
+      return !!this.couponError;
+    },
+    set(key, value) {
+      return value;
+    }
+  }),
+
   actions: {
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
+    },
+    handleCouponFocus() {
+      this.set('couponHasError', false);
     },
 
     clearCreditCardData() {

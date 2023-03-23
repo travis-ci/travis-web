@@ -29,6 +29,23 @@
     color: black;
   }
 
+  .form-vatid {
+    margin-bottom: 8px;
+  }
+
+  .form-label {
+    color: $cement-grey;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 5px;
+
+    .required {
+      color: $brick-red;
+    }
+  }
+
   .plan-desc {
     font-size: 15px;
     margin-bottom: 12px;
@@ -217,5 +234,59 @@
   .icon-desc {
     margin-bottom: 3px;
     @include colorSVG($oxide-blue);
+  }
+
+  .coupon-validation {
+
+    height: 38px;
+    white-space: nowrap;
+
+    &__input {
+      flex-basis: 85%;
+    }
+
+    &__validate-button-wrapper {
+      flex-basis: 20%;
+      font-size: 14px;
+      margin-left: 10px;
+      align-items: center;
+      display: flex;
+      justify-content: flex-end;
+      height: 38px;
+    }
+
+    .coupon-loading {
+      justify-content: center;
+    }
+
+    &__validate-button {
+      padding: 11px;
+    }
+
+    &__valid-coupon {
+      color: $ansi-green;
+
+      .icon-passed {
+        @include colorSVG($ansi-green);
+
+        color: inherit;
+      }
+    }
+
+    &__invalid-coupon {
+      color:  $ansi-red;
+
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .icon-warn {
+        @include colorSVG($ansi-red);
+
+        color: inherit;
+      }
+    }
+
   }
 }
