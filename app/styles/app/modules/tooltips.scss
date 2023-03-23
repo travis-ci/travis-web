@@ -26,22 +26,6 @@ $tooltip-color: $asphalt-grey;
 
 }
 
-.white-tooltip {
-  background-color: white;
-  color: #666666;
-  font-size: 18px;
-  font-weight: 400;
-  font-style: normal;
-  text-decoration: none;
-  border: 1px solid #666666;
-  padding-right: 25px;
-  padding-left: 25px;
-  margin-right:100px;
-  .ember-tooltip-arrow {
-    display: none;
-  }
-}
-
 body > .ember-tooltip {
   // Tweaks “View branch on GitHub” in components:my-build
   top: 6px !important;

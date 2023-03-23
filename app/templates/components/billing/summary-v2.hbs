@@ -24,56 +24,18 @@
         {{/if}}
       </span>
     {{/if}}
-    <div class="flex flex--space-between flex--wrap plan-overview__details">
+    <div class="flex flex--space-between flex--wrap plan-overview__details plan-grey">
       <section>
-        {{#if this.subscription.isManual}}
-          <div class="info-message" data-test-plan-manual-message='true'>
-            You are on <b>Manual Plan</b>, you have
-            {{#if this.subscription.plan.isUnlimitedUsers}}
-              unlimited
-            {{else}}
-              {{this.subscription.addonUsage.user.totalCredits}}
-            {{/if}}
-            users,
-            {{#if this.subscription.plan.hasCreditAddons}}
-                {{this.subscription.addonUsage.private.totalCredits}} private credits
-            {{/if}}
-            {{#if (and this.subscription.plan.hasCreditAddons this.subscription.plan.hasOSSCreditAddons)}}
-            ,
-            {{/if}}
-            {{#if this.subscription.plan.hasOSSCreditAddons}}
-                {{this.subscription.addonUsage.public.totalCredits}} public credits
-            {{/if}}
-            per month with access
-            to Linux, Windows, macOs and FreeBSD builds on the standard infrastructure size.
-          </div>
-        {{/if}}
         <div class='plan'>
           <div>
-            <span class="payment-details-label">Current plan:</span>
-            <p class='plan-name flex flex--v-center' data-test-plan-name='true'>
-              {{#if this.subscription.isManual}}
-                Manual plan
-                {{#if this.subscription.isSubscribed}}
-                  <span class="badge green square" data-test-active-status='true'>
-                    active
-                  </span>
-                {{else if this.subscription.isExpired}}
-                  <span class="badge red square" data-test-expired-status='true'>
-                    expired
-                  </span>
-                {{else}}
-                  <span class="badge grey square grey-badge" data-test-grey-status='true'>
-                    {{this.subscription.status}}
-                  </span>
-                {{/if}}
-              {{else}}
+            <span class="payment-details-label plan-label-color">Current plan:</span>
+            <p class='plan-name flex flex--v-center' data-test-plan-name='true'>           
                 {{#if this.subscription.plan}}
                   {{this.subscription.plan.name}}
                 {{else}}
                   Unknown plan
                 {{/if}}
-                {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                
                   {{#if this.subscription.isSubscribed}}
                     <span class="badge green square" data-test-active-status='true'>
                       active
@@ -86,8 +48,21 @@
                     <span class="badge grey square grey-badge" data-test-grey-status='true'>
                       {{this.subscription.status}}
                     </span>
-                  {{/if}}    
-                {{else if this.subscription.recurringAddon}}
+                  {{/if}}
+                  <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
+                    {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
+                  >
+                    {{#if this.isSubscribed}}
+                      Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                    {{else if this.isIncomplete}}
+                      Incomplete
+                    {{else if (and this.isComplete this.isCanceled)}}
+                      Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                    {{else if (and this.isComplete this.isExpired)}}
+                      Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                    {{/if}}
+                  </span>
+                {{#if this.subscription.recurringAddon}}
                   {{#if this.isCanceled}}
                     <span class="badge grey square grey-badge" data-test-expired-status='true'>
                       canceled
@@ -104,18 +79,33 @@
                     <span class="badge grey square grey-badge" data-test-grey-status='true'>
                       {{this.subscription.recurringAddon.current_usage.status}}
                     </span>
-                  {{/if}} 
+                  {{/if}}
+                  <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
+                    {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
+                  >
+                    {{#if (and this.isComplete this.isCanceled)}}
+                      Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                    {{else if (eq this.subscription.recurringAddon.current_usage.status 'subscribed')}}
+                      Valid until {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
+                    {{else if (eq this.subscription.recurringAddon.current_usage.status 'expired')}}
+                      Expired {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
+                    {{/if}}
+                  </span>
                 {{/if}}
-              {{/if}}
+             
             </p>
+            {{#if this.subscription.isManual}}
+		<div class='plan-overview__description' data-test-plan-description>
+                <p data-test-plan-manual-message>Manual plan</p>
+		</div>
+            {{/if}}
           </div>
         </div>
       </section>
-      <!--
-      {{#if (and this.subscription.isNotManual (not this.subscription.plan.isTrial))}}
-        <section>
-          <div class='selected-plan__price'>
-            <h6 class='selected-plan__price--total' data-test-plan-total='true'>
+      {{#if this.subscription.isManual }}
+        <section class='plan-price-container-manual-section'>
+          <div class='selected-plan__price plan-price-container-manual'>
+            <h6 class='selected-plan__price--total plan-label-color' data-test-plan-total='true'>
               Total:
             </h6>
             {{#if this.subscription.plan }}
@@ -135,27 +125,11 @@
           </div>
         </section>
       {{/if}}
-      -->
-       {{#if this.subscription.plan.isTrial}}
-        <section>
-          <div class='selected-plan__price'>
-            <h6 class='selected-plan__price--total' data-test-plan-total='true'>
-              Total:
-            </h6>
-            {{#if this.subscription.plan }}
-              {{#if (or this.subscription.plan.isFree this.subscription.plan.isTrial)}}
-                <p class='selected-plan__price--large' data-test-price>
-                  Free
-                </p>
-              {{/if}}
-            {{/if}}
-          </div>
-        </section>
-      {{/if}}
     
     </div>
   {{/if}}
-      <div class="plan-button-container">
+    {{#if this.subscription.isNotManual }}
+      <div class="plan-button-container {{if this.showPlanInfo 'plan-grey plan-grey-buttons'}}">
         <div class="float-left plan-buttons">
           {{#if this.subscription.isGithub}}
             <ManageSubscriptionButton
@@ -200,9 +174,12 @@
               {{/if}}
             </span>
           </div>
+
         </div>  
+      {{/if}}
+    </div>
 </div>
-</div>
+
 <hr />
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
   {{#if this.subscription.hasUserLicenseAddons}}

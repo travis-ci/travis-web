@@ -180,14 +180,13 @@ export default Component.extend({
       this.flashes.success('Your account has been successfully activated');
     } catch (error) {
       yield this.accounts.fetchV2Subscriptions.perform().then(() => {
-        if( this.accounts.user.subscription || this.accounts.user.v2subscription) {
+        if (this.accounts.user.subscription || this.accounts.user.v2subscription) {
           this.storage.clearBillingData();
           this.storage.clearSelectedPlanId();
           this.storage.wizardStep = 2;
           this.wizard.update.perform(2);
           this.router.transitionTo('account.repositories');
-        }
-        else {
+        } else {
           this.handleError();
         }
       });

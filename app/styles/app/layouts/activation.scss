@@ -12,7 +12,7 @@
     }
     .layout-activation-section__inner {
 
-      width: 440px;
+      width: 473px;
       max-width: $max-width;
       margin: 0 auto;
       padding: $column-gutter/2;
@@ -26,7 +26,7 @@
     font-weight: 600;
     margin-bottom: 12px;
     margin-top: 10px;
-    color: $asphalt-grey;
+    color: black;
   }
 
   .plan-desc {
@@ -45,12 +45,20 @@
     color: $asphalt-grey;
   }
 
+  .billing-plans__box-v2--desc {
+        color: $cement-grey;
+        font-weight: 500;
+        font-size: 13px;
+        margin: 5px 0 12px 0;
+        white-space: nowrap;
+  }
+
 
   .plan-change {
     font-size: 16px;
     margin:0px;
     padding: 0px;
-    top: 50%;
+    top: 50px;
     right: 0%;
     text-align: right;
     position: relative;
@@ -58,8 +66,8 @@
   }
 
   #first-plan-charge-info {
-    margin-top: 14px;
-    margin-bottom: 44px;
+    margin-top: 0px;
+    margin-bottom: 24px;
     font-size: 12px;
   }
   #first-plan-activate-button {
@@ -68,25 +76,62 @@
 
   .not-required-form-elem {
     width: 100%;
-    margin-bottom: 34px;
+    margin-bottom: 10px;
   }
 
   .form-elem {
     width: 100%;
-    margin-bottom: 14px;
+    margin-bottom: -8px;
+  }
+
+  .form-elem-select {
+    margin-top: 5px;
   }
   .travis-form {
     .travis-form__field {
 
+    &.travis-form__field--error {
+      margin-bottom: 12px;
+    }
+
+    .travis-form__error-message {
+      margin-top: 0px;
+    }
+
       .travis-form__label {
         font-size: 14px;
+
+        .travis-form__required-mark {
+          color: $brick-red;
+          margin-bottom: 14px;
+        }
       }
+
+      .travis-form__field-checkbox {
+      }
+
+      &--checked {
+        .travis-form__field-checkbox-wrapper {
+          .travis-form__field-checkbox-image--checked {
+            opacity: 1;
+          }
+        }
+      }
+
+      &--unchecked {
+        .travis-form__field-checkbox-wrapper {
+          .travis-form__field-checkbox-image--unchecked {
+            opacity: 1;
+          }
+        }
+      }
+
     }
   }
 
   .cc-form-elem {
     width: 100%;
-    margin-bottom: 52px;
+    margin-bottom: 42px;
   }
 
   .framed-form {
@@ -98,7 +143,12 @@
   font-size: 14px;
   font-family: $font-family-sans-serif;
   background: white;
-  margin-top: 30px;
+  margin-bottom: 12px;
+  }
+
+  .framed-form-plan {
+    margin-top: 32px;
+    min-height: 80px;
   }
 
   .margin-left-s {
@@ -162,5 +212,10 @@
 
   .StripeElement--webkit-autofill {
     background-color: #FEFDE5 !important;
+  }
+
+  .icon-desc {
+    margin-bottom: 3px;
+    @include colorSVG($oxide-blue);
   }
 }

@@ -127,6 +127,34 @@ $select-multiple-spacing: 5px;
       }
     }
 
+    .travis-form__field-radio {
+
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      cursor: pointer;
+      border: none;
+
+      .travis-form__field-radio-wrapper {
+        display: inline-block;
+        border-radius: 50%;
+        padding: 2px;
+        line-height: 0;
+        background-color: transparent;
+        cursor: pointer;
+        margin-right: 0.5rem;
+
+      }
+
+      &--checked &__radio::before {
+        background-color: $oxide-blue;
+      }
+
+      &--unchecked &__radio::before {
+        background-color: transparent;
+      }
+    }
+
     .travis-form__field-checkbox {
       display: flex;
       justify-content: flex-start;

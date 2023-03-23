@@ -49,6 +49,7 @@
 
   .wizard-page-number {
     margin-left: 18px;
+    color: $asphalt-grey;
   }
 
 }
@@ -58,6 +59,54 @@
   .ember-popover {
     border: none;
     box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.15);
-    z-index: 50;
+    z-index: 51;
+  }
+
+  .ember-popover[x-placement^="top"] .ember-popover-arrow {
+    border-top-color: white;
+    margin-left: -5px;
+    bottom: -39px;
+    z-index:51;
+
+    &:after {
+    border: 15px solid transparent;
+    content: "";
+    margin-left: -15px;
+    display: block;
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    bottom: 5px;
+    z-index: -1;
+    background: transparent;
+    transform: rotate(45deg);
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
+  }
+  }
+
+  .ember-popover[x-placement^="bottom"] .ember-popover-arrow {
+    border-bottom-color: white;
+    margin-left: -5px;
+    top: -40px;
+
+    &:before {
+      border: 10px solid transparent;
+      content: "";
+      margin-left: -10px;
+      display: block;
+      position: absolute;
+      height: 12px;
+      top: 4px;
+      width: 12px;
+      bottom: 5px;
+      z-index: -1;
+      background: transparent;
+      transform: rotate(45deg);
+      box-shadow: -2px -2px 3px rgba(0, 0, 0, 0.15);
+    }
+  }
+  .ember-popover-arrow {
+    z-index: 11;
+    border: 20px solid transparent;
   }
 }

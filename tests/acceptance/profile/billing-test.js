@@ -397,7 +397,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
-    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
   });
 
   test('view billing on an incomplete stripe plan', async function (assert) {
@@ -965,7 +964,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
-    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
   });
 
   test('logs an exception when there is a subscription without a plan and handles unknowns', async function (assert) {
@@ -1297,7 +1295,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
-    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
   });
 
   test('view billing tab when no organization subscription should fill form and transition to payment', async function (assert) {
@@ -1364,7 +1361,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
-    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
   });
 
   test('create subscription with multiple emails', async function (assert) {
@@ -1440,7 +1436,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
-    assert.dom(profilePage.billing.plan.description.scope).hasTextContaining(`${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);
   });
 
   test('view plan with manual subscription', async function (assert) {

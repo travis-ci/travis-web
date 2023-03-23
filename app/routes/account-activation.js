@@ -12,15 +12,15 @@ export default SimpleLayoutRoute.extend({
   wizardStateService: service('wizard-state'),
 
   activate() {
-    if( this.storage.wizardStep < 1) {
+    if (this.storage.wizardStep < 1) {
       this.storage.wizardStep = 1;
       this.wizardStateService.update.perform(1);
     }
   },
 
   deactivate() {
-    let step = this.storage.wizardStep;
-   // if (step == 2 || step == 3) this.transitionTo('/account/repositories');
+    /* let step = this.storage.wizardStep;
+    if (step == 2 || step == 3) this.transitionTo('/account/repositories');*/
   },
 
   title: 'Travis CI - Select Plan',

@@ -464,18 +464,35 @@ section.billing {
     margin-top: -22px;
   }
 
+  .plan-price-container-manual-section {
+    margin-bottom: -38px;
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .plan-price-container-manual {
+    margin-top: auto;
+  }
+
+
   .plan-price-info {
     color: $oxide-blue;
     text-transform: none;
-    font-size: 3.5em;
+    font-size: 50px;
     font-weight: 300;
     margin-bottom: 2px;
   }
 
   .plan-price-label {
+    color: $dim-grey;
     align-self: flex-end;
     margin-bottom: 16px;
     margin-right: 5px;
+  }
+
+  .plan-label-color {
+    color: $dim-grey;
   }
 
   .billing-section-link,
@@ -490,8 +507,7 @@ section.billing {
   }
 
   .plan {
-    background-color: $pebble-grey;
-    margin: 18px;
+    margin: 0px;
     p {
       margin: 0.3em 0 0.3em 0;
       font-weight: 100;
@@ -504,13 +520,23 @@ section.billing {
     }
   }
 
+  .plan-grey {
+    background-color: $pebble-grey;
+    padding: 18px;
+    padding-bottom: 0px;
+  }
+  .plan-grey-buttons {
+    padding-top: 0px;
+    margin-bottom: 0px;
+  }
+
   .plan+h2 {
     margin-bottom: 0;
   }
 
   .plan-button-container {
     width: 100%;
-    height: 66px;
+    height: 52px;
   }
 
   .plan-buttons {

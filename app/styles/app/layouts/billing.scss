@@ -500,7 +500,7 @@
     }
 
     &__buttons {
-      margin-top: 16px;
+      margin-top: 0px;
 
       &--cancel {
         margin-left: 10px;
@@ -689,6 +689,7 @@
 
   .payment-details-header {
     color: $cement-grey;
+    margin-bottom: 30px;
   }
 
   .no-invoices {

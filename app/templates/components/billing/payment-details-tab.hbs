@@ -161,7 +161,7 @@
               @onChange={{action (mut this.billingInfo.hasLocalRegistration) true}}
               as |Field|
             >
-              <Field.checkbox>Yes</Field.checkbox>
+              <Field.radio>Yes</Field.radio>
             </form.field>
           </div>
           <div class='w-1/6 text-right'>
@@ -172,7 +172,7 @@
               @onChange={{action (mut this.billingInfo.hasLocalRegistration) false}}
               as |Field|
             >
-              <Field.checkbox>No</Field.checkbox>
+              <Field.radio>No</Field.radio>
             </form.field>
           </div>
         </div>
@@ -208,7 +208,6 @@
   </div>
 
     {{#if this.invoices}}
-
       {{#if this.hasV2Subscription}}
         {{#if this.v2subscription.isNotManual}}
           <Billing::Invoices
@@ -224,7 +223,6 @@
           @subscription={{this.subscription}}
         />
       {{/if}}
-
     {{else}}
       <p class="no-invoices">You do not have any invoices yet</p>
     {{/if}}

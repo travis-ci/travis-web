@@ -62,7 +62,7 @@
     </div>
   </div>
 
-  <div class='form-elem full-width select' data-billing-form-select>
+  <div class='form-elem full-width select form-elem-select' data-billing-form-select>
     <form.field @label='Country' @value={{this.country}} @required={{true}} class='billing-country'
       @showRequiredMark={{true}} @showValidationStatusIcons={{false}} @onChange={{action 'changeCountry' }} as |Field|>
       <Field.select @placeholder='Select country' @options={{this.countries}} as |country|>
@@ -88,13 +88,13 @@
     <div class='w-1/6 text-right'>
       <form.field @value={{this.hasLocalRegistration}} @showValidationStatusIcons={{false}} @disableFrame={{true}}
         @onChange={{action (mut this.hasLocalRegistration) true}} as |Field|>
-        <Field.checkbox>Yes</Field.checkbox>
+        <Field.radio>Yes</Field.radio>
       </form.field>
     </div>
     <div class='w-1/6 text-right'>
       <form.field @value={{not this.hasLocalRegistration}} @showValidationStatusIcons={{false}} @disableFrame={{true}}
         @onChange={{action (mut this.hasLocalRegistration) false}} as |Field|>
-        <Field.checkbox>No</Field.checkbox>
+        <Field.radio>No</Field.radio>
       </form.field>
     </div>
   </div>
@@ -107,7 +107,7 @@
     </form.field>
   </div>
   {{/if}}
-  <div class="framed-form flex flex--col-2 flex--md-row">
+  <div class="framed-form framed-form-plan flex flex--col-2 flex--md-row">
       <div class='inline-form-elem full-width margin-left-s'>
         <h3 class="small-title"> {{this.selectedPlan.name}} </h3>
         {{#unless this.isTrial}}
@@ -126,8 +126,8 @@
           <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
             <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
           </p>
-          <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
-            <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
+          <p class='billing-plans__box-v2--desc cnowrap' data-test-selected-plan-os="true">
+            <SvgImage @name="stage-passed" @class="icon icon-desc" />Linux, Windows, macOS, FreeBSD
           </p>
           
           {{#if this.selectedPlan.hasOSSCreditAddons}}
@@ -175,7 +175,7 @@
       <b class="font-bold">We will charge you $1 and refund you in 7 days</b>. This is needed to make sure your card
   
       is valid. By clicking on "Verify Your Account" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI
-        Terms</a>,<a href="{{this.travisPolicyUrl}}" class="travis-link"  target="_blank">Privacy
+        Terms and Privacy
         Policy</a>.
 
       Your free Trial Plan ends on August 5,2022. If you cancel your free trial by that date you
@@ -187,8 +187,7 @@
       this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel the subscription. Previous
    
       charges won't be refunded when you cancel unless it's legally required. By clicking
-      on {{this.getActivateButtonText}} you agree o <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI Terms</a>,<a
-        href="{{this.travisPolicyUrl}}" class="travis-link"  target="_blank">Privacy
+      on {{this.getActivateButtonText}} you agree o <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI Terms and Privacy
         Policy</a>.
     {{/if}}
     <br />
