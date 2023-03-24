@@ -46,7 +46,8 @@ export default Controller.extend({
     console.log(isSignup);
     this.initialDelayPromise().then(() => this.fetchPromise().then(() => {
     console.log("transition");
-      this.transitionToRoute(isSignup ? 'first_sync' : 'account');
+      console.log(isSignup);
+      this.transitionToRoute('first_sync');
     }));
   },
 
