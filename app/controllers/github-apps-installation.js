@@ -35,6 +35,13 @@ export default Controller.extend({
       }
       this.storage.set('activeAccountInstallation', null);
     }
+    else {
+      let data = this.storage.get('activeAccountInstallation');
+      if (data) {
+        console.log("data2");
+        isSignup = true;
+      }
+    }
     console.log("issignup");
     console.log(isSignup);
     this.initialDelayPromise().then(() => this.fetchPromise().then(() => {
