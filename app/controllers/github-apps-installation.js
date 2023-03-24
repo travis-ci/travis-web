@@ -31,7 +31,6 @@ export default Controller.extend({
       this.storage.set('activeAccountInstallation', null);
     }
     this.initialDelayPromise().then(() => this.fetchPromise().then(() => {
-
       this.transitionToRoute(isSignup ? 'first_sync' : 'account');
     }));
   },
