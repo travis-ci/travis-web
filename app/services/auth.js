@@ -317,13 +317,20 @@ export default Service.extend({
 
   syncingDidChange: observer('isSyncing', 'currentUser', function () {
     const user = this.currentUser;
+    console.log("SDC");
     if (user && user.get('isSyncing') && !user.get('syncedAt')) {
+
+      console.log("SDC1");
       if (this.storage.get('activeAccountInstallation')) {
         let installation = this.storage.get('activeAccountInstallation');
+        console.log("SDC2");
+        console.log(installation);
         if (installation) {
+        console.log("SDC3 - ghi");
           return this.router.transitionTo('github_apps_installation');
         }
       }
+      console.log("SDC4 - fs");
       return this.router.transitionTo('first_sync');
     }
   }),
