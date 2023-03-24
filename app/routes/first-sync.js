@@ -22,14 +22,28 @@ export default SimpleLayoutRoute.extend({
   },
 
   getTransition() {
+    console.log("GET TR!!!");
+    console.log(this.storage.wizardStep);
+    console.log(this.accounts);
+    console.log("---");
+    console.log(this.user);
+    console.log(this.user.hasV2Subscription);
+    console.log(this.user.subscription);
+    console.log(this.user.collaborator);
     if (this.user.vcsType == 'AssemblaUser') return 'account';
+    console.log("FS1");
     if (this.user.collaborator ||
         this.user.hasV2Subscription ||
         this.user.subscription ||
         this.user.accountSubscriptions.length > 0 ||
         this.user.accountv2Subscriptions.length > 0) return 'account';
+    console.log("FS2");
     if (this.storage.wizardStep < 2 && !this.user.collaborator) return 'account_activation';
+
+    console.log("FS3");
     if (this.storage.wizardStep >= 2 && this.storage.wizardStep <= 3) return 'account/repositories';
+
+    console.log("FS4");
     return 'account';
   },
 
