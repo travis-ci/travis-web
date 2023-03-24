@@ -22,15 +22,23 @@ export default Controller.extend({
 
   startPolling() {
     let isSignup = false;
+    console.log("START POLLING!");
+    console.log(this.installation_id);
     if (!this.installation_id) {
       let data = this.storage.get('activeAccountInstallation');
+      console.log("data1");
       if (data) {
+        console.log("data");
+        console.log(data);
         this.installation_id = data;
         isSignup = true;
       }
       this.storage.set('activeAccountInstallation', null);
     }
+    console.log("issignup");
+    console.log(isSignup);
     this.initialDelayPromise().then(() => this.fetchPromise().then(() => {
+    console.log("transition");
       this.transitionToRoute(isSignup ? 'first_sync' : 'account');
     }));
   },
