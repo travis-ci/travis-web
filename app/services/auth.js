@@ -214,8 +214,12 @@ export default Service.extend({
     if (!user || !token) throw new Error('No login data');
 
     const userData = getProperties(user, USER_FIELDS);
-    this.validateUserData(userData, isBecome);
+    const installationData = getProperties(user, ['installation']);
+    if (installationData && installationData.installation) {
+      storage.set('activeAccountInstallation', installationData.installation);
+    }
 
+    this.validateUserData(userData, isBecome);
     const userRecord = pushUserToStore(this.store, userData);
     userRecord.set('authToken', token);
 
@@ -314,6 +318,12 @@ export default Service.extend({
   syncingDidChange: observer('isSyncing', 'currentUser', function () {
     const user = this.currentUser;
     if (user && user.get('isSyncing') && !user.get('syncedAt')) {
+      if (this.storage.get('activeAccountInstallation')) {
+        let installation = this.storage.get('activeAccountInstallation');
+        if (installation) {
+          return this.router.transitionTo('github_apps_installation');
+        }
+      }
       return this.router.transitionTo('first_sync');
     }
   }),

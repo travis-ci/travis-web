@@ -31,8 +31,8 @@ export default Component.extend(InViewportMixin, {
   isUnconfirmed: computed('user.confirmedAt', function () {
     if (!this.user ||
         (this.storage.wizardStep > 0 && this.storage.wizardStep <= 1) ||
-        this.router.currentRoute == 'first_sync' ||
-        this.router.currentRoute == 'github_apps_installation')
+        this.router.currentRouteName == 'first_sync' ||
+        this.router.currentRouteName == 'github_apps_installation')
       return false;
     return !this.user.confirmedAt;
   }),
