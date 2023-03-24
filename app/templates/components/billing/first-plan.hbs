@@ -198,11 +198,11 @@
         {{/if}}
         {{/unless}}
         {{#if this.isTrial}}
-        <p> Free plan valid one month</p>
+        <p class="plan-desc"> Free plan valid one month</p>
         {{/if}}
       </div>
       <div class='form-elem full-width margin-right-s'>
-        <button class="no-button plan-change  float-right" {{action 'changePlan' }}>
+        <button class="no-button plan-change  float-right {{if this.planDetailsVisible 'plan-change-expanded'}}" {{action 'changePlan' }}>
           Change Plan </button>
       </div>
   </div>
@@ -220,10 +220,10 @@
     {{else}}
   
       You'll be charged {{format-currency this.selectedPlan.startingPrice floor="true"}} {{ if
-      this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel the subscription. Previous
+      this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel your subscription. Previous
    
       charges won't be refunded when you cancel unless it's legally required. By clicking
-      on {{this.getActivateButtonText}} you agree o <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI Terms and Privacy
+      on "{{this.getActivateButtonText}}" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI Terms and Privacy
         Policy</a>.
     {{/if}}
     <br />

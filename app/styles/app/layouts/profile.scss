@@ -465,10 +465,9 @@ section.billing {
   }
 
   .plan-price-container-manual-section {
-    margin-bottom: -38px;
-    display: flex;
-    flex-direction: column;
-
+    margin-bottom: -18px;
+    margin-top: -64px;
+    display: relative;
   }
 
   .plan-price-container-manual {
@@ -514,7 +513,7 @@ section.billing {
     }
 
     h3 {
-      font-size: $font-size-xl;
+      font-size: $font-size-ml;
       font-weight: $font-weight-light;
       margin-bottom: 0.2em;
     }
@@ -539,8 +538,12 @@ section.billing {
     height: 52px;
   }
 
+  .plan-button-container-expanded {
+    margin-top: -20px;
+  }
+
   .plan-buttons {
-    margin-left:18px;
+    margin-left:0px;
    // margin-top:-24px;
  //   margin-bottom:14px;
   }

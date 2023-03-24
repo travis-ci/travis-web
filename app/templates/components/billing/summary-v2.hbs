@@ -1,4 +1,4 @@
-<div class="plan">
+<!--<div class="plan"> -->
 <div class='billing-subscription-section plan-overview'>
   {{#if (not this.account.hasSubscriptionPermissions)}}
     <span class="notice-banner--yellow" data-test-help='true'>
@@ -103,8 +103,8 @@
         </div>
       </section>
       {{#if this.subscription.isManual }}
-        <section class='plan-price-container-manual-section'>
-          <div class='selected-plan__price plan-price-container-manual'>
+        <section class='plan-price-container-manual-section full-width'>
+          <div class='selected-plan__price plan-price-container-manual float-right'>
             <h6 class='selected-plan__price--total plan-label-color' data-test-plan-total='true'>
               Total:
             </h6>
@@ -129,7 +129,7 @@
     </div>
   {{/if}}
     {{#if this.subscription.isNotManual }}
-      <div class="plan-button-container {{if this.showPlanInfo 'plan-grey plan-grey-buttons'}}">
+      <div class="plan-button-container {{if this.showPlanInfo 'plan-grey plan-grey-buttons' 'plan-button-container-expanded'}}">
         <div class="float-left plan-buttons">
           {{#if this.subscription.isGithub}}
             <ManageSubscriptionButton
@@ -177,7 +177,7 @@
 
         </div>  
       {{/if}}
-    </div>
+ <!--   </div> -->
 </div>
 
 <hr />
