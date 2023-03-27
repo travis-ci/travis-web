@@ -29,6 +29,12 @@ export default Controller.extend({
         isSignup = true;
       }
       this.storage.set('activeAccountInstallation', null);
+    } else {
+      let data = this.storage.get('activeAccountInstallation');
+      if (data) {
+        isSignup = true;
+        this.storage.set('activeAccountInstallation', null);
+      }
     }
     this.initialDelayPromise().then(() => this.fetchPromise().then(() => {
       this.transitionToRoute(isSignup ? 'first_sync' : 'account');

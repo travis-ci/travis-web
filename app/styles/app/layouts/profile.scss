@@ -645,6 +645,18 @@ section.billing {
   }
 }
 
+.invoice-issue-banner {
+  padding: 10px;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  width: 100%;
+}
+
+.invoice-header {
+    color: $oxide-blue;
+    margin-bottom: 0;
+  }
+
 section.invoices {
 
   font-size: $font-size-m;
@@ -657,6 +669,11 @@ section.invoices {
   .invoice-table {
     overflow-x: auto;
     padding-bottom: 20px;
+  }
+
+  .invoice-issue-banner {
+    margin-right: 46px;
+    width: 75%;
   }
 
   .invoice-select-year {
@@ -672,13 +689,6 @@ section.invoices {
     margin-right: 10px;
   }
 
-  .invoice-issue-banner {
-    padding: 10px;
-    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.15);
-    margin-right: 46px;
-    border-radius: 5px;
-    width: 75%;
-  }
 
   table {
     width: 100%;
