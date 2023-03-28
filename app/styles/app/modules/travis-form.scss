@@ -146,6 +146,33 @@ $select-multiple-spacing: 5px;
 
       }
 
+      input[type="radio"]::before {
+          border-radius: 50%;
+          content: "";
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          background-color: white;
+          border: 2px solid #FFF;
+          appearance: none;
+          box-shadow: 0 0 0 1px $oxide-blue;
+          top: 6px;
+          left: 3px;
+      }
+      input[type="radio"]:checked::before {
+          border-radius: 50%;
+          content: "";
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          background-color: $oxide-blue;
+          border: 2px solid #FFF;
+          appearance: none;
+          box-shadow: 0 0 0 1px $oxide-blue;
+          top: 6px;
+          left: 3px;
+      }
+
       &--checked &__radio::before {
         background-color: $oxide-blue;
       }
