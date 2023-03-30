@@ -62,11 +62,19 @@
     border: none;
     padding: 0 0 0 0;
   }
+
   .ember-popover[x-placement^="top"] .ember-popover-arrow {
     border-top-color: $asphalt-grey;
     margin-left: -5px;
     bottom: -13px;
   }
+
+  .ember-popover[x-placement^="bottom"] .ember-popover-arrow {
+    border-bottom-color: $asphalt-grey;
+    margin-left: -2px;
+    top: -14px;
+  }
+
   .ember-popover-arrow {
     border: 15px solid transparent;
   }
