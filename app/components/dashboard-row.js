@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { alias, reads } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
-import YAML from 'yamljs';
 import config from 'travis/config/environment';
 
 export default Component.extend({
@@ -44,11 +43,11 @@ export default Component.extend({
   showRequestStatus: task(function* (repoId, requestId) {
     const data = yield this.fetchBuildStatus.perform(repoId, requestId);
     let { result } = data;
-    let [build] = data.builds;
 
     if (result === 'rejected') {
       return this.showFailedRequest(requestId);
     }
+
     return this.showProcessingRequest(requestId);
   }),
 
@@ -81,7 +80,7 @@ export default Component.extend({
   triggerBuild: task(function* () {
     const data = yield this.createBuild.perform();
 
-    if (data) {
+    if (data && data.request) {
       let requestId = data.request.id;
 
       let { triggerBuildRequestDelay } = config.intervals;
