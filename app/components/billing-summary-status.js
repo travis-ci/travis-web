@@ -10,7 +10,6 @@ export default Component.extend({
   hasGithubTrialEnded: and('subscription.isGithub', 'trial.isEnded'),
   noSubscription: empty('subscription'),
   isDefaultEducationView: computed('subscription', 'account.education', 'subscription.plan_name', function () {
-    return this.get('subscription') && this.get('account.education') && this.get('subscription.plan_name') ===
-      'Github Student developer pack 1 concurrent plan' && this.get('subscription').isNotEmpty;
+    return this.get('subscription') &&  this.get('subscription').isNotEmpty && this.get('account.education');
   })
 });

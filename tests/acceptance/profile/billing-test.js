@@ -895,7 +895,8 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing tab on education account', async function (assert) {
-    this.subscription = null;
+    this.subscription.source = 'github';
+    this.subscription.status = 'subscribed';
     this.organization.attrs.education = true;
     this.organization.permissions = { createSubscription: true };
     this.organization.save();
