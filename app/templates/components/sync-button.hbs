@@ -16,7 +16,7 @@
     class="button--transparent"
     type="button"
     disabled={{if this.isSyncDisabled true false}}
-    onclick={{action "sync"}}
+    {{action "sync" bubbles=false}}
   >
 
     <EmberPopover @side='top'>

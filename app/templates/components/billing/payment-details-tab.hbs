@@ -226,7 +226,7 @@
     {{else}}
       <h3 class='invoice-header'>Payment history</h3>
       <div class='flex flex--wrap flex--v-center flex--space-between'>
-        <p class="invoice-issue-banner" data-test-help-text='true'>
+        <p class="invoice-issue-banner invoice-issue-banner-no-invoices" data-test-help-text='true'>
           <SvgImage @name='icon-help' @class='icon-help' />
           Having trouble with your invoices?
           <LinkTo @route='help' @query={{hash anchor='form' billing=true}}>

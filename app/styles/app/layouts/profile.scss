@@ -652,6 +652,10 @@ section.billing {
   width: 100%;
 }
 
+.invoice-issue-banner-no-invoices {
+    @include linkStyle;
+}
+
 .invoice-header {
     color: $oxide-blue;
     margin-bottom: 0;
