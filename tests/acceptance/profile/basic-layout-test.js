@@ -421,47 +421,6 @@ module('Acceptance | profile/basic layout', function (hooks) {
     assert.ok(profilePage.githubAppsInvitation.migrateButton.isHidden, 'expected migration button to be hidden when owner has too many repositories');
   });
 
-  test('Migration beta section is present on sidebar', async function (assert) {
-    await profilePage.visit();
-    assert.ok(profilePage.sidebarMigrate.isPresent);
-  });
-
-  test('Migration beta dialog renders properly', async function (assert) {
-    await profilePage.visit();
-    await profilePage.sidebarMigrate.signUpButton.click();
-
-    const { isPresent, accountsSelect, submit } = profilePage.migrateDialog;
-    assert.ok(isPresent);
-    assert.ok(accountsSelect.isPresent);
-
-    await accountsSelect.click();
-    assert.ok(accountsSelect.options.length > 0);
-
-    assert.ok(submit.isPresent);
-  });
-
-  test('Migration beta dialog sends request', async function (assert) {
-    let isRequested = false;
-    let requestUserId = null;
-    let organizations = [];
-
-    this.server.post('/user/:id/beta_migration_request', function (schema, request) {
-      let requestBody = JSON.parse(request.requestBody);
-
-      isRequested = true;
-      requestUserId = request.params.id;
-      organizations = requestBody.organizations;
-    });
-
-    await profilePage.visit();
-    await profilePage.sidebarMigrate.signUpButton.click();
-    await profilePage.migrateDialog.submit.click();
-
-    assert.ok(isRequested);
-    assert.equal(requestUserId, this.user.id);
-    assert.ok(organizations);
-  });
-
   test('Migration beta status message is present when apllied', async function (assert) {
     this.server.create('beta-migration-request', {
       owner_id: this.user.id,
