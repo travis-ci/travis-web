@@ -125,7 +125,10 @@ export default Component.extend({
   }),
 
   canActivate: computed('country', 'zipCode', 'address', 'creditCardOwner', 'city', 'stripeElement', 'billingEmail', function () {
-    return this.billingEmail && this.country && this.zipCode && this.address && this.creditCardOwner && this.stripeElement && this.city;
+    let valid = (val) => {
+      return !(val === null || val.trim() === "");
+    }
+    return valid(this.billingEmail) && valid(this.country)&& valid(this.zipCode) && valid(this.address) && valid(this.creditCardOwner) && this.stripeElement && valid(this.city);
   }),
 
   createSubscription: task(function* () {
@@ -206,6 +209,15 @@ export default Component.extend({
       this.firstName = '';
       this.lastName = ownerName;
     }
+    let empty = (val) => {
+      return val === null || val.trim() === "";
+    }
+    if ( empty(this.lastName) || empty(this.address) ||
+         empty(this.city) || empty(this.zipCode) ||
+         empty(this.country) || empty(this.billingEmail)
+        ) {
+      throw new Error('Fill all required fields');
+    }
     billingInfo.setProperties({
       firstName: this.firstName,
       lastName: this.lastName,
@@ -275,7 +287,9 @@ export default Component.extend({
 
     },
     subscribe() {
-      this.createSubscription.perform();
+      if  (this.canActivate) {
+        this.createSubscription.perform();
+      }
     },
     changeCountry(country) {
       this.set('country', country);
