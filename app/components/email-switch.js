@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import abstractMethod from 'travis/utils/abstract-method';
 
@@ -8,7 +7,7 @@ export default Component.extend({
   flashes: service(),
 
   tagName: 'button',
-  classNames: ['switch' ,'email-switch'],
+  classNames: ['email-switch'],
   classNameBindings: ['active:active', 'disabled:disabled'],
   attributeBindings: ['aria-checked', 'role', 'type'],
 
