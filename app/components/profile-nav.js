@@ -65,27 +65,41 @@ export default Component.extend({
   isOrganization: reads('model.isOrganization'),
   hasAdminPermissions: reads('model.permissions.admin'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
-  showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
+  showOrganizationSettings: computed('isOrganizationAdmin', 'isProVersion', function () {
+    const forOrganization = !this.isOrganization || this.model.permissions.settings_view;
+    return this.isOrganizationAdmin && this.isProVersion && forOrganization;
+  }),
 
-  showSubscriptionTab: computed('features.enterpriseVersion', 'model.isAssembla', 'model.isUser', function () {
+  showSubscriptionTab: computed('features.enterpriseVersion', 'model.isAssembla', 'model.isUser', 'isOrganization', function () {
+    const forOrganization = !this.isOrganization ||
+      ((this.model.hasSubscription || this.model.hasV2Subscription) && this.model.permissions.plan_view) ||
+      this.model.permissions.plan_create;
     const isAssemblaUser = this.model.isUser && this.model.isAssembla;
     const isEnterprise = this.features.get('enterpriseVersion');
-    return !isEnterprise && !isAssemblaUser && !!billingEndpoint;
+    return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization;
   }),
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin', 'model.isNotGithubOrManual', function () {
+
     if (this.isOrganization) {
-      return this.showSubscriptionTab && this.isOrganizationAdmin && this.model.get('isNotGithubOrManual');
+      const forOrganization = !this.isOrganization || this.model.permissions.billing_view;
+
+      return this.showSubscriptionTab && this.isOrganizationAdmin && this.model.get('isNotGithubOrManual') && !!forOrganization;
     } else {
       return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
     }
   }),
-  showPlanUsageTab: and('showSubscriptionTab', 'model.hasCredits'),
+  showPlanUsageTab: computed('showSubscriptionTab', 'model.hasCredits', function () {
+    const forOrganization = !this.isOrganization || this.model.permissions.plan_usage;
+    return this.showSubscriptionTab && this.model.hasCredits && forOrganization;
+  }),
+
   usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
+    const forOrganization = !this.isOrganization || this.model.permissions.plan_usage;
     const userUsage = this.model.allowance.get('userUsage');
     if (userUsage === undefined) {
       return true;
     }
-    return userUsage;
+    return userUsage && forOrganization;
   }),
 
   wizardStep: reads('storage.wizardStep'),

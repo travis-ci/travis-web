@@ -38,6 +38,7 @@ export default Component.extend({
   userHasPermissionForRepo: computed('repo.id', 'user', 'user.permissions.[]', function () {
     let repo = this.repo;
     let user = this.user;
+
     if (user && repo) {
       return user.hasAccessToRepo(repo);
     }
@@ -68,9 +69,21 @@ export default Component.extend({
 
   showPriority: true,
   showPrioritizeBuildModal: false,
-  canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
-  canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
-  canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
+  canCancel: computed('userHasPullPermissionForRepo', 'item.canCancel', function () {
+    const forRepo = this.repo.permissions.build_cancel;
+
+    return this.item.canCancel && forRepo;
+  }),
+  canRestart: computed('userHasPullPermissionForRepo', 'item.canRestart', function () {
+    const forRepo = this.repo.permissions.build_restart;
+
+    return this.item.canRestart && forRepo;
+  }),
+  canDebug: computed('userHasPushPermissionForRepo', 'item.canDebug', function () {
+    const forRepo = this.repo.permissions.build_debug;
+
+    return this.item.canDebug && forRepo;
+  }),
   isHighPriority: or('item.priority', 'item.build.priority'),
   isNotAlreadyHighPriority: not('isHighPriority'),
   hasPrioritizePermission: or('item.permissions.prioritize', 'item.build.permissions.prioritize'),
