@@ -44,6 +44,38 @@
     </p>
   {{/if}}
 {{/if}}
+
+{{#if this.owner.isOrganization}}
+  <div class="subscription-section">
+    Manage build emails subscription for this organization
+    <span class="button-container">
+      <button
+         class="button--white button--compact unsubscribe-button subscription-button"
+          {{action 'unsubscribe'}}
+          data-test-email-org-unsubscribe-button
+      >
+        {{#if this.owner.unsubscribe.isRunning}}
+          <LoadingIndicator @inline={{true}} />
+        {{else}}
+          <SvgImage @name="icon-email" @width="15px" @class="icon" />
+          Unsubscribe
+        {{/if}}      
+      </button>
+      <button
+         class="button--white button--compact subscribe-button subscription-button"
+          {{action 'subscribe'}}
+          data-test-email-org-subscribe-button
+      >
+        {{#if this.owner.subscribe.isRunning}}
+          <LoadingIndicator @inline={{true}} />
+        {{else}}
+          <SvgImage @name="icon-email" @width="15px" @class="icon" />
+          Subscribe   
+        {{/if}}      
+      </button>
+    </span>
+  </div>
+{{/if}}
 {{#if this.showGitHubApps}}
   {{#if this.skipGitHubAppsInstallation }}
     <div id="github-apps-repositories" data-test-github-app-repos>

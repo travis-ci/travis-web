@@ -155,7 +155,38 @@ export default Component.extend({
     let ownerId = this.get('owner.id');
     let ownerType = this.get('owner.type');
     const installation = this.store.peekAll('installation').findBy('owner.id', ownerId, 'owner.type', ownerType) || null;
-
     return installation !== null;
-  })
+  }),
+
+  reloadRepositories: task(function* () {
+    if (this.hasAppsRepos) {
+      yield this.appsRepos.content.forEach(element => {
+        element.reload();
+      });
+    }
+    if (this.hasLegacyRepos) {
+      yield this.legacyRepos.content.forEach(element => {
+        element.reload();
+      });
+    }
+  }),
+
+  actions: {
+    subscribe() {
+      if (!this.owner.unsubscribe.isRunning) {
+        this.owner.subscribe.perform().then(() => {
+          this.reloadRepositories.perform();
+        });
+      }
+    },
+
+    unsubscribe() {
+      if (!this.owner.subscribe.isRunning) {
+        this.owner.unsubscribe.perform().then(() => {
+          this.reloadRepositories.perform();
+        });
+      }
+    }
+  }
+
 });

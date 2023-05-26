@@ -44,6 +44,12 @@
     Settings
   </a>
 {{/if}}
+<a class="email-switch-container">
+<EmailSwitch class="email-switch"
+  @active={{this.hasEmailSubscription}}
+  @onToggle={{perform this.toggleRepositoryEmailSubscription}}/>
+ <EmberTooltip @text={{this.emailSubscriptionDescription}} @side="right" />
+</a>
 {{#if this.apiError}}
   <div class="repositories-error">
     <p>
