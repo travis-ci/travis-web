@@ -48,6 +48,21 @@ if ENV['TRAVIS_ENTERPRISE']
   ENV['CACHES_ENABLED'] = 'true' unless ENV.has_key?('CACHES_ENABLED')
 end
 
+if ENV['TRAVIS_MAINTENANCE']
+use Rack::Static,
+  :root => File.expand_path('../../maintenance', __FILE__)
+
+run lambda { |env|
+  [
+    200,
+    {
+      'Content-Type'  => 'text/html',
+      'Cache-Control' => 'public, max-age=86400'
+    },
+    File.open(File.expand_path('../../maintenance/index.html', __FILE__), File::RDONLY)
+  ]
+}
+else
 run Travis::Web::App.build(
   userlike:        ENV['USERLIKE'],
   environment:     ENV['RACK_ENV'] || 'development',
@@ -78,3 +93,4 @@ run Travis::Web::App.build(
   stripe_publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
   default_provider: ENV['DEFAULT_PROVIDER']
 )
+end
