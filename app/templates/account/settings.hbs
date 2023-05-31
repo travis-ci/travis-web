@@ -92,47 +92,6 @@
         </div>
       </div>
     </div>
-    {{#if this.showResubscribeList}}
-      <div
-        class="unsubscribed-emails"
-        data-test-email-settings-resubscribe-list
-      >
-        <PaperBlock
-          @title="Email notifications you've unsubscribed from"
-          @elevation={{2}}
-          @padding={{false}}
-        >
-          {{#each this.unsubscribedRepos as |repo|}}
-            <div class="row" data-test-email-settings-resubscribe-item>
-              <div class="name">
-                <LinkTo @route="repo" @models={{array repo.provider repo.urlOwnerName repo.urlName}}>
-                  {{repo.formattedSlug}}
-                </LinkTo>
-              </div>
-              <div class="description"></div>
-              <div class="controls">
-                <button
-                  class="button--white button--compact unsubscribe-button"
-                  onclick={{perform repo.subscribe}}
-                  data-test-email-settings-resubscribe-button
-                >
-                  {{#if repo.subscribe.isRunning}}
-                    <LoadingIndicator @inline={{true}} />
-                  {{else if repo.subscribe.last.error}}
-                    Error! Try again.
-                  {{else}}
-                    <SvgImage @name="icon-email" @width="15px" @class="icon" />
-                    Re-subscribe
-                  {{/if}}
-                </button>
-              </div>
-            </div>
-          {{/each}}
-        </PaperBlock>
-      </div>
-    {{else if this.fetchRepositories.isRunning}}
-      <LoadingIndicator />
-    {{/if}}
   </section>
   {{#if this.features.proVersion}}
     {{#if this.scrollToInsights}}
