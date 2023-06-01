@@ -44,6 +44,7 @@ RUN ( \
 WORKDIR /app
 
 COPY --from=build /app/dist/ /app/dist/
+COPY --from=build /app/maintenance/ /app/maintenance/
 COPY Gemfile* /app/
 COPY waiter /app/waiter
 COPY public /app/public
