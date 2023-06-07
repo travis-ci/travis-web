@@ -146,7 +146,9 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   }),
 
   clearLog() {
-    if (this.isLogAccessed) {
+    let access = this.repo.permissions.log_delete;
+
+    if (this.isLogAccessed && access) {
       return this.log.clear();
     }
   },
@@ -154,12 +156,22 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   canCancel: computed('isFinished', 'state', function () {
     let isFinished = this.isFinished;
     let state = this.state;
+    let access = this.repo.permissions.build_cancel;
     // not(isFinished) is insufficient since it will be true when state is undefined.
-    return !isFinished && !!state;
+    return !isFinished && !!state && access;
   }),
 
-  canRestart: alias('isFinished'),
-  canDebug: and('isFinished', 'repo.private'),
+  canRestart: computed('isFinished', function () {
+    let isFinished = this.isFinished;
+    let access = this.repo.permissions.build_restart;
+    return isFinished &&  access;
+  }),
+  canDebug: computed('isFinished', 'repo.private', function () {
+    let isFinished = this.isFinished;
+    let priv = this.repo.private;
+    let access = this.repo.permissions.build_debug;
+    return isFinished && priv && access;
+  }),
 
   cancel() {
     const url = `/job/${this.id}/cancel`;
@@ -234,7 +246,11 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   }),
 
-  canRemoveLog: not('log.removed'),
+  canRemoveLog: computed('log.removed', function () {
+    let removed = !!this.log.removed;
+    let access = this.repo.permissions.log_delete;
+    return !removed && access;
+  }),
 
   slug: computed('repo.slug', 'number', function () {
     let slug = this.get('repo.slug');

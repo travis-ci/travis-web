@@ -247,7 +247,14 @@ export default Component.extend({
     },
 
     toggleLog() {
-      this.toggleProperty('logIsVisible');
+      let repo = this.get('job.repo');
+      if (repo.permissions.log_view) {
+        this.toggleProperty('logIsVisible');
+      } else {
+        if (this.logIsVisible) {
+          this.toggleProperty('logIsVisible');
+        }
+      }
     },
 
     toggleRemoveLogModal() {

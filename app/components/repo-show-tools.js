@@ -55,7 +55,6 @@ export default Component.extend({
       let pro = this.get('features.proVersion');
       const forRepo = this.repo.permissions.build_create;
 
-
       if (enterprise || pro) {
         return canTriggerBuild && forRepo;
       }
