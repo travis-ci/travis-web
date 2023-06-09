@@ -130,15 +130,11 @@ export default Model.extend(DurationCalculations, {
   }),
 
   canCancel: computed('jobs.@each.canCancel', function () {
-    if (this.repo.permissions && !this.repo.build_cancel) return false;
-
     let jobs = this.jobs;
     return !isEmpty(jobs.filterBy('canCancel'));
   }),
 
   canRestart: computed('isFinished', function () {
-    if (this.repo.permissions && !this.repo.build_restart) return false;
-
     return this.isFinished;
   }),
 
@@ -162,8 +158,6 @@ export default Model.extend(DurationCalculations, {
   }),
 
   canDebug: computed('jobs.[]', 'repo.private', function () {
-    if (this.repo.permissions && !this.repo.build_debug) return false;
-
     let jobs = this.jobs;
     let repoPrivate = this.get('repo.private');
     return jobs.get('length') === 1 && repoPrivate;

@@ -2,7 +2,7 @@
 
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { observer, computed } from '@ember/object';
-import { alias, and, equal, not, reads } from '@ember/object/computed';
+import { alias, and, equal, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isEqual } from '@ember/utils';
 import { getOwner } from '@ember/application';
@@ -146,9 +146,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   }),
 
   clearLog() {
-    let access = this.repo.permissions.log_delete;
-
-    if (this.isLogAccessed && access) {
+    if (this.isLogAccessed) {
       return this.log.clear();
     }
   },
@@ -156,22 +154,14 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   canCancel: computed('isFinished', 'state', function () {
     let isFinished = this.isFinished;
     let state = this.state;
-    let access = this.repo.permissions.build_cancel;
-    // not(isFinished) is insufficient since it will be true when state is undefined.
-    return !isFinished && !!state && access;
+    return !isFinished && !!state;
   }),
 
   canRestart: computed('isFinished', function () {
     let isFinished = this.isFinished;
-    let access = this.repo.permissions.build_restart;
-    return isFinished &&  access;
+    return isFinished;
   }),
-  canDebug: computed('isFinished', 'repo.private', function () {
-    let isFinished = this.isFinished;
-    let priv = this.repo.private;
-    let access = this.repo.permissions.build_debug;
-    return isFinished && priv && access;
-  }),
+  canDebug: and('isFinished', 'repo.private'),
 
   cancel() {
     const url = `/job/${this.id}/cancel`;
@@ -248,8 +238,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   canRemoveLog: computed('log.removed', function () {
     let removed = !!this.log.removed;
-    let access = this.repo.permissions.log_delete;
-    return !removed && access;
+    return !removed;
   }),
 
   slug: computed('repo.slug', 'number', function () {

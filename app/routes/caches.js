@@ -13,7 +13,7 @@ export default TravisRoute.extend({
 
   beforeModel() {
     const repo = this.modelFor('repo');
-    if (repo.permissions.cache_view) {
+    if (!repo.permissions.cache_view) {
       this.transitionTo('repo.index');
       this.flashes.error('Your permissions are insufficient to access this repository\'s cache');
     }

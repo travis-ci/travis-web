@@ -64,37 +64,45 @@ export default Component.extend({
 
   isOrganization: reads('model.isOrganization'),
   hasAdminPermissions: reads('model.permissions.admin'),
+  hasPlanViewPermissions: reads('model.permissions.plan_view'),
+  hasPlanUsagePermissions: reads('model.permissions.plan_usage'),
+  hasPlanCreatePermissions: reads('model.permissions.plan_create'),
+  hasBillingViewPermissions: reads('model.permissions.billing_view'),
+  hasSettingsReadPermissions: reads('model.permissions.settings_read'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
-  showOrganizationSettings: computed('isOrganizationAdmin', 'isProVersion', function () {
-    const forOrganization = !this.isOrganization || this.model.permissions.settings_view;
+  showOrganizationSettings: computed('isOrganizationAdmin', 'isProVersion', 'hasSettingsReadPermissions', function () {
+    const forOrganization = !this.isOrganization || this.hasSettingsReadPermissions;
     return this.isOrganizationAdmin && this.isProVersion && forOrganization;
   }),
 
-  showSubscriptionTab: computed('features.enterpriseVersion', 'model.isAssembla', 'model.isUser', 'isOrganization', function () {
-    const forOrganization = !this.isOrganization ||
-      ((this.model.hasSubscription || this.model.hasV2Subscription) && this.model.permissions.plan_view) ||
-      this.model.permissions.plan_create;
-    const isAssemblaUser = this.model.isUser && this.model.isAssembla;
-    const isEnterprise = this.features.get('enterpriseVersion');
-    return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization;
-  }),
-  showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin', 'model.isNotGithubOrManual', function () {
+  showSubscriptionTab: computed('features.enterpriseVersion', 'hasPlanViewPermissions',
+    'hasPlanCreatePermissions', 'model.isAssembla', 'model.isUser',
+    'isOrganization', function () {
+      const forOrganization = !this.isOrganization ||
+        ((this.model.hasSubscription || this.model.hasV2Subscription) && !!this.hasPlanViewPermissions) ||
+        !!this.hasPlanCreatePermissions;
 
-    if (this.isOrganization) {
-      const forOrganization = !this.isOrganization || this.model.permissions.billing_view;
+      const isAssemblaUser = this.model.isUser && this.model.isAssembla;
+      const isEnterprise = this.features.get('enterpriseVersion');
+      return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization;
+    }),
+  showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
+    'hasBillingViewPermissions', 'model.isNotGithubOrManual', function () {
+      if (this.isOrganization) {
+        const forOrganization = !this.isOrganization || this.hasBillingViewPermissions;
 
-      return this.showSubscriptionTab && this.isOrganizationAdmin && this.model.get('isNotGithubOrManual') && !!forOrganization;
-    } else {
-      return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
-    }
-  }),
-  showPlanUsageTab: computed('showSubscriptionTab', 'model.hasCredits', function () {
-    const forOrganization = !this.isOrganization || this.model.permissions.plan_usage;
+        return this.showSubscriptionTab && this.isOrganizationAdmin && this.model.get('isNotGithubOrManual') && forOrganization;
+      } else {
+        return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
+      }
+    }),
+  showPlanUsageTab: computed('showSubscriptionTab', 'model.hasCredits', 'hasPlanUsagePermissions', function () {
+    const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
     return this.showSubscriptionTab && this.model.hasCredits && forOrganization;
   }),
 
-  usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
-    const forOrganization = !this.isOrganization || this.model.permissions.plan_usage;
+  usersUsage: computed('account.allowance.userUsage', 'addonUsage', 'hasPlanUsagePermissions', function () {
+    const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
     const userUsage = this.model.allowance.get('userUsage');
     if (userUsage === undefined) {
       return true;

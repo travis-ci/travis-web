@@ -220,12 +220,13 @@ export default Component.extend({
     return this.permissions.hasPermission(repo);
   }),
 
-  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', function () {
+  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', 'currentUser', function () {
     let job = this.job;
     let canRemoveLog = this.get('job.canRemoveLog');
     let hasPermission = this.hasPermission;
+    let access = this.currentUser && this.currentUser.hasPermissionToRepo(this.get('job.repo'), 'log_delete');
     if (job) {
-      return canRemoveLog && hasPermission;
+      return canRemoveLog && hasPermission && access;
     }
   }),
 
@@ -247,8 +248,8 @@ export default Component.extend({
     },
 
     toggleLog() {
-      let repo = this.get('job.repo');
-      if (repo.permissions.log_view) {
+      let access = this.currentUser && this.currentUser.hasPermissionToRepo(this.get('job.repo'), 'log_view');
+      if (access) {
         this.toggleProperty('logIsVisible');
       } else {
         if (this.logIsVisible) {

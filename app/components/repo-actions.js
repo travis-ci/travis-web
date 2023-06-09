@@ -59,6 +59,27 @@ export default Component.extend({
       return user.hasPushAccessToRepo(repo);
     }
   }),
+  userHasCancelPermissionForRepo: computed('repo.id', 'user', function () {
+    let repo = this.repo;
+    let user = this.user;
+    if (user && repo) {
+      return user.hasPermissionToRepo(repo, 'build_cancel');
+    }
+  }),
+  userHasRestartPermissionForRepo: computed('repo.id', 'user', function () {
+    let repo = this.repo;
+    let user = this.user;
+    if (user && repo) {
+      return user.hasPermissionToRepo(repo, 'build_restart');
+    }
+  }),
+  userHasDebugPermissionForRepo: computed('repo.id', 'user', function () {
+    let repo = this.repo;
+    let user = this.user;
+    if (user && repo) {
+      return user.hasPermissionToRepo(repo, 'build_debug');
+    }
+  }),
 
   canOwnerBuild: reads('repo.canOwnerBuild'),
   ownerRoMode: reads('repo.owner.ro_mode'),
@@ -69,21 +90,9 @@ export default Component.extend({
 
   showPriority: true,
   showPrioritizeBuildModal: false,
-  canCancel: computed('userHasPullPermissionForRepo', 'item.canCancel', function () {
-    const forRepo = this.repo.permissions.build_cancel;
-
-    return this.item.canCancel && forRepo;
-  }),
-  canRestart: computed('userHasPullPermissionForRepo', 'item.canRestart', function () {
-    const forRepo = this.repo.permissions.build_restart;
-
-    return this.item.canRestart && forRepo;
-  }),
-  canDebug: computed('userHasPushPermissionForRepo', 'item.canDebug', function () {
-    const forRepo = this.repo.permissions.build_debug;
-
-    return this.item.canDebug && forRepo;
-  }),
+  canCancel: and('userHasCancelPermissionForRepo', 'item.canCancel'),
+  canRestart: and('userHasRestartPermissionForRepo', 'item.canRestart'),
+  canDebug: and('userHasDebugPermissionForRepo', 'item.canDebug'),
   isHighPriority: or('item.priority', 'item.build.priority'),
   isNotAlreadyHighPriority: not('isHighPriority'),
   hasPrioritizePermission: or('item.permissions.prioritize', 'item.build.permissions.prioritize'),
