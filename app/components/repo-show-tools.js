@@ -27,6 +27,8 @@ export default Component.extend({
 
   displaySettingsLink: computed('permissions.all', 'repo', function () {
     let repo = this.repo;
+    console.log("REPO!!");
+    console.log(repo.permissions.settings_read);
     const forRepo = repo.permissions.settings_read;
 
     return this.permissions.hasPushPermission(repo) && forRepo;
@@ -35,6 +37,8 @@ export default Component.extend({
   displayCachesLink: computed('permissions.all', 'repo', function () {
     let repo = this.repo;
     const forRepo = repo.permissions.cache_view;
+    console.log("REPO.c!!");
+    console.log(repo.permissions.cache_view);
 
     return this.permissions.hasPushPermission(repo) && config.endpoints.caches && forRepo;
   }),
