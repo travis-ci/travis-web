@@ -7,19 +7,6 @@
 
   <div class='payment-details-form'>
     <TravisForm data-test-stripe-form='true' @onSubmit={{action "submit"}} as |form|>
-      <form.field
-        @label='Name On Card'
-        @value={{this.nameOnCard}}
-        @required={{true}}
-        @disabled={{this.disableForm}}
-        @showRequiredMark={{true}}
-        @showValidationStatusIcons={{false}}
-        @onChange={{action 'modifyNameOnCard'}}
-        as |Field|
-      >
-        <Field.input @name='name_on_card'/>
-      </form.field>
-  
       <span data-test-credit-card='true' class="payment-details-label">
         credit card details
         <span class="required">
@@ -44,6 +31,34 @@
         as |Field|
       >
         <Field.input @name='billing_email_address'/>
+      </form.field>
+
+      <form.field
+        @label='First Name'
+        @value={{this.billingInfo.firstName}}
+        @required={{true}}
+        @showRequiredMark={{true}}
+        @disabled={{this.disableForm}}
+        @showValidationStatusIcons={{true}}
+        @onChange={{action (mut this.billingInfo.firstName)}}
+        as |Field|
+      >
+        <Field.input @name='first_name'/>
+        <div class="travis-form__error-message">&nbsp;</div>
+      </form.field>
+
+      <form.field
+        @label='Last Name'
+        @value={{this.billingInfo.lastName}}
+        @required={{true}}
+        @showRequiredMark={{true}}
+        @disabled={{this.disableForm}}
+        @showValidationStatusIcons={{true}}
+        @onChange={{action (mut this.billingInfo.lastName)}}
+        as |Field|
+      >
+        <Field.input @name='last_name'/>
+        <div class="travis-form__error-message">&nbsp;</div>
       </form.field>
   
       <form.field

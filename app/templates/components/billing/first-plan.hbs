@@ -8,12 +8,6 @@
       @subscription={{this.subscription}} @account={{this.account}} @showPlansSelector={{true}}
       @showAddonsSelector={{false}} @next={{action 'closePlansModal' }} @showCancelButton={{this.showCancelButton}} />
   </Modal>
-  <div class='full-width form-elem'>
-    <form.field @label="Name on Card" @value={{this.creditCardOwner}} @onChange={{action (mut this.creditCardOwner)}}
-      onSubmit={{perform this.createSubscription}} @required={{true}} @showRequiredMark={{true}} as |field|>
-      <field.input @type="text" />
-    </form.field>
-  </div>
 
   <div class='full-width cc-form-elem'>   
     <form.field @label="Credit Card details"
@@ -34,6 +28,21 @@
       <field.input @type="text" />
     </form.field>
   </div>
+  
+  <div class='full-width form-elem'>
+    <form.field @label="First Name" @value={{this.firstName}} @onChange={{action (mut this.firstName)}}
+      @required={{true}} @showRequiredMark={{true}} as |field|>
+      <field.input @type="text" />
+    </form.field>
+  </div>
+
+  <div class='full-width form-elem'>
+    <form.field @label="Last Name" @value={{this.lastName}} @onChange={{action (mut this.lastName)}}
+      @required={{true}} @showRequiredMark={{true}} as |field|>
+      <field.input @type="text" />
+    </form.field>
+  </div>
+
   <div class='full-width not-required-form-elem'>
     <form.field @label="Company Name" @value="" @onChange={{action (mut this.company)}} @required={{false}} as |field|>
       <field.input @type="text" />
