@@ -104,7 +104,6 @@ export default Component.extend({
   isNewSubscription: not('subscription.id'),
 
   creditCardInfo: null,
-  creditCardOwner: null,
 
   creditCardInfoEmpty: computed('subscription.creditCardInfo', function () {
     return !this.creditCardInfo.lastDigits;
@@ -124,12 +123,11 @@ export default Component.extend({
     return text;
   }),
 
-  canActivate: computed('country', 'zipCode', 'address', 'creditCardOwner', 'city', 'stripeElement', 'billingEmail', function () {
+  canActivate: computed('country', 'zipCode', 'address', 'city', 'stripeElement', 'billingEmail', function () {
     let valid = (val) => !(val === null || val.trim() === '');
     return valid(this.billingEmail) && valid(this.country) &&
            valid(this.zipCode) && valid(this.address) &&
-           valid(this.creditCardOwner) && this.stripeElement &&
-           valid(this.city);
+           this.stripeElement && valid(this.city);
   }),
 
   createSubscription: task(function* () {
@@ -201,25 +199,17 @@ export default Component.extend({
     const plan = this.store.createRecord('v2-plan-config');
     const billingInfo = this.store.createRecord('v2-billing-info');
     const creditCardInfo = this.store.createRecord('v2-credit-card-info');
-    let ownerName = this.creditCardOwner.trim();
-    let idx = ownerName.lastIndexOf(' ');
-    if (idx > 0) {
-      this.firstName = ownerName.substr(0, idx);
-      this.lastName = ownerName.substr(idx + 1);
-    } else {
-      this.firstName = '';
-      this.lastName = ownerName;
-    }
     let empty = (val) => val === null || val.trim() === '';
     if (empty(this.lastName) || empty(this.address) ||
         empty(this.city) || empty(this.zipCode) ||
-        empty(this.country) || empty(this.billingEmail)
+        empty(this.country) || empty(this.billingEmail) ||
+        empty(this.firstName)
     ) {
       throw new Error('Fill all required fields');
     }
     billingInfo.setProperties({
-      firstName: this.firstName,
-      lastName: this.lastName,
+      firstName: this.firstName.trim(),
+      lastName: this.lastName.trim(),
       address: this.address,
       city: this.city,
       company: this.company,
