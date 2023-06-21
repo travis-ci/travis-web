@@ -101,13 +101,12 @@ export default Component.extend({
     return this.showSubscriptionTab && this.model.hasCredits && forOrganization;
   }),
 
-  usersUsage: computed('account.allowance.userUsage', 'addonUsage', 'hasPlanUsagePermissions', function () {
-    const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
+  usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
     const userUsage = this.model.allowance.get('userUsage');
     if (userUsage === undefined) {
       return true;
     }
-    return userUsage && forOrganization;
+    return userUsage;
   }),
 
   wizardStep: reads('storage.wizardStep'),
