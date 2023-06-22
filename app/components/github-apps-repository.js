@@ -28,7 +28,15 @@ export default Component.extend({
 
   hasSettingsPermission: computed('permissions.all', 'repository', function () {
     let repo = this.repository;
-    return this.permissions.hasPushPermission(repo);
+    console.log("repo.permissions.settings_read");
+    console.log(repo.permissions.settings_read);
+    let forRepo = (repo.owner.id == this.user.id && repo.ownerType == 'user') || ((repo.shared || repo.ownerType != 'user') && repo.permissions.settings_read);
+    console.log(this.user.id);
+    console.log(repo.owner.id);
+    console.log(repo.ownerType);
+    console.log(repo.shared);
+    console.log(forRepo);
+    return this.permissions.hasPushPermission(repo) && forRepo;
   }),
 
   toggleRepositoryTask: task(function* () {
