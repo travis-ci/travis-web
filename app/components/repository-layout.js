@@ -13,6 +13,7 @@ export default Component.extend({
   isShowingStatusBadgeModal: false,
   currentUser: alias('auth.currentUser'),
   userRoMode: reads('currentUser.roMode'),
+  scansEnabled: reads('features.logScanner'),
 
   repoUrl: computed('repo.{ownerName,vcsName,vcsType}', function () {
     const owner = this.get('repo.ownerName');
