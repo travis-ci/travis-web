@@ -43,6 +43,8 @@ export default TravisRoute.extend({
   fetchSshKey() {
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
+      if (repo.serverType === 'perforce') return;
+
       const url = `/repos/${repo.get('id')}/key`;
       return this.api.get(url, { travisApiVersion: null }).then((data) => {
         const fingerprint = EmberObject.create({

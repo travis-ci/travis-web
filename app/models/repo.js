@@ -50,6 +50,7 @@ const Repo = VcsEntity.extend({
   migrationStatus: attr('string'),
   historyMigrationStatus: attr('string'),
   scanFailedAt: attr('date'),
+  serverType: attr('string', { defaultValue: 'git' }),
 
   currentScan: computed('scanFailedAt', function () {
     let scanFailedAt = this.get('scanFailedAt');
