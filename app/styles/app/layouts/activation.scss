@@ -1,0 +1,298 @@
+.layout-activation {
+
+  @import "billing-plans";
+
+
+
+
+  .layout-activation-section {
+
+    &.layout-activation-section--header {
+      width: 30%;
+    }
+    .layout-activation-section__inner {
+
+      width: 473px;
+      max-width: $max-width;
+      margin: 0 auto;
+      padding: $column-gutter/2;
+
+    }
+
+  }
+
+  .small-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 10px;
+    color: black;
+  }
+
+  .form-vatid {
+    margin-bottom: 8px;
+  }
+
+  .form-label {
+    color: $cement-grey;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 5px;
+
+    .required {
+      color: $brick-red;
+    }
+  }
+
+  .plan-desc {
+    font-size: 15px;
+    margin-bottom: 12px;
+    margin-top: 4px;
+    color: $asphalt-grey;
+  }
+
+  .plan-details {
+    font-size: 14px;
+    margin-bottom: 12px;
+    margin-top: 10px;
+    margin-left: 0px;
+    padding-left: 0px;
+    color: $asphalt-grey;
+  }
+
+  .billing-plans__box-v2--desc {
+        color: $cement-grey;
+        font-weight: 500;
+        font-size: 13px;
+        margin: 5px 0 8px 0;
+        white-space: nowrap;
+  }
+
+
+  .plan-change {
+    font-size: 16px;
+    margin:0px;
+    padding: 0px;
+    top: 40%;
+    right: 0%;
+    text-align: right;
+    position: relative;
+    color: $oxide-blue;
+  }
+  .plan-change-expanded {
+    top: 52px;
+  }
+
+  #first-plan-charge-info {
+    margin-top: 0px;
+    margin-bottom: 24px;
+    font-size: 12px;
+  }
+  #first-plan-activate-button {
+    margin-top: 44px;
+    margin-bottom: 44px;
+  }
+
+  .not-required-form-elem {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .form-elem {
+    width: 100%;
+    margin-bottom: -8px;
+  }
+
+  .form-elem-select {
+    margin-top: 5px;
+  }
+  .travis-form {
+    .travis-form__field {
+
+    &.travis-form__field--error {
+      margin-bottom: 12px;
+    }
+
+    .travis-form__error-message {
+      margin-top: 0px;
+    }
+
+      .travis-form__label {
+        font-size: 14px;
+
+        .travis-form__required-mark {
+          color: $brick-red;
+          margin-bottom: 14px;
+        }
+      }
+
+      .travis-form__field-checkbox {
+      }
+
+      &--checked {
+        .travis-form__field-checkbox-wrapper {
+          .travis-form__field-checkbox-image--checked {
+            opacity: 1;
+          }
+        }
+      }
+
+      &--unchecked {
+        .travis-form__field-checkbox-wrapper {
+          .travis-form__field-checkbox-image--unchecked {
+            opacity: 1;
+          }
+        }
+      }
+
+    }
+  }
+
+  .cc-form-elem {
+    width: 100%;
+    margin-bottom: 42px;
+  }
+
+  .framed-form {
+  width: 100%;
+  padding: 0.4em 0.4em;
+  border: 1px solid #dbdcdc;
+  border-radius: 2px;
+  color: $asphalt-grey;
+  font-size: 14px;
+  font-family: $font-family-sans-serif;
+  background: white;
+  margin-bottom: 12px;
+  }
+
+  .framed-form-plan {
+    margin-top: 32px;
+    min-height: 80px;
+  }
+
+  .margin-left-s {
+    margin-left: 16px;
+  }
+
+  .margin-right-s {
+    margin-right: 16px;
+  }
+
+  .text-center {
+    position: relative;
+    top: 50%;
+    left: 50%;
+  }
+
+  .font-size-s {
+    font-size: $font-size-s;
+  }
+
+  .text-header {
+    font-size: 45px;
+    margin-bottom: 0px;
+  }
+
+  .text-subheader {
+    font-size: 14px;
+    color: #9D9D9D;
+    letter-spacing: 0px;
+    font-weight: 400;
+  }
+
+  .cc-form {
+    @extend %input-base;
+ }
+
+  .cc-form-internal {
+    height: 20px;
+  }
+
+  .travis-link {
+    color: #3EAAAF;
+  }
+
+  .StripeElement {
+    display: block;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 4px solid transparent;
+    margin: -4px;
+    padding: 10px 9px;
+    box-shadow: inset 0 0 1px 1px #d0d0d0;
+  }
+
+  .StripeElement--focus {
+    outline: none;
+    border-color: rgba(62, 170, 175, 0.2);
+  }
+
+  .StripeElement--invalid {
+    box-shadow: inset 0 0 1px 1px red;
+  }
+
+  .StripeElement--webkit-autofill {
+    background-color: #FEFDE5 !important;
+  }
+
+  .icon-desc {
+    margin-bottom: 3px;
+    @include colorSVG($oxide-blue);
+  }
+
+  .coupon-validation {
+
+    height: 38px;
+    white-space: nowrap;
+
+    &__input {
+      flex-basis: 85%;
+    }
+
+    &__validate-button-wrapper {
+      flex-basis: 20%;
+      font-size: 14px;
+      margin-left: 10px;
+      align-items: center;
+      display: flex;
+      justify-content: flex-end;
+      height: 38px;
+    }
+
+    .coupon-loading {
+      justify-content: center;
+    }
+
+    &__validate-button {
+      padding: 11px;
+    }
+
+    &__valid-coupon {
+      color: $ansi-green;
+
+      .icon-passed {
+        @include colorSVG($ansi-green);
+
+        color: inherit;
+      }
+    }
+
+    &__invalid-coupon {
+      color:  $ansi-red;
+
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .icon-warn {
+        @include colorSVG($ansi-red);
+
+        color: inherit;
+      }
+    }
+
+  }
+}

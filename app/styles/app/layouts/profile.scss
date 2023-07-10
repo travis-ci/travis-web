@@ -463,6 +463,48 @@ section.billing {
     font-size: 16px;
   }
 
+  .plan-name {
+    font-weight: 400;
+    font-size: 36px;
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+
+  .plan-price-container {
+    margin-right:18px;
+    margin-top: -22px;
+  }
+
+  .plan-price-container-manual-section {
+    margin-bottom: -18px;
+    margin-top: -64px;
+    display: relative;
+  }
+
+  .plan-price-container-manual {
+    margin-top: auto;
+  }
+
+
+  .plan-price-info {
+    color: $oxide-blue;
+    text-transform: none;
+    font-size: 50px;
+    font-weight: 300;
+    margin-bottom: 2px;
+  }
+
+  .plan-price-label {
+    color: $dim-grey;
+    align-self: flex-end;
+    margin-bottom: 16px;
+    margin-right: 5px;
+  }
+
+  .plan-label-color {
+    color: $dim-grey;
+  }
+
   .billing-section-link,
   .get-started-link {
     text-decoration: underline;
@@ -475,20 +517,46 @@ section.billing {
   }
 
   .plan {
+    margin: 0px;
     p {
       margin: 0.3em 0 0.3em 0;
       font-weight: 100;
     }
 
     h3 {
-      font-size: $font-size-xl;
+      font-size: $font-size-ml;
       font-weight: $font-weight-light;
       margin-bottom: 0.2em;
     }
   }
 
+  .plan-grey {
+    background-color: $pebble-grey;
+    padding: 18px;
+    padding-bottom: 0px;
+  }
+  .plan-grey-buttons {
+    padding-top: 0px;
+    margin-bottom: 0px;
+  }
+
   .plan+h2 {
     margin-bottom: 0;
+  }
+
+  .plan-button-container {
+    width: 100%;
+    height: 52px;
+  }
+
+  .plan-button-container-expanded {
+    margin-top: -20px;
+  }
+
+  .plan-buttons {
+    margin-left:0px;
+   // margin-top:-24px;
+ //   margin-bottom:14px;
   }
 
   .row {
@@ -588,6 +656,22 @@ section.billing {
   }
 }
 
+.invoice-issue-banner {
+  padding: 10px;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  width: 100%;
+}
+
+.invoice-issue-banner-no-invoices {
+    @include linkStyle;
+}
+
+.invoice-header {
+    color: $oxide-blue;
+    margin-bottom: 0;
+  }
+
 section.invoices {
 
   font-size: $font-size-m;
@@ -600,6 +684,11 @@ section.invoices {
   .invoice-table {
     overflow-x: auto;
     padding-bottom: 20px;
+  }
+
+  .invoice-issue-banner {
+    margin-right: 46px;
+    width: 75%;
   }
 
   .invoice-select-year {
@@ -615,13 +704,6 @@ section.invoices {
     margin-right: 10px;
   }
 
-  .invoice-issue-banner {
-    padding: 10px;
-    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.15);
-    margin-right: 46px;
-    border-radius: 5px;
-    width: 75%;
-  }
 
   table {
     width: 100%;

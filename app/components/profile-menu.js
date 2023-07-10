@@ -18,6 +18,7 @@ export default Component.extend({
   features: service(),
 
   isMenuOpen: false,
+  isActivation: false,
 
   user: reads('auth.currentUser'),
 

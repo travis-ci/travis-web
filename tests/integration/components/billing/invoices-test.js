@@ -90,7 +90,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
       />`
     );
 
-    assert.dom('h3').hasText('Invoice history');
+    assert.dom('h3').hasText('Payment history');
     assert.dom('[data-test-help-text]').containsText('Having trouble with your invoices?');
     assert.dom('[data-test-help-text] a').containsText('We’re happy to help');
     assert.dom('[data-test-table-header-row] th').exists({ count: 5 });
@@ -134,7 +134,7 @@ module('Integration | Component | billing-invoices', function (hooks) {
       />`
     );
 
-    assert.dom('h3').hasText('Invoice history');
+    assert.dom('h3').hasText('Payment history');
     assert.dom('[data-test-help-text]').containsText('Having trouble with your invoices?');
     assert.dom('[data-test-help-text] a').containsText('We’re happy to help');
     assert.dom('[data-test-table-header-row] th').exists({ count: 5 });

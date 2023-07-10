@@ -1,0 +1,19 @@
+<span class="travis-form__field-radio-wrapper">
+  <input
+    type="radio"
+    checked={{this.checked}}
+    disabled={{this.disabled}}
+    onchange={{action "toggle"}}
+    onfocus={{action "focus"}}
+    onblur={{action "blur"}}
+  />
+  <SvgImage
+    @name="radio-checked"
+    @class="travis-form__field-radio-image--checked"
+  />
+  <SvgImage
+    @name="radio-unchecked"
+    @class="travis-form__field-radio-image--unchecked"
+  />
+</span>
+{{yield}}

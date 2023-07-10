@@ -11,6 +11,24 @@ export default Service.extend({
     this.setItem('travis.billing_step', +value);
   },
 
+  get wizardStep() {
+    return +this.getItem('travis.wizard_step');
+  },
+  set wizardStep(value) {
+    this.setItem('travis.wizard_step', +value);
+  },
+
+  get selectedPlanId() {
+    return this.getItem('travis.billing_selected_plan_id');
+  },
+  set selectedPlanId(value) {
+    this.setItem('travis.billing_selected_plan_id', value);
+  },
+  clearSelectedPlanId() {
+    this.removeItem('travis.billing_selected_plan_id');
+  },
+
+
   get billingInfo() {
     return this.parseWithDefault('travis.billing_info', {});
   },

@@ -208,6 +208,11 @@ export default VcsEntity.extend({
     return this.hasV2Subscription ? this.v2subscription.get('hasCredits') : false;
   }),
 
+  isNotGithubOrManual: computed('hasV2Subscription', 'v2subscription', 'subscription', function () {
+    if (!this.v2subscription && !this.subscription) return false;
+    return this.hasV2Subscription ? this.v2subscription.get('isNotGithubOrManual') : this.subscription.get('isNotGithubOrManual');
+  }),
+
   trial: computed('accounts.trials.@each.{created_at,owner,hasTrial}', 'login', function () {
     let trials = this.get('accounts.trials') || [];
     let login = this.login;
