@@ -107,7 +107,7 @@ export default Component.extend({
     if (userUsage === undefined) {
       return true;
     }
-    return userUsage && forOrganization;
+    return userUsage /*&& forOrganization*/;
   }),
 
   wizardStep: reads('storage.wizardStep'),
