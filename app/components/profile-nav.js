@@ -68,6 +68,7 @@ export default Component.extend({
   hasPlanUsagePermissions: reads('model.permissions.plan_usage'),
   hasPlanCreatePermissions: reads('model.permissions.plan_create'),
   hasBillingViewPermissions: reads('model.permissions.billing_view'),
+  hasInvoicesViewPermissions: reads('model.permissions.plan_invoices'),
   hasSettingsReadPermissions: reads('model.permissions.settings_read'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
   showOrganizationSettings: computed('isOrganizationAdmin', 'isProVersion', 'hasSettingsReadPermissions', function () {
@@ -87,16 +88,17 @@ export default Component.extend({
       return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization;
     }),
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
-    'hasBillingViewPermissions', 'model.isNotGithubOrManual', function () {
+    'hasBillingViewPermissions', 'hasInvoicesViewPermissions', 'model.isNotGithubOrManual', function () {
       if (this.isOrganization) {
-        const forOrganization = !this.isOrganization || this.hasBillingViewPermissions;
+        const forOrganization = !this.isOrganization || this.hasBillingViewPermissions || this.hasInvoicesViewPermissions;
 
-        return this.showSubscriptionTab && this.isOrganizationAdmin && this.model.get('isNotGithubOrManual') && forOrganization;
+        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin  || forOrganization );
       } else {
         return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
       }
     }),
   showPlanUsageTab: computed('showSubscriptionTab', 'model.hasCredits', 'hasPlanUsagePermissions', function () {
+    console.log(this.model.permissions);
     const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
     return this.showSubscriptionTab && this.model.hasCredits && forOrganization;
   }),
