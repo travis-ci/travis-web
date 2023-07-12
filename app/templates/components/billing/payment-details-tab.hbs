@@ -11,31 +11,30 @@
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
-            @label='Last Name'
-            @value={{this.billingInfo.lastName}}
-            @required={{true}}
-            class='billing-country'
-            @showRequiredMark={{true}}
-            @disabled={{this.disableForm}}
-            @showValidationStatusIcons={{false}}
-            @onChange={{action (mut this.billingInfo.lastName)}}
-            as |Field|
-          >
-            <Field.input @name='last_name'/>
-          </form.field>
-        </div>
-        <div class='form-elem full-width'>
-          <form.field
             @label='First Name'
+            @value={{this.billingInfo.firstName}}
             @required={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
-            @value={{this.billingInfo.firstName}}
             @showValidationStatusIcons={{false}}
             @onChange={{action (mut this.billingInfo.firstName)}}
             as |Field|
           >
             <Field.input @name='first_name'/>
+          </form.field>
+        </div>
+        <div class='form-elem full-width'>
+          <form.field
+            @label='Last Name'
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @disabled={{this.disableForm}}
+            @value={{this.billingInfo.lastName}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut this.billingInfo.lastName)}}
+            as |Field|
+          >
+            <Field.input @name='last_name'/>
           </form.field>
         </div>
       </div>
