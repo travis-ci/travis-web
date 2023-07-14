@@ -32,6 +32,13 @@ export default Component.extend({
   canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', function () {
     return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial;
   }),
+
+  hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function() {
+    console.log("ACC1");
+    console.log(this.account.isOrganization);
+    console.log(this.account.permissions);
+    return this.account.hasSubscriptionPermissions && (!this.account.isOrganization || this.account.permissions.plan_create);
+  }),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   isTrial: reads('subscription.plan.isTrial'),
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',

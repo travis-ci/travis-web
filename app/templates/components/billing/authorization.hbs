@@ -46,7 +46,10 @@
     We are currently waiting for Stripe to finish processing your order.
   </span>
 {{else if (and this.isComplete (or this.subscription.isStripe this.subscription.isManual))}}
+
   {{#if (or this.showPlansSelector this.showAddonsSelector)}}
+
+    {{#if this.hasSubscriptionPermissions }}
     {{#if (not this.isV2Subscription)}}
       <Billing::Process
         @account={{this.account}}
@@ -70,7 +73,9 @@
         @retryAuthorization={{this.retryAuthorization}}
       />
     {{/if}}
+    {{/if}}
   {{else}}
+    {{#if this.hasSubscriptionPermissions }}
     <div class="flex flex--wrap {{if this.account.hasSubscriptionPermissions 'billing-subscription__buttons'}}">
       {{#if this.isLoading}}
         <LoadingIndicator/>
@@ -101,6 +106,7 @@
         </div>
       {{/if}}
     </div>
+    {{/if}}
   {{/if}}
 {{/if}}
  <Dialogs::CancelSubscriptionModal
