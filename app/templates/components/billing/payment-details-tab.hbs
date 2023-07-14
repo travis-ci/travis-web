@@ -5,6 +5,7 @@
     by placing test fee - $1, which will be returned to you within a week.
   </p>
 
+  {{#if this.canViewBilling }}
   <div class='payment-details-form'>
     <TravisForm data-test-stripe-form='true' @onSubmit={{action "submit"}} as |form|>
       <form.field
@@ -194,6 +195,7 @@
         </div>
       {{/if}}
 
+  {{#if this.canEditBilling }}
       <div class='billing-checkout__payment'>
         {{#if this.isLoading}}
           <LoadingIndicator/>
@@ -204,9 +206,10 @@
           </button>
         {{/if}}
       </div>
+  {{/if}}
     </TravisForm>
   </div>
-
+  {{/if}}
     {{#if this.invoices}}
       {{#if this.hasV2Subscription}}
         {{#if this.v2subscription.isNotManual}}
