@@ -92,7 +92,7 @@ export default Component.extend({
       if (this.isOrganization) {
         const forOrganization = !this.isOrganization || this.hasBillingViewPermissions || this.hasInvoicesViewPermissions;
 
-        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin  || forOrganization );
+        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin || forOrganization);
       } else {
         return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
       }
@@ -103,7 +103,7 @@ export default Component.extend({
   }),
 
   usersUsage: computed('account.allowance.userUsage', 'addonUsage', 'hasPlanUsagePermissions', function () {
-    const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
+    //const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
     const userUsage = this.model.allowance.get('userUsage');
     if (userUsage === undefined) {
       return true;

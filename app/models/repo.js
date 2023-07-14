@@ -212,7 +212,7 @@ const Repo = VcsEntity.extend({
     if (!this.auth.signedIn) return {};
 
     const hasPermissions = this.permissions.settings_read;
-    if (hasPermissions === false) return {}
+    if (hasPermissions === false) return {};
     try {
       const response = yield this.api.get(`/repo/${this.id}/settings`);
       return this._convertV3SettingsToV2(response.settings);

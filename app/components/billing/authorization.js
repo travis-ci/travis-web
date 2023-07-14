@@ -23,7 +23,6 @@ export default Component.extend({
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
   lastPaymentIntentError: reads('subscription.paymentIntent.last_payment_error'),
   retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
-  hasSubscriptionPermissions: reads('account.hasSubscriptionPermissions'),
   notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
   freeV2Plan: equal('subscription.plan.startingPrice', 0),
   isSubscribed: reads('subscription.isSubscribed'),
@@ -33,7 +32,7 @@ export default Component.extend({
     return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial;
   }),
 
-  hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function() {
+  hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function () {
     return this.account.hasSubscriptionPermissions && (!this.account.isOrganization || this.account.permissions.plan_create);
   }),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),

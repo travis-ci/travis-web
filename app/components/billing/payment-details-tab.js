@@ -39,10 +39,10 @@ export default Component.extend({
   isV2SubscriptionEmpty: empty('v2subscription'),
   isSubscriptionEmpty: empty('v1subscription'),
   isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
-  canViewBilling: computed('model', function() {
+  canViewBilling: computed('model', function () {
     return !this.account.isOrganization || this.account.permissions.billing_view;
   }),
-  canEditBilling: computed('model', function() {
+  canEditBilling: computed('model', function () {
     return !this.account.isOrganization || this.account.permissions.billing_update;
   }),
   hasV2Subscription: not('isV2SubscriptionEmpty'),
