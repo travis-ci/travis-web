@@ -103,7 +103,7 @@ export default Component.extend({
   }),
 
   usersUsage: computed('account.allowance.userUsage', 'addonUsage', 'hasPlanUsagePermissions', function () {
-    //const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
+    // const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
     const userUsage = this.model.allowance.get('userUsage');
     if (userUsage === undefined) {
       return true;
