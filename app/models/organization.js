@@ -1,6 +1,6 @@
 import Owner from 'travis/models/owner';
 import { attr } from '@ember-data/model';
-import { reads } from '@ember/object/computed';
+//import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 
