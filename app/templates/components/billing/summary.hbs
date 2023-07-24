@@ -86,8 +86,3 @@
   {{/if}}
 </div>
 <hr />
-{{#if (and this.subscription.isStripe (not this.showPlansSelector))}}
-  <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
-  <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
-  <hr />
-{{/if}}

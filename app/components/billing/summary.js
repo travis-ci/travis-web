@@ -1,7 +1,10 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { reads, or, not, and, bool } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  store: service(),
 
   subscription: null,
   account: null,
@@ -25,4 +28,14 @@ export default Component.extend({
   isGithubSubscription: reads('subscription.isGithub'),
   expiredStripeSubscription: reads('account.expiredStripeSubscription'),
   hasExpiredStripeSubscription: bool('expiredStripeSubscription'),
+
+  invoices: computed('subscription.id', function () {
+    const subscriptionId = this.get('subscription.id');
+    const type = 1;
+    if (subscriptionId) {
+      return this.store.query('invoice', { type, subscriptionId });
+    } else {
+      return [];
+    }
+  }),
 });

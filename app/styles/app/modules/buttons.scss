@@ -151,6 +151,24 @@
   }
 }
 
+.button--transparent {
+  @extend %button;
+  background: transparent;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+  &.button--hover {
+    transition: all 0.1s linear;
+
+    &:hover {
+      border-color: darken($pebble-grey, 10);
+      color: darken($asphalt-grey, 20);
+      background-color: lighten($pebble-grey, 2);
+    }
+  }
+}
+
 .button--green {
   @extend %button;
 
