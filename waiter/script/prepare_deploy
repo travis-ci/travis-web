@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'digest'
 require 'fileutils'
@@ -6,7 +7,8 @@ require 'fileutils'
 def fingerprint(file_path)
   # file_path is relative to public
   public_file_path = "public/#{file_path}"
-  return unless File.exists?(public_file_path)
+  return unless File.exist?(public_file_path)
+
   digest = Digest::MD5.file public_file_path
   extension = File.extname(file_path)
   basename  = File.basename(file_path, extension)
@@ -15,11 +17,11 @@ def fingerprint(file_path)
   new_public_file_path = "public/#{new_file_path}"
   FileUtils.mv(public_file_path, new_public_file_path)
 
-  index_content = File.read("public/index.html")
+  index_content = File.read('public/index.html')
   index_content.gsub!(file_path, new_file_path)
-  File.open("public/index.html", "w") { |f|
+  File.open('public/index.html', 'w') do |f|
     f.write index_content
-  }
+  end
 end
 
 fingerprint('scripts/app.js')

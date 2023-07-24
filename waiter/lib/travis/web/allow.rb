@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Travis
   module Web
     class Allow
@@ -5,12 +7,12 @@ module Travis
 
       def initialize(app, options = {})
         @app      = app
-        @allow    = options[:allow] || ['GET', 'HEAD']
+        @allow    = options[:allow] || %w[GET HEAD]
         @response = options.fetch(:response) do
           body    = 'request method not allowed'
           headers = {
-            'Content-Type'   => 'text/plain',
-            'Allow'          => allow.join(', '),
+            'Content-Type' => 'text/plain',
+            'Allow' => allow.join(', '),
             'Content-Length' => body.bytesize.to_s
           }
           [405, headers, [body]]

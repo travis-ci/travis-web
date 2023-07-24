@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Travis::Web::App::AltVersions
   attr_reader :app
 
@@ -15,15 +17,15 @@ class Travis::Web::App::AltVersions
 
   private
 
-    def cookie(alt)
-      "alt=#{alt == 'default' ? '' : alt}; path=/; max-age=#{alt == 'default' ? 0 : 86400}"
-    end
+  def cookie(alt)
+    "alt=#{alt == 'default' ? '' : alt}; path=/; max-age=#{alt == 'default' ? 0 : 86_400}"
+  end
 
-    def alt_from_params(env)
-      $1 if env['QUERY_STRING'] =~ /alt=([^&]+)/
-    end
+  def alt_from_params(env)
+    ::Regexp.last_match(1) if env['QUERY_STRING'] =~ /alt=([^&]+)/
+  end
 
-    def alt_from_cookie(env)
-      $1 if env['HTTP_COOKIE'] =~ /alt=([^;]+)/
-    end
+  def alt_from_cookie(env)
+    ::Regexp.last_match(1) if env['HTTP_COOKIE'] =~ /alt=([^;]+)/
+  end
 end
