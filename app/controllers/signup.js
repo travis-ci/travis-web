@@ -8,7 +8,7 @@ export default Controller.extend({
 
   actions: {
     signIn(provider) {
-      this.auth.signInWith(provider);
+      this.auth.signUp(provider);
     },
   },
 });

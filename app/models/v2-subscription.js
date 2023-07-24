@@ -145,6 +145,10 @@ export default Model.extend({
   }),
   hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons'),
 
+  isNotGithubOrManual: computed('source', function () {
+    return this.source !== 'github' && this.source !== 'manual';
+  }),
+
   priceInCents: reads('plan.planPrice'),
   validateCouponResult: reads('validateCoupon.last.value'),
 

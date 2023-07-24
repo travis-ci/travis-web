@@ -23,6 +23,7 @@ export default Component.extend({
   target: '_blank',
 
   route: null,
+  disabled: 'false',
 
   // Lifecycle
   didReceiveAttrs() {

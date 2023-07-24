@@ -119,6 +119,10 @@ export default Model.extend({
     return (isManual && (date > validToDate));
   }),
 
+  isNotGithubOrManual: computed('source', function () {
+    return this.source !== 'github' && this.source !== 'manual';
+  }),
+
   chargeUnpaidInvoices: task(function* () {
     return yield this.api.post(`/subscription/${this.id}/pay`);
   }).drop(),

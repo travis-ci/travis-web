@@ -62,6 +62,7 @@
 @import "app/modules/overlay-backdrop";
 @import "app/modules/migrate-beta-dialog";
 @import "app/modules/prioritize-build";
+@import "app/modules/wizard";
 
 @import "app/animation/tractor";
 @import "app/animation/barricade";
@@ -92,6 +93,7 @@
 @import "app/layouts/insights";
 @import "app/layouts/billing";
 @import "app/layouts/scan-results";
+@import "app/layouts/activation";
 
 @import "app/pages/landing";
 @import "app/pages/home-pro";

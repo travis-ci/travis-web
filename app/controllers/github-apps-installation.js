@@ -5,12 +5,15 @@ import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import { later } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
+import { reads } from '@ember/object/computed';
 
 const interval = config.intervals.githubAppsInstallationPolling;
 
 export default Controller.extend({
   auth: service(),
   raven: service(),
+  localStorage: service('storage'),
+  storage: reads('localStorage.auth'),
 
   queryParams: ['installation_id'],
 
@@ -18,8 +21,23 @@ export default Controller.extend({
   maxRepetitions: 10,
 
   startPolling() {
+    let isSignup = false;
+    if (!this.installation_id) {
+      let data = this.storage.get('activeAccountInstallation');
+      if (data) {
+        this.installation_id = data;
+        isSignup = true;
+      }
+      this.storage.set('activeAccountInstallation', null);
+    } else {
+      let data = this.storage.get('activeAccountInstallation');
+      if (data) {
+        isSignup = true;
+        this.storage.set('activeAccountInstallation', null);
+      }
+    }
     this.initialDelayPromise().then(() => this.fetchPromise().then(() => {
-      this.transitionToRoute('account');
+      this.transitionToRoute(isSignup ? 'first_sync' : 'account');
     }));
   },
 

@@ -1,0 +1,52 @@
+<section id="wizard" class='billing-select-plan rounded'>
+  <div class='wizard-title'>
+    {{#if (eq this.wizardStep 2)}}
+    <p class="wizard-heading">Add a .travis.yml file to your repository.</p>
+    <div class="wizard-content">
+    <span class="nowrap">
+    You need to add .travis.yml configuration file to root
+    </span><br/>
+    <span class="nowrap">
+    directory of your repository. If a .travis.yml is not in your
+    </span><br/>
+    <span class="nowrap">
+    repository or is not a valid YAML, Travis CI will ignore.it
+    </span><br/>
+    </div>
+    <p class="wizard-content">Here you can find some of our <a href={{this.travisBasicLanguageExamplesUrl}}  target="_blank"> basic language examples</a></p>
+     <div class="float-left wizard-page-number">
+      1 of 2
+    </div>
+    <button onclick={{action 'nextStep' }} class='button--green float-right wizard-button'>
+      Got It
+    </button>
+    {{else}}
+     <p class="wizard-heading">Trigger your next build </p>
+        <div class="wizard-content">
+    <span class="nowrap">
+    Once you've added .travis.yml to your repo, all you
+    </span><br/>
+    <span class="nowrap">
+    need to do now is commit your changes and push 
+    </span><br/>
+    <span class="nowrap">
+    them to the repository
+    </span><br/><br/>
+    <span class="nowrap">
+    Want to learn more? <a href="{{this.travisDocsUrl}}" target="_blank"> Learn up on our docs</a>
+    </span>
+    </div>
+     <div class="float-left wizard-page-number">
+      2 of 2
+    </div>
+     <div class="float-right">
+       <button onclick={{action 'previousStep' }} class='button--white wizard-button-white' >
+        Back
+       </button>
+       <button onclick={{action 'nextStep' }} class='button--green wizard-button'>
+        Got It
+       </button>
+      </div>
+    {{/if}}
+  </div>
+</section>
