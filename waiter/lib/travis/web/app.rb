@@ -68,6 +68,7 @@ class Travis::Web::App
   def call(env)
     name = env['travis.alt'] || :default
     routers[name] ||= create_router(alt: name)
+    puts "ROUTERS[#{name}]: #{routers[name].inspect}"
     route = routers[name].call(env)
     route[1]['Date'] = Time.now.httpdate
     route
@@ -117,6 +118,7 @@ class Travis::Web::App
   end
 
   def each_file
+    puts "ROOT: #{root.inspect}"
     Dir.glob(File.join(root, '**/*')) { |file| yield file if File.file?(file) }
   end
 
