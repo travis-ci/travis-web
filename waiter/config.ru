@@ -84,7 +84,7 @@ run Travis::Web::App.build(
   pusher_path: ENV['PUSHER_PATH'],
   pusher_channel_prefix: ENV['PUSHER_CHANNEL_PREFIX'],
   ga_code: ENV['GA_CODE'],
-  root: File.expand_path('../../dist', __dir__),
+  root: File.expand_path('../../dist', __FILE__),
   server_start: Time.now,
   caches_enabled: ENV['CACHES_ENABLED'],
   ssh_key_enabled: ENV['SSH_KEY_ENABLED'],

@@ -7,6 +7,7 @@ require 'delegate'
 require 'time'
 require 'json'
 require 'travis/utils/deep_merge'
+require 'digest/md5'
 
 class Travis::Web::App
   autoload :AltVersions,    'travis/web/app/alt_versions'
