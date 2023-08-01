@@ -887,7 +887,11 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   test('view billing tab on education account', async function (assert) {
-    this.subscription = null;
+    this.subscription.plan = this.server.create('plan', { id: 'travis-ci-one-build', name: 'Bootstrap', builds: 1, price: 6900, currency: 'USD' });
+    this.subscription.owner = this.organization;
+    this.subscription.source = 'github';
+    this.subscription.status = 'subscribed';
+    this.subscription.save();
     this.organization.attrs.education = true;
     this.organization.permissions = { createSubscription: true, admin: true };
     this.organization.save();
