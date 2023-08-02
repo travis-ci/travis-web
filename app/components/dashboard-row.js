@@ -9,6 +9,7 @@ export default Component.extend({
   auth: service(),
   api: service(),
   flashes: service(),
+  features: service(),
 
   tagName: '',
 
@@ -21,6 +22,7 @@ export default Component.extend({
   userRoMode: reads('currentUser.roMode'),
   ownerRoMode: reads('repo.owner.ro_mode'),
   currentBuild: alias('repo.currentBuild'),
+  scansEnabled: reads('features.logScanner'),
 
   displayMenuTofu: alias('repo.permissions.create_request'),
 
