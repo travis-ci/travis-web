@@ -7,18 +7,31 @@ export default Route.extend({
 
   beforeModel(transition) {
     const { params, queryParams } = transition.to;
-    let { owner, repo, method, id, view } = params;
-    let provider, routeName = 'provider', routeModels = [];
+    let { owner, repo, method, id, view, provider, serverType } = params;
+    let vcsConfig, routeName = 'provider', routeModels = [];
 
-    const vcsConfig = vcsConfigByUrlPrefix(owner);
+    if (provider) {
+      vcsConfig = vcsConfigByUrlPrefix(provider);
+    } else {
+      vcsConfig = vcsConfigByUrlPrefix(owner);
+    }
 
     const isLegacyUrl = isEmpty(vcsConfig);
+    const serverTypes = ['git', 'svn', 'perforce'];
+    const isServerTypeUrl = serverTypes.includes(serverType) || serverTypes.includes(id);
+
     if (isLegacyUrl) {
       provider = defaultVcsConfig.urlPrefix;
     } else {
       // params include provider, so swap them accordingly
-      [provider, owner, repo, method, id] = [owner, repo, method, id, view];
+      if (!isServerTypeUrl) {
+        [provider, owner, repo, method, id] = [owner, repo, method, id, view];
+      } else if (serverTypes.includes(id)) {
+        [provider, owner, repo, serverType, method, id, view] = [owner, repo, method, id, view];
+      }
     }
+
+    const newQueryParams = { serverType: serverType, ...queryParams };
 
     routeModels.push(provider);
 
@@ -43,7 +56,7 @@ export default Route.extend({
 
     if (this._router.hasRoute(routeName)) {
       transition.abort();
-      this.transitionTo(routeName, ...routeModels, { queryParams });
+      this.transitionTo(routeName, ...routeModels, { queryParams: newQueryParams });
     }
   }
 });

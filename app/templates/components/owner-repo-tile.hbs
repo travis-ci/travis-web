@@ -17,6 +17,7 @@
         <LinkTo
           @route="repo"
           @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
+          @query={{hash serverType=this.repo.serverType}}
           class="label-align"
         >
           <span class="repo-title-text">

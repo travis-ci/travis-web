@@ -22,6 +22,21 @@ export default Component.extend({
   isMatchGithub: match('vcsType', /Github\S+$/),
   isNotMatchGithub: not('isMatchGithub'),
 
+  repositoryProvider: computed('repository.provider', function () {
+    return this.repository.provider.capitalize();
+  }),
+
+  repositoryType: computed('repository.serverType', function () {
+    switch (this.repository.serverType) {
+      case 'git':
+        return 'GIT';
+      case 'subversion':
+        return 'SVN';
+      case 'perforce':
+        return 'P4';
+    }
+  }),
+
   accessSettingsUrl: computed('user.vcsType', 'user.vcsId', function () {
     return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
   }),
