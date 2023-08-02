@@ -13,6 +13,14 @@
     </span>
   {{/if}}
 </LinkTo>
+{{#if (eq this.repository.provider 'assembla')}}
+  <span class="profile-repo-type">
+    <span class="profile-repo-type-span">
+      {{this.repositoryType}}
+      <EmberTooltip @text="{{this.repositoryProvider}} {{this.repositoryType}} Repository" />
+    </span>
+  </span>
+{{/if}}
 {{#if this.hasSettingsPermission}}
   {{#if this.isNotMatchGithub}}
     <TravisSwitch
