@@ -14,6 +14,7 @@ export default Component.extend(InViewportMixin, {
   features: service(),
   flashes: service(),
   router: service(),
+  storage: service(),
 
   tagName: 'header',
   classNames: ['top'],
@@ -21,13 +22,17 @@ export default Component.extend(InViewportMixin, {
   isWhite: false,
   landingPage: false,
   isNavigationOpen: false,
+  isActivation: false,
 
   activeModel: null,
   model: reads('activeModel'),
 
   user: reads('auth.currentUser'),
   isUnconfirmed: computed('user.confirmedAt', function () {
-    if (!this.user)
+    if (!this.user ||
+        (this.storage.wizardStep > 0 && this.storage.wizardStep <= 1) ||
+        this.router.currentRouteName == 'first_sync' ||
+        this.router.currentRouteName == 'github_apps_installation')
       return false;
     return !this.user.confirmedAt;
   }),

@@ -40,6 +40,36 @@
       <div class="help-duo-image" data-test-help-page-resources-image>
         <SvgImage @name="docs" />
       </div>
+
+      {{#if this.isBilling}}
+      <div class="help-duo-text">
+        <h1 class="header-main header-billing" data-test-help-page-resources-header>
+          Hosted Billing
+        </h1>
+        <div class="page-notice page-notice-billing" data-test-help-page-navigation-links>
+          If you have problems with billing, please check the Billing section
+          in the documentation or fill out the form below
+          <br/>
+        </div>
+        <ul class="help-duo-list help-duo-list-billing" data-test-help-page-resources-list>
+          <li>
+            <ExternalLinkTo @href={{this.billingOverviewUrl}}>
+              Billing Overview
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo @href={{this.autoRefillUrl}}>
+              Auto-refill
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo @href={{this.faqUrl}}>
+              FAQ
+            </ExternalLinkTo>
+          </li>
+        </ul>
+      </div>
+      {{else}}
       <div class="help-duo-text">
         <h1 class="header-main" data-test-help-page-resources-header>
           Handy Resources
@@ -79,8 +109,20 @@
           Check Our Documentation
         </ExternalLinkTo>
       </div>
+      {{/if}}
     </div>
   </layout.section>
+  <layout.section
+    @hasBackground={{false}}
+    class="help-page__support"
+    data-test-help-page-support-section="true"
+  >
+    {{#if this.toForm}}
+      <ScrollHere />
+    {{/if}}
+    <ZendeskRequestForm @page={{this.page}} @utmParams={{this.utmParams}} />
+  </layout.section>
+
   <layout.section
     class="help-page__topics"
     data-test-help-page-topics-section="true"
@@ -109,15 +151,5 @@
         <SvgImage @name="community" />
       </div>
     </div>
-  </layout.section>
-  <layout.section
-    @hasBackground={{false}}
-    class="help-page__support"
-    data-test-help-page-support-section="true"
-  >
-    {{#if this.toForm}}
-      <ScrollHere />
-    {{/if}}
-    <ZendeskRequestForm @page={{this.page}} @utmParams={{this.utmParams}} />
   </layout.section>
 </TravisLayout>

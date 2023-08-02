@@ -21,6 +21,7 @@ Router.map(function () {
   this.route('search', { path: '/search/:phrase' });
 
   this.route('first_sync');
+  this.route('account_activation');
   this.route('insufficient_oauth_permissions');
   this.route('signin');
   this.route('signup');
@@ -41,6 +42,7 @@ Router.map(function () {
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/plan' });
     this.route('plan_usage', { path: '/plan/usage' });
+    this.route('payment_details', { path: '/payment-details' });
     this.route('migrate');
   });
   this.route('organization', { path: '/organizations/:login' }, function () {
@@ -48,6 +50,7 @@ Router.map(function () {
     this.route('settings', { path: '/preferences' });
     this.route('billing', { path: '/plan' });
     this.route('plan_usage', { path: '/plan/usage' });
+    this.route('payment_details', { path: '/payment-details' });
     this.route('migrate');
   });
   this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });

@@ -7,6 +7,10 @@ export default Model.extend({
   userUsage: attr('boolean'),
   pendingUserLicenses: attr('boolean'),
   concurrencyLimit: attr('number'),
+  paymentChangesBlockCredit: attr('boolean'),
+  paymentChangesBlockCaptcha: attr('boolean'),
+  creditCardBlockDuration: attr('number'),
+  captchaBlockDuration: attr('number'),
 
   owner: belongsTo('owner')
 });

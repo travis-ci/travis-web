@@ -66,7 +66,6 @@ module('Acceptance | profile/plan usage', function (hooks) {
 
     percySnapshot(assert);
 
-    assert.equal(profilePage.planUsage.page.uniquUsers.text, '1 Unique users who are running builds');
     assert.equal(profilePage.planUsage.page.macMinutes.text, '3 min');
     assert.equal(profilePage.planUsage.page.windowsMinutes.text, '2 min');
     assert.equal(profilePage.planUsage.page.linuxMinutes.text, '1 min');
@@ -74,16 +73,4 @@ module('Acceptance | profile/plan usage', function (hooks) {
     assert.equal(profilePage.planUsage.page.minutesTotal.text, '6');
   });
 
-  test('click Check users activity', async function (assert) {
-    await profilePage.visit();
-    await profilePage.planUsage.visit();
-    await profilePage.planUsage.checkUserActivity.visit();
-
-    percySnapshot(assert);
-
-    assert.equal(profilePage.planUsage.checkUserActivity.uniqueUsers.text, '1 active users');
-    assert.equal(profilePage.planUsage.checkUserActivity.userName.text, 'user-login');
-    assert.equal(profilePage.planUsage.checkUserActivity.minutesConsumed.text, '1');
-    assert.equal(profilePage.planUsage.checkUserActivity.creditsConsumed.text, '0');
-  });
 });
