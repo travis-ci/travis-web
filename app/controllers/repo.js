@@ -16,7 +16,8 @@ export default Controller.extend({
   features: service(),
   updateTimesService: service('updateTimes'),
 
-  queryParams: ['migrationStatus'],
+  queryParams: ['migrationStatus', 'serverType'],
+  serverType: null,
   migrationStatus: null,
 
   jobController: controller('job'),
