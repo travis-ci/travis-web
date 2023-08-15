@@ -29,11 +29,11 @@ export default V3Adapter.extend({
 
       // fetch repo by slug
       if (!id && slug) {
+        let url = `${prefix}/repo/${providerPrefix}${encodeURIComponent(slug)}`;
         if (serverType) {
-          return `${prefix}/repo/${providerPrefix}${encodeURIComponent(slug)}?server_type=${serverType}`;
-        } else {
-          return `${prefix}/repo/${providerPrefix}${encodeURIComponent(slug)}`;
+          url = `${url}?server_type=${serverType}`;
         }
+        return url;
       }
 
       if (custom && custom.type === 'byOwner') {
