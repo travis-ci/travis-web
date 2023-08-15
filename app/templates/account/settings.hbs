@@ -105,7 +105,10 @@
           {{#each this.unsubscribedRepos as |repo|}}
             <div class="row" data-test-email-settings-resubscribe-item>
               <div class="name">
-                <LinkTo @route="repo" @models={{array repo.provider repo.urlOwnerName repo.urlName}}>
+                <LinkTo
+                  @route="repo" @models={{array repo.provider repo.urlOwnerName repo.urlName}}
+                  @query={{hash serverType=repo.serverType}}
+                >
                   {{repo.formattedSlug}}
                 </LinkTo>
               </div>

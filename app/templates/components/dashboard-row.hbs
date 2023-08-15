@@ -33,6 +33,7 @@
           @route="repo"
           @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
           @title={{this.repo.name}}
+          @query={{hash serverType=this.repo.serverType}}
         >
           {{this.repo.name}}
           {{#if this.repo.shared}}
