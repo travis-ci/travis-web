@@ -93,6 +93,8 @@ Router.map(function () {
   this.route('legacy-repo-url', { path: '/:owner/:repo/:method' });
   this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id' });
   this.route('legacy-repo-url', { path: '/:owner/:repo/:method/:id/:view' });
+  this.route('legacy-repo-url', { path: '/:provider/:owner/:repo/:serverType/:method/:id' });
+  this.route('legacy-repo-url', { path: '/:provider/:owner/:repo/:serverType/:method/:id/:view' });
 
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
