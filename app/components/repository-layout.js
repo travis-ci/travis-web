@@ -15,6 +15,21 @@ export default Component.extend({
   userRoMode: reads('currentUser.roMode'),
   scansEnabled: reads('features.logScanner'),
 
+  repositoryProvider: computed('repo.provider', function () {
+    return this.repo.provider.capitalize();
+  }),
+
+  repositoryType: computed('repo.serverType', function () {
+    switch (this.repo.serverType) {
+      case 'git':
+        return 'GIT';
+      case 'subversion':
+        return 'SVN';
+      case 'perforce':
+        return 'P4';
+    }
+  }),
+
   repoUrl: computed('repo.{ownerName,vcsName,vcsType}', function () {
     const owner = this.get('repo.ownerName');
     const repo = this.get('repo.vcsName');

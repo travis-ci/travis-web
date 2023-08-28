@@ -52,10 +52,10 @@ export default TravisRoute.extend(ScrollResetMixin, {
     return { provider, owner, name };
   },
 
-  model({ provider, owner, name }) {
+  model({ provider, owner, name, serverType }) {
     const slug = `${owner}/${name}`;
     this.set('slug', slug);
-    return Repo.fetchBySlug(this.store, slug, provider);
+    return Repo.fetchBySlug(this.store, slug, provider, serverType);
   },
 
   beforeModel() {

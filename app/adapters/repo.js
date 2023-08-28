@@ -19,16 +19,21 @@ export default V3Adapter.extend({
     const prefix = this.urlPrefix();
 
     if (query) {
-      const { provider, slug, custom } = query;
+      const { provider, slug, serverType, custom } = query;
       const providerPrefix = provider ? `${provider}/` : '';
 
       delete query.provider;
       delete query.slug;
       delete query.custom;
+      delete query.serverType;
 
       // fetch repo by slug
       if (!id && slug) {
-        return `${prefix}/repo/${providerPrefix}${encodeURIComponent(slug)}`;
+        let url = `${prefix}/repo/${providerPrefix}${encodeURIComponent(slug)}`;
+        if (serverType) {
+          url = `${url}?server_type=${serverType}`;
+        }
+        return url;
       }
 
       if (custom && custom.type === 'byOwner') {

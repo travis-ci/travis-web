@@ -24,6 +24,7 @@
         <LinkTo
           @route="repo"
           @models={{array this.build.repo.provider this.build.repo.urlOwnerName this.build.repo.urlName}}
+          @query={{hash serverType=this.build.repo.serverType}}
           class="inner-underline"
         >
           {{this.build.repo.name}}

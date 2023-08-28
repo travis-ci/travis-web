@@ -104,6 +104,10 @@ export default Component.extend({
   isNewSubscription: not('subscription.id'),
 
   creditCardInfo: null,
+<<<<<<< HEAD
+=======
+  creditCardOwner: null,
+>>>>>>> master
 
   creditCardInfoEmpty: computed('subscription.creditCardInfo', function () {
     return !this.creditCardInfo.lastDigits;
@@ -123,12 +127,21 @@ export default Component.extend({
     return text;
   }),
 
+<<<<<<< HEAD
   canActivate: computed('country', 'zipCode', 'address', 'lastName', 'firstName', 'city', 'stripeElement', 'billingEmail', function () {
     let valid = (val) => !(val === null || val.trim() === '');
     return valid(this.billingEmail) && valid(this.country) &&
            valid(this.zipCode) && valid(this.address) &&
            valid(this.lastName) && valid(this.firstName) &&
            this.stripeElement && valid(this.city);
+=======
+  canActivate: computed('country', 'zipCode', 'address', 'creditCardOwner', 'city', 'stripeElement', 'billingEmail', function () {
+    let valid = (val) => !(val === null || val.trim() === '');
+    return valid(this.billingEmail) && valid(this.country) &&
+           valid(this.zipCode) && valid(this.address) &&
+           valid(this.creditCardOwner) && this.stripeElement &&
+           valid(this.city);
+>>>>>>> master
   }),
 
   createSubscription: task(function* () {
@@ -200,6 +213,18 @@ export default Component.extend({
     const plan = this.store.createRecord('v2-plan-config');
     const billingInfo = this.store.createRecord('v2-billing-info');
     const creditCardInfo = this.store.createRecord('v2-credit-card-info');
+<<<<<<< HEAD
+=======
+    let ownerName = this.creditCardOwner.trim();
+    let idx = ownerName.lastIndexOf(' ');
+    if (idx > 0) {
+      this.firstName = ownerName.substr(0, idx);
+      this.lastName = ownerName.substr(idx + 1);
+    } else {
+      this.firstName = '';
+      this.lastName = ownerName;
+    }
+>>>>>>> master
     let empty = (val) => val === null || val.trim() === '';
     if (empty(this.lastName) || empty(this.address) ||
         empty(this.city) || empty(this.zipCode) ||
