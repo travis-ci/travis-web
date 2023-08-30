@@ -164,7 +164,7 @@ export default Component.extend({
               this.set('limited', true);
             }
           });
-      });
+        });
       this.engine = Log.create({
         listeners: [this.scroll, this.limit]
       });
