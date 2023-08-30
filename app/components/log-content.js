@@ -77,8 +77,8 @@ export default Component.extend({
   router: service(),
   scroller: service(),
 
-  globalEnv: reads('build.request.config.env.global'),
-  jobEnv: reads('build.request.config.env.jobs'),
+  globalEnv: reads('job.build.content.request.content.config.env.global'),
+  jobEnv: reads('job.build.content.request.content.config.env.jobs'),
 
   jobEnvVars: computed('globalEnv', 'jobEnv', function () {
     const envMap = {};
