@@ -11,7 +11,7 @@ import config from 'travis/config/environment';
 
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and } from '@ember/object/computed';
+import { alias, and, reads} from '@ember/object/computed';
 
 const SELECTORS = {
   CONTENT: '.log-body-content',
@@ -77,6 +77,21 @@ export default Component.extend({
   router: service(),
   scroller: service(),
 
+  globalEnv: reads('build.request.config.env.global'),
+  jobEnv: reads('build.request.config.env.job'),
+
+  jobEnvVars: computed('globalEnv', 'jobEnv', function () {
+    const envMap = {};
+    [(this.globalEnv || []), (this.jobEnv || [])].forEach(envList => {
+      envList.forEach(vars => {
+        Object.entries(vars).forEach(([key, value]) => {
+          envMap[key] = value;
+        });
+      });
+    });
+    return envMap;
+  }),
+
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
 
@@ -140,12 +155,15 @@ export default Component.extend({
           this.unfoldHighlight();
         }
       });
-      this.limit = new Log.Limit(Log.LIMIT, () => {
-        run(() => {
-          if (!this.isDestroying) {
-            this.set('limited', true);
-          }
-        });
+      let logLimit = this.jobEnvVars['log_limit'] || Log.LIMIT;
+      this.limit = new Log.Limit(
+        logLimit,
+        () => {
+          run(() => {
+            if (!this.isDestroying) {
+              this.set('limited', true);
+            }
+          });
       });
       this.engine = Log.create({
         listeners: [this.scroll, this.limit]
