@@ -78,7 +78,7 @@ export default Component.extend({
   scroller: service(),
 
   globalEnv: reads('build.request.config.env.global'),
-  jobEnv: reads('build.request.config.env.job'),
+  jobEnv: reads('build.request.config.env.jobs'),
 
   jobEnvVars: computed('globalEnv', 'jobEnv', function () {
     const envMap = {};
