@@ -32,7 +32,7 @@ export default Component.extend({
     },
 
     regenerateToken() {
-      this.api.patch(`/access_token`).then((data) => {
+      this.api.patch('/access_token').then((data) => {
         this.auth.handleTokenRegeneration(data['token']);
 
         this.flashes.success('Token successfully regenerated!');
