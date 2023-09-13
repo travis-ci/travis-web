@@ -35,6 +35,29 @@ export default Component.extend({
     return !(com || enterprise);
   }),
 
+  hasEmailSubscription: computed('repository', 'repository.emailSubscribed', function () {
+    return this.repository.emailSubscribed;
+  }),
+
+  emailSubscriptionDescription: computed('repository', 'repository.emailSubscribed', function () {
+    return `${this.repository.emailSubscribed ? 'Disable ' : 'Enable '} build mails for ${this.repository.name}`;
+  }),
+
+  toggleRepositoryEmailSubscription: task(function* () {
+    const repository = this.repository;
+    try {
+      if (repository.emailSubscribed) {
+        yield repository.unsubscribe.perform();
+      } else {
+        yield repository.subscribe.perform();
+      }
+      yield repository.reload();
+    } catch (error) {
+      this.set('apiError', error);
+    }
+  }),
+
+
   actions: {
 
     close() {

@@ -8,12 +8,21 @@
       @subscription={{this.subscription}} @account={{this.account}} @showPlansSelector={{true}}
       @showAddonsSelector={{false}} @next={{action 'closePlansModal' }} @showCancelButton={{this.showCancelButton}} />
   </Modal>
-  <div class='full-width form-elem'>
-    <form.field @label="Name on Card" @value={{this.creditCardOwner}} @onChange={{action (mut this.creditCardOwner)}}
-      onSubmit={{perform this.createSubscription}} @required={{true}} @showRequiredMark={{true}} as |field|>
-      <field.input @type="text" />
-    </form.field>
+  <div class='flex flex--col flex-md-row form-elem'>
+    <div class='full-width form-elem inline-form-elem'>
+      <form.field @label='First Name' @value={{this.firstName}} @required={{true}} @showRequiredMark={{true}}
+        @showValidationStatusIcons={{false}} @onChange={{action (mut this.firstName)}} as |Field|>
+        <Field.input @name='first_name' />
+      </form.field>
+    </div>
+    <div class='full-width form-elem'>
+      <form.field @label='Last Name' @value={{this.lastName}} @required={{true}} @showRequiredMark={{true}}
+        @showValidationStatusIcons={{false}} @onChange={{action (mut this.lastName)}} as |Field|>
+        <Field.input @name='last_name' />
+      </form.field>
+    </div>
   </div>
+
 
   <div class='full-width cc-form-elem'>   
     <form.field @label="Credit Card details"
