@@ -29,6 +29,7 @@
         <LinkTo
           @route="repo"
           @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
+          @query={{hash serverType=this.repo.serverType}}
           @target="_blank"
           class="repo-link repo-slug"
         >
@@ -72,6 +73,7 @@
         <LinkTo
           @route="repo"
           @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
+          @query={{hash serverType=this.repo.serverType}}
           @tagName="button"
           @disabled={{this.task.isRunning}}
           class="no-button control"

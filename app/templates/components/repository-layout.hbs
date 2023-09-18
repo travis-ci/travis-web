@@ -9,7 +9,10 @@
           {{this.repo.owner.login}}
         </LinkTo>
         /
-        <LinkTo @route="repo" @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}} >
+        <LinkTo
+          @route="repo" @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
+          @query={{hash serverType=this.repo.serverType}}
+        >
           {{this.repo.name}}
         </LinkTo>
       </h1>

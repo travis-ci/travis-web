@@ -226,6 +226,7 @@ $profile-breakpoint: 600px;
 
   .profile-repo-name {
     height: 21px;
+    white-space: nowrap;
     overflow: hidden;
   }
 

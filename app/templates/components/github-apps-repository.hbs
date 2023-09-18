@@ -2,7 +2,7 @@
 <LinkTo
   @route="repo"
   @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}
-  @query={{this.hash}}
+  @query={{hash serverType=this.repository.serverType}}
   class="profile-repo"
 >
   <span class="profile-repo-name">{{this.name}}</span>
