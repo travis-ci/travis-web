@@ -24,23 +24,19 @@ export default Component.extend({
     'branch.repository.slug',
     'branch.last_build.commit.sha',
     'vcsType',
-    'branch.repository.{ownerName,vcsName,vcsType,vcsId}',
+    'vcsId',
     function () {
       const [owner, repo] = this.get('branch.repository.slug').split('/');
       const vcsType = this.get('vcsType');
+      const commit = this.get('branch.last_build.commit.sha');
+      const slugOwner = this.get('branch.repository.slug').split('/')[0];
       if (vcsType.startsWith('Assembla')) {
-        const owner = this.get('branch.repository.ownerName');
-        const repo = this.get('branch.repository.vcsName');
-        const vcsType = this.get('branch.repository.vcsType');
-        const vcsId = this.get('branch.repository.vcsId');
-        const commit = this.get('branch.last_build.commit.sha');
-        const slugOwner = this.get('branch.repository.slug').split('/')[0];
+        const owner = repo.split('.')[0];
+        const vcsId = this.get('vcsId');
 
         return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId, slugOwner });
       }
 
-      const commit = this.get('branch.last_build.commit.sha');
-      const slugOwner = this.get('branch.repository.slug').split('/')[0];
       return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, slugOwner });
     }
   ),
