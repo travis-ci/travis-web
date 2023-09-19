@@ -5,6 +5,7 @@ const deepFreeze = require('deep-freeze');
 
 const {
   GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL,
+  ENDPOINT_PORTFOLIO,
   DEFAULT_PROVIDER
 } = process && process.env || {};
 
@@ -37,7 +38,7 @@ module.exports = deepFreeze({
     isDefault: DEFAULT_PROVIDER === 'assembla',
     isBeta: true,
     vcsTypes: [VCS_TYPES.ASSEMBLA.ORG, VCS_TYPES.ASSEMBLA.REPO, VCS_TYPES.ASSEMBLA.USER],
-    endpointPortfolio: 'https://{portfolio}.assembla.com',
+    endpointPortfolio: ENDPOINT_PORTFOLIO,
     endpoint: 'https://app.assembla.com',
     icon: 'icon-assembla',
     name: 'Assembla',
