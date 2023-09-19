@@ -20,13 +20,30 @@ export default Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  commitUrl: computed('branch.repository.slug', 'branch.last_build.commit.sha', 'vcsType', function () {
-    const [owner, repo] = this.get('branch.repository.slug').split('/');
-    const vcsType = this.get('vcsType');
-    const commit = this.get('branch.last_build.commit.sha');
-    const slugOwner = this.get('branch.repository.slug').split('/')[0];
-    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, slugOwner });
-  }),
+  commitUrl: computed(
+    'branch.repository.slug',
+    'branch.last_build.commit.sha',
+    'vcsType',
+    'branch.repository.{ownerName,vcsName,vcsType,vcsId}',
+    function () {
+      const [owner, repo] = this.get('branch.repository.slug').split('/');
+      const vcsType = this.get('vcsType');
+      if (vcsType.startsWith('Assembla')) {
+        const owner = this.get('branch.repository.ownerName');
+        const repo = this.get('branch.repository.vcsName');
+        const vcsType = this.get('branch.repository.vcsType');
+        const vcsId = this.get('branch.repository.vcsId');
+        const commit = this.get('branch.last_build.commit.sha');
+        const slugOwner = this.get('branch.repository.slug').split('/')[0];
+
+        return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId, slugOwner });
+      }
+
+      const commit = this.get('branch.last_build.commit.sha');
+      const slugOwner = this.get('branch.repository.slug').split('/')[0];
+      return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, slugOwner });
+    }
+  ),
 
   vcsType: computed('branch.repository.id', function () {
     const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
