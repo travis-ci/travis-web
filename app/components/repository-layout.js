@@ -13,6 +13,7 @@ export default Component.extend({
   isShowingStatusBadgeModal: false,
   currentUser: alias('auth.currentUser'),
   userRoMode: reads('currentUser.roMode'),
+  scansEnabled: reads('features.logScanner'),
 
   repositoryProvider: computed('repo.provider', function () {
     return this.repo.provider.capitalize();

@@ -2,11 +2,12 @@ import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { alias, reads } from '@ember/object/computed';
 
 export default Component.extend({
   auth: service(),
   tabStates: service(),
+  features: service(),
 
   tagName: 'nav',
   classNames: ['travistab-nav'],
@@ -14,6 +15,8 @@ export default Component.extend({
   config,
 
   tab: alias('tabStates.mainTab'),
+
+  scansEnabled: reads('features.logScanner'),
 
   classCurrent: computed('tab', function () {
     let tab = this.tab;
