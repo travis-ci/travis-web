@@ -28,6 +28,8 @@
       @onToggle={{perform this.toggleRepositoryTask}}
     />
   {{/if}}
+{{/if}}
+{{#if this.hasSettingsPermission}}
   <LinkTo
     @route="settings"
     @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}
