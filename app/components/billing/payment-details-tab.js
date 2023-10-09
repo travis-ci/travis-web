@@ -91,6 +91,7 @@ export default Component.extend({
       });
       if (token) {
         paymentDetails['token'] = token.id;
+        paymentDetails['fingerprint'] = token.card.fingerprint;
       }
       const endpoint = this.isV2SubscriptionEmpty ? 'subscription' : 'v2_subscription';
       yield this.api.patch(`/${endpoint}/${subscription.id}/payment_details`, {
