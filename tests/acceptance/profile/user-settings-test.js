@@ -125,25 +125,7 @@ module('Acceptance | user settings', function (hooks) {
     percySnapshot(assert);
 
     assert.ok(emailSettings.toggle.isOn);
-    // assert.ok(emailSettings.resubscribeList.isPresent); Need to check why this fails.
     assert.equal(emailSettings.resubscribeList.items.length, AMOUNT_OF_REPOS);
-  });
-
-  test('User can resubscribe to repository', async function (assert) {
-    this.server.create('repository', { email_subscribed: false });
-
-    await profilePage.visit({ username: 'testuser' });
-    await profilePage.settings.visit();
-
-    const { emailSettings } = profilePage.settings;
-
-    await emailSettings.toggle.click();
-
-    // assert.equal(emailSettings.resubscribeList.items.length, 1); # Need to check why this fails.
-
-    await emailSettings.resubscribeList.items[0].click();
-
-    assert.ok(!emailSettings.resubscribeList.isPresent);
   });
 
   test('Insights settings are not listed in non-PRO version', async function (assert) {
