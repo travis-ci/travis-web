@@ -109,6 +109,10 @@ export default Service.extend({
 
   isBecome: computed(() => !!storage.getItem('travis.auth.become')),
 
+  setRegeneratedToken(token) {
+    storage.setItem('travis.token', token);
+  },
+
   clearLoginData() {
     storage.removeItem('travis.token');
     storage.removeItem('travis.user');
