@@ -198,7 +198,7 @@
   overflow: hidden;
 
   @media #{$medium-up} {
-    flex: 1 2 15%;
+    flex: 1 2 10%;
     position: relative;
     padding: 0.3em 0.5em 0.5em 0.7em;
     align-self: flex-start;
@@ -221,6 +221,22 @@
   @media #{$medium-up} {
     position: relative;
     flex-basis: 6em;
+    padding: 0.3em 0.3em 0.5em 0.7em;
+    align-self: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.job-server-type {
+  overflow: hidden;
+  min-width: 25px;
+
+  @media #{$medium-up} {
+    position: relative;
+    flex-basis: 6em;
+    flex: 1 2 15%;
     padding: 0.3em 0.3em 0.5em 0.7em;
     align-self: flex-start;
     white-space: nowrap;

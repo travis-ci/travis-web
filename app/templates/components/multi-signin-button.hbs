@@ -60,6 +60,15 @@
             <SvgImage @name={{vcs-icon 'GitlabUser'}} @class="fill-current w-5 h-5 ml-2" />
           </button>
         {{/if}}
+        {{#if this.multiVcs.enableTravisProxyLogin}}
+          <button
+            class='multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center'
+            {{on 'click' (action this.signInWith 'travisproxy')}}
+          >
+            With Travis CI VCS Proxy
+            <SvgImage @name={{vcs-icon 'TravisproxyUser'}} @class='fill-current w-5 h-5 ml-2' />
+          </button>
+        {{/if}}
       </div>
     </AnimatedIf>
   </div>
