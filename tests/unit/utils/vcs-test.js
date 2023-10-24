@@ -19,7 +19,7 @@ module('Unit | Utils | vcsName', function () {
   });
 
   test('it handles Travisproxy', function (assert) {
-    assert.equal(vcsName('TravisproxyRepository'), 'Travisproxy');
+    assert.equal(vcsName('TravisproxyRepository'), 'Travis CI VCS Proxy');
   });
 
   test('it returns default provider when vcs is not found in providers', function (assert) {

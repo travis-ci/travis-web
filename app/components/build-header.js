@@ -105,7 +105,8 @@ export default Component.extend({
   serverTypeIcon: reads('item.repo.serverType'),
 
   serverType: computed('item.repo.serverType', function () {
-    let serverType = this.item.repo.get('serverType');
+    if (!serverType) return '';
+    let serverType = this.get('item.repo.serverType');
     if (serverType === 'svn') {
       return 'SVN';
     } else {

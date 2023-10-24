@@ -174,7 +174,7 @@ module.exports = deepFreeze({
       accessSettings: '/',
     },
     vocabulary: {
-      organization: 'Organization',
+      organization: 'VCS Server',
       pullRequest: 'Merge Request',
       pr: 'MR',
     },

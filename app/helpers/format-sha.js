@@ -4,7 +4,7 @@ import formatSha from 'travis/utils/format-sha';
 
 export default helper((params) => {
   let [sha] = params;
-  if (sha.includes('@')) sha = sha.split('@')[1];
+  if (sha && sha.includes('@')) sha = sha.split('@')[1];
   const formattedSha = formatSha(sha);
   return new htmlSafe(formattedSha);
 });
