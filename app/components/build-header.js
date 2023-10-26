@@ -102,6 +102,18 @@ export default Component.extend({
     }
   }),
 
+  serverTypeIcon: reads('item.repo.serverType'),
+
+  serverType: computed('item.repo.serverType', function () {
+    if (!serverType) return '';
+    let serverType = this.get('item.repo.serverType');
+    if (serverType === 'svn') {
+      return 'SVN';
+    } else {
+      return serverType.capitalize();
+    }
+  }),
+
   languages: computed('jobsConfig.content', function () {
     let config = this.get('jobsConfig.content');
     return jobConfigLanguage(config);
