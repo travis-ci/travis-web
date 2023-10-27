@@ -61,7 +61,7 @@ export default Component.extend({
   },
 
   didRender() {
-    const repo = this.get('repo');
+    const repo = this.repo;
 
     if (repo.hasBuildBackups === undefined) {
       repo.fetchInitialBuildBackups.perform();

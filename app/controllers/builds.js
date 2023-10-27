@@ -35,7 +35,7 @@ export default Controller.extend(...mixins, {
   hasBuildBackups: reads('repo.hasBuildBackups'),
 
   displayShowMoreButton: computed('tab', 'loadMoreBuilds.isRunning', 'builds', function () {
-    const builds = this.get('builds');
+    const builds = this.builds;
     let tab = this.tab;
 
     if (this.oldBuilds.length === builds.length) {

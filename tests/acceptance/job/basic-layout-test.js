@@ -5,7 +5,7 @@ import {
   waitFor,
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import { percySnapshot } from 'ember-percy';
 
@@ -16,7 +16,7 @@ import config from 'travis/config/environment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | job/basic layout', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

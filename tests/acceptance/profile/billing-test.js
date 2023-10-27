@@ -1,5 +1,5 @@
 import { module, skip, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import moment from 'moment';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -16,7 +16,7 @@ import {
 
 
 module('Acceptance | profile/billing', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

@@ -18,12 +18,12 @@ export default Component.extend({
   selectPlan: null,
 
   bestPlan: computed('totalCredits', 'plans.[]', function () {
-    return this.get('plans').find(item => item.annual === this.get('isAnnual') && item.get('privateCredits') > this.get('totalCredits'));
+    return this.plans.find(item => item.annual === this.isAnnual && item.get('privateCredits') > this.totalCredits);
   }),
 
   totalPrice: computed('configurations.[]', function () {
     let sum = 0;
-    for (const configuration of this.get('configurations')) {
+    for (const configuration of this.configurations) {
       sum += configuration.price;
     }
 
@@ -32,7 +32,7 @@ export default Component.extend({
 
   totalCredits: computed('configurations.[]', function () {
     let sum = 0;
-    for (const configuration of this.get('configurations')) {
+    for (const configuration of this.configurations) {
       sum += configuration.credits;
     }
 
@@ -44,7 +44,7 @@ export default Component.extend({
       users: this.users,
       executions: []
     };
-    for (const build of this.get('builds')) {
+    for (const build of this.builds) {
       if (build.os.value !== undefined && parseInt(build.minutes) > 0) {
         let execution = {
           os: build.os.value,
@@ -65,7 +65,7 @@ export default Component.extend({
 
     this.api.post('/credits_calculator', { data })
       .then((result) => {
-        this.get('configurations').clear();
+        this.configurations.clear();
         for (const creditResult of result.credits_results) {
           let config = {
             credits: creditResult.credits,
@@ -97,7 +97,7 @@ export default Component.extend({
             }
           }
 
-          this.get('configurations').pushObject(config);
+          this.configurations.pushObject(config);
         }
       });
   },
@@ -121,23 +121,23 @@ export default Component.extend({
           }
         }
 
-        this.get('builds').clear();
-        this.get('builds').pushObject({ os: selectedOs, vmSize: selectedVmSize, minutes: result.minutes });
+        this.builds.clear();
+        this.builds.pushObject({ os: selectedOs, vmSize: selectedVmSize, minutes: result.minutes });
         this.set('users', result.users);
         this.calculate();
       });
   },
 
   addBuild() {
-    this.get('builds').pushObject({ os: {}, vmSize: {}, minutes: '' });
+    this.builds.pushObject({ os: {}, vmSize: {}, minutes: '' });
   },
 
   close() {
     this.hideCalculator();
-    this.get('builds').clear();
+    this.builds.clear();
     this.addBuild();
     this.set('users', '');
-    this.get('configurations').clear();
+    this.configurations.clear();
   },
 
   actions: {
@@ -160,7 +160,7 @@ export default Component.extend({
     },
 
     selectPlan() {
-      this.set('selectedPlan', this.get('bestPlan'));
+      this.set('selectedPlan', this.bestPlan);
       this.close();
       this.selectPlan(this.form);
     },

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { settled, visit, getContext } from '@ember/test-helpers';
 import sidebarPage from 'travis/tests/pages/sidebar';
 import jobPage from 'travis/tests/pages/job';
@@ -20,7 +20,7 @@ const repositoryTemplate = {
 };
 
 module('Acceptance | home/with repositories', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

@@ -1,5 +1,8 @@
 import { Promise as EmberPromise, resolve } from 'rsvp';
-import EmberObject, { computed, defineProperty } from '@ember/object';
+import EmberObject, {
+  computed,
+  defineProperty
+} from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import stringHash from 'travis/utils/string-hash';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';

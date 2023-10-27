@@ -53,7 +53,7 @@ export default Model.extend({
     const owner = this.get('build.repo.ownerName');
     const repo = this.get('build.repo.vcsName');
     const vcsType = this.get('build.repo.vcsType');
-    const commit = this.get('sha');
+    const commit = this.sha;
 
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),

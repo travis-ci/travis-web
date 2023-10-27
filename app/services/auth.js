@@ -17,7 +17,10 @@ import {
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
 import { task, didCancel } from 'ember-concurrency';
-import { availableProviders, vcsConfigByUrlPrefixOrType } from 'travis/utils/vcs';
+import {
+  availableProviders,
+  vcsConfigByUrlPrefixOrType
+} from 'travis/utils/vcs';
 
 const { authEndpoint, apiEndpoint } = config;
 

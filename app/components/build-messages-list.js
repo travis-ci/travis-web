@@ -21,7 +21,7 @@ export default Component.extend(WithConfigValidation, {
   messages: reads('request.messages'),
 
   toggleStatusClass: computed('isExpanded', function () {
-    return this.get('isExpanded') ? 'expanded' : 'collapsed';
+    return this.isExpanded ? 'expanded' : 'collapsed';
   }),
 
   sortedMessages: sort('request.messages', (lft, rgt) =>
@@ -33,11 +33,11 @@ export default Component.extend(WithConfigValidation, {
   }),
 
   iconClass: computed('maxLevel', function () {
-    return `icon icon-${this.get('maxLevel')}`;
+    return `icon icon-${this.maxLevel}`;
   }),
 
   summary: computed('sortedMessages', function () {
-    let counts = countBy(this.get('sortedMessages'), 'level');
+    let counts = countBy(this.sortedMessages, 'level');
     if (Object.entries(counts).length > 0) {
       return Object.entries(counts).map((entry) => formatLevel(...entry)).join(', ');
     }

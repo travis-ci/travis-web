@@ -4,7 +4,13 @@ import { inject as service } from '@ember/service';
 import { not, reads, filterBy, alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
-import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
+import {
+  countries,
+  states,
+  zeroVatThresholdCountries,
+  nonZeroVatThresholdCountries,
+  stateCountries
+} from 'travis/utils/countries';
 
 export default Component.extend({
   stripe: service(),

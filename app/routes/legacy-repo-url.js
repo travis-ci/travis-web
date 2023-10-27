@@ -1,5 +1,8 @@
 import Route from '@ember/routing/route';
-import { vcsConfigByUrlPrefix, defaultVcsConfig } from 'travis/utils/vcs';
+import {
+  vcsConfigByUrlPrefix,
+  defaultVcsConfig
+} from 'travis/utils/vcs';
 import { isEmpty } from '@ember/utils';
 
 export default Route.extend({

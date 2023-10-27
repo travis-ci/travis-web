@@ -2,7 +2,7 @@ import { underscore } from '@ember/string';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { isNone, typeOf } from '@ember/utils';
-import JSONSerializer from 'ember-data/serializers/json';
+import JSONSerializer from '@ember-data/serializer/json';
 import wrapWithArray from 'travis/utils/wrap-with-array';
 import traverse from 'travis/utils/traverse-payload';
 

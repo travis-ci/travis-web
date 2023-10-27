@@ -1,6 +1,6 @@
 import { click, currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import Service from '@ember/service';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { stubService } from 'travis/tests/helpers/stub-service';
@@ -16,7 +16,7 @@ const SELECTORS = {
 };
 
 module('Acceptance | sign up', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   test('visiting /signup shows signup page if unauthenticated', async function (assert) {

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import Store from 'ember-data/store';
+import Store from '@ember-data/store';
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 import { inject as service } from '@ember/service';
 import FilteredArrayManager from 'travis/utils/filtered-array-manager';

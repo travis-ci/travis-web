@@ -1,5 +1,5 @@
 import RepoV2FallbackSerializer from 'travis/serializers/repo_v2_fallback';
-import EmbeddedRecordsMixin from 'ember-data/serializers/embedded-records-mixin';
+import { EmbeddedRecordsMixin } from '@ember-data/serializer/rest';
 
 let Serializer = RepoV2FallbackSerializer.extend(EmbeddedRecordsMixin, {
   attrs: {

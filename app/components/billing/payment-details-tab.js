@@ -5,7 +5,13 @@ import { empty, not, reads, and } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { underscore } from '@ember/string';
-import { countries, states, stateCountries, nonZeroVatThresholdCountries, zeroVatThresholdCountries } from 'travis/utils/countries';
+import {
+  countries,
+  states,
+  stateCountries,
+  nonZeroVatThresholdCountries,
+  zeroVatThresholdCountries
+} from 'travis/utils/countries';
 
 export default Component.extend({
   api: service(),
@@ -26,7 +32,7 @@ export default Component.extend({
   couponId: null,
   options: computed('disableForm', function () {
     let configStripe = config.stripeOptions;
-    configStripe['disabled'] = this.get('disableForm');
+    configStripe['disabled'] = this.disableForm;
     return configStripe;
   }),
   showSwitchToFreeModal: false,
@@ -39,7 +45,7 @@ export default Component.extend({
   isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
   hasV2Subscription: not('isV2SubscriptionEmpty'),
   subscription: computed('v1subscription', 'v2subscription', function () {
-    return this.isV2SubscriptionEmpty ? this.get('v1subscription') : this.get('v2subscription');
+    return this.isV2SubscriptionEmpty ? this.v1subscription : this.v2subscription;
   }),
   invoices: computed('v1subscription.id', 'v2subscription.id', function () {
     const subscriptionId = this.isV2SubscriptionEmpty ? this.get('v1subscription.id') : this.get('v2subscription.id');

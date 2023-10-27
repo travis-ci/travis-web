@@ -73,14 +73,7 @@
       </tbody>
     </table>
     {{#if (gt this.usersCount this.perPage)}}
-      {{pagination-links
-        currentPage=this.page
-        showFirstAndLast=false
-        lastPage=this.maxPages
-        prevPageIcon='Prev'
-        nextPageIcon='Next'
-        goToPage=(action 'setPage')
-      }}
+      <PaginationLinks @currentPage={{this.page}} @showFirstAndLast={{false}} @lastPage={{this.maxPages}} @prevPageIcon="Prev" @nextPageIcon="Next" @goToPage={{action "setPage"}} />
     {{/if}}
   </div>
 </Modal>

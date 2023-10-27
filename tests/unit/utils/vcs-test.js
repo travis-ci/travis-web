@@ -1,4 +1,10 @@
-import { vcsUrl, vcsConfig, vcsVocab, vcsIcon, availableProviders } from 'travis/utils/vcs';
+import {
+  vcsUrl,
+  vcsConfig,
+  vcsVocab,
+  vcsIcon,
+  availableProviders
+} from 'travis/utils/vcs';
 import { module, test } from 'qunit';
 
 const vcsName = (vcsType) => vcsConfig(vcsType).name;

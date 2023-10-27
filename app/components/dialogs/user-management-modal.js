@@ -55,7 +55,7 @@ export default Component.extend({
   }),
 
   isAllSelected: computed('selectedUserIds', 'buildPermissionsToShow', function () {
-    const selectedUserIds = this.get('selectedUserIds');
+    const selectedUserIds = this.selectedUserIds;
     if (Object.keys(selectedUserIds).length === 0) {
       return false;
     }

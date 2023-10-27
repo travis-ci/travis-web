@@ -1,9 +1,9 @@
-import { setupApplicationTest as _super } from 'ember-qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import signOutUser from './sign-out-user';
 
-export function setupApplicationTest(hooks) {
+export function setupApplicationTestCustom(hooks) {
   hooks.beforeEach(function () {
     signOutUser();
   });
-  return _super(...arguments);
+  return setupApplicationTest(...arguments);
 }
