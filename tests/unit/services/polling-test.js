@@ -1,6 +1,6 @@
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
-import Polling from 'travis/services/polling';
+import Polling from 'travis/services/po{{in-element}}lling';
 import config from 'travis/config/environment';
 import { Promise } from 'rsvp';
 
