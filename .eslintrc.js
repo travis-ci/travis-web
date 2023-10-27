@@ -17,6 +17,7 @@ module.exports = {
     browser: true,
     es6: true
   },
+<<<<<<< HEAD
   rules: {
     // Don't allow unused vars, but allow unused arguments
     'no-unused-vars': ['error', { 'vars': 'all', 'args': 'none', 'ignoreRestSiblings': false }],
@@ -313,6 +314,9 @@ module.exports = {
     // require regex literals to be wrapped in parentheses
     'wrap-regex': 0
   },
+=======
+  rules: {},
+>>>>>>> 16f2d5458 (v3.16.2...v3.20.2)
   overrides: [
     // node files
     {
@@ -332,6 +336,7 @@ module.exports = {
       env: {
         browser: false,
         node: true
+<<<<<<< HEAD
       }
     },
 
@@ -353,6 +358,15 @@ module.exports = {
       rules: {
         'max-len': 0,
         'no-useless-escape': 0,
+=======
+      },
+      plugins: ['node'],
+      extends: ['plugin:node/recommended'],
+      rules: {
+        // this can be removed once the following is fixed
+        // https://github.com/mysticatea/eslint-plugin-node/issues/77
+        'node/no-unpublished-require': 'off'
+>>>>>>> 16f2d5458 (v3.16.2...v3.20.2)
       }
     }
   ]

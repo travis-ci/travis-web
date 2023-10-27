@@ -1,6 +1,20 @@
 ---
 language: node_js
+<<<<<<< HEAD
 node_js: 10
+=======
+node_js:
+  - "10"
+
+dist: xenial
+
+addons:
+  chrome: stable
+
+cache:
+  directories:
+    - $HOME/.npm
+>>>>>>> 16f2d5458 (v3.16.2...v3.20.2)
 
 env:
   global:
@@ -33,6 +47,7 @@ before_script:
   - greenkeeper-lockfile-update
 
 script:
+<<<<<<< HEAD
   - if [ -z "$TRY_CONFIG" ]; then npm run lint:js; fi
   - if [ -z "$TRY_CONFIG" ]; then ember exam --reporter dot $RANDOMISE; fi
   - if [[ ! -z "$TRY_CONFIG" ]]; then ember try:one $TRY_CONFIG --skip-cleanup; fi
@@ -58,3 +73,6 @@ jobs:
   allow_failures:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
+=======
+  - npm test
+>>>>>>> 16f2d5458 (v3.16.2...v3.20.2)

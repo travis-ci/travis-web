@@ -241,9 +241,4 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     let number = this.number;
     return `${slug} #${number}`;
   }),
-
-  didLoad() {
-    if (this.number)
-      this.set('jobIdNumber', this.number);
-  }
 });
