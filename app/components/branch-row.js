@@ -22,7 +22,7 @@ export default Component.extend({
 
   commitUrl: computed('branch.repository.slug', 'branch.last_build.commit.sha', 'vcsType', function () {
     const [owner, repo] = this.get('branch.repository.slug').split('/');
-    const vcsType = this.get('vcsType');
+    const vcsType = this.vcsType;
     const commit = this.get('branch.last_build.commit.sha');
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
@@ -33,7 +33,7 @@ export default Component.extend({
   }),
 
   provider: computed('vcsType', function () {
-    return this.get('vcsType') && this.get('vcsType').toLowerCase().replace('repository', '');
+    return this.vcsType && this.vcsType.toLowerCase().replace('repository', '');
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),

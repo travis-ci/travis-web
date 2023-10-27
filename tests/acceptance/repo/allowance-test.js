@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import page from 'travis/tests/pages/repo/show';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo allowance', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

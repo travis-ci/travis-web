@@ -1,13 +1,13 @@
 import Service from '@ember/service';
 import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { stubService } from 'travis/tests/helpers/stub-service';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | auth/call gtm', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   let callCounter = 0;

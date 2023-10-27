@@ -1,6 +1,6 @@
 import { task } from 'ember-concurrency';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { visit, click } from '@ember/test-helpers';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
@@ -18,7 +18,7 @@ const RepositoriesServiceStub = RepositoriesService.extend({
 });
 
 module('Acceptance | home/sidebar tabs', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

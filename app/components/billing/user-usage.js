@@ -13,7 +13,7 @@ export default Component.extend({
   usersUsageReceived: reads('account.allowance.isFulfilled'),
   usersUsageRejected: reads('account.allowance.isRejected'),
   usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
-    const userUsage = this.get('account').get('allowance').get('userUsage');
+    const userUsage = this.account.get('allowance').get('userUsage');
     if (userUsage === undefined) {
       return true;
     }

@@ -1,7 +1,7 @@
 import { visit } from '@ember/test-helpers';
 import Ember from 'ember';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import jobPage from 'travis/tests/pages/job';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -9,7 +9,7 @@ let adapterException;
 let loggerError;
 
 module('Acceptance | job/invalid log', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

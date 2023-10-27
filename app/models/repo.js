@@ -53,7 +53,7 @@ const Repo = VcsEntity.extend({
   serverType: attr('string', { defaultValue: 'git' }),
 
   currentScan: computed('scanFailedAt', function () {
-    let scanFailedAt = this.get('scanFailedAt');
+    let scanFailedAt = this.scanFailedAt;
     return {
       icon: scanFailedAt ? 'errored' : 'passed',
       state: scanFailedAt ? 'issue' : 'passed'
@@ -132,7 +132,7 @@ const Repo = VcsEntity.extend({
       return false;
     const isPro = this.get('features.proVersion');
     const enterprise = !!this.get('features.enterpriseVersion');
-    const roMode = this.get('owner').ro_mode || false;
+    const roMode = this.owner.ro_mode || false;
 
     if (!isPro || enterprise) {
       return !roMode;
@@ -279,7 +279,7 @@ const Repo = VcsEntity.extend({
   cronJobs: computed('id', 'fetchCronJobs.lastSuccessful.value', function () {
     const crons = this.fetchCronJobs.get('lastSuccessful.value');
     if (!crons) {
-      this.get('fetchCronJobs').perform();
+      this.fetchCronJobs.perform();
     }
     return crons || [];
   }),

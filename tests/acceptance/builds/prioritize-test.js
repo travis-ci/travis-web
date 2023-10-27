@@ -1,11 +1,11 @@
 import { module, test, skip } from 'qunit';
 import { visit, click, triggerKeyEvent } from '@ember/test-helpers';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | builds/prioritize', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

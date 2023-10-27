@@ -2,7 +2,7 @@ import { module, test, skip } from 'qunit';
 import { settled } from '@ember/test-helpers';
 import { selectChoose } from 'ember-power-select/test-support';
 import moment from 'moment';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import helpPage from 'travis/tests/pages/help';
@@ -45,7 +45,7 @@ const checkBasicStructure = (assert, isSignedIn) => {
 };
 
 module('Acceptance | help page', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   module('for .org users', function (hooks) {

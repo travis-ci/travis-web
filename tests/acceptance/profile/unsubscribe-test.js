@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { currentRouteName } from '@ember/test-helpers';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { percySnapshot } from 'ember-percy';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import unsubscribePage from 'travis/tests/pages/unsubscribe';
@@ -9,7 +9,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 const { emailUnsubscribe } = unsubscribePage;
 
 module('Acceptance | profile/unsubscribe', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {

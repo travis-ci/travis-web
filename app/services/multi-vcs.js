@@ -1,7 +1,11 @@
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { not, or, reads } from '@ember/object/computed';
-import { defaultVcsConfig, vcsConfig, vcsConfigByUrlPrefix } from 'travis/utils/vcs';
+import {
+  defaultVcsConfig,
+  vcsConfig,
+  vcsConfigByUrlPrefix
+} from 'travis/utils/vcs';
 
 export default Service.extend({
   auth: service(),

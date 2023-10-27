@@ -1,6 +1,6 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { percySnapshot } from 'ember-percy';
 import plansPage from 'travis/tests/pages/plans';
@@ -8,7 +8,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import config from 'travis/config/environment';
 
 module('Acceptance | plans page', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {

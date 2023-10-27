@@ -19,6 +19,7 @@
 /testem.log
 /yarn-error.log
 .DS_Store
+env
 
 # ember-try
 /.node_modules.ember-try/

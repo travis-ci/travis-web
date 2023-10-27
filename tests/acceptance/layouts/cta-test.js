@@ -1,5 +1,5 @@
 import { module, test, skip } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import existingRepoPage from 'travis/tests/pages/repo-tabs/current';
 import defaultHeader from 'travis/tests/pages/header/default';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -7,7 +7,7 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | layouts/cta', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

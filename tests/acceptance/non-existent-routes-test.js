@@ -1,11 +1,11 @@
 import { currentURL } from '@ember/test-helpers';
 import { visitWithAbortedTransition } from 'travis/tests/helpers/visit-with-aborted-transition';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | non existent routes', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   test('visiting /some/non-existent/route', async function (assert) {

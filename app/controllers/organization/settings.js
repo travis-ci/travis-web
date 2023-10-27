@@ -81,7 +81,7 @@ export default Controller.extend({
     },
 
     customKeyDeleted(key) {
-      const keys = this.get('customKeys');
+      const keys = this.customKeys;
       this.set('model.organization.customKeys', keys.filter(obj => obj.id !== key.id));
     },
 

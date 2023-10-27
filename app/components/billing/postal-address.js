@@ -1,7 +1,13 @@
 import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
-import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
+import {
+  countries,
+  states,
+  zeroVatThresholdCountries,
+  nonZeroVatThresholdCountries,
+  stateCountries
+} from 'travis/utils/countries';
 
 export default Component.extend({
   countries,
