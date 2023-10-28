@@ -29,48 +29,6 @@ export default Helper.extend({
 
 ### Unknown Global
 
-**Global**: `Ember.testing`
-
-**Location**: `app/controllers/build.js` at line 31
-
-```js
-  init() {
-    this._super(...arguments);
-    if (!Ember.testing) {
-      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
-    }
-```
-
-### Unknown Global
-
-**Global**: `Ember.testing`
-
-**Location**: `app/controllers/index.js` at line 21
-
-```js
-  init() {
-    this._super(...arguments);
-    if (!Ember.testing) {
-      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
-    }
-```
-
-### Unknown Global
-
-**Global**: `Ember.testing`
-
-**Location**: `app/controllers/repo.js` at line 66
-
-```js
-  init() {
-    this._super(...arguments);
-    if (!Ember.testing) {
-      Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
-    }
-```
-
-### Unknown Global
-
 **Global**: `Ember.Test`
 
 **Location**: `tests/acceptance/builds/invalid-build-test.js` at line 16
@@ -239,6 +197,132 @@ export default Helper.extend({
 
 ### Unknown Global
 
+**Global**: `Ember.Test`
+
+**Location**: `tests/acceptance/owner/not-found-test.js` at line 24
+
+```js
+    // Ignore promise rejection.
+    // Original exception will fail test on promise rejection.
+    adapterException = Ember.Test.adapter.exception;
+    loggerError = Ember.Logger.error;
+    Ember.Test.adapter.exception = () => null;
+```
+
+### Unknown Global
+
+**Global**: `Ember.Logger`
+
+**Location**: `tests/acceptance/owner/not-found-test.js` at line 25
+
+```js
+    // Original exception will fail test on promise rejection.
+    adapterException = Ember.Test.adapter.exception;
+    loggerError = Ember.Logger.error;
+    Ember.Test.adapter.exception = () => null;
+    Ember.Logger.error = () => null;
+```
+
+### Unknown Global
+
+**Global**: `Ember.Test`
+
+**Location**: `tests/acceptance/owner/not-found-test.js` at line 26
+
+```js
+    adapterException = Ember.Test.adapter.exception;
+    loggerError = Ember.Logger.error;
+    Ember.Test.adapter.exception = () => null;
+    Ember.Logger.error = () => null;
+  });
+```
+
+### Unknown Global
+
+**Global**: `Ember.Logger`
+
+**Location**: `tests/acceptance/owner/not-found-test.js` at line 27
+
+```js
+    loggerError = Ember.Logger.error;
+    Ember.Test.adapter.exception = () => null;
+    Ember.Logger.error = () => null;
+  });
+
+```
+
+### Unknown Global
+
+**Global**: `Ember.Test`
+
+**Location**: `tests/acceptance/owner/not-found-test.js` at line 31
+
+```js
+
+  hooks.afterEach(function () {
+    Ember.Test.adapter.exception = adapterException;
+    Ember.Logger.error = loggerError;
+  });
+```
+
+### Unknown Global
+
+**Global**: `Ember.Logger`
+
+**Location**: `tests/acceptance/owner/not-found-test.js` at line 32
+
+```js
+  hooks.afterEach(function () {
+    Ember.Test.adapter.exception = adapterException;
+    Ember.Logger.error = loggerError;
+  });
+
+```
+
+### Unknown Global
+
+**Global**: `Ember.testing`
+
+**Location**: `app/controllers/build.js` at line 31
+
+```js
+  init() {
+    this._super(...arguments);
+    if (!Ember.testing) {
+      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
+    }
+```
+
+### Unknown Global
+
+**Global**: `Ember.testing`
+
+**Location**: `app/controllers/index.js` at line 21
+
+```js
+  init() {
+    this._super(...arguments);
+    if (!Ember.testing) {
+      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
+    }
+```
+
+### Unknown Global
+
+**Global**: `Ember.testing`
+
+**Location**: `app/controllers/repo.js` at line 66
+
+```js
+  init() {
+    this._super(...arguments);
+    if (!Ember.testing) {
+      Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
+    }
+```
+
+### Unknown Global
+
 **Global**: `Ember.testing`
 
 **Location**: `app/components/broadcast-tower.js` at line 19
@@ -249,34 +333,6 @@ export default Helper.extend({
     if (this.isOpen && !Ember.testing) {
       yield new EmberPromise(resolve => later(resolve, 10000));
 
-```
-
-### Unknown Global
-
-**Global**: `Ember.Handlebars`
-
-**Location**: `app/components/build-message.js` at line 10
-
-```js
-import Ember from 'ember';
-
-const { escapeExpression: escape } = Ember.Handlebars.Utils;
-
-export default Component.extend({
-```
-
-### Unknown Global
-
-**Global**: `Ember.testing`
-
-**Location**: `app/components/queued-jobs.js` at line 16
-
-```js
-  init() {
-    this._super(...arguments);
-    if (!Ember.testing) {
-      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
-    }
 ```
 
 ### Unknown Global
@@ -365,86 +421,30 @@ export default Component.extend({
 
 ### Unknown Global
 
-**Global**: `Ember.Test`
+**Global**: `Ember.Handlebars`
 
-**Location**: `tests/acceptance/owner/not-found-test.js` at line 24
+**Location**: `app/components/build-message.js` at line 10
 
 ```js
-    // Ignore promise rejection.
-    // Original exception will fail test on promise rejection.
-    adapterException = Ember.Test.adapter.exception;
-    loggerError = Ember.Logger.error;
-    Ember.Test.adapter.exception = () => null;
+import Ember from 'ember';
+
+const { escapeExpression: escape } = Ember.Handlebars.Utils;
+
+export default Component.extend({
 ```
 
 ### Unknown Global
 
-**Global**: `Ember.Logger`
+**Global**: `Ember.testing`
 
-**Location**: `tests/acceptance/owner/not-found-test.js` at line 25
-
-```js
-    // Original exception will fail test on promise rejection.
-    adapterException = Ember.Test.adapter.exception;
-    loggerError = Ember.Logger.error;
-    Ember.Test.adapter.exception = () => null;
-    Ember.Logger.error = () => null;
-```
-
-### Unknown Global
-
-**Global**: `Ember.Test`
-
-**Location**: `tests/acceptance/owner/not-found-test.js` at line 26
+**Location**: `app/components/queued-jobs.js` at line 16
 
 ```js
-    adapterException = Ember.Test.adapter.exception;
-    loggerError = Ember.Logger.error;
-    Ember.Test.adapter.exception = () => null;
-    Ember.Logger.error = () => null;
-  });
-```
-
-### Unknown Global
-
-**Global**: `Ember.Logger`
-
-**Location**: `tests/acceptance/owner/not-found-test.js` at line 27
-
-```js
-    loggerError = Ember.Logger.error;
-    Ember.Test.adapter.exception = () => null;
-    Ember.Logger.error = () => null;
-  });
-
-```
-
-### Unknown Global
-
-**Global**: `Ember.Test`
-
-**Location**: `tests/acceptance/owner/not-found-test.js` at line 31
-
-```js
-
-  hooks.afterEach(function () {
-    Ember.Test.adapter.exception = adapterException;
-    Ember.Logger.error = loggerError;
-  });
-```
-
-### Unknown Global
-
-**Global**: `Ember.Logger`
-
-**Location**: `tests/acceptance/owner/not-found-test.js` at line 32
-
-```js
-  hooks.afterEach(function () {
-    Ember.Test.adapter.exception = adapterException;
-    Ember.Logger.error = loggerError;
-  });
-
+  init() {
+    this._super(...arguments);
+    if (!Ember.testing) {
+      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
+    }
 ```
 
 ### Unknown Global
