@@ -5,6 +5,7 @@
     by placing test fee - $1, which will be returned to you within a week.
   </p>
 
+  {{#if this.canViewBilling }}
   <div class='payment-details-form'>
     <TravisForm data-test-stripe-form='true' @onSubmit={{action "submit"}} as |form|>
       <div class='flex flex--col flex-md-row'>
