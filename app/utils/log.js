@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-control-regex */
 
-import ansiparse from 'ansiparse';
+const ansiparse  = require('ansiparse');
 
 let Log = function () {
   this.autoCloseFold = true;
