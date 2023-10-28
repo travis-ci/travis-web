@@ -112,7 +112,7 @@ module.exports = function () {
   importNpmDependency(app, 'node_modules/emoji-js/lib/emoji.js');
   importNpmDependency(app, 'node_modules/visibilityjs/index.js');
   importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
-  importNpmDependency(app, 'node_modules/yamljs/index.js');
+  importNpmDependency(app, 'node_modules/js-yaml/index.js');
   importNpmDependency(app, 'node_modules/deep-freeze/index.js');
 
   return app.toTree(emojiAssets);
