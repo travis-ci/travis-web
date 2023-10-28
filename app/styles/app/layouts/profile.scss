@@ -18,6 +18,17 @@ $profile-breakpoint: 600px;
     color: $oxide-blue;
   }
 
+  .subscription-section {
+    margin-bottom: 5px;
+    .button-container {
+      margin-left: 20px;
+    }
+
+    .subscription-button {
+      width: 120px;
+    }
+  }
+
   .profile-aside {
     flex: 0 0 180px;
     margin-right: 55px;
@@ -141,6 +152,44 @@ $profile-breakpoint: 600px;
 
   font-size: $font-size-m;
 
+  .email-switch-container {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    margin-left: 5px;
+    margin-bottom: 3px;
+  }
+
+  .email-switch {
+    margin-left: 0px;
+    margin-right: 0px;
+    div {
+      display: inline-block;
+    }
+    $switch-height: 20px;
+    $switch-width: 20px;
+    $switch-gap: 1px;
+    $switch-inner-height: $switch-height - $switch-gap*2;
+    $switch-inner-width: $switch-inner-height;
+    .switch-inner {
+    width: $switch-width;
+    height: $switch-height;
+    border-radius: $switch-inner-width;
+    span {
+      width: $switch-inner-width;
+      height: $switch-inner-height;
+      border-radius: $switch-inner-width;
+    }
+    .on {
+      margin-left: 0%;
+    }
+
+    .off {
+      margin-left: 0%;
+    }
+  }
+  }
+
   li {
     display: flex;
     flex-flow: row wrap;
@@ -220,13 +269,13 @@ $profile-breakpoint: 600px;
 .profile-repo {
   display: flex;
   position: relative;
-  flex: 1;
+  flex: 0;
   padding: 0.25em 0.5em 0.3em;
   border-radius: 2px;
-  margin-right: 1rem;
 
   .profile-repo-name {
     height: 21px;
+    white-space: nowrap;
     overflow: hidden;
   }
 
@@ -236,6 +285,18 @@ $profile-breakpoint: 600px;
 
   .sync-spinner {
     vertical-align: top;
+  }
+}
+
+.profile-repo-type {
+  display: flex;
+  flex: 1;
+
+  .profile-repo-type-span {
+    background-color: #d8d8d8;
+    padding: 2px 6px;
+    border-radius: 25%;
+    font-weight: 600;
   }
 }
 

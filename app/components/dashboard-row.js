@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { alias, reads } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
@@ -9,6 +10,7 @@ export default Component.extend({
   auth: service(),
   api: service(),
   flashes: service(),
+  features: service(),
 
   tagName: '',
 
@@ -21,8 +23,24 @@ export default Component.extend({
   userRoMode: reads('currentUser.roMode'),
   ownerRoMode: reads('repo.owner.ro_mode'),
   currentBuild: alias('repo.currentBuild'),
+  scansEnabled: reads('features.logScanner'),
 
   displayMenuTofu: alias('repo.permissions.create_request'),
+
+  repositoryProvider: computed('repo.provider', function () {
+    return this.repo.provider.capitalize();
+  }),
+
+  repositoryType: computed('repo.serverType', function () {
+    switch (this.repo.serverType) {
+      case 'git':
+        return 'GIT';
+      case 'subversion':
+        return 'SVN';
+      case 'perforce':
+        return 'P4';
+    }
+  }),
 
   openDropup() {
     this.set('dropupIsOpen', true);

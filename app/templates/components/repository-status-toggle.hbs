@@ -2,6 +2,7 @@
 <LinkTo
   @route="repo"
   @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}
+  @query={{hash serverType=this.repository.serverType}}
   class="profile-repo"
   @classNameBindings="admin:admin:non-admin"
 >
@@ -44,6 +45,12 @@
     Settings
   </a>
 {{/if}}
+<a class="email-switch-container">
+<EmailSwitch class="email-switch"
+  @active={{this.hasEmailSubscription}}
+  @onToggle={{perform this.toggleRepositoryEmailSubscription}}/>
+ <EmberTooltip @text={{this.emailSubscriptionDescription}} @side="right" />
+</a>
 {{#if this.apiError}}
   <div class="repositories-error">
     <p>

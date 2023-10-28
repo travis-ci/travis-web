@@ -33,6 +33,7 @@
           @route="repo"
           @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
           @title={{this.repo.name}}
+          @query={{hash serverType=this.repo.serverType}}
         >
           {{this.repo.name}}
           {{#if this.repo.shared}}
@@ -70,6 +71,16 @@
           {{/if}}
         </p>
       </section>
+      {{#if (eq this.repo.provider 'assembla')}}
+        <section class="dash-last">
+          <h3 class="label">
+            Repo type
+          </h3>
+          <p class="row-content color">
+            {{this.repositoryType}}
+          </p>
+        </section>
+      {{/if}}
       {{#if this.repo.currentBuild}}
         <section class="dash-last {{this.repo.currentBuild.state}}">
           <h3 class="label">
@@ -92,6 +103,7 @@
             </LinkTo>
           </p>
         </section>
+        {{#if this.scansEnabled }}
         <section class="dash-last {{this.repo.currentScan.icon}}">
           <h3 class="label">
             Log Scan
@@ -105,6 +117,7 @@
             </LinkTo>
           </p>
         </section>
+        {{/if}}
         <section class="dash-commit">
           <h3 class="label">
             Commit

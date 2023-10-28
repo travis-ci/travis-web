@@ -108,7 +108,10 @@
         {{#each this.summarizedRepositories as |repository|}}
           <tr data-test-repository='true'>
             <td>
-              <LinkTo @route="repo" @models={{array repository.provider repository.urlOwnerName repository.urlName}}>
+              <LinkTo
+                @route="repo" @models={{array repository.provider repository.urlOwnerName repository.urlName}}
+                @query={{hash serverType=this.repo.serverType}}
+              >
                 {{repository.formattedSlug}}
               </LinkTo>
             </td>

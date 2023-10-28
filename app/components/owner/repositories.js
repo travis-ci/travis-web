@@ -149,9 +149,37 @@ export default Component.extend({
     yield this.wizard.delete.perform();
   }).drop(),
 
+  reloadRepositories: task(function* () {
+    if (this.hasAppsRepos) {
+      yield this.appsRepos.content.forEach(element => {
+        element.reload();
+      });
+    }
+    if (this.hasLegacyRepos) {
+      yield this.legacyRepos.content.forEach(element => {
+        element.reload();
+      });
+    }
+  }),
+
   actions: {
     onWizardClose() {
       this.closeWizard.perform();
+    },
+    subscribe() {
+      if (!this.owner.unsubscribe.isRunning) {
+        this.owner.subscribe.perform().then(() => {
+          this.reloadRepositories.perform();
+        });
+      }
+    },
+
+    unsubscribe() {
+      if (!this.owner.subscribe.isRunning) {
+        this.owner.unsubscribe.perform().then(() => {
+          this.reloadRepositories.perform();
+        });
+      }
     }
   }
 });

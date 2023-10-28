@@ -1,7 +1,7 @@
 <div class="tile {{this.repo.currentBuild.state}}">
   <h2 class="tile-title {{this.repo.currentBuild.state}}">
     {{#if this.repo.slug}}
-      <LinkTo @route="repo" @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}>
+      <LinkTo @route="repo" @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}} @query={{hash serverType=this.repo.serverType}}>
         <StatusIcon @status={{this.repo.currentBuild.state}} />
         <span data-test-repos-list-item-slug class="label-align inner-underline">
           {{this.repo.slug}}

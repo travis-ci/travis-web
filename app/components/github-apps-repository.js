@@ -22,6 +22,21 @@ export default Component.extend({
   isMatchGithub: match('vcsType', /Github\S+$/),
   isNotMatchGithub: not('isMatchGithub'),
 
+  repositoryProvider: computed('repository.provider', function () {
+    return this.repository.provider.capitalize();
+  }),
+
+  repositoryType: computed('repository.serverType', function () {
+    switch (this.repository.serverType) {
+      case 'git':
+        return 'GIT';
+      case 'subversion':
+        return 'SVN';
+      case 'perforce':
+        return 'P4';
+    }
+  }),
+
   accessSettingsUrl: computed('user.vcsType', 'user.vcsId', function () {
     return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
   }),
@@ -38,6 +53,28 @@ export default Component.extend({
     let forRepo = (repo.owner.id == this.user.id && repo.ownerType == 'user') ||
                   ((repo.shared || repo.ownerType != 'user') && repo.permissions.settings_read);
     return this.permissions.hasPushPermission(repo) && forRepo;
+  }),
+
+  hasEmailSubscription: computed('repository', 'repository.emailSubscribed', function () {
+    return this.repository.emailSubscribed;
+  }),
+
+  emailSubscriptionDescription: computed('repository', 'repository.emailSubscribed', function () {
+    return `${this.repository.emailSubscribed ? 'Disable ' : 'Enable '} build mails for ${this.repository.name}`;
+  }),
+
+  toggleRepositoryEmailSubscription: task(function* () {
+    const repository = this.repository;
+    try {
+      if (repository.emailSubscribed) {
+        yield repository.unsubscribe.perform();
+      } else {
+        yield repository.subscribe.perform();
+      }
+      yield repository.reload();
+    } catch (error) {
+      this.set('apiError', error);
+    }
   }),
 
   toggleRepositoryTask: task(function* () {
