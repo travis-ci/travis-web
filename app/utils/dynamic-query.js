@@ -3,7 +3,7 @@ import { reads, equal, not, notEmpty } from '@ember/object/computed';
 import ArrayProxy from '@ember/array/proxy';
 import Evented from '@ember/object/evented';
 import { next } from '@ember/runloop';
-import { assert } from '@ember/debug';
+import { assert, debug } from '@ember/debug';
 import { task } from 'ember-concurrency';
 import bindGenerator from 'travis/utils/bind-generator';
 
@@ -54,14 +54,14 @@ export default function dynamicQuery(...args) {
 
   assert('Task must be provided', typeof taskFn === 'function');
   if(taskFn.constructor.name === 'GeneratorFunction') {
-    console.log("MAMMA MIA!")
-    console.log(taskFn.constructor.name)
+    debug("MAMMA MIA!")
+    debug(taskFn.constructor.name)
   } else {
-    console.log("Padre Mio!")
-    console.log(taskFn.constructor.name)
+    debug("Padre Mio!")
+    debug(taskFn.constructor.name)
   }
 
-  assert('Task must be a GeneratorFunction', taskFn.constructor.name === 'GeneratorFunction');
+  // assert('Task must be a GeneratorFunction', taskFn.constructor.name === 'GeneratorFunction');
   assert('Limit must be provided if using Limit Pagination', !initialState.limitPagination || initialState.limit);
 
   args.push(function () {
