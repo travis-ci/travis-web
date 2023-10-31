@@ -31,7 +31,9 @@ export default Service.extend({
     let id = isNaN(repo) ? repo.get('id') : repo;
     let currentUser = this.currentUser;
     if (currentUser) {
-      return currentUser.get(permissionsType).includes(parseInt(id));
+      const permType = currentUser.get(permissionsType) || currentUser[permissionsType];
+      if (!permType) return false;
+      return permType.includes(parseInt(id));
     } else {
       return false;
     }

@@ -250,7 +250,8 @@ export default Service.extend({
 
   fetchUser: task(function* (userRecord) {
     try {
-      return yield userRecord.reload({ included: includes.join(',') });
+      const reloadedUser = userRecord.reload({ included: includes.join(',') });
+      return yield reloadedUser;
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
       if (status === 401 || status === 403 || status === 500) {
