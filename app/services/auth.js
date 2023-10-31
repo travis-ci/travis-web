@@ -87,7 +87,7 @@ export default Service.extend({
   gravatarUrl: reads('currentUser.gravatarUrl'),
 
   redirectUrl: null,
-  erroredOnce: false,
+  errored: false,
 
   init() {
     this._super(...arguments);
