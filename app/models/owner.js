@@ -131,7 +131,7 @@ export default VcsEntity.extend({
   },
 
   migrationBetaRequests: computed('tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value.[]', 'login', function () {
-    const requests = this.tasks.fetchBetaMigrationRequestsTask.get('lastSuccessful.value') || [];
+    const requests = this.tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value || [];
     return requests.filter(request =>
       this.isUser && request.ownerName == this.login || request.organizations.mapBy('login').includes(this.login)
     );
