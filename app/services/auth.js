@@ -87,6 +87,7 @@ export default Service.extend({
   gravatarUrl: reads('currentUser.gravatarUrl'),
 
   redirectUrl: null,
+  erroredOnce: false,
 
   init() {
     this._super(...arguments);
@@ -191,12 +192,14 @@ export default Service.extend({
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
-        .then(() => this.permissionsService.fetchPermissions.perform())
+        .then(() => { if (!this.errored) this.permissionsService.fetchPermissions.perform()})
         .then(() => {
-          const { currentUser } = this;
-          this.set('state', STATE.SIGNED_IN);
-          Travis.trigger('user:signed_in', currentUser);
-          Travis.trigger('user:refreshed', currentUser);
+          if (!this.errored) {
+            const {currentUser} = this;
+            this.set('state', STATE.SIGNED_IN);
+            Travis.trigger('user:signed_in', currentUser);
+            Travis.trigger('user:refreshed', currentUser);
+          }
         })
         .catch(error => {
           if (!didCancel(error)) {
@@ -213,7 +216,6 @@ export default Service.extend({
     const { user, token, isBecome } = storage;
 
     storage.clearLoginData();
-
     if (!user || !token) throw new Error('No login data');
 
     const userData = getProperties(user, USER_FIELDS);
@@ -227,10 +229,12 @@ export default Service.extend({
     userRecord.set('authToken', token);
 
     return this.reloadUser(userRecord).then(() => {
-      storage.accounts.addObject(userRecord);
-      storage.set('activeAccount', userRecord);
-      this.reportNewUser();
-      this.reportToIntercom();
+      if (!this.errored) {
+        storage.accounts.addObject(userRecord);
+        storage.set('activeAccount', userRecord);
+        this.reportNewUser();
+        this.reportToIntercom();
+      }
     });
   },
 
@@ -250,6 +254,7 @@ export default Service.extend({
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
       if (status === 401 || status === 403 || status === 500) {
+        this.set('errored', true);
         this.flashes.error(TOKEN_EXPIRED_MSG);
         this.signOut();
       }
