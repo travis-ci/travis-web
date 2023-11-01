@@ -7,7 +7,6 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import Ember from 'ember';
 
 module('Acceptance | automatic sign out', function (hooks) {
   setupApplicationTestCustom(hooks);
@@ -17,8 +16,6 @@ module('Acceptance | automatic sign out', function (hooks) {
     const currentUser = this.server.create('user');
     enableFeature('proVersion');
     signInUser(currentUser);
-    Ember.Test.adapter = null;
-   // Ember.Logger.error = () => null;
   });
 
   test('when token is invalid user should be signed out', async function (assert) {
