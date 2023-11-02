@@ -67,7 +67,7 @@ export default function () {
   });
 
   this.get('/user', function (schema, request) {
-    const authorization = request.requestHeaders['Authorization'];
+    const authorization = request.requestHeaders.Authorization;
     const firstUser = schema.users.first();
 
     if (authorization !== `token ${firstUser.token}`) {
@@ -86,7 +86,7 @@ export default function () {
   });
 
   this.get('/users/permissions', (schema, request) => {
-    const { authorization } = request.requestHeaders;
+    const authorization = request.requestHeaders.Authorization;
 
     if (!authorization) {
       return {};
