@@ -14,7 +14,7 @@
         @language="yaml"
         class="codedisplay line-numbers"
         data-test-yaml="true"
-      >{{this.formattedConfig}}</CodeBlock>
+        @code={{this.formattedConfig}}></CodeBlock>
       <CopyButton
         @clipboardText={{this.config}}
         @title={{this.buttonLabel}}
