@@ -133,5 +133,6 @@
     "ignore": [
       "ember-power-select"
     ]
-  }
+  },
+  "postinstall": "npx patch-package"
 }
