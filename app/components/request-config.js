@@ -19,7 +19,7 @@ export default Component.extend({
     try {
       return JSON.stringify(config, null, 2);
     } catch (e) {
-      return config;
+      return config ? config : "{}";
     }
   }),
 

@@ -33,7 +33,7 @@ export default Component.extend({
     try {
       return JSON.stringify(JSON.parse(config), null, 2);
     } catch (e) {
-      return config;
+      return config || "{}";
     }
   }),
 
