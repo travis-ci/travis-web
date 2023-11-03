@@ -19,7 +19,8 @@
     "start:pro": "TRAVIS_PRO=true ember serve",
     "test": "npm-run-all lint:* test:*",
     "test:ember": "ember test",
-    "deploy": "bash ./config/deployment/deploy-local.sh"
+    "deploy": "bash ./config/deployment/deploy-local.sh",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
@@ -125,6 +126,7 @@
     "acorn": "^8.11.2",
     "babel-plugin-transform-remove-strict-mode": "^0.0.2",
     "deep-freeze": "0.0.1",
+    "patch-package": "^8.0.0",
     "postcss": "^8.1.0",
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.4"
@@ -133,6 +135,5 @@
     "ignore": [
       "ember-power-select"
     ]
-  },
-  "postinstall": "npx patch-package"
+  }
 }
