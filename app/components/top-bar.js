@@ -57,7 +57,7 @@ export default class TopBar extends Component {
 
   @computed('model.allowance.subscriptionType', 'model.hasV2Subscription', 'model.subscription')
   get hasNoPlan() {
-    if(!this.model) return true;
+    if(!this.model) return false; // logged out
     return !this.model.hasV2Subscription && this.model.subscription === undefined && this.model.allowance.subscriptionType === 3;
   }
 

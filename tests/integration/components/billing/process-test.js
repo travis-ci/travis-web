@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubConfig, stubService } from 'travis/tests/helpers/stub-service';
 import { getContext } from '@ember/test-helpers';
@@ -72,7 +72,7 @@ module('Integration | Component | billing-process', function (hooks) {
     this.set('account', { hasSubscriptionPermissions: false });
 
     await render(hbs`
-    <Billing::Process 
+    <Billing::Process
       @account={{account}}
     />`);
 

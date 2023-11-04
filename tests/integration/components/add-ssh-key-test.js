@@ -8,7 +8,7 @@ import {
   triggerEvent,
   waitFor
 } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import DS from 'ember-data';
 
 module('Integration | Component | add ssh-key', function (hooks) {

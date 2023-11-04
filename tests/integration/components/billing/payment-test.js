@@ -1,7 +1,7 @@
 import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubConfig } from 'travis/tests/helpers/stub-service';
 import { getContext } from '@ember/test-helpers';
