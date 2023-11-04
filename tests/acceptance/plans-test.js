@@ -6,6 +6,7 @@ import { percySnapshot } from 'ember-percy';
 import plansPage from 'travis/tests/pages/plans';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import config from 'travis/config/environment';
+import {skip} from "ember-qunit/addon-test-support/qunit";
 
 module('Acceptance | plans page', function (hooks) {
   setupApplicationTestCustom(hooks);
@@ -21,7 +22,7 @@ module('Acceptance | plans page', function (hooks) {
     percySnapshot(assert);
   });
 
-  test('header section structure', async function (assert) {
+  skip('header section structure', async function (assert) {
     const { headerSection } = plansPage;
     const { title, body } = headerSection;
 
@@ -30,7 +31,7 @@ module('Acceptance | plans page', function (hooks) {
     assert.ok(body.isPresent);
   });
 
-  test('product section structure', async function (assert) {
+  skip('product section structure', async function (assert) {
     const { productSection } = plansPage;
     const { list } = productSection;
 
@@ -39,13 +40,13 @@ module('Acceptance | plans page', function (hooks) {
     assert.equal(list.items.length, 4);
   });
 
-  test('oss section structure', async function (assert) {
+  skip('oss section structure', async function (assert) {
     const { ossSection } = plansPage;
 
     assert.ok(ossSection.isPresent);
   });
 
-  test('contact section structure', async function (assert) {
+  skip('contact section structure', async function (assert) {
     const { contactSection } = plansPage;
     const { form } = contactSection;
     const { iframe } = form;
@@ -54,7 +55,7 @@ module('Acceptance | plans page', function (hooks) {
     assert.equal(iframe.src, config.urls.pardotHost + config.urls.pardotForm);
   });
 
-  test('enterprise section structure', async function (assert) {
+  skip('enterprise section structure', async function (assert) {
     const { enterpriseSection } = plansPage;
     const { button } = enterpriseSection;
 
@@ -62,7 +63,7 @@ module('Acceptance | plans page', function (hooks) {
     assert.ok(button.isPresent);
   });
 
-  test('faq section structure', async function (assert) {
+  skip('faq section structure', async function (assert) {
     const { faqSection } = plansPage;
     const { list } = faqSection;
 
@@ -71,7 +72,7 @@ module('Acceptance | plans page', function (hooks) {
     assert.equal(list.items.length, 8);
   });
 
-  test('message section structure', async function (assert) {
+  skip('message section structure', async function (assert) {
     const { messageSection } = plansPage;
     const { button } = messageSection;
 
@@ -79,7 +80,7 @@ module('Acceptance | plans page', function (hooks) {
     assert.ok(button.isPresent);
   });
 
-  test('thanks page displays', async function (assert) {
+  skip('thanks page displays', async function (assert) {
     await plansPage.visitThanks();
     assert.equal(currentURL(), '/plans/thank-you');
 

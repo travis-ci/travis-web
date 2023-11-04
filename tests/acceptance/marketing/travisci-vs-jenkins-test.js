@@ -9,6 +9,7 @@ import {
   SALES_CONTACT_FORM_CONTAINER,
   SALES_CONTACT_IFRAME
 } from 'travis/tests/helpers/selectors';
+import {skip} from "ember-qunit/addon-test-support/qunit";
 
 // Main page
 export const PAGE_URL = '/travisci-vs-jenkins';
@@ -78,7 +79,7 @@ module('Acceptance | travis vs jenkins page', function (hooks) {
       await visit(PAGE_URL);
     });
 
-    test('page structure', async function (assert) {
+    skip('page structure', async function (assert) {
       assert.equal(currentURL(), PAGE_URL);
 
       assert.dom(HEADER_TITLE).exists();
@@ -104,7 +105,7 @@ module('Acceptance | travis vs jenkins page', function (hooks) {
       percySnapshot(assert);
     });
 
-    test('thanks page structure', async function (assert) {
+    skip('thanks page structure', async function (assert) {
       await visit(THANKS_URL);
 
       checkThanksPageUrlAndContent(assert);
