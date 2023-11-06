@@ -8,11 +8,24 @@ export default Component.extend({
   initialValue: '',
   value: reads('initialValue'),
 
-  fields: computed('value', {
+  fieldsValue: computed('value', {
     get() {
-      return (this.value || '').split(this.delimeter).map(value => ({ value }));
+      return (this.value || '').split(this.delimiter).map(value => ({ value }));
     },
     set(_, value) {
+      // Handle the setter logic if needed.
+      // For example, you can parse the 'value' and update it.
+      this.set('value', value.join(this.delimiter));
+      return value;
+    }
+  }),
+
+  fields: computed('fieldsValue', {
+    get() {
+      return this.get('fieldsValue');
+    },
+    set(_, value) {
+      this.set('fieldsValue', value);
       return value;
     }
   }),
