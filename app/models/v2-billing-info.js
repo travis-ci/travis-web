@@ -12,7 +12,13 @@ export default Model.extend({
   country: attr('string'),
   vatId: attr('string'),
   billingEmail: attr('string'),
+  billingEmailRead: attr('string'),
+
   hasLocalRegistration: attr('boolean'),
 
-  subscription: belongsTo('v2-subscription')
+  subscription: belongsTo('v2-subscription'),
+
+  didUpdate() {
+    this.setAttribute('billingEmailRead', this.billingEmail)
+  }
 });

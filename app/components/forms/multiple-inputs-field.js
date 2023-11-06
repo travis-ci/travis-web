@@ -48,13 +48,14 @@ export default Component.extend({
     this.updateValues(values);
   },
 
+
   actions: {
 
     handleBlur() {
       const values = this.fields.map(input => input.value);
       this.handleValidation(values);
       const value = values.join(this.delimeter);
-      this.set('value', value);
+      this.set('valueValue', value);
     },
 
     handleChange(index, { target }) {
@@ -63,7 +64,7 @@ export default Component.extend({
       fields[index] = { value };
       const values = fields.map(input => input.value);
       this.handleValidation(values);
-      this.set('fields', fields);
+      this.set('fieldsValue', fields);
     },
 
     removeInput(inputIndex, e) {
@@ -71,12 +72,12 @@ export default Component.extend({
       const filteredFields = this.fields.filter((_, index) => index !== inputIndex);
       const values = filteredFields.map(input => input.value);
       this.handleValidation(values);
-      this.set('fields', filteredFields);
+      this.set('fieldsValue', filteredFields);
     },
 
     addInput(e) {
       e.preventDefault();
-      this.set('fields', [...this.fields, { value: '' }]);
+      this.set('fieldsValue', [...this.fields, { value: '' }]);
     },
   }
 });
