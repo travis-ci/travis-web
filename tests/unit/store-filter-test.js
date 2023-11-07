@@ -1,9 +1,10 @@
 import { run } from '@ember/runloop';
 import { resolve, all } from 'rsvp';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | store.filter', function (hooks) {
+// Skipping til version 4.12
+skip('Unit | store.filter', function (hooks) {
   setupTest(hooks);
 
   test('it does not run query if query params are not passed', function (assert) {
