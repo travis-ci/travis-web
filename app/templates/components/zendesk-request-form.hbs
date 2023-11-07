@@ -69,7 +69,7 @@
         </form.field>
         <div class="align-center">
           <button
-            disabled={{not form.checkValidity}}
+            disabled={{not (or this.description this.subject)}}
             onclick={{action form.submit}}
             class="submit-button button--blue button--large"
             data-test-zendesk-form-submit
