@@ -46,7 +46,7 @@
       onInit=(action "setFieldElementId")
       class="travis-form__field-component"
     )
-    select=(component selectComponent
+    select=(component this.selectComponent
       form=this.form
       selected=this.value
       disabled=this.disabled
@@ -86,7 +86,7 @@
       class="travis-form__field-component"
     )
     slider=(component 'forms/form-slider'
-      form=form
+      form=this.form
       value=this.value
       max=this.max
       min=this.min
@@ -97,7 +97,7 @@
       class='travis-form__field-component'
     )
     multipleInputs=(component 'forms/multiple-inputs-field'
-      form=form
+      form=this.form
       initialValue=this.initialValue
       required=this.required
       disabled=this.disabled
