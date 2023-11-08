@@ -22,11 +22,23 @@
     "deploy": "bash ./config/deployment/deploy-local.sh",
     "postinstall": "patch-package"
   },
+  "dependencies": {
+    "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
+    "acorn": "^8.11.2",
+    "babel-plugin-transform-remove-strict-mode": "^0.0.2",
+    "deep-freeze": "0.0.1",
+    "patch-package": "^8.0.0",
+    "postcss": "^8.1.0",
+    "watchman": "^1.0.0",
+    "xss-clean": "^0.1.4"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@csstools/postcss-sass": "^4.0.0",
     "@ember/optional-features": "^1.3.0",
     "@ember/render-modifiers": "^1.0.2",
+    "@glimmer/component": "^1.0.0",
+    "@glimmer/tracking": "^1.0.0",
     "ansiparse": "artursmirnov/ansiparse",
     "babel-eslint": "10.1.0",
     "babel-preset-env": "^1.7.0",
@@ -121,15 +133,8 @@
     "node": "16.20.2",
     "npm": "9.9.0"
   },
-  "dependencies": {
-    "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
-    "acorn": "^8.11.2",
-    "babel-plugin-transform-remove-strict-mode": "^0.0.2",
-    "deep-freeze": "0.0.1",
-    "patch-package": "^8.0.0",
-    "postcss": "^8.1.0",
-    "watchman": "^1.0.0",
-    "xss-clean": "^0.1.4"
+  "ember": {
+    "edition": "octane"
   },
   "greenkeeper": {
     "ignore": [
