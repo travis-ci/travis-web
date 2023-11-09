@@ -100,6 +100,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
 
       array._lastPromise = promise;
     }
+    console.log(array); // for some reason we need to initialize the object. Otherwise tests are failing
 
     return array;
   },

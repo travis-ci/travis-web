@@ -4,7 +4,7 @@ import { module, test, skip } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
 // Skipping til version 4.12
-skip('Unit | store.filter', function (hooks) {
+module('Unit | store.filter', function (hooks) {
   setupTest(hooks);
 
   test('it does not run query if query params are not passed', function (assert) {
