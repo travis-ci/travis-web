@@ -1,7 +1,12 @@
 import { scheduleOnce } from '@ember/runloop';
 import Component from '@ember/component';
 import Ember from 'ember';
-import { computed, setProperties, set, action } from '@ember/object';
+import {
+  computed,
+  setProperties,
+  set,
+  action
+} from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 

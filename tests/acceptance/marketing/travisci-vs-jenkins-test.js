@@ -9,7 +9,7 @@ import {
   SALES_CONTACT_FORM_CONTAINER,
   SALES_CONTACT_IFRAME
 } from 'travis/tests/helpers/selectors';
-import {skip} from "qunit";
+import { skip } from "qunit";
 
 // Main page
 export const PAGE_URL = '/travisci-vs-jenkins';

@@ -22,7 +22,7 @@ export default Component.extend({
 
   fields: computed('fieldsValue', {
     get() {
-      return this.get('fieldsValue');
+      return this.fieldsValue;
     },
     set(_, value) {
       this.set('fieldsValue', value);

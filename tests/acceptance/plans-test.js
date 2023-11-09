@@ -6,7 +6,7 @@ import { percySnapshot } from 'ember-percy';
 import plansPage from 'travis/tests/pages/plans';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import config from 'travis/config/environment';
-import {skip} from "qunit";
+import { skip } from "qunit";
 
 module('Acceptance | plans page', function (hooks) {
   setupApplicationTestCustom(hooks);
