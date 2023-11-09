@@ -1,4 +1,3 @@
-import { Promise as EmberPromise, resolve } from 'rsvp';
 import EmberObject, {
   computed,
   defineProperty
@@ -84,6 +83,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
   //
   // Returns a FilteredArray (an ArrayProxy)
   fetchArray(queryParams, filterFunction, dependencies, forceReload) {
+
     let id = this.calculateId(queryParams, filterFunction, dependencies);
     let hasArray = !!this.arrays[id];
     let array = this._getFilterArray(id, queryParams, filterFunction, dependencies);
@@ -91,7 +91,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
     if (hasArray && forceReload) {
       // if forceReload is true and array already exist, just run the query
       // to get new results
-      let promise = new EmberPromise((resolve, reject) => {
+      let promise = new Promise((resolve, reject) => {
         this.fetchQuery(queryParams).then(queryResult => {
           array.set('queryResult', queryResult);
           resolve(array);
@@ -100,6 +100,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
 
       array._lastPromise = promise;
     }
+
     console.log(array); // for some reason we need to initialize the object. Otherwise tests are failing
 
     return array;
@@ -130,7 +131,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
       dependencies
     }));
 
-    let promise = new EmberPromise((resolve, reject) => {
+    let promise = new Promise((resolve, reject) => {
       // TODO: think about error handling, at the moment it will just pass the
       // reject from store.query
       this.fetchQuery(queryParams).then(queryResult => {
@@ -151,7 +152,9 @@ let FilteredArrayManagerForType = EmberObject.extend({
     if (queryParams) {
       return this.store.query(this.modelName, queryParams);
     } else {
-      return resolve([]);
+      return new Promise((resolve, reject) => {
+        resolve([]);
+      });
     }
   },
 
@@ -183,6 +186,10 @@ let FilteredArrayManager = EmberObject.extend({
     this.filteredArrayManagersByType = {};
   },
 
+  resolve(args) {
+    return new Promise((resolve, reject) => resolve(args))
+  },
+
   filter(modelName, queryParams, filterFunction, dependencies) {
     const filterArray = this.filteredArrayManagerForType(modelName).getFilterArray(queryParams, filterFunction, dependencies);
 
@@ -191,7 +198,7 @@ let FilteredArrayManager = EmberObject.extend({
       if (filterFunction) {
         currentRecords = currentRecords.filter(record => filterFunction(record));
       }
-      const promise = resolve(currentRecords).then(() => filterArray);
+      const promise = this.resolve(currentRecords).then(() => filterArray);
 
       return PromiseArray.create({ promise });
     }
