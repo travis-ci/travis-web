@@ -59,6 +59,7 @@
         @disabled={{this.disableForm}}
         @showValidationStatusIcons={{false}}
         @onChange={{action (mut this.billingInfo.billingEmail)}}
+        @validator={{action "validateBillingEmails"}}
         as |Field|
       >
         <Field.input @name='billing_email_address'/>
