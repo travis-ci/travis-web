@@ -166,7 +166,7 @@ export default Component.extend({
         return true;
       }
 
-      const emailRegex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i;
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
       const emails = billingEmailField.split(',').map(email => email.trim());
 
       const invalidEmails = emails.filter(email => !emailRegex.test(email));
