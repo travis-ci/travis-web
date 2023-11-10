@@ -4,7 +4,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const SVGO = require('svgo');
 
-module.exports = function (defaults {
+module.exports = function (defaults) {
   let fingerprint;
 
   if (process.env.DISABLE_FINGERPRINTS) {

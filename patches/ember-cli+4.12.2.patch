@@ -1,0 +1,12 @@
+diff --git a/node_modules/ember-cli/lib/broccoli/ember-app.js b/node_modules/ember-cli/lib/broccoli/ember-app.js
+index 375a1c0..59cdf64 100644
+--- a/node_modules/ember-cli/lib/broccoli/ember-app.js
++++ b/node_modules/ember-cli/lib/broccoli/ember-app.js
+@@ -1520,6 +1520,7 @@ class EmberApp {
+ 
+           if (!this._customTransformsMap.has(transformName)) {
+             let availableTransformNames = Array.from(this._customTransformsMap.keys()).join(',');
++            return; // in forEach it works like continue
+             throw new Error(
+               `while import ${assetPath}: found an unknown transformation name ${transformName}. Available transformNames are: ${availableTransformNames}`
+             );
