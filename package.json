@@ -69,7 +69,7 @@
     "ember-cli-head": "^0.4.1",
     "ember-cli-htmlbars": "^6.0.1",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-mirage": "^2.4.0",
+    "ember-cli-mirage": "^3.0.2",
     "ember-cli-moment-shim": "^3.8.0",
     "ember-cli-page-object": "^1.15.0-beta.3",
     "ember-cli-postcss": "^6.0.2",
