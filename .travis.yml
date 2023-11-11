@@ -51,7 +51,7 @@ jobs:
       env: TRY_CONFIG=ember-beta
     - if: type = cron
       env: TRY_CONFIG=ember-data-beta
-    - node_js: 16
+    - node_js: 18
     - stage: ":ship: it to quay.io"
       before_install: skip
       install: skip
