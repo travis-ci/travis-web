@@ -42,6 +42,7 @@ export default Service.extend({
     }
   }),
 
+  Object.defineProperty(Auth.prototype)
   accounts: computed({
     get() {
       const accountsData = storage.getItem('travis.auth.accounts');

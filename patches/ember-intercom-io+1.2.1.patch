@@ -1,0 +1,13 @@
+diff --git a/node_modules/ember-intercom-io/app/services/intercom.js b/node_modules/ember-intercom-io/app/services/intercom.js
+index 5241225..9ad4f38 100644
+--- a/node_modules/ember-intercom-io/app/services/intercom.js
++++ b/node_modules/ember-intercom-io/app/services/intercom.js
+@@ -1,7 +1,6 @@
+-import { getWithDefault } from '@ember/object';
+ import IntercomService from 'ember-intercom-io/services/intercom';
+ import cfg from '../config/environment';
+ 
+ export default IntercomService.extend({
+-  config: getWithDefault(cfg, 'intercom', {})
++  config: cfg ? cfg.intercom : {}
+ });

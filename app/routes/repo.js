@@ -1,4 +1,4 @@
-import { getWithDefault, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
@@ -45,7 +45,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   serialize(repo) {
     // slugs are sometimes unknown ???
-    const slug = getWithDefault(repo, 'slug', 'unknown/unknown');
+    const slug = repo ? repo.slug : 'unknown/unknown';
     const [owner, name] = slug.split('/');
     const provider = repo.get('vcsProvider.urlPrefix');
 
