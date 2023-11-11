@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { prettyDate } from 'travis/helpers/pretty-date';
-import { percySnapshot } from 'ember-percy';
 
 import requestsPage from 'travis/tests/pages/requests';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -111,7 +110,7 @@ module('Acceptance | repo | requests', function (hooks) {
 
     assert.ok(requestsPage.missingNotice.isHidden);
 
-    percySnapshot(assert);
+
   });
 
   test('a placeholder shows when there are no requests', async function (assert) {

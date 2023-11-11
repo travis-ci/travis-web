@@ -4,7 +4,6 @@ import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-applicati
 import { visit, click } from '@ember/test-helpers';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { percySnapshot } from 'ember-percy';
 import { prettyDate } from 'travis/helpers/pretty-date';
 import RepositoriesService from 'travis/services/repositories';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -88,7 +87,6 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
 
     assert.dom('[data-test-sidebar-running-tab]').containsText('Running (0/1)', 'running tab correctly shows number of started/queued jobs');
     assert.dom('[data-test-sidebar-queued-job]').exists('expected one queued job');
-    percySnapshot(assert);
   });
 
   test('we query the API for all the jobs', async function (assert) {

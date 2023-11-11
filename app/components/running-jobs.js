@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import Ember from 'ember';
+import {testing} from 'ember';
 import { reads } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import Visibility from 'visibilityjs';
@@ -13,7 +13,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    if (!Ember.testing) {
+    if (!testing) {
       return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },

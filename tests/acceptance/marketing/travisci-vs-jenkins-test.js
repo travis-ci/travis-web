@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { percySnapshot } from 'ember-percy';
 
 import {
   SALES_CONTACT_FORM_CONTAINER,
@@ -101,16 +100,12 @@ module('Acceptance | travis vs jenkins page', function (hooks) {
       assert.dom(TESTIMONIAL_NAME).exists();
       assert.dom(TESTIMONIAL_POSITION).exists();
       assert.dom(TESTIMONIAL_LINK).exists();
-
-      percySnapshot(assert);
     });
 
     skip('thanks page structure', async function (assert) {
       await visit(THANKS_URL);
 
       checkThanksPageUrlAndContent(assert);
-
-      percySnapshot(assert);
     });
   });
 });

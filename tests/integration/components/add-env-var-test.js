@@ -5,7 +5,6 @@ import { render, click } from '@ember/test-helpers';
 import { fillInWithKeyEvent } from 'travis/tests/helpers/extra-test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import DS from 'ember-data';
-import { percySnapshot } from 'ember-percy';
 import { selectChoose, selectSearch } from 'ember-power-select/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -62,7 +61,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     assert.dom('.env-name').doesNotHaveAttribute('value', 'precond: name input should be empty');
 
-    percySnapshot(assert);
+
 
     await click('.form-submit');
 

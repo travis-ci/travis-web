@@ -4,7 +4,6 @@ import { visit } from '@ember/test-helpers';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | broadcasts', function (hooks) {
@@ -63,8 +62,6 @@ module('Acceptance | broadcasts', function (hooks) {
 
     assert.ok(topPage.broadcasts.items[1].isWarning, 'expected the second broadcast to be a warning');
     assert.equal(topPage.broadcasts.items[1].message, 'A warning');
-
-    percySnapshot(assert);
 
     await topPage.broadcasts.items[0].dismiss();
 

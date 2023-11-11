@@ -2,7 +2,6 @@ import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | job/build matrix', function (hooks) {
@@ -54,6 +53,5 @@ module('Acceptance | job/build matrix', function (hooks) {
       assert.equal(failedJobRow.language, 'Ruby');
       assert.ok(failedJobRow.os.isUnknown, 'expected the job OS to be unknown');
     });
-    percySnapshot(assert);
   });
 });

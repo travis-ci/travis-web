@@ -1,6 +1,6 @@
 import { scheduleOnce } from '@ember/runloop';
 import Component from '@ember/component';
-import Ember from 'ember';
+import {testing} from 'ember';
 import {
   computed,
   setProperties,
@@ -84,7 +84,7 @@ export default class TopBar extends Component {
   }
 
   didInsertElement() {
-    if (Ember.testing) {
+    if (testing) {
       super.didInsertElement(...arguments);
       return;
     }

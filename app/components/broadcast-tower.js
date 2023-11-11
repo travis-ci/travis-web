@@ -1,7 +1,7 @@
 import { later } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
 import Component from '@ember/component';
-import Ember from 'ember';
+import {testing} from 'ember';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
@@ -16,7 +16,7 @@ export default Component.extend({
     this.toggleBroadcasts();
 
     // Acceptance tests will wait for the promise to resolve, so skip in tests
-    if (this.isOpen && !Ember.testing) {
+    if (this.isOpen && !testing) {
       yield new EmberPromise(resolve => later(resolve, 10000));
 
       this.toggleProperty('isOpen');

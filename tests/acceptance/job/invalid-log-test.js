@@ -1,5 +1,5 @@
 import { visit } from '@ember/test-helpers';
-import Ember from 'ember';
+import {Test, Logger} from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import jobPage from 'travis/tests/pages/job';
@@ -13,15 +13,15 @@ module('Acceptance | job/invalid log', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    adapterException = Ember.Test.adapter.exception;
-    loggerError = Ember.Logger.error;
-    Ember.Test.adapter.exception = () => {};
-    Ember.Logger.error = () => null;
+    adapterException = Test.adapter.exception;
+    loggerError = Logger.error;
+    Test.adapter.exception = () => {};
+    Logger.error = () => null;
   });
 
   hooks.afterEach(function () {
-    Ember.Test.adapter.exception = adapterException;
-    Ember.Logger.error = loggerError;
+    Test.adapter.exception = adapterException;
+    Logger.error = loggerError;
   });
 
   test('viewing invalid job shows error', async function (assert) {

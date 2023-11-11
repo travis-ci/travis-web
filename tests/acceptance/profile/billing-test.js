@@ -4,7 +4,6 @@ import profilePage from 'travis/tests/pages/profile';
 import moment from 'moment';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { selectChoose } from 'ember-power-select/test-support';
-import { percySnapshot } from 'ember-percy';
 import Service from '@ember/service';
 import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubService, stubConfig } from 'travis/tests/helpers/stub-service';
@@ -163,8 +162,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
-
     assert.ok(profilePage.billing.expiryMessage.isHidden);
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
@@ -222,8 +219,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
-
     profilePage.billing.invoices.items[0].as(march2010 => {
       assert.equal(march2010.invoiceUrl.href, 'https://example.com/20102.pdf');
       assert.equal(march2010.invoiceDate, 'March 14, 2010');
@@ -270,8 +265,6 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
-
     assert.dom('[data-test-stripe-discount]').hasText('Discount: $10 forever');
   });
 
@@ -289,7 +282,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.dom('[data-test-stripe-discount]').hasText('Discount: 10% off until September 2018');
   });
@@ -308,7 +301,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.dom('[data-test-stripe-discount]').hasText('Discount: $10 off until September 2018');
   });
@@ -319,7 +312,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
     await profilePage.billing.editContactAddressButton.click();
 
-    percySnapshot(assert);
+
 
     assert.dom(profilePage.billing.editContactAddressForm.inputs.scope).exists({ count: 4 });
 
@@ -344,7 +337,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
     await profilePage.billing.editBillingAddressButton.click();
 
-    percySnapshot(assert);
+
 
     assert.dom(profilePage.billing.editBillingAddressForm.inputs.scope).exists({ count: 4 });
 
@@ -365,7 +358,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
 
@@ -405,7 +398,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan incomplete');
     assert.ok(profilePage.billing.marketplaceButton.isHidden);
@@ -496,7 +489,7 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing on a marketplace plan', async function (assert) {
     this.trial.destroy();
     this.subscription.source = 'github';
-    percySnapshot(assert);
+
 
     await profilePage.visit();
     await profilePage.billing.visit();
@@ -526,7 +519,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan trial github marketplace subscription');
   });
@@ -553,7 +546,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
-    percySnapshot(assert);
+
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
   });
@@ -578,7 +571,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active github marketplace subscription');
     assert.ok(profilePage.billing.inactiveResubscribeSubscriptionButton.isDisabled);
@@ -692,7 +685,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.ok(profilePage.billing.trial.activateButton.isHidden);
   });
@@ -719,7 +712,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.accounts[1].visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.ok(profilePage.billing.billingPlanChoices.isPresent);
     assert.ok(profilePage.billing.billingPlanChoices.isVisible);
@@ -735,7 +728,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.ok(profilePage.billing.billingPlanChoices.isPresent);
     assert.ok(profilePage.billing.billingPlanChoices.isVisible);
@@ -810,7 +803,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.name.text, 'You have 25 trial builds left');
@@ -843,7 +836,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.name.text, 'You have 10 trial builds left');
@@ -899,7 +892,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visitOrganization({ name: 'org-login' });
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.equal(profilePage.billing.plan.name, 'Bootstrap plan education subscription');
     assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('1 concurrent job');
@@ -929,7 +922,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
     await selectedPlan.subscribeButton.click();
 
-    percySnapshot(assert);
+
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
@@ -1058,7 +1051,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const { billingForm, selectedPlan, billingCouponForm } = profilePage.billing;
     await selectedPlan.subscribeButton.click();
 
-    percySnapshot(assert);
+
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
@@ -1109,7 +1102,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const { billingForm, selectedPlan, billingCouponForm } = profilePage.billing;
     await selectedPlan.subscribeButton.click();
 
-    percySnapshot(assert);
+
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
@@ -1158,7 +1151,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const { billingForm, selectedPlan, billingCouponForm } = profilePage.billing;
     await selectedPlan.subscribeButton.click();
 
-    percySnapshot(assert);
+
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
@@ -1210,7 +1203,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const { billingForm, selectedPlan, billingCouponForm } = profilePage.billing;
     await selectedPlan.subscribeButton.click();
 
-    percySnapshot(assert);
+
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
@@ -1260,7 +1253,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
     await selectedPlan.subscribeButton.click();
 
-    percySnapshot(assert);
+
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
@@ -1326,7 +1319,7 @@ module('Acceptance | profile/billing', function (hooks) {
     const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
     await selectedPlan.subscribeButton.click();
 
-    percySnapshot(assert);
+
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
@@ -1394,7 +1387,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await selectChoose(billingForm.billingSelectCountry.scope, 'Germany');
 
-    percySnapshot(assert);
+
 
     await billingForm
       .fillIn('firstname', 'John')
@@ -1456,7 +1449,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.visit();
     await profilePage.billing.visit();
 
-    percySnapshot(assert);
+
 
     assert.ok(profilePage.billing.planYellowMessage.isPresent);
     assert.ok(profilePage.billing.planManualMessage.isPresent);

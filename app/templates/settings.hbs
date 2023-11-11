@@ -317,8 +317,7 @@
         class="migrated-repo-settings-modal__button button--blue"
       >
         View Build History
-      </LinkTo>
-      <ExternalLinkTo
+      </LinkTo>      <ExternalLinkTo
         @href={{this.migratedRepositorySettingsLink}}
         class="migrated-repo-settings-modal__button button--dark-grey"
       >
@@ -326,8 +325,7 @@
       </ExternalLinkTo>
       <LinkTo @route="repo.index" @models={{array repo.provider repo.ownerName repo.vcsName}} class="modal-close pointer">
         <SvgImage @name="icon-failed" @class="icon" />
-      </LinkTo>
-    </div>
+      </LinkTo>    </div>
   </div>
 </Modal>
 <Dialogs::UserManagementModal

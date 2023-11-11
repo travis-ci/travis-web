@@ -2,7 +2,6 @@ import { currentURL, settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | home/without repositories', function (hooks) {
@@ -19,6 +18,5 @@ module('Acceptance | home/without repositories', function (hooks) {
     await settled();
 
     assert.equal(currentURL(), '/getting_started');
-    percySnapshot(assert);
   });
 });

@@ -1,5 +1,5 @@
 import { visit } from '@ember/test-helpers';
-import Ember from 'ember';
+import {Logger, Test} from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
@@ -13,15 +13,15 @@ module('Acceptance | builds/invalid build', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    adapterException = Ember.Test.adapter.exception;
-    loggerError = Ember.Logger.error;
-    Ember.Test.adapter.exception = () => {};
-    Ember.Logger.error = () => null;
+    adapterException = Test.adapter.exception;
+    loggerError = Logger.error;
+    Test.adapter.exception = () => {};
+    Logger.error = () => null;
   });
 
   hooks.afterEach(function () {
-    Ember.Test.adapter.exception = adapterException;
-    Ember.Logger.error = loggerError;
+    Test.adapter.exception = adapterException;
+    Logger.error = loggerError;
   });
 
   test('viewing invalid build shows error', async function (assert) {

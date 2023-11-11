@@ -1,5 +1,5 @@
 import Controller, { inject as controller } from '@ember/controller';
-import Ember from 'ember';
+import {testing} from 'ember';
 import Polling from 'travis/mixins/polling';
 import Visibility from 'visibilityjs';
 import config from 'travis/config/environment';
@@ -28,7 +28,7 @@ export default Controller.extend(Polling, {
 
   init() {
     this._super(...arguments);
-    if (!Ember.testing) {
+    if (!testing) {
       return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },

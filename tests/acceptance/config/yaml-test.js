@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
-import { percySnapshot } from 'ember-percy';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import page from 'travis/tests/pages/build';
 import { codeblockName } from 'travis/utils/format-config';
@@ -112,7 +111,6 @@ module('Acceptance | config/yaml', function (hooks) {
         assert.equal(message.link.href, `#${codeblockName(msg1.src)}.${msg1.line + 1}`);
       });
 
-      percySnapshot(assert);
     });
 
     test('hides the tab when no yaml is found', async function (assert) {

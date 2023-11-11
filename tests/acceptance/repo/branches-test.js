@@ -4,7 +4,6 @@ import { settled } from '@ember/test-helpers';
 import branchesPage from 'travis/tests/pages/branches';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { prettyDate } from 'travis/helpers/pretty-date';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo branches', function (hooks) {
@@ -238,7 +237,7 @@ module('Acceptance | repo branches', function (hooks) {
     assert.equal(branchesPage.inactiveBranches[0].name, 'old-edits');
     assert.ok(branchesPage.inactiveBranches[0].errored, 'expected first inactive branch to have errored');
     assert.equal(branchesPage.inactiveBranches[1].name, 'older-edits');
-    percySnapshot(assert);
+
   });
 
   test('view branches tab when no branches present', async function (assert) {

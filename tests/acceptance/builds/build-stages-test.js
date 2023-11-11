@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
 import { prettyDate } from 'travis/helpers/pretty-date';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | build stages', function (hooks) {
@@ -47,7 +46,6 @@ module('Acceptance | build stages', function (hooks) {
       assert.ok(stage.isPassed);
     });
 
-    percySnapshot(assert);
   });
 
   test('visiting build with stages', async function (assert) {
@@ -108,6 +106,5 @@ module('Acceptance | build stages', function (hooks) {
       assert.equal(stage.jobs[0].number, '1234.999');
       assert.ok(stage.allowFailures.isHidden, 'expected no allowed failures text');
     });
-    percySnapshot(assert);
   });
 });

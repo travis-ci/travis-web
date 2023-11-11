@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { Response } from 'ember-cli-mirage';
-import { percySnapshot } from 'ember-percy';
 import settingsPage from 'travis/tests/pages/settings';
 import userManagement from 'travis/tests/pages/user-management';
 import topPage from 'travis/tests/pages/top';
@@ -457,6 +456,6 @@ module('Acceptance | repo settings', function (hooks) {
     assert.notOk(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be disabled');
     assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'setting.value': false });
 
-    percySnapshot(assert);
+
   });
 });

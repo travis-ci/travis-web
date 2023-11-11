@@ -8,7 +8,6 @@ import {
 import page from 'travis/tests/pages/build-list';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -194,7 +193,7 @@ module('Acceptance | repo build list routes', function (hooks) {
     });
     olderBuild.save();
 
-    percySnapshot(assert);
+
 
     await page.showMoreButton.click();
 

@@ -396,14 +396,6 @@ module.exports = function (environment) {
 
     ENV.logLimit = 100;
 
-    ENV.percy = {
-      breakpointsConfig: {
-        mobile: 375,
-        desktop: 1280
-      },
-      defaultBreakpoints: ['mobile', 'desktop']
-    };
-
     ENV.featureFlags['debug-logging'] = false;
     ENV.featureFlags['dashboard'] = false;
     ENV.featureFlags['pro-version'] = false;

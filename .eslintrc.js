@@ -351,7 +351,6 @@ module.exports = {
         triggerCopyError: true,
         signInUser: true,
         withFeature: true,
-        percySnapshot: true,
         waitForElement: true
       },
       plugins: ['node'],

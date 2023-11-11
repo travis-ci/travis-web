@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import { Handlebars } from 'ember';
 import { htmlSafe } from '@ember/string';
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
 import formatCommit from 'travis/utils/format-commit';
 
-const { escapeExpression: escape } = Ember.Handlebars.Utils;
+const { Utils: { escapeExpression: escape } } = Handlebars;
 
 export default Helper.extend({
   externalLinks: service(),
