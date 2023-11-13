@@ -43,7 +43,7 @@
   <div class='full-width form-elem'>
 
     <form.field @label="Billing e-mail address" @value={{this.billingEmail}} @onChange={{action (mut
-      this.billingEmail)}} @required={{true}} @validator={{form-validator form.validators.email}}
+      this.billingEmail)}} @required={{true}} @validator={{form-validator form.validators.email action "validateBillingEmails"}}
       @showRequiredMark={{true}} as |field|>
       <field.input @type="text" />
     </form.field>

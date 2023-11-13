@@ -326,7 +326,23 @@ export default Component.extend({
     },
     togglePlanDetails() {
       this.set('planDetailsVisible', !this.planDetailsVisible);
-    }
+    },
+    validateBillingEmails(billingEmailField) {
+      if (!billingEmailField) {
+        return true;
+      }
 
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      const emails = billingEmailField.split(',').map(email => email.trim());
+
+      const invalidEmails = emails.filter(email => !emailRegex.test(email));
+
+      if (invalidEmails.length > 0) {
+        const invalidEmailsList = invalidEmails.join(', ');
+        return `The following email addresses are not valid: ${invalidEmailsList}`;
+      }
+
+      return true;
+    },
   }
 });
