@@ -6,6 +6,7 @@ import { alias } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
+  pusher: service(),
   api: service(),
   auth: service(),
   flashes: service(),

@@ -2,10 +2,11 @@ import { computed } from '@ember/object';
 import { assert } from '@ember/debug';
 import { parseWithDefault } from '../storage';
 import Service, { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 const storage = getStorage();
 
-export default Service.extend({
+const Auth = Service.extend({
   store: service(),
 
   token: computed({
@@ -41,26 +42,6 @@ export default Service.extend({
       return null;
     }
   }),
-
-
-  // rewrite this
-  accounts: computed({
-    get() {
-      const accountsData = storage.getItem('travis.auth.accounts');
-      const accounts = parseWithDefault(accountsData, []).map(account =>
-        extractAccountRecord(this.store, account)
-      );
-      accounts.addArrayObserver(this, {
-        willChange: 'persistAccounts',
-        didChange: 'persistAccounts'
-      });
-      return accounts;
-    },
-    set(key, accounts) {
-      this.persistAccounts(accounts);
-      return accounts;
-    }
-  }).volatile(),
 
   persistAccounts(newValue) {
     const records = (newValue || []).map(record => serializeUserRecord(record));
@@ -149,3 +130,22 @@ function extractAccountRecord(store, userData) {
   return record || store.push(store.normalize('user', userData));
 }
 
+Object.defineProperty(Auth.prototype, 'accounts', {
+  @tracked
+  accounts_: [],
+
+  get() {
+    const accountsData = storage.getItem('travis.auth.accounts');
+    this.accounts_ = parseWithDefault(accountsData, []).map(account =>
+      extractAccountRecord(this.store, account)
+    );
+    return this.accounts_;
+  },
+  set(key, accounts_) {
+    const records = (accounts_ || []).map(record => serializeUserRecord(record));
+    storage.setItem('travis.auth.accounts', JSON.stringify(records));
+    return accounts_;
+  }
+});
+
+export default Auth;

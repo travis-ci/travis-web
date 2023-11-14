@@ -11,6 +11,7 @@ import { task } from 'ember-concurrency';
 import { vcsLinks } from 'travis/services/external-links';
 
 export default Component.extend({
+  pusher: service(),
   accounts: service(),
   permissions: service(),
   tagName: 'li',

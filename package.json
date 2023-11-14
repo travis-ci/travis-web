@@ -26,11 +26,11 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
     "@embroider/macros": "^1.13.2",
     "acorn": "^8.11.2",
     "babel-plugin-transform-remove-strict-mode": "^0.0.2",
     "deep-freeze": "0.0.1",
+    "ember-animated": "^1.0.4",
     "ember-rfc176-data": "^0.3.18",
     "patch-package": "^8.0.0",
     "postcss": "^8.1.0",
@@ -38,9 +38,11 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
+    "@adopted-ember-addons/ember-stripe-elements": "^2.0.5",
     "@babel/core": "^7.14.0",
     "@babel/template": "^7.22.15",
     "@csstools/postcss-sass": "^4.0.0",
+    "@ember-data/model": "^4.12.4",
     "@ember/optional-features": "^2.0.0",
     "@ember/render-modifiers": "^1.0.2",
     "@ember/test-helpers": "^3.2.0",
@@ -81,7 +83,7 @@
     "ember-composable-helpers": "^5.0.0",
     "ember-concurrency": "^3.1.1",
     "ember-concurrency-scroll": "^1.0.0",
-    "ember-data": "^4.0.2",
+    "ember-data": "4.12",
     "ember-element-helper": "^0.8.5",
     "ember-exam": "^4.0.0",
     "ember-export-application-global": "^2.0.0",
@@ -106,7 +108,7 @@
     "ember-prism": "^0.13.0",
     "ember-qunit": "^7.1.0-0",
     "ember-resolver": "^11.0.1",
-    "ember-source": "^4.0.1",
+    "ember-source": "4.12",
     "ember-style-modifier": "^3.0.1",
     "ember-svg-jar": "^2.2.2",
     "ember-template-lint": "^3.15.0",

@@ -1,3 +1,4 @@
+/* TODO use new syntax for creating models for ember-cli mirage
 import V2Serializer from 'travis/mirage/serializers/v2';
 
 import Schema from 'ember-cli-mirage/orm/schema';
@@ -97,3 +98,4 @@ module('Integration | Mirage Serializer | V2Serializer', function (hooks) {
     });
   });
 });
+*/

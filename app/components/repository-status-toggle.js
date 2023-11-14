@@ -7,6 +7,7 @@ import hasErrorWithStatus from 'travis/utils/api-errors';
 import { vcsLinks } from 'travis/services/external-links';
 
 export default Component.extend({
+  pusher: service(),
   externalLinks: service(),
   accounts: service(),
   user: reads('accounts.user'),

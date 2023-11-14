@@ -3,17 +3,18 @@ import TravisPusher from 'travis/utils/pusher';
 
 export function initialize(applicationInstance) {
   const app = applicationInstance.application;
-  app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:api'));
+  const pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:api'));
 
   if (!applicationInstance.lookup('pusher:main')) {
-    app.register('pusher:main', app.pusher, {
+    app.register('pusher:main', pusher, {
       instantiate: false
     });
   }
-  app.inject('route', 'pusher', 'pusher:main');
-  app.inject('component', 'pusher', 'pusher:main');
-  app.pusher.store = applicationInstance.lookup('service:store');
-  app.pusher.pusherService = applicationInstance.lookup('service:pusher');
+  pusher.store = applicationInstance.lookup('service:store');
+  pusher.pusherService = applicationInstance.lookup('service:pusher');
+
+  // Setting the pusher instance in the application instance for explicit injection later
+  applicationInstance.pusher = pusher;
 }
 
 export default {

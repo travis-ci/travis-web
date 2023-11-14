@@ -10,12 +10,14 @@ import {
 } from 'ember-keyboard-shortcuts';
 
 export default TravisRoute.extend(BuildFaviconMixin, {
+  store: service(),
   auth: service(),
   features: service(),
   featureFlags: service(),
   flashes: service(),
   repositories: service(),
   storage: service(),
+  pusher: service(),
   wizard: service('wizard-state'),
   queryParams: {
     selectedPlanId: null,
