@@ -5,6 +5,7 @@ import EmberObject, {
 import ArrayProxy from '@ember/array/proxy';
 import stringHash from 'travis/utils/string-hash';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+import {inject as service} from "@ember/service";
 
 const PromiseArray = ArrayProxy.extend(PromiseProxyMixin);
 
@@ -54,7 +55,8 @@ let FilteredArray = ArrayProxy.extend({
 // removed from all of the filtered arrays.
 let FilteredArrayManagerForType = EmberObject.extend({
   init() {
-    this._super(...arguments);
+    this._super(...arguments)
+    this.store = this.get('store');
     this.arrays = {};
     this.allRecords = this.store.peekAll(this.modelName);
   },

@@ -1,4 +1,4 @@
-import { JSONAPISerializer } from 'ember-cli-mirage';
+import { JSONAPISerializer } from 'miragejs';
 import { singularize, pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import apiSpec from '../api-spec';

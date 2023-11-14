@@ -176,10 +176,6 @@ export default Component.extend({
     let parts;
     if (log || (log = this.log)) {
       parts = log.get('parts');
-      parts.addArrayObserver(this, {
-        didChange: 'partsDidChange',
-        willChange: 'noop'
-      });
       parts = parts.slice(0);
       this.partsDidChange(parts, 0, null, parts.length);
     }

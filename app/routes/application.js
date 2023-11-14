@@ -64,16 +64,13 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   // visitor is subscribed to all of the public repos in the store as long as
   // they're not a collaborator. It also sets up an observer to subscribe to any
   // new repo that enters the store.
+
   setupRepoSubscriptions() {
-    this.store.filter('repo', null,
-      (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
-      ['private', 'isCurrentUserACollaborator']
-    ).then((repos) => {
+    this.store.filter('repo', null, (repo) => {
+      return !repo.get('private') && !repo.get('isCurrentUserACollaborator');
+    }).then((repos) => {
+      this.set('repos', repos);
       repos.forEach(repo => this.subscribeToRepo(repo));
-      repos.addArrayObserver(this, {
-        willChange: 'reposWillChange',
-        didChange: 'reposDidChange'
-      });
     });
   },
 
