@@ -1,6 +1,6 @@
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import { A } from ' @ember/array'
+import { A } from '@ember/array'
 import {
   getResponsiveProp,
   screens,
