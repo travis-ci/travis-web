@@ -50,11 +50,11 @@
         </UiKit::Text>
       {{/if}}
 
-      <UiKit::ButtonSignin @provider='github' />
-      <UiKit::ButtonSignin @provider='bitbucket' />
-      <UiKit::ButtonSignin @provider='gitlab' />
-      <UiKit::ButtonSignin @provider='assembla' />
-      <UiKit::ButtonSignin @provider='travisproxy' />
+      <UiKit::ButtonSignin @overriddenProvider='github' />
+      <UiKit::ButtonSignin @overriddenProvider='bitbucket' />
+      <UiKit::ButtonSignin @overriddenProvider='gitlab' />
+      <UiKit::ButtonSignin @overriddenProvider='assembla' />
+      <UiKit::ButtonSignin @overriddenProvider='travisproxy' />
 
       {{#unless this.hasAccounts}}
         {{#if this.features.proVersion}}

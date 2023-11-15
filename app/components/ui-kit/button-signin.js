@@ -13,7 +13,8 @@ export default Component.extend({
   account: null,
 
   isSignup: false,
-  provider: or('account.provider', 'multiVcs.primaryProvider'),
+  overriddenProvider: null,
+  provider: or('account.provider', 'multiVcs.primaryProvider', 'overriddenProvider'),
   isLogoVisible: true,
   isLogoSeparatorVisible: true,
   isBetaBadgeVisible: reads('isBetaProvider'),
