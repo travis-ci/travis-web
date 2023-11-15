@@ -57,7 +57,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
   init() {
     this._super(...arguments);
     this.arrays = {};
-    this.store = this.get('store')
+    this.store = this.store
     this.allRecords = this.store.peekAll(this.modelName);
   },
 

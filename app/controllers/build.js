@@ -1,5 +1,5 @@
 import Controller, { inject as controller } from '@ember/controller';
-import {testing} from 'ember';
+import { testing } from 'ember';
 import Polling from 'travis/mixins/polling';
 import Visibility from 'visibilityjs';
 import config from 'travis/config/environment';

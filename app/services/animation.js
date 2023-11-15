@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { computed } from '@ember/object';
-import {testing} from 'ember';
+import { testing } from 'ember';
 import fade from 'ember-animated/transitions/fade';
 
 const isTest = testing;

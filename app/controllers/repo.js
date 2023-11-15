@@ -1,7 +1,7 @@
 import { scheduleOnce } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
 import Controller, { inject as controller } from '@ember/controller';
-import {testing} from 'ember';
+import { testing } from 'ember';
 import eventually from 'travis/utils/eventually';
 import Visibility from 'visibilityjs';
 import { inject as service } from '@ember/service';

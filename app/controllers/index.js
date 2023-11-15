@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import {testing} from 'ember';
+import { testing } from 'ember';
 import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import Visibility from 'visibilityjs';

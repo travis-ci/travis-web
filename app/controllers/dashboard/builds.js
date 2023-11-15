@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import {testing} from 'ember';
+import { testing } from 'ember';
 import Visibility from 'visibilityjs';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';

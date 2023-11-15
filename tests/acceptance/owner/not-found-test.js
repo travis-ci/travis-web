@@ -2,7 +2,10 @@ import {
   currentURL,
   visit,
 } from '@ember/test-helpers';
-import {Logger as EmberLogger, Test as EmberTest} from 'ember';
+import {
+  Logger as EmberLogger,
+  Test as EmberTest
+} from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import nonExistentOwnerPage from 'travis/tests/pages/owner/non-existent';

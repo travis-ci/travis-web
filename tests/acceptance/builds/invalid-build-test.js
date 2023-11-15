@@ -1,5 +1,5 @@
 import { visit } from '@ember/test-helpers';
-import {Logger, Test} from 'ember';
+import { Logger, Test } from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';

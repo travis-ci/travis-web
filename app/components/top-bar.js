@@ -1,6 +1,6 @@
 import { scheduleOnce } from '@ember/runloop';
 import Component from '@ember/component';
-import {testing} from 'ember';
+import { testing } from 'ember';
 import {
   computed,
   setProperties,

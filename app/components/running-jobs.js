@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import {testing} from 'ember';
+import { testing } from 'ember';
 import { reads } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import Visibility from 'visibilityjs';

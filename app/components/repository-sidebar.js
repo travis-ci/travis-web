@@ -1,7 +1,7 @@
 import { isEmpty } from '@ember/utils';
 import { schedule } from '@ember/runloop';
 import Component from '@ember/component';
-import {testing} from 'ember';
+import { testing } from 'ember';
 import Visibility from 'visibilityjs';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
