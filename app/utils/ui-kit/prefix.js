@@ -1,5 +1,6 @@
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { A } from ' @ember/array'
 import {
   getResponsiveProp,
   screens,
@@ -42,6 +43,6 @@ export default function generatePrefix(key, propPrefix = '',
       return validator(value) ? `${screenPrefix}${negator}${propPrefix}${sep}${displayVal}` : defaultValue;
     });
 
-    return classes.compact().join(' ');
+    return A(classes).compact().join(' ');
   });
 }
