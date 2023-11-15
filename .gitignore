@@ -36,3 +36,7 @@ jsconfig.json
 # IDEs folders
 .idea
 .history
+
+
+# broccoli-debug
+/DEBUG/
