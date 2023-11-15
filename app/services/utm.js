@@ -51,7 +51,7 @@ export default Service.extend({
   }),
 
   hasParamsInUrl: computed('searchParams', function () {
-    return UTM_FIELD_NAMES.any(field => this.searchParams.has(field));
+    return UTM_FIELD_NAMES.some(field => this.searchParams.has(field));
   }),
 
   peek(fields, includeEmpty = true) {

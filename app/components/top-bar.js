@@ -1,6 +1,6 @@
 import { scheduleOnce } from '@ember/runloop';
 import Component from '@ember/component';
-import { testing } from 'ember';
+import Ember from 'ember';
 import {
   computed,
   setProperties,
@@ -27,7 +27,7 @@ export default class TopBar extends Component {
   landingPage = false;
   isNavigationOpen = false;
   isActivation = false;
-
+  viewportTolerance = { top: 0, bottom: 0, left: 0, right: 0 };
   activeModel = null;
   @reads('activeModel') model;
 
@@ -84,10 +84,11 @@ export default class TopBar extends Component {
   }
 
   didInsertElement() {
-    if (testing) {
+    if (Ember.testing) {
       super.didInsertElement(...arguments);
       return;
     }
+
 
     set(this, 'viewportSpy', true);
     super.didInsertElement(...arguments);

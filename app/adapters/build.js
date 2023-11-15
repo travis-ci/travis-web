@@ -1,5 +1,5 @@
 import V3Adapter from 'travis/adapters/v3';
-import { testing } from 'ember';
+import Ember from 'ember';
 
 let includes = 'build.commit,build.branch,build.request,build.created_by';
 

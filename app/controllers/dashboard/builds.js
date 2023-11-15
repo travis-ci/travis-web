@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { testing } from 'ember';
+import Ember from 'ember';
 import Visibility from 'visibilityjs';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
@@ -9,7 +9,7 @@ export default Controller.extend({
 
   init() {
     this._super(...arguments);
-    if (!testing) {
+    if (!Ember.testing) {
       Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },

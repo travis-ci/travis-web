@@ -1,7 +1,7 @@
 import { later } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
 import Component from '@ember/component';
-import { testing } from 'ember';
+import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({

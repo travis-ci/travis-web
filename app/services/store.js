@@ -30,9 +30,6 @@ export default class ExtendedStore extends Store {
     }
 
     if (!dependencies) {
-      console.log("No dependency");
-      console.log(this.filteredArraysManager);
-      console.log(this.filteredArraysManager.filter);
       return this.filteredArraysManager.filter(modelName, queryParams, filterFunction, ['']);
     } else {
       return this.filteredArraysManager.fetchArray(modelName, queryParams, filterFunction, dependencies, forceReload);

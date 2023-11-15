@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { testing } from 'ember';
+import Ember from 'ember';
 import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import Visibility from 'visibilityjs';
@@ -18,8 +18,8 @@ export default Controller.extend({
 
   init() {
     this._super(...arguments);
-    if (!testing) {
-      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
+    if (!Ember.testing) {
+     return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
 

@@ -1,9 +1,9 @@
 import Service from '@ember/service';
 import { computed } from '@ember/object';
-import { testing } from 'ember';
+import Ember from 'ember';
 import fade from 'ember-animated/transitions/fade';
 
-const isTest = testing;
+const isTest = Ember.testing;
 
 export const DURATION_NAMES = {
   QUICK: 'quick',

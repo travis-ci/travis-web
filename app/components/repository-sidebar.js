@@ -1,7 +1,7 @@
 import { isEmpty } from '@ember/utils';
 import { schedule } from '@ember/runloop';
 import Component from '@ember/component';
-import { testing } from 'ember';
+import Ember from 'ember';
 import Visibility from 'visibilityjs';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
@@ -42,7 +42,7 @@ export default Component.extend({
       this.set('_data', this.get('repositories.accessible'));
     }
 
-    if (!testing) {
+    if (!Ember.testing) {
       Visibility.every(config.intervals.updateTimes, () => {
         const callback = (record) => record.get('currentBuild');
         const withCurrentBuild = this._data.filter(callback).map(callback);

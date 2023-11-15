@@ -127,7 +127,8 @@ export default Service.extend({
     this.set('state', STATE.SIGNED_OUT);
 
     const { accounts, activeAccount } = this.storage;
-    accounts.removeObject(activeAccount);
+    if(accounts.removeObject) // not in case accounts is just a plain array
+      accounts.removeObject(activeAccount);
     this.storage.setProperties({ accounts, activeAccount: null });
 
     if (runTeardown) {

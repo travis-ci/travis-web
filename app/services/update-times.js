@@ -3,31 +3,41 @@ import Service from '@ember/service';
 import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
 import Visibility from 'visibilityjs';
+import { task } from 'ember-concurrency';
+import { on } from '@ember/object/evented';
 
 export default Service.extend({
   allowFinishedBuilds: false,
+  isDestroyedOrDestroying: false,
 
   init() {
-    const visibilityId = Visibility.every(config.intervals.updateTimes, bind(this, 'updateTimes'));
-    const intervalId = setInterval(this.resetAllowFinishedBuilds.bind(this), 60000);
     const records = [];
 
-    this.setProperties({ visibilityId, intervalId, records });
+    this.setProperties({ records });
 
     return this._super(...arguments);
   },
 
+  updateTimesTask: task(function* () {
+    while (true) {
+      yield this.updateTimes();
+      yield timeout(config.intervals.updateTimes);
+    }
+  }).on('init'),
+
+
   willDestroy() {
-    Visibility.stop(this.visibilityId);
-    clearInterval(this.intervalId);
+    this.set('isDestroyedOrDestroying', true);
     this._super(...arguments);
   },
 
   resetAllowFinishedBuilds() {
+    if (this.isDestroyedOrDestroying) { return; }
     this.set('allowFinishedBuilds', true);
   },
 
   updateTimes() {
+    if (this.isDestroyedOrDestroying) { return; }
     let records = this.records;
 
     records.filter(record => this.allowFinishedBuilds || !record.get('isFinished'))

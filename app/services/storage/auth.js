@@ -9,6 +9,20 @@ const storage = getStorage();
 const Auth = Service.extend({
   store: service(),
 
+  accounts: computed({
+    get() {
+      const accountsData = storage.getItem('travis.auth.accounts');
+      const accounts = parseWithDefault(accountsData, []).map(account =>
+          extractAccountRecord(this.store, account)
+      );
+      return accounts;
+    },
+    set(key, accounts_) {
+      this.persistAccounts(accounts_);
+      return accounts_;
+    }
+  }),
+
   token: computed({
     get() {
       return storage.getItem('travis.token') || null;
@@ -118,6 +132,7 @@ function getStorage() {
   // primary storage for auth is the one in which auth data was updated last
   const sessionStorageUpdatedAt = +sessionStorage.getItem('travis.auth.updatedAt');
   const localStorageUpdatedAt = +localStorage.getItem('travis.auth.updatedAt');
+
   return sessionStorageUpdatedAt > localStorageUpdatedAt ? sessionStorage : localStorage;
 }
 
@@ -129,23 +144,5 @@ function extractAccountRecord(store, userData) {
   const record = store.peekRecord('user', userData.id);
   return record || store.push(store.normalize('user', userData));
 }
-
-Object.defineProperty(Auth.prototype, 'accounts', {
-  @tracked
-  accounts_: [],
-
-  get() {
-    const accountsData = storage.getItem('travis.auth.accounts');
-    this.accounts_ = parseWithDefault(accountsData, []).map(account =>
-      extractAccountRecord(this.store, account)
-    );
-    return this.accounts_;
-  },
-  set(key, accounts_) {
-    const records = (accounts_ || []).map(record => serializeUserRecord(record));
-    storage.setItem('travis.auth.accounts', JSON.stringify(records));
-    return accounts_;
-  }
-});
 
 export default Auth;
