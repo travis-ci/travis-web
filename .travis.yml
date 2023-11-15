@@ -26,7 +26,7 @@ before_install:
   - npm install -g greenkeeper-lockfile@1
 
 install:
-  - npm ci
+  - npm ci --force
 
 before_script:
   - if [ $TRAVIS_PULL_REQUEST = 'false' ] && [ $TRAVIS_EVENT_TYPE != 'cron' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; else export PERCY_ENABLE=0; fi
