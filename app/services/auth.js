@@ -107,7 +107,8 @@ export default Service.extend({
   },
 
   switchAccount(id, redirectUrl) {
-    this.store.unloadAll();
+    if (!this.store.isDestroyed && !this.store.isDestroying)
+      this.store.unloadAll();
     const targetAccount = this.accounts.findBy('id', id);
     this.storage.set('activeAccount', targetAccount);
     if (redirectUrl)
@@ -133,7 +134,8 @@ export default Service.extend({
       this.clearNonAuthFlashes();
       runAfterSignOutCallbacks();
     }
-    this.store.unloadAll();
+    if (!this.store.isDestroyed && !this.store.isDestroying)
+      this.store.unloadAll();
 
     const { currentRouteName } = this.router;
     if (currentRouteName && currentRouteName !== 'signin') {

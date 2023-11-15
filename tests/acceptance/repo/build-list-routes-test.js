@@ -70,7 +70,7 @@ module('Acceptance | repo build list routes', function (hooks) {
     };
     this.commitAttributes = commitAttributes;
 
-    lastBuild.createCommit(assign({
+    lastBuild.createCommit(Object.assign({
       message: 'A generic cron commit message'
     }, commitAttributes));
     lastBuild.save();

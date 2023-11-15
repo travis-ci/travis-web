@@ -14,7 +14,7 @@ export default class ExtendedStore extends Store {
   constructor() {
     super(...arguments);
     this.shouldAssertMethodCallsOnDestroyedStore = true;
-    this.filteredArraysManager = new FilteredArrayManager({ store: this });
+    this.filteredArraysManager = FilteredArrayManager.create({ store: this });
   }
 
   filter(modelName, queryParams, filterFunction, dependencies, forceReload) {
@@ -30,6 +30,9 @@ export default class ExtendedStore extends Store {
     }
 
     if (!dependencies) {
+      console.log("No dependency");
+      console.log(this.filteredArraysManager);
+      console.log(this.filteredArraysManager.filter);
       return this.filteredArraysManager.filter(modelName, queryParams, filterFunction, ['']);
     } else {
       return this.filteredArraysManager.fetchArray(modelName, queryParams, filterFunction, dependencies, forceReload);
@@ -70,7 +73,7 @@ export default class ExtendedStore extends Store {
   }
 
   destroy() {
-    super.destroy();
     this.filteredArraysManager.destroy();
+    super.destroy();
   }
 }
