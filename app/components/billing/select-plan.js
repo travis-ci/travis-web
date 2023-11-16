@@ -4,6 +4,7 @@ import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 import { or, reads, filterBy } from '@ember/object/computed';
+import { A } from '@ember/array';
 
 export default Component.extend({
   accounts: service(),
@@ -21,7 +22,7 @@ export default Component.extend({
   displayedPlans: reads('availablePlans'),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
-    return this.displayedPlans.findBy('name', this.defaultPlanName);
+    return A(this.displayedPlans).findBy('name', this.defaultPlanName);
   }),
 
   allowReactivation: computed(function () {

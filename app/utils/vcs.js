@@ -1,5 +1,6 @@
 import { assert } from '@ember/debug';
 import config from 'travis/config/environment';
+import { A } from '@ember/array';
 
 const {
   providers,
@@ -14,7 +15,7 @@ export const vcsConfig = (vcsType) => (
 );
 
 export const vcsConfigByUrlPrefix = (urlPrefix) => (
-  Object.values(providers).findBy('urlPrefix', urlPrefix)
+  A(Object.values(providers)).findBy('urlPrefix', urlPrefix)
 );
 
 export const vcsConfigByUrlPrefixOrType = (prefixOrType) => {

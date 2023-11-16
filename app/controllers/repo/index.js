@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { reads, and, or, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { A } from '@ember/array';
 
 export default Controller.extend({
   auth: service(),
@@ -10,7 +11,7 @@ export default Controller.extend({
   repo: null,
 
   repoOwner: computed('accounts.all.@each.login', 'repo.owner.login', 'auth.signedIn', function () {
-    return this.auth.signedIn && this.accounts.all.findBy('login', this.repo.owner.login);
+    return this.auth.signedIn && A(this.accounts.all).findBy('login', this.repo.owner.login);
   }),
 
   permissions: reads('repo.permissions'),

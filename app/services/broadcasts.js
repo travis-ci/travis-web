@@ -2,6 +2,7 @@ import { run } from '@ember/runloop';
 import EmberObject, { computed } from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import Service, { inject as service } from '@ember/service';
+import { A } from '@ember/array';
 
 export default Service.extend({
   api: service(),
@@ -70,9 +71,9 @@ export default Service.extend({
       return '';
     }
     if (broadcastArray.length) {
-      if (broadcastArray.findBy('category', 'warning')) {
+      if (A(broadcastArray).findBy('category', 'warning')) {
         return 'warning';
-      } else if (broadcastArray.findBy('category', 'announcement')) {
+      } else if (A(broadcastArray).findBy('category', 'announcement')) {
         return 'announcement';
       } else {
         return '';

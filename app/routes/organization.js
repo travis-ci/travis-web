@@ -1,5 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
+import { A } from '@ember/array';
 
 export default TravisRoute.extend({
   accounts: service(),
@@ -26,7 +27,7 @@ export default TravisRoute.extend({
   },
 
   model({ login }) {
-    const org = this.accounts.organizations.findBy('login', login);
+    const org = A(this.accounts.organizations).findBy('login', login);
     return org || { login, error: true };
   },
 

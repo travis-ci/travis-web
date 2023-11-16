@@ -21,6 +21,7 @@ import {
   availableProviders,
   vcsConfigByUrlPrefixOrType
 } from 'travis/utils/vcs';
+import { A } from '@ember/array';
 
 const { authEndpoint, apiEndpoint } = config;
 
@@ -109,7 +110,7 @@ export default Service.extend({
   switchAccount(id, redirectUrl) {
     if (!this.store.isDestroyed && !this.store.isDestroying)
       this.store.unloadAll();
-    const targetAccount = this.accounts.findBy('id', id);
+    const targetAccount = A(this.accounts).findBy('id', id);
     this.storage.set('activeAccount', targetAccount);
     if (redirectUrl)
       window.location.href = redirectUrl;
@@ -183,7 +184,7 @@ export default Service.extend({
   getAccountByProvider(provider) {
     const { vcsTypes } = vcsConfigByUrlPrefixOrType(provider);
     const [,, userType] = vcsTypes;
-    return this.accounts.findBy('vcsType', userType);
+    return A(this.accounts).findBy('vcsType', userType);
   },
 
   isSignedInWith(provider) {
@@ -359,7 +360,7 @@ export default Service.extend({
 
 function pushUserToStore(store, user) {
   const record = store.push(store.normalize('user', user));
-  const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
+  const installation = A(store.peekAll('installation')).findBy('owner.id', user.id) || null;
   record.setProperties({ installation });
   return record;
 }

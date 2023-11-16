@@ -3,6 +3,7 @@ import { Response } from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 import fuzzysort from 'fuzzysort';
 import { createServer } from 'miragejs';
+import { A } from '@ember/array';
 
 const { validAuthToken, apiEndpoint } = config;
 
@@ -646,10 +647,10 @@ function routes () {
     const { slug_or_id } = params;
     let repo;
     if (slug_or_id.match(/^\d+$/)) {
-      repo = schema.repositories.find(slug_or_id);
+      repo = A(schema.repositories).find(slug_or_id);
     } else {
       const slug = decodeURIComponent(slug_or_id);
-      repo = schema.repositories.findBy({ slug });
+      repo = A(schema.repositories).findBy({ slug });
     }
     return repo || new Response(404, {});
   });
@@ -805,11 +806,11 @@ function routes () {
   });
 
   this.get('/v3/preference/:id', function (schema, request) {
-    return schema.preferences.findBy({ name: request.params.id });
+    return A(schema.preferences).findBy({ name: request.params.id });
   });
 
   this.patch('/v3/preference/:id', function (schema, request) {
-    const preference = schema.preferences.findBy({ name: request.params.id });
+    const preference = A(schema.preferences).findBy({ name: request.params.id });
     if (!preference)
       return new Response(404, {});
     const requestBody = JSON.parse(request.requestBody);

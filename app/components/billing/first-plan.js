@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { not, reads, filterBy, alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
+import { A } from '@ember/array';
 import {
   countries,
   states,
@@ -48,7 +49,7 @@ export default Component.extend({
       plan = this.defaultPlanId;
     }
 
-    return this.displayedPlans.findBy('id', plan);
+    return A(this.displayedPlans).findBy('id', plan);
   }),
 
   isTrial: computed('selectedPlan', function () {

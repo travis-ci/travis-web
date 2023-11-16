@@ -13,6 +13,7 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
+import { A } from '@ember/array';
 
 export default Component.extend({
   classNames: ['visibility-setting-list'],
@@ -48,7 +49,7 @@ export default Component.extend({
 
   initialKey: '',
   initial: computed('initialKey', 'options.@each.key', function () {
-    return this.options.findBy('key', this.initialKey);
+    return A(this.options).findBy('key', this.initialKey);
   }),
   initialIndex: computed('initial', 'options.[]', function () {
     return this.options.indexOf(this.initial);
@@ -56,7 +57,7 @@ export default Component.extend({
 
   selectionKey: reads('initialKey'),
   selection: computed('selectionKey', 'options.@each.key', function () {
-    return this.options.findBy('key', this.selectionKey);
+    return A(this.options).findBy('key', this.selectionKey);
   }),
   selectionIndex: computed('selection', 'options.[]', function () {
     return this.options.indexOf(this.selection);
