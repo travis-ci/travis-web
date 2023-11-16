@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Travis::Web::App do
   before do
-    current_session.global_env['HTTP_ACCEPT'] = 'text/html,*/*'
+#    current_session.global_env['HTTP_ACCEPT'] = 'text/html,*/*'
   end
 
   describe 'catch all' do

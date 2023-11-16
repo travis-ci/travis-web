@@ -151,7 +151,7 @@ module.exports = function (environment) {
       hidePostalCode: true,
       style: {
         base: {
-          fontStyle: 'Source Sans Pro',
+          fontStyle: 'sans-serif',
           fontSize: '15px',
           color: '#666',
           '::placeholder': {

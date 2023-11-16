@@ -32,6 +32,9 @@ export default Component.extend({
       return false;
     }
   }),
+  hasPlanChangePermission: computed('account', function () {
+    return !this.account.isOrganization || this.account.permissions.plan_create;
+  }),
 
   save: task(function* () {
     if (this.next.perform) {

@@ -33,7 +33,8 @@ module('Acceptance | repo/trigger build', function (hooks) {
       name: 'difference-engine',
       slug: 'adal/difference-engine',
       permissions: {
-        create_request: true
+        create_request: true,
+        build_create: true,
       },
       owner: {
         login: 'adal',
@@ -74,7 +75,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('trigger link is not visible to users without proper permissions', async function (assert) {
-    this.repo.update('permissions', { create_request: false });
+    this.repo.update('permissions', { create_request: false, build_create: false });
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
     assert.ok(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');

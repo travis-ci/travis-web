@@ -2,7 +2,7 @@
 
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { observer, computed } from '@ember/object';
-import { alias, and, equal, not, reads } from '@ember/object/computed';
+import { alias, and, equal, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isEqual } from '@ember/utils';
 import { getOwner } from '@ember/application';
@@ -154,11 +154,13 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   canCancel: computed('isFinished', 'state', function () {
     let isFinished = this.isFinished;
     let state = this.state;
-    // not(isFinished) is insufficient since it will be true when state is undefined.
     return !isFinished && !!state;
   }),
 
-  canRestart: alias('isFinished'),
+  canRestart: computed('isFinished', function () {
+    let isFinished = this.isFinished;
+    return isFinished;
+  }),
   canDebug: and('isFinished', 'repo.private'),
 
   cancel() {
@@ -234,7 +236,10 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   }),
 
-  canRemoveLog: not('log.removed'),
+  canRemoveLog: computed('log.removed', function () {
+    let removed = !!this.log.removed;
+    return !removed;
+  }),
 
   slug: computed('repo.slug', 'number', function () {
     let slug = this.get('repo.slug');

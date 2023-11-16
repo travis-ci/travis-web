@@ -140,7 +140,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
       managed_by_installation: true,
       private: false,
       permissions: {
-        admin: true
+        admin: true,
+        settings_read: true
       },
     });
 
@@ -154,7 +155,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
       managed_by_installation: true,
       private: true,
       permissions: {
-        admin: false
+        admin: false,
+        settings_read: true
       }
     });
 

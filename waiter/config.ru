@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 # Make sure we set that before everything
 ENV['RACK_ENV'] ||= ENV['RAILS_ENV'] || ENV['ENV']
 ENV['RAILS_ENV']  = ENV['RACK_ENV']
 
-$: << 'lib'
+$LOAD_PATH << 'lib'
 require 'travis/web'
 
-class RedirectSubdomain < Struct.new(:app, :from)
+RedirectSubdomain = Struct.new(:app, :from) do
   def call(env)
     request = Rack::Request.new(env)
     if request.host == from
@@ -16,10 +18,10 @@ class RedirectSubdomain < Struct.new(:app, :from)
   end
 end
 
-class RedirectPages < Struct.new(:app, :from, :to, :page)
+RedirectPages = Struct.new(:app, :from, :to, :page) do
   def call(env)
     request = Rack::Request.new(env)
-    if  request.host == from && request.fullpath == page
+    if request.host == from && request.fullpath == page
       [301, { 'Location' => "https://#{to}#{request.fullpath}", 'Content-Type' => 'text/html' }, []]
     else
       app.call(env)
@@ -28,34 +30,32 @@ class RedirectPages < Struct.new(:app, :from, :to, :page)
 end
 
 if ENV['TRAVIS_PRO']
-  ENV['API_ENDPOINT'] ||= "https://api.travis-ci.com"
-  ENV['PAGES_ENDPOINT'] ||= "https://travis-ci.com/account/plan"
-  ENV['BILLING_ENDPOINT'] ||= "https://travis-ci.com/account/plan"
+  ENV['API_ENDPOINT'] ||= 'https://api.travis-ci.com'
+  ENV['PAGES_ENDPOINT'] ||= 'https://travis-ci.com/account/plan'
+  ENV['BILLING_ENDPOINT'] ||= 'https://travis-ci.com/account/plan'
 
-  ENV['SSH_KEY_ENABLED'] = 'true' unless ENV.has_key?('SSH_KEY_ENABLED')
-  ENV['CACHES_ENABLED'] = 'true' unless ENV.has_key?('CACHES_ENABLED')
+  ENV['SSH_KEY_ENABLED'] = 'true' unless ENV.key?('SSH_KEY_ENABLED')
+  ENV['CACHES_ENABLED'] = 'true' unless ENV.key?('CACHES_ENABLED')
 
-  ENV['PUSHER_KEY'] ||= "59236bc0716a551eab40"
-  ENV['GA_CODE'] ||= "UA-24868285-5"
+  ENV['PUSHER_KEY'] ||= '59236bc0716a551eab40'
+  ENV['GA_CODE'] ||= 'UA-24868285-5'
 
-  ENV['REDIRECT_FROM'] ||= "travis-ci.org"
-  ENV['REDIRECT_TO'] ||= "app.travis-ci.com"
-  ENV['TRAVIS_WP_SITE'] ||= "www.travis-ci.com"
+  ENV['REDIRECT_FROM'] ||= 'travis-ci.org'
+  ENV['REDIRECT_TO'] ||= 'app.travis-ci.com'
+  ENV['TRAVIS_WP_SITE'] ||= 'www.travis-ci.com'
 end
 
-unless ENV['TRAVIS_PRO']
-  if ENV['REDIRECT']
-    use RedirectSubdomain, 'secure.travis-ci.org'
-    use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signin'
-    use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signup'
-    use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/help'
-    use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/'
-  end
+if ENV['REDIRECT'] && !ENV['TRAVIS_PRO']
+  use RedirectSubdomain, 'secure.travis-ci.org'
+  use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signin'
+  use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signup'
+  use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/help'
+  use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/'
 end
 
 use RedirectPages, ENV['REDIRECT_TO'], ENV['TRAVIS_WP_SITE'],  '/help' if ENV['TRAVIS_PRO'] && ENV['REDIRECT']
 
-use Rack::MobileDetect, :redirect_to => ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
+use Rack::MobileDetect, redirect_to: ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
 
 use Travis::Web::SentryDeployHook
 
@@ -67,28 +67,28 @@ use Travis::Web::ApiRedirect do |app|
 end
 
 if ENV['TRAVIS_ENTERPRISE']
-  ENV['SSH_KEY_ENABLED'] = 'true' unless ENV.has_key?('SSH_KEY_ENABLED')
-  ENV['CACHES_ENABLED'] = 'true' unless ENV.has_key?('CACHES_ENABLED')
+  ENV['SSH_KEY_ENABLED'] = 'true' unless ENV.key?('SSH_KEY_ENABLED')
+  ENV['CACHES_ENABLED'] = 'true' unless ENV.key?('CACHES_ENABLED')
 end
 
 run Travis::Web::App.build(
-  userlike:        ENV['USERLIKE'],
-  environment:     ENV['RACK_ENV'] || 'development',
-  api_endpoint:    ENV['API_ENDPOINT'],
+  userlike: ENV['USERLIKE'],
+  environment: ENV['RACK_ENV'] || 'development',
+  api_endpoint: ENV['API_ENDPOINT'],
   github_apps_endpoint: 'https://github.com/apps',
-  pages_endpoint:   ENV['PAGES_ENDPOINT'],
+  pages_endpoint: ENV['PAGES_ENDPOINT'],
   billing_endpoint: ENV['BILLING_ENDPOINT'],
   source_endpoint: ENV['SOURCE_ENDPOINT'] || 'https://github.com',
-  pusher_key:      ENV['PUSHER_KEY'],
-  pusher_host:     ENV['PUSHER_HOST'] || 'ws.pusherapp.com',
-  pusher_path:     ENV['PUSHER_PATH'],
+  pusher_key: ENV['PUSHER_KEY'],
+  pusher_host: ENV['PUSHER_HOST'] || 'ws.pusherapp.com',
+  pusher_path: ENV['PUSHER_PATH'],
   pusher_channel_prefix: ENV['PUSHER_CHANNEL_PREFIX'],
-  ga_code:         ENV['GA_CODE'],
-  root:            File.expand_path('../../dist', __FILE__),
-  server_start:    Time.now,
-  caches_enabled:  ENV['CACHES_ENABLED'],
+  ga_code: ENV['GA_CODE'],
+  root: File.expand_path('../../dist', __FILE__),
+  server_start: Time.now,
+  caches_enabled: ENV['CACHES_ENABLED'],
   ssh_key_enabled: ENV['SSH_KEY_ENABLED'],
-  pusher_log_fallback:  ENV['PUSHER_LOG_FALLBACK'],
+  pusher_log_fallback: ENV['PUSHER_LOG_FALLBACK'],
   customer_io_site_id: ENV['CUSTOMER_IO_SITE_ID'],
   pro: ENV['TRAVIS_PRO'],
   enterprise: ENV['TRAVIS_ENTERPRISE'],
