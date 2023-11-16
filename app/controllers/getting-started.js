@@ -15,4 +15,5 @@ export default Controller.extend({
   showBitbucket: equal('selectedProvider', 'bitbucket'),
   showGitlab: equal('selectedProvider', 'gitlab'),
   showAssembla: equal('selectedProvider', 'assembla'),
+  showTravisProxy: equal('selectedProvider', 'travisproxy'),
 });

@@ -169,7 +169,7 @@ export default Service.extend({
       url.pathname = '/';
     }
     const providerSegment = provider ? `/${provider}` : '';
-    const path = `/auth/handshake${providerSegment}`;
+    const path = `/auth/handshake${providerSegment.replace('-', '')}`;
     window.location.href = `${authEndpoint || apiEndpoint}${path}?redirect_uri=${url}`;
   },
 
