@@ -78,7 +78,7 @@ module('Acceptance | travis vs jenkins page', function (hooks) {
       await visit(PAGE_URL);
     });
 
-    skip('page structure', async function (assert) {
+    test('page structure', async function (assert) {
       assert.equal(currentURL(), PAGE_URL);
 
       assert.dom(HEADER_TITLE).exists();
@@ -102,7 +102,7 @@ module('Acceptance | travis vs jenkins page', function (hooks) {
       assert.dom(TESTIMONIAL_LINK).exists();
     });
 
-    skip('thanks page structure', async function (assert) {
+    test('thanks page structure', async function (assert) {
       await visit(THANKS_URL);
 
       checkThanksPageUrlAndContent(assert);
