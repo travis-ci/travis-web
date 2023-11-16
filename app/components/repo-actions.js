@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 import { alias, and, not, or, reads } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
+import { capitalize } from "@ember/string";
 
 export default Component.extend({
   flashes: service(),
@@ -83,7 +84,7 @@ export default Component.extend({
 
     yield eventually(this.item, (record) => {
       record.cancel().then(() => {
-        this.flashes.success(`${type.capitalize()} has been successfully cancelled.`);
+        this.flashes.success(`${capitalize(type)} has been successfully cancelled.`);
       }, (xhr) => {
         this.displayFlashError(xhr.status, 'cancel');
       });

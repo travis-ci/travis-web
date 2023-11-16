@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { alias, reads } from '@ember/object/computed';
+import { capitalize } from "@ember/string";
 
 export default Component.extend({
   auth: service(),
@@ -16,7 +17,7 @@ export default Component.extend({
   scansEnabled: reads('features.logScanner'),
 
   repositoryProvider: computed('repo.provider', function () {
-    return this.repo.provider.capitalize();
+    return capitalize(this.repo.provider);
   }),
 
   repositoryType: computed('repo.serverType', function () {

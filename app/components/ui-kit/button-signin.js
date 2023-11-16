@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { or, reads } from '@ember/object/computed';
+import { capitalize } from "@ember/string";
 
 export default Component.extend({
   tagName: '',
@@ -23,7 +24,7 @@ export default Component.extend({
   isLoading: false,
 
   vcsType: computed('provider', function () {
-    return `${this.provider.replace('-', '').capitalize()}User`;
+    return `${capitalize(this.provider.replace('-', ''))}User`;
   }),
 
   isPrimaryProvider: computed('provider', function () {

@@ -4,6 +4,7 @@ import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { reads, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { capitalize } from '@ember/string';
 
 const commitMessageLimit = 72;
 
@@ -110,7 +111,7 @@ export default Component.extend({
     if (serverType === 'svn') {
       return 'SVN';
     } else {
-      return serverType.capitalize();
+      return capitalize(serverType);
     }
   }),
 
