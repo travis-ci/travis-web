@@ -47,28 +47,6 @@ export default class ExtendedStore extends Store {
       });
     }
   }
-
-  _pushInternalModel(data) {
-    let type = data.type;
-    let newUpdatedAt = data.attributes ? data.attributes.updatedAt : null;
-
-    if (newUpdatedAt) {
-      let internalModel = this._internalModelForId(type, data.id),
-        record = internalModel.getRecord(),
-        existingUpdatedAt = record.get('updatedAt');
-
-      if (!existingUpdatedAt || existingUpdatedAt <= newUpdatedAt) {
-        return super._pushInternalModel(...arguments);
-      } else {
-        // record to push is older than the existing one, we need to skip,
-        // but we still need to return the result
-        return internalModel;
-      }
-    } else {
-      return super._pushInternalModel(...arguments);
-    }
-  }
-
   destroy() {
     this.filteredArraysManager.destroy();
     super.destroy();

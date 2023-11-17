@@ -32,7 +32,7 @@ export default Route.extend({
   },
 
   activate(...args) {
-    this._super(args);
+    this._super(...args);
     if (this.get('auth.signedIn')) {
       this.tabStates.set('sidebarTab', 'owned');
       this.set('tabStates.mainTab', 'current');

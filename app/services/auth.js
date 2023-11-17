@@ -211,6 +211,7 @@ export default Service.extend({
           }
         });
     } catch (error) {
+      throw error;
       this.signOut(false);
     }
   },
@@ -234,7 +235,7 @@ export default Service.extend({
 
     return this.reloadUser(userRecord).then(() => {
       if (!this.errored) {
-        storage.accounts.addObject(userRecord);
+        storage.accounts.push(userRecord);
         storage.set('activeAccount', userRecord);
         this.reportNewUser();
         this.reportToIntercom();
@@ -248,7 +249,7 @@ export default Service.extend({
   },
 
   reloadUser(userRecord, include = []) {
-    includes = includes.concat(include).uniq();
+    includes = A(includes.concat(include)).uniq();
     return this.fetchUser.perform(userRecord);
   },
 
@@ -359,8 +360,9 @@ export default Service.extend({
 });
 
 function pushUserToStore(store, user) {
-  const record = store.push(store.normalize('user', user));
-  const installation = A(store.peekAll('installation')).findBy('owner.id', user.id) || null;
+  let theUser = store.normalize('user', user);
+  const record = store.push(theUser);
+  const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
   record.setProperties({ installation });
   return record;
 }

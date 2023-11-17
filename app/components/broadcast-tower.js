@@ -16,7 +16,7 @@ export default Component.extend({
     this.toggleBroadcasts();
 
     // Acceptance tests will wait for the promise to resolve, so skip in tests
-    if (this.isOpen && !testing) {
+    if (this.isOpen && !Ember.testing) {
       yield new EmberPromise(resolve => later(resolve, 10000));
 
       this.toggleProperty('isOpen');
