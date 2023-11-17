@@ -37,7 +37,7 @@ RUN npm install --silent -g ember-cli
 
 COPY . /app
 
-RUN npm ci --silent
+RUN npm ci --silent --force
 RUN ember build --environment=production
 
 RUN cp -a public/* dist/
