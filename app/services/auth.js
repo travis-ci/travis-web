@@ -29,7 +29,7 @@ const { authEndpoint, apiEndpoint } = config;
 // and ensures the future fetches don't override previously loaded includes
 let includes = ['owner.installation', 'user.emails'];
 
-const afterSignOutCallbacks = [];
+const afterSignOutCallbacks = A([]);
 
 const STATE = {
   SIGNED_OUT: 'signed-out',

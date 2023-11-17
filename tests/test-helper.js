@@ -6,7 +6,7 @@ import { setup } from 'qunit-dom';
 import { start } from 'ember-qunit';
 
 setApplication(Application.create(config.APP));
-
+QUnit.config.testTimeout = 5000;
 setup(QUnit.assert);
 
 start({ setupTestIsolationValidation: true });
