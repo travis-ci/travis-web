@@ -1,5 +1,8 @@
 /* eslint-disable camelcase */
 import Store from '@ember-data/store';
+import RequestManager from '@ember-data/request';
+import Fetch from '@ember-data/request/fetch';
+
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 import { inject as service } from '@ember/service';
 import FilteredArrayManager from 'travis/utils/filtered-array-manager';
@@ -15,6 +18,8 @@ export default class ExtendedStore extends Store {
     super(...arguments);
     this.shouldAssertMethodCallsOnDestroyedStore = true;
     this.filteredArraysManager = FilteredArrayManager.create({ store: this });
+    this.requestManager = new RequestManager();
+    this.requestManager.use([Fetch]);
   }
 
   filter(modelName, queryParams, filterFunction, dependencies, forceReload) {
