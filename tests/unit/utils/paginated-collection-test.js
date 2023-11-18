@@ -1,9 +1,10 @@
 import PaginatedCollection from 'travis/utils/paginated-collection';
 import { module, test } from 'qunit';
+import { A } from '@ember/array'
 
 module('Unit | Utility | paginated collection', function () {
   test('takes content and populates the pagination property accordingly', function (assert) {
-    const array = [],
+    const array = A([]),
       meta = {
         pagination: {
           limit: 5,

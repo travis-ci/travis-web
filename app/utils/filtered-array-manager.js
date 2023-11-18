@@ -6,6 +6,7 @@ import EmberObject, {
 import ArrayProxy from '@ember/array/proxy';
 import stringHash from 'travis/utils/string-hash';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+import { A } from '@ember/array'
 
 const PromiseArray = ArrayProxy.extend(PromiseProxyMixin);
 
@@ -87,7 +88,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
   fetchArray(queryParams, filterFunction, dependencies, forceReload) {
     let id = this.calculateId(queryParams, filterFunction, dependencies);
     let hasArray = !!this.arrays[id];
-    let array = this._getFilterArray(id, queryParams, filterFunction, dependencies);
+    let array = A(this._getFilterArray(id, queryParams, filterFunction, dependencies));
 
     if (hasArray && forceReload) {
       // if forceReload is true and array already exist, just run the query
@@ -129,6 +130,8 @@ let FilteredArrayManagerForType = EmberObject.extend({
       _all: this.allRecords,
       dependencies
     }));
+
+    array = A(array);
 
     let promise = new EmberPromise((resolve, reject) => {
       // TODO: think about error handling, at the moment it will just pass the

@@ -211,7 +211,6 @@ export default Service.extend({
           }
         });
     } catch (error) {
-      throw error;
       this.signOut(false);
     }
   },
@@ -259,11 +258,9 @@ export default Service.extend({
       return yield reloadedUser;
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
-      if (status === 401 || status === 403 || status === 500) {
-        this.set('errored', true);
-        this.flashes.error(TOKEN_EXPIRED_MSG);
-        this.signOut();
-      }
+      this.flashes.error(TOKEN_EXPIRED_MSG);
+      this.set('errored', true);
+      yield this.signOut();
     }
   }).keepLatest(),
 
@@ -313,8 +310,8 @@ export default Service.extend({
   },
 
   clearNonAuthFlashes() {
-    const flashMessages = this.get('flashes.flashes') || [];
-    const errorMessages = flashMessages.filterBy('type', 'error');
+    const flashMessages = A(this.get('flashes.flashes') || []);
+    const errorMessages = A(flashMessages.filterBy('type', 'error'));
     if (!isEmpty(errorMessages)) {
       const errMsg = errorMessages.get('firstObject.message');
       if (errMsg !== TOKEN_EXPIRED_MSG) {
