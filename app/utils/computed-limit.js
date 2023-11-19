@@ -5,7 +5,7 @@ let limit = function (dependentKey, limitKey) {
     let limit = get(this, limitKey),
       array = this.get(dependentKey);
 
-    return array ? array.toArray().slice(0, limit) : [];
+    return array ? array.slice(0, limit) : [];
   });
 };
 

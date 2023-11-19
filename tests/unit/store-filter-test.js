@@ -34,7 +34,7 @@ module('Unit | store.filter', function (hooks) {
     result.then((collection) => {
       done();
 
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
     });
   });
 
@@ -79,7 +79,7 @@ module('Unit | store.filter', function (hooks) {
       done();
 
       assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
     });
   });
 
@@ -124,7 +124,7 @@ module('Unit | store.filter', function (hooks) {
       done();
 
       assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
 
       let repo1 = store.peekRecord('repo', 1);
       let repo2 = store.peekRecord('repo', 2);
@@ -133,13 +133,13 @@ module('Unit | store.filter', function (hooks) {
         repo1.set('starred', false);
       });
 
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), []);
+      assert.deepEqual(collection.map((r) => r.get('id')), []);
 
       run(() => {
         repo2.set('starred', true);
       });
 
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['2']);
+      assert.deepEqual(collection.map((r) => r.get('id')), ['2']);
     });
   });
 
@@ -185,7 +185,7 @@ module('Unit | store.filter', function (hooks) {
     result.then((collection) => {
       done();
 
-      assert.equal(collection.toArray().length, 0);
+      assert.equal(collection.length, 0);
 
       run(() => {
         store.push({
@@ -205,7 +205,7 @@ module('Unit | store.filter', function (hooks) {
         });
       });
 
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
     });
   });
 

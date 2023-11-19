@@ -1,9 +1,5 @@
-import ApplicationSerializer from 'travis/serializers/application';
-
-export default ApplicationSerializer.extend({
-  pushPayload(store, payload) {
-    const modelClass = store.modelFor('plan');
-    const json = this.normalizeArrayResponse(store, modelClass, payload);
+export default function pushPayload(store, payloads) {
+    const applicationSerializer = store.serializerFor('application');
+    const json = applicationSerializer.normalizeArrayResponse(store, store.modelFor('plan'), payloads);
     store.push(json);
-  }
-});
+}

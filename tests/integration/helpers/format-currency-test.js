@@ -9,7 +9,7 @@ module('Integration | Helper | format-currency', function (hooks) {
   test('it formats 100cents to $1.00', async function (assert) {
     this.set('inputValue', 100);
 
-    await render(hbs`{{format-currency inputValue}}`);
+    await render(hbs`{{format-currency this.inputValue}}`);
 
     assert.equal(this.element.textContent.trim(), '$1.00');
   });
@@ -17,7 +17,7 @@ module('Integration | Helper | format-currency', function (hooks) {
   test('it formats 0cents to $0.00', async function (assert) {
     this.set('inputValue', 0);
 
-    await render(hbs`{{format-currency inputValue}}`);
+    await render(hbs`{{format-currency this.inputValue}}`);
 
     assert.equal(this.element.textContent.trim(), '$0.00');
   });
@@ -25,7 +25,7 @@ module('Integration | Helper | format-currency', function (hooks) {
   test('it formats 154cents to $1.54', async function (assert) {
     this.set('inputValue', 154);
 
-    await render(hbs`{{format-currency inputValue}}`);
+    await render(hbs`{{format-currency this.inputValue}}`);
 
     assert.equal(this.element.textContent.trim(), '$1.54');
   });
@@ -34,7 +34,7 @@ module('Integration | Helper | format-currency', function (hooks) {
     this.set('inputValue', 1500);
     this.set('floor', true);
 
-    await render(hbs`{{format-currency inputValue floor=floor}}`);
+    await render(hbs`{{format-currency this.inputValue floor=this.floor}}`);
 
     assert.equal(this.element.textContent.trim(), '$15');
   });

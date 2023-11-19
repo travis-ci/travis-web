@@ -8,7 +8,7 @@ export default Component.extend({
   invoices: null,
 
   invoiceYears: computed('invoices.@each.createdAt', function () {
-    return A(this.invoices.mapBy('year')).uniq().sort((a, b) => b - a);
+    return A(A(this.invoices.mapBy('year')).uniq()).sort((a, b) => b - a);
   }),
 
   year: reads('invoiceYears.firstObject'),

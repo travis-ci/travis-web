@@ -1,5 +1,6 @@
 import Service, { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { pushPayload } from 'travis/serializers/beta-migration-request'
 
 /**
  * Service for shared Ember Concurrency tasks.
@@ -22,7 +23,10 @@ export default Service.extend({
     });
 
     if (data) {
-      this.store.pushPayload('beta-migration-request', data);
+      const modelClass = this.store.modelFor('beta-migration-request');
+      const serializer = this.serializerFor('application')
+      const json = serializer.normalizeArrayResponse(this.store, modelClass, data);
+      this.store.push(json);
     }
 
     return this.store.peekAll('beta-migration-request');

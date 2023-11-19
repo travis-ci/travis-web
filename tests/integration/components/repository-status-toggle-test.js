@@ -26,7 +26,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
       },
     });
 
-    await render(hbs`{{repository-status-toggle repository=repository}}`);
+    await render(hbs`{{repository-status-toggle repository=this.repository}}`);
 
     assert.dom('.switch').hasClass('active', 'switch should have active class');
   });
@@ -54,7 +54,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
       return new Response(409, {}, {});
     });
 
-    await render(hbs`{{repository-status-toggle repository=repository}}`);
+    await render(hbs`{{repository-status-toggle repository=this.repository}}`);
     assert.dom('.switch').findElement().click();
     settled().then(() => {
       assert.dom('.repositories-error').hasText(
@@ -85,7 +85,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
       return new Response(404, {}, {});
     });
 
-    await render(hbs`{{repository-status-toggle repository=repository}}`);
+    await render(hbs`{{repository-status-toggle repository=this.repository}}`);
     assert.dom('.switch').findElement().click();
     settled().then(() => {
       assert.dom('.repositories-error').includesText(

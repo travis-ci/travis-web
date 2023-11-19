@@ -21,7 +21,7 @@ module('Integration | Component | ssh-key', function (hooks) {
 
     var key = EmberObject.create({ fingerprint: 'fingerprint' });
     this.set('key', key);
-    await render(hbs`{{ssh-key key=key sshKeyDeleted=(action "sshKeyDeleted")}}`);
+    await render(hbs`{{ssh-key key=this.key sshKeyDeleted=(action "sshKeyDeleted")}}`);
 
     assert.dom('.ssh-key-name span').hasText('Default', 'should display that no custom key is set');
     assert.dom('.ssh-key-value span').hasText('fingerprint', 'should display default key fingerprint');
@@ -38,7 +38,7 @@ module('Integration | Component | ssh-key', function (hooks) {
     });
 
     this.set('key', key);
-    await render(hbs`{{ssh-key key=key sshKeyDeleted=(action "sshKeyDeleted")}}`);
+    await render(hbs`{{ssh-key key=this.key sshKeyDeleted=(action "sshKeyDeleted")}}`);
 
     assert.dom('.ssh-key-name span').hasText('fookey', 'should display key description');
     assert.dom('.ssh-key-value span').hasText('somethingthing', 'should display custom key fingerprint');
@@ -55,7 +55,7 @@ module('Integration | Component | ssh-key', function (hooks) {
     });
 
     this.set('key', key);
-    await render(hbs`{{ssh-key key=key sshKeyDeleted=(action "sshKeyDeleted") pushAccess=true}}`);
+    await render(hbs`{{ssh-key key=this.key sshKeyDeleted=(action "sshKeyDeleted") pushAccess=true}}`);
 
     await click('.ssh-key-action button');
 
@@ -76,7 +76,7 @@ module('Integration | Component | ssh-key', function (hooks) {
     });
 
     this.set('key', key);
-    await render(hbs`{{ssh-key key=key sshKeyDeleted=(action "sshKeyDeleted") pushAccess=false}}`);
+    await render(hbs`{{ssh-key key=this.key sshKeyDeleted=(action "sshKeyDeleted") pushAccess=false}}`);
 
     assert.dom('.ssh-key-action a').doesNotExist('delete link should not be displayed');
   });

@@ -211,6 +211,7 @@ export default Service.extend({
           }
         });
     } catch (error) {
+      console.log(error.message); // for debugging purposes is better option...
       this.signOut(false);
     }
   },

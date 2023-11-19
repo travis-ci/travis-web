@@ -44,7 +44,7 @@ module('Unit | store.paginated', function (hooks) {
       done();
 
       assert.equal(collection.get('pagination.perPage'), 1);
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
     });
   });
 
@@ -85,7 +85,7 @@ module('Unit | store.paginated', function (hooks) {
       done();
 
       assert.equal(collection.get('pagination.perPage'), 1);
-      assert.equal(collection.toArray().length, 0);
+      assert.equal(collection.length, 0);
     });
   });
 
@@ -129,7 +129,7 @@ module('Unit | store.paginated', function (hooks) {
       done();
 
       assert.equal(collection.get('pagination.perPage'), 1);
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['2']);
+      assert.deepEqual(collection.map((r) => r.get('id')), ['2']);
     });
   });
 
@@ -164,7 +164,7 @@ module('Unit | store.paginated', function (hooks) {
     result.then((collection) => {
       done();
 
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
 
       run(() => {
         store.push({
@@ -176,7 +176,7 @@ module('Unit | store.paginated', function (hooks) {
         });
       });
 
-      assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['2']);
+      assert.deepEqual(collection.map((r) => r.get('id')), ['2']);
     });
   });
 

@@ -29,7 +29,7 @@ module('Integration | Component | requests item', function (hooks) {
     };
 
     this.request = request;
-    await render(hbs`{{requests-item request=request}}`);
+    await render(hbs`{{requests-item request=this.request}}`);
 
     assert.dom('.row-item:nth-of-type(2) strong').hasText('dev');
     assert.dom('.row-item:nth-of-type(3) .label-align').hasText('a day ago');
@@ -50,7 +50,7 @@ module('Integration | Component | requests item', function (hooks) {
     };
 
     this.request = request;
-    await render(hbs`{{requests-item request=request}}`);
+    await render(hbs`{{requests-item request=this.request}}`);
     return assert.dom('.row-item:nth-child(2) strong').hasText('#20');
   });
 });

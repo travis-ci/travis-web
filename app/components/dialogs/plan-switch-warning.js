@@ -15,7 +15,7 @@ export default Component.extend({
 
   selectableAccounts: computed('accounts.organizations.[]', 'user', function () {
     const accountOrgs = this.accounts.organizations || [];
-    const organizations = accountOrgs.toArray() || [];
+    const organizations = accountOrgs || [];
     return [this.user, ...organizations]; // user account must be first item, so that it couldn't be removed from selected options
   }),
   selectableOptions: map('selectableAccounts', makeOptionFromAccount),
@@ -24,7 +24,7 @@ export default Component.extend({
 
   register: task(function* () {
     try {
-      yield this.user.joinMigrateBeta(this.selectedAccounts.without(this.user).toArray());
+      yield this.user.joinMigrateBeta(this.selectedAccounts.without(this.user));
       this.onClose();
       this.flashes.clear();
       this.flashes.success('You have successfully joined the beta!');

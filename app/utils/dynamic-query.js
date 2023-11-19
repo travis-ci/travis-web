@@ -148,7 +148,7 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
         } else {
           this.set('pagination', result.pagination);
         }
-        const results = result.toArray();
+        const results = result;
         if (this.appendResults) {
           this.addObjects(results);
         } else {

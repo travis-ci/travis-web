@@ -9,7 +9,7 @@ module('Integration | Helper | format-domain', function (hooks) {
   test('it works', async function (assert) {
     this.set('inputValue', 'https://education.travis-ci.com/');
 
-    await render(hbs`{{format-domain inputValue}}`);
+    await render(hbs`{{format-domain this.inputValue}}`);
 
     assert.equal(this.element.textContent.trim(), 'education.travis-ci.com');
   });
