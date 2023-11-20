@@ -34,6 +34,7 @@ module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
     'ember-cli-babel': {
       includePolyfill: true,
+      sourceMaps: 'inline'
     },
     fingerprint: fingerprint,
     sourcemaps: {

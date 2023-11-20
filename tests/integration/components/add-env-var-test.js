@@ -35,7 +35,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     this.set('repo', repo);
 
-    await render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=this.repo}}`);
 
     await fillInWithKeyEvent('.env-name', 'FOO');
     await fillInWithKeyEvent('.env-value', 'bar');
@@ -57,7 +57,7 @@ module('Integration | Component | add env-var', function (hooks) {
   test('it shows an error if no name is present', async function (assert) {
     assert.expect(3);
 
-    await render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=this.repo}}`);
 
     assert.dom('.env-name').doesNotHaveAttribute('value', 'precond: name input should be empty');
 
@@ -76,7 +76,7 @@ module('Integration | Component | add env-var', function (hooks) {
   test('it does not show an error when changing the public switch', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=this.repo}}`);
 
     await click('.switch');
 
@@ -97,7 +97,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     this.set('repo', repo);
 
-    await render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=this.repo}}`);
 
     await fillInWithKeyEvent('.env-name', 'FOO');
     await fillInWithKeyEvent('.env-value', 'bar');
@@ -142,7 +142,7 @@ module('Integration | Component | add env-var', function (hooks) {
       repository: this.repository,
     });
 
-    await render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=this.repo}}`);
 
     await fillInWithKeyEvent('.env-name', 'FOO');
     await fillInWithKeyEvent('.env-value', 'bar');
@@ -189,7 +189,7 @@ module('Integration | Component | add env-var', function (hooks) {
       repository: this.repository,
     });
 
-    await render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=this.repo}}`);
 
     await fillInWithKeyEvent('.env-name', 'FOO');
     await fillInWithKeyEvent('.env-value', 'bar');
@@ -201,7 +201,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     assert.equal(store.peekAll('envVar').get('length'), 1, 'env var with branch should be added to store');
 
-    await render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=this.repo}}`);
 
     await fillInWithKeyEvent('.env-name', 'FOO');
     await fillInWithKeyEvent('.env-value', 'bar');
@@ -231,7 +231,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     this.set('repo', repo);
 
-    await render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=this.repo}}`);
 
     await fillInWithKeyEvent('.env-name', 'FOO');
     await fillInWithKeyEvent('.env-value', 'bar');
@@ -240,7 +240,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     assert.equal(store.peekAll('envVar').get('length'), 1, 'env var without branch should be added to store');
 
-    await render(hbs`{{add-env-var repo=repo}}`);
+    await render(hbs`{{add-env-var repo=this.repo}}`);
 
     await fillInWithKeyEvent('.env-name', 'FOO');
     await fillInWithKeyEvent('.env-value', 'bar');

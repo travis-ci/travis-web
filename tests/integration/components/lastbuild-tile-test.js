@@ -17,7 +17,7 @@ module('Integration | Component | lastbuild tile', function (hooks) {
     };
     this.set('build', build);
 
-    await render(hbs`{{lastbuild-tile build=build}}`);
+    await render(hbs`{{lastbuild-tile build=this.build}}`);
 
     assert.dom('.label-align').hasText('#222', 'shows the right build number');
     assert.dom('li').hasClass('passed', 'has class according to build state');

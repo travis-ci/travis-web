@@ -22,7 +22,7 @@ module('Integration | Component | build-count', function (hooks) {
 
     this.server.createList('insight-metric', 15);
 
-    await render(hbs`{{build-count interval=interval owner=ownerData private=private}}`);
+    await render(hbs`{{build-count interval=this.interval owner=this.ownerData private=this.private}}`);
     await settled();
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
@@ -37,7 +37,7 @@ module('Integration | Component | build-count', function (hooks) {
   test('loading state renders', async function (assert) {
     this.set('interval', INSIGHTS_INTERVALS.WEEK);
 
-    render(hbs`{{build-count interval=interval owner=ownerData private=private}}`);
+    render(hbs`{{build-count interval=this.interval owner=this.ownerData private=this.private}}`);
     await waitFor('.insights-glance--loading');
 
     assert.dom('.insights-glance').hasClass('insights-glance--loading');

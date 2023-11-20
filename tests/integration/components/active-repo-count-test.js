@@ -21,7 +21,7 @@ module('Integration | Component | active-repo-count', function (hooks) {
   test('it renders', async function (assert) {
     this.server.createList('insight-metric', 1);
 
-    await render(hbs`{{active-repo-count interval=interval owner=ownerData private=private}}`);
+    await render(hbs`{{active-repo-count interval=this.interval owner=this.ownerData private=this.private}}`);
     await settled();
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
@@ -31,7 +31,7 @@ module('Integration | Component | active-repo-count', function (hooks) {
   });
 
   test('loading state renders', async function (assert) {
-    render(hbs`{{active-repo-count interval=interval owner=ownerData private=private}}`);
+    render(hbs`{{active-repo-count interval=this.interval owner=this.ownerData private=this.private}}`);
     await waitFor('.insights-glance--loading');
 
     assert.dom('.insights-glance').hasClass('insights-glance--loading');

@@ -9,7 +9,7 @@ module('Integration | Component | repository-migration-modal', function (hooks) 
   test('it renders', async function (assert) {
     this.set('repositories', [{ slug: 'travis-ci/travis-web' }]);
     this.set('fakeAction', () => {});
-    await render(hbs`{{repository-migration-modal repositories=repositories onClose=fakeAction}}`);
+    await render(hbs`{{repository-migration-modal repositories=this.repositories onClose=this.fakeAction}}`);
 
     const expectedHeader = 'Migrate selected repositories';
     assert.dom('[data-test-repository-migration-modal-header]').hasText(expectedHeader);

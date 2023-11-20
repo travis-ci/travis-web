@@ -27,7 +27,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
 
     this.set('repo', repo);
 
-    await render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
+    await render(hbs`{{add-ssh-key repo=this.repo sshKeyAdded="sshKeyAdded"}}`);
 
     var sshKey = store.peekAll('ssh_key').objectAt(0);
 
@@ -63,7 +63,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
 
     this.set('repo', repo);
 
-    await render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
+    await render(hbs`{{add-ssh-key repo=this.repo sshKeyAdded="sshKeyAdded"}}`);
 
     var sshKey = store.peekAll('ssh_key').objectAt(0);
 

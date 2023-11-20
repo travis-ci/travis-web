@@ -62,7 +62,7 @@ module('Integration | Component | dashboard row', function (hooks) {
     });
 
     this.set('repo', repo);
-    await render(hbs`{{dashboard-row repo=repo}}`);
+    await render(hbs`{{dashboard-row repo=this.repo}}`);
 
     assert.dom('.dash-header .row-label a').hasText('travis-ci');
     assert.dom('.dash-header .row-label a').hasAttribute('title', 'travis-ci');

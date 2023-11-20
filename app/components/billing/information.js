@@ -5,10 +5,13 @@ export default Component.extend({
   newSubscription: null,
 
   billingInfo: reads('subscription.billingInfo'),
+  next: null,
 
   actions: {
-    updateEmails(values) {
+    updateEmails(values)
+    {
       this.billingInfo.set('billingEmail', values.join(','));
     },
+    next() {}
   }
 });

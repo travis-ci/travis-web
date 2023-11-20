@@ -33,7 +33,7 @@ module('Integration | Component | builds item', function (hooks) {
       }
     };
     this.build = build;
-    await render(hbs`{{builds-item build=build}}`);
+    await render(hbs`{{builds-item build=this.build}}`);
     assert.dom('.row-li').hasClass('passed', 'component has right status class');
     assert.dom('.row-branch a').hasText('foobarbranch', 'component renders branch if event is push');
     assert.dom('.row-branch a').hasAttribute('title', 'foobarbranch');
@@ -51,7 +51,7 @@ module('Integration | Component | builds item', function (hooks) {
       pullRequestTitle: 'Strike!',
     };
     this.build = build;
-    await render(hbs`{{builds-item build=build}}`);
+    await render(hbs`{{builds-item build=this.build}}`);
     assert.dom('.row-li').hasClass('failed');
     assert.dom('.row-branch a').hasText('PR #1919');
     assert.dom('.row-branch a').hasAttribute('title', 'PR #1919 Strike!');
@@ -70,7 +70,7 @@ module('Integration | Component | builds item', function (hooks) {
       },
     };
     this.build = build;
-    await render(hbs`{{builds-item build=build}}`);
+    await render(hbs`{{builds-item build=this.build}}`);
     assert.dom('.row-li').hasClass('errored');
     assert.dom('.row-branch a').hasText('Strike!');
     assert.dom('.row-branch a').hasAttribute('title', 'Strike!');
@@ -90,7 +90,7 @@ module('Integration | Component | builds item', function (hooks) {
     };
 
     this.build = build;
-    await render(hbs`{{builds-item build=build}}`);
+    await render(hbs`{{builds-item build=this.build}}`);
     assert.dom('.row-branch .badge').hasText('draft');
   });
 
@@ -103,7 +103,7 @@ module('Integration | Component | builds item', function (hooks) {
     };
 
     this.build = build;
-    await render(hbs`{{builds-item build=build}}`);
+    await render(hbs`{{builds-item build=this.build}}`);
 
     assert.dom('.row-message').hasText('cron A cron message');
   });

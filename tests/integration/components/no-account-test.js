@@ -12,7 +12,7 @@ module('Integration | Component | no account', function (hooks) {
       name: 'famous-org'
     });
     this.set('name', org);
-    await render(hbs`{{no-account name=name.name}}`);
+    await render(hbs`{{no-account name=this.name.name}}`);
 
     assert.dom('.page-title').hasText('We couldn\'t find the organization famous-org');
   });

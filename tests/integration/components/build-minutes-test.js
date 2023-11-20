@@ -21,7 +21,7 @@ module('Integration | Component | build-minutes', function (hooks) {
   test('it renders', async function (assert) {
     this.server.createList('insight-metric', 5);
 
-    await render(hbs`{{build-minutes interval=interval owner=ownerData private=private}}`);
+    await render(hbs`{{build-minutes interval=this.interval owner=this.ownerData private=this.private}}`);
     await settled();
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
@@ -31,7 +31,7 @@ module('Integration | Component | build-minutes', function (hooks) {
   });
 
   test('loading state renders', async function (assert) {
-    render(hbs`{{build-minutes interval=interval owner=ownerData private=private}}`);
+    render(hbs`{{build-minutes interval=this.interval owner=this.ownerData private=this.private}}`);
     await waitFor('.insights-glance--loading');
 
     assert.dom('.insights-glance').hasClass('insights-glance--loading');

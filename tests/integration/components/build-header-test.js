@@ -37,7 +37,7 @@ module('Integration | Component | build header', function (hooks) {
     this.set('repo', repo);
     this.set('commit', commit);
 
-    await render(hbs`{{build-header item=build repo=repo commit=commit}}`);
+    await render(hbs`{{build-header item=build repo=this.repo commit=commit}}`);
 
     assert.dom('.commit-compare').doesNotExist('does not display compare link element for api builds');
     assert.dom('.build-status .inner-underline').hasText('#1234', 'displays build number');

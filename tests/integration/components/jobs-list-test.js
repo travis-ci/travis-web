@@ -22,7 +22,7 @@ module('Integration | Component | jobs list', function (hooks) {
       required: true
     };
     this.jobs = jobs;
-    await render(hbs`{{jobs-list jobs=jobs.jobs required=jobs.required}}`);
+    await render(hbs`{{jobs-list jobs=this.jobs.jobs required=jobs.required}}`);
 
     assert.dom('.jobs-list li').exists({ count: 2 }, 'there should be 2 job items');
     assert.dom('.jobs-item:nth-of-type(1)').hasClass('passed', 'passed class should be applied to a job');
@@ -36,7 +36,7 @@ module('Integration | Component | jobs list', function (hooks) {
       ]
     };
     this.jobs = jobs;
-    await render(hbs`{{jobs-list jobs=jobs.jobs}}`);
+    await render(hbs`{{jobs-list jobs=this.jobs.jobs}}`);
     assert.dom('.section-title').hasText(/Allowed Failures/);
     assert.dom('.jobs-list li').exists('there should be 1 job item');
   });
@@ -90,7 +90,7 @@ module('Integration | Component | jobs list', function (hooks) {
     context.stage = context.stages[stage];
     context.jobs = A(jobs);
     context.build = { jobs: context.jobs };
-    await render(hbs`{{jobs-list build=build jobs=jobs stages=stages stage=stage}})`);
+    await render(hbs`{{jobs-list build=build jobs=this.jobs stages=stages stage=stage}})`);
   };
 
   test('it renders allowed failures text for a non-final stage with a failed job', async function (assert) {

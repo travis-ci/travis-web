@@ -118,7 +118,7 @@
                 </UiKit::Box>
 
                 <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
-                  <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
+                  <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @customBgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
                     {{#if plan.isFree}}
                       Start building for free
                     {{else}}
@@ -230,7 +230,7 @@
                   </UiKit::Box>
 
                   <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
-                    <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
+                    <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @customBgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
                       {{#if plan.isFree}}
                         Start building for free
                       {{else}}
@@ -421,7 +421,7 @@
             Simply select the annual option when signing up for a subscription, or go to
             <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='md' @href={{this.billingUrl}}>{{format-domain this.billingUrl}}</UiKit::Link>
             if you want to switch your current plan to annual.
-            For more flexible, usage based Plans please <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
+            For more flexible, usage based Plans please <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut this.scrollToContact true)}}>contact us</UiKit::Link>
           </UiKit::Text>
         </grid.item>
 
@@ -443,7 +443,7 @@
           </UiKit::Text>
           <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
             Yes! We have many plans available for your concurrency needs. You can change your plan subscription at any time on the billing page or
-            <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
+            <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut this.scrollToContact true)}}>contact us</UiKit::Link>
             if you’re looking for something custom.
           </UiKit::Text>
         </grid.item>

@@ -49,7 +49,7 @@ module('OwnerRepoTileComponent', function (hooks) {
 
     this.set('repo', repo);
 
-    await render(hbs`{{owner-repo-tile repo=repo}}`);
+    await render(hbs`{{owner-repo-tile repo=this.repo}}`);
 
     assert.dom('.owner-tile').hasClass('passed', 'component should have state class (passed)');
     assert.dom('.owner-tile-section:nth-of-type(1) span.repo-title-text').hasText('travis-chat', 'should display correct repo name');

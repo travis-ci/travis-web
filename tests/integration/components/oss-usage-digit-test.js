@@ -8,7 +8,7 @@ module('Integration | Component | oss usage digit', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('digit', 1);
-    await render(hbs`{{oss-usage-digit digit=digit}}`);
+    await render(hbs`{{oss-usage-digit digit=this.digit}}`);
 
     assert.dom('img').hasAttribute('src', '../images/landing-page/oss-num-1.svg');
   });

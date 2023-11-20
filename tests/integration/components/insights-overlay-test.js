@@ -23,7 +23,7 @@ module('Integration | Component | insights-overlay', function (hooks) {
   test('month version renders correctly', async function (assert) {
     this.set('interval', INSIGHTS_INTERVALS.MONTH);
 
-    await render(hbs`{{insights-overlay interval=interval owner=ownerData private=private}}`);
+    await render(hbs`{{insights-overlay interval=this.interval owner=this.ownerData private=this.private}}`);
     await settled();
 
     assert.dom('[data-test-insights-overlay-title]').hasText('Build to get monthly insights');
@@ -35,7 +35,7 @@ module('Integration | Component | insights-overlay', function (hooks) {
   test('week version renders correctly', async function (assert) {
     this.set('interval', INSIGHTS_INTERVALS.WEEK);
 
-    await render(hbs`{{insights-overlay interval=interval owner=ownerData private=private}}`);
+    await render(hbs`{{insights-overlay interval=this.interval owner=this.ownerData private=this.private}}`);
     await settled();
 
     assert.dom('[data-test-insights-overlay-title]').hasText('It\'s been a quiet week for builds');
@@ -49,7 +49,7 @@ module('Integration | Component | insights-overlay', function (hooks) {
 
     this.server.createList('insight-metric', 5);
 
-    await render(hbs`{{insights-overlay interval=interval owner=ownerData private=private}}`);
+    await render(hbs`{{insights-overlay interval=this.interval owner=this.ownerData private=this.private}}`);
     await settled();
 
     assert.dom('.overlay-backdrop').hasNoClass('overlay-backdrop--visible');

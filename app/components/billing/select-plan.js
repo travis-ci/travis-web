@@ -82,6 +82,6 @@ export default Component.extend({
 
     hideCalculator() {
       this.set('showCalculator', false);
-    }
+    },
   }
 });

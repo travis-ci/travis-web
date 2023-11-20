@@ -29,7 +29,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
     let [start, end] = this.insightsService.getDatesFromInterval(INSIGHTS_INTERVALS.MONTH);
     this.set('interval', INSIGHTS_INTERVALS.MONTH);
 
-    await render(hbs`{{insights-date-display interval=interval}}`);
+    await render(hbs`{{insights-date-display interval=this.interval}}`);
 
     assert.dom(this.element).hasText(
       `${start.format(INSIGHTS_DATE_RANGE_FORMAT)}\n-\n${end.format(INSIGHTS_DATE_RANGE_FORMAT)}`
@@ -40,7 +40,7 @@ module('Integration | Component | insights-date-display', function (hooks) {
     let [start, end] = this.insightsService.getDatesFromInterval(INSIGHTS_INTERVALS.WEEK);
     this.set('interval', INSIGHTS_INTERVALS.WEEK);
 
-    await render(hbs`{{insights-date-display interval=interval}}`);
+    await render(hbs`{{insights-date-display interval=this.interval}}`);
 
     assert.dom(this.element).hasText(
       `${start.format(INSIGHTS_DATE_RANGE_FORMAT)}\n-\n${end.format(INSIGHTS_DATE_RANGE_FORMAT)}`

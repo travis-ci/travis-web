@@ -182,7 +182,7 @@ const Repo = VcsEntity.extend({
 
   urlOwnerName: computed('slug', function () {
     const { slug = '', ownerName } = this;
-    return slug.split('/').firstObject || ownerName;
+    return slug.split('/') && slug.split('/').firstObject || ownerName;
   }),
 
   formattedSlug: computed('owner.login', 'name', function () {

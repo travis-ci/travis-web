@@ -24,7 +24,7 @@ module('Integration | Component | Dialog | prioritize build modal', function (ho
     this.set('priority', EmberObject.create({ isRunning: true }));
     this.set('fakeAction', () => {});
 
-    await render(hbs`<Dialogs::prioritize-build-modal @build={{build}} @job={{job}} @isOpen={{true}} @onClose={{fakeAction}} @increasePriority={{priority}} />`);
+    await render(hbs`<Dialogs::prioritize-build-modal @build={{this.build}} @job={{this.job}} @isOpen={{true}} @onClose={{this.fakeAction}} @increasePriority={{this.priority}} />`);
     assert.dom('.repo-actions-modal__header').exists();
     assert.dom('.repo-actions-modal__header').hasText('Prioritize your build');
     assert.dom('.repo-actions-modal__controls').exists();

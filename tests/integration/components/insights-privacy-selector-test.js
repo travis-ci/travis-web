@@ -19,11 +19,11 @@ module('Integration | Component | insights-privacy-selector', function (hooks) {
       includePrivate: false,
     });
 
-    await render(hbs`{{insights-privacy-selector isPrivateViewable=isPrivateViewable includePrivate=includePrivate}}`);
+    await render(hbs`{{insights-privacy-selector isPrivateViewable=this.isPrivateViewable includePrivate=this.includePrivate}}`);
     assert.dom('.insights-privacy-selector__selected').hasText(INSIGHTS_PRIVACY_OPTIONS.PUBLIC);
 
     this.set('includePrivate', true);
-    await render(hbs`{{insights-privacy-selector isPrivateViewable=isPrivateViewable includePrivate=includePrivate}}`);
+    await render(hbs`{{insights-privacy-selector isPrivateViewable=this.isPrivateViewable includePrivate=this.includePrivate}}`);
     assert.dom('.insights-privacy-selector__selected').hasText(INSIGHTS_PRIVACY_OPTIONS.PUBLIC);
   });
 
@@ -37,9 +37,9 @@ module('Integration | Component | insights-privacy-selector', function (hooks) {
     });
 
     await render(hbs`{{insights-privacy-selector
-      isPrivateViewable=isPrivateViewable
-      includePrivate=includePrivate
-      setRequestPrivateInsights=setPrivate
+      isPrivateViewable=this.isPrivateViewable
+      includePrivate=this.includePrivate
+      setRequestPrivateInsights=this.setPrivate
     }}`);
 
     assert.dom('.ember-power-select-selected-item').hasText(INSIGHTS_PRIVACY_OPTIONS.PUBLIC);
@@ -57,9 +57,9 @@ module('Integration | Component | insights-privacy-selector', function (hooks) {
     });
 
     await render(hbs`{{insights-privacy-selector
-      isPrivateViewable=isPrivateViewable
-      includePrivate=includePrivate
-      setRequestPrivateInsights=setPrivate
+      isPrivateViewable=this.isPrivateViewable
+      includePrivate=this.includePrivate
+      setRequestPrivateInsights=this.setPrivate
     }}`);
 
     assert.dom('.ember-power-select-selected-item').hasText(INSIGHTS_PRIVACY_OPTIONS.PRIVATE);

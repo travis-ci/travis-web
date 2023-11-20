@@ -1,11 +1,12 @@
 import RavenLogger from 'ember-cli-sentry/services/raven';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
+import { A } from '@ember/array';
 
 export default RavenLogger.extend({
   features: service(),
 
-  benignErrors: [
+  benignErrors: A([
     'TransitionAborted',
     'TaskInstance',
     'UnrecognizedURLError',
@@ -15,7 +16,7 @@ export default RavenLogger.extend({
     'operation failed',
     'operation was aborted',
     'needs-auth'
-  ],
+  ]),
 
   unhandledPromiseErrorMessage: '',
 

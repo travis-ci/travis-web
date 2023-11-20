@@ -21,7 +21,7 @@ module('Integration | Component | status images', function (hooks) {
     });
 
     this.set('repo', repo);
-    await render(hbs`{{status-images repo=repo}}`);
+    await render(hbs`{{status-images repo=this.repo}}`);
 
 
 

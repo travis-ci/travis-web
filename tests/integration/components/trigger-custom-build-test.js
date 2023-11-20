@@ -20,7 +20,7 @@ module('Integration | Component | trigger custom build', function (hooks) {
     });
 
     this.set('repo', repo);
-    await render(hbs`{{trigger-custom-build repo=repo}}`);
+    await render(hbs`{{trigger-custom-build repo=this.repo}}`);
 
     assert.dom('h2').hasText('Trigger a custom build\nBeta Feature');
     assert.dom('[data-test-trigger-build-branch]').containsText('master');
