@@ -47,11 +47,9 @@ module('Integration | Component | billing-information', function (hooks) {
       plan: this.plans[0]
     };
 
-    this['actions'] = {
-      next: () => { },
-      back: () => { },
-      goToFirstStep: () => { }
-    };
+    this.set('next', () => {});
+    this.set('back', () => {});
+    this.set('goToFirstStep', () => {});
 
     this.setProperties({
       displayedPlans: plans,
@@ -63,12 +61,12 @@ module('Integration | Component | billing-information', function (hooks) {
   test('it renders billing information form correctly', async function (assert) {
     await render(hbs`
       <Billing::Information
-        @displayedPlans={{displayedPlans}}
-        @subscription={{subscription}}
-        @selectedPlan={{selectedPlan}}
-        @next={{action 'next'}}
-        @back={{action 'back'}}
-        @goToFirstStep={{action 'goToFirstStep'}}
+        @displayedPlans={{this.displayedPlans}}
+        @subscription={{this.subscription}}
+        @selectedPlan={{this.selectedPlan}}
+        @next={{this.next}}
+        @back={{this.back}}
+        @goToFirstStep={{this.goToFirstStep}}
       />`
     );
 
@@ -86,19 +84,10 @@ module('Integration | Component | billing-information', function (hooks) {
   test('it renders billing information form correctly', async function (assert) {
     assert.expect(1);
 
-    this['actions']['back'] = () => {
-      assert.ok(true);
-    };
+    this.set('next', () => { return assert.ok(true) });
 
     await render(hbs`
       <Billing::Information
-        @selectedPlan={{selectedPlan}}
-        @displayedPlans={{displayedPlans}}
-        @showAnnual={{showAnnual}}
-        @selectedPlan={{this.selectedPlan}}
-        @next={{action 'next'}}
-        @back={{action 'back'}}
-        @goToFirstStep={{action 'goToFirstStep'}}
       />`
     );
 
@@ -108,12 +97,12 @@ module('Integration | Component | billing-information', function (hooks) {
   test('it adds multiple email inputs to form', async function (assert) {
     await render(hbs`
       <Billing::Information
-        @displayedPlans={{displayedPlans}}
-        @showAnnual={{showAnnual}}
+        @displayedPlans={{this.displayedPlans}}
+        @showAnnual={{this.showAnnual}}
         @selectedPlan={{this.selectedPlan}}
-        @next={{action 'next'}}
-        @back={{action 'back'}}
-        @goToFirstStep={{action 'goToFirstStep'}}
+        @next={{this.next}}
+        @back={{this.back}}
+        @goToFirstStep={{this.goToFirstStep}}
       />`
     );
 

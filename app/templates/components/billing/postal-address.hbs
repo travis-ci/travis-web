@@ -4,9 +4,9 @@
       <form.field
         @label='Street Address'
         @value={{this.billingInfo.address}}
-        @required={{true}}
+        @requiredOverride={{true}}
         @showRequiredMark={{true}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.address)}}
         as |Field|
       >
@@ -17,9 +17,9 @@
       <form.field
         @label='City'
         @value={{this.billingInfo.city}}
-        @required={{true}}
+        @requiredOverride={{true}}
         @showRequiredMark={{true}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.city)}}
         as |Field|
       >
@@ -32,9 +32,9 @@
       <form.field
         @label='Zip Code'
         @value={{this.billingInfo.zipCode}}
-        @required={{true}}
+        @requiredOverride={{true}}
         @showRequiredMark={{true}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.zipCode)}}
         as |Field|
       >
@@ -45,10 +45,10 @@
       <form.field
         @label='Country'
         @value={{this.billingInfo.country}}
-        @required={{true}}
+        @requiredOverride={{true}}
         class='billing-country'
         @showRequiredMark={{true}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.country)}}
         as |Field|
       >
@@ -65,10 +65,10 @@
     <div class='form-elem-half-width inline-form-elem'>
       <form.field
         @label='State'
-        @required={{true}}
+        @requiredOverride={{true}}
         @showRequiredMark={{true}}
         @value={{this.billingInfo.state}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.state)}}
         as |Field|
       >
@@ -89,7 +89,7 @@
       <div class='w-1/6 text-right'>
         <form.field
           @value={{this.billingInfo.hasLocalRegistration}}
-          @showValidationStatusIcons={{false}}
+          @showValidationStatusIconsOverride={{false}}
           @disableFrame={{true}}
           @onChange={{action (mut this.billingInfo.hasLocalRegistration) true}}
           as |Field|
@@ -100,7 +100,7 @@
       <div class='w-1/6 text-right'>
         <form.field
           @value={{not this.billingInfo.hasLocalRegistration}}
-          @showValidationStatusIcons={{false}}
+          @showValidationStatusIconsOverride={{false}}
           @disableFrame={{true}}
           @onChange={{action (mut this.billingInfo.hasLocalRegistration) false}}
           as |Field|
@@ -114,10 +114,10 @@
     <div class='form-elem-half-width inline-form-elem billing-optional-field'>
       <form.field
         @label='Vat Id'
-        @required={{this.isVatMandatory}}
+        @requiredOverride={{this.isVatMandatory}}
         @showRequiredMark={{this.isVatMandatory}}
         @value={{this.billingInfo.vatId}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.vatId)}}
         as |Field|
       >

@@ -1,5 +1,5 @@
 {{#if (eq this.skipBillingInfo true)}}
-  {{action next}}
+  {{action this.next}}
 {{/if}}
 <div class='billing-information-form'>
   <h3 data-test-contact-details-title='true'>
@@ -24,16 +24,16 @@
       @subscription={{this.subscription}}
     />
   {{/if}}
-  <TravisForm @onSubmit={{action next}} as |form|>
+  <TravisForm @onSubmit={{action this.next}} as |form|>
     <div data-test-billing-form>
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
             @label='First Name'
             @value={{this.billingInfo.firstName}}
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.firstName)}} as |Field|
           >
             <Field.input @name='firstname'/>
@@ -43,9 +43,9 @@
           <form.field
             @label='Last Name'
             @value={{this.billingInfo.lastName}}
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.lastName)}} as |Field|
           >
             <Field.input @name='lastname'/>
@@ -56,7 +56,7 @@
         <form.field
           @label='Company Name'
           @value={{this.billingInfo.company}}
-          @showValidationStatusIcons={{false}}
+          @showValidationStatusIconsOverride={{false}}
           @onChange={{action (mut this.billingInfo.company)}} as |Field|
         >
           <Field.input @name='companyName'/>
@@ -67,9 +67,9 @@
           @label='Billing Email Address'
           @isMultipleInputsField={{true}}
           @disableFrame={{true}}
-          @required={{true}}
+          @requiredOverride={{true}}
           @showRequiredMark={{true}}
-          @showValidationStatusIcons={{false}}
+          @showValidationStatusIconsOverride={{false}}
           @validator={{form-validator form.validators.email}}
           @initialValue={{this.billingInfo.billingEmailRead}}
           as |Field|
@@ -89,7 +89,7 @@
         >
           Proceed to Payment
         </button>
-        <span data-test-back-to-plans='true' onClick={{action back}} class='link back-button'>
+        <span data-test-back-to-plans='true' onClick={{action this.back}} class='link back-button'>
           Back to plans
         </span>
       </div>
