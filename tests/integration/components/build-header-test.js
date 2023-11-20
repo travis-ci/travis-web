@@ -37,7 +37,7 @@ module('Integration | Component | build header', function (hooks) {
     this.set('repo', repo);
     this.set('commit', commit);
 
-    await render(hbs`{{build-header item=build repo=this.repo commit=commit}}`);
+    await render(hbs`{{build-header item=this.build repo=this.repo commit=this.commit}}`);
 
     assert.dom('.commit-compare').doesNotExist('does not display compare link element for api builds');
     assert.dom('.build-status .inner-underline').hasText('#1234', 'displays build number');
@@ -67,7 +67,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('build', build);
-    await render(hbs`{{build-header item=build}}`);
+    await render(hbs`{{build-header item=this.build}}`);
 
     assert.dom('.build-status svg title').hasText('Push event', 'displays push icon');
     assert.dom('.commit-branch').hasText('feature-2');
@@ -89,7 +89,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('build', build);
-    await render(hbs`{{build-header item=build commit=build.commit}}`);
+    await render(hbs`{{build-header item=this.build commit=this.build.commit}}`);
 
     assert.dom('.build-status svg title').hasText('Cron job event');
     assert.dom('.build-title').hasText(/cron Just complete and utter joy/, 'displays cron before commit message');
@@ -116,7 +116,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('build', build);
-    await render(hbs`{{build-header item=build commit=build.commit}}`);
+    await render(hbs`{{build-header item=this.build commit=this.build.commit}}`);
 
     assert.dom('.build-title .message-label').hasText('draft');
   });
@@ -137,7 +137,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('build', build);
-    await render(hbs`{{build-header item=build commit=build.commit}}`);
+    await render(hbs`{{build-header item=this.build commit=this.build.commit}}`);
 
     assert.dom('.build-status svg title').hasText('Tag');
     assert.dom('.build-title .commit-branch').hasText('v1.0.0', 'displays tag name in title');
@@ -155,7 +155,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('build', build);
-    await render(hbs`{{build-header item=build}}`);
+    await render(hbs`{{build-header item=this.build}}`);
     assert.dom('.commit-stopwatch').exists('displays running time');
     assert.dom('.commit-calendar').doesNotExist('does not display calendar while running');
     assert.dom('.commit-clock').doesNotExist('does not display elapsed time');
@@ -234,7 +234,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('build', build);
-    await render(hbs`{{build-header item=build}}`);
+    await render(hbs`{{build-header item=this.build}}`);
     assert.dom('.build-prioritize').hasText('Prioritized build');
   });
 
@@ -252,7 +252,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('build', build);
-    await render(hbs`{{build-header item=build}}`);
+    await render(hbs`{{build-header item=this.build}}`);
     assert.dom('.build-prioritize').doesNotExist();
   });
 });

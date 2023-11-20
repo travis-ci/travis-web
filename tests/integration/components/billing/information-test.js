@@ -84,10 +84,16 @@ module('Integration | Component | billing-information', function (hooks) {
   test('it renders billing information form correctly', async function (assert) {
     assert.expect(1);
 
-    this.set('next', () => { return assert.ok(true) });
+    this.set('back', () => { return assert.ok(true) });
 
     await render(hbs`
       <Billing::Information
+        @displayedPlans={{this.displayedPlans}}
+        @subscription={{this.subscription}}
+        @selectedPlan={{this.selectedPlan}}
+        @next={{this.next}}
+        @back={{this.back}}
+        @goToFirstStep={{this.goToFirstStep}}
       />`
     );
 

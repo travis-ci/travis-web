@@ -90,7 +90,7 @@ module('Integration | Component | jobs list', function (hooks) {
     context.stage = context.stages[stage];
     context.jobs = A(jobs);
     context.build = { jobs: context.jobs };
-    await render(hbs`{{jobs-list build=build jobs=this.jobs stages=stages stage=stage}})`);
+    await render(hbs`{{jobs-list build=this.build jobs=this.jobs stages=stages stage=stage}})`);
   };
 
   test('it renders allowed failures text for a non-final stage with a failed job', async function (assert) {
