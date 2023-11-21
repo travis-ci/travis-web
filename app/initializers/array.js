@@ -7,6 +7,22 @@ export function initialize() {
       }
     };
   }
+
+  if (!Array.prototype.firstObject) {
+    Object.defineProperty(Array.prototype, 'firstObject', {
+      get: function() {
+        return this[0];
+      }
+    });
+  }
+
+  if (!Array.prototype.lastObject) {
+    Object.defineProperty(Array.prototype, 'lastObject', {
+      get: function() {
+        return this[this.length - 1];
+      }
+    });
+  }
 }
 
 export default {

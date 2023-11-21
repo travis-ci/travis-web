@@ -17,7 +17,7 @@ module('Integration | Component | feature toggle', function (hooks) {
 
     this.set('feature', feature);
 
-    await render(hbs`{{feature-toggle feature=feature}}`);
+    await render(hbs`{{feature-toggle feature=this.feature}}`);
 
     assert.dom('button.switch').hasClass('active');
 

@@ -74,7 +74,7 @@ module('Integration | Component | billing-payment', function (hooks) {
       @cancel={{action 'cancel'}}
       @goToFirstStep={{action 'goToFirstStep'}}
       @back={{action 'back'}}
-      @selectedPlan={{selectedPlan}}/>`);
+      />`);
 
     assert.dom('h3').hasText('Order Summary');
     assert.dom(profilePage.billing.billingPaymentForm.completePayment.scope).isVisible();

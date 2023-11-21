@@ -6,7 +6,7 @@
     <form.field
       @label="Name"
       @value={{this.name}}
-      @required={{true}}
+      @requiredOverride={{true}}
       @validateOnField={{false}}
       @showValidationStatusIcons={{false}}
       @onChange={{action (mut this.name)}}
@@ -20,7 +20,7 @@
     <form.field
       @label="Value"
       @value={{this.value}}
-      @required={{true}}
+      @requiredOverride={{true}}
       @onChange={{action (mut this.value)}}
       @showValidationStatusIcons={{false}}
       as |field|
@@ -32,7 +32,7 @@
     <form.field
       @label="Branch"
       @value={{this.branch}}
-      @required={{false}}
+      @requiredOverride={{false}}
       class="env-branch-selector"
       @showValidationStatusIcons={{false}}
       as |field|

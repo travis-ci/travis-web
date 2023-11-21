@@ -40,8 +40,8 @@ module('Integration | Component | warning-message', function (hooks) {
 
     this.set('subscription', subscription);
     await render(hbs`<Billing::WarningMessage
-      @selectedPlan={{selectedPlan}}
-      @subscription={{subscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
       />`);
 
 
@@ -77,8 +77,8 @@ module('Integration | Component | warning-message', function (hooks) {
 
     this.set('subscription', subscription);
     await render(hbs`<Billing::WarningMessage
-      @selectedPlan={{selectedPlan}}
-      @subscription={{subscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
       />`);
 
     assert.equal(profilePage.billing.warningMessage.text, 'Pricing for number of users who are allowed to trigger builds may be changed. See our documentation for more details.');
@@ -118,8 +118,8 @@ module('Integration | Component | warning-message', function (hooks) {
     this.subscription = subscription;
     this.set('subscription', subscription);
     await render(hbs`<Billing::WarningMessage
-      @selectedPlan={{selectedPlan}}
-      @subscription={{subscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
       />`);
 
     assert.equal(profilePage.billing.warningMessage.text, 'Your Private or OSS Credit balance is negative. After upgrading to the Startup plan the negative Credit amount will be deducted from the respective new credit type balance. Please see our documentation for more details.');

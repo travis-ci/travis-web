@@ -26,8 +26,8 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
     this.set('selectedPlan', plan1);
 
     await render(hbs`<Billing::SelectedPlan
-      @selectedPlan={{selectedPlan}}
-      @totalPrice={{selectedPlan.startingPrice}}
+      @selectedPlan={{this.selectedPlan}}
+      @totalPrice={{this.selectedPlan.startingPrice}}
       @goToFirstStep={{action 'goToFirstStep'}}/>`);
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plan1.name}`);

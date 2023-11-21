@@ -173,7 +173,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('job', job);
-    await render(hbs`{{build-header item=job}}`);
+    await render(hbs`{{build-header item=this.job}}`);
     assert.dom('.commit-stopwatch').exists('does display elapsed time');
     assert.dom('.commit-stopwatch').hasText('Running for -', 'Says running for');
     assert.dom('.commit-calendar').doesNotExist('does not display calendar while running');
@@ -193,7 +193,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('job', job);
-    await render(hbs`{{build-header item=job}}`);
+    await render(hbs`{{build-header item=this.job}}`);
     assert.dom('.commit-stopwatch').exists('does display elapsed time');
     assert.dom('.commit-stopwatch').hasText('Running for -', 'Says running for');
     assert.dom('.commit-calendar').doesNotExist('does not display calendar while running');
@@ -216,7 +216,7 @@ module('Integration | Component | build header', function (hooks) {
     };
 
     this.set('job', job);
-    await render(hbs`{{build-header item=job}}`);
+    await render(hbs`{{build-header item=this.job}}`);
     assert.dom('.detail-job-arch').exists('does display CPU architecture');
   });
 

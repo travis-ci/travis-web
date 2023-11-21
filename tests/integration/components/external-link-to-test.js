@@ -13,7 +13,7 @@ module('Integration | Component | external link to', function (hooks) {
     this.set('href', href);
     this.set('content', content);
 
-    await render(hbs`{{external-link-to href=href content=content}}`);
+    await render(hbs`{{external-link-to href=this.href content=this.content}}`);
 
     assert.dom('a').hasAttribute('href', href, 'Sets href correctly');
     assert.dom('a').hasAttribute('target', '_blank', 'Opens up the link in a new tab');
@@ -22,7 +22,7 @@ module('Integration | Component | external link to', function (hooks) {
     assert.dom('a').hasAttribute('rel', 'noopener noreferrer', 'Mitigates the security vulnerability discussed in https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/');
 
     await render(hbs`
-      {{#external-link-to href=href}}
+      {{#external-link-to href=this.href}}
         <span class="foobar">FOOBAR</span>
       {{/external-link-to}}
     `);

@@ -56,8 +56,8 @@ module('Integration | Component | billing-select-plan', function (hooks) {
   skip('it renders default selected plan', async function (assert) {
 
     await render(hbs`<Billing::SelectPlan
-      @displayedPlans={{displayedPlans}}
-      @selectedPlan={{selectedPlan}}
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlan={{this.selectedPlan}}
       @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );
@@ -70,8 +70,8 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     this.set('selectedPlan', this.plan2);
 
     await render(hbs`<Billing::SelectPlan
-      @displayedPlans={{displayedPlans}}
-      @selectedPlan={{selectedPlan}}
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlan={{this.selectedPlan}}
       @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );

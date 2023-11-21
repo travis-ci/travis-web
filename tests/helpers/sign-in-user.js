@@ -7,8 +7,6 @@ export default function signInUser(user) {
   user.save();
 
   const localStorageUser = JSON.parse(JSON.stringify(user.attrs));
-  localStorageUser.token = token;
-  localStorageUser.rss_token = token;
   window.localStorage.setItem('travis.token', token);
   window.localStorage.setItem('travis.rssToken', token);
   window.localStorage.setItem('travis.auth.updatedAt', Date.now());

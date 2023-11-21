@@ -9,6 +9,7 @@ import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import { defaultVcsConfig } from 'travis/utils/vcs';
 import { isEmpty } from '@ember/utils';
 import config from 'travis/config/environment';
+import { A } from '@ember/array'
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',
@@ -430,7 +431,8 @@ Repo.reopenClass({
   },
 
   fetchBySlug(store, slug, provider = defaultVcsConfig.urlPrefix, serverType = undefined) {
-    let loadedRepos = store.peekAll('repo').filterBy('provider', provider).filterBy('slug', slug);
+    let loadedRepos = A(A(store.peekAll('repo').toArray() || []).filterBy('provider', provider)).filterBy('slug', slug);
+    loadedRepos = A(loadedRepos);
     if (serverType) {
       loadedRepos = loadedRepos.filterBy('serverType', serverType);
     }
