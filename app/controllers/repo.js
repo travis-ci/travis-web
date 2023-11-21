@@ -19,6 +19,7 @@ export default Controller.extend({
   queryParams: ['migrationStatus', 'serverType'],
   serverType: null,
   migrationStatus: null,
+  repo: null,
 
   jobController: controller('job'),
   buildController: controller('build'),
@@ -39,6 +40,20 @@ export default Controller.extend({
     let isPrivate = this.get('repo.private');
     let currentUser = this.currentUser;
     return showGitHubApps && !isPrivate && !currentUser;
+  }),
+
+  actualBuild: computed('repo.currentBuild', function() {
+    let currentBuild = this.get('repo.currentBuild');
+    if (currentBuild && currentBuild.get('id')) {
+      eventually(currentBuild, (build) => {
+        if (build.get('jobs.length') === 1) {
+          this.set('job', build.get('jobs.firstObject'));
+        }
+        return build;
+      });
+    } else {
+      return null;
+    }
   }),
 
   isCentered: computed('auth.signedIn', 'features.dashboard', function () {
@@ -77,45 +92,10 @@ export default Controller.extend({
   },
 
   deactivate() {
-    return this.stopObservingLastBuild();
   },
 
   activate(action) {
-    this.stopObservingLastBuild();
-
     const observesLastBuild = ['index', 'current'];
-
-    if (observesLastBuild.includes(action)) {
-      this.observeLastBuild();
-      this.set('tabStates.mainTab', 'current');
-    } else {
-      this.set('tabStates.mainTab', action);
-    }
-  },
-
-  currentBuildDidChange() {
-    return scheduleOnce('actions', this, this._currentBuildDidChange);
-  },
-
-  _currentBuildDidChange() {
-    let currentBuild = this.get('repo.currentBuild');
-    if (currentBuild && currentBuild.get('id')) {
-      eventually(currentBuild, (build) => {
-        this.set('build', build);
-
-        if (build.get('jobs.length') === 1) {
-          this.set('job', build.get('jobs.firstObject'));
-        }
-      });
-    }
-  },
-
-  stopObservingLastBuild() {
-    return this.removeObserver('repo.currentBuild', this, 'currentBuildDidChange');
-  },
-
-  observeLastBuild() {
-    this.currentBuildDidChange();
-    return this.addObserver('repo.currentBuild', this, 'currentBuildDidChange');
+    this.set('tabStates.mainTab', observesLastBuild.includes(action) ? 'current' : action);
   }
 });
