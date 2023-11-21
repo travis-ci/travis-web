@@ -16,7 +16,7 @@
               @value={{this.info.firstName}}
               @required={{true}}
               @validateOnField={{false}}
-              @showValidationStatusIcons={{false}}
+              @showValidationStatusIconsOverride={{false}}
               @onChange={{action (mut this.info.firstName)}}
               as |field|
             >
@@ -29,7 +29,7 @@
               @value={{this.info.lastName}}
               @required={{true}}
               @validateOnField={{false}}
-              @showValidationStatusIcons={{false}}
+              @showValidationStatusIconsOverride={{false}}
               @onChange={{action (mut this.info.lastName)}}
               as |field|
             >
@@ -44,7 +44,7 @@
             @disableFrame={{true}}
             @required={{true}}
             @showRequiredMark={{true}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @validator={{form-validator form.validators.email}}
             @initialValue={{this.info.billingEmail}}
             as |Field|
@@ -58,7 +58,7 @@
             @value={{this.info.company}}
             @required={{false}}
             @validateOnField={{false}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.info.company)}}
             as |field|
           >
@@ -74,7 +74,7 @@
               <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--green">
                 Update contact details
               </button>
-              <a data-test-cancel-contact-address-button='true' 
+              <a data-test-cancel-contact-address-button='true'
                 onClick={{action (toggle 'openEditContactForm' this)}} class='link cancel-link'
               >
                 Cancel
@@ -108,11 +108,11 @@
       {{/if}}
     </div>
     {{#if this.account.hasSubscriptionPermissions}}
-      <button class='button--blue billing-subscription__buttons' 
+      <button class='button--blue billing-subscription__buttons'
         onClick={{action (toggle 'openEditContactForm' this)}} data-test-edit-contact-address='true'
       >
         Edit contact details
-      </button> 
+      </button>
     {{/if}}
   {{/if}}
 </div>

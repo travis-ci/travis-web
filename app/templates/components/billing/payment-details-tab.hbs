@@ -16,7 +16,7 @@
             @required={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.firstName)}}
             as |Field|
           >
@@ -30,7 +30,7 @@
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
             @value={{this.billingInfo.lastName}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.lastName)}}
             as |Field|
           >
@@ -50,47 +50,47 @@
           <p>{{stripeError.message}}</p>
         {{/if}}
       </StripeCard>
-  
+
       <form.field
         @label='Billing Email Address'
         @value={{this.billingInfo.billingEmail}}
         @required={{true}}
         @showRequiredMark={{true}}
         @disabled={{this.disableForm}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.billingEmail)}}
         as |Field|
       >
         <Field.input @name='billing_email_address'/>
       </form.field>
-  
+
       <form.field
         @label='Company Name'
         @value={{this.billingInfo.company}}
         @required={{false}}
         @showRequiredMark={{false}}
         @disabled={{this.disableForm}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.company)}}
         as |Field|
       >
         <Field.input @name='company_name'/>
         <div class="travis-form__error-message">&nbsp;</div>
       </form.field>
-  
+
       <form.field
         @label='Street Address'
         @value={{this.billingInfo.address}}
         @required={{true}}
         @showRequiredMark={{true}}
         @disabled={{this.disableForm}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.address)}}
         as |Field|
       >
         <Field.input @name='address'/>
       </form.field>
-  
+
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
@@ -99,7 +99,7 @@
             @required={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.city)}}
             as |Field|
           >
@@ -113,7 +113,7 @@
             @required={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.zipCode)}}
             as |Field|
           >
@@ -130,7 +130,7 @@
             class='billing-country'
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.country)}}
             as |Field|
           >
@@ -150,7 +150,7 @@
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
             @value={{this.billingInfo.state}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.state)}}
             as |Field|
           >
@@ -164,7 +164,7 @@
         </div>
         {{/if}}
       </div>
-  
+
       {{#if this.showNonZeroVatConfirmation}}
         <div class='flex justify-between items-center mb-8'>
           <div class='w-4/6 pr-2'>
@@ -173,7 +173,7 @@
           <div class='w-1/6 text-right'>
             <form.field
               @value={{this.billingInfo.hasLocalRegistration}}
-              @showValidationStatusIcons={{false}}
+              @showValidationStatusIconsOverride={{false}}
               @disabled={{this.disableForm}}
               @disableFrame={{true}}
               @onChange={{action (mut this.billingInfo.hasLocalRegistration) true}}
@@ -185,7 +185,7 @@
           <div class='w-1/6 text-right'>
             <form.field
               @value={{not this.billingInfo.hasLocalRegistration}}
-              @showValidationStatusIcons={{false}}
+              @showValidationStatusIconsOverride={{false}}
               @disableFrame={{true}}
               @onChange={{action (mut this.billingInfo.hasLocalRegistration) false}}
               as |Field|
@@ -203,7 +203,7 @@
             @showRequiredMark={{this.isVatMandatory}}
             @disabled={{this.disableForm}}
             @value={{this.billingInfo.vatId}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.vatId)}}
             as |Field|
           >

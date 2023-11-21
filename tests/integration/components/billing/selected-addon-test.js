@@ -24,7 +24,7 @@ module('Integration | Component | selected-addon', function (hooks) {
     this.set('selectedAddon', addonConfig);
 
     await render(hbs`<Billing::SelectedAddon
-      @selectedAddon={{selectedAddon}}
+      @selectedAddon={{this.selectedAddon}}
       @goToFirstStep={{action 'goToFirstStep'}}/>`);
 
     assert.equal(profilePage.billing.selectedAddonOverview.name.text, this.selectedAddon.name);

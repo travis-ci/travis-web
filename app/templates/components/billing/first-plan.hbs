@@ -11,20 +11,20 @@
   <div class='flex flex--col flex-md-row form-elem'>
     <div class='full-width form-elem inline-form-elem'>
       <form.field @label='First Name' @value={{this.firstName}} @required={{true}} @showRequiredMark={{true}}
-        @showValidationStatusIcons={{false}} @onChange={{action (mut this.firstName)}} as |Field|>
+        @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.firstName)}} as |Field|>
         <Field.input @name='first_name' />
       </form.field>
     </div>
     <div class='full-width form-elem'>
       <form.field @label='Last Name' @value={{this.lastName}} @required={{true}} @showRequiredMark={{true}}
-        @showValidationStatusIcons={{false}} @onChange={{action (mut this.lastName)}} as |Field|>
+        @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.lastName)}} as |Field|>
         <Field.input @name='last_name' />
       </form.field>
     </div>
   </div>
 
 
-  <div class='full-width cc-form-elem'>   
+  <div class='full-width cc-form-elem'>
     <form.field @label="Credit Card details"
       onSubmit={{perform this.createSubscription}} @required={{true}} @showRequiredMark={{true}} as |field|>
       <StripeCard  class="cc-form-internal" @onComplete={{action "complete" }} @options={{this.options}} as |stripeError|>
@@ -59,13 +59,13 @@
   <div class='flex flex--col flex-md-row form-elem'>
     <div class='full-width form-elem inline-form-elem'>
       <form.field @label='Zip Code' @value={{this.zipCode}} @required={{true}} @showRequiredMark={{true}}
-        @showValidationStatusIcons={{false}} @onChange={{action (mut this.zipCode)}} as |Field|>
+        @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.zipCode)}} as |Field|>
         <Field.input @name='zip' />
       </form.field>
     </div>
     <div class='full-width form-elem'>
       <form.field @label='City' @value={{this.city}} @required={{true}} @showRequiredMark={{true}}
-        @showValidationStatusIcons={{false}} @onChange={{action (mut this.city)}} as |Field|>
+        @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.city)}} as |Field|>
         <Field.input @name='city' />
       </form.field>
     </div>
@@ -73,7 +73,7 @@
 
   <div class='form-elem full-width select form-elem-select' data-billing-form-select>
     <form.field @label='Country' @value={{this.country}} @required={{true}} class='billing-country'
-      @showRequiredMark={{true}} @showValidationStatusIcons={{false}} @onChange={{action 'changeCountry' }} as |Field|>
+      @showRequiredMark={{true}} @showValidationStatusIconsOverride={{false}} @onChange={{action 'changeCountry' }} as |Field|>
       <Field.select @placeholder='Select country' @options={{this.countries}} as |country|>
         {{country}}
       </Field.select>
@@ -82,7 +82,7 @@
   {{#if this.isStateMandatory}}
   <div class='form-elem-half-width inline-form-elem'>
     <form.field @label='State' @required={{true}} @showRequiredMark={{true}} @value={{this.state}}
-      @showValidationStatusIcons={{false}} @onChange={{action (mut this.state)}} as |Field|>
+      @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.state)}} as |Field|>
       <Field.select @placeholder='Select state' @options={{this.states}} as |state|>
         {{state}}
       </Field.select>
@@ -95,13 +95,13 @@
       Is your company registered locally for VAT/GST?
     </div>
     <div class='w-1/6 text-right'>
-      <form.field @value={{this.hasLocalRegistration}} @showValidationStatusIcons={{false}} @disableFrame={{true}}
+      <form.field @value={{this.hasLocalRegistration}} @showValidationStatusIconsOverride={{false}} @disableFrame={{true}}
         @onChange={{action (mut this.hasLocalRegistration) true}} as |Field|>
         <Field.radio>Yes</Field.radio>
       </form.field>
     </div>
     <div class='w-1/6 text-right'>
-      <form.field @value={{not this.hasLocalRegistration}} @showValidationStatusIcons={{false}} @disableFrame={{true}}
+      <form.field @value={{not this.hasLocalRegistration}} @showValidationStatusIconsOverride={{false}} @disableFrame={{true}}
         @onChange={{action (mut this.hasLocalRegistration) false}} as |Field|>
         <Field.radio>No</Field.radio>
       </form.field>
@@ -111,7 +111,7 @@
   {{#if this.showVatField}}
   <div class='form-elem-half-width inline-form-elem billing-optional-field form-vatid'>
     <form.field @label='Vat Id' @required={{this.isVatMandatory}} @showRequiredMark={{this.isVatMandatory}}
-      @value={{this.vatId}} @showValidationStatusIcons={{false}} @onChange={{action (mut this.vatId)}} as |Field|>
+      @value={{this.vatId}} @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.vatId)}} as |Field|>
       <Field.input @name='vat' />
     </form.field>
   </div>
@@ -123,7 +123,7 @@
           <form.field
             class="coupon-validation__input"
             @value={{this.couponId}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onFocus={{action 'handleCouponFocus'}}
             @onChange={{action (mut this.couponId)}}
             as |Field|
@@ -158,7 +158,7 @@
         {{#unless this.isTrial}}
         <p class="plan-desc">{{format-currency this.selectedPlan.startingPrice floor="true"}}{{ if this.selectedPlan.isAnnual '/annualy'
           '/monthly'}}</p>
-        
+
          <button class=" no-button plan-details" {{action 'togglePlanDetails' }}>
           Plan details </button>
         {{#if this.planDetailsVisible}}
@@ -174,7 +174,7 @@
           <p class='billing-plans__box-v2--desc cnowrap' data-test-selected-plan-os="true">
             <SvgImage @name="stage-passed" @class="icon icon-desc" />Linux, Windows, macOS, FreeBSD
           </p>
-          
+
           {{#if this.selectedPlan.hasOSSCreditAddons}}
           <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
             <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{this.selectedPlan.publicCredits}} OSS Credits<span
@@ -218,7 +218,7 @@
   <div class="align-left font-size-s" id="first-plan-charge-info">
     {{#if this.isTrial}}
       <b class="font-bold">We will charge you $1 and refund you in 7 days</b>. This is needed to make sure your card
-  
+
       is valid. By clicking on "Verify Your Account" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI
         Terms and Privacy
         Policy</a>.
@@ -227,10 +227,10 @@
 
       will not be able to use Travis CI features.
     {{else}}
-  
+
       You'll be charged {{format-currency this.selectedPlan.startingPrice floor="true"}} {{ if
       this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel your subscription. Previous
-   
+
       charges won't be refunded when you cancel unless it's legally required. By clicking
       on "{{this.getActivateButtonText}}" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI Terms and Privacy
         Policy</a>.

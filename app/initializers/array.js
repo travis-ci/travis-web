@@ -38,11 +38,24 @@ export function initialize() {
   }
 
   if (!Array.prototype.addObject) {
-    Array.prototype.addObject = function(item) {
+    Array.prototype.addObject = function (item) {
       if (this.indexOf(item) === -1) {
         this.push(item);
       }
       return this;
+    };
+  }
+
+  if (!Array.prototype.any) {
+    Array.prototype.any = function(...args) {
+      return this.some(...args);
+    }
+  }
+
+
+  if (!Array.prototype.mapBy) {
+    Array.prototype.mapBy = function(property) {
+      return this.map(item => item[property]);
     };
   }
 

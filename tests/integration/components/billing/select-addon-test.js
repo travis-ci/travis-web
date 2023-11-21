@@ -41,8 +41,8 @@ module('Integration | Component | billing-select-addon', function (hooks) {
 
   test('it renders selected addon', async function (assert) {
     await render(hbs`<Billing::SelectAddon
-      @displayedStandaloneAddons={{displayedStandaloneAddons}}
-      @selectedAddon={{selectedAddon}}
+      @displayedStandaloneAddons={{this.displayedStandaloneAddons}}
+      @selectedAddon={{this.selectedAddon}}
       @showAddonsSelector={{true}}
       @next={{action 'next'}}/>`
     );

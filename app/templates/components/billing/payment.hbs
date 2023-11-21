@@ -70,7 +70,7 @@
           <form.field
             class="coupon-validation__input"
             @value={{this.couponId}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onFocus={{action 'handleCouponFocus'}}
             @onChange={{action (mut this.couponId)}}
             as |Field|

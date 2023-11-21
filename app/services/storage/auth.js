@@ -4,6 +4,7 @@ import { parseWithDefault } from '../storage';
 import Service, { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { asObservableArray } from "travis/utils/observable_array";
+import { underscoreKeys } from "travis/utils/underscore-keys";
 
 const storage = getStorage();
 
@@ -42,6 +43,7 @@ const Auth = Service.extend({
 
   rssToken: computed({
     get() {
+      console.log("AM I here 2?")
       return storage.getItem('travis.rssToken') || null;
     },
     set(key, token) {
@@ -53,8 +55,12 @@ const Auth = Service.extend({
 
   user: computed({
     get() {
+      console.log("I bet I am here");
+      console.log(storage.getItem('travis.user'))
       const data = parseWithDefault(storage.getItem('travis.user'), null);
-      return data && data.user || data;
+      console.log(data);
+      console.log("DATA!")
+      return underscoreKeys(data && data.user || data);
     },
     set(key, user) {
       assert('User storage is read-only', user === null);

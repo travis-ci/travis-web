@@ -11,7 +11,7 @@
       @label="Branch"
       @placeholder="Select a branch"
       @value={{this.branch}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       @onChange={{action (mut this.branch)}}
       as |field|
     >
@@ -28,7 +28,7 @@
       data-test-status-image-format="true"
       @label="Format"
       @value={{this.format}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       @onChange={{action (mut this.format)}}
       as |field|
     >

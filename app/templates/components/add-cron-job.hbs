@@ -8,7 +8,7 @@
       @value={{this.selectedBranch}}
       required={{true}}
       class="branch-selector"
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.select
@@ -29,7 +29,7 @@
       @required={{true}}
       @value={{this.selectedInterval}}
       @onChange={{action (mut this.selectedInterval)}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.select @options={{this.intervals}} as |interval|>
@@ -43,7 +43,7 @@
       @required={{true}}
       @value={{this.selectedOption}}
       @onChange={{action (mut this.selectedOption)}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.select @options={{this.options}} as |option|>

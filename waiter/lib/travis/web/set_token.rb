@@ -22,6 +22,8 @@ module Travis
         return unless env['REQUEST_METHOD'] == 'POST'
 
         request = Rack::Request.new(env)
+        puts "WHAT"
+        puts  request.params
         token, rss_token, user, storage, become = request.params.values_at('token', 'rssToken', 'user', 'storage',
                                                                            'become')
         if /\A[a-zA-Z\-_\d]+\Z/.match?(token)

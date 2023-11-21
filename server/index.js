@@ -32,6 +32,8 @@ module.exports = function (app) {
       if (storage !== 'localStorage') {
         storage = 'sessionStorage';
       }
+
+      console.log("AM I here?");
       var user = JSON.stringify(req.body['user']);
       var become = req.body['become'];
       var rssToken = req.body['rssToken'];

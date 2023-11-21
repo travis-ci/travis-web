@@ -8,7 +8,7 @@
       @value={{this.name}}
       @requiredOverride={{true}}
       @validateOnField={{false}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       @onChange={{action (mut this.name)}}
       @validator={{action "validateEnvName"}}
       as |field|
@@ -22,7 +22,7 @@
       @value={{this.value}}
       @requiredOverride={{true}}
       @onChange={{action (mut this.value)}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.input class="env-value" placeholder="Value" />
@@ -34,7 +34,7 @@
       @value={{this.branch}}
       @requiredOverride={{false}}
       class="env-branch-selector"
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.select
