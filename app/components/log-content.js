@@ -12,6 +12,7 @@ import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, and } from '@ember/object/computed';
+import { asObservableArray } from "travis/utils/observable_array";
 
 const SELECTORS = {
   CONTENT: '.log-body-content',
@@ -105,6 +106,7 @@ export default Component.extend({
     let parts, ref;
     if (log || (log = this.log)) {
       parts = log.get('parts');
+      parts = asObservableArray(parts);
       parts.removeArrayObserver(this, {
         didChange: 'partsDidChange',
         willChange: 'noop'
@@ -176,6 +178,11 @@ export default Component.extend({
     let parts;
     if (log || (log = this.log)) {
       parts = log.get('parts');
+      parts = asObservableArray(parts);
+      parts.addArrayObserver(this, {
+        didChange: 'partsDidChange',
+        willChange: 'noop'
+      });
       parts = parts.slice(0);
       this.partsDidChange(parts, 0, null, parts.length);
     }

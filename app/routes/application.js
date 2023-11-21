@@ -8,6 +8,7 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
+import {asObservableArray} from "travis/utils/observable_array";
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   store: service(),
@@ -69,8 +70,13 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     this.store.filter('repo', null, (repo) => {
       return !repo.get('private') && !repo.get('isCurrentUserACollaborator');
     }).then((repos) => {
+      repos = asObservableArray(repos);
       this.set('repos', repos);
       repos.forEach(repo => this.subscribeToRepo(repo));
+      repos.addArrayObserver(this, {
+        willChange: 'reposWillChange',
+        didChange: 'reposDidChange'
+      });
     });
   },
 

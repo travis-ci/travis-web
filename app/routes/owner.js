@@ -1,8 +1,11 @@
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
+import { A } from '@ember/array'
 
 export default TravisRoute.extend({
   auth: service(),
+  store: service(),
+
   deactivate() {
     return this.controllerFor('loading').set('layoutName', null);
   },
@@ -18,7 +21,7 @@ export default TravisRoute.extend({
 
   actions: {
     error(error, /* transition, originRoute*/) {
-      const is404 = error.status === 404 || error.errors.firstObject.status === '404';
+      const is404 = error.status === 404 || A(error.errors || []).firstObject?.status === '404';
 
       if (!is404) {
         let message = 'There was an error while loading data, please try again.';

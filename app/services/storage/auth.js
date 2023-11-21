@@ -3,6 +3,7 @@ import { assert } from '@ember/debug';
 import { parseWithDefault } from '../storage';
 import Service, { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { asObservableArray } from "travis/utils/observable_array";
 
 const storage = getStorage();
 
@@ -12,9 +13,14 @@ const Auth = Service.extend({
   accounts: computed({
     get() {
       const accountsData = storage.getItem('travis.auth.accounts');
-      const accounts = parseWithDefault(accountsData, []).map(account =>
+      let accounts = parseWithDefault(accountsData, []).map(account =>
           extractAccountRecord(this.store, account)
       );
+      accounts = asObservableArray(accounts);
+      accounts.addArrayObserver(this, {
+        willChange: 'persistAccounts',
+        didChange: 'persistAccounts'
+      });
       return accounts;
     },
     set(key, accounts_) {

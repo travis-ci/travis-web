@@ -12,6 +12,7 @@ export default Owner.extend({
   accounts: service(),
   permissionsService: service('permissions'),
   wizardStateService: service('wizardState'),
+  store: service(),
 
   email: attr('string'),
   emails: attr(), // list of all known user emails
