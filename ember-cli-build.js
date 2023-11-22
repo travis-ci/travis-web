@@ -77,6 +77,20 @@ module.exports = function (defaults) {
         ]
       }
     },
+    emberData: {
+      compatWith: '3.12',
+      debug: {
+        LOG_PAYLOADS: false, // data store received to update cache with
+        LOG_OPERATIONS: false, // updates to cache remote state
+        LOG_MUTATIONS: false, // updates to cache local state
+        LOG_NOTIFICATIONS: false,
+        LOG_REQUESTS: false, // log Requests issued via the request manager
+        LOG_REQUEST_STATUS: false,
+        LOG_IDENTIFIERS: false,
+        LOG_GRAPH: false, // relationship storage
+        LOG_INSTANCE_CACHE: false, // instance creation/deletion
+      },
+    },
     'ember-composable-helpers': {
       only: ['sort-by', 'compute', 'contains', 'toggle']
     },

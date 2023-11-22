@@ -61,13 +61,13 @@ export default TravisRoute.extend({
   },
 
   fetchRepositoryActiveFlag() {
-    const repoId = this.modelFor('repo').get('id');
+    const repoId = this.modelFor('repo').id;
     return this.api.get(`/repo/${repoId}`).then(response => response.active);
   },
 
   beforeModel() {
     const repo = this.modelFor('repo');
-    if (!repo.permissions.settings_read) {
+    if (!repo.permissions?.settings_read) {
       this.transitionTo('repo.index');
       this.flashes.error('Your permissions are insufficient to access this repository\'s settings');
     }

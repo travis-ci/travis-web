@@ -4,7 +4,7 @@ export default TravisRoute.extend({
   titleToken: 'Config',
 
   model() {
-    return this.modelFor('build').get('request');
+    return this.modelFor('build').request;
   },
 
   afterModel(request) {

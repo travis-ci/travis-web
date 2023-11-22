@@ -89,7 +89,6 @@ export default Service.extend({
   gravatarUrl: reads('currentUser.gravatarUrl'),
 
   redirectUrl: null,
-  errored: false,
 
   init() {
     this._super(...arguments);
@@ -197,22 +196,24 @@ export default Service.extend({
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
-        .then(() => { if (!this.errored) this.permissionsService.fetchPermissions.perform()})
+        .then(() => {  this.permissionsService.fetchPermissions.perform()})
         .then(() => {
-          if (!this.errored) {
             const {currentUser} = this;
             this.set('state', STATE.SIGNED_IN);
             Travis.trigger('user:signed_in', currentUser);
             Travis.trigger('user:refreshed', currentUser);
-          }
         })
         .catch(error => {
+          console.log("Problems");
+          console.log(error.message);
           if (!didCancel(error)) {
             throw new Error(error);
           }
         });
     } catch (error) {
+      console.log("General catch");
       console.log(error.message); // for debugging purposes is better option...
+      console.log(error.stack);
       this.signOut(false);
     }
   },
@@ -223,24 +224,20 @@ export default Service.extend({
 
     storage.clearLoginData();
     if (!user || !token) throw new Error('No login data');
-
     const userData = getProperties(user, USER_FIELDS);
     const installationData = getProperties(user, ['installation']);
     if (installationData && installationData.installation) {
       storage.set('activeAccountInstallation', installationData.installation);
     }
-
     this.validateUserData(userData, isBecome);
     const userRecord = pushUserToStore(this.store, userData);
     userRecord.set('authToken', token);
 
     return this.reloadUser(userRecord).then(() => {
-      if (!this.errored) {
         storage.accounts.push(userRecord);
         storage.set('activeAccount', userRecord);
         this.reportNewUser();
         this.reportToIntercom();
-      }
     });
   },
 
@@ -261,7 +258,6 @@ export default Service.extend({
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
       this.flashes.error(TOKEN_EXPIRED_MSG);
-      this.set('errored', true);
       yield this.signOut();
     }
   }).keepLatest(),

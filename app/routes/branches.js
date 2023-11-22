@@ -9,7 +9,7 @@ export default TravisRoute.extend({
   auth: service(),
 
   model() {
-    const repoId = this.modelFor('repo').get('id');
+    const repoId = this.modelFor('repo').id;
     let allTheBranches = ArrayProxy.create();
 
     const path = `/repo/${repoId}/branches`;

@@ -98,7 +98,7 @@ const Repo = VcsEntity.extend({
     const allowance = this.store.peekRecord('allowance', this.owner.id);
     if (allowance)
       return allowance;
-    return yield this.store.queryRecord('allowance', { login: this.owner.login, provider: this.provider });
+    return yield this.store.smartQueryRecord('allowance', { login: this.owner.login, provider: this.provider });
   }).drop(),
 
   buildPermissions: reads('fetchBuildPermissions.lastSuccessful.value'),
@@ -439,7 +439,7 @@ Repo.reopenClass({
     if (!isEmpty(loadedRepos)) {
       return EmberPromise.resolve(loadedRepos.firstObject);
     }
-    return store.queryRecord('repo', { slug, provider, serverType });
+    return store.smartQueryRecord('repo', { slug, provider, serverType });
   },
 });
 

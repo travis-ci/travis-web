@@ -656,10 +656,11 @@ function routes () {
     const { slug_or_id } = params;
     let repo;
     if (slug_or_id.match(/^\d+$/)) {
-      repo = A(schema.repositories).find(slug_or_id);
+      repo = schema.repositories.find(slug_or_id);
     } else {
       const slug = decodeURIComponent(slug_or_id);
-      repo = A(schema.repositories).findBy({ slug });
+
+      repo = schema.repositories.findBy({ slug });
     }
     return repo || new Response(404, {});
   });

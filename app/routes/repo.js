@@ -46,7 +46,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
   serialize(repo) {
     // slugs are sometimes unknown ???
     const slug = repo ? repo.slug : 'unknown/unknown';
-    const [owner, name] = slug.split('/');
+    const [owner, name] = (slug || 'unknown/unknown').split('/');
     const provider = repo.get('vcsProvider.urlPrefix');
 
     return { provider, owner, name };

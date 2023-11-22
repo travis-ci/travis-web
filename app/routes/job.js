@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   router: service(),
+  store: service(),
 
   titleToken(model) {
     return `Job #${model.get('number')}`;
@@ -46,7 +47,7 @@ export default TravisRoute.extend({
   },
 
   afterModel(job) {
-    const slug = this.modelFor('repo').get('slug');
+    const slug = this.modelFor('repo').slug;
     this.ensureJobOwnership(job, slug);
     return job
       .get('build.request')

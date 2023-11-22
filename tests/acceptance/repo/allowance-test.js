@@ -21,6 +21,7 @@ module('Acceptance | repo allowance', function (hooks) {
     this.server.create('user', {login: 'user-login6'});
 
     const repoPrivate = this.server.create('repository', {
+      // allowance test plx
       name: 'repository-private',
       slug: 'user-login/repository-private',
       'private': true,

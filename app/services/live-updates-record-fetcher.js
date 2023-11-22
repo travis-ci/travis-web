@@ -62,7 +62,7 @@ export default Service.extend({
       if (needToFetchBuild || jobsData.length > 1) {
         let index = buildIds.indexOf(buildId);
         buildIds.splice(index, 1);
-        this.store.queryRecord('build', { id: buildId, include: 'build.jobs' });
+        this.store.smartQueryRecord('build', { id: buildId, include: 'build.jobs' });
       } else {
         this.store.findRecord('job', jobsData[0], { reload: true });
       }

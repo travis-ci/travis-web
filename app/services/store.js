@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import Store from '@ember-data/store';
+import Store, { CacheHandler } from '@ember-data/store';
 import RequestManager from '@ember-data/request';
-import Fetch from '@ember-data/request/fetch';
+import { LegacyNetworkHandler } from '@ember-data/legacy-compat';
 
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 import { inject as service } from '@ember/service';
@@ -19,7 +19,8 @@ export default class ExtendedStore extends Store {
     this.shouldAssertMethodCallsOnDestroyedStore = true;
     this.filteredArraysManager = FilteredArrayManager.create({ store: this });
     this.requestManager = new RequestManager();
-    this.requestManager.use([Fetch]);
+    this.requestManager.use([LegacyNetworkHandler]);
+    this.requestManager.useCache(CacheHandler);
   }
 
   filter(modelName, queryParams, filterFunction, dependencies, forceReload) {
@@ -39,6 +40,11 @@ export default class ExtendedStore extends Store {
     } else {
       return this.filteredArraysManager.fetchArray(modelName, queryParams, filterFunction, dependencies, forceReload);
     }
+  }
+
+  smartQueryRecord(type, ...params) {
+    const adapter = this.adapterFor(type);
+    return adapter.queryRecord(this, type, ...params);
   }
 
   paginated(modelName, queryParams, options = {}) {

@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   tabStates: service(),
+  store: service(),
 
   titleToken(model) {
     return `Build #${model.get('number')}`;
@@ -34,14 +35,14 @@ export default TravisRoute.extend({
   },
 
   afterModel(model) {
-    const slug = this.modelFor('repo').get('slug');
+    const slug = this.modelFor('repo').slug;
     this.ensureBuildOwnership(model, slug);
     return model.get('request').then(request => request && request.fetchMessages.perform());
   },
 
   beforeModel() {
     const repo = this.modelFor('repo');
-    if (repo && !repo.repoOwnerAllowance) {
+    if (repo && !repo.repoOwnerAllowance && repo.fetchRepoOwnerAllowance) {
       repo.fetchRepoOwnerAllowance.perform();
     }
   },

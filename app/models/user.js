@@ -122,7 +122,8 @@ export default Owner.extend({
 
   reload(options = {}) {
     const { authToken } = this;
-    return this.store.queryRecord('user', Object.assign({}, options, { current: true, authToken }));
+    const queryParams = Object.assign({}, options, { current: true, authToken });
+    return this.store.smartQueryRecord('user', queryParams);
   },
 
   applyReposFilter() {

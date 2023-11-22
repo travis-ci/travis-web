@@ -15,6 +15,7 @@ let sourceToWords = {
 export default Model.extend({
   api: service(),
   accounts: service(),
+  store: service(),
 
   source: attr(),
   status: attr(),
