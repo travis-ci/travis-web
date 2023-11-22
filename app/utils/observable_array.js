@@ -24,6 +24,7 @@ const ObservableArrayBase = EmberObject.extend({
     });
   },
 
+
   pushObject(item) {
     this.notifyObservers('willChange', this._content.length, 0, 1);
     this._content.push(item);
@@ -32,24 +33,44 @@ const ObservableArrayBase = EmberObject.extend({
   },
 
   push(item) {
-    this.pushObject(item)
+    return this.pushObject(item)
   },
 
   find(...params) {
-    this._content.find(...params)
+    return this._content.find(...params)
   },
 
   map(...params) {
-    this._content.map(...params)
+    return this._content.map(...params)
   },
 
   forEach(...params) {
-    this._content.map(...params)
+    return this._content.map(...params)
   },
 
   firstObject(...params) {
-    this._content.map(...params)
+    return this._content.map(...params)
   },
+
+  filterBy(...params) {
+    return this._content.filterBy(...params)
+  },
+
+  get(_target, prop, _receiver) {
+    if(prop in this._content) {
+      return this._content[prop]
+    } else {
+      return undefined;
+    }
+  },
+
+  set(_target, prop, value, _receiver) {
+    // Custom behavior when setting a property
+    this._content[prop] = value;
+
+    // You must return true to indicate that assignment succeeded
+    return true;
+  }
 })
 
 export function asObservableArray(array) {

@@ -81,7 +81,7 @@ module('Integration | Component | billing-address', function (hooks) {
       hasSubscriptionPermissions: true
     });
 
-    await render(hbs`<Billing::Address @account={{this.account}} @subscription={{tihs.subscription}}/>`);
+    await render(hbs`<Billing::Address @account={{this.account}} @subscription={{this.subscription}}/>`);
 
     assert.dom('[data-test-user-details]').doesNotExist();
     assert.dom('[data-test-billing-details]').doesNotExist();

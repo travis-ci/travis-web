@@ -18,15 +18,15 @@ export default Component.extend({
   deltaTitle: '',
   deltaText: '',
 
-  labels: computed(() => []),
-  values: computed(() => []),
+  labels: [],
+  values: [],
   datasetTitle: 'Data',
   centerline: null,
 
   showPlaceholder: or('isLoading', 'isEmpty'),
 
   // Chart component data
-  data: computed('values.[]', 'labels.[]', 'datasetTitle', function () {
+  data: computed('values', 'labels', 'datasetTitle', function () {
     return {
       type: 'spline',
       x: 'x',

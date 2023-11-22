@@ -224,8 +224,6 @@ export default Service.extend({
     storage.clearLoginData();
     if (!user || !token) throw new Error('No login data');
 
-    console.log("PROPS!")
-    debug(user);
     const userData = getProperties(user, USER_FIELDS);
     const installationData = getProperties(user, ['installation']);
     if (installationData && installationData.installation) {
@@ -269,8 +267,6 @@ export default Service.extend({
   }).keepLatest(),
 
   validateUserData(user, isBecome) {
-    debug(user);
-    console.log(user);
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
     user['confirmed_at'] = user['confirmed_at'] || false;
     const hasAllFields = USER_FIELDS.every(field => isPresent(user[field]) || hasChannelsOnPro(field));

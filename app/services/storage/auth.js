@@ -55,11 +55,7 @@ const Auth = Service.extend({
 
   user: computed({
     get() {
-      console.log("I bet I am here");
-      console.log(storage.getItem('travis.user'))
       const data = parseWithDefault(storage.getItem('travis.user'), null);
-      console.log(data);
-      console.log("DATA!")
       return underscoreKeys(data && data.user || data);
     },
     set(key, user) {

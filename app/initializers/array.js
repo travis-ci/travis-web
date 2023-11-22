@@ -1,3 +1,5 @@
+import { A } from '@ember/array'
+
 export function initialize() {
   if (!Array.prototype.removeObject) {
     Array.prototype.removeObject = function(item) {
@@ -68,6 +70,11 @@ export function initialize() {
     };
   }
 
+  if (!Array.prototype.filterBy) {
+    Array.prototype.filterBy = function(...params) {
+      return A(this).filterBy(...params);
+    }
+  }
 }
 
 export default {

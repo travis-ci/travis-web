@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import BranchSearching from 'travis/mixins/branch-searching';
+import { A } from '@ember/array'
 
 export default Component.extend(BranchSearching, {
   classNames: ['form--envvar'],
@@ -33,7 +34,7 @@ export default Component.extend(BranchSearching, {
   save: task(function* () {
     const envVar = this.store.createRecord('env_var', {
       name: (this.name || "").trim(),
-      value: (this.name || "").trim(),
+      value: (this.value || "").trim(),
       'public': this.public,
       repo: this.repo,
       branch: this.branch
@@ -52,7 +53,7 @@ export default Component.extend(BranchSearching, {
   actions: {
     validateEnvName(name) {
       const { branch, repo } = this;
-      const existingEnvVars = this.store.peekAll('env-var')
+      const existingEnvVars = A(...(this.store.peekAll('env-var').toArray()))
         .filterBy('repo.id', repo.id)
         .filterBy('name', name)
         .filterBy('branch', branch);
