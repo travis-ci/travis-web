@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
 import Visibility from 'visibilityjs';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { on } from '@ember/object/evented';
 
 export default Service.extend({

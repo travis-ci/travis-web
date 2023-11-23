@@ -51,7 +51,7 @@ export function requireProp(value, propertyName = '', componentName = '') {
 
 export function getValuesToCheck(inputValue) {
   const responsivePropMap = getResponsiveProp(inputValue);
-  return Object.values(responsivePropMap).compact().without('');
+  return A(Object.values(responsivePropMap).compact()).without('');
 }
 
 export function checkColor({value, dictionary, property = '@color', component = ''} = {}) {

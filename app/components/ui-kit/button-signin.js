@@ -15,7 +15,7 @@ export default Component.extend({
 
   isSignup: false,
   overriddenProvider: null,
-  provider: or('account.provider', 'multiVcs.primaryProvider', 'overriddenProvider'),
+  provider: or('overriddenProvider', 'account.provider', 'multiVcs.primaryProvider'),
   isLogoVisible: true,
   isLogoSeparatorVisible: true,
   isBetaBadgeVisible: reads('isBetaProvider'),
