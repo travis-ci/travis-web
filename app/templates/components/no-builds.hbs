@@ -1,6 +1,6 @@
-<MissingNotice @title="No builds for this repository">
+<MissingNotice @title={{if this.title this.title 'No builds for this repository'}}>
   <p class="page-notice">
-    Want to start testing this project on Travis CI?
+    {{if this.subtitle this.subtitle 'Want to start testing this project on Travis CI?'}}
   </p>
   <ExternalLinkTo
     @href="http://docs.travis-ci.com/user/getting-started/"
