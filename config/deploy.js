@@ -20,8 +20,8 @@ module.exports = function (deployTarget) {
     },
     s3: {
       region: 'eu-west-1',
-      accessKeyId: process.env.AWS_KEY,
-      secretAccessKey: process.env.AWS_SECRET
+      accessKeyId: process.env.TRAVIS_S3_ACCESS_KEY_ID,
+      secretAccessKey: process.env.TRAVIS_S3_SECRET_ACCESS_KEY
     }
   };
 
