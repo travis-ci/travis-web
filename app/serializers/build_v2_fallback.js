@@ -13,7 +13,7 @@ export default V2FallbackSerializer.extend({
   normalizeArrayResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commits) {
       payload.builds.forEach((build) => {
-        let commit = A(payload.commits).findBy('id', build.commit_id);
+        let commit = payload.commits.findBy('id', build.commit_id);
         if (commit) {
           build.commit = commit;
           return delete build.commit_id;

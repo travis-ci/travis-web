@@ -28,7 +28,7 @@ export default Service.extend({
   ),
 
   loadingData: computed('tasks.@each.isRunning', function () {
-    let tasks = A(this.tasks);
+    let tasks = this.tasks;
     return tasks.any(task => task.isRunning);
   }),
 

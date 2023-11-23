@@ -13,7 +13,7 @@
           <form.field
             @label='First Name'
             @value={{this.billingInfo.firstName}}
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
             @showValidationStatusIconsOverride={{false}}
@@ -26,7 +26,7 @@
         <div class='form-elem full-width'>
           <form.field
             @label='Last Name'
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
             @value={{this.billingInfo.lastName}}
@@ -54,7 +54,7 @@
       <form.field
         @label='Billing Email Address'
         @value={{this.billingInfo.billingEmail}}
-        @required={{true}}
+        @requiredOverride={{true}}
         @showRequiredMark={{true}}
         @disabled={{this.disableForm}}
         @showValidationStatusIconsOverride={{false}}
@@ -67,7 +67,7 @@
       <form.field
         @label='Company Name'
         @value={{this.billingInfo.company}}
-        @required={{false}}
+        @requiredOverride={{false}}
         @showRequiredMark={{false}}
         @disabled={{this.disableForm}}
         @showValidationStatusIconsOverride={{false}}
@@ -81,7 +81,7 @@
       <form.field
         @label='Street Address'
         @value={{this.billingInfo.address}}
-        @required={{true}}
+        @requiredOverride={{true}}
         @showRequiredMark={{true}}
         @disabled={{this.disableForm}}
         @showValidationStatusIconsOverride={{false}}
@@ -96,7 +96,7 @@
           <form.field
             @label='City'
             @value={{this.billingInfo.city}}
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
             @showValidationStatusIconsOverride={{false}}
@@ -110,7 +110,7 @@
           <form.field
             @label='Zip Code'
             @value={{this.billingInfo.zipCode}}
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
             @showValidationStatusIconsOverride={{false}}
@@ -126,7 +126,7 @@
           <form.field
             @label='Country'
             @value={{this.billingInfo.country}}
-            @required={{true}}
+            @requiredOverride={{true}}
             class='billing-country'
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
@@ -146,7 +146,7 @@
         <div class='form-elem full-width'>
           <form.field
             @label='State'
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
             @value={{this.billingInfo.state}}
@@ -199,7 +199,7 @@
         <div class='form-elem-half-width inline-form-elem billing-optional-field'>
           <form.field
             @label='Vat Id'
-            @required={{this.isVatMandatory}}
+            @requiredOverride={{this.isVatMandatory}}
             @showRequiredMark={{this.isVatMandatory}}
             @disabled={{this.disableForm}}
             @value={{this.billingInfo.vatId}}

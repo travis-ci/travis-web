@@ -88,7 +88,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
   fetchArray(queryParams, filterFunction, dependencies, forceReload) {
     let id = this.calculateId(queryParams, filterFunction, dependencies);
     let hasArray = !!this.arrays[id];
-    let array = A(this._getFilterArray(id, queryParams, filterFunction, dependencies));
+    let array = this._getFilterArray(id, queryParams, filterFunction, dependencies);
 
     if (hasArray && forceReload) {
       // if forceReload is true and array already exist, just run the query

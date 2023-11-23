@@ -71,9 +71,9 @@ export default Service.extend({
       return '';
     }
     if (broadcastArray.length) {
-      if (A(broadcastArray).findBy('category', 'warning')) {
+      if (broadcastArray.findBy('category', 'warning')) {
         return 'warning';
-      } else if (A(broadcastArray).findBy('category', 'announcement')) {
+      } else if (broadcastArray.findBy('category', 'announcement')) {
         return 'announcement';
       } else {
         return '';

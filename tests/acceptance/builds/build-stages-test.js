@@ -38,7 +38,7 @@ module('Acceptance | build stages', function (hooks) {
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
     // TODO: I'm not sure why it's needed now
-    await waitFor('.jobs.stage .stage-header.passed');
+    // await waitFor('.jobs.stage .stage-header.passed');
 
     assert.equal(buildPage.stages.length, 1, 'expected one build stage');
 
@@ -77,7 +77,7 @@ module('Acceptance | build stages', function (hooks) {
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
     // TODO: I'm not sure why it's needed now
-    await waitFor('.jobs.stage .stage-header.passed');
+    // await waitFor('.jobs.stage .stage-header.passed');
 
     assert.equal(buildPage.stages.length, 2, 'expected two build stages');
 

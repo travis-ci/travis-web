@@ -1,13 +1,24 @@
 import Owner from 'travis/models/owner';
-import { attr } from '@ember-data/model';
 import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
+import { attr, hasMany } from '@ember-data/model';
 
 export default Owner.extend({
   type: 'organization',
   allowMigration: attr('boolean'),
   customKeys: attr(),
+  allowance: {
+    name: 'allowance',
+    type: 'allowance',
+    kind: 'belongsTo',
+    options: {
+      as: 'owner',
+      async: true,
+      polymorphic: false,
+      inverse: 'owner'
+    }
+  },
 
   buildPermissions: reads('fetchBuildPermissions.lastSuccessful.value'),
 

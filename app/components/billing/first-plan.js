@@ -49,7 +49,7 @@ export default Component.extend({
       plan = this.defaultPlanId;
     }
 
-    return A(this.displayedPlans).findBy('id', plan);
+    return this.displayedPlans.findBy('id', plan);
   }),
 
   isTrial: computed('selectedPlan', function () {

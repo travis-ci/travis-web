@@ -8,5 +8,5 @@ import { A } from '@ember/array'
 export default function hasErrorWithStatus(errorResponse, status) {
   const { errors = [] } = errorResponse || {};
 
-  return A(errors).isAny('status', status);
+  return errors.isAny('status', status);
 }

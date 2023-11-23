@@ -1,9 +1,10 @@
 /* global server */
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 import config from 'travis/config/environment';
 import fuzzysort from 'fuzzysort';
 import { createServer } from 'miragejs';
-import { A } from '@ember/array';
+import { isArray } from '@ember/array';
+
 
 const { validAuthToken, apiEndpoint } = config;
 
@@ -816,11 +817,11 @@ function routes () {
   });
 
   this.get('/v3/preference/:id', function (schema, request) {
-    return A(schema.preferences).findBy({ name: request.params.id });
+    return schema.preferences.findBy({ name: request.params.id });
   });
 
   this.patch('/v3/preference/:id', function (schema, request) {
-    const preference = A(schema.preferences).findBy({ name: request.params.id });
+    const preference = schema.preferences.findBy({ name: request.params.id });
     if (!preference)
       return new Response(404, {});
     const requestBody = JSON.parse(request.requestBody);
@@ -1003,6 +1004,9 @@ function routes () {
     const { sort_by, name_filter } = queryParams;
 
     const repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
+
+    if (!repositories.models.sortBy)
+      return new Response(200, {}, {});
 
     if (sort_by) {
       repositories.models = repositories.models.sortBy(sort_by);
@@ -1253,7 +1257,9 @@ function routes () {
   });
 
   this.get('/user/:id/beta_migration_requests', function ({ betaMigrationRequests }, request) {
-    return betaMigrationRequests.where({ owner_id: request.params.id });
+    if (betaMigrationRequests)
+      return betaMigrationRequests.where({ owner_id: request.params.id });
+    return new Response(404, {}, []);
   });
 
   this.post('/user/:id/beta_migration_request', function ({ betaMigrationRequests }, request) {

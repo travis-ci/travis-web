@@ -43,6 +43,6 @@ export default function generatePrefix(key, propPrefix = '',
       return validator(value) ? `${screenPrefix}${negator}${propPrefix}${sep}${displayVal}` : defaultValue;
     });
 
-    return A(classes).compact().join(' ');
+    return classes.compact().join(' ');
   });
 }

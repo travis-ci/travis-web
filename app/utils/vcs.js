@@ -15,7 +15,7 @@ export const vcsConfig = (vcsType) => (
 );
 
 export const vcsConfigByUrlPrefix = (urlPrefix) => (
-  A(Object.values(providers)).findBy('urlPrefix', urlPrefix)
+  Object.values(providers).findBy('urlPrefix', urlPrefix)
 );
 
 export const vcsConfigByUrlPrefixOrType = (prefixOrType) => {

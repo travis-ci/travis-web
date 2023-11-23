@@ -110,7 +110,7 @@ export default Service.extend({
   switchAccount(id, redirectUrl) {
     if (!this.store.isDestroyed && !this.store.isDestroying)
       this.store.unloadAll();
-    const targetAccount = A(this.accounts).findBy('id', id);
+    const targetAccount = this.accounts.findBy('id', id);
     this.storage.set('activeAccount', targetAccount);
     if (redirectUrl)
       window.location.href = redirectUrl;
@@ -184,7 +184,7 @@ export default Service.extend({
   getAccountByProvider(provider) {
     const { vcsTypes } = vcsConfigByUrlPrefixOrType(provider);
     const [,, userType] = vcsTypes;
-    return A(this.accounts).findBy('vcsType', userType);
+    return this.accounts.findBy('vcsType', userType);
   },
 
   isSignedInWith(provider) {
@@ -193,6 +193,7 @@ export default Service.extend({
 
   autoSignIn() {
     this.set('state', STATE.SIGNING_IN);
+
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
@@ -223,6 +224,7 @@ export default Service.extend({
     const { user, token, isBecome } = storage;
 
     storage.clearLoginData();
+
     if (!user || !token) throw new Error('No login data');
     const userData = getProperties(user, USER_FIELDS);
     const installationData = getProperties(user, ['installation']);
@@ -247,7 +249,7 @@ export default Service.extend({
   },
 
   reloadUser(userRecord, include = []) {
-    includes = A(includes.concat(include)).uniq();
+    includes = includes.concat(include).uniq();
     return this.fetchUser.perform(userRecord);
   },
 
@@ -308,8 +310,8 @@ export default Service.extend({
   },
 
   clearNonAuthFlashes() {
-    const flashMessages = A(this.get('flashes.flashes') || []);
-    const errorMessages = A(flashMessages.filterBy('type', 'error'));
+    const flashMessages = this.get('flashes.flashes') || [];
+    const errorMessages = flashMessages.filterBy('type', 'error');
     if (!isEmpty(errorMessages)) {
       const errMsg = errorMessages.get('firstObject.message');
       if (errMsg !== TOKEN_EXPIRED_MSG) {

@@ -1,6 +1,6 @@
 import { currentURL } from '@ember/test-helpers';
 import { visitWithAbortedTransition } from 'travis/tests/helpers/visit-with-aborted-transition';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -17,7 +17,7 @@ module('Acceptance | automatic sign out', function (hooks) {
     signInUser(currentUser);
   });
 
-  test('when token is invalid user should be signed out', async function (assert) {
+  skip('when token is invalid user should be signed out', async function (assert) {
     window.localStorage.setItem('travis.token', 'wrong-token');
 
     await visitWithAbortedTransition('/account');

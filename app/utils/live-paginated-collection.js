@@ -94,7 +94,7 @@ LivePaginatedCollection.reopenClass({
     sortDependencies.push('content.[]');
 
     defineProperty(instance, 'sorted', computed(...sortDependencies, function () {
-      return A(this.content.content).sort(sortByFunction);
+      return this.content.content.sort(sortByFunction);
     }));
 
     defineProperty(instance, 'limited', limit('sorted', 'pagination.perPage'));

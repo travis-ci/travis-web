@@ -7,6 +7,7 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   features: service(),
   accounts: service(),
+  store: service(),
 
   queryParams: {
     page: {

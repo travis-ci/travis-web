@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   auth: service(),
+  store: service(),
 
   model(params) {
     let currentUserId = this.get('auth.currentUser.id');

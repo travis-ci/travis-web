@@ -215,6 +215,9 @@ export default JSONSerializer.extend({
       items = payload[plural];
     }
 
+    if (!items)
+      return {data: []};
+
     documentHash.data = items.map((item) => {
       let { data, included } = this.normalize(primaryModelClass, item);
       if (included) {

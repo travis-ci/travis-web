@@ -27,7 +27,7 @@ export default TravisRoute.extend({
   },
 
   model({ login }) {
-    const org = A(this.accounts.organizations).findBy('login', login);
+    const org = this.accounts.organizations.findBy('login', login);
     return org || { login, error: true };
   },
 

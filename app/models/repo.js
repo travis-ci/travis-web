@@ -431,8 +431,7 @@ Repo.reopenClass({
   },
 
   fetchBySlug(store, slug, provider = defaultVcsConfig.urlPrefix, serverType = undefined) {
-    let loadedRepos = A(A(store.peekAll('repo').toArray() || []).filterBy('provider', provider)).filterBy('slug', slug);
-    loadedRepos = A(loadedRepos);
+    let loadedRepos = store.peekAll('repo').filterBy('provider', provider).filterBy('slug', slug);
     if (serverType) {
       loadedRepos = loadedRepos.filterBy('serverType', serverType);
     }

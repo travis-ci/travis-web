@@ -39,12 +39,12 @@ export default Service.extend({
   },
 
   setup() {
-    this.set('flashes', A([]));
+    this.set('flashes', []);
   },
 
   messages: computed('flashes.[]', function () {
     let flashes = this.flashes;
-    let model = A([]);
+    let model = [];
     if (flashes.length) {
       model.pushObjects(flashes);
     }
@@ -58,7 +58,7 @@ export default Service.extend({
   // messages from API responses in V2 that way, so I think that cleaning this
   // up once we're using V3 would be a good point.
   loadFlashes(flashes = []) {
-    A(flashes).forEach(flash => {
+    flashes.forEach(flash => {
       const type = Object.keys(flash)[0];
       const { message, preamble = messageTypeToPreamble[type], aboveOverlay } = flash[type];
       const icon = messageTypeToIcon[type];

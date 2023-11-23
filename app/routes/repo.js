@@ -37,15 +37,12 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   setupController(controller, model) {
-    if (model && !model.get) {
-      model = this.store.find('repo', model.id);
-    }
-    return controller.set('repo', model);
+      return controller.set('repo', this.modelFor('repo'));
   },
 
   serialize(repo) {
     // slugs are sometimes unknown ???
-    const slug = repo ? repo.slug : 'unknown/unknown';
+    const slug = repo ? repo.get('slug') : 'unknown/unknown';
     const [owner, name] = (slug || 'unknown/unknown').split('/');
     const provider = repo.get('vcsProvider.urlPrefix');
 
@@ -60,6 +57,9 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   beforeModel() {
     const repo = this.modelFor('repo');
+    console.log('Before Model');
+    console.log(repo)
+    console.log('/Before Node')
     if (repo && !repo.repoOwnerAllowance) {
       repo.fetchRepoOwnerAllowance.perform();
     }

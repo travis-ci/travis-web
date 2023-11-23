@@ -10,13 +10,13 @@
   </Modal>
   <div class='flex flex--col flex-md-row form-elem'>
     <div class='full-width form-elem inline-form-elem'>
-      <form.field @label='First Name' @value={{this.firstName}} @required={{true}} @showRequiredMark={{true}}
+      <form.field @label='First Name' @value={{this.firstName}} @requiredOverride={{true}} @showRequiredMark={{true}}
         @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.firstName)}} as |Field|>
         <Field.input @name='first_name' />
       </form.field>
     </div>
     <div class='full-width form-elem'>
-      <form.field @label='Last Name' @value={{this.lastName}} @required={{true}} @showRequiredMark={{true}}
+      <form.field @label='Last Name' @value={{this.lastName}} @requiredOverride={{true}} @showRequiredMark={{true}}
         @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.lastName)}} as |Field|>
         <Field.input @name='last_name' />
       </form.field>
@@ -26,7 +26,7 @@
 
   <div class='full-width cc-form-elem'>
     <form.field @label="Credit Card details"
-      onSubmit={{perform this.createSubscription}} @required={{true}} @showRequiredMark={{true}} as |field|>
+      onSubmit={{perform this.createSubscription}} @requiredOverride={{true}} @showRequiredMark={{true}} as |field|>
       <StripeCard  class="cc-form-internal" @onComplete={{action "complete" }} @options={{this.options}} as |stripeError|>
         {{#if stripeError}}
         <p>{{stripeError.message}}</p>
@@ -38,33 +38,33 @@
   <div class='full-width form-elem'>
 
     <form.field @label="Billing e-mail address" @value={{this.billingEmail}} @onChange={{action (mut
-      this.billingEmail)}} @required={{true}} @validator={{form-validator form.validators.email}}
+      this.billingEmail)}} @requiredOverride={{true}} @validator={{form-validator form.validators.email}}
       @showRequiredMark={{true}} as |field|>
       <field.input @type="text" />
     </form.field>
   </div>
   <div class='full-width not-required-form-elem'>
-    <form.field @label="Company Name" @value="" @onChange={{action (mut this.company)}} @required={{false}} as |field|>
+    <form.field @label="Company Name" @value="" @onChange={{action (mut this.company)}} @requiredOverride={{false}} as |field|>
       <field.input @type="text" />
     </form.field>
   </div>
 
   <div class='full-width form-elem'>
     <form.field @label="Street Address" @value={{this.address}} @onChange={{action (mut this.address)}}
-      @required={{true}} @showRequiredMark={{true}} as |field|>
+      @requiredOverride={{true}} @showRequiredMark={{true}} as |field|>
       <field.input @type="text" />
     </form.field>
   </div>
 
   <div class='flex flex--col flex-md-row form-elem'>
     <div class='full-width form-elem inline-form-elem'>
-      <form.field @label='Zip Code' @value={{this.zipCode}} @required={{true}} @showRequiredMark={{true}}
+      <form.field @label='Zip Code' @value={{this.zipCode}} @requiredOverride={{true}} @showRequiredMark={{true}}
         @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.zipCode)}} as |Field|>
         <Field.input @name='zip' />
       </form.field>
     </div>
     <div class='full-width form-elem'>
-      <form.field @label='City' @value={{this.city}} @required={{true}} @showRequiredMark={{true}}
+      <form.field @label='City' @value={{this.city}} @requiredOverride={{true}} @showRequiredMark={{true}}
         @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.city)}} as |Field|>
         <Field.input @name='city' />
       </form.field>
@@ -72,7 +72,7 @@
   </div>
 
   <div class='form-elem full-width select form-elem-select' data-billing-form-select>
-    <form.field @label='Country' @value={{this.country}} @required={{true}} class='billing-country'
+    <form.field @label='Country' @value={{this.country}} @requiredOverride={{true}} class='billing-country'
       @showRequiredMark={{true}} @showValidationStatusIconsOverride={{false}} @onChange={{action 'changeCountry' }} as |Field|>
       <Field.select @placeholder='Select country' @options={{this.countries}} as |country|>
         {{country}}
@@ -81,7 +81,7 @@
   </div>
   {{#if this.isStateMandatory}}
   <div class='form-elem-half-width inline-form-elem'>
-    <form.field @label='State' @required={{true}} @showRequiredMark={{true}} @value={{this.state}}
+    <form.field @label='State' @requiredOverride={{true}} @showRequiredMark={{true}} @value={{this.state}}
       @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.state)}} as |Field|>
       <Field.select @placeholder='Select state' @options={{this.states}} as |state|>
         {{state}}
@@ -110,7 +110,7 @@
   {{/if}}
   {{#if this.showVatField}}
   <div class='form-elem-half-width inline-form-elem billing-optional-field form-vatid'>
-    <form.field @label='Vat Id' @required={{this.isVatMandatory}} @showRequiredMark={{this.isVatMandatory}}
+    <form.field @label='Vat Id' @requiredOverride={{this.isVatMandatory}} @showRequiredMark={{this.isVatMandatory}}
       @value={{this.vatId}} @showValidationStatusIconsOverride={{false}} @onChange={{action (mut this.vatId)}} as |Field|>
       <Field.input @name='vat' />
     </form.field>

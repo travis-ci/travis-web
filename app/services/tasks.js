@@ -24,7 +24,7 @@ export default Service.extend({
 
     if (data) {
       const modelClass = this.store.modelFor('beta-migration-request');
-      const serializer = this.serializerFor('application')
+      const serializer = this.store.serializerFor('application')
       const json = serializer.normalizeArrayResponse(this.store, modelClass, data);
       this.store.push(json);
     }

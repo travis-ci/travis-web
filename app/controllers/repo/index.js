@@ -24,7 +24,7 @@ export default Controller.extend({
   repo: null,
 
   repoOwner: computed('accounts.all.@each.login', 'repo.owner.login', 'auth.signedIn', function () {
-    return this.auth.signedIn && A(this.accounts.all).findBy('login', this.repo.owner.login);
+    return this.auth.signedIn && this.accounts.all.findBy('login', this.repo.owner.login);
   }),
 
   permissions: reads('repo.permissions'),

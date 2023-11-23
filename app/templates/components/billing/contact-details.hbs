@@ -14,7 +14,7 @@
             <form.field
               @label="First Name"
               @value={{this.info.firstName}}
-              @required={{true}}
+              @requiredOverride={{true}}
               @validateOnField={{false}}
               @showValidationStatusIconsOverride={{false}}
               @onChange={{action (mut this.info.firstName)}}
@@ -27,7 +27,7 @@
             <form.field
               @label="Last Name"
               @value={{this.info.lastName}}
-              @required={{true}}
+              @requiredOverride={{true}}
               @validateOnField={{false}}
               @showValidationStatusIconsOverride={{false}}
               @onChange={{action (mut this.info.lastName)}}
@@ -42,7 +42,7 @@
             @label='Billing Email Address'
             @isMultipleInputsField={{true}}
             @disableFrame={{true}}
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @showValidationStatusIconsOverride={{false}}
             @validator={{form-validator form.validators.email}}
@@ -56,7 +56,7 @@
           <form.field
             @label="Company"
             @value={{this.info.company}}
-            @required={{false}}
+            @requiredOverride={{false}}
             @validateOnField={{false}}
             @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.info.company)}}

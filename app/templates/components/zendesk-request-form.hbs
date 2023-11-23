@@ -22,7 +22,7 @@
         <form.field
           @label="Email"
           @value={{this.email}}
-          @required={{this.emails.length}}
+          @requiredOverride={{this.emails.length}}
           @validator={{form-validator form.validators.email}}
           @onChange={{action (mut this.email)}}
           data-test-zendesk-form-email="true"
@@ -39,7 +39,7 @@
         <form.field
           @label="Subject"
           @value={{this.subject}}
-          @required={{true}}
+          @requiredOverride={{true}}
           @disabled={{this.isSubmitting}}
           @onChange={{action (mut this.subject)}}
           data-test-zendesk-form-subject="true"
@@ -51,7 +51,7 @@
           @label="Description"
           @value={{this.description}}
           @disabled={{this.isSubmitting}}
-          @required={{true}}
+          @requiredOverride={{true}}
           @validator={{form-validator
             form.validators.difference
             this.descriptionTemplate

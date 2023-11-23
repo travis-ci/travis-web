@@ -53,7 +53,7 @@ export default Component.extend(BranchSearching, {
   actions: {
     validateEnvName(name) {
       const { branch, repo } = this;
-      const existingEnvVars = A(...(this.store.peekAll('env-var').toArray()))
+      const existingEnvVars = this.store.peekAll('env-var')
         .filterBy('repo.id', repo.id)
         .filterBy('name', name)
         .filterBy('branch', branch);

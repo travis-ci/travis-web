@@ -6,7 +6,7 @@ import { A } from '@ember/array';
 export default RavenLogger.extend({
   features: service(),
 
-  benignErrors: A([
+  benignErrors: [
     'TransitionAborted',
     'TaskInstance',
     'UnrecognizedURLError',
@@ -16,7 +16,7 @@ export default RavenLogger.extend({
     'operation failed',
     'operation was aborted',
     'needs-auth'
-  ]),
+  ],
 
   unhandledPromiseErrorMessage: '',
 

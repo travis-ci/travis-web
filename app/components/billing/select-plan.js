@@ -22,7 +22,7 @@ export default Component.extend({
   displayedPlans: reads('availablePlans'),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
-    return A(this.displayedPlans).findBy('name', this.defaultPlanName);
+    return this.displayedPlans.findBy('name', this.defaultPlanName);
   }),
 
   allowReactivation: computed(function () {

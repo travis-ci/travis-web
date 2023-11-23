@@ -6,7 +6,7 @@
     <form.field
       @label="Branch"
       @value={{this.selectedBranch}}
-      required={{true}}
+      requiredOverride={{true}}
       class="branch-selector"
       @showValidationStatusIconsOverride={{false}}
       as |field|
@@ -26,7 +26,7 @@
   <div class="form-elem select">
     <form.field
       @label="Interval"
-      @required={{true}}
+      @requiredOverride={{true}}
       @value={{this.selectedInterval}}
       @onChange={{action (mut this.selectedInterval)}}
       @showValidationStatusIconsOverride={{false}}
@@ -40,7 +40,7 @@
   <div class="form-elem select">
     <form.field
       @label="Options"
-      @required={{true}}
+      @requiredOverride={{true}}
       @value={{this.selectedOption}}
       @onChange={{action (mut this.selectedOption)}}
       @showValidationStatusIconsOverride={{false}}
