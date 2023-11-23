@@ -1,28 +1,4 @@
 <div class="wrapper {{if this.isCentered 'centered'}}">
-
-  <div class="wrapper-main">
-    <div id="main" class="main" role="main">
-      {{#if this.repo.isLoaded}}
-        {{#if this.isActiveOnOrg}}
-          <ActiveOnOrgComponent />
-        {{else if this.isNotActive}}
-          <NotActiveComponent />
-        {{else if this.hasNoCurrentBuild}}
-          <NoBuildsComponent />
-        {{else}}
-          <RepositoryLayout
-            @repo={{this.repo}}
-            @build={{this.build}}
-            @job={{this.job}}
-            @scanResult={{this.scanResult}}
-            @tab={{this.tab}}
-          >
-            {{outlet}}
-          </RepositoryLayout>
-        {{/if}}
-      {{/if}}
-    </div>
-  </div>
   {{#if this.showGitHubAppsCTA}}
     <TopBar>
       <div class="cta">

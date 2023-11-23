@@ -7,19 +7,6 @@ import { A } from '@ember/array';
 export default Controller.extend({
   auth: service(),
   accounts: service(),
-  features: service(),
-
-  isActiveOnOrg: computed('repo.active_on_org', 'migrationStatus', function() {
-    return this.features.githubApps && this.get('repo.active_on_org') && this.migrationStatus !== 'success';
-  }),
-
-  isNotActive: computed('repo.active', function() {
-    return !this.get('repo.active');
-  }),
-
-  hasNoCurrentBuild: computed('repo.currentBuildId', function() {
-    return !this.get('repo.currentBuildId');
-  }),
 
   repo: null,
 
