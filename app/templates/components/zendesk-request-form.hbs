@@ -22,7 +22,7 @@
         <form.field
           @label="Email"
           @value={{this.email}}
-          @requiredOverride={{this.emails.length}}
+          @requiredOverride={{true}}
           @validator={{form-validator form.validators.email}}
           @onChange={{action (mut this.email)}}
           data-test-zendesk-form-email="true"
@@ -69,7 +69,6 @@
         </form.field>
         <div class="align-center">
           <button
-            disabled={{not form.checkValidity}}
             onclick={{action form.submit}}
             class="submit-button button--blue button--large"
             data-test-zendesk-form-submit

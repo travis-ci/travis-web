@@ -66,8 +66,8 @@ export default Component.extend({
   }),
 
   disableForm: computed('account.allowance.paymentChangesBlockCredit', 'account.allowance.paymentChangesBlockCaptcha', function () {
-    const paymentChangesBlockCredit = this.account.allowance?.get('paymentChangesBlockCredit');
-    const paymentChangesBlockCaptcha = this.account.allowance?.get('paymentChangesBlockCaptcha');
+    const paymentChangesBlockCredit = this.account.allowance.paymentChangesBlockCredit;
+    const paymentChangesBlockCaptcha = this.account.allowance.paymentChangesBlockCaptcha;
     return paymentChangesBlockCaptcha || paymentChangesBlockCredit;
   }),
 

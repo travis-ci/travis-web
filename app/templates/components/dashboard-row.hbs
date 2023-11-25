@@ -59,7 +59,7 @@
                 this.repo
                 this.repo.defaultBranch.lastBuild.id
               }}
-              @title="Last build on the default branch"
+              title="Last build on the default branch"
             >
               {{this.repo.defaultBranch.lastBuild.branch.name}}
               {{this.repo.defaultBranch.lastBuild.state}}
@@ -94,7 +94,7 @@
                 this.repo
                 this.repo.currentBuild.id
               }}
-              @title="Last build on the repo"
+              title="Last build on the repo"
             >
               <span class="label-align">
                 #{{this.repo.currentBuild.number}}
@@ -110,7 +110,7 @@
           </h3>
           <p class="row-content color">
             <StatusIcon @status={{this.repo.currentScan.icon}} />
-            <LinkTo @route="scanResults" @model={{this.repo}} @title="Log Scans">
+            <LinkTo @route="scanResults" @model={{this.repo}} title="Log Scans">
               <span class="label-align">
                 {{this.repo.currentScan.state}}
               </span>
@@ -153,7 +153,7 @@
             {{#if this.isTriggering}}
               <LoadingIndicator />
             {{else}}
-              <div class="dropup {{if dropupIsOpen 'is-open'}}">
+              <div class="dropup {{if this.dropupIsOpen 'is-open'}}">
                 <button
                   type="button"
                   class="dropup-tofu"
@@ -191,7 +191,7 @@
                     <LinkTo
                       @route="settings"
                       @model={{this.repo}}
-                      @title="Settings for this repository"
+                      title="Settings for this repository"
                     >
                       <SvgImage @name="icon-settings" @class="icon" />
                       <span class="label-align">

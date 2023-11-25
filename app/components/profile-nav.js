@@ -104,7 +104,7 @@ export default Component.extend({
 
   usersUsage: computed('account.allowance.userUsage', 'addonUsage', 'hasPlanUsagePermissions', function () {
     // const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
-    const userUsage = this.model.allowance?.get('userUsage');
+    const userUsage = this.model.allowance.userUsage;
     if (userUsage === undefined) {
       return true;
     }
@@ -129,26 +129,26 @@ export default Component.extend({
       return;
     }
 
-    if (allowance?.get('paymentChangesBlockCredit') || allowance?.get('paymentChangesBlockCaptcha')) {
+    if (allowance.paymentChangesBlockCredit || allowance.paymentChangesBlockCaptcha) {
       let time;
-      if (allowance?.get('paymentChangesBlockCaptcha')) time = allowance?.get('captchaBlockDuration');
-      if (allowance?.get('paymentChangesBlockCredit')) time = allowance?.get('creditCardBlockDuration');
+      if (allowance.paymentChangesBlockCaptcha) time = allowance.captchaBlockDuration;
+      if (allowance.paymentChangesBlockCredit) time = allowance.creditCardBlockDuration;
       this.flashes.custom('flashes/payment-details-edit-lock', { owner: this.model, isUser: this.model.isUser, time: time}, 'warning');
     }
 
-    if (allowance?.get('subscriptionType') !== 2) {
+    if (allowance.subscriptionType !== 2) {
       return;
     }
 
-    if (!allowance.get('privateRepos') && !allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
+    if (!allowance.privateRepos && !allowance.publicRepos && (this.isOrganizationAdmin || this.model.isUser)) {
       this.flashes.custom('flashes/negative-balance-private-and-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('privateRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
+    } else if (!allowance.privateRepos && (this.isOrganizationAdmin || this.model.isUser)) {
       this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
+    } else if (!allowance.publicRepos && (this.isOrganizationAdmin || this.model.isUser)) {
       this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
     }
 
-    if (allowance.get('pendingUserLicenses')) {
+    if (allowance.pendingUserLicenses) {
       this.flashes.custom('flashes/pending-user-licenses', { owner: this.model, isUser: this.model.isUser }, 'warning');
     } else if (!this.usersUsage) {
       this.flashes.custom('flashes/users-limit-exceeded', { owner: this.model, isUser: this.model.isUser }, 'warning');
@@ -158,7 +158,7 @@ export default Component.extend({
   willDestroyElement() {
     const allowance = this.model.allowance;
 
-    if (allowance && allowance.get('subscriptionType') === 2) {
+    if (allowance && allowance.subscriptionType === 2) {
       this.flashes.removeCustomsByClassName('warning');
     }
   },

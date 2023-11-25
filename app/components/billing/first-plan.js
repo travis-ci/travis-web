@@ -43,7 +43,11 @@ export default Component.extend({
 
   displayedPlans: reads('availablePlans'),
 
-  selectedPlan: computed('displayedPlans.[].id', 'defaultPlanId', function () {
+  selectedPlanOverride: null,
+  selectedPlan: computed('selectedPlanOverride','displayedPlans.[].id', 'defaultPlanId', function () {
+    if (this.selectedPlanOverride !== null)
+      return this.selectedPlanOverride;
+
     let plan = this.storage.selectedPlanId;
     if (plan == null) {
       plan = this.defaultPlanId;

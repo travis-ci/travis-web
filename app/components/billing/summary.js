@@ -9,6 +9,14 @@ export default Component.extend({
   subscription: null,
   account: null,
 
+  selectedPlanOverride: null,
+
+  selectedPlanV: computed('selectedPlanOverride', 'subscription.plan',  function () {
+    if (this.selectedPlanOverride !== null)
+      return this.selectedPlanOverride;
+
+    return this.subscription.plan
+  }),
   selectedPlan: reads('subscription.plan'),
 
   isEditPlanLoading: reads('subscription.changePlan.isLoading'),

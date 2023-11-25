@@ -4,7 +4,7 @@
 <TravisForm data-test-stripe-form='true' class='edit-form' as |form|>
 
   <Modal @isVisible={{this.showPlansSelector}} @closeButton={{true}} @onClose={{action 'closePlansModal' }}>
-    <Billing::SelectPlan @title="Select plan" @selectedPlan={{this.selectedPlan}} @isReactivation={{false}}
+    <Billing::SelectPlan @title="Select plan" @selectedPlanOverride={{this.selectedPlan}} @isReactivation={{false}}
       @subscription={{this.subscription}} @account={{this.account}} @showPlansSelector={{true}}
       @showAddonsSelector={{false}} @next={{action 'closePlansModal' }} @showCancelButton={{this.showCancelButton}} />
   </Modal>

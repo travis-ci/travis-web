@@ -21,7 +21,11 @@ export default Component.extend({
 
   displayedPlans: reads('availablePlans'),
 
-  selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
+  selectedPlanOverride: null,
+  selectedPlan: computed('selectedPlanOverride', 'displayedPlans.[].name', 'defaultPlanName', function () {
+    if (this.selectedPlanOverride !== null)
+      return this.selectedPlanOverride;
+
     return this.displayedPlans.findBy('name', this.defaultPlanName);
   }),
 
@@ -45,13 +49,13 @@ export default Component.extend({
   }).drop(),
 
   reactivatePlan(plan, form) {
-    this.set('selectedPlan', plan);
+    this.set('selectedPlanOverride', plan);
     this.set('isReactivation', true);
     later(form.submit, 500);
   },
 
   selectAndSubmit(plan, form) {
-    this.set('selectedPlan', plan);
+    this.set('selectedPlanOverride', plan);
     later(form.submit, 500);
   },
 

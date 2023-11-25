@@ -57,7 +57,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
     await render(hbs`<Billing::SelectPlan
       @displayedPlans={{this.displayedPlans}}
-      @selectedPlan={{this.selectedPlan}}
+      @selectedPlanOverride={{this.selectedPlan}}
       @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );
@@ -71,7 +71,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
     await render(hbs`<Billing::SelectPlan
       @displayedPlans={{this.displayedPlans}}
-      @selectedPlan={{this.selectedPlan}}
+      @selectedPlanOverride={{this.selectedPlan}}
       @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );

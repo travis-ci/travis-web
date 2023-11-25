@@ -78,9 +78,9 @@ export default Component.extend({
       } else {
         this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'warning');
       }
-      if (allowance?.get('pendingUserLicenses')) {
+      if (allowance.pendingUserLicenses) {
         this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'warning');
-      } else if (allowance && !allowance.get('userUsage')) {
+      } else if (allowance && !allowance.userUsage) {
         this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'warning');
       }
     } else if (this.userRoMode && ownerRoMode) {
