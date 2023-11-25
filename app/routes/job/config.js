@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   store: service(),
+  tasks: service(),
   titleToken: 'Config',
 
   model() {
@@ -12,6 +13,6 @@ export default TravisRoute.extend({
   },
 
   afterModel(request) {
-    return request.fetchMessages.perform();
+    return this.tasks.fetchMessages.perform(request);
   }
 });

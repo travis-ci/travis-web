@@ -108,7 +108,7 @@ export default Component.extend({
         }
 
         run(() => {
-          lastBuilds.set('count', response['@pagination'].count);
+          lastBuilds.set('count', response['@pagination']?.count || 0);
           lastBuilds.set('content', array);
           lastBuilds.set('isLoading', false);
         });

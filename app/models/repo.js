@@ -32,6 +32,7 @@ const Repo = VcsEntity.extend({
   auth: service(),
   features: service(),
   store: service(),
+  tasks: service(),
 
   permissions: attr(),
   slug: attr('string'),
@@ -92,14 +93,7 @@ const Repo = VcsEntity.extend({
       return this.repoOwnerAllowance;
   }),
 
-  repoOwnerAllowance: reads('fetchRepoOwnerAllowance.lastSuccessful.value'),
-
-  fetchRepoOwnerAllowance: task(function* () {
-    const allowance = this.store.peekRecord('allowance', this.owner.id);
-    if (allowance)
-      return allowance;
-    return yield this.store.smartQueryRecord('allowance', { login: this.owner.login, provider: this.provider });
-  }).drop(),
+  repoOwnerAllowance: reads('tasks.fetchRepoOwnerAllowance.lastSuccessful.value'),
 
   buildPermissions: reads('fetchBuildPermissions.lastSuccessful.value'),
 
@@ -194,7 +188,7 @@ const Repo = VcsEntity.extend({
 
   sshKey: function () {
     this.store.find('ssh_key', this.id);
-    return this.store.recordForId('ssh_key', this.id);
+    return this.store.findRecord('ssh_key', this.id);
   },
 
   envVars: computed('id', function () {

@@ -45,10 +45,10 @@ export default Component.extend({
   isV2SubscriptionEmpty: empty('v2subscription'),
   isSubscriptionEmpty: empty('v1subscription'),
   isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
-  canViewBilling: computed('model', function () {
+  canViewBilling: computed('account.isOrganization account.permissions.billing_view', function () {
     return !this.account.isOrganization || this.account.permissions.billing_view;
   }),
-  canEditBilling: computed('model', function () {
+  canEditBilling: computed('account.isOrganization account.permissions.billing_update', function () {
     return !this.account.isOrganization || this.account.permissions.billing_update;
   }),
   hasV2Subscription: not('isV2SubscriptionEmpty'),
@@ -66,8 +66,8 @@ export default Component.extend({
   }),
 
   disableForm: computed('account.allowance.paymentChangesBlockCredit', 'account.allowance.paymentChangesBlockCaptcha', function () {
-    const paymentChangesBlockCredit = this.account.allowance.get('paymentChangesBlockCredit');
-    const paymentChangesBlockCaptcha = this.account.allowance.get('paymentChangesBlockCaptcha');
+    const paymentChangesBlockCredit = this.account.allowance?.get('paymentChangesBlockCredit');
+    const paymentChangesBlockCaptcha = this.account.allowance?.get('paymentChangesBlockCaptcha');
     return paymentChangesBlockCaptcha || paymentChangesBlockCredit;
   }),
 

@@ -5,6 +5,8 @@ import formatCommit from 'travis/utils/format-commit';
 export default helper((params) => {
   const [commit] = params;
   if (commit) {
-    return new htmlSafe(formatCommit(commit.get('sha'), commit.get('branch')));
+
+  const theHtml = formatCommit(commit.get('sha'), commit.get('branch'));
+    return new htmlSafe(`<span>${theHtml}</span>`);
   }
 });

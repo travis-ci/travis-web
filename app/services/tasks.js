@@ -30,6 +30,25 @@ export default Service.extend({
     }
 
     return this.store.peekAll('beta-migration-request');
-  }).drop()
+  }).drop(),
+
+  fetchRepoOwnerAllowance: task(function* (repo) {
+    console.log(repo);
+    console.log("%%%repo$$$$")
+    const allowance = this.store.peekRecord('allowance', repo.id);
+    console.log(allowance);
+    if (allowance)
+      return allowance;
+    return yield this.store.smartQueryRecord('allowance', { login: repo.owner.login, provider: repo.provider || 'github' });
+  }).drop(),
+
+  fetchMessages: task(function* (request) {
+    const repoId = request.get('repo.id');
+    const requestId = request.get('build.request.id');
+    if (repoId && requestId) {
+      const response = yield request.api.get(`/repo/${repoId}/request/${requestId}/messages`) || {};
+      return response.messages;
+    }
+  }).drop(),
 
 });

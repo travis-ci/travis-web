@@ -16,9 +16,9 @@ export default Component.extend({
     const { code, key, args } = this.message;
 
     if (this[code]) {
-      return htmlSafe(this[code](key, args));
+      return htmlSafe(`<span>${this[code](key, args)}</span>`);
     } else {
-      return htmlSafe(`unrecognised message code ${format(code)}`);
+      return htmlSafe(`<span>unrecognised message code ${format(code)}</span>`);
     }
   }),
 

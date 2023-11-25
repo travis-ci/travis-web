@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   tabStates: service(),
   auth: service(),
+  tasks: service(),
 
   activate(...args) {
     this._super(args);
@@ -25,7 +26,7 @@ export default TravisRoute.extend({
   beforeModel() {
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
-      repo.fetchRepoOwnerAllowance.perform();
+      this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
   }
 });

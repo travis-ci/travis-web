@@ -43,7 +43,6 @@ const Auth = Service.extend({
 
   rssToken: computed({
     get() {
-      console.log("AM I here 2?")
       return storage.getItem('travis.rssToken') || null;
     },
     set(key, token) {

@@ -5,5 +5,5 @@ import timeInWords from 'travis/utils/time-in-words';
 export default helper((params) => {
   const [time] = params;
   const timeText = timeInWords(time);
-  return new htmlSafe(timeText);
+  return new htmlSafe(`<span>${timeText}</span>`);
 });

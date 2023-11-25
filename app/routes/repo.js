@@ -9,6 +9,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
   tabStates: service(),
   auth: service(),
   features: service(),
+  tasks: service(),
 
   slug: null,
 
@@ -59,9 +60,15 @@ export default TravisRoute.extend(ScrollResetMixin, {
     const repo = this.modelFor('repo');
     console.log('Before Model');
     console.log(repo)
+  //  console.log(this.tasks);
+    //here
+   // for (const [key, value] of Object.entries(this.tasks)) {
+   //   console.log(`${key}: ${value}`);
+   // }
+    // console.log(this.tasks.fetchRepoOwnerAllowance);
     console.log('/Before Node')
     if (repo && !repo.repoOwnerAllowance) {
-      repo.fetchRepoOwnerAllowance.perform();
+      this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
   },
 

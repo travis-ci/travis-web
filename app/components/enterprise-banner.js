@@ -69,7 +69,8 @@ export default Component.extend({
 
   expirationTimeFromNow: computed('expirationTime', function () {
     let expirationTime = this.expirationTime;
-    return new htmlSafe(timeAgoInWords(expirationTime) || '-');
+    let timeText = timeAgoInWords(expirationTime) || '-';
+    return new htmlSafe(`<span>${timeText}</span>`);
   }),
 
   expiring: computed('daysUntilExpiry', function () {

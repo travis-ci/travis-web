@@ -1,6 +1,7 @@
 import { get, computed } from '@ember/object';
 import Component from '@ember/component';
 import { alias, mapBy } from '@ember/object/computed';
+import { A } from '@ember/array'
 
 export default Component.extend({
   tagName: 'section',
@@ -66,10 +67,10 @@ export default Component.extend({
       }
 
       const jobsAllowedToFail = filteredJobs.filterBy('allowFailure');
-      const relevantJobs = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
+      const relevantJobs = A(jobsAllowedToFail.filterBy('isFinished')).rejectBy('state', 'passed');
 
-      const failedJobsNotAllowedToFail = this.filteredJobs.rejectBy('allowFailure')
-        .filterBy('isFinished').rejectBy('state', 'passed');
+      const failedJobsNotAllowedToFail = A(A(this.filteredJobs).rejectBy('allowFailure')
+        .filterBy('isFinished')).rejectBy('state', 'passed');
 
       if (relevantJobs.length > 0) {
         let jobList;

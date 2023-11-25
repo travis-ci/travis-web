@@ -8,6 +8,7 @@ export default TravisRoute.extend({
   tabStates: service(),
   auth: service(),
   needsAuth: true,
+  tasks: service(),
 
   page: 1,
 
@@ -50,7 +51,7 @@ export default TravisRoute.extend({
   beforeModel() {
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
-      repo.fetchRepoOwnerAllowance.perform();
+      this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
   }
 });

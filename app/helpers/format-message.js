@@ -130,5 +130,5 @@ export default helper((params, options) => {
   const message = params[0] || '';
   const formattedMessage = formatMessage(message, options);
 
-  return new htmlSafe(formattedMessage);
+  return new htmlSafe(`<span>${formattedMessage}</span>`);
 });

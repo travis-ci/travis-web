@@ -25,7 +25,8 @@ export default Component.extend({
   }).restartable(),
 
   computeName(name, query) {
-    return isPresent(query) ? htmlSafe(fuzzyMatch(name, query)) : name;
+    const fuzzyMatchConst = fuzzyMatch(name, query)
+    return isPresent(query) ? htmlSafe(`<span>${fuzzyMatchConst}</span>`) : name;
   },
 
   didReceiveAttrs() {

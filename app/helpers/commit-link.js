@@ -24,6 +24,6 @@ export default Helper.extend({
     const commitUrl = this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
     const url = escape(commitUrl);
     const string = `<a class="github-link only-on-hover" href="${url}">${commit}</a>`;
-    return new htmlSafe(string);
+    return new htmlSafe(`<span>${string}</span>`);
   }
 });

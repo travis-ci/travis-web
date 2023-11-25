@@ -104,7 +104,7 @@ export default Component.extend({
 
   usersUsage: computed('account.allowance.userUsage', 'addonUsage', 'hasPlanUsagePermissions', function () {
     // const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
-    const userUsage = this.model.allowance.get('userUsage');
+    const userUsage = this.model.allowance?.get('userUsage');
     if (userUsage === undefined) {
       return true;
     }
@@ -129,14 +129,14 @@ export default Component.extend({
       return;
     }
 
-    if (allowance.get('paymentChangesBlockCredit') || allowance.get('paymentChangesBlockCaptcha')) {
+    if (allowance?.get('paymentChangesBlockCredit') || allowance?.get('paymentChangesBlockCaptcha')) {
       let time;
-      if (allowance.get('paymentChangesBlockCaptcha')) time = allowance.get('captchaBlockDuration');
-      if (allowance.get('paymentChangesBlockCredit')) time = allowance.get('creditCardBlockDuration');
+      if (allowance?.get('paymentChangesBlockCaptcha')) time = allowance?.get('captchaBlockDuration');
+      if (allowance?.get('paymentChangesBlockCredit')) time = allowance?.get('creditCardBlockDuration');
       this.flashes.custom('flashes/payment-details-edit-lock', { owner: this.model, isUser: this.model.isUser, time: time}, 'warning');
     }
 
-    if (allowance.get('subscriptionType') !== 2) {
+    if (allowance?.get('subscriptionType') !== 2) {
       return;
     }
 

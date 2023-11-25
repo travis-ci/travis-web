@@ -33,7 +33,6 @@ module.exports = function (app) {
         storage = 'sessionStorage';
       }
 
-      console.log("AM I here?");
       var user = JSON.stringify(req.body['user']);
       var become = req.body['become'];
       var rssToken = req.body['rssToken'];

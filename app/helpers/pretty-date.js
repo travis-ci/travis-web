@@ -6,7 +6,9 @@ import moment from 'moment';
 
 export function prettyDate(params) {
   let date = new Date(params[0]);
-  return new htmlSafe(moment(date).format('MMMM D, YYYY H:mm:ss') || '-');
+  const theMoment = moment(date).format('MMMM D, YYYY H:mm:ss') || '-';
+
+  return new htmlSafe(`<span>${theMoment}</span>`);
 }
 
 export default helper(prettyDate);
