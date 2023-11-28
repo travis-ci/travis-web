@@ -56,6 +56,10 @@ const ObservableArrayBase = EmberObject.extend({
     return this._content.filterBy(...params)
   },
 
+  slice(...params) {
+    return this._content.slice(...params);
+  },
+
   get(_target, prop, _receiver) {
     if(prop in this._content) {
       return this._content[prop]

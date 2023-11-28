@@ -21,9 +21,9 @@
 <div class="token-actions">
   <CopyButton
     class="copy-button"
-    @clipboardText={{this.token}}
-    @title="Copy to clipboard"
-    @success={{action "copyTokenSuccessful"}}
+    @text={{this.token}}
+    title="Copy to clipboard"
+    @onSuccess={{action "copyTokenSuccessful"}}
   >
     <SvgImage @name="icon-copy" @class="icon" />
     <span>Copy token</span>

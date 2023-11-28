@@ -23,6 +23,7 @@ import {
 } from 'travis/utils/vcs';
 import { A } from '@ember/array';
 import { debug } from '@ember/debug';
+import {resolve} from "rsvp";
 
 const { authEndpoint, apiEndpoint } = config;
 
@@ -100,11 +101,16 @@ export default Service.extend({
       return;
     const { accounts } = this.storage;
     const { vcsId } = this.currentUser;
-    const stillLoggedIn = accounts.isAny('vcsId', vcsId);
 
-    if (!stillLoggedIn) {
-      this.router.transitionTo('signin');
-    }
+    // I have doubts
+    return resolve(accounts).then((acc) => {
+      const stillLoggedIn = acc.isAny('vcsId', vcsId);
+      if (!stillLoggedIn) {
+        this.router.transitionTo('signin');
+      }
+    });
+
+
   },
 
   switchAccount(id, redirectUrl) {

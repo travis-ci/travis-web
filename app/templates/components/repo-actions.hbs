@@ -26,10 +26,10 @@
     <div class="action-button-container">
       {{#if this.insufficientPermissions}}
         <EmberTooltip
-          class={{if this.mobilelabels "hidden-on-mobile"}} 
+          class={{if this.mobilelabels "hidden-on-mobile"}}
           @text="This action can be triggered only by users with push access to the repository" />
       {{/if}}
-      <button 
+      <button
         type="button"
         class="action-button--prioritize"
         data-test-repo-actions-prioritize-button
@@ -92,7 +92,7 @@
           <button
             data-test-repo-actions-debug-button
             class="action-button--debug"
-            aria-label="Restart as debug {{type}}"
+            aria-label="Restart as debug {{this.type}}"
             type="button"
             {{action (perform this.debug)}}
           >

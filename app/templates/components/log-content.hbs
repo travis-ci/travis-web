@@ -41,7 +41,7 @@
       </div>
       <div class="stage-loading stage-3-container {{if this.job.isQueued 'not-loaded-ring'}} {{if this.job.isCreated 'not-loaded-ring'}} {{if this.job.isReceived 'spinner-container'}} {{if this.job.started 'stage-loaded-ring'}}">
         <svg
-          class="{{if job.isReceived "spinner"}}"
+          class="{{if this.job.isReceived "spinner"}}"
           x="0px"
           y="0px"
           viewBox="0 0 150 150"
