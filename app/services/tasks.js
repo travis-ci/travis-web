@@ -33,10 +33,7 @@ export default Service.extend({
   }).drop(),
 
   fetchRepoOwnerAllowance: task(function* (repo) {
-    console.log(repo);
-    console.log("%%%repo$$$$")
     const allowance = this.store.peekRecord('allowance', repo.id);
-    console.log(allowance);
     if (allowance)
       return allowance;
     return yield this.store.smartQueryRecord('allowance', { login: repo.owner.login, provider: repo.provider || 'github' });
@@ -49,6 +46,5 @@ export default Service.extend({
       const response = yield request.api.get(`/repo/${repoId}/request/${requestId}/messages`) || {};
       return response.messages;
     }
-  }).drop(),
-
+  }).drop()
 });

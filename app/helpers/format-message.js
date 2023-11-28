@@ -68,6 +68,7 @@ function formatMessage(message, options) {
   message = handleEventType(message, options.eventType);
   message = emojiConvertor.replace_colons(message);
 
+  console.log(message);
   return message;
 }
 
@@ -130,5 +131,5 @@ export default helper((params, options) => {
   const message = params[0] || '';
   const formattedMessage = formatMessage(message, options);
 
-  return new htmlSafe(`<span>${formattedMessage}</span>`);
+  return new htmlSafe(`${formattedMessage}`);
 });

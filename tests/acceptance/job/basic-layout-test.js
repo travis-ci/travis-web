@@ -316,7 +316,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
     let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
     let build = this.server.create('build', { repository: repo, state: 'passed', commit, branch });
-    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, repositorySlug: 'travis-ci/travis-web', state: 'passed', commit, build });
     commit.job = job;
 
     await job.save();

@@ -1,5 +1,5 @@
 import { task } from 'ember-concurrency';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { visit, click } from '@ember/test-helpers';
 import signInUser from 'travis/tests/helpers/sign-in-user';

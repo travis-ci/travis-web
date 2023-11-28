@@ -58,15 +58,6 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   beforeModel() {
     const repo = this.modelFor('repo');
-    console.log('Before Model');
-    console.log(repo)
-  //  console.log(this.tasks);
-    //here
-   // for (const [key, value] of Object.entries(this.tasks)) {
-   //   console.log(`${key}: ${value}`);
-   // }
-    // console.log(this.tasks.fetchRepoOwnerAllowance);
-    console.log('/Before Node')
     if (repo && !repo.repoOwnerAllowance) {
       this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }

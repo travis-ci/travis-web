@@ -138,10 +138,8 @@ export function initialize() {
   }
 
 
-  if (!Array.prototype.sort) {
-    Array.prototype.sort = function(...params) {
-      return A(this).sort(...params)
-    }
+  Array.prototype.sort = function(...params) {
+    return A(this).sort(...params)
   }
 
   if (!Array.prototype.rejectBy) {

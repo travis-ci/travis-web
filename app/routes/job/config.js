@@ -8,8 +8,10 @@ export default TravisRoute.extend({
 
   model() {
     let build = this.modelFor('job').build
-    let requestId = build.get('build.request.id') || build.belongsTo('request').id();
-    return this.store.findRecord('request', requestId);
+    return build.then((build_) => {
+      let requestId = build_.get('build.request.id') || build_.belongsTo('request').id();
+      return this.store.findRecord('request', requestId);
+    });
   },
 
   afterModel(request) {

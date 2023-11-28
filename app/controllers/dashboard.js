@@ -40,11 +40,7 @@ export default Controller.extend({
     'model.starredRepos.@each.currentBuildFinishedAt',
     function () {
       let repositories = this.get('model.starredRepos');
-
-      for (const [key, value] of Object.entries(repositories)) {
-        console.log(`${key}: ${value}`);
-      }
-      return (repositories || []).sort(dashboardRepositoriesSort);
+      return (repositories.content || []).sort(dashboardRepositoriesSort);
     }
   )
 });

@@ -5,9 +5,7 @@ import { and, notEmpty } from '@ember/object/computed';
 import { htmlSafe } from '@ember/template';
 import { typeOf } from '@ember/utils';
 import { codeblockName } from 'travis/utils/format-config';
-import { Handlebars } from 'ember';
-
-const { Utils: { escapeExpression: escape } } = Handlebars;
+import { escape } from 'travis/helpers/format-message';
 
 export default Component.extend({
   tagName: '',

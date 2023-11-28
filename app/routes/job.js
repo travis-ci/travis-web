@@ -53,7 +53,7 @@ export default TravisRoute.extend({
     this.ensureJobOwnership(job, slug);
     return job
       .get('build.request')
-      .then(request => request && this.tasks.fetchMessages.perform(perform));
+      .then(request => request && this.tasks.fetchMessages.perform(request));
   },
 
  beforeModel() {
