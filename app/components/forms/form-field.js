@@ -55,6 +55,9 @@ export default Component.extend({
 
   errorMessage: '',
   isFocused: false,
+  isDefault: equal('state', FIELD_STATE.DEFAULT),
+  isValid: equal('state', FIELD_STATE.VALID),
+  isError: equal('state', FIELD_STATE.ERROR),
 
   requiresValidation: or('required', 'validator'),
 
@@ -104,22 +107,9 @@ export default Component.extend({
     this.set('state', FIELD_STATE.VALID);
   },
 
-  isValid() {
-    return this.state === FIELD_STATE.VALID;
-  },
-
   setError(errorMessage) {
     const state = FIELD_STATE.ERROR;
     this.setProperties({ state, errorMessage });
-  },
-
-  isError() {
-    return this.state === FIELD_STATE.ERROR;
-  },
-
-
-  isDefault() {
-    return this.state === FIELD_STATE.DEFAULT;
   },
 
   clearError() {
