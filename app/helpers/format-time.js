@@ -6,5 +6,5 @@ export default helper((params) => {
   const [time] = params;
   const timeText = timeAgoInWords(time) || '-';
 
-  return new htmlSafe(`<span>${timeText}</span>`);
+  return new htmlSafe(`${timeText}`);
 });

@@ -23,7 +23,12 @@ export default Component.extend({
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
   authenticationNotRequired: not('subscription.clientSecret'),
-  isPending: and('subscription.isPending', 'authenticationNotRequired'),
+  isPendingOverride: null,
+  isPending: computed('subscription.isPending', 'authenticationNotRequired', 'isPendingOverride', function() {
+    if (this.isPendingOverride !== null)
+      return this.isPendingOverride
+    return this.authenticationNotRequired && this.subscription.isPending;
+  }),
   isNotCanceled: not('isCanceled'),
   isNotPending: not('isPending'),
   hasNotExpired: not('isExpired'),

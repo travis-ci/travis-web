@@ -31,7 +31,7 @@ export default Component.extend({
         const branchURL = this.externalLinks.travisWebBranch(branchName);
         const branchLink = `<a href='${branchURL}'><code>${branchName}</code></a>`;
 
-        return htmlSafe(`<span>Test deployment ${branchLink}</span>`);
+        return htmlSafe(`Test deployment ${branchLink}`);
       } else {
         return false;
       }

@@ -3,7 +3,6 @@ import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import BranchSearching from 'travis/mixins/branch-searching';
-import { A } from '@ember/array'
 
 export default Component.extend(BranchSearching, {
   classNames: ['form--envvar'],

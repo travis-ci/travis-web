@@ -61,23 +61,24 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
   });
 
   test('options display', async function (assert) {
+    const options = [{
+      key: 'private',
+      displayValue: 'you',
+      description: 'Do not allow anyone else to see insights from your private builds',
+    }, {
+      key: 'public',
+      displayValue: 'everyone',
+      description: 'Allow everyone to see insights from your private builds',
+      modalText: 'Allow everyone to see my private build insights',
+    }];
     this.owner.register('component:visibility-setting-list', VisibilitySettingList.extend({
-      options: [{
-        key: 'private',
-        displayValue: 'you',
-        description: 'Do not allow anyone else to see insights from your private builds',
-      }, {
-        key: 'public',
-        displayValue: 'everyone',
-        description: 'Allow everyone to see insights from your private builds',
-        modalText: 'Allow everyone to see my private build insights',
-      }]
+      options: options
     }));
-    const selectedOption = this.options.find((item) => item.key === this.initialKey);
+    const selectedOption = options.find((item) => item.key === this.initialKey);
 
     await render(hbs`{{visibility-setting-list initialKey=this.initialKey}}`);
 
-    assert.dom(INSIGHTS_SETTINGS_LIST_ITEM).exists({ count: this.options.length });
+    assert.dom(INSIGHTS_SETTINGS_LIST_ITEM).exists({ count: options.length });
     assert.dom(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED).exists({ count: 1 });
     assert.dom(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED).hasText(selectedOption.description);
   });

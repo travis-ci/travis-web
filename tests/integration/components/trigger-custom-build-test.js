@@ -14,7 +14,7 @@ module('Integration | Component | trigger custom build', function (hooks) {
       default: true,
       exists_on_github: true
     });
-    const repo = this.server.create('repo', {
+    const repo = this.server.create('repository', {
       id: 22,
       defaultBranch: branch
     });

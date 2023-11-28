@@ -7,5 +7,5 @@ export default helper((params) => {
   if (sha && sha.includes('@')) sha = sha.split('@')[1];
   const formattedSha = formatSha(sha);
 
-  return new htmlSafe(`<span>${formattedSha}</span>`);
+  return new htmlSafe(`${formattedSha}`);
 });

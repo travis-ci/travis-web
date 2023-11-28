@@ -76,6 +76,7 @@ export default Component.extend({
   }),
 
   validate(value, isFormValidation = false) {
+
     if (!this.validateOnField && !isFormValidation) return true;
     let validator = this.validator;
 

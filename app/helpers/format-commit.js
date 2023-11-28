@@ -7,6 +7,6 @@ export default helper((params) => {
   if (commit) {
 
   const theHtml = formatCommit(commit.get('sha'), commit.get('branch'));
-    return new htmlSafe(`<span>${theHtml}</span>`);
+    return new htmlSafe(`${theHtml}`);
   }
 });

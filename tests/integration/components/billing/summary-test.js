@@ -127,7 +127,7 @@ module('Integration | Component | billing-summary', function (hooks) {
     await render(hbs`<Billing::Summary
       @subscription={{this.subscription}}
       @account={{this.account}}
-      @isPending={{this.isPending}}
+      @isPendingOverride={{this.isPending}}
     />`);
 
     assert.dom('h3').hasText('Plan information');

@@ -7,7 +7,7 @@
 </p>
 <PaperBlock class="profile-repolist-wrapper">
   <ul class="profile-repositorylist">
-    {{#each repositories as |repository|}}
+    {{#each this.repositories as |repository|}}
       <li class="profile-repolist-item">
         <RepositoryVisibilityIcon @repository={{repository}} />
         <span class="profile-repo">
