@@ -12,8 +12,8 @@ emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;
 emojiConvertor.include_title = true;
 emojiConvertor.allow_native = false;
 
-function escape(text) {
-  return text
+export function escape(text) {
+  return text.toString()
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
