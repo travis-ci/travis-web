@@ -7,6 +7,7 @@ RUN groupadd --gid 1000 node \
 
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 18.17.1
+ENV NODE_OPTIONS --no-experimental-fetch
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \

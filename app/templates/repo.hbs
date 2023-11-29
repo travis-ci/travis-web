@@ -14,8 +14,7 @@
 
   <div class="wrapper-main">
     <div id="main" class="main" role="main">
-        And maybe now?!!!
-      {{#if this.repo}}
+      {{#if this.repo.isLoaded}}
 
         <RepositoryLayout
           @repo={{this.repo}}

@@ -4,11 +4,10 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   features: service(),
   tabStates: service(),
-  tasks: service(),
 
   afterModel(repo) {
     try {
-      return repo.get('currentBuild.request').then(request => request && this.tasks.fetchMessages.perform(request));
+      return repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
     } catch (error) {}
   },
 
@@ -47,7 +46,7 @@ export default TravisRoute.extend({
   beforeModel() {
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
-      this.tasks.fetchRepoOwnerAllowance.perform(repo);
+      repo.fetchRepoOwnerAllowance.perform();
     }
   },
 
