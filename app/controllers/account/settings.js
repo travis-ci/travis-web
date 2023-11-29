@@ -33,6 +33,7 @@ export default Controller.extend({
   auth: service(),
   preferences: service(),
   flashes: service(),
+  store: service(),
 
   queryParams: ['section'],
   section: SECTION.NONE,

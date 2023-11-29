@@ -1,7 +1,11 @@
 import EmberObject from '@ember/object';
 import {A} from '@ember/array'
+import {reads} from "@ember/object/computed";
 
 const ObservableArrayBase = EmberObject.extend({
+
+  length: reads('_content.length'),
+
   init() {
     this._super(...arguments);
     this._content = A();
@@ -27,7 +31,18 @@ const ObservableArrayBase = EmberObject.extend({
 
   pushObject(item) {
     this.notifyObservers('willChange', this._content.length, 0, 1);
-    this._content.push(item);
+    this._content.pushObject(item);
+    this.notifyObservers('didChange', this._content.length - 1, 0, 1);
+    return this._content.length;
+  },
+
+  addObject(item) {
+    this.pushObject(item)
+  },
+
+  removeObject(item) {
+    this.notifyObservers('willChange', this._content.length, 0, 1);
+    this._content.removeObject(item)
     this.notifyObservers('didChange', this._content.length - 1, 0, 1);
     return this._content.length;
   },
@@ -38,6 +53,10 @@ const ObservableArrayBase = EmberObject.extend({
 
   find(...params) {
     return this._content.find(...params)
+  },
+
+  findBy(...params) {
+    return this._content.findBy(...params)
   },
 
   map(...params) {
@@ -56,8 +75,16 @@ const ObservableArrayBase = EmberObject.extend({
     return this._content.filterBy(...params)
   },
 
+  filter(...params) {
+    return this._content.filterBy(...params)
+  },
+
   slice(...params) {
     return this._content.slice(...params);
+  },
+
+  isAny(...params) {
+    return this._content.isAny(...params);
   },
 
   get(_target, prop, _receiver) {
@@ -74,6 +101,10 @@ const ObservableArrayBase = EmberObject.extend({
 
     // You must return true to indicate that assignment succeeded
     return true;
+  },
+
+  content() {
+    return this._content.toArray();
   }
 })
 

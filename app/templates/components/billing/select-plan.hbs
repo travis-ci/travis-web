@@ -27,7 +27,7 @@
               <div
                 data-test-plan-box='true'
                 class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
-                onclick={{action (mut this.selectedPlan) plan}}
+                onclick={{action (mut this.selectedPlanOverride) plan}}
               >
                 <p class='billing-plans__box-v2--name billing-annual-plans' data-test-selected-plan-name="true">
                   {{plan.name}}

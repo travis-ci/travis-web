@@ -23,7 +23,6 @@ import {
 } from 'travis/utils/vcs';
 import { A } from '@ember/array';
 import { debug } from '@ember/debug';
-import {resolve} from "rsvp";
 
 const { authEndpoint, apiEndpoint } = config;
 
@@ -71,8 +70,8 @@ export default Service.extend({
 
   inactiveAccounts: computed('accounts.@each.id', 'storage.activeAccount.id', function () {
     const { accounts, activeAccount } = this.storage;
-    if (accounts && accounts.length > 0 && activeAccount) {
-      return accounts.filter(account => account.id !== activeAccount.id);
+    if (accounts.content() && accounts.content().length > 0 && activeAccount) {
+      return accounts.content().filter(account => account.id !== activeAccount.id);
     } else {
       return [];
     }
@@ -101,16 +100,11 @@ export default Service.extend({
       return;
     const { accounts } = this.storage;
     const { vcsId } = this.currentUser;
+    const stillLoggedIn = accounts.content().isAny('vcsId', vcsId);
 
-    // I have doubts
-    return resolve(accounts).then((acc) => {
-      const stillLoggedIn = acc.isAny('vcsId', vcsId);
-      if (!stillLoggedIn) {
-        this.router.transitionTo('signin');
-      }
-    });
-
-
+    if (!stillLoggedIn) {
+      this.router.transitionTo('signin');
+    }
   },
 
   switchAccount(id, redirectUrl) {
@@ -134,8 +128,7 @@ export default Service.extend({
     this.set('state', STATE.SIGNED_OUT);
 
     const { accounts, activeAccount } = this.storage;
-    if(accounts.removeObject) // not in case accounts is just a plain array
-      accounts.removeObject(activeAccount);
+    accounts.removeObject(activeAccount);
     this.storage.setProperties({ accounts, activeAccount: null });
 
     if (runTeardown) {

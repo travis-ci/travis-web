@@ -19,7 +19,11 @@ export default Component.extend({
 
   showCancelButton: false,
 
+  currentStepOverride: null,
+
   currentStep: computed(function () {
+    if (this.currentStepOverride !== null)
+      return this.currentStepOverride;
     return this.storage.billingStep || STEPS.ONE;
   }),
 
@@ -78,11 +82,11 @@ export default Component.extend({
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
         if ((this.billingInfoExists && this.currentStep === STEPS.ONE) || this.selectedPlan.startingPrice === 0) {
           const currentStep = STEPS.THREE;
-          this.set('currentStep', currentStep);
+          this.set('currentStepOverride', currentStep);
           this.set('billingInfo', this.existingBillingInfo);
         } else {
           const currentStep = this.steps[nextIndex];
-          this.set('currentStep', currentStep);
+          this.set('currentStepOverride', currentStep);
         }
         this.updateBillingQueryParams(this.currentStep);
         this.persistBillingData(this.currentStep);
@@ -93,13 +97,13 @@ export default Component.extend({
       const currentIndex = this.steps.indexOf(this.currentStep);
       const prevIndex = Math.max(0, currentIndex - 1);
       const currentStep = this.steps[prevIndex];
-      this.set('currentStep', currentStep);
+      this.set('currentStepOverride', currentStep);
       this.updateBillingQueryParams(currentStep);
       this.persistBillingData(currentStep);
     },
 
     cancel() {
-      this.set('currentStep', STEPS.ONE);
+      this.set('currentStepOverride', STEPS.ONE);
       this.updateBillingQueryParams(STEPS.ONE);
     },
 
