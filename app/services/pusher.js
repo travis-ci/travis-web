@@ -76,12 +76,11 @@ export default Service.extend({
 
     if (event === 'job:log') {
       data = data.job ? data.job : data;
-      job = store.findRecord('job', data.id);
-      return job.appendLog({
+      return store.findRecord('job', data.id).then((job) => job.appendLog({
         number: parseInt(data.number),
         content: data._log,
         final: data.final
-      });
+      }));
     } else if (data[name]) {
       if (data._no_full_payload) {
         // if payload is too big, travis-live will send us only the id of the
