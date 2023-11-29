@@ -2,7 +2,7 @@ import { currentURL, visit } from '@ember/test-helpers';
 import { module, skip } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | auth/GitHub Apps installation redirect', function (hooks) {

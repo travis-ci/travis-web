@@ -13,14 +13,14 @@ module('Acceptance | builds/invalid build', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    adapterException = Test.adapter.exception;
+    //adapterException = Test.adapter.exception;
     loggerError = Logger.error;
-    Test.adapter.exception = () => {};
+    //Test.adapter.exception = () => {};
     Logger.error = () => null;
   });
 
   hooks.afterEach(function () {
-    Test.adapter.exception = adapterException;
+    // Test.adapter.exception = adapterException;
     Logger.error = loggerError;
   });
 

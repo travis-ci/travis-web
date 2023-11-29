@@ -4,7 +4,7 @@ import {
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 import Service from '@ember/service';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { stubService } from 'travis/tests/helpers/stub-service';

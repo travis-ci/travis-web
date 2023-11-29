@@ -3,7 +3,7 @@ import { module, skip, test } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import triggerBuildPage from 'travis/tests/pages/trigger-build';
 import topPage from 'travis/tests/pages/top';
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
