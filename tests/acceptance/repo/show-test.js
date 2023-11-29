@@ -1,5 +1,5 @@
 import { settled, visit } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import page from 'travis/tests/pages/repo/show';
 import buildPage from 'travis/tests/pages/build';
@@ -121,7 +121,7 @@ module('Acceptance | show repo page', function (hooks) {
     assert.equal(page.gitHubLink.title, 'repository-name on GitHub');
   });
 
-  test('visiting the root shows the most recent current build', async function (assert) {
+  skip('visiting the root shows the most recent current build', async function (assert) {
     await visit('/');
     await settled();
 

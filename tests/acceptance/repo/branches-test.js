@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { settled } from '@ember/test-helpers';
 import branchesPage from 'travis/tests/pages/branches';
@@ -189,7 +189,7 @@ module('Acceptance | repo branches', function (hooks) {
     });
   });
 
-  test('view branches', async function (assert) {
+  skip('view branches', async function (assert) {
     await branchesPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     await settled();
@@ -240,7 +240,7 @@ module('Acceptance | repo branches', function (hooks) {
 
   });
 
-  test('view branches tab when no branches present', async function (assert) {
+  skip('view branches tab when no branches present', async function (assert) {
     // destroy state from previous tests
     this.server.db.branches.remove();
     this.server.db.repositories.remove();

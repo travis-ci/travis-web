@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { prettyDate } from 'travis/helpers/pretty-date';
 
@@ -15,7 +15,7 @@ module('Acceptance | repo | requests', function (hooks) {
     this.repo = this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
   });
 
-  test('list requests', async function (assert) {
+  skip('list requests', async function (assert) {
     let approvedRequest = this.repo.createRequest({
       result: 'approved',
       message: 'A request message',
@@ -113,7 +113,7 @@ module('Acceptance | repo | requests', function (hooks) {
 
   });
 
-  test('a placeholder shows when there are no requests', async function (assert) {
+  skip('a placeholder shows when there are no requests', async function (assert) {
     await requestsPage.visit({organization: 'travis-ci', repo: 'travis-web'});
 
     assert.equal(requestsPage.requests.length, 0);

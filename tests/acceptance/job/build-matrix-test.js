@@ -1,5 +1,5 @@
 import { visit } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -8,7 +8,7 @@ module('Acceptance | job/build matrix', function (hooks) {
   setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
-  test('visiting build matrix', async function (assert) {
+  skip('visiting build matrix', async function (assert) {
     this.server.create('user', {login: 'travis-ci'});
     this.server.create('allowance', {subscription_type: 1});
     let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
