@@ -5,7 +5,7 @@ import { A } from '@ember/array'
 
 export default Component.extend({
 
-  invoices: [],
+  invoices: A([]),
 
   invoiceYears: computed('invoices.@each.createdAt', function () {
     return this.invoices.mapBy('year').uniq().sort((a, b) => b - a);
