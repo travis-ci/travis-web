@@ -88,6 +88,8 @@ export default Service.extend({
   ),
 
   sortData(repos) {
+    if (repos && repos.toArray)
+      repos = repos.toArray();
     if (repos && repos.sort) {
       return repos.sort((repo1, repo2) => {
         let buildId1 = repo1.get('currentBuild.id');
