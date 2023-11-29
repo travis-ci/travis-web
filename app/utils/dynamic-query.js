@@ -52,11 +52,15 @@ export default function dynamicQuery(...args) {
   const initialState = Object.assign({}, args.pop(), { content: [] });
   let taskFn = args.pop();
 
-  if (!taskFn)
-    taskFn = function* ({ page = 1, filter = '' }){};
+  let defaultTaskFn = false;
+
+  if (!taskFn) {
+    taskFn = function* ({page = 1, filter = ''}) {};
+    defaultTaskFn = true;
+  }
 
   assert('Task must be provided', typeof taskFn === 'function');
-  assert('Task must be a GeneratorFunction', taskFn.constructor.name === 'GeneratorFunction');
+  assert('Task must be a GeneratorFunction', taskFn.constructor.name === 'GeneratorFunction' && !defaultTaskFn);
   assert('Limit must be provided if using Limit Pagination', !initialState.limitPagination || initialState.limit);
 
   args.push(function () {
