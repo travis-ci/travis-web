@@ -42,7 +42,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
       model = this.store.find('repo', model.id);
     }
 
-    return controller.set('repo', this.modelFor('repo'));
+    return controller.set('repo', model);
   },
 
   serialize(repo) {
@@ -63,7 +63,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
   beforeModel() {
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
-      repo.fetchRepoOwnerAllowance.perform();
+      this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
   },
 
