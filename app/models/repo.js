@@ -275,7 +275,7 @@ const Repo = VcsEntity.extend({
   }),
 
   cronJobs: computed('id', 'fetchCronJobs.lastSuccessful.value', function () {
-    const crons = this.fetchCronJobs.lastSuccessful.value;
+    const crons = this.fetchCronJobs.lastSuccessful && this.fetchCronJobs.lastSuccessful.value;
     if (!crons) {
       this.fetchCronJobs.perform();
     }
