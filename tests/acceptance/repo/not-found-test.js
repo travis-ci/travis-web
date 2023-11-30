@@ -17,18 +17,6 @@ module('Acceptance | repo/not found', function (hooks) {
   setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    //adapterException = EmberTest.adapter.exception;
-    loggerError = EmberLogger.error;
-    // EmberTest.adapter.exception = () => {};
-    EmberLogger.error = () => null;
-  });
-
-  hooks.afterEach(function () {
-    // EmberTest.adapter.exception = adapterException;
-    EmberLogger.error = loggerError;
-  });
-
   test('visiting /non-existent/repository shows error message when authenticated', async function (assert) {
     const user = this.server.create('user');
     signInUser(user);

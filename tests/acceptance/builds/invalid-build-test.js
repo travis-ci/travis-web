@@ -12,17 +12,6 @@ module('Acceptance | builds/invalid build', function (hooks) {
   setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    //adapterException = Test.adapter.exception;
-    loggerError = Logger.error;
-    //Test.adapter.exception = () => {};
-    Logger.error = () => null;
-  });
-
-  hooks.afterEach(function () {
-    // Test.adapter.exception = adapterException;
-    Logger.error = loggerError;
-  });
 
   test('viewing invalid build shows error', async function (assert) {
     // create incorrect repository as this is resolved first, errors otherwise
