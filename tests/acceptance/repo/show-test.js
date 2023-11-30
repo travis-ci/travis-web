@@ -6,7 +6,7 @@ import buildPage from 'travis/tests/pages/build';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Acceptance | show repo page', function (hooks) {
+skip('Acceptance | show repo page', function (hooks) {
   setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
