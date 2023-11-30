@@ -68,12 +68,13 @@ module('Integration | Component | billing-process', function (hooks) {
 
   test('deny subscription when user has no permission', async function (assert) {
 
-    this.set('currentStep', 'stepTwo');
+    this.set('currentStepOverride', 'stepTwo');
     this.set('account', { hasSubscriptionPermissions: false });
 
     await render(hbs`
     <Billing::Process
       @account={{this.account}}
+      @currentStepOverride={{this.currentStepOverride}}
     />`);
 
     assert.dom('p').hasText("You don't have permission to create a subscription");

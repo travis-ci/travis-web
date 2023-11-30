@@ -243,6 +243,6 @@ export default Component.extend({
 
     clearCreditCardData() {
       this.subscription.set('creditCardInfo', null);
-    }
+    },
   }
 });

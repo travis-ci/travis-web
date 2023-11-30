@@ -21,7 +21,7 @@ export default Component.extend({
 
   currentStepOverride: null,
 
-  currentStep: computed(function () {
+  currentStep: computed('currentStepOverride', 'storage.billingStep', function () {
     if (this.currentStepOverride !== null)
       return this.currentStepOverride;
     return this.storage.billingStep || STEPS.ONE;
@@ -69,7 +69,7 @@ export default Component.extend({
   actions: {
 
     goToFirstStep() {
-      this.set('currentStep', STEPS.ONE);
+      this.set('currentStepOverride', STEPS.ONE);
       this.persistBillingData(STEPS.ONE);
       this.updateBillingQueryParams(STEPS.ONE);
     },
