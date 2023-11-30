@@ -12,7 +12,6 @@ import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, and } from '@ember/object/computed';
-import { asObservableArray } from "travis/utils/observable_array";
 
 const SELECTORS = {
   CONTENT: '.log-body-content',
@@ -77,6 +76,7 @@ export default Component.extend({
   externalLinks: service(),
   router: service(),
   scroller: service(),
+  logToLogContent: service(),
 
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
@@ -86,6 +86,8 @@ export default Component.extend({
   isShowingRemoveLogModal: false,
 
   didInsertElement() {
+    this.logToLogContent.setLogContent(this);
+    this.logToLogContent.setLog(this.log);
     if (this.get('features.debugLogging')) {
       // eslint-disable-next-line
       console.log('log view: did insert');
@@ -106,11 +108,6 @@ export default Component.extend({
     let parts, ref;
     if (log || (log = this.log)) {
       parts = log.get('parts');
-      parts = asObservableArray(parts);
-      parts.removeArrayObserver(this, {
-        didChange: 'partsDidChange',
-        willChange: 'noop'
-      });
       parts.destroy();
       log.notifyPropertyChange('parts');
       if ((ref = this.lineSelector) != null) {
@@ -178,11 +175,6 @@ export default Component.extend({
     let parts;
     if (log || (log = this.log)) {
       parts = log.get('parts');
-      parts = asObservableArray(parts);
-      parts.addArrayObserver(this, {
-        didChange: 'partsDidChange',
-        willChange: 'noop'
-      });
       parts = parts.slice(0);
       this.partsDidChange(parts, 0, null, parts.length);
     }
