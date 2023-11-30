@@ -3,7 +3,6 @@ import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { assert } from '@ember/debug';
-import { A } from '@ember/array';
 
 const messageTypeToIcon = {
   notice: 'icon-flag',
@@ -46,7 +45,7 @@ export default Service.extend({
     let flashes = this.flashes;
     let model = [];
     if (flashes.length) {
-      model.pushObjects(flashes);
+      model.pushObjects(...flashes.toArray());
     }
     return model.uniq();
   }),
