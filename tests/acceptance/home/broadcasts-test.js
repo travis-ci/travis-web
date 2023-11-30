@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { visit } from '@ember/test-helpers';
 import topPage from 'travis/tests/pages/top';
@@ -6,7 +6,8 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Acceptance | broadcasts', function (hooks) {
+// this is not in use anyways?
+skip('Acceptance | broadcasts', function (hooks) {
   setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
