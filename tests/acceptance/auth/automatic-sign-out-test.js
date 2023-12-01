@@ -16,7 +16,7 @@ module('Acceptance | automatic sign out', function (hooks) {
     enableFeature('proVersion');
     signInUser(currentUser);
   });
-
+  // visually test passes but for some reason errors raised meantime won't allow to assert proceed
   skip('when token is invalid user should be signed out', async function (assert) {
     window.localStorage.setItem('travis.token', 'wrong-token');
 

@@ -17,7 +17,9 @@ export default TravisRoute.extend({
     this._super(...arguments);
     this.controllerFor('repo').activate('current');
     controller.set('repo', model);
-    if (model.slug) //basically it is loaded
+    // this below checks if model is present & loaded & it is loading.
+    console.log(this.router.currentRouteName);
+    if (model && model.slug && /loading/.test(this.router.currentRouteName))
       this.router.transitionTo('index');
   },
 
