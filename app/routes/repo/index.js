@@ -5,10 +5,11 @@ export default TravisRoute.extend({
   features: service(),
   tabStates: service(),
   tasks: service(),
+  router: service(),
 
   afterModel(repo) {
     try {
-      return repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
+      return repo.get('currentBuild.request').then(request => request && this.tasks.fetchMessages.perform(request));
     } catch (error) {}
   },
 
@@ -16,6 +17,8 @@ export default TravisRoute.extend({
     this._super(...arguments);
     this.controllerFor('repo').activate('current');
     controller.set('repo', model);
+    if (model.slug) //basically it is loaded
+      this.router.transitionTo('index');
   },
 
   deactivate() {

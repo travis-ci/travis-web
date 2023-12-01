@@ -44,8 +44,6 @@ export default class ExtendedStore extends Store {
 
   smartQueryRecord(type, ...params) {
     return this.queryRecord(type, ...params);
-    //const adapter = this.adapterFor(type);
-    //return adapter.queryRecord(this, type, ...params);
   }
 
   paginated(modelName, queryParams, options = {}) {
