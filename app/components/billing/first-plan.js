@@ -197,13 +197,13 @@ export default Component.extend({
   }).drop(),
 
 
-  skipSubscription: task(function* () {
+  skipSubscription() {
     this.storage.clearBillingData();
     this.storage.clearSelectedPlanId();
     this.storage.wizardStep = 2;
     this.wizard.update.perform(2);
     this.router.transitionTo('account.repositories');
-  }).drop(),
+  },
 
   newV2Subscription() {
     const plan = this.store.createRecord('v2-plan-config');
@@ -290,7 +290,7 @@ export default Component.extend({
       }
     },
     skipActivation() {
-      this.skipSubscription.perform();
+      this.skipSubscription();
     },
     changeCountry(country) {
       this.set('country', country);
