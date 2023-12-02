@@ -436,7 +436,7 @@ function routes () {
       return {
         owner: {
           // The API for now is returning these capitalised
-          type: `${owner.modelName.substr(0, 1).toUpperCase()}${owner.modelName.substr(1)}`,
+          type: `${owner.modelName.slice(0, 1).toUpperCase()}${owner.modelName.slice(1)}`,
           id: owner.id
         },
         create: (owner.permissions || {}).createSubscription

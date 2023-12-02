@@ -260,11 +260,11 @@ module('Acceptance | profile/basic layout', function (hooks) {
   });
 
   test('displays an error banner when subscription status cannot be determined', async function (assert) {
+    await profilePage.visit();
+
     this.server.get('/subscriptions', function (schema) {
       return new Response(500, {}, {});
     });
-
-    await profilePage.visit();
 
     assert.equal(profilePage.subscriptionStatus.text, 'There was an error determining your subscription status.');
   });

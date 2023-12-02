@@ -1,7 +1,7 @@
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
-import pushPayload from 'travis/serializers/plan'
+import { pushPayload } from 'travis/serializers/plan'
 
 export default TravisRoute.extend({
   auth: service(),
