@@ -3,7 +3,7 @@ import { Response } from 'miragejs';
 import config from 'travis/config/environment';
 import fuzzysort from 'fuzzysort';
 import { createServer } from 'miragejs';
-import { isArray } from '@ember/array';
+import { A } from '@ember/array';
 
 
 const { validAuthToken, apiEndpoint } = config;
@@ -1005,8 +1005,7 @@ function routes () {
 
     const repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
 
-    if (!repositories.models.sortBy)
-      return new Response(200, {}, {});
+    repositories.models = A(repositories.models);
 
     if (sort_by) {
       repositories.models = repositories.models.sortBy(sort_by);
@@ -1029,11 +1028,10 @@ function routes () {
         if (paramValue === 'true') {
           repositories.models = repositories.models.filterBy(property);
         } else {
-          repositories.models = repositories.models.rejectBy(property);
+          repositories.models = A(repositories.models).rejectBy(property);
         }
       }
     });
-
     return this.serialize(repositories);
   });
 
