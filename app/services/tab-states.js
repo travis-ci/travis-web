@@ -18,6 +18,9 @@ export default Service.extend({
   switchSidebar(state) {
     this.set('sidebarTab', state);
   },
+  setMainTab(tabName) {
+    this.set('mainTab', tabName);
+  },
   switchSidebarToOwned() {
     this.switchSidebar(SIDEBAR_TAB_STATES.OWNED);
   },
