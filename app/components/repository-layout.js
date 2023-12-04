@@ -9,6 +9,7 @@ export default Component.extend({
   externalLinks: service(),
   features: service(),
   flashes: service(),
+  router: service(),
   isProVersion: reads('features.proVersion'),
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
@@ -29,6 +30,10 @@ export default Component.extend({
       case 'perforce':
         return 'P4';
     }
+  }),
+
+  currentRouteName: computed('router.currentRouteName', function () {
+    return this.router.currentRouteName;
   }),
 
   repoUrl: computed('repo.{ownerName,vcsName,vcsType}', function () {
@@ -58,7 +63,9 @@ export default Component.extend({
     },
     toggleTriggerBuildModal() {
       this.toggleProperty('isShowingTriggerBuildModal');
-    }
+    },
+
+
   },
 
   didRender() {

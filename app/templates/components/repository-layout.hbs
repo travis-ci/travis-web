@@ -51,7 +51,7 @@
       />
     </div>
     <div class="travistab-body repo-body">
-      {{#if (has-block)}}
+      {{#if (and (has-block) (not (eq this.currentRouteName 'repo.index')))}}
         {{yield}}
       {{else}}
         <BuildLayout @build={{this.build}} @repo={{this.repo}} />
