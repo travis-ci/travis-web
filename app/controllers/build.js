@@ -13,6 +13,8 @@ export default Controller.extend(Polling, {
   updateTimesService: service('updateTimes'),
 
   repoController: controller('repo'),
+  queryParams: ['currentTab'],
+  currentTab: null,
 
   config,
 

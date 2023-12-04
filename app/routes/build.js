@@ -22,13 +22,12 @@ export default TravisRoute.extend({
       model = this.store.findRecord('build', model);
       this.store.find('build', model);
     }
+    const currentTab = controller.currentTab
+    this.tabStates.setMainTab(currentTab || 'build');
     const repo = this.controllerFor('repo');
     controller.set('build', model);
-    return repo.activate('build');
-  },
-
-  activate() {
-    this.set('tabStates.mainTab', 'build');
+    if (!currentTab)
+      return repo.activate('build');
   },
 
   model(params) {

@@ -34,7 +34,7 @@ export default TravisRoute.extend({
 
   afterModel(repo, _transition) {
     try {
-      return repo.get('currentBuild.request').then(request => request && this.tasks.fetchMessages.perform(request));
+      repo.get('currentBuild.request').then(request => request && this.tasks.fetchMessages.perform(request));
     } catch (error) {}
 
     if (this.get('features.github-apps') &&
@@ -46,8 +46,7 @@ export default TravisRoute.extend({
     } else if (!repo.currentBuildId) {
       this.transitionTo('repo.no-build');
     } else {
-      console.log("Else route");
-      this.transitionTo('build.index'); // { into: 'build', controller: 'build' }
+      this.transitionTo('build.index', repo.currentBuildId, { queryParams: { currentTab: 'current' } });
     }
   }
 });
