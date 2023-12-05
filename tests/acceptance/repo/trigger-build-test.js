@@ -114,7 +114,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   test('triggering a custom build via the dropdown', async function (assert) {
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
-    assert.equal(currentURL(), '/github/adal/difference-engine', 'we are on the repo page');
+    assert.equal(currentURL(), '/github/adal/difference-engine/builds/1?currentTab=current', 'we are on the repo page');
     assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden');
 
     await triggerBuildPage.openPopup();
@@ -127,6 +127,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
     await triggerBuildPage.clickSubmit();
 
     assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden again');
+
     assert.equal(currentURL(), '/github/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
   });
 

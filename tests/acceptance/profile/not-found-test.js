@@ -21,7 +21,7 @@ module('Acceptance | profile/not found', function (hooks) {
     await profilePage.visitOrganization({ name: 'random-org' });
 
 
-    assert.equal(document.title, 'Account - Profile - Travis CI');
+    assert.equal(document.title, 'Travis Tests');
     assert.equal(profilePage.notFoundOrgName, 'random-org');
   });
 });
