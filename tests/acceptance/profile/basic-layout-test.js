@@ -12,6 +12,7 @@ import config from 'travis/config/environment';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { stubService } from 'travis/tests/helpers/stub-service';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { Response } from 'miragejs';
 
 module('Acceptance | profile/basic layout', function (hooks) {
   setupApplicationTestCustom(hooks);
@@ -259,12 +260,13 @@ module('Acceptance | profile/basic layout', function (hooks) {
     assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
   });
 
+  // basically for some reason mocking /subscriptions in this scenario stopped working.
   test('displays an error banner when subscription status cannot be determined', async function (assert) {
-    await profilePage.visit();
-
     this.server.get('/subscriptions', function (schema) {
       return new Response(500, {}, {});
     });
+
+    await profilePage.visit();
 
     assert.equal(profilePage.subscriptionStatus.text, 'There was an error determining your subscription status.');
   });
