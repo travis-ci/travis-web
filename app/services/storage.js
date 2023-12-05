@@ -34,6 +34,9 @@ export default Service.extend({
     return this.parseWithDefault('travis.billing_info', {});
   },
   set billingInfo(value) {
+    if(!value)
+      return this.setItem('travis.billing_info', value);
+
     const data
         = (({
               address,

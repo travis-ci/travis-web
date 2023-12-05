@@ -61,6 +61,8 @@ export default Component.extend({
   },
 
   onQueryChange(query) {
+    if (query.target) // might be KeyboardEvent
+      query = query.target.value;
     if (query === '' || query === this.get('repositories.searchQuery')) { return; }
     this.set('repositories.searchQuery', query);
     this.get('repositories.showSearchResults').perform();
