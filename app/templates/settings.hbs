@@ -44,7 +44,7 @@
         </ExternalLinkTo>
       </li>
       <li>
-        <button class="button--blue" {{on 'click' (fn (mut this.showUserManagementModal) true)}} data-test-repo-settings-show-user-management-modal='true'>
+        <button class="button--blue" data-test-repo-settings-show-user-management-modal='true' type="button" {{on 'click' (fn (mut this.showUserManagementModal) true)}}>
           User management
         </button>
       </li>

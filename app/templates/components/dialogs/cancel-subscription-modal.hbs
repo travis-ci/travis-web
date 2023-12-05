@@ -1,6 +1,6 @@
 <Modal
   @isVisible={{@isOpen}}
-  @onClose={{fn @onClose}}
+  @onClose={{@onClose}}
   @closeButton={{true}}
 >
   <div data-test-cancel-subscription-modal="true" class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
@@ -39,10 +39,10 @@
           {{#if this.cancelSubscription.isRunning}}
             <LoadingIndicator />
           {{else}}
-            <button data-test-cancel-subscription="true" {{action (perform this.cancelSubscription)}} class="button--red confirm-cancellation-button">
+            <button data-test-cancel-subscription="true" class="button--red confirm-cancellation-button" type="button" {{action (perform this.cancelSubscription)}}>
               Confirm cancellation
             </button>
-            <a class="link" {{on 'click' (fn @onClose)}}>
+            <a class="link" {{on 'click' @onClose}}>
               I changed my mind
             </a>
           {{/if}}

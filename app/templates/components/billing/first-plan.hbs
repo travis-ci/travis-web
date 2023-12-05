@@ -144,7 +144,7 @@
                 Coupon invalid
               </p>
             {{else}}
-              <button class='button--white coupon-validation__validate-button' {{on 'click' form.submit}} data-test-coupon-button='true'>
+              <button class='button--white coupon-validation__validate-button' data-test-coupon-button='true' type="button" {{on 'click' form.submit}}>
                 Validate coupon
               </button>
             {{/if}}
@@ -159,7 +159,7 @@
         <p class="plan-desc">{{format-currency this.selectedPlan.startingPrice floor="true"}}{{ if this.selectedPlan.isAnnual '/annualy'
           '/monthly'}}</p>
 
-         <button class=" no-button plan-details" {{action 'togglePlanDetails' }}>
+         <button class=" no-button plan-details" type="button" {{action 'togglePlanDetails' }}>
           Plan details </button>
         {{#if this.planDetailsVisible}}
         <div class='selected-plan__details'>
@@ -211,7 +211,7 @@
         {{/if}}
       </div>
       <div class='form-elem full-width margin-right-s'>
-        <button class="no-button plan-change  float-right {{if this.planDetailsVisible 'plan-change-expanded'}}" {{action 'changePlan' }}>
+        <button class="no-button plan-change  float-right {{if this.planDetailsVisible 'plan-change-expanded'}}" type="button" {{action 'changePlan' }}>
           Change Plan </button>
       </div>
   </div>
@@ -219,7 +219,7 @@
     {{#if this.isTrial}}
       <b class="font-bold">We will charge you $1 and refund you in 7 days</b>. This is needed to make sure your card
 
-      is valid. By clicking on "Verify Your Account" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI
+      is valid. By clicking on "Verify Your Account" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank" rel="noopener noreferrer">Travis CI
         Terms and Privacy
         Policy</a>.
 
@@ -232,7 +232,7 @@
       this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel your subscription. Previous
 
       charges won't be refunded when you cancel unless it's legally required. By clicking
-      on "{{this.getActivateButtonText}}" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI Terms and Privacy
+      on "{{this.getActivateButtonText}}" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank" rel="noopener noreferrer">Travis CI Terms and Privacy
         Policy</a>.
     {{/if}}
     <br />
@@ -241,8 +241,7 @@
       {{#if this.isLoading}}
       <LoadingIndicator />
       {{else}}
-      <button class="{{if this.canActivate 'button--green' 'button disabled'}}" {{action 'subscribe' }}
-        data-test-complete-payment='true'>
+      <button class="{{if this.canActivate 'button--green' 'button disabled'}}" data-test-complete-payment='true' type="button" {{action 'subscribe' }}>
         {{this.getActivateButtonText}}
       </button>
       {{/if}}

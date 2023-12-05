@@ -126,7 +126,7 @@
                   data-test-migrate-button
                   disabled={{not this.selectedRepositories.length}}
                   class="button--blue {{unless this.selectedRepositories.length 'disabled'}}"
-                  onclick={{action (mut this.isShowingRepositoryMigrationModal) true}}
+                  onclick={{action (mut this.isShowingRepositoryMigrationModal) true}} type="button"
                 >
                   Migrate selected repositories to travis-ci.com
                 </button>
@@ -138,8 +138,7 @@
                 </p>
                 <div>
                   <button
-                    class="button--blue"
-                    {{on 'click' (fn (mut this.isShowingMigrateBetaDialog) true)}}
+                    class="button--blue" type="button" {{on 'click' (fn (mut this.isShowingMigrateBetaDialog) true)}}
                   >
                     Sign up for the beta
                   </button>

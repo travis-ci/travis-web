@@ -19,7 +19,7 @@
     <div class="form-elem">
       <Textarea
         @value={{this.value}}
-        @rows="10"
+        rows="10"
         class="ssh-value custom-key-value"
         placeholder="SSH Key"
       />
@@ -36,7 +36,7 @@
         <div class="form-actions">
           <input type="submit" value="Add new SSH key" class="form-submit" />
         </div>
-        <a {{on 'click' (fn @onClose)}} class='link custom-keys-cancel'>
+        <a {{on 'click' @onClose}} class='link custom-keys-cancel'>
           Cancel
         </a>
       {{/if}}

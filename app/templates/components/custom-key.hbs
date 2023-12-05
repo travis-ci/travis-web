@@ -70,18 +70,14 @@
   </div>
   <div class="custom-key-modal__controls">
     <button
-      data-test-custom-key-modal-cancel-button
-      role="button"
-      class="button button--red"
-      onclick={{action "toggleConfirmationModal"}}
+      data-test-custom-key-modal-cancel-button class="button button--red"
+      onclick={{action "toggleConfirmationModal"}} type="button"
     >
       Cancel
     </button>
     <button
-      data-test-custom-key-modal-confirm-button
-      role="button"
-      class="button button--blue"
-      onclick={{action "confirm"}}
+      data-test-custom-key-modal-confirm-button class="button button--blue"
+      onclick={{action "confirm"}} type="button"
     >
       Confirm
     </button>

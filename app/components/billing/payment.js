@@ -110,7 +110,7 @@ export default Component.extend({
             v1SubscriptionId: this.v1SubscriptionId,
           });
           const { clientSecret } = yield subscription.save();
-          yield this.stripe.handleStripePayment.perform(clientSecret);
+          yield this.stripe.handleStripePayment.linked().perform(clientSecret);  // if parent task dies this task dies too
         } else {
           this.metrics.trackEvent({
             action: 'Change Plan Pay Button Clicked',

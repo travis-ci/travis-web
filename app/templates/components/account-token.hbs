@@ -28,7 +28,7 @@
     <SvgImage @name="icon-copy" @class="icon" />
     <span>Copy token</span>
   </CopyButton>
-  <button class="show-token" onclick={{action "tokenVisibility"}}>
+  <button class="show-token" onclick={{action "tokenVisibility"}} type="button">
     <SvgImage @name="icon-seemore" @class="icon" />
     <span>
       {{if this.tokenIsVisible "Hide token" "View token"}}

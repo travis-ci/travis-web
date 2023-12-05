@@ -4,7 +4,7 @@
       <LinkTo
         @route="build.index"
         @models={{array this.build.repo this.build}}
-        @title="Look at this build’s jobs"
+        title="Look at this build’s jobs"
         class={{if this.isLog 'active'}}
         data-test-build-matrix-tab="true"
       >
@@ -16,7 +16,7 @@
         @route="build.config"
         @models={{array this.build.repo this.build}}
         data-test-build-yaml-tab
-        @title="Look at this build's config"
+        title="Look at this build's config"
         @disabled={{this.build.request.noYaml}}
       >
         {{#if this.build.request.noYaml}}

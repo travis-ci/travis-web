@@ -22,9 +22,9 @@ module('Integration | Component | external link to', function (hooks) {
     assert.dom('a').hasAttribute('rel', 'noopener noreferrer', 'Mitigates the security vulnerability discussed in https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/');
 
     await render(hbs`
-      {{#external-link-to href=this.href}}
+      <ExternalLinkTo @href={{this.href}}>
         <span class="foobar">FOOBAR</span>
-      {{/external-link-to}}
+      </ExternalLinkTo>
     `);
 
     assert.dom('a').hasAttribute('href', href, 'Sets href correctly');

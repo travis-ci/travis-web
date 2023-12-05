@@ -12,7 +12,5 @@
 
     {{if this.invert 'border-px border-solid'}}
     border-{{this.borderColor}}
-  "
-  {{on 'click' (action 'handleClick')}}
-  ...attributes
+  " ...attributes type="button" {{on 'click' (action 'handleClick')}}
 >{{yield}}</button>

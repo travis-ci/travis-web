@@ -9,7 +9,7 @@
       <nav class="travistab-nav">
         <ul>
           <li>
-            <a class={{if (not this.showAnnual) 'active'}} onclick={{action 'showMonthlyPlans'}}>
+            <a class={{unless this.showAnnual 'active'}} onclick={{action 'showMonthlyPlans'}}>
               Monthly Plans
             </a>
           </li>
@@ -63,7 +63,7 @@
                 {{#if (and (eq plan.id this.subscription.plan.id) this.allowReactivation)}}
                   <button data-test-subscribe-button
                     onclick={{action 'reactivatePlan' plan form}}
-                    class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
+                    class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}' type="button"
                   >
                     Reactivate plan
                   </button>
@@ -74,7 +74,7 @@
                 {{else}}
                   <button data-test-subscribe-button
                     onclick={{action 'selectAndSubmit' plan form}}
-                    class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
+                    class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}' type="button"
                   >
                     Select plan
                   </button>

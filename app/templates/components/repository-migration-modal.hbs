@@ -25,21 +25,21 @@
   <a
     data-test-repository-migration-modal-org-build-history-link
     target="_blank"
-    href="https://travis-ci.org"
+    href="https://travis-ci.org" rel="noopener noreferrer"
   >travis-ci.org</a>.
 </p>
 <div class="modal-controls">
   <button
     data-test-repository-migration-modal-cancel-migration-button
     class="migration-modal-cancel button"
-    onclick={{action this.onClose}}
+    onclick={{action this.onClose}} type="button"
   >
     Cancel
   </button>
   <button
     data-test-repository-migration-modal-confirm-migration-button
     class="button button--blue"
-    onclick={{action "startMigration"}}
+    onclick={{action "startMigration"}} type="button"
   >
     Migrate
   </button>

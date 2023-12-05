@@ -16,9 +16,9 @@ module('Integration | Component | forms/form-slider', function (hooks) {
 
     // Template block usage:
     await render(hbs`
-      {{#forms/form-slider}}
+      <Forms::FormSlider>
         template block text
-      {{/forms/form-slider}}
+      </Forms::FormSlider>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

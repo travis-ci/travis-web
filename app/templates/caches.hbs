@@ -9,7 +9,7 @@
     <button
       class="{{if this.deleteRepoCache.isRunning 'deleting'}} delete-cache-button no-button"
       title="Delete all repository caches"
-      onclick={{action (perform this.deleteRepoCache)}}
+      onclick={{action (perform this.deleteRepoCache)}} type="button"
     >
       Delete all repository caches
       <SvgImage @name="icon-trash" @class="icon" />

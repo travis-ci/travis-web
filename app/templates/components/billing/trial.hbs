@@ -1,18 +1,4 @@
-{{#if (not this.trial)}}
-  {{#if (not this.hasNoSubscriptionPermissions)}}
-    <Billing::Process
-      @account={{this.account}}
-      @subscription={{this.newSubscription}}
-      @selectedPlan={{this.selectedPlan}}
-      @showPlansSelector={{true}}
-      @isProcessCompleted={{this.isProcessCompleted}}
-    />
-  {{else}}
-    <p data-test-no-permission-message>
-      You don't have permission to create a subscription
-    </p>
-  {{/if}}  
-{{else}}
+{{#if this.trial}}
 <div class="billing-trial">
   <span class="notice-banner--white flex flex--v-center" data-test-help-text='true'>
     <div>
@@ -94,4 +80,18 @@
   @showPlansSelector={{true}}
   @isProcessCompleted={{this.isProcessCompleted}}
 />
+{{else}}
+  {{#if this.hasNoSubscriptionPermissions}}
+    <p data-test-no-permission-message>
+      You don't have permission to create a subscription
+    </p>
+  {{else}}
+    <Billing::Process
+      @account={{this.account}}
+      @subscription={{this.newSubscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @showPlansSelector={{true}}
+      @isProcessCompleted={{this.isProcessCompleted}}
+    />
+  {{/if}}  
 {{/if}}

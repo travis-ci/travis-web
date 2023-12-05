@@ -32,19 +32,12 @@
         SSH Key for build jobs
       </h3>
       <button
-        data-test-custom-key-modal-add-button
-        role="button"
-        class="button button--blue custom-keys-add-button"
-        {{action "toggleAddKeyModal"}}
+        data-test-custom-key-modal-add-button class="button button--blue custom-keys-add-button" type="button" {{action "toggleAddKeyModal"}}
       >
         Add new SSH Key
       </button>
     </div>
-    {{#unless this.showOrganizationSettings}}
-      <p>
-        You don't have sufficient permissons to add or remove ssh keys for build jobs.
-      </p>
-    {{else}}
+    {{#if this.showOrganizationSettings}}
       {{#each this.customKeys as |key|}}
         <CustomKey @key={{key}} @customKeyDeleted={{action "customKeyDeleted"}} />
       {{/each}}
@@ -55,6 +48,10 @@
       >
         <AddCustomKey @owner={{this.organization}} @ownerType='Organization' @customKeyAdded={{action "customKeyAdded"}} @onClose={{action "toggleAddKeyModal"}} />
       </Modal>
-    {{/unless}}
+    {{else}}
+      <p>
+        You don't have sufficient permissons to add or remove ssh keys for build jobs.
+      </p>
+    {{/if}}
   </section>
 </section>

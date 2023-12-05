@@ -1,11 +1,11 @@
 <div class='billing-subscription-section plan-overview'>
-  {{#if (not this.account.hasSubscriptionPermissions)}}
+  {{#unless this.account.hasSubscriptionPermissions}}
     <span class="notice-banner--yellow" data-test-help='true'>
       <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
       You don't have admin permissions to edit this subscription.
     </span>
-  {{/if}}
-  {{#if (not this.showPlansSelector)}}
+  {{/unless}}
+  {{#unless this.showPlansSelector}}
     <div class="flex flex--space-between flex--wrap plan-overview__details">
       <section>
         <h3 class='plan-overview__header'> Plan information </h3>
@@ -57,7 +57,7 @@
         <Billing::Price @subscription={{this.subscription}} @trial={{this.trial}}/>
       </section>
     </div>
-  {{/if}}
+  {{/unless}}
   {{#if this.subscription.isGithub}}
     <ManageSubscriptionButton
       @subscription={{this.subscription}}

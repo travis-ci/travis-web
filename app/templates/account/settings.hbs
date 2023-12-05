@@ -7,7 +7,7 @@
       <h3>
         Confirm account
       </h3>
-      <button class={{this.confirmationButtonClass}} {{action 'sendConfirmationEmail'}} >SEND CONFIRMATION TOKEN AGAIN</button>
+      <button class={{this.confirmationButtonClass}} type="button" {{action 'sendConfirmationEmail'}} >SEND CONFIRMATION TOKEN AGAIN</button>
       {{#if this.userHasNoEmails}}
       <div>
         We don’t have your email address.
@@ -125,10 +125,7 @@
         SSH Key for build jobs
       </h3>
       <button
-        data-test-custom-key-modal-add-button
-        role="button"
-        class="button button--blue custom-keys-add-button"
-        {{action "toggleAddKeyModal"}}
+        data-test-custom-key-modal-add-button class="button button--blue custom-keys-add-button" type="button" {{action "toggleAddKeyModal"}}
       >
         Add new SSH Key
       </button>

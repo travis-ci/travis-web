@@ -18,7 +18,7 @@
         <button
           class="button--white button--hover"
           onclick={{perform this.fetchRepo}}
-          data-test-email-unsubscribe-primary-button
+          data-test-email-unsubscribe-primary-button type="button"
         >
           Try again
         </button>
@@ -57,7 +57,7 @@
           class="{{if this.isSubscribed 'button--orange' 'button--white'}} button--hover control control--primary"
           disabled={{this.task.isRunning}}
           onclick={{action "processTask"}}
-          data-test-email-unsubscribe-primary-button
+          data-test-email-unsubscribe-primary-button type="button"
         >
           {{#if this.isUnsubscribing}}
             Unsubscribing...

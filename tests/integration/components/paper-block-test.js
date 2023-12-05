@@ -12,9 +12,9 @@ module('Integration | Component | paper-block', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`
-      {{#paper-block}}
+      <PaperBlock>
         template block text
-      {{/paper-block}}
+      </PaperBlock>
     `);
 
     assert.dom(this.element).hasText('template block text');
@@ -22,9 +22,9 @@ module('Integration | Component | paper-block', function (hooks) {
 
   test('it shows title', async function (assert) {
     await render(hbs`
-      {{#paper-block title="Title text"}}
+      <PaperBlock @title="Title text">
         template block text
-      {{/paper-block}}
+      </PaperBlock>
     `);
     assert.dom(PAPER_BLOCK_TITLE).exists();
     assert.dom(PAPER_BLOCK_TITLE).hasText('Title text');
@@ -32,7 +32,7 @@ module('Integration | Component | paper-block', function (hooks) {
 
   test('it handles elevation properly', async function (assert) {
     this.set('elevation', 1);
-    await render(hbs`{{#paper-block elevation=this.elevation}}{{/paper-block}}`);
+    await render(hbs`<PaperBlock @elevation={{this.elevation}}></PaperBlock>`);
 
     for (let i = 0; i <= MAX_ELEVATION + 1; i++) {
       this.set('elevation', i);
@@ -41,7 +41,7 @@ module('Integration | Component | paper-block', function (hooks) {
   });
 
   test('it handles padding properly', async function (assert) {
-    await render(hbs`{{#paper-block padding=this.padding}}{{/paper-block}}`);
+    await render(hbs`<PaperBlock @padding={{this.padding}}></PaperBlock>`);
 
     assert.dom(this.element.firstChild).hasClass('no-padding');
 

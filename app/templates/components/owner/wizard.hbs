@@ -13,11 +13,11 @@
     repository or is not a valid YAML, Travis CI will ignore.it
     </span><br/>
     </div>
-    <p class="wizard-content">Here you can find some of our <a href={{this.travisBasicLanguageExamplesUrl}}  target="_blank"> basic language examples</a></p>
+    <p class="wizard-content">Here you can find some of our <a href={{this.travisBasicLanguageExamplesUrl}}  target="_blank" rel="noopener noreferrer"> basic language examples</a></p>
      <div class="float-left wizard-page-number">
       1 of 2
     </div>
-    <button onclick={{action 'nextStep' }} class='button--green float-right wizard-button'>
+    <button onclick={{action 'nextStep' }} class='button--green float-right wizard-button' type="button">
       Got It
     </button>
     {{else}}
@@ -33,17 +33,17 @@
     them to the repository
     </span><br/><br/>
     <span class="nowrap">
-    Want to learn more? <a href="{{this.travisDocsUrl}}" target="_blank"> Learn up on our docs</a>
+    Want to learn more? <a href="{{this.travisDocsUrl}}" target="_blank" rel="noopener noreferrer"> Learn up on our docs</a>
     </span>
     </div>
      <div class="float-left wizard-page-number">
       2 of 2
     </div>
      <div class="float-right">
-       <button onclick={{action 'previousStep' }} class='button--white wizard-button-white' >
+       <button onclick={{action 'previousStep' }} class='button--white wizard-button-white' type="button" >
         Back
        </button>
-       <button onclick={{action 'nextStep' }} class='button--green wizard-button'>
+       <button onclick={{action 'nextStep' }} class='button--green wizard-button' type="button">
         Got It
        </button>
       </div>
