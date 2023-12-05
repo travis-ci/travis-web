@@ -65,10 +65,16 @@ export default Component.extend({
   trial: reads('auth.currentUser.trial'),
   trialBuildsRemaining: reads('trial.buildsRemaining'),
   noTrialYet: empty('trial'),
+  trialNotEnded: computed('auth.currentUser.trial.status', function() {
+    if (!this?.auth?.currentUser?.trial)
+      return false;
+
+    return this.auth.currentUser.trial.status !== 'ended';
+  }),
 
   isPremium: or('isSubscribed', 'isEducation', 'trialBuildsRemaining', 'noTrialYet'),
 
-  showSupportForm: and('isPro', 'isSignedIn', 'isPremium'),
+  showSupportForm: and('isPro', 'isSignedIn', 'isPremium', 'trialNotEnded'),
   showLoginPrompt: and('isPro', 'isNotSignedIn'),
 
   utmParams: '',
