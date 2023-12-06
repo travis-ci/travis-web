@@ -67,7 +67,7 @@ export default Component.extend({
   noTrialYet: empty('trial'),
   trialNotEnded: computed('auth.currentUser.trial.status', function() {
     if (!this?.auth?.currentUser?.trial)
-      return false;
+      return true;
 
     return this.auth.currentUser.trial.status !== 'ended';
   }),
