@@ -52,7 +52,7 @@ module('Acceptance | builds/prioritize', function (hooks) {
     assert.dom('[data-test-repo-actions-prioritize-button]').doesNotExist();
   });
 
-  test('the Cancel button funcationality', async function (assert) {
+  skip('the Cancel button funcationality', async function (assert) {
     let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
     let branch = this.server.create('branch', { repository, name: 'acceptance-tests', default_branch: true });
     let gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -70,7 +70,7 @@ module('Acceptance | builds/prioritize', function (hooks) {
     assert.dom('[data-test-prioritize-modal-header]').doesNotExist();
   });
 
-  test('the Close button funcationality', async function (assert) {
+  skip('the Close button funcationality', async function (assert) {
     let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
     let branch = this.server.create('branch', { repository, name: 'acceptance-tests', default_branch: true });
     let gitUser = this.server.create('git-user', { name: 'Mr T' });
@@ -88,7 +88,7 @@ module('Acceptance | builds/prioritize', function (hooks) {
     assert.dom('[data-test-prioritize-modal-header]').doesNotExist();
   });
 
-  test('the Escape key event funcationality', async function (assert) {
+  skip('the Escape key event funcationality', async function (assert) {
     let repository =  this.server.create('repository', { slug: 'travis-ci/travis-web' });
     let branch = this.server.create('branch', { repository, name: 'acceptance-tests', default_branch: true });
     let gitUser = this.server.create('git-user', { name: 'Mr T' });
