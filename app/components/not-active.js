@@ -6,7 +6,6 @@ import { alias } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  pusher: service(),
   api: service(),
   auth: service(),
   flashes: service(),
@@ -65,7 +64,7 @@ export default Component.extend({
       const response = yield this.api.post(`/repo/${repoId}/activate`);
 
       if (response.active) {
-        this.pusher.subscribe(`repo-${repoId}`);
+        Travis.pusher.subscribe(`repo-${repoId}`);
 
         this.repo.set('active', true);
         this.flashes.success('Repository has been successfully activated.');

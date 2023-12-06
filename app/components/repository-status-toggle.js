@@ -7,7 +7,6 @@ import hasErrorWithStatus from 'travis/utils/api-errors';
 import { vcsLinks } from 'travis/services/external-links';
 
 export default Component.extend({
-  pusher: service(),
   externalLinks: service(),
   accounts: service(),
   user: reads('accounts.user'),
@@ -75,7 +74,7 @@ export default Component.extend({
     try {
       yield repository.toggle();
       yield repository.reload();
-      this.pusher.subscribe(`repo-${repository.id}`);
+      Travis.pusher.subscribe(`repo-${repository.id}`);
     } catch (error) {
       this.set('apiError', error);
     }

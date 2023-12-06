@@ -12,7 +12,6 @@ import { vcsLinks } from 'travis/services/external-links';
 import { capitalize } from '@ember/string';
 
 export default Component.extend({
-  pusher: service(),
   accounts: service(),
   permissions: service(),
   tagName: 'li',
@@ -84,7 +83,7 @@ export default Component.extend({
     try {
       yield repository.toggle();
       yield repository.reload();
-      this.pusher.subscribe(`repo-${repository.id}`);
+      Travis.pusher.subscribe(`repo-${repository.id}`);
     } catch (error) {
       this.set('apiError', error);
     }
