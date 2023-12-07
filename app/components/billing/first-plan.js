@@ -179,7 +179,7 @@ export default Component.extend({
           });
           yield this.subscription.save();
           yield this.subscription.changePlan.perform(selectedPlan.id, this.couponId);
-          yield this.accounts.fetchV2Subscriptions.perform();
+          this.accounts.fetchV2Subscriptions.perform();
           yield this.retryAuthorization.perform();
         }
         this.metrics.trackEvent({ button: 'pay-button' });
@@ -187,13 +187,13 @@ export default Component.extend({
         this.storage.clearSelectedPlanId();
         this.storage.wizardStep = 2;
         this.wizard.update.perform(2);
-        yield this.accounts.fetchV2Subscriptions.perform().then(() => {
+        this.accounts.fetchV2Subscriptions.perform().then(() => {
           this.router.transitionTo('/account/repositories');
         });
       }
       this.flashes.success('Your account has been successfully activated');
     } catch (error) {
-      yield this.accounts.fetchV2Subscriptions.perform().then(() => {
+      this.accounts.fetchV2Subscriptions.perform().then(() => {
         if (this.accounts.user.subscription || this.accounts.user.v2subscription) {
           this.storage.clearBillingData();
           this.storage.clearSelectedPlanId();

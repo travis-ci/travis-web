@@ -70,7 +70,7 @@ export default Component.extend({
         });
         const { client_secret: clientSecret } = yield this.subscription.chargeUnpaidInvoices.perform();
         yield this.stripe.handleStripePayment.perform(clientSecret);
-        yield this.accounts.fetchV2Subscriptions.perform();
+        this.accounts.fetchV2Subscriptions.perform();
       }
     } catch (error) {
       this.flashes.error('An error occurred when creating your subscription. Please try again.');
@@ -80,7 +80,7 @@ export default Component.extend({
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform(this.selectedPlan.id);
     yield this.accounts.fetchSubscriptions.perform();
-    yield this.accounts.fetchV2Subscriptions.perform();
+    this.accounts.fetchV2Subscriptions.perform();
     yield this.retryAuthorization.perform();
   }).drop(),
 
@@ -90,7 +90,7 @@ export default Component.extend({
       yield this.stripe.handleStripePayment.perform(result.payment_intent.client_secret);
     } else {
       yield this.accounts.fetchSubscriptions.perform();
-      yield this.accounts.fetchV2Subscriptions.perform();
+      this.accounts.fetchV2Subscriptions.perform();
     }
   }).drop(),
 

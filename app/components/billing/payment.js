@@ -111,7 +111,7 @@ export default Component.extend({
             v1SubscriptionId: this.v1SubscriptionId,
           });
           const { clientSecret } = yield subscription.save();
-          this.stripe.handleStripePayment.perform(clientSecret);
+          yield this.stripe.handleStripePayment.perform(clientSecret);
         } else {
           this.metrics.trackEvent({
             action: 'Change Plan Pay Button Clicked',
@@ -145,7 +145,7 @@ export default Component.extend({
         v1SubscriptionId: this.v1SubscriptionId,
       });
       yield subscription.save();
-      yield this.accounts.fetchV2Subscriptions.perform();
+      this.accounts.fetchV2Subscriptions.perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
       this.set('hasV2Subscription', true);
@@ -190,13 +190,14 @@ export default Component.extend({
           });
           yield subscription.save();
           yield subscription.changePlan.perform(selectedPlan.id, this.couponId);
-          yield this.accounts.fetchV2Subscriptions.perform();
+          this.accounts.fetchV2Subscriptions.perform();
           yield this.retryAuthorization.perform();
         }
         this.metrics.trackEvent({ button: 'pay-button' });
         this.storage.clearBillingData();
         this.set('showPlansSelector', false);
         this.set('hasV2Subscription', true);
+        this.set('stripeElement', true);
       }
     } catch (error) {
       this.handleError(error);

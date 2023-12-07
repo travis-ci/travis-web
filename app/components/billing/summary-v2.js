@@ -32,9 +32,6 @@ export default Component.extend({
   expiredStripeSubscription: reads('account.expiredStripeSubscription'),
   hasExpiredStripeSubscription: bool('expiredStripeSubscription'),
   showPlanInfo: computed('showPlansSelector', 'showAddonsSelector', function () {
-    console.log("I am computed")
-    console.log(!this.showPlansSelector)
-    console.log(!this.showAddonsSelector)
     return !this.showPlansSelector && !this.showAddonsSelector;
   }),
   showUserManagementModal: false,

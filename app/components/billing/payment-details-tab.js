@@ -45,10 +45,10 @@ export default Component.extend({
   isV2SubscriptionEmpty: empty('v2subscription'),
   isSubscriptionEmpty: empty('v1subscription'),
   isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
-  canViewBilling: computed('account.isOrganization account.permissions.billing_view', function () {
+  canViewBilling: computed('account.isOrganization', 'account.permissions.billing_view', function () {
     return !this.account.isOrganization || this.account.permissions.billing_view;
   }),
-  canEditBilling: computed('account.isOrganization account.permissions.billing_update', function () {
+  canEditBilling: computed('account.isOrganization', 'account.permissions.billing_update', function () {
     return !this.account.isOrganization || this.account.permissions.billing_update;
   }),
   hasV2Subscription: not('isV2SubscriptionEmpty'),

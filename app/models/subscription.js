@@ -33,7 +33,7 @@ export default Model.extend({
   creditCardInfo: belongsTo('credit-card-info', { async: false }),
   invoices: hasMany('invoice'),
   owner: belongsTo('owner', { polymorphic: true }),
-  plan: belongsTo(),
+  plan: belongsTo('plan'),
 
   isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),

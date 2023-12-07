@@ -119,7 +119,7 @@
           {{#if this.isLoading}}
             <LoadingIndicator/>
           {{else}}
-            <button class='{{if this.stripeElement 'button--green' 'button disabled'}}' data-test-complete-payment='true' type="button" {{on 'click' form.submit}}>
+            <button class='button--green' data-test-complete-payment='true' type="button" {{on 'click' form.submit}}>
               {{#if this.isReactivation}}
                 Reactivate plan payments
               {{else if this.selectedPlan.isTrial}}
