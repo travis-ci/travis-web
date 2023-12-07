@@ -13,6 +13,7 @@ export default Component.extend({
   flashes: service(),
   metrics: service(),
   storage: service(),
+  router: service(),
 
   account: null,
   stripeElement: null,
@@ -86,7 +87,7 @@ export default Component.extend({
           action: 'Buy Addon Pay Button Clicked',
           category: 'Subscription',
         });
-        yield this.subscription.buyAddon.perform(this.selectedAddon);
+        this.subscription.buyAddon.perform(this.selectedAddon);
       } else {
         if (this.subscription.plan.get('planType') == 'metered'
           && (this.selectedPlan.get('planType') == 'hybrid' || this.selectedPlan.get('planType') == 'hybrid annual')
@@ -110,21 +111,21 @@ export default Component.extend({
             v1SubscriptionId: this.v1SubscriptionId,
           });
           const { clientSecret } = yield subscription.save();
-          yield this.stripe.handleStripePayment.linked().perform(clientSecret);  // if parent task dies this task dies too
+          this.stripe.handleStripePayment.perform(clientSecret);
         } else {
           this.metrics.trackEvent({
             action: 'Change Plan Pay Button Clicked',
             category: 'Subscription',
           });
-          yield this.subscription.changePlan.perform(this.selectedPlan.id, this.couponId);
+          this.subscription.changePlan.perform(this.selectedPlan.id, this.couponId);
         }
       }
-      yield this.accounts.fetchV2Subscriptions.perform();
-      yield this.retryAuthorization.perform();
+      this.accounts.fetchV2Subscriptions.perform();
+      this.retryAuthorization.perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
       this.set('showAddonsSelector', false);
-      this.set('isProcessCompleted', true);
+      this.set('hasV2Subscription', true);
     }
   }).drop(),
 
@@ -147,7 +148,7 @@ export default Component.extend({
       yield this.accounts.fetchV2Subscriptions.perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
-      this.set('isProcessCompleted', true);
+      this.set('hasV2Subscription', true);
     } catch (error) {
       this.handleError(error);
     }
@@ -195,7 +196,7 @@ export default Component.extend({
         this.metrics.trackEvent({ button: 'pay-button' });
         this.storage.clearBillingData();
         this.set('showPlansSelector', false);
-        this.set('isProcessCompleted', true);
+        this.set('hasV2Subscription', true);
       }
     } catch (error) {
       this.handleError(error);
@@ -225,7 +226,7 @@ export default Component.extend({
     this.set('showSwitchToFreeModal', false);
     this.storage.clearBillingData();
     this.set('showPlansSelector', false);
-    this.set('isProcessCompleted', true);
+    this.set('hasV2Subscription', true);
   },
 
   closePlanSwitchWarning: function () {
@@ -243,6 +244,6 @@ export default Component.extend({
 
     clearCreditCardData() {
       this.subscription.set('creditCardInfo', null);
-    },
+    }
   }
 });

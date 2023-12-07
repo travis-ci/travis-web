@@ -16,7 +16,7 @@
     {{/if}}
     <div class="flex cancel-subscription-modal__reason-options">
       {{#each this.cancellationReasons as |reason|}}
-        <div data-test-cancel-reason-option='true' onClick={{action 'selectCancellationReason' reason}} class='{{if (eq selectedCancellationReason reason.name) 'selected'}}'>
+        <div data-test-cancel-reason-option='true' onClick={{action 'selectCancellationReason' reason}} class='{{if (eq this.selectedCancellationReason reason.name) 'selected'}}'>
           <p>{{reason.name}}</p>
         </div>
       {{/each}}

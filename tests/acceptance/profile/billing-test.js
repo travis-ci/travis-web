@@ -388,8 +388,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await billingPaymentForm.completePayment.click();
 
-
-
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
   });
 

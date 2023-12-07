@@ -7,5 +7,5 @@ export default TravisRoute.extend(AccountBillingMixin, {
     return hash({
       account: this.modelFor('account'),
     });
-  }
+  },
 });

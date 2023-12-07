@@ -11,7 +11,7 @@
     <h5>Reason for changing your plan</h5>
     <div class="flex switchtofree-subscription-modal__reason-options">
       {{#each this.switchToFreeReasons as |reason|}}
-        <div data-test-switchtofree-reason-option='true' onClick={{action 'selectSwitchToFreeReason' reason}} class='{{if (eq selectedSwitchToFreeReason reason.name) 'selected'}}'>
+        <div data-test-switchtofree-reason-option='true' onClick={{action 'selectSwitchToFreeReason' reason}} class='{{if (eq this.selectedSwitchToFreeReason reason.name) 'selected'}}'>
           <p>{{reason.name}}</p>
         </div>
       {{/each}}
