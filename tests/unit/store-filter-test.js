@@ -1,7 +1,7 @@
-import { run } from '@ember/runloop';
-import { resolve, all } from 'rsvp';
-import { module, test, skip } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import {run} from '@ember/runloop';
+import {all, resolve} from 'rsvp';
+import {module, test} from 'qunit';
+import {setupTest} from 'ember-qunit';
 
 // Skipping til version 4.12
 module('Unit | store.filter', function (hooks) {
@@ -77,9 +77,8 @@ module('Unit | store.filter', function (hooks) {
 
     result.then((collection) => {
       done();
-
-      assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
       assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
+      assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
     });
   });
 
@@ -123,8 +122,8 @@ module('Unit | store.filter', function (hooks) {
     result.then((collection) => {
       done();
 
-      assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
       assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
+      assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
 
       let repo1 = store.peekRecord('repo', 1);
       let repo2 = store.peekRecord('repo', 2);
