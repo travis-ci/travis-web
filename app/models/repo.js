@@ -9,7 +9,6 @@ import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import { defaultVcsConfig } from 'travis/utils/vcs';
 import { isEmpty } from '@ember/utils';
 import config from 'travis/config/environment';
-import { A } from '@ember/array'
 
 export const MIGRATION_STATUS = {
   QUEUED: 'queued',

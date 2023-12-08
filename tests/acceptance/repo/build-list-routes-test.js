@@ -144,7 +144,7 @@ module('Acceptance | repo build list routes', function (hooks) {
     assert.expect(24);
 
     await page.visitBuildHistory({ organization: 'org-login', repo: 'repository-name' });
-
+    await new Promise(r => setTimeout(r, 200000));
     assert.equal(page.builds.length, 4, 'expected four non-PR builds');
 
     const { owner } = getContext();

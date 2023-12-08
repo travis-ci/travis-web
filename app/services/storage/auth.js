@@ -2,7 +2,6 @@ import { computed } from '@ember/object';
 import { assert } from '@ember/debug';
 import { parseWithDefault } from '../storage';
 import Service, { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 import { asObservableArray } from "travis/utils/observable_array";
 import { underscoreKeys } from "travis/utils/underscore-keys";
 
@@ -11,6 +10,11 @@ const storage = getStorage();
 const Auth = Service.extend({
   store: service(),
 
+  persistAccounts(newValue) {
+    const records = (newValue || []).map(record => serializeUserRecord(record));
+    storage.setItem('travis.auth.accounts', JSON.stringify(records));
+  },
+
   accounts: computed({
     get() {
       const accountsData = storage.getItem('travis.auth.accounts');
@@ -18,6 +22,7 @@ const Auth = Service.extend({
           extractAccountRecord(this.store, account)
       );
       accounts = asObservableArray(accounts);
+
       accounts.addArrayObserver(this, {
         willChange: 'persistAccounts',
         didChange: 'persistAccounts'
@@ -63,11 +68,6 @@ const Auth = Service.extend({
       return null;
     }
   }),
-
-  persistAccounts(newValue) {
-    const records = (newValue || []).map(record => serializeUserRecord(record));
-    storage.setItem('travis.auth.accounts', JSON.stringify(records));
-  },
 
   activeAccountId: computed({
     get() {

@@ -1,7 +1,8 @@
 import { Promise as EmberPromise } from 'rsvp';
 import ArrayProxy from '@ember/array/proxy';
 import { computed } from '@ember/object';
-import { asObservableArray } from "travis/utils/observable_array";
+import ObservableArrayBase from 'travis/utils/observable_array'
+import {asObservableArray} from "./observable_array";
 
 export default ArrayProxy.extend({
   isLoaded: false,
@@ -35,14 +36,20 @@ export default ArrayProxy.extend({
     });
   },
 
+
   observe(collection) {
-    return asObservableArray(collection).addArrayObserver(this, {
+    if (!(collection instanceof ObservableArrayBase)) {
+      collection = asObservableArray(collection)
+    }
+
+    return collection.addArrayObserver(this, {
       willChange: 'observedArrayWillChange',
       didChange: 'observedArraydidChange'
     });
   },
 
   observedArrayWillChange(array, index, removedCount) {
+    console.log("Will I change?");
     let i, len, object, removedObjects, results;
     removedObjects = array.slice(index, index + removedCount);
     results = [];
@@ -53,7 +60,16 @@ export default ArrayProxy.extend({
     return results;
   },
 
+  willChange() {
+    console.log("Surprise");
+  },
+
+  didChange() {
+    console.log(" o Wow");
+  },
+
   observedArraydidChange(array, index, removedCount, addedCount) {
+    console.log("did I changed?");
     let addedObjects, i, len, object, results;
     addedObjects = array.slice(index, index + addedCount);
     results = [];

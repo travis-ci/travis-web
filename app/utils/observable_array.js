@@ -1,38 +1,43 @@
-import EmberObject from '@ember/object';
-import {A} from '@ember/array'
 import {reads} from "@ember/object/computed";
+import ArrayProxy from "@ember/array/proxy";
+import { A } from '@ember/array';
+import {resolve} from "rsvp";
 
-const ObservableArrayBase = EmberObject.extend({
+const ObservableArrayBase = ArrayProxy.extend({
 
   length: reads('_content.length'),
 
   init() {
     this._super(...arguments);
-    this._content = A();
+    this._content = null; // set in asObservableArray function
     this.observers = [];
   },
 
-  addArrayObserver(observer) {
-    this.observers.push(observer);
+  addArrayObserver(observer, options) {
+    const mergedObserver = { observer: observer, options: options }
+    this.observers.push(mergedObserver);
   },
 
-  removeArrayObserver(observer) {
+  removeArrayObserver(observer, options) {
+    // there was no need to implement this method at all and do not use array observers please...
     this.observers = this.observers.filter(obs => obs !== observer);
   },
 
   notifyObservers(method, ...args) {
-    this.observers.forEach(observer => {
-      if (typeof observer[method] === 'function') {
-        observer[method](this, ...args);
+    this.observers.forEach(observerWithOptions => {
+      let actualMethodToCall = observerWithOptions.options[method];
+      let observer = observerWithOptions.observer;
+      if (typeof observer[actualMethodToCall] === 'function') {
+        observer[actualMethodToCall](...args);
       }
     });
   },
 
 
   pushObject(item) {
-    this.notifyObservers('willChange', this._content.length, 0, 1);
+    this.notifyObservers('willChange', this._content, this._content.length, 0, 1);
     this._content.pushObject(item);
-    this.notifyObservers('didChange', this._content.length - 1, 0, 1);
+    this.notifyObservers('didChange', this._content, this._content - 1, 0, 1);
     return this._content.length;
   },
 
@@ -41,9 +46,9 @@ const ObservableArrayBase = EmberObject.extend({
   },
 
   removeObject(item) {
-    this.notifyObservers('willChange', this._content.length, 0, 1);
+    this.notifyObservers('willChange', this._content, this._content.length, 1, 0);
     this._content.removeObject(item)
-    this.notifyObservers('didChange', this._content.length - 1, 0, 1);
+    this.notifyObservers('didChange', this._content, this._content.length -1 , 1, 0);
     return this._content.length;
   },
 
@@ -104,12 +109,17 @@ const ObservableArrayBase = EmberObject.extend({
   },
 
   content() {
-    return this._content.toArray();
-  }
+    return this._content;
+  },
 })
+
 
 export function asObservableArray(array) {
   let observableArray = ObservableArrayBase.create();
-  array.forEach(item => observableArray.pushObject(item));
+  observableArray._content = array;
   return observableArray;
 }
+
+
+
+export default ObservableArrayBase;
