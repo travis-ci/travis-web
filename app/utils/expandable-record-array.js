@@ -1,4 +1,4 @@
-import { Promise as EmberPromise } from 'rsvp';
+import {Promise as EmberPromise, resolve} from 'rsvp';
 import ArrayProxy from '@ember/array/proxy';
 import { computed } from '@ember/object';
 import ObservableArrayBase from 'travis/utils/observable_array'
@@ -25,7 +25,7 @@ export default ArrayProxy.extend({
 
   load(array) {
     this.set('isLoading', true);
-    return array.then(() => {
+    return resolve(array).then(() => {
       array.forEach((record) => {
         if (!this.includes(record)) {
           return this.pushObject(record);
