@@ -37,7 +37,7 @@ const ObservableArrayBase = ArrayProxy.extend({
   pushObject(item) {
     this.notifyObservers('willChange', this._content, this._content.length, 0, 1);
     this._content.pushObject(item);
-    this.notifyObservers('didChange', this._content, this._content - 1, 0, 1);
+    this.notifyObservers('didChange', this._content, this._content.length - 1, 0, 1);
     return this._content.length;
   },
 

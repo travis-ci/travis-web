@@ -38,10 +38,11 @@ export default ArrayProxy.extend({
 
 
   observe(collection) {
+    console.log(collection);
     if (!(collection instanceof ObservableArrayBase)) {
       collection = asObservableArray(collection)
     }
-
+    console.log(collection);
     return collection.addArrayObserver(this, {
       willChange: 'observedArrayWillChange',
       didChange: 'observedArraydidChange'
@@ -58,14 +59,6 @@ export default ArrayProxy.extend({
       results.push(this.removeObject(object));
     }
     return results;
-  },
-
-  willChange() {
-    console.log("Surprise");
-  },
-
-  didChange() {
-    console.log(" o Wow");
   },
 
   observedArraydidChange(array, index, removedCount, addedCount) {
