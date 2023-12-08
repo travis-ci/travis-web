@@ -77,8 +77,8 @@ module('Unit | store.filter', function (hooks) {
 
     result.then((collection) => {
       done();
-      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
       assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
+      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
     });
   });
 
@@ -122,8 +122,9 @@ module('Unit | store.filter', function (hooks) {
     result.then((collection) => {
       done();
 
-      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
       assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
+      assert.deepEqual(collection.map((r) => r.get('id')), ['1']);
+
 
       let repo1 = store.peekRecord('repo', 1);
       let repo2 = store.peekRecord('repo', 2);

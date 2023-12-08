@@ -23,18 +23,6 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
 
 
   test('it is empty when no options are set', async function (assert) {
-    this.owner.register('component:visibility-setting-list', VisibilitySettingList.extend({
-      options: [{
-        key: 'private',
-        displayValue: 'you',
-        description: 'Do not allow anyone else to see insights from your private builds',
-      }, {
-        key: 'public',
-        displayValue: 'everyone',
-        description: 'Allow everyone to see insights from your private builds',
-        modalText: 'Allow everyone to see my private build insights',
-      }]
-    }));
     await render(hbs`{{visibility-setting-list}}`);
 
     assert.dom(this.element).hasText('');
