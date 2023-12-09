@@ -26,8 +26,12 @@ export default Component.extend({
     const commit = this.get('branch.last_build.commit.sha');
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
+  vcsTypeOverride: null,
 
   vcsType: computed('branch.repository.id', function () {
+    if (this.vcsTypeOverride)
+      return this.vcsTypeOverride;
+
     const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
     return repository.vcsType;
   }),
