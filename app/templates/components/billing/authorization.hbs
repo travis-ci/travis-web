@@ -35,7 +35,7 @@
       {{#if this.retryPayment.isRunning}}
         <LoadingIndicator/>
       {{else}}
-        <button class='button--green' data-test-complete-payment='true' type="button" {{action form.submit}}>
+        <button class='button--green' data-test-complete-payment='submit' type="submit" {{action form.submit}}>
           Pay {{format-currency this.subscription.plan.price}}
         </button>
       {{/if}}

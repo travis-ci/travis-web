@@ -218,7 +218,7 @@
           <LoadingIndicator/>
         {{else}}
           <GRecaptcha @onSuccess={{action "onCaptchaResolved"}} @size="invisible" />
-          <button class='{{if this.enableSubmit 'button--green' 'button disabled'}}' data-test-complete-payment='true' type="button" {{on 'click' form.submit}}>
+          <button class='{{if this.enableSubmit 'button--green' 'button disabled'}}' data-test-complete-payment='true' type="submit" {{on 'click' form.submit}}>
             Update payment details
           </button>
         {{/if}}

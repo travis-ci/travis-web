@@ -179,7 +179,7 @@ export default Component.extend({
           });
           yield this.subscription.save();
           yield this.subscription.changePlan.perform(selectedPlan.id, this.couponId);
-          this.accounts.fetchV2Subscriptions.perform();
+          yield this.accounts.fetchV2Subscriptions.linked().perform();
           yield this.retryAuthorization.perform();
         }
         this.metrics.trackEvent({ button: 'pay-button' });
