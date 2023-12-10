@@ -15,30 +15,34 @@
       <SvgImage @name="icon-trash" @class="icon" />
     </button>
   </div>
-  {{#if this.model.pushes.length}}
+  {{#if this.pushes.length}}
     <h2 class="small-title">
       Pushes
     </h2>
     <ul class="caches-list push-caches">
-      {{#each this.model.pushes as |cache|}}
+      {{#each this.pushes as |cache|}}
         <CachesItem
           @cache={{cache}}
           @repo={{this.repo}}
-          @caches={{this.model.pushes}}
+          @caches={{this.pushes}}
+          @injectedFunction={{this.reassignPushes}}
+          @component={{this}}
         />
       {{/each}}
     </ul>
   {{/if}}
-  {{#if this.model.pullRequests.length}}
+  {{#if this.pullRequests.length}}
     <h2 class="small-title">
       {{vcs-vocab this.repo.vcsType 'pullRequest' plural=true}}
     </h2>
     <ul class="caches-list pull-request-caches">
-      {{#each this.model.pullRequests as |cache|}}
+      {{#each this.pullRequests as |cache|}}
         <CachesItem
           @cache={{cache}}
           @repo={{this.repo}}
-          @caches={{this.model.pullRequests}}
+          @caches={{this.pullRequests}}
+          @injectedFunction={{this.reassignPullRequests}}
+          @component={{this}}
         />
       {{/each}}
     </ul>
