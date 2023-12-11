@@ -208,6 +208,7 @@ export default Service.extend({
   },
 
   handleNewLogin() {
+    console.log('handleNewLogin called');
     const { storage } = this;
     const { user, token, isBecome } = storage;
 
@@ -280,9 +281,10 @@ export default Service.extend({
   },
 
   reportNewUser() {
+    console.log('reportNewUser called');
     const { currentUser, metrics } = this;
     const { recentlySignedUp, vcsProvider } = currentUser;
-
+    console.log('currentUser', currentUser);
     if (recentlySignedUp) {
       metrics.trackEvent({
         event: 'first_authentication'
