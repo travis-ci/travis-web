@@ -34,6 +34,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   beforeModel() {
+    console.log('beforeModel called in application.js route');
     return this.auth.autoSignIn();
   },
 

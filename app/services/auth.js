@@ -186,6 +186,8 @@ export default Service.extend({
   autoSignIn() {
     this.set('state', STATE.SIGNING_IN);
     try {
+      console.log('autoSignIn called');
+      console.log('this.storage.user', this.storage.user);
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
         .then(() => this.permissionsService.fetchPermissions.perform())
