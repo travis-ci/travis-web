@@ -265,7 +265,7 @@ export default Service.extend({
     console.log('reportNewUser called');
     const { currentUser, metrics } = this;
     const { recentlySignedUp, vcsProvider } = currentUser;
-    console.log('currentUser', currentUser);
+    console.log('recentlySignup', recentlySignedUp);
     if (recentlySignedUp) {
       metrics.trackEvent({
         event: 'first_authentication'
