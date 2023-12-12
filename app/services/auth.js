@@ -113,6 +113,7 @@ export default Service.extend({
   },
 
   signOut(runTeardown = true) {
+    console.log('signOut called');
     if (this.signedIn) this.api.get('/logout');
 
     [this.localStorage, this.sessionStorage].forEach(storage => {
@@ -149,6 +150,7 @@ export default Service.extend({
   },
 
   signUp(provider) {
+    console.log('signUp called');
     this.set('state', STATE.SIGNING_IN);
     const url = new URL(this.redirectUrl || window.location.href);
 
@@ -161,6 +163,7 @@ export default Service.extend({
   },
 
   signIn(provider) {
+    console.log('signIn called');
     this.set('state', STATE.SIGNING_IN);
 
     const url = new URL(this.redirectUrl || window.location.href);
@@ -184,10 +187,9 @@ export default Service.extend({
   },
 
   autoSignIn() {
+    console.log('autoSignIn called');
     this.set('state', STATE.SIGNING_IN);
     try {
-      console.log('autoSignIn called');
-      console.log('this.storage.user', this.storage.user);
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
         .then(() => this.permissionsService.fetchPermissions.perform())
@@ -235,16 +237,19 @@ export default Service.extend({
   },
 
   reloadCurrentUser(include = []) {
+    console.log('reloadCurrentUser called');
     if (!this.currentUser) throw new Error('No active account');
     return this.reloadUser(this.currentUser, include);
   },
 
   reloadUser(userRecord, include = []) {
+    console.log('reloadUser called');
     includes = includes.concat(include).uniq();
     return this.fetchUser.perform(userRecord);
   },
 
   fetchUser: task(function* (userRecord) {
+    console.log('fetchUser called');
     try {
       return yield userRecord.reload({ included: includes.join(',') });
     } catch (error) {
@@ -281,10 +286,9 @@ export default Service.extend({
   },
 
   reportNewUser() {
-    console.log('reportNewUser called');
+    console.log('reportNewUser called - this is where we track the first time a user signs in');
     const { currentUser, metrics } = this;
     const { recentlySignedUp, vcsProvider } = currentUser;
-    console.log('recentlySignup', recentlySignedUp);
     if (recentlySignedUp) {
       metrics.trackEvent({
         event: 'first_authentication'

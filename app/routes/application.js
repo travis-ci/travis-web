@@ -24,6 +24,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   needsAuth: false,
 
   init() {
+    console.log('init hook called in application.js route');
     this.featureFlags;
 
     this.auth.afterSignOut(() => {
@@ -34,11 +35,12 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   beforeModel() {
-    console.log('beforeModel called in application.js route');
+    console.log('beforeModel hook called in application.js route');
     return this.auth.autoSignIn();
   },
 
   model(model, transition) {
+    console.log('model hook called in application.js route');
     if (model.selectedPlanId) {
       this.storage.selectedPlanId = model.selectedPlanId;
     }
@@ -49,11 +51,13 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   activate() {
+    console.log('activate hook called in application.js route');
     this.setupRepoSubscriptions();
     bindKeyboardShortcuts(this);
   },
 
   deactivate() {
+    console.log('deactivate hook called in application.js route');
     unbindKeyboardShortcuts(this);
   },
 
