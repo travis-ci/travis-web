@@ -17,8 +17,6 @@
     class="pointer navigation-anchor navigation-profile-link signed-in"
     {{on 'click' (action 'toggleMenu')}}
   >
-
-  
     <UserAvatar
       @url={{this.user.avatarUrl}}
       @name={{this.user.fullName}}
@@ -46,7 +44,7 @@
         {{vcs-name this.user.vcsType}} support is currently in Beta
       </li>
     {{/if}}
-   {{#unless this.isActivation}}
+
     <li>
       <LinkTo
         @route="account"
@@ -59,7 +57,7 @@
         </div>
       </LinkTo>
     </li>
-   {{/unless}}
+
     <li>
       <a
         data-test-signout-link

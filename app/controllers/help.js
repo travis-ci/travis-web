@@ -15,15 +15,14 @@ const UTM_SOURCE = 'help-page';
 const UTM_MEDIUM = 'travisweb';
 const UTM_PARAMS = `?utm_source=${UTM_SOURCE}&utm_medium=${UTM_MEDIUM}`;
 
-const { docs, community, docker, node, multiOS, noRun, tutorial, billingOverview, autoRefill, billingFaq } = config.urls;
+const { docs, community, docker, node, multiOS, noRun, tutorial } = config.urls;
 
 export default Controller.extend({
   auth: service(),
   features: service(),
 
-  queryParams: ['anchor', 'page', 'billing'],
+  queryParams: ['anchor', 'page'],
   anchor: ANCHOR.TOP,
-  billing: 'false',
   page: '',
 
   isSignedIn: reads('auth.signedIn'),
@@ -32,7 +31,6 @@ export default Controller.extend({
   toDocs: equal('anchor', ANCHOR.DOCS),
   toCommunity: equal('anchor', ANCHOR.COMMUNITY),
   toForm: equal('anchor', ANCHOR.FORM),
-  isBilling: equal('billing', 'true'),
 
   utmParams: computed(() => UTM_PARAMS),
   docsUrl: computed(() => `${docs}${UTM_PARAMS}`),
@@ -41,9 +39,6 @@ export default Controller.extend({
   multiOsUrl: computed(() => `${multiOS}${UTM_PARAMS}`),
   noRunUrl: computed(() => `${noRun}${UTM_PARAMS}`),
   tutorialUrl: computed(() => `${tutorial}${UTM_PARAMS}`),
-  billingOverviewUrl: computed(() => `${billingOverview}${UTM_PARAMS}`),
-  autoRefillUrl: computed(() => `${autoRefill}${UTM_PARAMS}`),
-  faqUrl: computed(() => `${billingFaq}${UTM_PARAMS}`),
 
   communityUrl: computed(() => `${community}/top${UTM_PARAMS}`),
 

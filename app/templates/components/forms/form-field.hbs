@@ -67,16 +67,6 @@
       onInit=(action "setFieldElementId")
       class="travis-form__field-component"
     )
-    radio=(component "forms/form-radio"
-      form=this.form
-      checked=this.value
-      disabled=this.disabled
-      onFocus=(action "handleFocus")
-      onBlur=(action "handleBlur")
-      onChange=(action "handleChange")
-      onInit=(action "setFieldElementId")
-      class="travis-form__field-component"
-    )
     switch=(component "forms/form-switch"
       form=this.form
       checked=this.value
@@ -103,14 +93,6 @@
       disabled=this.disabled
       validateMultipleInputs=(action "validateMultipleInputs")
       onInit=(action "setFieldElementId")
-    )
-    placeholder=(component "forms/form-placeholder"
-      form=this.form
-      onFocus=(action "handleFocus")
-      onBlur=(action "handleBlur")
-      onChange=(action "handleChange")
-      onInit=(action "setFieldElementId")
-      class="travis-form__field-component"
     )
   )
 }}

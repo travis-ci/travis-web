@@ -3,7 +3,6 @@ import { inject as service } from '@ember/service';
 import { Promise } from 'rsvp';
 import config from 'travis/config/environment';
 import { later } from '@ember/runloop';
-import { reads } from '@ember/object/computed';
 
 const { utmParametersResetDelay } = config.timing;
 
@@ -12,12 +11,6 @@ export default Controller.extend({
   metrics: service(),
   router: service(),
   utm: service(),
-  auth: service(),
-  storage: service(),
-  user: reads('auth.currentUser'),
-  queryParams: ['selectedPlanId'],
-  selectedPlanId: null,
-
 
   trackPage(page) {
     page = page || this.router.currentURL || this.router.location.getURL();
@@ -47,11 +40,6 @@ export default Controller.extend({
   init() {
     this._super(...arguments);
     this.router.on('routeDidChange', () => this.handleRouteChange());
-    this.router.on('routeWillChange', (transition) => {
-      if (this.selectedPlanId) {
-        this.storage.selectedPlanId = this.selectedPlanId;
-      }
-    });
     this.utm.capture();
   }
 });

@@ -5,9 +5,10 @@
     </h2>
     <ul class="profile-user">
       <li>
-        <OrgItem @account={{this.user}} @isOrganization={{this.isOrganization}} @showSync="true" @wizardStep={{this.wizardStep}}/>
+        <OrgItem @account={{this.user}} />
       </li>
     </ul>
+    <SyncButton @isOrganization={{this.isOrganization}}/>
   </section>
   {{#if this.showMigrationBetaBanner}}
     <section class="migrate-beta" data-test-sidebar-migrate>
@@ -98,33 +99,19 @@
         @showLink={{this.model.subscriptionPermissions.create}}
       />
     {{/if}}
-    <nav class="travistab-nav" id="travis-nav">
+    <nav class="travistab-nav">
       <ul>
         {{#if this.model.isUser}}
           <li>
             <LinkTo @route="account.repositories">
               Repositories
             </LinkTo>
-            <EmberPopover @isShown={{this.showWizard}} @event="none" class="rounded" @side="bottom">
-            <Owner::Wizard  @showWizard="{{this.showWizard}}" 
-                  @wizardStep={{this.wizardStep}} 
-                  @onClose={{action 'onWizardClose'}}
-            /> 
-          </EmberPopover>
-
           </li>
           <li data-test-settings-tab>
             <LinkTo @route="account.settings">
               Settings
             </LinkTo>
           </li>
-          {{#if this.showMigrateTab}}
-            <li data-test-migrate-tab>
-              <LinkTo @route="account.migrate">
-                Migrate
-              </LinkTo>
-            </li>
-          {{/if}}
           {{#if this.showSubscriptionTab}}
             <li data-test-billing-tab>
               <LinkTo @route="account.billing">
@@ -132,10 +119,10 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if this.showPaymentDetailsTab}}
-            <li data-test-payment-details-tab>
-              <LinkTo @route="account.payment_details">
-                Payment details
+          {{#if this.showMigrateTab}}
+            <li data-test-migrate-tab>
+              <LinkTo @route="account.migrate">
+                Migrate
               </LinkTo>
             </li>
           {{/if}}
@@ -160,13 +147,6 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if this.showMigrateTab}}
-            <li>
-              <LinkTo @route="organization.migrate" @model={{this.model}}>
-                Migrate
-              </LinkTo>
-            </li>
-          {{/if}}
           {{#if (and this.showSubscriptionTab this.isOrganizationAdmin)}}
             <li data-test-billing-tab>
               <LinkTo @route="organization.billing" @model={{this.model}}>
@@ -174,10 +154,10 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if this.showPaymentDetailsTab}}
-            <li data-test-payment-details-tab>
-              <LinkTo @route="organization.payment_details">
-                Payment details
+          {{#if this.showMigrateTab}}
+            <li>
+              <LinkTo @route="organization.migrate" @model={{this.model}}>
+                Migrate
               </LinkTo>
             </li>
           {{/if}}

@@ -7,8 +7,8 @@
     />
   </h1>
   <HeaderBroadcasts @showBroadcasts={{this.showBroadcasts}} />
-  <HeaderLinks @isOpen={{this.isNavigationOpen}} @isActivation={{this.isActivation}}/>
-  <ProfileMenu   id='profile-menu' @isActivation={{this.isActivation}} />
+  <HeaderLinks @isOpen={{this.isNavigationOpen}} />
+  <ProfileMenu />
 </div>
 {{#if this.isUnconfirmed}}
  <UnconfirmedUserBanner />

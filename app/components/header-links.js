@@ -18,8 +18,6 @@ export default Component.extend({
   externalLinks: service(),
   multiVcs: service(),
 
-  isActivation: false,
-
   deploymentVersion: computed(function () {
     if (window && window.location) {
       const hostname = window.location.hostname;

@@ -202,10 +202,6 @@ span.emoji.emoji-sizer {
   line-height: 2;
 }
 
-.float-left {
-  float: left;
-}
-
 .float-right {
   float: right;
 }
@@ -310,17 +306,6 @@ span.emoji.emoji-sizer {
   .height-#{$i} {
     height: $i + 0%;
   }
-}
-
-.ember-popover {
-  border-radius: 10px;
-}
-.underline {
-  text-decoration: underline;
-}
-a.underline:hover {
-  text-decoration: underline;
-  color: black;
 }
 
 .calendar-medium {

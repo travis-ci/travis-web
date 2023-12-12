@@ -11,7 +11,6 @@ export default Owner.extend({
   api: service(),
   accounts: service(),
   permissionsService: service('permissions'),
-  wizardStateService: service('wizardState'),
 
   email: attr('string'),
   emails: attr(), // list of all known user emails
@@ -27,7 +26,6 @@ export default Owner.extend({
   utmParams: attr(),
   confirmedAt: attr('date'),
   customKeys: attr(),
-  collaborator: attr('boolean'),
 
   type: 'user',
 
@@ -47,7 +45,6 @@ export default Owner.extend({
   adminPermissions: reads('permissionsService.admin'),
   pullPermissions: reads('permissionsService.pull'),
   pushPermissions: reads('permissionsService.push'),
-  wizardState: reads('wizardStateService.state'),
 
   hasAccessToRepo(repo) {
     let id = repo.get ? repo.get('id') : repo;
@@ -95,11 +92,7 @@ export default Owner.extend({
         this.schedulePoll();
       } else {
         this.permissionsService.fetchPermissions.perform();
-        this.wizardStateService.fetch.perform();
         this.accounts.fetchOrganizations.perform();
-        this.accounts.fetchSubscriptions.perform();
-        this.accounts.fetchV2Subscriptions.perform();
-
         this.applyReposFilter();
         Travis.trigger('user:synced', this);
         this.set('isSyncing', false);

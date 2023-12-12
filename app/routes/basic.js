@@ -5,18 +5,8 @@ import { inject as service } from '@ember/service';
 export default Route.extend({
   auth: service(),
   featureFlags: service(),
-  storage: service(),
 
   activate() {
-    if (this.storage.wizardStep > 0 && this.storage.wizardStep <= 3) {
-      if (this.storage.wizardStep == 1) {
-        this.transitionTo('account_activation');
-      } else {
-        this.transitionTo('account.repositories');
-      }
-      return this._super(...arguments);
-    }
-
     if (this.routeName !== 'error') {
       this.controllerFor('error').set('layoutName', null);
     }

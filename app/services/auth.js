@@ -16,7 +16,7 @@ import {
 } from '@ember/object/computed';
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
-import { task, didCancel } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { availableProviders, vcsConfigByUrlPrefixOrType } from 'travis/utils/vcs';
 
 const { authEndpoint, apiEndpoint } = config;
@@ -49,7 +49,6 @@ export default Service.extend({
   metrics: service(),
   utm: service(),
   permissionsService: service('permissions'),
-  wizardStateService: service('wizard-state'),
 
   state: STATE.SIGNED_OUT,
 
@@ -148,18 +147,6 @@ export default Service.extend({
     this.signIn(provider);
   },
 
-  signUp(provider) {
-    this.set('state', STATE.SIGNING_IN);
-    const url = new URL(this.redirectUrl || window.location.href);
-
-    if (['/signin', '/plans', '/integration/bitbucket'].includes(url.pathname)) {
-      url.pathname = '/';
-    }
-    const providerSegment = provider ? `/${provider}` : '';
-    const path = `/auth/handshake${providerSegment}`;
-    window.location.href = `${authEndpoint || apiEndpoint}${path}?signup=true&redirect_uri=${url}`;
-  },
-
   signIn(provider) {
     this.set('state', STATE.SIGNING_IN);
 
@@ -196,9 +183,7 @@ export default Service.extend({
           Travis.trigger('user:refreshed', currentUser);
         })
         .catch(error => {
-          if (!didCancel(error)) {
-            throw new Error(error);
-          }
+          throw new Error(error);
         });
     } catch (error) {
       this.signOut(false);
@@ -214,12 +199,8 @@ export default Service.extend({
     if (!user || !token) throw new Error('No login data');
 
     const userData = getProperties(user, USER_FIELDS);
-    const installationData = getProperties(user, ['installation']);
-    if (installationData && installationData.installation) {
-      storage.set('activeAccountInstallation', installationData.installation);
-    }
-
     this.validateUserData(userData, isBecome);
+
     const userRecord = pushUserToStore(this.store, userData);
     userRecord.set('authToken', token);
 
@@ -318,12 +299,6 @@ export default Service.extend({
   syncingDidChange: observer('isSyncing', 'currentUser', function () {
     const user = this.currentUser;
     if (user && user.get('isSyncing') && !user.get('syncedAt')) {
-      if (this.storage.get('activeAccountInstallation')) {
-        let installation = this.storage.get('activeAccountInstallation');
-        if (installation) {
-          return this.router.transitionTo('github_apps_installation');
-        }
-      }
       return this.router.transitionTo('first_sync');
     }
   }),

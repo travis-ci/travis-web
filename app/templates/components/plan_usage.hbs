@@ -29,7 +29,16 @@
       </li>
     {{/each}}
     </ul>
+    {{#if this.v2subscription.hasUserLicenseAddons}}
+      <Billing::UserUsage @subscription={{this.v2subscription}} @account={{this.account}}/>
+      <button class="button--blue" {{on 'click' (fn (mut this.showUserStatisticsModals) true)}} data-test-plan-usage-check-user-activity='true'>
+        Check your user activity
+      </button>
+    {{/if}}
     <hr />
+  </section>
+  <section>
+    <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}} @lastInvoice={{this.lastInvoice}} @hideToggle={{true}}/>
   </section>
   <section>
     <h3 class="usage-statistics">Usage statistics</h3>

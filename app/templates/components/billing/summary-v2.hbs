@@ -1,4 +1,3 @@
-<!--<div class="plan"> -->
 <div class='billing-subscription-section plan-overview'>
   {{#if (not this.account.hasSubscriptionPermissions)}}
     <span class="notice-banner--yellow" data-test-help='true'>
@@ -24,18 +23,65 @@
         {{/if}}
       </span>
     {{/if}}
-    <div class="flex flex--space-between flex--wrap plan-overview__details plan-grey">
+    <div class="flex flex--space-between flex--wrap plan-overview__details">
       <section>
+        {{#if this.subscription.isManual}}
+          <div class="info-message" data-test-plan-manual-message='true'>
+            You are on <b>Manual Plan</b>, you have
+            {{#if this.subscription.plan.isUnlimitedUsers}}
+              unlimited
+            {{else}}
+              {{this.subscription.addonUsage.user.totalCredits}}
+            {{/if}}
+            users,
+            {{#if this.subscription.plan.hasCreditAddons}}
+                {{this.subscription.addonUsage.private.totalCredits}} private credits
+            {{/if}}
+            {{#if (and this.subscription.plan.hasCreditAddons this.subscription.plan.hasOSSCreditAddons)}}
+            ,
+            {{/if}}
+            {{#if this.subscription.plan.hasOSSCreditAddons}}
+                {{this.subscription.addonUsage.public.totalCredits}} public credits
+            {{/if}}
+            per month with access
+            to Linux, Windows, macOs and FreeBSD builds on the standard infrastructure size.
+          </div>
+        {{/if}}
+        <h3 class='plan-overview__header'> Plan information </h3>
         <div class='plan'>
           <div>
-            <span class="payment-details-label plan-label-color">Current plan:</span>
-            <p class='plan-name flex flex--v-center' data-test-plan-name='true'>           
+            <p class='plan-overview__name flex flex--v-center' data-test-plan-name='true'>
+              {{#if this.subscription.isManual}}
+                Manual plan
+                {{#if this.subscription.isSubscribed}}
+                  <span class="badge green square" data-test-active-status='true'>
+                    active
+                  </span>
+                {{else if this.subscription.isExpired}}
+                  <span class="badge red square" data-test-expired-status='true'>
+                    expired
+                  </span>
+                {{else}}
+                  <span class="badge grey square grey-badge" data-test-grey-status='true'>
+                    {{this.subscription.status}}
+                  </span>
+                {{/if}}
+                  <span class="valid-until" data-test-renews='true'>
+                    Valid until
+                    {{#if this.subscription.validTo}}
+                      {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                    {{else}}
+                      {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
+                    {{/if}}
+                  </span>
+              {{else}}
                 {{#if this.subscription.plan}}
                   {{this.subscription.plan.name}}
                 {{else}}
                   Unknown plan
                 {{/if}}
-                
+
+                {{#if (eq this.subscription.plan.planType 'hybrid')}}
                   {{#if this.subscription.isSubscribed}}
                     <span class="badge green square" data-test-active-status='true'>
                       active
@@ -62,20 +108,96 @@
                       Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{/if}}
                   </span>
-              
+                {{else if this.subscription.recurringAddon}}
+                  {{#if this.isCanceled}}
+                    <span class="badge grey square grey-badge" data-test-expired-status='true'>
+                      canceled
+                    </span>
+                  {{else if (eq this.subscription.recurringAddon.current_usage.status 'subscribed')}}
+                    <span class="badge green square" data-test-active-status='true'>
+                      active
+                    </span>
+                  {{else if (eq this.subscription.recurringAddon.current_usage.status 'expired')}}
+                    <span class="badge red square" data-test-expired-status='true'>
+                      expired
+                    </span>
+                  {{else}}
+                    <span class="badge grey square grey-badge" data-test-grey-status='true'>
+                      {{this.subscription.recurringAddon.current_usage.status}}
+                    </span>
+                  {{/if}}
+                  <span data-test-plan-message='true' class='plan-overview__description--validity ml-3
+                    {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
+                  >
+                    {{#if (and this.isComplete this.isCanceled)}}
+                      Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM DD"}}
+                    {{else if (eq this.subscription.recurringAddon.current_usage.status 'subscribed')}}
+                      Valid until {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
+                    {{else if (eq this.subscription.recurringAddon.current_usage.status 'expired')}}
+                      Expired {{moment-format this.subscription.validToFromAddon "MMMM D, YYYY"}}
+                    {{/if}}
+                  </span>
+                {{/if}}
+              {{/if}}
             </p>
-            {{#if this.subscription.isManual}}
-		<div class='plan-overview__description' data-test-plan-description>
-                <p data-test-plan-manual-message>Manual plan</p>
-		</div>
-            {{/if}}
+            <div class='plan-overview__description' data-test-plan-description>
+              {{#if this.subscription.plan.hasUserLicenseAddons}}
+                <p>
+                  {{#if this.subscription.plan.isUnlimitedUsers}}
+                    Unlimited unique users
+                  {{else}}
+                    {{#if this.subscription.isManual}}
+                      {{this.subscription.addonUsage.user.totalCredits}} unique users
+                    {{else}}
+                      Up to {{this.subscription.plan.startingUsers}} unique users
+                    {{/if}}
+                  {{/if}}
+                </p>
+              {{/if}}
+              {{#if this.subscription.plan.hasCreditAddons}}
+                <p>
+                  {{#if this.subscription.isManual}}
+                    {{this.subscription.addonUsage.private.totalCredits}} Credits
+                  {{else}}
+                    {{this.subscription.plan.privateCreditsTotal}} Credits
+                  {{/if}}
+                </p>
+              {{/if}}
+              {{#if this.subscription.plan.hasOSSCreditAddons}}
+                <p>
+                  {{#if this.subscription.isManual}}
+                    {{this.subscription.addonUsage.public.totalCredits}} OSS Credits per month
+                  {{else}}
+                    {{this.subscription.plan.publicCredits}} OSS Credits per month
+                  {{/if}}
+                </p>
+              {{/if}}
+              {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                <p>
+                  {{pluralize this.subscription.plan.concurrencyLimit "concurrent job"}}
+                </p>
+              {{/if}}
+              {{#if (eq this.subscription.plan.planType 'hybrid')}}
+                <p>
+                  Linux, Windows, FreeBSD builds
+                </p>
+                {{else if (eq this.subscription.plan.planType 'hybrid annual')}}
+                  <p>
+                    Linux, Windows, FreeBSD builds
+                  </p>
+                {{else}}
+                <p>
+                  Linux, Windows, macOS, FreeBSD builds
+                </p>
+               {{/if}}
+            </div>
           </div>
         </div>
       </section>
-      {{#if this.subscription.isManual }}
-        <section class='plan-price-container-manual-section full-width'>
-          <div class='selected-plan__price plan-price-container-manual float-right'>
-            <h6 class='selected-plan__price--total plan-label-color' data-test-plan-total='true'>
+      {{#if (and this.subscription.isNotManual (not this.subscription.plan.isTrial))}}
+        <section>
+          <div class='selected-plan__price'>
+            <h6 class='selected-plan__price--total' data-test-plan-total='true'>
               Total:
             </h6>
             {{#if this.subscription.plan }}
@@ -95,62 +217,41 @@
           </div>
         </section>
       {{/if}}
-    
     </div>
   {{/if}}
-    {{#if this.subscription.isNotManual }}
-      <div class="plan-button-container {{if this.showPlanInfo 'plan-grey plan-grey-buttons' 'plan-button-container-expanded'}}">
-        <div class="float-left plan-buttons">
-          {{#if this.subscription.isGithub}}
-            <ManageSubscriptionButton
-              @subscription={{this.subscription}}
-              @account={{this.account}}
-            />
-          {{/if}}
-          {{#if this.subscription.isNotManual}}
-            {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
-              <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
-                <Billing::Authorization
-                  @githubSubscription={{this.subscription}}
-                  @subscription={{this.expiredStripeSubscription}}
-                  @isV2Subscription={{true}}
-                  @account={{this.account}}
-                  @isPending={{this.isPending}}
-                  @showPlansSelector={{this.showPlansSelector}}
-                  @showAddonsSelector={{this.showAddonsSelector}}
-                />
-              {{/if}}
-              {{#if (or this.subscription.isStripe this.subscription.isManual)}}
-                <Billing::Authorization
-                  @selectedPlan={{this.selectedPlan}}
-                  @selectedAddon={{this.selectedAddon}}
-                  @subscription={{this.subscription}}
-                  @isV2Subscription={{true}}
-                  @account={{this.account}}
-                  @isPending={{this.isPending}}
-                  @showPlansSelector={{this.showPlansSelector}}
-                  @showAddonsSelector={{this.showAddonsSelector}}
-                />
-              {{/if}}
-            {{/if}}
-            </div>
-          {{#if this.showPlanInfo}}  
-          <div class='float-right flex plan-price-container'>
-            <span class="payment-details-label plan-price-label">Total:</span> 
-            <span class="plan-price-info">
-              {{#if (or this.subscription.plan.isFree this.subscription.plan.isTrial)}}
-                Free
-              {{else}}
-                {{format-currency this.subscription.plan.startingPrice floor="true"}}
-              {{/if}}
-            </span>
-          </div>
-          {{/if}}
-        </div>  
-      {{/if}}
- <!--   </div> -->
+  {{#if this.subscription.isGithub}}
+    <ManageSubscriptionButton
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+    />
+  {{/if}}
+  {{#if this.subscription.isNotManual}}
+    {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
+      <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
+      <Billing::Authorization
+        @githubSubscription={{this.subscription}}
+        @subscription={{this.expiredStripeSubscription}}
+        @isV2Subscription={{true}}
+        @account={{this.account}}
+        @isPending={{this.isPending}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showAddonsSelector={{this.showAddonsSelector}}
+      />
+    {{/if}}
+    {{#if (or this.subscription.isStripe this.subscription.isManual)}}
+      <Billing::Authorization
+        @selectedPlan={{this.selectedPlan}}
+        @selectedAddon={{this.selectedAddon}}
+        @subscription={{this.subscription}}
+        @isV2Subscription={{true}}
+        @account={{this.account}}
+        @isPending={{this.isPending}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showAddonsSelector={{this.showAddonsSelector}}
+      />
+    {{/if}}
+  {{/if}}
 </div>
-
 <hr />
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
   {{#if this.subscription.hasUserLicenseAddons}}
@@ -171,12 +272,20 @@
   {{#if this.subscription.hasCredits}}
     <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
   {{/if}}
+  {{#if (not this.subscription.plan.isFree)}}
+    <Billing::Address @subscription={{this.subscription}} @account={{this.account}}/>
+    {{#if this.subscription.isNotManual}}
+      <Billing::PaymentDetails @subscription={{this.subscription}} @account={{this.account}}//>
+    {{/if}}
+    <hr />
+  {{/if}}
 {{/if}}
 
 {{#if this.subscription.isManual}}
+  <Billing::Address @subscription={{this.subscription}} @account={{this.account}} @hideEdit={{true}}/>
   <div class="yellow-message" data-test-plan-yellow-message='true'>
     This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
-    <LinkTo @route="help" @query={{hash anchor="form" billing=true}}>
+    <LinkTo @route="help" @query={{hash anchor="form"}}>
       contact our support team.
     </LinkTo>
   </div>

@@ -1,32 +1,37 @@
 {{#if this.user.isSyncing}}
-  <div data-test-is-syncing-button class="button--transparent color-oxide-blue">
-    <span class="loading-indicator label-align">
+  <div data-test-is-syncing-button class="button is-syncing">
+    <span class="loading-indicator--white label-align">
       <i></i>
       <i></i>
       <i></i>
     </span>
+    <span class="label-align">
+      Syncing from {{vcs-name this.user.vcsType}}
+    </span>
   </div>
 {{else if this.user.roMode}}
-    <button class="button--transparent" disabled="disabled">
-      <SvgImage @name="sync-icon" @class="icon--l" />
+    <button class="button" disabled="disabled">
+      <SvgImage @name="icon-restart" @class="icon white" />
+        <span class="label-align">
+          Sync account
+        </span>
     </button>
 {{else}}
   <button
     data-test-start-sync-button
-    class="button--transparent"
+    class="button"
     type="button"
-    disabled={{if this.isSyncDisabled true false}}
-    {{action "sync" bubbles=false}}
+    onclick={{action "sync"}}
   >
-
-    <EmberPopover @side='top'>
-      <span class='nowrap'>Last synced {{format-time this.user.syncedAt}} </span>
-      <span class='nowrap'>Click the button to sync.</span>
-      </EmberPopover>
-    <SvgImage @name="{{if this.isSyncDisabled 'sync-icon-disabled' 'sync-icon'}}" @class="icon--sync "  />
+    <SvgImage @name="icon-restart" @class="icon white" />
+    <span class="label-align">
+      Sync account
+    </span>
   </button>
   <div class="sync-last-container">
     <span class="sync-last">
+      Last synced
+      {{format-time this.user.syncedAt}}
     </span>
   </div>
 {{/if}}

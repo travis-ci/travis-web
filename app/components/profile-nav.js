@@ -13,8 +13,6 @@ import {
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { vcsLinks } from 'travis/services/external-links';
-import { task } from 'ember-concurrency';
-
 
 const { billingEndpoint } = config;
 
@@ -25,8 +23,6 @@ export default Component.extend({
   accounts: service(),
   features: service(),
   flashes: service(),
-  storage: service(),
-  wizard: service('wizard-state'),
 
   activeModel: null,
   model: reads('activeModel'),
@@ -72,13 +68,6 @@ export default Component.extend({
     const isEnterprise = this.features.get('enterpriseVersion');
     return !isEnterprise && !isAssemblaUser && !!billingEndpoint;
   }),
-  showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin', 'model.isNotGithubOrManual', function () {
-    if (this.isOrganization) {
-      return this.showSubscriptionTab && this.isOrganizationAdmin && this.model.get('isNotGithubOrManual');
-    } else {
-      return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
-    }
-  }),
   showPlanUsageTab: and('showSubscriptionTab', 'model.hasCredits'),
   usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
     const userUsage = this.model.allowance.get('userUsage');
@@ -86,13 +75,6 @@ export default Component.extend({
       return true;
     }
     return userUsage;
-  }),
-
-  wizardStep: reads('storage.wizardStep'),
-  wizardState: reads('wizard.state'),
-  showWizard: computed('wizardStep', function () {
-    let state = this.wizardStep;
-    return state && state <= 3;
   }),
 
   didRender() {
@@ -104,13 +86,6 @@ export default Component.extend({
 
     if (!allowance) {
       return;
-    }
-
-    if (allowance.get('paymentChangesBlockCredit') || allowance.get('paymentChangesBlockCaptcha')) {
-      let time;
-      if (allowance.get('paymentChangesBlockCaptcha')) time = allowance.get('captchaBlockDuration');
-      if (allowance.get('paymentChangesBlockCredit')) time = allowance.get('creditCardBlockDuration');
-      this.flashes.custom('flashes/payment-details-edit-lock', { owner: this.model, isUser: this.model.isUser, time: time}, 'warning');
     }
 
     if (allowance.get('subscriptionType') !== 2) {
@@ -137,17 +112,6 @@ export default Component.extend({
 
     if (allowance && allowance.get('subscriptionType') === 2) {
       this.flashes.removeCustomsByClassName('warning');
-    }
-  },
-
-  closeWizard: task(function* () {
-    this.set('showWizard', false);
-    yield this.wizard.delete.perform();
-  }).drop(),
-
-  actions: {
-    onWizardClose() {
-      this.closeWizard.perform();
     }
   }
 });

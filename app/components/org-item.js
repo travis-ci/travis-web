@@ -22,7 +22,6 @@ export default Component.extend({
 
   routeModel: computed('account.isOrganization', function () {
     let isOrganization = this.get('account.isOrganization');
-    let login = this.account.login || this.account.name;
-    if (isOrganization) return login;
+    if (isOrganization) return this.account.login;
   })
 });

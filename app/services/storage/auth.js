@@ -80,21 +80,6 @@ export default Service.extend({
     }
   }),
 
-  activeAccountInstallation: computed({
-    get() {
-      return +storage.getItem('travis.auth.activeAccountInstallation');
-    },
-    set(key, id) {
-      if (id === null) {
-        storage.removeItem('travis.auth.activeAccountInstallation');
-        return null;
-      } else {
-        storage.setItem('travis.auth.activeAccountInstallation', id);
-        return id;
-      }
-    }
-  }),
-
   activeAccount: computed({
     get() {
       const { accounts, activeAccountId } = this;

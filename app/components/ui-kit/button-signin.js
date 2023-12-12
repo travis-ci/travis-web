@@ -54,11 +54,7 @@ export default Component.extend({
         this.auth.switchAccount(this.account.id, this.auth.redirectUrl || '/');
       } else {
         this.set('isLoading', true);
-        if (this.isSignup) {
-          this.auth.signUp(this.provider);
-        } else {
-          this.auth.signInWith(this.provider);
-        }
+        this.auth.signInWith(this.provider);
       }
     } else {
       window.location.href = 'https://app.travis-ci.com/signin';

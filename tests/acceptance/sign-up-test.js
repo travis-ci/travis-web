@@ -29,10 +29,6 @@ module('Acceptance | sign up', function (hooks) {
       signIn() {
         return undefined;
       },
-
-      signUp(provider) {
-        signupRequest = provider;
-      },
       signInWith(provider) {
         signupRequest = provider;
       },
