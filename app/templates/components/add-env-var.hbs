@@ -40,8 +40,9 @@
       <field.select
         @placeholder="All branches"
         @allowClear={{true}}
-        @onchange={{action (mut this.branch)}}
+        @onChange={{action (mut this.branch)}}
         @search={{perform this.search}}
+        @searchEnabled={{true}}
         as |branch|
       >
         {{branch}}

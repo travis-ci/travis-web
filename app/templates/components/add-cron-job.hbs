@@ -15,8 +15,9 @@
         @searchField="name"
         @placeholder="Select branch"
         @selected={{this.selectedBranch}}
-        @onchange={{action (mut this.selectedBranch)}}
+        @onChange={{action (mut this.selectedBranch)}}
         @search={{perform this.search}}
+        @searchEnabled={{true}}
         as |branch|
       >
         {{branch.name}}
