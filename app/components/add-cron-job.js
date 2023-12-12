@@ -5,6 +5,7 @@ import BranchSearching from 'travis/mixins/branch-searching';
 
 export default Component.extend(BranchSearching, {
   store: service(),
+  flashes: service(),
 
   classNames: ['form--cron'],
 
