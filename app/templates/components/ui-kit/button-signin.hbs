@@ -21,9 +21,7 @@
       </UiKit::Box>
     {{/if}}
 
-    {{#unless this.features.proVersion}}
-      Visit https://travis-ci.com in order to sign-up!
-    {{else}}
+    {{#if this.features.proVersion}}
       {{#if this.account}}
         {{or this.account.login this.account.fullName}}
       {{else}}
@@ -33,7 +31,9 @@
           Sign {{if this.isSignup 'Up' 'In'}} With {{vcs-name this.vcsType}}
         {{/if}}
       {{/if}}
-    {{/unless}}
+    {{else}}
+      Visit https://travis-ci.com in order to sign-up!
+    {{/if}}
 
     {{#if this.isBetaBadgeVisible}}
       <UiKit::Badge

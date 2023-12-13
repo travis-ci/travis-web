@@ -21,12 +21,13 @@
       @label="Branch"
       @placeholder="Select a branch"
       @value={{this.triggerBuildBranch}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       @onChange={{action (mut this.triggerBuildBranch)}}
       as |field|
     >
       <field.select
         @search={{perform this.searchBranches}}
+        @searchEnabled={{true}}
         as |branch|
       >
         {{branch}}
@@ -54,7 +55,7 @@
       @onChange={{action (mut this.triggerBuildConfig)}}
       as |field|
     >
-      {{field.textarea class="monospace"}}
+      <field.textarea @class="monospace" />
     </form.field>
   </div>
   <div class="form-elem">

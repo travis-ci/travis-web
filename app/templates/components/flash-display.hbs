@@ -1,4 +1,4 @@
-{{#let this.messages.firstObject as |flash|}}
+{{#let (get this.messages 0) as |flash|}}
   {{#if (eq flash.type 'custom')}}
     {{component flash.component data=flash.data}}
   {{else if flash}}

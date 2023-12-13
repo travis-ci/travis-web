@@ -20,7 +20,7 @@
       <button
         class="button--blue"
         onclick={{action (mut this.isShowingMigrateBetaDialog) true}}
-        data-test-migrate-signup="true"
+        data-test-migrate-signup="true" type="button"
       >
         {{#if this.user.isMigrationBetaRequested}}
           Add {{vcs-vocab this.model.vcsType 'organization' plural=true}} to the beta
@@ -62,7 +62,12 @@
   {{/if}}
 </aside>
 <article class="profile-main">
-  {{#unless this.model.error}}
+  {{#if this.model.error}}
+    <NoAccount
+      @name={{this.model.login}}
+      @vcsType={{this.model.vcsType}}
+    />
+  {{else}}
     <header class="profile-header">
       <div class="left">
         <UserAvatar
@@ -167,7 +172,7 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if (and this.showSubscriptionTab this.isOrganizationAdmin)}}
+          {{#if this.showSubscriptionTab}}
             <li data-test-billing-tab>
               <LinkTo @route="organization.billing" @model={{this.model}}>
                 Plan
@@ -181,7 +186,7 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if (and this.showPlanUsageTab this.isOrganizationAdmin)}}
+          {{#if this.showPlanUsageTab}}
             <li data-test-plan-usage-tab>
               <LinkTo @route="organization.plan_usage" @model={{this.model}}>
                 Plan usage
@@ -192,12 +197,7 @@
       </ul>
     </nav>
     {{yield}}
-  {{else}}
-    <NoAccount
-      @name={{this.model.login}}
-      @vcsType={{this.model.vcsType}}
-    />
-  {{/unless}}
+  {{/if}}
 </article>
 
 <Dialogs::MigrateBeta

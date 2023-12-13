@@ -2,12 +2,14 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { alias, reads } from '@ember/object/computed';
+import { capitalize } from "@ember/string";
 
 export default Component.extend({
   auth: service(),
   externalLinks: service(),
   features: service(),
   flashes: service(),
+  router: service(),
   isProVersion: reads('features.proVersion'),
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
@@ -16,7 +18,7 @@ export default Component.extend({
   scansEnabled: reads('features.logScanner'),
 
   repositoryProvider: computed('repo.provider', function () {
-    return this.repo.provider.capitalize();
+    return capitalize(this.repo.provider);
   }),
 
   repositoryType: computed('repo.serverType', function () {
@@ -28,6 +30,10 @@ export default Component.extend({
       case 'perforce':
         return 'P4';
     }
+  }),
+
+  currentRouteName: computed('router.currentRouteName', function () {
+    return this.router.currentRouteName;
   }),
 
   repoUrl: computed('repo.{ownerName,vcsName,vcsType}', function () {
@@ -57,11 +63,13 @@ export default Component.extend({
     },
     toggleTriggerBuildModal() {
       this.toggleProperty('isShowingTriggerBuildModal');
-    }
+    },
+
+
   },
 
   didRender() {
-    const repo = this.get('repo');
+    const repo = this.repo;
 
     if (repo.hasBuildBackups === undefined) {
       repo.fetchInitialBuildBackups.perform();
@@ -77,9 +85,9 @@ export default Component.extend({
       } else {
         this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'warning');
       }
-      if (allowance.get('pendingUserLicenses')) {
+      if (allowance.pendingUserLicenses) {
         this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'warning');
-      } else if (!allowance.get('userUsage')) {
+      } else if (allowance && !allowance.userUsage) {
         this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'warning');
       }
     } else if (this.userRoMode && ownerRoMode) {

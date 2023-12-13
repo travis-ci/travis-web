@@ -3,12 +3,11 @@
     class="multi-signin-button relative w-64 inline-block"
     {{on 'mouseenter' (action this.open)}}
     {{on 'mouseleave' (action this.close)}}
-    data-test-multi-signin-button=""
+    data-test-multi-signin-button
     ...attributes
   >
     <button
-      class="hero-button w-full"
-      {{on 'click' (action this.clickMainButton)}}
+      class="hero-button w-full" type="button" {{on 'click' (action this.clickMainButton)}}
     >
       {{#if this.auth.signingIn}}
         Signing in
@@ -26,8 +25,7 @@
       <div class="multi-signin-button__vcs-options absolute w-64 shadow-sm">
         {{#if this.multiVcs.enableGithubLogin}}
           <button
-            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center"
-            {{on 'click' (action this.signInWith 'github')}}
+            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center" type="button" {{on 'click' (action this.signInWith 'github')}}
           >
             With Github
             <SvgImage @name={{vcs-icon 'GithubUser'}} @class="fill-current w-5 h-5 ml-2" />
@@ -35,8 +33,7 @@
         {{/if}}
         {{#if this.multiVcs.enableBitbucketLogin}}
           <button
-            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center"
-            {{on 'click' (action this.signInWith 'bitbucket')}}
+            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center" type="button" {{on 'click' (action this.signInWith 'bitbucket')}}
           >
             With Bitbucket
             <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="fill-current w-5 h-5 ml-2" />
@@ -44,8 +41,7 @@
         {{/if}}
         {{#if this.multiVcs.enableAssemblaLogin}}
           <button
-            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center"
-            {{on 'click' (action this.signInWith 'assembla')}}
+            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center" type="button" {{on 'click' (action this.signInWith 'assembla')}}
           >
             With Assembla
             <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="fill-current w-5 h-5 ml-2" />
@@ -53,8 +49,7 @@
         {{/if}}
         {{#if this.multiVcs.enableGitlabLogin}}
           <button
-            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center"
-            {{on 'click' (action this.signInWith 'gitlab')}}
+            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center" type="button" {{on 'click' (action this.signInWith 'gitlab')}}
           >
             With Gitlab
             <SvgImage @name={{vcs-icon 'GitlabUser'}} @class="fill-current w-5 h-5 ml-2" />
@@ -62,8 +57,7 @@
         {{/if}}
         {{#if this.multiVcs.enableTravisProxyLogin}}
           <button
-            class='multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center'
-            {{on 'click' (action this.signInWith 'travisproxy')}}
+            class='multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center' type="button" {{on 'click' (action this.signInWith 'travisproxy')}}
           >
             With Travis CI VCS Proxy
             <SvgImage @name={{vcs-icon 'TravisproxyUser'}} @class='fill-current w-5 h-5 ml-2' />

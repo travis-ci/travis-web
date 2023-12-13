@@ -5,6 +5,7 @@
     by placing test fee - $1, which will be returned to you within a week.
   </p>
 
+  {{#if this.canViewBilling }}
   <div class='payment-details-form'>
     <TravisForm data-test-stripe-form='true' @onSubmit={{action "submit"}} as |form|>
       <div class='flex flex--col flex-md-row'>
@@ -12,10 +13,10 @@
           <form.field
             @label='First Name'
             @value={{this.billingInfo.firstName}}
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.firstName)}}
             as |Field|
           >
@@ -25,11 +26,11 @@
         <div class='form-elem full-width'>
           <form.field
             @label='Last Name'
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
             @value={{this.billingInfo.lastName}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.lastName)}}
             as |Field|
           >
@@ -49,56 +50,56 @@
           <p>{{stripeError.message}}</p>
         {{/if}}
       </StripeCard>
-  
+
       <form.field
         @label='Billing Email Address'
         @value={{this.billingInfo.billingEmail}}
-        @required={{true}}
+        @requiredOverride={{true}}
         @showRequiredMark={{true}}
         @disabled={{this.disableForm}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.billingEmail)}}
         as |Field|
       >
         <Field.input @name='billing_email_address'/>
       </form.field>
-  
+
       <form.field
         @label='Company Name'
         @value={{this.billingInfo.company}}
-        @required={{false}}
+        @requiredOverride={{false}}
         @showRequiredMark={{false}}
         @disabled={{this.disableForm}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.company)}}
         as |Field|
       >
         <Field.input @name='company_name'/>
         <div class="travis-form__error-message">&nbsp;</div>
       </form.field>
-  
+
       <form.field
         @label='Street Address'
         @value={{this.billingInfo.address}}
-        @required={{true}}
+        @requiredOverride={{true}}
         @showRequiredMark={{true}}
         @disabled={{this.disableForm}}
-        @showValidationStatusIcons={{false}}
+        @showValidationStatusIconsOverride={{false}}
         @onChange={{action (mut this.billingInfo.address)}}
         as |Field|
       >
         <Field.input @name='address'/>
       </form.field>
-  
+
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
             @label='City'
             @value={{this.billingInfo.city}}
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.city)}}
             as |Field|
           >
@@ -109,10 +110,10 @@
           <form.field
             @label='Zip Code'
             @value={{this.billingInfo.zipCode}}
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.zipCode)}}
             as |Field|
           >
@@ -125,11 +126,11 @@
           <form.field
             @label='Country'
             @value={{this.billingInfo.country}}
-            @required={{true}}
+            @requiredOverride={{true}}
             class='billing-country'
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.country)}}
             as |Field|
           >
@@ -145,11 +146,11 @@
         <div class='form-elem full-width'>
           <form.field
             @label='State'
-            @required={{true}}
+            @requiredOverride={{true}}
             @showRequiredMark={{true}}
             @disabled={{this.disableForm}}
             @value={{this.billingInfo.state}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.state)}}
             as |Field|
           >
@@ -163,7 +164,7 @@
         </div>
         {{/if}}
       </div>
-  
+
       {{#if this.showNonZeroVatConfirmation}}
         <div class='flex justify-between items-center mb-8'>
           <div class='w-4/6 pr-2'>
@@ -172,7 +173,7 @@
           <div class='w-1/6 text-right'>
             <form.field
               @value={{this.billingInfo.hasLocalRegistration}}
-              @showValidationStatusIcons={{false}}
+              @showValidationStatusIconsOverride={{false}}
               @disabled={{this.disableForm}}
               @disableFrame={{true}}
               @onChange={{action (mut this.billingInfo.hasLocalRegistration) true}}
@@ -184,7 +185,7 @@
           <div class='w-1/6 text-right'>
             <form.field
               @value={{not this.billingInfo.hasLocalRegistration}}
-              @showValidationStatusIcons={{false}}
+              @showValidationStatusIconsOverride={{false}}
               @disableFrame={{true}}
               @onChange={{action (mut this.billingInfo.hasLocalRegistration) false}}
               as |Field|
@@ -198,11 +199,11 @@
         <div class='form-elem-half-width inline-form-elem billing-optional-field'>
           <form.field
             @label='Vat Id'
-            @required={{this.isVatMandatory}}
+            @requiredOverride={{this.isVatMandatory}}
             @showRequiredMark={{this.isVatMandatory}}
             @disabled={{this.disableForm}}
             @value={{this.billingInfo.vatId}}
-            @showValidationStatusIcons={{false}}
+            @showValidationStatusIconsOverride={{false}}
             @onChange={{action (mut this.billingInfo.vatId)}}
             as |Field|
           >
@@ -211,19 +212,21 @@
         </div>
       {{/if}}
 
+  {{#if this.canEditBilling }}
       <div class='billing-checkout__payment'>
         {{#if this.isLoading}}
           <LoadingIndicator/>
         {{else}}
-          {{g-recaptcha onSuccess=(action "onCaptchaResolved") size="invisible"}}
-          <button class='{{if this.enableSubmit 'button--green' 'button disabled'}}' {{on 'click' form.submit}} data-test-complete-payment='true'>
+          <GRecaptcha @onSuccess={{action "onCaptchaResolved"}} @size="invisible" />
+          <button class='{{if this.enableSubmit 'button--green' 'button disabled'}}' data-test-complete-payment='true' type="button" {{on 'click' form.submit}}>
             Update payment details
           </button>
         {{/if}}
       </div>
+  {{/if}}
     </TravisForm>
   </div>
-
+  {{/if}}
     {{#if this.invoices}}
       {{#if this.hasV2Subscription}}
         {{#if this.v2subscription.isNotManual}}

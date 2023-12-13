@@ -1,8 +1,7 @@
-import { assign } from '@ember/polyfills';
 import { underscore } from '@ember/string';
 import { pluralize } from 'ember-inflector';
 import config from 'travis/config/environment';
-import RESTAdapter from 'ember-data/adapters/rest';
+import RESTAdapter from '@ember-data/adapter/rest';
 import { inject as service } from '@ember/service';
 
 export default RESTAdapter.extend({
@@ -22,7 +21,7 @@ export default RESTAdapter.extend({
   ajaxOptions: function (url, type = 'GET', options) {
     options = options || {};
     options.data = options.data || {};
-    options.data = assign({}, options.data); // clone
+    options.data = Object.assign({}, options.data); // clone
 
     for (let key in options.data) {
       let value = options.data[key];

@@ -50,7 +50,10 @@ export default function dynamicQuery(...args) {
   }
 
   const initialState = Object.assign({}, args.pop(), { content: [] });
-  const taskFn = args.pop();
+  let taskFn = args.pop();
+
+  if (!taskFn)
+    taskFn = function* ({ page = 1, filter = '' }){};
 
   assert('Task must be provided', typeof taskFn === 'function');
   assert('Task must be a GeneratorFunction', taskFn.constructor.name === 'GeneratorFunction');
@@ -145,7 +148,7 @@ const DynamicQuery = ArrayProxy.extend(Evented, {
         } else {
           this.set('pagination', result.pagination);
         }
-        const results = result.toArray();
+        const results = result;
         if (this.appendResults) {
           this.addObjects(results);
         } else {

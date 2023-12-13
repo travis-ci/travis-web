@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import config from 'travis/config/environment';
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | travis-status', function (hooks) {

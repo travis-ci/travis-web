@@ -2,6 +2,7 @@ import { run } from '@ember/runloop';
 import EmberObject, { computed } from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import Service, { inject as service } from '@ember/service';
+import { A } from '@ember/array';
 
 export default Service.extend({
   api: service(),

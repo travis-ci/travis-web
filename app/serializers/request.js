@@ -1,4 +1,5 @@
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
+import { A } from '@ember/array';
 
 let Serializer = V2FallbackSerializer.extend({
 
@@ -13,7 +14,7 @@ let Serializer = V2FallbackSerializer.extend({
   normalizeArrayResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commits) {
       payload.requests.forEach((request) => {
-        let commit = commit = payload.commits.findBy('id', request.commit_id);
+        let commit = payload.commits.findBy('id', request.commit_id);
         if (commit) {
           request.commit = commit;
           return delete request.commit_id;

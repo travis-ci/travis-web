@@ -11,12 +11,13 @@
       @label="Branch"
       @placeholder="Select a branch"
       @value={{this.branch}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       @onChange={{action (mut this.branch)}}
       as |field|
     >
       <field.select
         @search={{perform this.searchBranches}}
+        @searchEnabled={{true}}
         as |branch|
       >
         {{branch}}
@@ -28,7 +29,7 @@
       data-test-status-image-format="true"
       @label="Format"
       @value={{this.format}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       @onChange={{action (mut this.format)}}
       as |field|
     >

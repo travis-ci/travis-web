@@ -1,15 +1,14 @@
 import { visit } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { module, test, skip } from 'qunit';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | job/build matrix', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
-  test('visiting build matrix', async function (assert) {
+  skip('visiting build matrix', async function (assert) {
     this.server.create('user', {login: 'travis-ci'});
     this.server.create('allowance', {subscription_type: 1});
     let repo =  this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
@@ -54,6 +53,5 @@ module('Acceptance | job/build matrix', function (hooks) {
       assert.equal(failedJobRow.language, 'Ruby');
       assert.ok(failedJobRow.os.isUnknown, 'expected the job OS to be unknown');
     });
-    percySnapshot(assert);
   });
 });

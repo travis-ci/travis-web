@@ -4,19 +4,18 @@
       <LinkTo
         @route="job.index"
         @models={{array this.repo this.job}}
-        @id="tab_log"
-        @title="Look at this job's log"
+        id="tab_log"
+        title="Look at this job's log"
         class={{if this.isLog 'active'}}
         data-test-job-log-tab="true"
       >
         Job log
-      </LinkTo>
-    </li>
+      </LinkTo>    </li>
     <li>
       <LinkTo
         @route="job.config"
         @models={{array this.repo this.job}}
-        @title="Look at this job's config"
+        title="Look at this job's config"
         @disabled={{this.job.build.request.noYaml}}
         data-test-build-yaml-tab="true"
       >
@@ -32,8 +31,7 @@
             <EmberTooltip @text={{this.messagesBadgeTooltipText}} />
           </span>
         {{/if}}
-      </LinkTo>
-    </li>
+      </LinkTo>    </li>
   </ul>
 </nav>
 <div class="travistab-body job-tabs">

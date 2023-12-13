@@ -7,7 +7,7 @@
           data-test-visibility-settings-list-item-selected={{selected}}
           autofocus={{and this.focusOnList selected}}
           class="visibility-setting-list-item {{if selected 'visibility-setting-list-item--selected'}}"
-          onclick={{action (mut this.selectionKey) option.key}}
+          onclick={{action (mut this.selectionKey) option.key}} type="button"
         >
           <span class="visibility-setting-list-item__radio"></span>
           <span class="visibility-setting-list-item__description" data-test-visibility-settings-list-item-description>
@@ -22,7 +22,7 @@
       class="settings-button"
       onclick={{action "toggleConfirmationModal"}}
       disabled={{this.isChangeNeutral}}
-      data-test-visibility-settings-submit
+      data-test-visibility-settings-submit type="button"
     >
       Save
     </button>
@@ -68,18 +68,14 @@
     </div>
     <div class="visibility-settings-modal__controls">
       <button
-        data-test-visibility-settings-modal-cancel-button
-        role="button"
-        class="button button--red"
-        onclick={{action "toggleConfirmationModal"}}
+        data-test-visibility-settings-modal-cancel-button class="button button--red"
+        onclick={{action "toggleConfirmationModal"}} type="button"
       >
         Cancel
       </button>
       <button
-        data-test-visibility-settings-modal-confirm-button
-        role="button"
-        class="button button--blue"
-        onclick={{action "confirm"}}
+        data-test-visibility-settings-modal-confirm-button class="button button--blue"
+        onclick={{action "confirm"}} type="button"
       >
         Confirm
       </button>

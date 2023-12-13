@@ -1,14 +1,14 @@
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { percySnapshot } from 'ember-percy';
 
 import {
   SALES_CONTACT_FORM_CONTAINER,
   SALES_CONTACT_IFRAME
 } from 'travis/tests/helpers/selectors';
+import { skip } from "qunit";
 
 // Main page
 export const PAGE_URL = '/travisci-vs-jenkins';
@@ -62,7 +62,7 @@ const checkThanksPageUrlAndContent = (assert, thanksExpected = true) => {
 };
 
 module('Acceptance | travis vs jenkins page', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   test('org redirects', async function (assert) {
@@ -100,16 +100,12 @@ module('Acceptance | travis vs jenkins page', function (hooks) {
       assert.dom(TESTIMONIAL_NAME).exists();
       assert.dom(TESTIMONIAL_POSITION).exists();
       assert.dom(TESTIMONIAL_LINK).exists();
-
-      percySnapshot(assert);
     });
 
     test('thanks page structure', async function (assert) {
       await visit(THANKS_URL);
 
       checkThanksPageUrlAndContent(assert);
-
-      percySnapshot(assert);
     });
   });
 });

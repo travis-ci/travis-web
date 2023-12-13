@@ -1,11 +1,11 @@
-<!--<div class="plan"> -->
+{{!--<div class="plan"> --}}
 <div class='billing-subscription-section plan-overview'>
-  {{#if (not this.account.hasSubscriptionPermissions)}}
+  {{#unless this.account.hasSubscriptionPermissions}}
     <span class="notice-banner--yellow" data-test-help='true'>
       <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
       You don't have admin permissions to edit this subscription.
     </span>
-  {{/if}}
+  {{/unless}}
   {{#if this.showPlanInfo}}
     {{#if (and (not this.subscription.plan.isTrial) (and this.subscription.isNotManual (eq this.subscription.plan.planType 'metered')))}}
       <span class="notice-banner--white block" data-test-plan-notice='true'>
@@ -29,13 +29,13 @@
         <div class='plan'>
           <div>
             <span class="payment-details-label plan-label-color">Current plan:</span>
-            <p class='plan-name flex flex--v-center' data-test-plan-name='true'>           
+            <p class='plan-name flex flex--v-center' data-test-plan-name='true'>
                 {{#if this.subscription.plan}}
                   {{this.subscription.plan.name}}
                 {{else}}
                   Unknown plan
                 {{/if}}
-                
+
                   {{#if this.subscription.isSubscribed}}
                     <span class="badge green square" data-test-active-status='true'>
                       active
@@ -62,7 +62,7 @@
                       Expired {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{/if}}
                   </span>
-              
+
             </p>
             {{#if this.subscription.isManual}}
 		<div class='plan-overview__description' data-test-plan-description>
@@ -95,7 +95,7 @@
           </div>
         </section>
       {{/if}}
-    
+
     </div>
   {{/if}}
     {{#if this.subscription.isNotManual }}
@@ -115,7 +115,7 @@
                   @subscription={{this.expiredStripeSubscription}}
                   @isV2Subscription={{true}}
                   @account={{this.account}}
-                  @isPending={{this.isPending}}
+                  @isPendingOverride={{this.isPending}}
                   @showPlansSelector={{this.showPlansSelector}}
                   @showAddonsSelector={{this.showAddonsSelector}}
                 />
@@ -127,16 +127,16 @@
                   @subscription={{this.subscription}}
                   @isV2Subscription={{true}}
                   @account={{this.account}}
-                  @isPending={{this.isPending}}
+                  @isPendingOverride={{this.isPending}}
                   @showPlansSelector={{this.showPlansSelector}}
                   @showAddonsSelector={{this.showAddonsSelector}}
                 />
               {{/if}}
             {{/if}}
             </div>
-          {{#if this.showPlanInfo}}  
+          {{#if this.showPlanInfo}}
           <div class='float-right flex plan-price-container'>
-            <span class="payment-details-label plan-price-label">Total:</span> 
+            <span class="payment-details-label plan-price-label">Total:</span>
             <span class="plan-price-info">
               {{#if (or this.subscription.plan.isFree this.subscription.plan.isTrial)}}
                 Free
@@ -146,9 +146,9 @@
             </span>
           </div>
           {{/if}}
-        </div>  
+        </div>
       {{/if}}
- <!--   </div> -->
+ {{!--   </div> --}}
 </div>
 
 <hr />
@@ -156,7 +156,7 @@
   {{#if this.subscription.hasUserLicenseAddons}}
     <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
     {{#if this.account.isOrganization}}
-      <button class="button--blue" {{on 'click' (fn (mut this.showUserManagementModal) true)}} data-test-plan-show-user-management-modal='true'>
+      <button class="button--blue" data-test-plan-show-user-management-modal='true' type="button" {{on 'click' (fn (mut this.showUserManagementModal) true)}}>
         User management
       </button>
       <Dialogs::UserManagementModal
@@ -184,7 +184,7 @@
   {{#if (and this.subscription.hasUserLicenseAddons)}}
     <Billing::UserUsage @subscription={{this.subscription}} @account={{this.account}}/>
     {{#if this.account.isOrganization}}
-      <button class="button--blue" {{on 'click' (fn (mut this.showUserManagementModal) true)}} data-test-plan-show-user-management-modal='true'>
+      <button class="button--blue" data-test-plan-show-user-management-modal='true' type="button" {{on 'click' (fn (mut this.showUserManagementModal) true)}}>
         User management
       </button>
       <Dialogs::UserManagementModal

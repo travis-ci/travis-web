@@ -1,4 +1,4 @@
-import Mirage from 'ember-cli-mirage';
+import { Factory } from 'miragejs';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
 });

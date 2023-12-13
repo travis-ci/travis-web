@@ -76,6 +76,7 @@ export default Component.extend({
   externalLinks: service(),
   router: service(),
   scroller: service(),
+  logToLogContent: service(),
 
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
@@ -85,6 +86,8 @@ export default Component.extend({
   isShowingRemoveLogModal: false,
 
   didInsertElement() {
+    this.logToLogContent.setLogContent(this);
+    this.logToLogContent.setLog(this.log);
     if (this.get('features.debugLogging')) {
       // eslint-disable-next-line
       console.log('log view: did insert');
@@ -105,10 +108,6 @@ export default Component.extend({
     let parts, ref;
     if (log || (log = this.log)) {
       parts = log.get('parts');
-      parts.removeArrayObserver(this, {
-        didChange: 'partsDidChange',
-        willChange: 'noop'
-      });
       parts.destroy();
       log.notifyPropertyChange('parts');
       if ((ref = this.lineSelector) != null) {
@@ -176,10 +175,6 @@ export default Component.extend({
     let parts;
     if (log || (log = this.log)) {
       parts = log.get('parts');
-      parts.addArrayObserver(this, {
-        didChange: 'partsDidChange',
-        willChange: 'noop'
-      });
       parts = parts.slice(0);
       this.partsDidChange(parts, 0, null, parts.length);
     }
@@ -220,12 +215,13 @@ export default Component.extend({
     return this.permissions.hasPermission(repo);
   }),
 
-  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', function () {
+  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', 'currentUser', function () {
     let job = this.job;
     let canRemoveLog = this.get('job.canRemoveLog');
     let hasPermission = this.hasPermission;
+    let access = this.currentUser && this.currentUser.hasPermissionToRepo(this.get('job.repo'), 'log_delete');
     if (job) {
-      return canRemoveLog && hasPermission;
+      return canRemoveLog && hasPermission && access;
     }
   }),
 
@@ -247,7 +243,14 @@ export default Component.extend({
     },
 
     toggleLog() {
-      this.toggleProperty('logIsVisible');
+      let access = this.currentUser && this.currentUser.hasPermissionToRepo(this.get('job.repo'), 'log_view');
+      if (access) {
+        this.toggleProperty('logIsVisible');
+      } else {
+        if (this.logIsVisible) {
+          this.toggleProperty('logIsVisible');
+        }
+      }
     },
 
     toggleRemoveLogModal() {

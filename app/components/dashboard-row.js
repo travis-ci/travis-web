@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { alias, reads } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
+import { capitalize } from '@ember/string';
 
 export default Component.extend({
   permissionsService: service('permissions'),
@@ -28,7 +29,7 @@ export default Component.extend({
   displayMenuTofu: alias('repo.permissions.create_request'),
 
   repositoryProvider: computed('repo.provider', function () {
-    return this.repo.provider.capitalize();
+    return capitalize(this.repo.provider);
   }),
 
   repositoryType: computed('repo.serverType', function () {

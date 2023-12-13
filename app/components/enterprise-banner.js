@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { and, alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { task } from 'ember-concurrency';
 
 import timeAgoInWords from 'travis/utils/time-ago-in-words';
@@ -69,7 +69,8 @@ export default Component.extend({
 
   expirationTimeFromNow: computed('expirationTime', function () {
     let expirationTime = this.expirationTime;
-    return new htmlSafe(timeAgoInWords(expirationTime) || '-');
+    let timeText = timeAgoInWords(expirationTime) || '-';
+    return new htmlSafe(`${timeText}`);
   }),
 
   expiring: computed('daysUntilExpiry', function () {

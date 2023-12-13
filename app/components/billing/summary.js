@@ -9,13 +9,25 @@ export default Component.extend({
   subscription: null,
   account: null,
 
-  selectedPlan: reads('subscription.plan'),
+  selectedPlanOverride: null,
+
+  selectedPlan: computed('selectedPlanOverride', 'subscription.plan',  function () {
+    if (this.selectedPlanOverride !== null)
+      return this.selectedPlanOverride;
+
+    return this.subscription.plan
+  }),
 
   isEditPlanLoading: reads('subscription.changePlan.isLoading'),
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
   authenticationNotRequired: not('subscription.clientSecret'),
-  isPending: and('subscription.isPending', 'authenticationNotRequired'),
+  isPendingOverride: null,
+  isPending: computed('subscription.isPending', 'authenticationNotRequired', 'isPendingOverride', function() {
+    if (this.isPendingOverride !== null)
+      return this.isPendingOverride
+    return this.authenticationNotRequired && this.subscription.isPending;
+  }),
   isNotCanceled: not('isCanceled'),
   isNotPending: not('isPending'),
   hasNotExpired: not('isExpired'),

@@ -8,27 +8,26 @@ export default ArrayProxy.extend({
   pagination: computed('content.meta.pagination', function () {
     let paginationData = this.get('content.meta.pagination');
     let object = {
-      total: paginationData.count,
-      perPage: paginationData.limit,
-      offset: paginationData.offset,
-      isFirst: paginationData.is_first,
-      isLast: paginationData.is_last,
-      prev: paginationData.prev,
-      next: paginationData.next,
-      first: paginationData.first,
-      last: paginationData.last,
+      total: paginationData?.count || 0,
+      perPage: paginationData?.limit || 1,
+      offset: paginationData?.offset || 0,
+      isFirst: paginationData?.is_first || false,
+      isLast: paginationData?.is_last || false,
+      prev: paginationData?.prev || 0,
+      next: paginationData?.next || 0,
+      first: paginationData?.first,
+      last: paginationData?.last,
     };
 
     defineProperty(object, 'currentPage', computed(() => {
-      const { offset, limit } = paginationData;
+      const { offset = 0, limit = 1 } = paginationData || {};
       return (offset / limit + 1);
     }));
 
     defineProperty(object, 'numberOfPages', computed(() => {
-      const { count, limit } = paginationData;
+      const { count = 0, limit = 1 } = paginationData || {};
       return Math.ceil(count / limit);
     }));
-
     return object;
   }),
 });

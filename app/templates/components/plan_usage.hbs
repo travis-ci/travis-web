@@ -34,7 +34,7 @@
   <section>
     <h3 class="usage-statistics">Usage statistics</h3>
     <div class="date-picker-container">
-      <button class="date-picker" onclick={{action "datePicker"}} >
+      <button class="date-picker" onclick={{action "datePicker"}} type="button" >
         {{#if this.dateRange.start}}
           {{moment-format this.dateRange.start "YYYY-MM-DD"}}
         {{/if}}
@@ -60,9 +60,9 @@
         </PowerCalendarRange>
       {{/if}}
     </div>
-    <button class="download-csv" onclick={{action "downloadCsv"}}>Download .csv file for more detailed information about usage</button>
+    <button class="download-csv" onclick={{action "downloadCsv"}} type="button">Download .csv file for more detailed information about usage</button>
     {{#if this.v2subscription.plan.isNotStandardOrProTier}}
-      <button class="download-csv" onclick={{action "downloadUserLicenseCsv"}}>Download .csv file for more detailed information about user license usage</button>
+      <button class="download-csv" onclick={{action "downloadUserLicenseCsv"}} type="button">Download .csv file for more detailed information about user license usage</button>
     {{/if}}
     <div class="repositories-visiblity">
       <TravisForm
@@ -70,12 +70,12 @@
       >
         <form.field
           @value={{this.repositoriesVisiblity}}
-          @required={{false}}
+          @requiredOverride={{false}}
           class="repositories-visiblity-selector"
           as |field|
         >
           <field.select
-            @onchange={{action (mut this.repositoriesVisiblity)}}
+            @onChange={{action (mut this.repositoriesVisiblity)}}
             @options={{this.repositoriesVisiblityOptions}}
             as |repositoriesVisiblity|
           >
@@ -113,8 +113,7 @@
                 @query={{hash serverType=this.repo.serverType}}
               >
                 {{repository.formattedSlug}}
-              </LinkTo>
-            </td>
+              </LinkTo>            </td>
             <td>
               {{format-number repository.buildMinutes}}
             </td>

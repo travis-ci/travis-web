@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { currentRouteName } from '@ember/test-helpers';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
-import { percySnapshot } from 'ember-percy';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import unsubscribePage from 'travis/tests/pages/unsubscribe';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -9,7 +8,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 const { emailUnsubscribe } = unsubscribePage;
 
 module('Acceptance | profile/unsubscribe', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
@@ -33,7 +32,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
     test('it renders correct view', function (assert) {
       const { sadmail, title, description, primaryButton, secondaryButton, appendix } = emailUnsubscribe;
 
-      percySnapshot(assert);
+
 
       assert.ok(sadmail.isPresent);
       assert.ok(title.isPresent);
@@ -61,7 +60,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
       test('it renders correct view', function (assert) {
         const { sadmail, title, description, primaryButton, secondaryButton, appendix } = emailUnsubscribe;
 
-        percySnapshot(assert);
+
 
         assert.ok(sadmail.isPresent);
         assert.ok(title.isPresent);
@@ -85,7 +84,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
       test('it allows to cancel unsubscription', async function (assert) {
         const { secondaryButton } = emailUnsubscribe;
         await secondaryButton.click();
-        assert.equal(currentRouteName(), 'repo.index');
+        assert.equal(currentRouteName(), 'repo.no-build');
       });
     });
 
@@ -105,7 +104,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
       test('it renders correct view', function (assert) {
         const { sadmail, title, description, primaryButton, secondaryButton, appendix } = emailUnsubscribe;
 
-        percySnapshot(assert);
+
 
         assert.ok(sadmail.isPresent);
         assert.ok(title.isPresent);
@@ -129,7 +128,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
       test('it allows to leave the page', async function (assert) {
         const { secondaryButton } = emailUnsubscribe;
         await secondaryButton.click();
-        assert.equal(currentRouteName(), 'repo.index');
+        assert.equal(currentRouteName(), 'repo.no-build');
       });
     });
   });

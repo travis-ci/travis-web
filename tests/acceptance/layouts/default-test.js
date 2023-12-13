@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import defaultHeader from 'travis/tests/pages/header/default';
 import defaultLayout from 'travis/tests/pages/layouts/default';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | layouts/default', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   test('header layout when unauthenticated', async function (assert) {

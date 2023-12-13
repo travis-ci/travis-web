@@ -1,6 +1,8 @@
-import { Promise as EmberPromise } from 'rsvp';
+import {Promise as EmberPromise, resolve} from 'rsvp';
 import ArrayProxy from '@ember/array/proxy';
 import { computed } from '@ember/object';
+import ObservableArrayBase from 'travis/utils/observable_array'
+import {asObservableArray} from "./observable_array";
 
 export default ArrayProxy.extend({
   isLoaded: false,
@@ -23,8 +25,8 @@ export default ArrayProxy.extend({
 
   load(array) {
     this.set('isLoading', true);
-    return array.then(() => {
-      array.forEach((record) => {
+    return resolve(array).then((array_) => {
+      array_.forEach((record) => {
         if (!this.includes(record)) {
           return this.pushObject(record);
         }
@@ -34,7 +36,11 @@ export default ArrayProxy.extend({
     });
   },
 
+
   observe(collection) {
+    if (!(collection instanceof ObservableArrayBase)) {
+      collection = asObservableArray(collection)
+    }
     return collection.addArrayObserver(this, {
       willChange: 'observedArrayWillChange',
       didChange: 'observedArraydidChange'
@@ -42,6 +48,7 @@ export default ArrayProxy.extend({
   },
 
   observedArrayWillChange(array, index, removedCount) {
+    console.log("Will I change?");
     let i, len, object, removedObjects, results;
     removedObjects = array.slice(index, index + removedCount);
     results = [];
@@ -53,6 +60,7 @@ export default ArrayProxy.extend({
   },
 
   observedArraydidChange(array, index, removedCount, addedCount) {
+    console.log("did I changed?");
     let addedObjects, i, len, object, results;
     addedObjects = array.slice(index, index + addedCount);
     results = [];

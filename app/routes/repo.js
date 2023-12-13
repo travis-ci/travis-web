@@ -1,4 +1,4 @@
-import { getWithDefault, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
@@ -9,6 +9,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
   tabStates: service(),
   auth: service(),
   features: service(),
+  tasks: service(),
 
   slug: null,
 
@@ -40,13 +41,14 @@ export default TravisRoute.extend(ScrollResetMixin, {
     if (model && !model.get) {
       model = this.store.find('repo', model.id);
     }
+
     return controller.set('repo', model);
   },
 
   serialize(repo) {
     // slugs are sometimes unknown ???
-    const slug = getWithDefault(repo, 'slug', 'unknown/unknown');
-    const [owner, name] = slug.split('/');
+    const slug = repo ? repo.get('slug') : 'unknown/unknown';
+    const [owner, name] = (slug || 'unknown/unknown').split('/');
     const provider = repo.get('vcsProvider.urlPrefix');
 
     return { provider, owner, name };
@@ -61,7 +63,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
   beforeModel() {
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
-      repo.fetchRepoOwnerAllowance.perform();
+      this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
   },
 

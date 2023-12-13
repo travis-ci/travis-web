@@ -17,7 +17,7 @@ export default Component.extend({
   onSubmit() {},
 
   registerField(field) {
-    this.fields.addObject(field);
+    this.fields.push(field);
   },
 
   unregisterField(field) {

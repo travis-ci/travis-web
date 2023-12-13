@@ -6,6 +6,7 @@ import { OWNER_TABS } from 'travis/controllers/owner/repositories';
 export default TravisRoute.extend({
   features: service(),
   insights: service(),
+  store: service(),
 
   needsAuth: false,
 

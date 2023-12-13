@@ -68,15 +68,14 @@
         <span>Prioritize build</span>
       {{/if}}
     </button>
-    {{#if (not this.increasePriorityTask.isRunning)}}
+    {{#unless this.increasePriorityTask.isRunning}}
       <button
-        role="button"
         class="button button--red"
         onclick={{this.onClose}}
-        data-test-prioritize-cancel-button
+        data-test-prioritize-cancel-button type="button"
       >
         Cancel
       </button>
-    {{/if}}
+    {{/unless}}
   </div>
 </Modal> 

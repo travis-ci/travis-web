@@ -10,6 +10,7 @@ export default Component.extend({
   tagName: 'li',
   classNames: ['cache-item'],
   classNameBindings: ['cache.type'],
+  injectedFunction: null,
 
   delete: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
@@ -20,7 +21,8 @@ export default Component.extend({
 
       try {
         yield this.api.delete(url);
-        this.caches.removeObject(this.cache);
+        const caches = this.caches.filter(item => item !== this.cache);
+        this.injectedFunction(caches, this.component);
       } catch (e) {
         this.flashes.error('Could not delete the cache');
       }

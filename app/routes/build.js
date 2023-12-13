@@ -3,6 +3,8 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   tabStates: service(),
+  store: service(),
+  tasks: service(),
 
   titleToken(model) {
     return `Build #${model.get('number')}`;
@@ -17,16 +19,15 @@ export default TravisRoute.extend({
 
   setupController(controller, model) {
     if (model && !model.get) {
-      model = this.store.recordForId('build', model);
+      model = this.store.findRecord('build', model);
       this.store.find('build', model);
     }
+    const currentTab = controller.currentTab
+    this.tabStates.setMainTab(currentTab || 'build');
     const repo = this.controllerFor('repo');
     controller.set('build', model);
-    return repo.activate('build');
-  },
-
-  activate() {
-    this.set('tabStates.mainTab', 'build');
+    if (!currentTab)
+      return repo.activate('build');
   },
 
   model(params) {
@@ -34,15 +35,15 @@ export default TravisRoute.extend({
   },
 
   afterModel(model) {
-    const slug = this.modelFor('repo').get('slug');
+    const slug = this.modelFor('repo').slug;
     this.ensureBuildOwnership(model, slug);
-    return model.get('request').then(request => request && request.fetchMessages.perform());
+    return model.get('request').then(request => request && this.tasks.fetchMessages.perform(request));
   },
 
   beforeModel() {
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
-      repo.fetchRepoOwnerAllowance.perform();
+       this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
   },
 

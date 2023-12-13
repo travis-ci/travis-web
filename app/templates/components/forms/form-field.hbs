@@ -16,7 +16,7 @@
 {{/if}}
 {{#if this.showIcon}}
   <div class="travis-form__icon">
-    <SvgImage @name={{icon}} />
+    <SvgImage @name={{this.icon}} />
   </div>
 {{/if}}
 {{yield
@@ -46,16 +46,16 @@
       onInit=(action "setFieldElementId")
       class="travis-form__field-component"
     )
-    select=(component selectComponent
+    select=(component this.selectComponent
       form=this.form
       selected=this.value
       disabled=this.disabled
       placeholder=this.placeholder
-      onfocus=(action "handleFocus")
-      onopen=(action "handleFocus")
-      onblur=(action "handleSelectBlur")
-      onclose=(action "handleSelectBlur")
-      onchange=(action "handleChange")
+      onFocus=(action "handleFocus")
+      onOpen=(action "handleFocus")
+      onBlur=(action "handleSelectBlur")
+      onClose=(action "handleSelectBlur")
+      onChange=(action "handleChange")
     )
     checkbox=(component "forms/form-checkbox"
       form=this.form
@@ -86,7 +86,7 @@
       class="travis-form__field-component"
     )
     slider=(component 'forms/form-slider'
-      form=form
+      form=this.form
       value=this.value
       max=this.max
       min=this.min
@@ -97,7 +97,7 @@
       class='travis-form__field-component'
     )
     multipleInputs=(component 'forms/multiple-inputs-field'
-      form=form
+      form=this.form
       initialValue=this.initialValue
       required=this.required
       disabled=this.disabled
@@ -118,10 +118,10 @@
 {{#if this.requiresValidation }}
   {{#if this.showValidationStatusIcons}}
     <div class="travis-form__field-badge travis-form__field-badge--error">
-      <SvgImage @name="form-error-icon" @width=14 @height=14 />
+      <SvgImage @name="form-error-icon" @width="14" @height="14" />
     </div>
     <div class="travis-form__field-badge travis-form__field-badge--valid">
-      <SvgImage @name="form-valid-icon" @width=14 @height=14 />
+      <SvgImage @name="form-valid-icon" @width="14" @height="14" />
     </div>
   {{/if}}
   {{#if this.showValidationStatusMessage}}

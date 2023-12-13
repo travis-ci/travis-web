@@ -134,7 +134,9 @@ export default Model.extend(DurationCalculations, {
     return !isEmpty(jobs.filterBy('canCancel'));
   }),
 
-  canRestart: alias('isFinished'),
+  canRestart: computed('isFinished', function () {
+    return this.isFinished;
+  }),
 
   cancel() {
     const url = `/build/${this.id}/cancel`;

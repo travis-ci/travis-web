@@ -1,10 +1,8 @@
 <div class="search search--sidebar">
   <div class="search-inner">
     <Input
-      @id="travis-search"
-      @value={{readonly this.repositories.searchQuery}}
-      @key-up={{action this.onQueryChange}}
-      @placeholder="Search all repositories"
+      id="travis-search"
+      @value={{readonly this.repositories.searchQuery}} placeholder="Search all repositories" {{on "keyup" (action this.onQueryChange)}}
     />
     <label for="travis-search">
       <SvgImage @name="icon-search" @class="icon" />

@@ -1,9 +1,8 @@
 import EmberObject from '@ember/object';
-import { percySnapshot } from 'ember-percy';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | status images', function (hooks) {
   setupRenderingTest(hooks);
@@ -22,9 +21,9 @@ module('Integration | Component | status images', function (hooks) {
     });
 
     this.set('repo', repo);
-    await render(hbs`{{status-images repo=repo}}`);
+    await render(hbs`{{status-images repo=this.repo}}`);
 
-    percySnapshot(assert);
+
 
     assert.dom('h3').hasText('Status Image');
     assert.dom('[data-test-status-image-branch]').containsText('not-actually-master');

@@ -90,9 +90,8 @@ You can also start an interactive test runner for easier development:
 
 ### Linting
 
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
+* `npm run lint`
+* `npm run lint:fix`
 
 ### Feature Flags
 

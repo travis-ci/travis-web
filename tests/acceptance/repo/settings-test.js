@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
-import { Response } from 'ember-cli-mirage';
-import { percySnapshot } from 'ember-percy';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
+import { Response } from 'miragejs';
 import settingsPage from 'travis/tests/pages/settings';
 import userManagement from 'travis/tests/pages/user-management';
 import topPage from 'travis/tests/pages/top';
@@ -11,7 +10,7 @@ import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo settings', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
@@ -33,7 +32,11 @@ module('Acceptance | repo settings', function (hooks) {
       slug: 'org-login/repository-name',
       private: true,
       permissions: {
-        admin: true
+        admin: true,
+        settings_read: true,
+        settings_create: true,
+        settings_delete: true,
+        settings_update: true
       },
       owner: { login: 'org-login', id: 2 }
     });
@@ -228,14 +231,14 @@ module('Acceptance | repo settings', function (hooks) {
       assert.equal(environmentVariable.value, 'true', 'expected leading whitespace to be trimmed');
     });
 
-    assert.deepEqual(requestBodies.pop(), { env_var: {
+    assert.deepEqual(requestBodies[0].env_var, {
       id: '1919',
       name: 'drafted',
       value: 'true',
       public: true,
       branch: null,
       repository_id: this.repository.id
-    } });
+    });
 
     // This will save env var with branch
     requestBodies = [];
@@ -267,14 +270,16 @@ module('Acceptance | repo settings', function (hooks) {
       assert.ok(environmentVariable.isNewlyCreated, 'expected environment variable to be newly created');
     });
 
-    assert.deepEqual(requestBodies.pop(), { env_var: {
+
+
+    assert.deepEqual(requestBodies[0].env_var,  {
       id: '1920',
       name: 'envname',
       value: 'envvalue',
       public: true,
       branch: branchName,
       repository_id: this.repository.id
-    } });
+    });
 
     // This will trigger a client-side error
     this.server.post('/settings/env_vars', () => new Response(403, {}, {}));
@@ -457,6 +462,6 @@ module('Acceptance | repo settings', function (hooks) {
     assert.notOk(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be disabled');
     assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'setting.value': false });
 
-    percySnapshot(assert);
+
   });
 });

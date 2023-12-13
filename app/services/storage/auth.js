@@ -2,11 +2,38 @@ import { computed } from '@ember/object';
 import { assert } from '@ember/debug';
 import { parseWithDefault } from '../storage';
 import Service, { inject as service } from '@ember/service';
+import { asObservableArray } from "travis/utils/observable_array";
+import { underscoreKeys } from "travis/utils/underscore-keys";
 
 const storage = getStorage();
 
-export default Service.extend({
+const Auth = Service.extend({
   store: service(),
+
+  persistAccounts(newValue) {
+    const records = (newValue || []).map(record => serializeUserRecord(record));
+    storage.setItem('travis.auth.accounts', JSON.stringify(records));
+  },
+
+  accounts: computed({
+    get() {
+      const accountsData = storage.getItem('travis.auth.accounts');
+      let accounts = parseWithDefault(accountsData, []).map(account =>
+          extractAccountRecord(this.store, account)
+      );
+      accounts = asObservableArray(accounts);
+
+      accounts.addArrayObserver(this, {
+        willChange: 'persistAccounts',
+        didChange: 'persistAccounts'
+      });
+      return accounts;
+    },
+    set(key, accounts_) {
+      this.persistAccounts(accounts_);
+      return accounts_;
+    }
+  }),
 
   token: computed({
     get() {
@@ -32,8 +59,8 @@ export default Service.extend({
 
   user: computed({
     get() {
-      const data = parseWithDefault(storage.getItem('travis.user'), null);
-      return data && data.user || data;
+      const data = parseWithDefault(storage.getItem('travis.user'), {});
+      return underscoreKeys(data && data.user || data);
     },
     set(key, user) {
       assert('User storage is read-only', user === null);
@@ -41,29 +68,6 @@ export default Service.extend({
       return null;
     }
   }),
-
-  accounts: computed({
-    get() {
-      const accountsData = storage.getItem('travis.auth.accounts');
-      const accounts = parseWithDefault(accountsData, []).map(account =>
-        extractAccountRecord(this.store, account)
-      );
-      accounts.addArrayObserver(this, {
-        willChange: 'persistAccounts',
-        didChange: 'persistAccounts'
-      });
-      return accounts;
-    },
-    set(key, accounts) {
-      this.persistAccounts(accounts);
-      return accounts;
-    }
-  }).volatile(),
-
-  persistAccounts(newValue) {
-    const records = (newValue || []).map(record => serializeUserRecord(record));
-    storage.setItem('travis.auth.accounts', JSON.stringify(records));
-  },
 
   activeAccountId: computed({
     get() {
@@ -135,6 +139,7 @@ function getStorage() {
   // primary storage for auth is the one in which auth data was updated last
   const sessionStorageUpdatedAt = +sessionStorage.getItem('travis.auth.updatedAt');
   const localStorageUpdatedAt = +localStorage.getItem('travis.auth.updatedAt');
+
   return sessionStorageUpdatedAt > localStorageUpdatedAt ? sessionStorage : localStorage;
 }
 
@@ -147,3 +152,4 @@ function extractAccountRecord(store, userData) {
   return record || store.push(store.normalize('user', userData));
 }
 
+export default Auth;

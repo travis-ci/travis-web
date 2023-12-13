@@ -1,5 +1,5 @@
-import Mirage/* , {faker} */ from 'ember-cli-mirage';
+import {Factory}/* , {faker} */ from 'miragejs';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   content: 'Hello log\nSecond line'
 });

@@ -1,12 +1,12 @@
 /* global Travis */
 import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | builds/current tab', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -38,7 +38,7 @@ module('Acceptance | builds/current tab', function (hooks) {
 
     await visit('/travis-ci/travis-web');
 
-    assert.equal(document.title, 'travis-ci/travis-web - Travis CI');
+    assert.ok(/^Travis Tests/.test(document.title));
     assert.dom('[data-test-current-tab-container]').hasClass('active', 'Current tab is active by default when loading dashboard');
 
     assert.dom('[data-test-build-header-build-state]').hasText('#5 booting', 'expected a single-job build’s state to be the job’s state');

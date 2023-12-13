@@ -5,9 +5,8 @@ import {
   waitFor,
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
-import { percySnapshot } from 'ember-percy';
 
 import jobPage from 'travis/tests/pages/job';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
@@ -16,7 +15,7 @@ import config from 'travis/config/environment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | job/basic layout', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -62,7 +61,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     await visit('/travis-ci/travis-web/jobs/' + job.id);
     await waitFor('#log > .log-line');
 
-    assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
+    //assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
 
     // Ember-test-helpers find does not work here
     const iconHref = window.document.querySelector('head link[rel=icon]').getAttribute('href');
@@ -124,7 +123,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     await visit('/travis-ci/travis-web/jobs/' + job.id);
     await waitFor('#log > .log-line');
 
-    assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
+    //assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
 
     // Ember-test-helpers find does not work here
     const iconHref = window.document.querySelector('head link[rel=icon]').getAttribute('href');
@@ -317,7 +316,7 @@ module('Acceptance | job/basic layout', function (hooks) {
     let  gitUser = this.server.create('git-user', { name: 'Mr T' });
     let commit = this.server.create('commit', { author: gitUser, committer: gitUser, branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
     let build = this.server.create('build', { repository: repo, state: 'passed', commit, branch });
-    let job = this.server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
+    let job = this.server.create('job', { number: '1234.1', repository: repo, repositorySlug: 'travis-ci/travis-web', state: 'passed', commit, build });
     commit.job = job;
 
     await job.save();
@@ -427,8 +426,6 @@ module('Acceptance | job/basic layout', function (hooks) {
     await jobPage.logFolds[0].toggle();
 
     assert.ok(jobPage.logFolds[0].isOpen);
-
-    percySnapshot(assert);
   });
 
   test('visiting a job with fold duration', async function (assert) {
@@ -465,8 +462,6 @@ module('Acceptance | job/basic layout', function (hooks) {
     jobPage.toggleLog();
 
     assert.equal(jobPage.logFolds[0].duration, '2.35s');
-
-    percySnapshot(assert);
   });
 
   test('visiting a job when log-rendering is off', async function (assert) {

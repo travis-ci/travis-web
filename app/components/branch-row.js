@@ -22,18 +22,22 @@ export default Component.extend({
 
   commitUrl: computed('branch.repository.slug', 'branch.last_build.commit.sha', 'vcsType', function () {
     const [owner, repo] = this.get('branch.repository.slug').split('/');
-    const vcsType = this.get('vcsType');
+    const vcsType = this.vcsType;
     const commit = this.get('branch.last_build.commit.sha');
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
   }),
+  vcsTypeOverride: null,
 
   vcsType: computed('branch.repository.id', function () {
+    if (this.vcsTypeOverride)
+      return this.vcsTypeOverride;
+
     const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
     return repository.vcsType;
   }),
 
   provider: computed('vcsType', function () {
-    return this.get('vcsType') && this.get('vcsType').toLowerCase().replace('repository', '');
+    return this.vcsType && this.vcsType.toLowerCase().replace('repository', '');
   }),
 
   rawCreatedBy: alias('branch.last_build.created_by'),
@@ -108,7 +112,7 @@ export default Component.extend({
         }
 
         run(() => {
-          lastBuilds.set('count', response['@pagination'].count);
+          lastBuilds.set('count', response['@pagination']?.count || 0);
           lastBuilds.set('content', array);
           lastBuilds.set('isLoading', false);
         });

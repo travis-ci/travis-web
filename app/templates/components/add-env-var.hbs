@@ -6,9 +6,9 @@
     <form.field
       @label="Name"
       @value={{this.name}}
-      @required={{true}}
+      @requiredOverride={{true}}
       @validateOnField={{false}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       @onChange={{action (mut this.name)}}
       @validator={{action "validateEnvName"}}
       as |field|
@@ -20,9 +20,9 @@
     <form.field
       @label="Value"
       @value={{this.value}}
-      @required={{true}}
+      @requiredOverride={{true}}
       @onChange={{action (mut this.value)}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.input class="env-value" placeholder="Value" />
@@ -32,16 +32,17 @@
     <form.field
       @label="Branch"
       @value={{this.branch}}
-      @required={{false}}
+      @requiredOverride={{false}}
       class="env-branch-selector"
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.select
         @placeholder="All branches"
         @allowClear={{true}}
-        @onchange={{action (mut this.branch)}}
+        @onChange={{action (mut this.branch)}}
         @search={{perform this.search}}
+        @searchEnabled={{true}}
         as |branch|
       >
         {{branch}}
@@ -64,7 +65,7 @@
     {{#if this.save.isRunning}}
       <LoadingIndicator />
     {{else}}
-      <button onclick={{form.submit}} class="add-env-form-submit form-submit">
+      <button onclick={{form.submit}} class="add-env-form-submit form-submit" type="button">
         Add
       </button>
     {{/if}}

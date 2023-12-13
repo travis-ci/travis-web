@@ -1,23 +1,28 @@
 /* global server */
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 import config from 'travis/config/environment';
 import fuzzysort from 'fuzzysort';
+import { createServer } from 'miragejs';
+import { A } from '@ember/array';
+
 
 const { validAuthToken, apiEndpoint } = config;
 
-export default function () {
-  this.timing = 0;
+export default function (server) {
+  server.timing = 0;
+  server.urlPrefix = apiEndpoint;
+  server.namespace = '';
+  server.logging = window.location.search.includes('mirage-logging=true');
 
-  const _defaultHandler = this.pretender._handlerFor;
+  let finalConfig = {
+    ...server,
+    routes
+  }
 
-  this.pretender._handlerFor = function (verb, path, request) {
-    const authHeader = request.requestHeaders.Authorization;
-    if (authHeader && authHeader !== `token ${validAuthToken}`) {
-      return _defaultHandler.apply(this, ['GET', '/unauthorized', request]);
-    }
-    return _defaultHandler.apply(this, arguments);
-  };
+  return createServer(finalConfig);
+}
 
+function routes () {
   this.get('https://pnpcptp8xh9k.statuspage.io/api/v2/status.json', function () {
     return {
       'page': {
@@ -52,10 +57,6 @@ export default function () {
     return new Response(403, {}, {});
   });
 
-  this.urlPrefix = apiEndpoint;
-  this.namespace = '';
-  this.logging = window.location.search.includes('mirage-logging=true');
-
   this.get('/users', function ({ users }, request) {
     let userData = JSON.parse(localStorage.getItem('travis.user')),
       id = userData.id;
@@ -67,7 +68,7 @@ export default function () {
   });
 
   this.get('/user', function (schema, request) {
-    const { authorization } = request.requestHeaders;
+    const authorization = request.requestHeaders.Authorization;
     const firstUser = schema.users.first();
 
     if (authorization !== `token ${firstUser.token}`) {
@@ -86,7 +87,7 @@ export default function () {
   });
 
   this.get('/users/permissions', (schema, request) => {
-    const { authorization } = request.requestHeaders;
+    const authorization = request.requestHeaders.Authorization;
 
     if (!authorization) {
       return {};
@@ -191,6 +192,9 @@ export default function () {
               'migrate': false,
               'star': false,
               'unstar': false,
+              'build_cancel': true,
+              'build_restart': true,
+              'build_debug': true,
               'create_cron': false,
               'create_env_var': false,
               'create_key_pair': false
@@ -247,6 +251,9 @@ export default function () {
               'migrate': false,
               'star': false,
               'unstar': false,
+              'build_cancel': true,
+              'build_restart': true,
+              'build_debug': true,
               'create_cron': false,
               'create_env_var': false,
               'create_key_pair': false
@@ -303,6 +310,9 @@ export default function () {
               'migrate': false,
               'star': false,
               'unstar': false,
+              'build_cancel': true,
+              'build_restart': true,
+              'build_debug': true,
               'create_cron': false,
               'create_env_var': false,
               'create_key_pair': false
@@ -426,7 +436,7 @@ export default function () {
       return {
         owner: {
           // The API for now is returning these capitalised
-          type: `${owner.modelName.substr(0, 1).toUpperCase()}${owner.modelName.substr(1)}`,
+          type: `${owner.modelName.slice(0, 1).toUpperCase()}${owner.modelName.slice(1)}`,
           id: owner.id
         },
         create: (owner.permissions || {}).createSubscription
@@ -650,6 +660,7 @@ export default function () {
       repo = schema.repositories.find(slug_or_id);
     } else {
       const slug = decodeURIComponent(slug_or_id);
+
       repo = schema.repositories.findBy({ slug });
     }
     return repo || new Response(404, {});
@@ -739,7 +750,7 @@ export default function () {
   this.get('/v3/org/:organizationId/build_permissions', function (schema, request) {
     const { organizationId } = request.params;
     const org = schema.organizations.find(organizationId);
-    const owner = schema.owners.first;
+    const owner = schema.owners?.first || {};
 
     let response = {
       '@type': 'build_permissions',
@@ -994,6 +1005,8 @@ export default function () {
 
     const repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
 
+    repositories.models = A(repositories.models);
+
     if (sort_by) {
       repositories.models = repositories.models.sortBy(sort_by);
     }
@@ -1015,11 +1028,10 @@ export default function () {
         if (paramValue === 'true') {
           repositories.models = repositories.models.filterBy(property);
         } else {
-          repositories.models = repositories.models.rejectBy(property);
+          repositories.models = A(repositories.models).rejectBy(property);
         }
       }
     });
-
     return this.serialize(repositories);
   });
 
@@ -1243,7 +1255,9 @@ export default function () {
   });
 
   this.get('/user/:id/beta_migration_requests', function ({ betaMigrationRequests }, request) {
-    return betaMigrationRequests.where({ owner_id: request.params.id });
+    if (betaMigrationRequests)
+      return betaMigrationRequests.where({ owner_id: request.params.id });
+    return new Response(404, {}, []);
   });
 
   this.post('/user/:id/beta_migration_request', function ({ betaMigrationRequests }, request) {

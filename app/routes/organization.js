@@ -1,5 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
+import { A } from '@ember/array';
 
 export default TravisRoute.extend({
   accounts: service(),

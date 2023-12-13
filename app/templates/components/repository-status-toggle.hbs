@@ -3,8 +3,7 @@
   @route="repo"
   @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}
   @query={{hash serverType=this.repository.serverType}}
-  class="profile-repo"
-  @classNameBindings="admin:admin:non-admin"
+  class="profile-repo non-admin"
 >
   {{this.name}}
 </LinkTo>
@@ -30,7 +29,7 @@
       @route="settings"
       @models={{array this.repository.provider this.repository.ownerName this.repository.vcsName}}
       @tagName="button"
-      @title="Go to Travis CI repository settings"
+      title="Go to Travis CI repository settings"
       class="button profile-settings"
     >
       <SvgImage @name="icon-settings" @class="icon icon-hover" />

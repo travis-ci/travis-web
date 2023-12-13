@@ -1,13 +1,12 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | profile/filtering', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -82,7 +81,7 @@ module('Acceptance | profile/filtering', function (hooks) {
     assert.equal(profilePage.noRepositoriesFoundByFilter, 'Sorry, no results found.');
 
     await profilePage.filter('spec');
-    percySnapshot(assert);
+
     assert.equal(profilePage.administerableRepositories.length, 1, 'expected one repository');
 
     assert.equal(profilePage.administerableRepositories[0].name, 'specific-repository-name');

@@ -1,10 +1,8 @@
-import Ember from 'ember';
-import { htmlSafe } from '@ember/string';
+import { escape } from 'travis/helpers/format-message';
+import { htmlSafe } from '@ember/template';
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
 import formatCommit from 'travis/utils/format-commit';
-
-const { escapeExpression: escape } = Ember.Handlebars.Utils;
 
 export default Helper.extend({
   externalLinks: service(),
@@ -24,6 +22,6 @@ export default Helper.extend({
     const commitUrl = this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
     const url = escape(commitUrl);
     const string = `<a class="github-link only-on-hover" href="${url}">${commit}</a>`;
-    return new htmlSafe(string);
+    return new htmlSafe(`${string}`);
   }
 });

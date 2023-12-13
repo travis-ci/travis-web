@@ -8,8 +8,10 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
+import {asObservableArray} from "travis/utils/observable_array";
 
 export default TravisRoute.extend(BuildFaviconMixin, {
+  store: service(),
   auth: service(),
   features: service(),
   featureFlags: service(),
@@ -43,7 +45,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     }
     if (this.auth.signedIn) {
       this.wizard.fetch.perform().then(() => { this.storage.wizardStep = this.wizard.state; });
-      return this.get('featureFlags.fetchTask').perform();
+      return this.get('featureFlags.fetchTask').unlinked().perform();
     }
   },
 
@@ -62,18 +64,25 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   // visitor is subscribed to all of the public repos in the store as long as
   // they're not a collaborator. It also sets up an observer to subscribe to any
   // new repo that enters the store.
+
   setupRepoSubscriptions() {
-    this.store.filter('repo', null,
-      (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
-      ['private', 'isCurrentUserACollaborator']
-    ).then((repos) => {
-      repos.forEach(repo => this.subscribeToRepo(repo));
-      repos.addArrayObserver(this, {
+    this.store.filter('repo', null, (repo) => {
+      return !repo.get('private') && !repo.get('isCurrentUserACollaborator');
+    }).then((repos) => {
+      let plainRepos = []
+      repos.forEach(repo => {
+        this.subscribeToRepo(repo)
+        plainRepos.push(repo)
+      });
+      plainRepos = asObservableArray(plainRepos);
+      this.set('repos', plainRepos);
+      plainRepos.addArrayObserver(this, {
         willChange: 'reposWillChange',
         didChange: 'reposDidChange'
       });
     });
   },
+
 
   reposWillChange(array, start, removedCount, addedCount) {
     let removedRepos = array.slice(start, start + removedCount);
@@ -86,14 +95,14 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   unsubscribeFromRepo: function (repo) {
-    if (this.pusher && repo) {
-      this.pusher.unsubscribe(`repo-${repo.get('id')}`);
+    if (Travis.pusher && repo) {
+      Travis.pusher.unsubscribe(`repo-${repo.get('id')}`);
     }
   },
 
   subscribeToRepo: function (repo) {
-    if (this.pusher) {
-      this.pusher.subscribe(`repo-${repo.get('id')}`);
+    if (Travis.pusher) {
+      Travis.pusher.subscribe(`repo-${repo.get('id')}`);
     }
   },
 

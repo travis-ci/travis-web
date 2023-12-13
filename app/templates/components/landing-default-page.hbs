@@ -13,7 +13,7 @@
           {{#if this.multiVcs.enabled}}
             <div>
               {{#if this.multiVcs.enableGithubLogin}}
-                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'github')}}>
+                <button class="hero-button org multi-vcs" type="button" {{on 'click' (action this.signIn 'github')}}>
                   <SvgImage @name="icon-repooctocat" />
                   <span class="label-align">
                     Sign up with Github
@@ -21,7 +21,7 @@
                 </button>
               {{/if}}
               {{#if this.multiVcs.enableAssemblaLogin}}
-                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'assembla')}}>
+                <button class="hero-button org multi-vcs" type="button" {{on 'click' (action this.signIn 'assembla')}}>
                   <SvgImage @name="icon-assembla" />
                   <span class="label-align">
                     Sign up with Assembla
@@ -29,7 +29,7 @@
                 </button>
               {{/if}}
               {{#if this.multiVcs.enableBitbucketLogin}}
-                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'bitbucket')}}>
+                <button class="hero-button org multi-vcs" type="button" {{on 'click' (action this.signIn 'bitbucket')}}>
                   <SvgImage @name="icon-bitbucket" />
                   <span class="label-align">
                     Sign up with Bitbucket
@@ -37,7 +37,7 @@
                 </button>
               {{/if}}
               {{#if this.multiVcs.enableGitlabLogin}}
-                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'gitlab')}}>
+                <button class="hero-button org multi-vcs" type="button" {{on 'click' (action this.signIn 'gitlab')}}>
                   <SvgImage @name="icon-bitbucket" />
                   <span class="label-align">
                     Sign up with Gitlab
@@ -48,7 +48,7 @@
           {{/if}}
         {{/if}}
         {{#if this.auth.signingIn}}
-          <button class="hero-button org">
+          <button class="hero-button org" type="button">
             <span class="loading-indicator--white">
               <i></i>
               <i></i>

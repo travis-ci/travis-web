@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { reads, and, or, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { A } from '@ember/array';
 
 export default Controller.extend({
   auth: service(),

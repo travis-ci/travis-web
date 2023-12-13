@@ -1,4 +1,4 @@
-FROM ruby:2.4
+FROM ruby:3.2.2
 
 LABEL maintainer Travis CI GmbH <support+travis-web-docker-images@travis-ci.com>
 
@@ -6,7 +6,8 @@ RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 10.7.0
+ENV NODE_VERSION 18.17.1
+ENV NODE_OPTIONS --no-experimental-fetch
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
@@ -37,7 +38,7 @@ RUN npm install --silent -g ember-cli
 
 COPY . /app
 
-RUN npm ci --silent
+RUN npm ci --silent --force
 RUN ember build --environment=production
 
 RUN cp -a public/* dist/

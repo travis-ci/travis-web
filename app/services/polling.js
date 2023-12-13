@@ -33,7 +33,7 @@ export default Service.extend({
     let sources;
     sources = this.sources;
     if (!sources.includes(source)) {
-      return sources.pushObject(source);
+      return sources.push(source);
     }
   },
 
@@ -47,7 +47,7 @@ export default Service.extend({
     let watchedModels;
     watchedModels = this.watchedModels;
     if (!watchedModels.includes(model)) {
-      return watchedModels.pushObject(model);
+      return watchedModels.push(model);
     }
   },
 

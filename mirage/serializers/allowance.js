@@ -1,4 +1,4 @@
-import { Serializer } from 'ember-cli-mirage';
+import { Serializer } from 'miragejs';
 import { isArray } from '@ember/array';
 
 export default Serializer.extend({

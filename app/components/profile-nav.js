@@ -64,24 +64,47 @@ export default Component.extend({
 
   isOrganization: reads('model.isOrganization'),
   hasAdminPermissions: reads('model.permissions.admin'),
+  hasPlanViewPermissions: reads('model.permissions.plan_view'),
+  hasPlanUsagePermissions: reads('model.permissions.plan_usage'),
+  hasPlanCreatePermissions: reads('model.permissions.plan_create'),
+  hasBillingViewPermissions: reads('model.permissions.billing_view'),
+  hasInvoicesViewPermissions: reads('model.permissions.plan_invoices'),
+  hasSettingsReadPermissions: reads('model.permissions.settings_read'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
-  showOrganizationSettings: and('isOrganizationAdmin', 'isProVersion'),
+  showOrganizationSettings: computed('isOrganizationAdmin', 'isProVersion', 'hasSettingsReadPermissions', function () {
+    const forOrganization = !this.isOrganization || this.hasSettingsReadPermissions;
+    return this.isOrganizationAdmin && this.isProVersion && forOrganization;
+  }),
 
-  showSubscriptionTab: computed('features.enterpriseVersion', 'model.isAssembla', 'model.isUser', function () {
-    const isAssemblaUser = this.model.isUser && this.model.isAssembla;
-    const isEnterprise = this.features.get('enterpriseVersion');
-    return !isEnterprise && !isAssemblaUser && !!billingEndpoint;
+  showSubscriptionTab: computed('features.enterpriseVersion', 'hasPlanViewPermissions',
+    'hasPlanCreatePermissions', 'model.isAssembla', 'model.isUser',
+    'isOrganization', function () {
+      const forOrganization = !this.isOrganization ||
+        ((this.model.hasSubscription || this.model.hasV2Subscription) && !!this.hasPlanViewPermissions) ||
+        !!this.hasPlanCreatePermissions;
+
+      const isAssemblaUser = this.model.isUser && this.model.isAssembla;
+      const isEnterprise = this.features.get('enterpriseVersion');
+      return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization;
+    }),
+  showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
+    'hasBillingViewPermissions', 'hasInvoicesViewPermissions', 'model.isNotGithubOrManual', function () {
+      if (this.isOrganization) {
+        const forOrganization = !this.isOrganization || this.hasBillingViewPermissions || this.hasInvoicesViewPermissions;
+
+        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin || forOrganization);
+      } else {
+        return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
+      }
+    }),
+  showPlanUsageTab: computed('showSubscriptionTab', 'model.hasCredits', 'hasPlanUsagePermissions', function () {
+    const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
+    return this.showSubscriptionTab && this.model.hasCredits && forOrganization;
   }),
-  showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin', 'model.isNotGithubOrManual', function () {
-    if (this.isOrganization) {
-      return this.showSubscriptionTab && this.isOrganizationAdmin && this.model.get('isNotGithubOrManual');
-    } else {
-      return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
-    }
-  }),
-  showPlanUsageTab: and('showSubscriptionTab', 'model.hasCredits'),
-  usersUsage: computed('account.allowance.userUsage', 'addonUsage', function () {
-    const userUsage = this.model.allowance.get('userUsage');
+
+  usersUsage: computed('account.allowance.userUsage', 'addonUsage', 'hasPlanUsagePermissions', function () {
+    // const forOrganization = !this.isOrganization || this.hasPlanUsagePermissions;
+    const userUsage = this.model.allowance.userUsage;
     if (userUsage === undefined) {
       return true;
     }
@@ -106,26 +129,26 @@ export default Component.extend({
       return;
     }
 
-    if (allowance.get('paymentChangesBlockCredit') || allowance.get('paymentChangesBlockCaptcha')) {
+    if (allowance.paymentChangesBlockCredit || allowance.paymentChangesBlockCaptcha) {
       let time;
-      if (allowance.get('paymentChangesBlockCaptcha')) time = allowance.get('captchaBlockDuration');
-      if (allowance.get('paymentChangesBlockCredit')) time = allowance.get('creditCardBlockDuration');
+      if (allowance.paymentChangesBlockCaptcha) time = allowance.captchaBlockDuration;
+      if (allowance.paymentChangesBlockCredit) time = allowance.creditCardBlockDuration;
       this.flashes.custom('flashes/payment-details-edit-lock', { owner: this.model, isUser: this.model.isUser, time: time}, 'warning');
     }
 
-    if (allowance.get('subscriptionType') !== 2) {
+    if (allowance.subscriptionType !== 2) {
       return;
     }
 
-    if (!allowance.get('privateRepos') && !allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
+    if (!allowance.privateRepos && !allowance.publicRepos && (this.isOrganizationAdmin || this.model.isUser)) {
       this.flashes.custom('flashes/negative-balance-private-and-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('privateRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
+    } else if (!allowance.privateRepos && (this.isOrganizationAdmin || this.model.isUser)) {
       this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
+    } else if (!allowance.publicRepos && (this.isOrganizationAdmin || this.model.isUser)) {
       this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
     }
 
-    if (allowance.get('pendingUserLicenses')) {
+    if (allowance.pendingUserLicenses) {
       this.flashes.custom('flashes/pending-user-licenses', { owner: this.model, isUser: this.model.isUser }, 'warning');
     } else if (!this.usersUsage) {
       this.flashes.custom('flashes/users-limit-exceeded', { owner: this.model, isUser: this.model.isUser }, 'warning');
@@ -135,7 +158,7 @@ export default Component.extend({
   willDestroyElement() {
     const allowance = this.model.allowance;
 
-    if (allowance && allowance.get('subscriptionType') === 2) {
+    if (allowance && allowance.subscriptionType === 2) {
       this.flashes.removeCustomsByClassName('warning');
     }
   },

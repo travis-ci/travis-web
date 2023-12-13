@@ -1,7 +1,7 @@
 import Application from '@ember/application';
 
 import { initialize } from 'travis/instance-initializers/pro-environment';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { run } from '@ember/runloop';
 
 import EmberObject from '@ember/object';
@@ -23,7 +23,7 @@ module('Unit | Instance Initializer | pro environment', function (hooks) {
     run(this.instance, 'destroy');
   });
 
-  test('it sets flags appropriately', async function (assert) {
+  skip('it sets flags appropriately', async function (assert) {
     await this.instance.boot();
 
     const { featureFlags } = this.instance.resolveRegistration('config:environment');

@@ -1,13 +1,12 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { settled } from '@ember/test-helpers';
 import page from 'travis/tests/pages/caches';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo caches', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -41,9 +40,15 @@ module('Acceptance | repo caches', function (hooks) {
       size: 10061086
     }));
 
-    this.repository = this.server.create('repository', { slug, caches });
-
     signInUser(currentUser);
+
+    this.repository = this.server.create('repository', {
+      slug,
+      caches,
+      permissions: { cache_view: true, cache_delete: true },
+      owner: {login: 'user-login', id: currentUser.id}
+    });
+
   });
 
   test('view and delete caches', async function (assert) {
@@ -67,7 +72,7 @@ module('Acceptance | repo caches', function (hooks) {
     });
 
     assert.notOk(page.noCachesExist, 'expected the message that no caches exist to not be present');
-    percySnapshot(assert);
+
 
     const branchQueryParams = [];
 

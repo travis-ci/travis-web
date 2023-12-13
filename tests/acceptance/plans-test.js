@@ -1,14 +1,14 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { percySnapshot } from 'ember-percy';
 import plansPage from 'travis/tests/pages/plans';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import config from 'travis/config/environment';
+import { skip } from "qunit";
 
 module('Acceptance | plans page', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
@@ -18,7 +18,6 @@ module('Acceptance | plans page', function (hooks) {
 
   test('location and visual test', async function (assert) {
     assert.equal(currentURL(), '/plans');
-    percySnapshot(assert);
   });
 
   test('header section structure', async function (assert) {
@@ -91,7 +90,5 @@ module('Acceptance | plans page', function (hooks) {
     assert.ok(image.isPresent);
     assert.ok(body.isPresent);
     assert.ok(button.isPresent);
-
-    percySnapshot(assert);
   });
 });

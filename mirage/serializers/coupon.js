@@ -1,4 +1,4 @@
-import { Serializer } from 'ember-cli-mirage';
+import { Serializer } from 'miragejs';
 import { decamelize } from '@ember/string';
 
 export default Serializer.extend({

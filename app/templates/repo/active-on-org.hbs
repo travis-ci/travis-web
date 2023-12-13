@@ -7,7 +7,7 @@
     <button
       disabled={{this.isButtonDisabled}}
       onclick={{action "migrate"}}
-      class="button button--flex button--blue {{if this.isButtonDisabled 'disabled'}}"
+      class="button button--flex button--blue {{if this.isButtonDisabled 'disabled'}}" type="button"
     >
       {{#if this.repo.isMigrationInProgress}}
         Migrating...
@@ -20,8 +20,7 @@
   {{else if this.showBetaButton}}
     <button
       class="button--blue {{if this.isButtonDisabled 'disabled'}}"
-      disabled={{this.isButtonDisabled}}
-      {{on 'click' (fn (mut this.isShowingMigrateBetaDialog) true)}}
+      disabled={{this.isButtonDisabled}} type="button" {{on 'click' (fn (mut this.isShowingMigrateBetaDialog) true)}}
     >
       Sign up for the beta
     </button>

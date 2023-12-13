@@ -1,16 +1,15 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import triggerBuildPage from 'travis/tests/pages/trigger-build';
 import topPage from 'travis/tests/pages/top';
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo/trigger build', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -34,7 +33,8 @@ module('Acceptance | repo/trigger build', function (hooks) {
       name: 'difference-engine',
       slug: 'adal/difference-engine',
       permissions: {
-        create_request: true
+        create_request: true,
+        build_create: true,
       },
       owner: {
         login: 'adal',
@@ -75,7 +75,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   });
 
   test('trigger link is not visible to users without proper permissions', async function (assert) {
-    this.repo.update('permissions', { create_request: false });
+    this.repo.update('permissions', { create_request: false, build_create: false });
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
     assert.ok(triggerBuildPage.popupTriggerLinkIsPresent, 'trigger build link is not rendered');
@@ -114,7 +114,7 @@ module('Acceptance | repo/trigger build', function (hooks) {
   test('triggering a custom build via the dropdown', async function (assert) {
     await triggerBuildPage.visit({ owner: 'adal', repo: 'difference-engine' });
 
-    assert.equal(currentURL(), '/github/adal/difference-engine', 'we are on the repo page');
+    assert.equal(currentURL(), '/github/adal/difference-engine/builds/1?currentTab=current', 'we are on the repo page');
     assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden');
 
     await triggerBuildPage.openPopup();
@@ -123,10 +123,11 @@ module('Acceptance | repo/trigger build', function (hooks) {
 
     await triggerBuildPage.writeMessage('This is a demo build');
     await triggerBuildPage.writeConfig('script: echo "Hello World"');
-    percySnapshot(assert);
+
     await triggerBuildPage.clickSubmit();
 
     assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden again');
+
     assert.equal(currentURL(), '/github/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
   });
 

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | insights-glance', function (hooks) {
   setupRenderingTest(hooks);
@@ -9,7 +9,7 @@ module('Integration | Component | insights-glance', function (hooks) {
   test('loading state renders', async function (assert) {
     this.set('isLoading', true);
 
-    await render(hbs`{{insights-glance isLoading=isLoading}}`);
+    await render(hbs`{{insights-glance isLoading=this.isLoading}}`);
     assert.dom('.insights-glance').hasClass('insights-glance--loading');
     assert.dom('.insights-glance__stat').hasText('');
     assert.dom('.insights-glance__chart .chart-component').doesNotExist();
@@ -23,7 +23,7 @@ module('Integration | Component | insights-glance', function (hooks) {
       isEmpty: false,
     });
 
-    await render(hbs`{{insights-glance isLoading=isLoading statistic=statistic isEmpty=isEmpty title=title}}`);
+    await render(hbs`{{insights-glance isLoading=this.isLoading statistic=this.statistic isEmpty=this.isEmpty title=this.title}}`);
 
     assert.dom('.insights-glance__title').hasText('Test title');
     assert.dom('.insights-glance__stat').hasText('100');
@@ -35,7 +35,7 @@ module('Integration | Component | insights-glance', function (hooks) {
     this.set('deltaTitle', 'Test 1');
     this.set('deltaText', 'Test 2');
 
-    await render(hbs`{{insights-glance delta=delta deltaTitle=deltaTitle deltaText=deltaText}}`);
+    await render(hbs`{{insights-glance delta=this.delta deltaTitle=this.deltaTitle deltaText=this.deltaText}}`);
     assert.dom('.insights-glance-delta').hasAttribute('data-dir', '+');
     assert.dom('.insights-glance-delta').hasAttribute('title', 'Test 1');
     assert.dom('.insights-glance-delta__stat').hasText('Test 2');

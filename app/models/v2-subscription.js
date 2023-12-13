@@ -14,6 +14,7 @@ let sourceToWords = {
 export default Model.extend({
   api: service(),
   accounts: service(),
+  store: service(),
 
   source: attr('string'),
   status: attr('string'),
@@ -200,25 +201,25 @@ export default Model.extend({
     yield this.api.patch(`/v2_subscription/${this.id}/changetofree`, {
       data: { reason, reason_details: details }
     });
-    yield this.accounts.fetchV2Subscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   changePlan: task(function* (plan, coupon) {
     const data = { plan, coupon };
     yield this.api.patch(`/v2_subscription/${this.id}/plan`, { data });
-    yield this.accounts.fetchV2Subscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   buyAddon: task(function* (addon) {
     yield this.api.post(`/v2_subscription/${this.id}/addon/${addon.id}`);
-    yield this.accounts.fetchV2Subscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   autoRefillToggle: task(function* (ownerId, value) {
     const data = { enabled: value };
     yield this.api.patch(`/v2_subscription/${this.id}/auto_refill`, { data });
 
-    yield this.accounts.fetchV2Subscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
   autoRefillAddonId: reads('auto_refill.addon_id'),
   autoRefillEnabled: reads('auto_refill.enabled'),
@@ -230,13 +231,13 @@ export default Model.extend({
     const data = { addon_id: this.autoRefillAddonId, threshold: parseInt(threshold), amount: parseInt(amount) };
     yield this.api.patch(`/v2_subscription/${this.id}/update_auto_refill`, { data });
 
-    yield this.accounts.fetchV2Subscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   cancelSubscription: task(function* (data) {
     yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
       data
     });
-    yield this.accounts.fetchV2Subscriptions.perform();
+    this.accounts.fetchV2Subscriptions.perform();
   }).drop(),
 });

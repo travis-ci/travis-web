@@ -38,7 +38,7 @@ export default Service.extend({
           resolve(job._config);
         } else {
           const build = yield job.build;
-          yield this.store.queryRecord('build', { id: build.id, include: 'build.jobs,job.config' });
+          yield this.store.smartQueryRecord('build', { id: build.id, include: 'build.jobs,job.config' });
           resolve(job._config);
         }
       } catch (e) {

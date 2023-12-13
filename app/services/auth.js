@@ -17,7 +17,12 @@ import {
 import { getOwner } from '@ember/application';
 import config from 'travis/config/environment';
 import { task, didCancel } from 'ember-concurrency';
-import { availableProviders, vcsConfigByUrlPrefixOrType } from 'travis/utils/vcs';
+import {
+  availableProviders,
+  vcsConfigByUrlPrefixOrType
+} from 'travis/utils/vcs';
+import { A } from '@ember/array';
+import { debug } from '@ember/debug';
 
 const { authEndpoint, apiEndpoint } = config;
 
@@ -25,7 +30,7 @@ const { authEndpoint, apiEndpoint } = config;
 // and ensures the future fetches don't override previously loaded includes
 let includes = ['owner.installation', 'user.emails'];
 
-const afterSignOutCallbacks = [];
+const afterSignOutCallbacks = A([]);
 
 const STATE = {
   SIGNED_OUT: 'signed-out',
@@ -65,8 +70,8 @@ export default Service.extend({
 
   inactiveAccounts: computed('accounts.@each.id', 'storage.activeAccount.id', function () {
     const { accounts, activeAccount } = this.storage;
-    if (accounts && accounts.length > 0 && activeAccount) {
-      return accounts.filter(account => account.id !== activeAccount.id);
+    if (accounts.content() && accounts.content().length > 0 && activeAccount) {
+      return accounts.content().filter(account => account.id !== activeAccount.id);
     } else {
       return [];
     }
@@ -95,7 +100,7 @@ export default Service.extend({
       return;
     const { accounts } = this.storage;
     const { vcsId } = this.currentUser;
-    const stillLoggedIn = accounts.isAny('vcsId', vcsId);
+    const stillLoggedIn = accounts.content().isAny('vcsId', vcsId);
 
     if (!stillLoggedIn) {
       this.router.transitionTo('signin');
@@ -103,7 +108,8 @@ export default Service.extend({
   },
 
   switchAccount(id, redirectUrl) {
-    this.store.unloadAll();
+    if (!this.store.isDestroyed && !this.store.isDestroying)
+      this.store.unloadAll();
     const targetAccount = this.accounts.findBy('id', id);
     this.storage.set('activeAccount', targetAccount);
     if (redirectUrl)
@@ -129,7 +135,8 @@ export default Service.extend({
       this.clearNonAuthFlashes();
       runAfterSignOutCallbacks();
     }
-    this.store.unloadAll();
+    if (!this.store.isDestroyed && !this.store.isDestroying)
+      this.store.unloadAll();
 
     const { currentRouteName } = this.router;
     if (currentRouteName && currentRouteName !== 'signin') {
@@ -185,22 +192,28 @@ export default Service.extend({
 
   autoSignIn() {
     this.set('state', STATE.SIGNING_IN);
+
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
-        .then(() => this.permissionsService.fetchPermissions.perform())
+        .then(() => {  this.permissionsService.fetchPermissions.perform()})
         .then(() => {
-          const { currentUser } = this;
-          this.set('state', STATE.SIGNED_IN);
-          Travis.trigger('user:signed_in', currentUser);
-          Travis.trigger('user:refreshed', currentUser);
+            const {currentUser} = this;
+            this.set('state', STATE.SIGNED_IN);
+            Travis.trigger('user:signed_in', currentUser);
+            Travis.trigger('user:refreshed', currentUser);
         })
         .catch(error => {
+          console.log("Problems");
+          console.log(error.message);
           if (!didCancel(error)) {
             throw new Error(error);
           }
         });
     } catch (error) {
+      console.log("General catch");
+      console.log(error.message); // for debugging purposes is better option...
+      console.log(error.stack);
       this.signOut(false);
     }
   },
@@ -212,22 +225,20 @@ export default Service.extend({
     storage.clearLoginData();
 
     if (!user || !token) throw new Error('No login data');
-
     const userData = getProperties(user, USER_FIELDS);
     const installationData = getProperties(user, ['installation']);
     if (installationData && installationData.installation) {
       storage.set('activeAccountInstallation', installationData.installation);
     }
-
     this.validateUserData(userData, isBecome);
     const userRecord = pushUserToStore(this.store, userData);
     userRecord.set('authToken', token);
 
     return this.reloadUser(userRecord).then(() => {
-      storage.accounts.addObject(userRecord);
-      storage.set('activeAccount', userRecord);
-      this.reportNewUser();
-      this.reportToIntercom();
+        storage.accounts.push(userRecord);
+        storage.set('activeAccount', userRecord);
+        this.reportNewUser();
+        this.reportToIntercom();
     });
   },
 
@@ -243,13 +254,12 @@ export default Service.extend({
 
   fetchUser: task(function* (userRecord) {
     try {
-      return yield userRecord.reload({ included: includes.join(',') });
+      const reloadedUser = userRecord.reload({ included: includes.join(',') });
+      return yield reloadedUser;
     } catch (error) {
       const status = +error.status || +get(error, 'errors.firstObject.status');
-      if (status === 401 || status === 403 || status === 500) {
-        this.flashes.error(TOKEN_EXPIRED_MSG);
-        this.signOut();
-      }
+      this.flashes.error(TOKEN_EXPIRED_MSG);
+      yield this.signOut();
     }
   }).keepLatest(),
 
@@ -346,7 +356,8 @@ export default Service.extend({
 });
 
 function pushUserToStore(store, user) {
-  const record = store.push(store.normalize('user', user));
+  let theUser = store.normalize('user', user);
+  const record = store.push(theUser);
   const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
   record.setProperties({ installation });
   return record;

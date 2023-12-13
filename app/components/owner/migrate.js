@@ -70,9 +70,9 @@ export default Component.extend({
       const { isAllSelected, selectableRepositories, selectedRepositories } = this;
 
       if (isAllSelected) {
-        selectedRepositories.removeObjects(selectableRepositories.toArray());
+        selectedRepositories.removeObjects(selectableRepositories);
       } else {
-        selectedRepositories.addObjects(selectableRepositories.toArray());
+        selectedRepositories.addObjects(selectableRepositories);
       }
     },
 

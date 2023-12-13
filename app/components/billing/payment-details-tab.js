@@ -5,7 +5,13 @@ import { empty, not, reads, and } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { underscore } from '@ember/string';
-import { countries, states, stateCountries, nonZeroVatThresholdCountries, zeroVatThresholdCountries } from 'travis/utils/countries';
+import {
+  countries,
+  states,
+  stateCountries,
+  nonZeroVatThresholdCountries,
+  zeroVatThresholdCountries
+} from 'travis/utils/countries';
 
 export default Component.extend({
   api: service(),
@@ -15,6 +21,8 @@ export default Component.extend({
   metrics: service(),
 
   countries,
+
+  model: reads('activeModel'),
   states: computed('country', function () {
     const { country } = this;
 
@@ -26,7 +34,7 @@ export default Component.extend({
   couponId: null,
   options: computed('disableForm', function () {
     let configStripe = config.stripeOptions;
-    configStripe['disabled'] = this.get('disableForm');
+    configStripe['disabled'] = this.disableForm;
     return configStripe;
   }),
   showSwitchToFreeModal: false,
@@ -37,9 +45,15 @@ export default Component.extend({
   isV2SubscriptionEmpty: empty('v2subscription'),
   isSubscriptionEmpty: empty('v1subscription'),
   isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
+  canViewBilling: computed('account.isOrganization', 'account.permissions.billing_view', function () {
+    return !this.account.isOrganization || this.account.permissions.billing_view;
+  }),
+  canEditBilling: computed('account.isOrganization', 'account.permissions.billing_update', function () {
+    return !this.account.isOrganization || this.account.permissions.billing_update;
+  }),
   hasV2Subscription: not('isV2SubscriptionEmpty'),
   subscription: computed('v1subscription', 'v2subscription', function () {
-    return this.isV2SubscriptionEmpty ? this.get('v1subscription') : this.get('v2subscription');
+    return this.isV2SubscriptionEmpty ? this.v1subscription : this.v2subscription;
   }),
   invoices: computed('v1subscription.id', 'v2subscription.id', function () {
     const subscriptionId = this.isV2SubscriptionEmpty ? this.get('v1subscription.id') : this.get('v2subscription.id');
@@ -52,8 +66,8 @@ export default Component.extend({
   }),
 
   disableForm: computed('account.allowance.paymentChangesBlockCredit', 'account.allowance.paymentChangesBlockCaptcha', function () {
-    const paymentChangesBlockCredit = this.account.allowance.get('paymentChangesBlockCredit');
-    const paymentChangesBlockCaptcha = this.account.allowance.get('paymentChangesBlockCaptcha');
+    const paymentChangesBlockCredit = this.account.allowance.paymentChangesBlockCredit;
+    const paymentChangesBlockCaptcha = this.account.allowance.paymentChangesBlockCaptcha;
     return paymentChangesBlockCaptcha || paymentChangesBlockCredit;
   }),
 

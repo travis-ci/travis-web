@@ -18,7 +18,7 @@
         <button
           class="button--white button--hover"
           onclick={{perform this.fetchRepo}}
-          data-test-email-unsubscribe-primary-button
+          data-test-email-unsubscribe-primary-button type="button"
         >
           Try again
         </button>
@@ -30,12 +30,11 @@
           @route="repo"
           @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
           @query={{hash serverType=this.repo.serverType}}
-          @target="_blank"
+          target="_blank"
           class="repo-link repo-slug"
         >
           {{this.repo.formattedSlug}}
-        </LinkTo>
-      </h1>
+        </LinkTo>      </h1>
       <p class="description" data-test-email-unsubscribe-description>
         {{#if this.isSubscribed}}
           Please confirm that you would like to unsubscribe from build emails for the
@@ -58,7 +57,7 @@
           class="{{if this.isSubscribed 'button--orange' 'button--white'}} button--hover control control--primary"
           disabled={{this.task.isRunning}}
           onclick={{action "processTask"}}
-          data-test-email-unsubscribe-primary-button
+          data-test-email-unsubscribe-primary-button type="button"
         >
           {{#if this.isUnsubscribing}}
             Unsubscribing...

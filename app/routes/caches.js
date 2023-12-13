@@ -6,10 +6,23 @@ export default TravisRoute.extend({
 
   needsAuth: true,
 
-  setupController(/* controller*/) {
+  setupController(controller, model) {
     this._super(...arguments);
+    controller.pushes = model.pushes;
+    controller.pullRequests = model.pullRequests;
+    controller.repo = this.modelFor('repo');
+
     return this.controllerFor('repo').activate('caches');
   },
+
+  beforeModel() {
+    const repo = this.modelFor('repo');
+    if (!repo.permissions?.cache_view) {
+      this.transitionTo('repo.index');
+      this.flashes.error('Your permissions are insufficient to access this repository\'s cache');
+    }
+  },
+
 
   model() {
     const repo = this.modelFor('repo');

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'hashr'
 require 'yaml'
 
@@ -17,7 +19,7 @@ module Travis
     class Config < Hashr
       class << self
         def env
-         ENV['ENV'] || ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'development'
+          ENV['ENV'] || ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'development'
         end
 
         def load_env
@@ -25,11 +27,13 @@ module Travis
         end
 
         def load_file
-          @load_file ||= YAML.load_file(filename)[env] if File.exists?(filename) rescue {}
+          @load_file ||= YAML.load_file(filename)[env] if File.exist?(filename)
+        rescue StandardError
+          {}
         end
 
         def filename
-          @filename ||= File.expand_path('config/travis.yml')
+          @_filename ||= File.expand_path('config/travis.yml')
         end
       end
 

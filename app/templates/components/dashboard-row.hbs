@@ -6,7 +6,7 @@
   <button
     class="dash-star {{if this.repo.starred 'is-starred'}}"
     title="{{if this.repo.starred 'un'}}star this repo"
-    onclick={{action "starRepo"}}
+    onclick={{action "starRepo"}} type="button"
   >
     <SvgImage @name="icon-star" @class="icon--m" />
   </button>
@@ -23,7 +23,7 @@
         <LinkTo
           @route="owner"
           @models={{array this.repo.provider this.repo.ownerName}}
-          @title={{this.repo.owner.login}}
+          title={{this.repo.owner.login}}
         >
           {{this.repo.owner.login}}
         </LinkTo>
@@ -32,7 +32,7 @@
         <LinkTo
           @route="repo"
           @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
-          @title={{this.repo.name}}
+          title={{this.repo.name}}
           @query={{hash serverType=this.repo.serverType}}
         >
           {{this.repo.name}}
@@ -59,7 +59,7 @@
                 this.repo
                 this.repo.defaultBranch.lastBuild.id
               }}
-              @title="Last build on the default branch"
+              title="Last build on the default branch"
             >
               {{this.repo.defaultBranch.lastBuild.branch.name}}
               {{this.repo.defaultBranch.lastBuild.state}}
@@ -94,7 +94,7 @@
                 this.repo
                 this.repo.currentBuild.id
               }}
-              @title="Last build on the repo"
+              title="Last build on the repo"
             >
               <span class="label-align">
                 #{{this.repo.currentBuild.number}}
@@ -110,7 +110,7 @@
           </h3>
           <p class="row-content color">
             <StatusIcon @status={{this.repo.currentScan.icon}} />
-            <LinkTo @route="scanResults" @model={{this.repo}} @title="Log Scans">
+            <LinkTo @route="scanResults" @model={{this.repo}} title="Log Scans">
               <span class="label-align">
                 {{this.repo.currentScan.state}}
               </span>
@@ -153,7 +153,7 @@
             {{#if this.isTriggering}}
               <LoadingIndicator />
             {{else}}
-              <div class="dropup {{if dropupIsOpen 'is-open'}}">
+              <div class="dropup {{if this.dropupIsOpen 'is-open'}}">
                 <button
                   type="button"
                   class="dropup-tofu"
@@ -166,7 +166,7 @@
                     <li>
                       <button
                         title="Trigger a build on the default branch"
-                        onclick={{action "triggerBuild"}}
+                        onclick={{action "triggerBuild"}} type="button"
                       >
                         <SvgImage @name="icon-restart" @class="icon" />
                         <span class="label-align">
@@ -178,7 +178,7 @@
                     <li>
                       <button
                         title="Trigger a build on the default branch"
-                        disabled="disabled"
+                        disabled="disabled" type="button"
                       >
                         <SvgImage @name="icon-restart" @class="icon" />
                         <span class="label-align">
@@ -191,7 +191,7 @@
                     <LinkTo
                       @route="settings"
                       @model={{this.repo}}
-                      @title="Settings for this repository"
+                      title="Settings for this repository"
                     >
                       <SvgImage @name="icon-settings" @class="icon" />
                       <span class="label-align">
@@ -216,7 +216,7 @@
               <button
                 class="button--blue"
                 title="Trigger a build on the default branch"
-                onclick={{action "triggerBuild"}}
+                onclick={{action "triggerBuild"}} type="button"
               >
                 Trigger a build
               </button>
@@ -224,7 +224,7 @@
               <button
                 class="button--blue"
                 title="Trigger a build on the default branch"
-                disabled="disabled"
+                disabled="disabled" type="button"
               >
                 Trigger a build
               </button>

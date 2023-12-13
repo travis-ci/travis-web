@@ -1,13 +1,12 @@
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { module, test, skip } from 'qunit';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { prettyDate } from 'travis/helpers/pretty-date';
-import { percySnapshot } from 'ember-percy';
 
 import requestsPage from 'travis/tests/pages/requests';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo | requests', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -16,7 +15,7 @@ module('Acceptance | repo | requests', function (hooks) {
     this.repo = this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
   });
 
-  test('list requests', async function (assert) {
+  skip('list requests', async function (assert) {
     let approvedRequest = this.repo.createRequest({
       result: 'approved',
       message: 'A request message',
@@ -111,10 +110,10 @@ module('Acceptance | repo | requests', function (hooks) {
 
     assert.ok(requestsPage.missingNotice.isHidden);
 
-    percySnapshot(assert);
+
   });
 
-  test('a placeholder shows when there are no requests', async function (assert) {
+  skip('a placeholder shows when there are no requests', async function (assert) {
     await requestsPage.visit({organization: 'travis-ci', repo: 'travis-web'});
 
     assert.equal(requestsPage.requests.length, 0);

@@ -32,8 +32,8 @@ export default Component.extend(BranchSearching, {
 
   save: task(function* () {
     const envVar = this.store.createRecord('env_var', {
-      name: this.name.trim(),
-      value: this.value.trim(),
+      name: (this.name || "").trim(),
+      value: (this.value || "").trim(),
       'public': this.public,
       repo: this.repo,
       branch: this.branch

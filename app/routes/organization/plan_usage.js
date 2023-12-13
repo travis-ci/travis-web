@@ -5,7 +5,7 @@ import { hash } from 'rsvp';
 export default TravisRoute.extend(AccountPlanUsageMixin, {
   model() {
     const organization = this.modelFor('organization');
-    if (organization.permissions && organization.permissions.admin !== true) {
+    if (organization.permissions && organization.permissions.plan_usage !== true) {
       this.transitionTo('organization.repositories', organization);
     }
     return hash({

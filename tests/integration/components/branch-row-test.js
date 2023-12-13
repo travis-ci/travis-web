@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | branch row', function (hooks) {
@@ -59,7 +59,7 @@ module('Integration | Component | branch row', function (hooks) {
 
     this.set('branch', branch);
 
-    await render(hbs`{{branch-row branch=branch}}`);
+    await render(hbs`{{branch-row branch=this.branch}}`);
 
     assert.dom('.branch-row').hasClass('passed', 'component should have state class (passed)');
     assert.dom('.row-name .label-align').hasText('master', 'should display correct branch name');

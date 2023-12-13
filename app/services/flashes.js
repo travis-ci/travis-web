@@ -45,7 +45,7 @@ export default Service.extend({
     let flashes = this.flashes;
     let model = [];
     if (flashes.length) {
-      model.pushObjects(flashes.toArray());
+      model.pushObjects(...flashes.toArray());
     }
     return model.uniq();
   }),

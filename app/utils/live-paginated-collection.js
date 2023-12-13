@@ -2,6 +2,7 @@ import { defineProperty, computed } from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import { reads } from '@ember/object/computed';
 import limit from 'travis/utils/computed-limit';
+import { A } from '@ember/array'
 
 // LivePaginatedCollection is an interface for a first page of paginated set of
 // results.
@@ -93,7 +94,7 @@ LivePaginatedCollection.reopenClass({
     sortDependencies.push('content.[]');
 
     defineProperty(instance, 'sorted', computed(...sortDependencies, function () {
-      return this.content.toArray().sort(sortByFunction);
+      return this.content.content.sort(sortByFunction);
     }));
 
     defineProperty(instance, 'limited', limit('sorted', 'pagination.perPage'));

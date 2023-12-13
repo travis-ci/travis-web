@@ -169,7 +169,7 @@ export default Component.extend({
       await this.owner.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
         moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
       const header = ['Job Id', 'Started at', 'Finished at', 'OS', 'Credits consumed', 'Minutes consumed', 'Repository', 'Owner', 'Sender'];
-      const data = this.get('executionsDataForCsv');
+      const data = this.executionsDataForCsv;
 
       this.download.asCSV(fileName, header, data);
     },
@@ -182,7 +182,7 @@ export default Component.extend({
       await this.owner.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
         moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
       const header = ['Job Id', 'Sender', 'Credits consumed', 'Date'];
-      const data = await this.get('userLicenseExecutionsDataForCsv');
+      const data = await this.userLicenseExecutionsDataForCsv;
 
       this.download.asCSV(fileName, header, data);
     },

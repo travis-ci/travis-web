@@ -24,7 +24,7 @@ export default Service.extend({
     if (clientSecret) {
       yield this.stripev3.handleCardPayment(clientSecret);
     }
-    yield this.accounts.fetchV2Subscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   handleError(stripeError) {

@@ -1,16 +1,15 @@
 import { currentURL, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import topPage from 'travis/tests/pages/top';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { INSIGHTS_VIS_OPTIONS } from 'travis/controllers/account/settings';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | user settings', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -46,7 +45,7 @@ module('Acceptance | user settings', function (hooks) {
     await profilePage.visit();
     await profilePage.settings.visit();
 
-    percySnapshot(assert);
+
 
     assert.equal(profilePage.settings.features.length, 2, 'expected there to be two features');
 

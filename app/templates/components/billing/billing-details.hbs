@@ -14,7 +14,7 @@
             <LoadingIndicator />
           {{else}}
             <div class="flex flex--wrap">
-              <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--green">
+              <button data-test-update-billing-address-button='true' onclick={{form.submit}} class="button--green" type="button">
                 Update billing details
               </button>
               <a data-test-cancel-billing-address-button='true' onClick={{action (toggle 'openEditBillingForm' this)}} class='link cancel-link'>
@@ -60,7 +60,7 @@
     </div>
     {{#if (and this.account.hasSubscriptionPermissions (not this.hideEdit))}}
       <button class='button--blue billing-subscription__buttons'
-        onClick={{action (toggle 'openEditBillingForm' this)}} data-test-edit-billing-address='true'
+        onClick={{action (toggle 'openEditBillingForm' this)}} data-test-edit-billing-address='true' type="button"
       >
         Edit billing details
       </button>

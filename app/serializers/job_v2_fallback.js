@@ -1,4 +1,5 @@
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
+import { A } from '@ember/array';
 
 export default V2FallbackSerializer.extend({
   keyForV2Relationship(key/* , typeClass, method*/) {

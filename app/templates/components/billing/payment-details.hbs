@@ -16,7 +16,7 @@
               {{#if this.updateCreditCard.isRunning}}
                 <LoadingIndicator/>
               {{else}}
-                <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--green">
+                <button data-test-update-contact-address-button='true' onclick={{form.submit}} class="button--green" type="button">
                   Update payment details
                 </button>
                 <a onClick={{action (toggle 'openCreditCardForm' this)}} class='link cancel-link'>
@@ -35,7 +35,7 @@
           </p>  
         </div>
         {{#if this.account.hasSubscriptionPermissions}}
-          <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openCreditCardForm' this)}}>
+          <button class='button--blue billing-subscription__buttons' onClick={{action (toggle 'openCreditCardForm' this)}} type="button">
             Edit payment details
           </button>
         {{/if}}

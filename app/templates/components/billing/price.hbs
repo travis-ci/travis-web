@@ -15,7 +15,7 @@
   {{#if this.discountIsValid}}
     <div class="discount" data-test-stripe-discount='true'>
       <h6>Discount: </h6>
-      <p> 
+      <p>
         {{#if this.percentOff}}
           {{this.percentOff}}%
         {{else if this.amountOff}}
@@ -24,7 +24,7 @@
         {{#if (eq this.duration 'forever')}}
           forever
         {{else}}
-          off until {{moment-format (moment-add subscription.createdAt this.durationInMonths precision='months') 'MMMM YYYY'}}
+          off until {{moment-format (moment-add this.subscription.createdAt this.durationInMonths precision='months') 'MMMM YYYY'}}
         {{/if}}
       </p>
     </div>

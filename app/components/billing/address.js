@@ -2,7 +2,10 @@ import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { observer } from '@ember/object';
-import { countries, nonZeroVatThresholdCountries } from 'travis/utils/countries';
+import {
+  countries,
+  nonZeroVatThresholdCountries
+} from 'travis/utils/countries';
 
 export default Component.extend({
   countries,

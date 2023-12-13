@@ -12,6 +12,7 @@ export default Owner.extend({
   accounts: service(),
   permissionsService: service('permissions'),
   wizardStateService: service('wizardState'),
+  store: service(),
 
   email: attr('string'),
   emails: attr(), // list of all known user emails
@@ -73,6 +74,13 @@ export default Owner.extend({
     }
   },
 
+  hasPermissionToRepo(repo, permission) {
+    let permissions = repo.get ? repo.get('permissions') : null;
+    if (permissions) {
+      return permissions[permission] || false;
+    }
+  },
+
   sync(isOrganization) {
     this.set('isSyncing', true);
     this.set('applyFilterRepos', !isOrganization);
@@ -114,7 +122,8 @@ export default Owner.extend({
 
   reload(options = {}) {
     const { authToken } = this;
-    return this.store.queryRecord('user', Object.assign({}, options, { current: true, authToken }));
+    const queryParams = Object.assign({}, options, { current: true, authToken });
+    return this.store.smartQueryRecord('user', queryParams);
   },
 
   applyReposFilter() {

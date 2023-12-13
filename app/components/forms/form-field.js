@@ -43,13 +43,18 @@ export default Component.extend({
   multipleInputsValue: null,
 
   validator: null,
-  required: equal('validator.kind', presense),
+  requiredOverride: null,
+  required: computed('requiredOverride', 'validator.kind', function() {
+    if (this.requiredOverride !== null) {
+      return this.requiredOverride;
+    }
+    return this.validator && this.validator.kind === presense
+  }),
 
   autoValidate: true,
 
   errorMessage: '',
   isFocused: false,
-
   isDefault: equal('state', FIELD_STATE.DEFAULT),
   isValid: equal('state', FIELD_STATE.VALID),
   isError: equal('state', FIELD_STATE.ERROR),
@@ -59,7 +64,14 @@ export default Component.extend({
   showClear: and('allowClear', 'value'),
   showIcon: notEmpty('icon'),
   showFrame: not('disableFrame'),
-  showValidationStatusIcons: and('enableValidationStatusIcons', 'requiresValidation'),
+  showValidationStatusIconsOverride: null,
+  showValidationStatusIcons: computed('showValidationStatusIconsOverride', 'enableValidationStatusIcons', 'requiresValidation', function() {
+    if (this.showValidationStatusIconsOverride !== null) {
+      return this.showValidationStatusIconsOverride;
+    }
+
+    return this.enableValidationStatusIcon && this.requiresValidation;
+  }),
   showValidationStatusMessage: and('enableValidationStatusMessage', 'requiresValidation'),
 
   selectComponent: computed('multiple', function () {
@@ -67,6 +79,7 @@ export default Component.extend({
   }),
 
   validate(value, isFormValidation = false) {
+
     if (!this.validateOnField && !isFormValidation) return true;
     let validator = this.validator;
 

@@ -1,8 +1,11 @@
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
+import {task} from "ember-concurrency";
 
 export default TravisRoute.extend({
   router: service(),
+  store: service(),
+  tasks: service(),
 
   titleToken(model) {
     return `Job #${model.get('number')}`;
@@ -19,7 +22,7 @@ export default TravisRoute.extend({
     let buildController, repo;
 
     if (model && !model.get) {
-      model = this.store.recordForId('job', model);
+      model = this.store.findRecord('job', model);
       this.store.find('job', model);
     }
     repo = this.controllerFor('repo');
@@ -30,7 +33,7 @@ export default TravisRoute.extend({
     let buildPromise = model.get('build');
     if (buildPromise) {
       buildPromise.then(build => {
-        build = this.store.recordForId('build', build.get('id'));
+        build = this.store.findRecord('build', build.get('id'));
         return buildController.set('build', build);
       });
     }
@@ -46,17 +49,18 @@ export default TravisRoute.extend({
   },
 
   afterModel(job) {
-    const slug = this.modelFor('repo').get('slug');
+    const slug = this.modelFor('repo').slug;
     this.ensureJobOwnership(job, slug);
     return job
       .get('build.request')
-      .then(request => request && request.fetchMessages.perform());
+      .then(request => request && this.tasks.fetchMessages.perform(request));
   },
 
-  beforeModel() {
-    const repo = this.modelFor('repo');
+ beforeModel() {
+    let repo = this.modelFor('repo');
+    // move this to service to be sure it is present...
     if (repo && !repo.repoOwnerAllowance) {
-      repo.fetchRepoOwnerAllowance.perform();
+        this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
   },
 
@@ -75,5 +79,5 @@ export default TravisRoute.extend({
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
     return this._super(...arguments);
-  }
+  },
 });
