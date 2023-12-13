@@ -91,6 +91,7 @@ export default Service.extend({
   },
 
   checkAuth() {
+    console.log('checkAuth called');
     if (!this.currentUser || !this.storage)
       return;
     const { accounts } = this.storage;
@@ -98,11 +99,14 @@ export default Service.extend({
     const stillLoggedIn = accounts.isAny('vcsId', vcsId);
 
     if (!stillLoggedIn) {
+      console.log('checkAuth: not logged in');
       this.router.transitionTo('signin');
     }
+    console.log('checkAuth finished');
   },
 
   switchAccount(id, redirectUrl) {
+    console.log('switchAccount called');
     this.store.unloadAll();
     const targetAccount = this.accounts.findBy('id', id);
     this.storage.set('activeAccount', targetAccount);
@@ -110,6 +114,7 @@ export default Service.extend({
       window.location.href = redirectUrl;
     else
       window.location.reload();
+    console.log('switchAccount finished');
   },
 
   signOut(runTeardown = true) {
@@ -135,16 +140,20 @@ export default Service.extend({
     const { currentRouteName } = this.router;
     if (currentRouteName && currentRouteName !== 'signin') {
       try {
+        console.log('signOut: redirecting to signin');
         this.router.transitionTo('signin');
       } catch (e) {}
     }
+    console.log('signOut finished');
   },
 
   afterSignOut(callback) {
+    console.log('afterSignOut called');
     afterSignOutCallbacks.push(callback);
   },
 
   signInWith(provider) {
+    console.log('signInWith called');
     assert(`Invalid provider to authenticate ${provider}`, availableProviders.includes(provider));
     this.signIn(provider);
   },
@@ -160,6 +169,7 @@ export default Service.extend({
     const providerSegment = provider ? `/${provider}` : '';
     const path = `/auth/handshake${providerSegment}`;
     window.location.href = `${authEndpoint || apiEndpoint}${path}?signup=true&redirect_uri=${url}`;
+    console.log('signUp finished');
   },
 
   signIn(provider) {
@@ -174,15 +184,19 @@ export default Service.extend({
     const providerSegment = provider ? `/${provider}` : '';
     const path = `/auth/handshake${providerSegment.replace('-', '')}`;
     window.location.href = `${authEndpoint || apiEndpoint}${path}?redirect_uri=${url}`;
+    console.log('signIn finished');
   },
 
   getAccountByProvider(provider) {
+    console.log('getAccountByProvider called');
     const { vcsTypes } = vcsConfigByUrlPrefixOrType(provider);
     const [,, userType] = vcsTypes;
+    console.log('getAccountByProvider finished');
     return this.accounts.findBy('vcsType', userType);
   },
 
   isSignedInWith(provider) {
+    console.log('isSignedInWith called');
     return !!this.getAccountByProvider(provider);
   },
 
@@ -198,6 +212,7 @@ export default Service.extend({
           this.set('state', STATE.SIGNED_IN);
           Travis.trigger('user:signed_in', currentUser);
           Travis.trigger('user:refreshed', currentUser);
+          console.log('autoSignIn finished');
         })
         .catch(error => {
           if (!didCancel(error)) {
@@ -205,6 +220,7 @@ export default Service.extend({
           }
         });
     } catch (error) {
+      console.log('autoSignIn finished with error');
       this.signOut(false);
     }
   },
@@ -233,6 +249,7 @@ export default Service.extend({
       storage.set('activeAccount', userRecord);
       this.reportNewUser();
       this.reportToIntercom();
+      console.log('handleNewLogin finished');
     });
   },
 
@@ -253,6 +270,7 @@ export default Service.extend({
     try {
       return yield userRecord.reload({ included: includes.join(',') });
     } catch (error) {
+      console.log('fetchUser finished with error');
       const status = +error.status || +get(error, 'errors.firstObject.status');
       if (status === 401 || status === 403 || status === 500) {
         this.flashes.error(TOKEN_EXPIRED_MSG);
@@ -262,6 +280,7 @@ export default Service.extend({
   }).keepLatest(),
 
   validateUserData(user, isBecome) {
+    console.log('validateUserData called');
     const hasChannelsOnPro = field => field === 'channels' && !this.isProVersion;
     user['confirmed_at'] = user['confirmed_at'] || false;
     const hasAllFields = USER_FIELDS.every(field => isPresent(user[field]) || hasChannelsOnPro(field));
@@ -269,9 +288,11 @@ export default Service.extend({
     if (!hasAllFields || !hasCorrectScopes) {
       throw new Error('User validation failed');
     }
+    console.log('validateUserData finished');
   },
 
   reportToIntercom() {
+    console.log('reportToIntercom called');
     const {
       id,
       name,
@@ -293,20 +314,24 @@ export default Service.extend({
       metrics.trackEvent({
         event: 'first_authentication'
       });
+      console.log('reportNewUser: first_authentication event tracked');
       if (vcsProvider) {
         metrics.trackEvent({
           event: 'first_authentication_with_provider',
           authProvider: vcsProvider.name
         });
+        console.log('reportNewUser: first_authentication_with_provider event tracked');
       }
       if (this.utm.hasData) {
         currentUser.set('utmParams', this.utm.all);
         currentUser.save();
       }
     }
+    console.log('reportNewUser finished');
   },
 
   clearNonAuthFlashes() {
+    console.log('clearNonAuthFlashes called');
     const flashMessages = this.get('flashes.flashes') || [];
     const errorMessages = flashMessages.filterBy('type', 'error');
     if (!isEmpty(errorMessages)) {
@@ -320,10 +345,12 @@ export default Service.extend({
   },
 
   sync() {
+    console.log('sync called');
     return this.currentUser.sync();
   },
 
   syncingDidChange: observer('isSyncing', 'currentUser', function () {
+    console.log('syncingDidChange called');
     const user = this.currentUser;
     if (user && user.get('isSyncing') && !user.get('syncedAt')) {
       if (this.storage.get('activeAccountInstallation')) {
@@ -339,21 +366,25 @@ export default Service.extend({
   actions: {
 
     switchAccount(id) {
+      console.log('switchAccount action called');
       this.switchAccount(id);
     },
 
     signIn(runAfterSignIn) {
+      console.log('signIn action called');
       let applicationRoute = getOwner(this).lookup('route:application');
       applicationRoute.send('signIn', runAfterSignIn);
     },
 
     signOut() {
+      console.log('signOut action called');
       this.signOut();
     }
   }
 });
 
 function pushUserToStore(store, user) {
+  console.log('pushUserToStore called');
   const record = store.push(store.normalize('user', user));
   const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
   record.setProperties({ installation });
@@ -361,6 +392,7 @@ function pushUserToStore(store, user) {
 }
 
 function runAfterSignOutCallbacks() {
+  console.log('runAfterSignOutCallbacks called');
   afterSignOutCallbacks.forEach(callback => callback());
   afterSignOutCallbacks.clear();
 }
