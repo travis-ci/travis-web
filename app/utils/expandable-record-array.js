@@ -25,8 +25,8 @@ export default ArrayProxy.extend({
 
   load(array) {
     this.set('isLoading', true);
-    return resolve(array).then(() => {
-      array.forEach((record) => {
+    return resolve(array).then((array_) => {
+      array_.forEach((record) => {
         if (!this.includes(record)) {
           return this.pushObject(record);
         }

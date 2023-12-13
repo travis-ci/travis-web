@@ -58,7 +58,6 @@ let FilteredArrayManagerForType = EmberObject.extend({
   init() {
     this._super(...arguments);
     this.arrays = {};
-    this.store = this.store
     this.allRecords = this.store.peekAll(this.modelName);
   },
 
@@ -88,7 +87,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
   fetchArray(queryParams, filterFunction, dependencies, forceReload) {
     let id = this.calculateId(queryParams, filterFunction, dependencies);
     let hasArray = !!this.arrays[id];
-    let array = this._getFilterArray(id, queryParams, filterFunction, dependencies);
+    let array = A(this._getFilterArray(id, queryParams, filterFunction, dependencies));
 
     if (hasArray && forceReload) {
       // if forceReload is true and array already exist, just run the query
@@ -188,7 +187,6 @@ let FilteredArrayManager = EmberObject.extend({
 
   filter(modelName, queryParams, filterFunction, dependencies) {
     const filterArray = this.filteredArrayManagerForType(modelName).getFilterArray(queryParams, filterFunction, dependencies);
-
     if (queryParams) {
       let currentRecords = this.store.peekAll(modelName);
       if (filterFunction) {
