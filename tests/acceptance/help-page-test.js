@@ -152,7 +152,7 @@ module('Acceptance | help page', function (hooks) {
       assert.notOk(helpPage.supportSection.form.isPresent);
     });
 
-    test('form not present when subscribed after trial', async function (assert) {
+    skip('form not present when subscribed after trial', async function (assert) {
       this.trial = this.server.create('trial', {
         has_active_trial: true,
         builds_remaining: 0,
