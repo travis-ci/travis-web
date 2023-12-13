@@ -239,8 +239,7 @@ const Repo = VcsEntity.extend({
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
     });
 
-    const res = this._buildObservableArray(builds);
-    return this._buildObservableArray(res);
+    return this._buildObservableArray(builds);
   }),
 
   _requestRepoMatches(request, id) {

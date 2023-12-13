@@ -38,11 +38,9 @@ export default ArrayProxy.extend({
 
 
   observe(collection) {
-    console.log(collection);
     if (!(collection instanceof ObservableArrayBase)) {
       collection = asObservableArray(collection)
     }
-    console.log(collection);
     return collection.addArrayObserver(this, {
       willChange: 'observedArrayWillChange',
       didChange: 'observedArraydidChange'
