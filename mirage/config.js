@@ -750,7 +750,7 @@ function routes () {
   this.get('/v3/org/:organizationId/build_permissions', function (schema, request) {
     const { organizationId } = request.params;
     const org = schema.organizations.find(organizationId);
-    const owner = schema.owners.first;
+    const owner = schema.owners?.first || {};
 
     let response = {
       '@type': 'build_permissions',

@@ -25,11 +25,11 @@
         <LoadingIndicator/>
       {{else}}
         {{#if this.isNewSubscription}}
-          <button class='button--green' data-test-complete-payment='true' type="submit" {{on 'click' (perform this.createFreeSubscription)}}>
+          <button class='button--green' data-test-complete-payment='true' type="button" {{on 'click' (perform this.createFreeSubscription)}}>
             Select plan
           </button>
         {{else}}
-          <button class='button--green' data-test-complete-payment='true' type="submit" {{on 'click' (perform this.updatePlan)}}>
+          <button class='button--green' data-test-complete-payment='true' type="button" {{on 'click' (perform this.updatePlan)}}>
             Switch plan
           </button>
         {{/if}}
@@ -119,7 +119,7 @@
           {{#if this.isLoading}}
             <LoadingIndicator/>
           {{else}}
-            <button class='button--green' data-test-complete-payment='true' type="submit" {{on 'click' form.submit}}>
+            <button class='button--green' data-test-complete-payment='true' type="button" {{on 'click' form.submit}}>
               {{#if this.isReactivation}}
                 Reactivate plan payments
               {{else if this.selectedPlan.isTrial}}
@@ -150,7 +150,7 @@
         {{#if this.isLoading}}
           <LoadingIndicator/>
         {{else}}
-          <button class='button--green' data-test-complete-payment='true' type="submit" {{on 'click' (perform this.updatePlan)}}>
+          <button class='button--green' data-test-complete-payment='true' type="button" {{on 'click' (perform this.updatePlan)}}>
             {{#if this.isReactivation}}
               Reactivate plan payments
             {{else if this.selectedPlan.isTrial}}

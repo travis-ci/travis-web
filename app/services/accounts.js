@@ -49,8 +49,10 @@ export default Service.extend({
 
   fetchV2Subscriptions: task(function* () {
     this.set('v2SubscriptionError', false);
+    console.log("fetchV2Subscriptions");
     try {
-      const subscriptions = yield this.store.findAll('v2-subscription') || [];
+      const subscriptions =  yield this.store.findAll('v2-subscription') || [];
+
 
       if (subscriptions.any(s => s.isSubscribed && !s.belongsTo('plan').id())) {
         this.logMissingPlanException();
@@ -58,6 +60,7 @@ export default Service.extend({
 
       return subscriptions;
     } catch (e) {
+      console.log("any error?", e);
       this.set('v2SubscriptionError', true);
     }
   }),

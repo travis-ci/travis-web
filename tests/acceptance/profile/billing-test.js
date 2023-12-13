@@ -385,7 +385,6 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(billingPaymentForm.contactDetails.country.text, 'Germany');
 
     assert.ok(billingPaymentForm.isPresent);
-
     await billingPaymentForm.completePayment.click();
 
     assert.equal(profilePage.billing.plan.name, `${this.defaultV2Plan.name}`);
