@@ -237,7 +237,7 @@ const Repo = VcsEntity.extend({
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
-    });
+    }, [''], true);
 
     return this._buildObservableArray(builds);
   }),
