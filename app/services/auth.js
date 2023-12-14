@@ -328,6 +328,16 @@ export default Service.extend({
     }
   }),
 
+  handleTokenRegeneration(token) {
+    const currentUser = this.currentUser;
+    this.storage.accounts.removeObject(currentUser);
+    currentUser.set('authToken', token);
+    this.storage.accounts.addObject(currentUser);
+    this.reloadUser(currentUser);
+    this.storage.set('activeAccount', currentUser);
+    this.storage.setRegeneratedToken(token);
+  },
+
   actions: {
 
     switchAccount(id) {
