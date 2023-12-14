@@ -70,10 +70,11 @@ export default Component.extend({
   hasBillingViewPermissions: reads('model.permissions.billing_view'),
   hasInvoicesViewPermissions: reads('model.permissions.plan_invoices'),
   hasSettingsReadPermissions: reads('model.permissions.settings_read'),
+  hasSettingsCreatePermissions: reads('model.permissions.settings_create'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
-  showOrganizationSettings: computed('isOrganizationAdmin', 'isProVersion', 'hasSettingsReadPermissions', function () {
-    const forOrganization = !this.isOrganization || this.hasSettingsReadPermissions;
-    return this.isOrganizationAdmin && this.isProVersion && forOrganization;
+  showOrganizationSettings: computed('isOrganizationAdmin', 'isProVersion', 'hasSettingsCreatePermissions', function () {
+    const forOrganization = !this.isOrganization || this.hasSettingsCreatePermissions;
+    return this.isProVersion && forOrganization;
   }),
 
   showSubscriptionTab: computed('features.enterpriseVersion', 'hasPlanViewPermissions',
