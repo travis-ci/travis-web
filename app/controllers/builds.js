@@ -12,6 +12,7 @@ export default Controller.extend(...mixins, {
   features: service(),
   externalLinks: service(),
   permissions: service(),
+  refreshService: service(),
 
   buildsSorting: ['number:desc'],
   builds: sort('model.content', 'buildsSorting'),

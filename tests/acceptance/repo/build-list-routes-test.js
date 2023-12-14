@@ -1,4 +1,3 @@
-import { assign } from '@ember/polyfills';
 import { module, test, skip } from 'qunit';
 import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import {
@@ -226,14 +225,18 @@ module('Acceptance | repo build list routes', function (hooks) {
       branch: 'no-dapl'
     });
 
+    const buildAsPayload = generatePusherPayload(build);
+    buildAsPayload.commit = generatePusherPayload(commit);
+
     const createdData = {
-      build: generatePusherPayload(build),
+      build: buildAsPayload,
       commit: generatePusherPayload(commit),
       repository: generatePusherPayload(this.repository)
     };
     createdData.build.state = 'created';
     await app.pusher.receive('build:created', createdData);
     await settled();
+
     assert.equal(page.builds.length, 6, 'expected another build');
 
     page.builds[0].as(newBuild => {

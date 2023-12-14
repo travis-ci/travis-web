@@ -32,6 +32,7 @@ const Repo = VcsEntity.extend({
   features: service(),
   store: service(),
   tasks: service(),
+  refreshService: service(),
 
   permissions: attr(),
   slug: attr('string'),
@@ -52,6 +53,7 @@ const Repo = VcsEntity.extend({
   historyMigrationStatus: attr('string'),
   scanFailedAt: attr('date'),
   serverType: attr('string', { defaultValue: 'git' }),
+  buildsRefreshToken: null,
 
   currentScan: computed('scanFailedAt', function () {
     let scanFailedAt = this.scanFailedAt;
@@ -225,11 +227,11 @@ const Repo = VcsEntity.extend({
       content: []
     });
     array.load(builds);
-    array.observe(builds);
+  //  array.observe(builds);
     return array;
   },
 
-  builds: computed('id', function () {
+  builds: computed('id', 'buildsRefreshToken', function () {
     let id = this.id;
     const builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],

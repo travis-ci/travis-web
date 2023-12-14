@@ -6,11 +6,20 @@ export default Service.extend({
   store: service(),
   jobState: service(),
   liveUpdatesRecordFetcher: service(),
+  refreshService: service(),
+
+  refreshEntities(event, data) {
+    switch(event) {
+      case 'build:created':
+        this.refreshService.refreshBuildsInRepos.perform(data.repository.id);
+    }
+  },
 
   receive(event, data) {
     let build, commit, job;
     let store = this.store;
     let [name, type] = event.split(':');
+
 
     if (name === 'repository' && type === 'migration') {
       const repository = store.peekRecord('repo', data.repositoryId);
@@ -59,6 +68,7 @@ export default Service.extend({
         };
         delete data.build.commit;
         store.push(store.normalize('commit', commit));
+        this.refreshEntities(event, data);
       }
     }
 

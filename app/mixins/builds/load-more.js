@@ -5,6 +5,7 @@ import { task } from 'ember-concurrency';
 export default Mixin.create({
   tabStates: service(),
   store: service(),
+  refreshService: service(),
 
   loadMoreBuilds: task(function* () {
     let number = this.get('builds.lastObject.number');
@@ -31,13 +32,14 @@ export default Mixin.create({
     const singularTab = tabName.substr(0, tabName.length - 1);
     const type = tabName === 'builds' ? 'push' : singularTab;
     const options = this._constructOptions(type);
-    yield this.store.query('build', options);
+   // yield this.store.query('build', options);
+    this.refreshService.refreshBuildsInRepos.perform(this.repo);
   }).drop(),
 
   _constructOptions(type) {
     let options = {
       repository_id: this.get('repo.id'),
-      offset: this.get('builds.length'),
+       offset: this.get('builds.length'),
     };
     if (type != null) {
       options.event_type = type.replace(/s$/, '');

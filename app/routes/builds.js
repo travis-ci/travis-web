@@ -5,6 +5,7 @@ export default TravisRoute.extend({
   tabStates: service(),
   auth: service(),
   tasks: service(),
+  refreshService: service(),
 
   activate(...args) {
     this._super(args);
@@ -20,7 +21,13 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.modelFor('repo').builds;
+    const that = this;
+    const repo = this.modelFor('repo');
+    repo.addObserver('buildsRefreshToken', function () {
+        that.refresh()
+      }
+    );
+    return repo.builds;
   },
 
   beforeModel() {
@@ -28,5 +35,9 @@ export default TravisRoute.extend({
     if (repo && !repo.repoOwnerAllowance) {
       this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
-  }
+  },
+
+  refreshRoute() {
+    this.refresh();
+  },
 });

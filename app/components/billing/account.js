@@ -4,7 +4,7 @@ import { computed, action } from '@ember/object';
 import { reads, empty, bool, not, and, or } from '@ember/object/computed';
 import {tracked} from "@glimmer/tracking";
 
-export default class MyComponent extends Component {
+export default class BillingAccount extends Component {
   @service store;
   @service accounts;
 
