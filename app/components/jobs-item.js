@@ -60,4 +60,16 @@ export default Component.extend({
     let config = this.get('job.config.content');
     return jobConfigArch(config);
   }),
+
+  serverTypeIcon: reads('repo.serverType'),
+
+  serverType: computed('repo.serverType', function () {
+    let serverType = this.get('repo.serverType');
+    if (!serverType) return '';
+    if (serverType === 'svn') {
+      return 'SVN';
+    } else {
+      return serverType.capitalize();
+    }
+  }),
 });

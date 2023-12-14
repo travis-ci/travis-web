@@ -67,8 +67,7 @@ export default TravisRoute.extend({
 
   beforeModel() {
     const repo = this.modelFor('repo');
-    const hasPushPermission = this.permissions.hasPushPermission(repo);
-    if (!hasPushPermission) {
+    if (!repo.permissions.settings_read) {
       this.transitionTo('repo.index');
       this.flashes.error('Your permissions are insufficient to access this repository\'s settings');
     }

@@ -33,7 +33,11 @@ module('Acceptance | repo settings', function (hooks) {
       slug: 'org-login/repository-name',
       private: true,
       permissions: {
-        admin: true
+        admin: true,
+        settings_read: true,
+        settings_create: true,
+        settings_delete: true,
+        settings_update: true
       },
       owner: { login: 'org-login', id: 2 }
     });
