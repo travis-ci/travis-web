@@ -17,7 +17,7 @@ export default Component.extend({
     const vcsType = this.get('build.repo.vcsType');
     const vcsId = this.get('build.repo.vcsId');
     const branch = this.get('build.branchName');
-    const slugOwner = this.get('build.repo.slug').split('/')[0];
+    const slugOwner = (this.get('build.repo.slug') || '').split('/')[0];
 
     return this.externalLinks.branchUrl(vcsType, { owner, repo, branch, vcsId, slugOwner });
   }),
@@ -27,7 +27,7 @@ export default Component.extend({
     const vcsType = this.get('build.repo.vcsType');
     const vcsId = this.get('build.repo.vcsId');
     const commit = this.get('build.commit.sha');
-    const slugOwner = this.get('build.repo.slug').split('/')[0];
+    const slugOwner = (this.get('build.repo.slug') || '').split('/')[0];
 
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId, slugOwner });
   }),

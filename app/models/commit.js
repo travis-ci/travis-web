@@ -56,7 +56,7 @@ export default Model.extend({
     const commit = this.get('sha');
     const slugOwner = this.get('build.repo.slug').split('/')[0];
 
-    if (vcsType.startsWith('Assembla')) {
+    if (vcsType && vcsType.startsWith('Assembla')) {
       const vcsId = this.get('build.repo.vcsId');
 
       return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId, slugOwner });

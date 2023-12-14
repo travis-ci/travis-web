@@ -30,7 +30,7 @@ export default Component.extend({
       const vcsType = this.get('vcsType');
       const commit = this.get('branch.last_build.commit.sha');
       const slugOwner = this.get('branch.repository.slug').split('/')[0];
-      if (vcsType.startsWith('Assembla')) {
+      if (vcsType && vcsType.startsWith('Assembla')) {
         const owner = repo.split('.')[0];
         const vcsId = this.get('vcsId');
 
