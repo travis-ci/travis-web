@@ -24,7 +24,7 @@
   </div>
 
 
-  <div class='full-width cc-form-elem'>   
+  <div class='full-width cc-form-elem'>
     <form.field @label="Credit Card details"
       onSubmit={{perform this.createSubscription}} @required={{true}} @showRequiredMark={{true}} as |field|>
       <StripeCard  class="cc-form-internal" @onComplete={{action "complete" }} @options={{this.options}} as |stripeError|>
@@ -158,7 +158,7 @@
         {{#unless this.isTrial}}
         <p class="plan-desc">{{format-currency this.selectedPlan.startingPrice floor="true"}}{{ if this.selectedPlan.isAnnual '/annualy'
           '/monthly'}}</p>
-        
+
          <button class=" no-button plan-details" {{action 'togglePlanDetails' }}>
           Plan details </button>
         {{#if this.planDetailsVisible}}
@@ -174,7 +174,7 @@
           <p class='billing-plans__box-v2--desc cnowrap' data-test-selected-plan-os="true">
             <SvgImage @name="stage-passed" @class="icon icon-desc" />Linux, Windows, macOS, FreeBSD
           </p>
-          
+
           {{#if this.selectedPlan.hasOSSCreditAddons}}
           <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
             <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{this.selectedPlan.publicCredits}} OSS Credits<span
@@ -218,7 +218,7 @@
   <div class="align-left font-size-s" id="first-plan-charge-info">
     {{#if this.isTrial}}
       <b class="font-bold">We will charge you $1 and refund you in 7 days</b>. This is needed to make sure your card
-  
+
       is valid. By clicking on "Verify Your Account" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI
         Terms and Privacy
         Policy</a>.
@@ -227,10 +227,10 @@
 
       will not be able to use Travis CI features.
     {{else}}
-  
+
       You'll be charged {{format-currency this.selectedPlan.startingPrice floor="true"}} {{ if
       this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel your subscription. Previous
-   
+
       charges won't be refunded when you cancel unless it's legally required. By clicking
       on "{{this.getActivateButtonText}}" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI Terms and Privacy
         Policy</a>.

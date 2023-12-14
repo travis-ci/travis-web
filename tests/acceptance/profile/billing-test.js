@@ -513,9 +513,20 @@ module('Acceptance | profile/billing', function (hooks) {
       created_at: new Date(2018, 7, 16),
       permissions: {
         read: true,
-        write: true
+        write: true,
+        plan_view: true,
+        billing_view: true,
       }
     });
+
+    this.organization.permissions = {
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
+    };
 
     this.subscription.owner = this.organization;
     this.subscription.source = 'github';
@@ -540,9 +551,20 @@ module('Acceptance | profile/billing', function (hooks) {
       created_at: new Date(2018, 7, 16),
       permissions: {
         read: true,
-        write: true
+        write: true,
+        plan_view: true,
+        billing_view: true,
       }
     });
+
+    this.organization.permissions = {
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
+    };
 
     this.subscription.owner = this.organization;
     this.subscription.source = 'github';
@@ -711,6 +733,12 @@ module('Acceptance | profile/billing', function (hooks) {
   test('switching to another account’s billing tab loads the subscription form properly', async function (assert) {
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -728,6 +756,12 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing tab when trial has not started', async function (assert) {
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -744,6 +778,12 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing tab with no create subscription permissions', async function (assert) {
     this.organization.permissions = {
       createSubscription: false,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -759,6 +799,12 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription = null;
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -791,6 +837,12 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription = null;
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -824,6 +876,12 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription = null;
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -859,6 +917,12 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription = null;
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -893,7 +957,16 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription.status = 'subscribed';
     this.subscription.save();
     this.organization.attrs.education = true;
-    this.organization.permissions = { createSubscription: true, admin: true };
+    this.organization.permissions = {
+      createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
+      admin: true
+    };
     this.organization.save();
 
     await profilePage.visitOrganization({ name: 'org-login' });
@@ -918,7 +991,16 @@ module('Acceptance | profile/billing', function (hooks) {
 
     this.subscription = null;
     this.organization.attrs.education = true;
-    this.organization.permissions = { createSubscription: true, admin: true };
+    this.organization.permissions = {
+      createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
+      admin: true
+    };
     this.organization.save();
 
     await profilePage.visitOrganization({ name: 'org-login' });
@@ -1046,6 +1128,12 @@ module('Acceptance | profile/billing', function (hooks) {
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -1097,6 +1185,12 @@ module('Acceptance | profile/billing', function (hooks) {
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -1146,6 +1240,12 @@ module('Acceptance | profile/billing', function (hooks) {
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -1198,6 +1298,12 @@ module('Acceptance | profile/billing', function (hooks) {
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -1314,6 +1420,12 @@ module('Acceptance | profile/billing', function (hooks) {
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();
@@ -1380,6 +1492,12 @@ module('Acceptance | profile/billing', function (hooks) {
     owner.inject('service:stripev3', 'config', 'config:stripe');
     this.organization.permissions = {
       createSubscription: true,
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
       admin: true
     };
     this.organization.save();

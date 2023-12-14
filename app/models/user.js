@@ -73,6 +73,13 @@ export default Owner.extend({
     }
   },
 
+  hasPermissionToRepo(repo, permission) {
+    let permissions = repo.get ? repo.get('permissions') : null;
+    if (permissions) {
+      return permissions[permission] || false;
+    }
+  },
+
   sync(isOrganization) {
     this.set('isSyncing', true);
     this.set('applyFilterRepos', !isOrganization);

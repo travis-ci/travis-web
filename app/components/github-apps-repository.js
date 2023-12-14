@@ -41,9 +41,18 @@ export default Component.extend({
     return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
   }),
 
+  hasActivatePermission: computed('permissions.all', 'repository', function () {
+    let repo = this.repository;
+    let forRepo = (repo.owner.id == this.user.id && repo.ownerType == 'user') ||
+                  ((repo.shared || repo.ownerType != 'user') && repo.permissions.activate);
+    return forRepo;
+  }),
+
   hasSettingsPermission: computed('permissions.all', 'repository', function () {
     let repo = this.repository;
-    return this.permissions.hasPushPermission(repo);
+    let forRepo = (repo.owner.id == this.user.id && repo.ownerType == 'user') ||
+                  ((repo.shared || repo.ownerType != 'user') && repo.permissions.settings_read);
+    return this.permissions.hasPushPermission(repo) && forRepo;
   }),
 
   hasEmailSubscription: computed('repository', 'repository.emailSubscribed', function () {

@@ -5,6 +5,7 @@
     by placing test fee - $1, which will be returned to you within a week.
   </p>
 
+  {{#if this.canViewBilling }}
   <div class='payment-details-form'>
     <TravisForm data-test-stripe-form='true' @onSubmit={{action "submit"}} as |form|>
       <div class='flex flex--col flex-md-row'>
@@ -49,7 +50,7 @@
           <p>{{stripeError.message}}</p>
         {{/if}}
       </StripeCard>
-  
+
       <form.field
         @label='Billing Email Address'
         @value={{this.billingInfo.billingEmail}}
@@ -62,7 +63,7 @@
       >
         <Field.input @name='billing_email_address'/>
       </form.field>
-  
+
       <form.field
         @label='Company Name'
         @value={{this.billingInfo.company}}
@@ -76,7 +77,7 @@
         <Field.input @name='company_name'/>
         <div class="travis-form__error-message">&nbsp;</div>
       </form.field>
-  
+
       <form.field
         @label='Street Address'
         @value={{this.billingInfo.address}}
@@ -89,7 +90,7 @@
       >
         <Field.input @name='address'/>
       </form.field>
-  
+
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
           <form.field
@@ -163,7 +164,7 @@
         </div>
         {{/if}}
       </div>
-  
+
       {{#if this.showNonZeroVatConfirmation}}
         <div class='flex justify-between items-center mb-8'>
           <div class='w-4/6 pr-2'>
@@ -211,6 +212,7 @@
         </div>
       {{/if}}
 
+  {{#if this.canEditBilling }}
       <div class='billing-checkout__payment'>
         {{#if this.isLoading}}
           <LoadingIndicator/>
@@ -221,9 +223,10 @@
           </button>
         {{/if}}
       </div>
+  {{/if}}
     </TravisForm>
   </div>
-
+  {{/if}}
     {{#if this.invoices}}
       {{#if this.hasV2Subscription}}
         {{#if this.v2subscription.isNotManual}}

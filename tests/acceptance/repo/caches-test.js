@@ -41,9 +41,15 @@ module('Acceptance | repo caches', function (hooks) {
       size: 10061086
     }));
 
-    this.repository = this.server.create('repository', { slug, caches });
-
     signInUser(currentUser);
+
+    this.repository = this.server.create('repository', {
+      slug,
+      caches,
+      permissions: { cache_view: true, cache_delete: true },
+      owner: {login: 'user-login', id: currentUser.id}
+    });
+
   });
 
   test('view and delete caches', async function (assert) {

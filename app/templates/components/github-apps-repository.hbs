@@ -21,13 +21,15 @@
     </span>
   </span>
 {{/if}}
-{{#if this.hasSettingsPermission}}
+{{#if this.hasActivatePermission}}
   {{#if this.isNotMatchGithub}}
     <TravisSwitch
       @active={{this.repository.active}}
       @onToggle={{perform this.toggleRepositoryTask}}
     />
   {{/if}}
+{{/if}}
+{{#if this.hasSettingsPermission}}
   <LinkTo
     @route="settings"
     @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}

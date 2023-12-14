@@ -135,7 +135,9 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       currentBuild: permissionBuild,
       defaultBranch: permissionBranch,
       permissions: {
-        create_request: true
+        create_request: true,
+        build_create: true,
+        build_restart: true
       }
     });
   });
