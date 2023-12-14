@@ -31,7 +31,7 @@ export default Mixin.create({
     const singularTab = tabName.substr(0, tabName.length - 1);
     const type = tabName === 'builds' ? 'push' : singularTab;
     const options = this._constructOptions(type);
-    yield this.store.query('build', options);
+    this.set('newElements', this.newElements.concat(yield this.store.query('build', options)));
   }).drop(),
 
   _constructOptions(type) {

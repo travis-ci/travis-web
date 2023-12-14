@@ -13,9 +13,13 @@ export default Controller.extend(...mixins, {
   externalLinks: service(),
   permissions: service(),
 
-  buildsSorting: ['number:desc'],
-  builds: sort('model.content', 'buildsSorting'),
   oldBuilds: [],
+  newElements: [],
+
+  builds: computed('model.content', 'newElements', function() {
+    console.log(this.model);
+    return (this.model.content.concat(this.newElements)).sort((e) => e.number);
+  }),
 
   repoController: controller('repo'),
   repo: alias('repoController.repo'),
