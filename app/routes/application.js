@@ -68,7 +68,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   setupRepoSubscriptions() {
     this.store.filter('repo', null, (repo) => {
       return !repo.get('private') && !repo.get('isCurrentUserACollaborator');
-    }).then((repos) => {
+    }, ['private', 'isCurrentUserACollaborator']).then((repos) => {
       let plainRepos = []
       repos.forEach(repo => {
         this.subscribeToRepo(repo)
