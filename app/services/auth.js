@@ -70,8 +70,8 @@ export default Service.extend({
 
   inactiveAccounts: computed('accounts.@each.id', 'storage.activeAccount.id', function () {
     const { accounts, activeAccount } = this.storage;
-    if (accounts.content() && accounts.content().length > 0 && activeAccount) {
-      return accounts.content().filter(account => account.id !== activeAccount.id);
+    if (accounts && accounts.length > 0 && activeAccount) {
+      return accounts.filter(account => account.id !== activeAccount.id);
     } else {
       return [];
     }
@@ -100,7 +100,7 @@ export default Service.extend({
       return;
     const { accounts } = this.storage;
     const { vcsId } = this.currentUser;
-    const stillLoggedIn = accounts.content().isAny('vcsId', vcsId);
+    const stillLoggedIn = accounts.isAny('vcsId', vcsId);
 
     if (!stillLoggedIn) {
       this.router.transitionTo('signin');
