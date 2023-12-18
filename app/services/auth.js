@@ -204,16 +204,11 @@ export default Service.extend({
             Travis.trigger('user:refreshed', currentUser);
         })
         .catch(error => {
-          console.log("Problems");
-          console.log(error.message);
           if (!didCancel(error)) {
             throw new Error(error);
           }
         });
     } catch (error) {
-      console.log("General catch");
-      console.log(error.message); // for debugging purposes is better option...
-      console.log(error.stack);
       this.signOut(false);
     }
   },

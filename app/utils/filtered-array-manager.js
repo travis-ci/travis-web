@@ -19,7 +19,7 @@ let FilteredArray = ArrayProxy.extend({
       'content',
       computed(
         `_all.@each.{${dependencies.join(',')}}`,
-        () => _all.filter(item => item && filterFunction(item))
+        () => console.log("I am invoked") || _all.filter(item => item && filterFunction(item))
       )
     );
 
@@ -87,7 +87,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
   fetchArray(queryParams, filterFunction, dependencies, forceReload) {
     let id = this.calculateId(queryParams, filterFunction, dependencies);
     let hasArray = !!this.arrays[id];
-    let array = A(this._getFilterArray(id, queryParams, filterFunction, dependencies));
+    let array = this._getFilterArray(id, queryParams, filterFunction, dependencies);
 
     if (hasArray && forceReload) {
       // if forceReload is true and array already exist, just run the query
@@ -130,7 +130,6 @@ let FilteredArrayManagerForType = EmberObject.extend({
       dependencies
     }));
 
-    array = A(array);
 
     let promise = new EmberPromise((resolve, reject) => {
       // TODO: think about error handling, at the moment it will just pass the

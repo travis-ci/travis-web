@@ -157,6 +157,7 @@ const Repo = VcsEntity.extend({
   _branches: hasMany('branch'),
 
   isCurrentUserACollaborator: computed('auth.currentUser.permissions.[]', function () {
+    console.log("I am isCurrentUserACollaborator");
     let permissions = this.get('auth.currentUser.permissions');
 
     if (permissions) {
