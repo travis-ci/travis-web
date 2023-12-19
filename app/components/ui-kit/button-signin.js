@@ -23,7 +23,12 @@ export default Component.extend({
 
   isLoading: false,
 
+  vcnTypeOverride: null,
+
   vcsType: computed('provider', function () {
+    if (this.vcsTypeOverride)
+      return this.vcsTypeOverride;
+
     return `${capitalize(this.provider.replace('-', ''))}User`;
   }),
 

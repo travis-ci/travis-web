@@ -44,19 +44,19 @@ module('Acceptance | profile/billing', function (hooks) {
       id: 'free_tier_plan', name: 'Free Tier Plan', startingPrice: 0,
       startingUsers: 999999, privateCredits: 10000, publicCredits: 40000,
       isFree: true, isUnlimitedUsers: true, addonConfigs: [{ type: 'credit_private' }, { type: 'credit_public'}, { type: 'user_license'}],
-      planType: 'metered'
+      hasCreditAddons: true, hasOSSCreditAddons: true, planType: 'metered'
     });
     this.server.create('v2-plan-config', {
       id: 'yearly_basic_plan', name: 'Basic', startingPrice: 3000,
       startingUsers: 100, privateCredits: 25000, publicCredits: 40000,
       isFree: false, isUnlimitedUsers: false, addonConfigs: [{ type: 'credit_private' }, { type: 'credit_public'}, { type: 'user_license'}],
-      planType: 'metered', isAnnual: true
+      hasCreditAddons: true, hasOSSCreditAddons: true, planType: 'metered', isAnnual: true
     });
     this.server.create('v2-plan-config', {
       id: 'pro_tier_plan', name: 'Pro Tier Plan', startingPrice: 30000,
       startingUsers: 10000, privateCredits: 500000, publicCredits: 40000,
       isFree: false, isUnlimitedUsers: false, addonConfigs: [{ type: 'credit_private' }, { type: 'credit_public'}, { type: 'user_license'}],
-      planType: 'metered', isAnnual: true
+      hasCreditAddons: true, hasOSSCreditAddons: true, planType: 'metered', isAnnual: true
     });
     this.defaultV2Plan = this.server.create('v2-plan-config', {
       id: 'standard_tier_plan', name: 'Standard Tier Plan', startingPrice: 3000,

@@ -19,7 +19,7 @@ let FilteredArray = ArrayProxy.extend({
       'content',
       computed(
         `_all.@each.{${dependencies.join(',')}}`,
-        () => console.log("I am invoked") || _all.filter(item => item && filterFunction(item))
+        () => _all.filter(item => item && filterFunction(item))
       )
     );
 

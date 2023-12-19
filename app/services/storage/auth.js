@@ -35,13 +35,11 @@ export default class Auth extends Service {
 
   @action
   setAccounts(accounts) {
-    console.log("setting accounts", accounts);
     this._accounts = accounts;
     this.persistAccounts(accounts);
   }
 
   persistAccounts(newValue) {
-    console.log("newValue", newValue);
     const records = (newValue || []).map(record => serializeUserRecord(record));
     storage.setItem('travis.auth.accounts', JSON.stringify(records));
   }

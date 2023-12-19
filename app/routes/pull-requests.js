@@ -16,7 +16,12 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.modelFor('repo');
+    const that = this;
+    const repo = this.modelFor('repo');
+    repo.addObserver('requestsRefreshToken', function () {
+      that.refresh()
+    });
+    return repo;
   },
 
   titleToken() {

@@ -33,7 +33,11 @@ export default Mixin.create({
     const type = tabName === 'builds' ? 'push' : singularTab;
     const options = this._constructOptions(type);
    // yield this.store.query('build', options);
-    this.refreshService.refreshBuildsInRepos.perform(this.repo);
+    if (type === 'push') {
+      this.refreshService.refreshBuildsInRepos.perform(this.repo);
+    } else {
+      this.refreshService.refreshRequestsInRepos.perform(this.repo);
+    }
   }).drop(),
 
   _constructOptions(type) {

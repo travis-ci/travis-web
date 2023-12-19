@@ -17,7 +17,7 @@
         </h2>
         <ul class="blank-list">
           {{#each this.activeBranches as |branch|}}
-            <BranchRow @branch={{branch}} @vcsType={{this.repo.vcsTypeOverride}} />
+            <BranchRow @branch={{branch}} @vcsTypeOverride={{this.repo.vcsTypeOverride}} />
           {{/each}}
         </ul>
       </section>
@@ -29,7 +29,7 @@
         </h2>
         <ul class="blank-list">
           {{#each this.inactiveBranches as |branch|}}
-            <BranchRow @branch={{branch}} @inactive={{true}} @vcsType={{this.repo.vcsTypeOverride}} />
+            <BranchRow @branch={{branch}} @inactive={{true}} @vcsTypeOverride={{this.repo.vcsTypeOverride}} />
           {{/each}}
         </ul>
       </section>

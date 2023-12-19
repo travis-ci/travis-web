@@ -12,6 +12,8 @@ export default Service.extend({
     switch(event) {
       case 'build:created':
         this.refreshService.refreshBuildsInRepos.perform(data.repository.id);
+      case 'request:created':
+        this.refreshService.refreshRequestsInRepos.perform(data.repository.id);
     }
   },
 

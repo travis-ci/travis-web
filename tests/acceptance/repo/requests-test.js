@@ -15,7 +15,7 @@ module('Acceptance | repo | requests', function (hooks) {
     this.repo = this.server.create('repository', { slug: 'travis-ci/travis-web', owner: { login: 'travis-ci', id: 1 } });
   });
 
-  skip('list requests', async function (assert) {
+  test('list requests', async function (assert) {
     let approvedRequest = this.repo.createRequest({
       result: 'approved',
       message: 'A request message',
@@ -74,6 +74,8 @@ module('Acceptance | repo | requests', function (hooks) {
 
     await requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
 
+    await new Promise(r => setTimeout(r, 20000));
+
     requestsPage.requests[0].as(request => {
       assert.ok(request.isApproved);
       assert.ok(request.isHighlighted, 'expected the request to be highlighted because of the query param');
@@ -113,7 +115,7 @@ module('Acceptance | repo | requests', function (hooks) {
 
   });
 
-  skip('a placeholder shows when there are no requests', async function (assert) {
+  test('a placeholder shows when there are no requests', async function (assert) {
     await requestsPage.visit({organization: 'travis-ci', repo: 'travis-web'});
 
     assert.equal(requestsPage.requests.length, 0);

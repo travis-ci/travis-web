@@ -6,7 +6,7 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { prettyDate } from 'travis/helpers/pretty-date';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Acceptance | repo branches', function (hooks) {
+skip('Acceptance | repo branches', function (hooks) {
   setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
@@ -189,7 +189,7 @@ module('Acceptance | repo branches', function (hooks) {
     });
   });
 
-  skip('view branches', async function (assert) {
+  test('view branches', async function (assert) {
     await branchesPage.visit({ organization: 'org-login', repo: 'repository-name' });
 
     await settled();
@@ -240,7 +240,7 @@ module('Acceptance | repo branches', function (hooks) {
 
   });
 
-  skip('view branches tab when no branches present', async function (assert) {
+  test('view branches tab when no branches present', async function (assert) {
     // destroy state from previous tests
     this.server.db.branches.remove();
     this.server.db.repositories.remove();

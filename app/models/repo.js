@@ -54,6 +54,7 @@ const Repo = VcsEntity.extend({
   scanFailedAt: attr('date'),
   serverType: attr('string', { defaultValue: 'git' }),
   buildsRefreshToken: null,
+  requestsRefreshToken: null,
 
   currentScan: computed('scanFailedAt', function () {
     let scanFailedAt = this.scanFailedAt;
@@ -255,11 +256,11 @@ const Repo = VcsEntity.extend({
       content: []
     });
     array.load(requests);
-    array.observe(requests);
+   // array.observe(requests);
     return array;
   },
 
-  requests: computed('id', function () {
+  requests: computed('id', 'requestsRefreshToken', function () {
     let id = this.id;
     const requests = this.store.filter(
       'request',

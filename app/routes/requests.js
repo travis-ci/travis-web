@@ -9,6 +9,13 @@ export default TravisRoute.extend({
   },
 
   model() {
+    const that = this;
+    const repo = this.modelFor('repo');
+    repo.addObserver('requestsRefreshToken', function () {
+        that.refresh()
+      }
+    );
+
     return this.modelFor('repo').requests;
   },
 
@@ -17,5 +24,8 @@ export default TravisRoute.extend({
     if (repo && !repo.repoOwnerAllowance) {
        this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
-  }
+  },
+  refreshRoute() {
+    this.refresh();
+  },
 });

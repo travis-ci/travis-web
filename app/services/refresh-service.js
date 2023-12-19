@@ -14,5 +14,13 @@ export default class RefreshService extends Service {
     repo.set('buildsRefreshToken', Date.now());
   })
   refreshBuildsInRepos;
-  
+
+
+  @task( function* (arg) {
+    const repo = arg.get ? arg : this.store.peekRecord('repo', arg);
+    const offset = repo.builds.length;
+    yield this.store.query('build', {offset: offset, repository_id: repo.id, event_type: ['request', 'pull_request']});
+    repo.set('requestsRefreshToken', Date.now());
+  })
+  refreshRequestsInRepos;
 }

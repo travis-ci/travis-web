@@ -65,7 +65,7 @@
   {{#if this.model.error}}
     <NoAccount
       @name={{this.model.login}}
-      @vcsType={{this.model.vcsType}}
+      @vcsTypeOverride={{this.model.vcsType}}
     />
   {{else}}
     <header class="profile-header">
@@ -111,10 +111,10 @@
               Repositories
             </LinkTo>
             <EmberPopover @isShown={{this.showWizard}} @event="none" class="rounded" @side="bottom">
-            <Owner::Wizard  @showWizard="{{this.showWizard}}" 
-                  @wizardStep={{this.wizardStep}} 
+            <Owner::Wizard  @showWizard="{{this.showWizard}}"
+                  @wizardStep={{this.wizardStep}}
                   @onClose={{action 'onWizardClose'}}
-            /> 
+            />
           </EmberPopover>
 
           </li>
