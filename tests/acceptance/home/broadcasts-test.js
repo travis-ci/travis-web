@@ -6,8 +6,8 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-// this is not in use anyways?
-skip('Acceptance | broadcasts', function (hooks) {
+
+module('Acceptance | broadcasts', function (hooks) {
   setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
