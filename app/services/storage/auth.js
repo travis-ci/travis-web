@@ -12,14 +12,13 @@ export default class Auth extends Service {
 
   @tracked _accounts = [];
 
-  constructor() {
-    super(...arguments);
+  init() {
+    super.init();
     this.loadAccounts();
   }
 
   loadAccounts() {
     const accountsData = storage.getItem('travis.auth.accounts');
-    console.log("accounts Data", accountsData);
     this.accounts = parseWithDefault(accountsData, []).map(account =>
       extractAccountRecord(this.store, account)
     );
