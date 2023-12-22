@@ -76,7 +76,7 @@ export default Component.extend({
   migrateURL: computed('owner.type', 'owner.login', function () {
     const { login, isUser } = this.owner;
     const path = isUser ? 'account/migrate' : `organizations/${login}/migrate`;
-    return `https://travis-ci.com/${path}`;
+    return `https://app.travis-ci.com/${path}`;
   }),
 
   wizardStep: reads('storage.wizardStep'),

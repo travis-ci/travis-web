@@ -19,12 +19,12 @@ module('Unit | Service | external-links', function (hooks) {
 
   test('billingUrl as organization', function (assert) {
     const service = this.owner.lookup('service:external-links');
-    assert.equal(service.billingUrl('organization', 'travis-ci'), 'https://travis-ci.com/organizations/travis-ci/plan');
+    assert.equal(service.billingUrl('organization', 'travis-ci'), 'https://app.travis-ci.com/organizations/travis-ci/plan');
   });
 
   test('billingUrl as user', function (assert) {
     const service = this.owner.lookup('service:external-links');
-    assert.equal(service.billingUrl('user', 'travis-ci'), 'https://travis-ci.com/account/plan');
+    assert.equal(service.billingUrl('user', 'travis-ci'), 'https://app.travis-ci.com/account/plan');
   });
 });
 
