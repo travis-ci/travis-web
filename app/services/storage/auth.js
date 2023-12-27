@@ -85,6 +85,7 @@ export default class Auth extends Service {
   }
 
   set activeAccount(value) {
+    this.setAccounts([value]);
     const id = value && value.id || null;
     this.activeAccountId = id;
     return value;
