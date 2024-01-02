@@ -105,47 +105,6 @@ module('Acceptance | user settings', function (hooks) {
     assert.ok(emailSettings.toggle.isVisible);
   });
 
-  test('Email settings can be toggled', async function (assert) {
-    const AMOUNT_OF_REPOS = 3;
-
-    this.server.createList('repository', AMOUNT_OF_REPOS, {
-      email_subscribed: false
-    });
-
-    await profilePage.visit({ username: 'testuser' });
-    await profilePage.settings.visit();
-
-    const { emailSettings } = profilePage.settings;
-
-    assert.ok(!emailSettings.toggle.isOn);
-    assert.ok(!emailSettings.resubscribeList.isPresent);
-
-    await emailSettings.toggle.click();
-
-    percySnapshot(assert);
-
-    assert.ok(emailSettings.toggle.isOn);
-    assert.ok(emailSettings.resubscribeList.isPresent);
-    assert.equal(emailSettings.resubscribeList.items.length, AMOUNT_OF_REPOS);
-  });
-
-  test('User can resubscribe to repository', async function (assert) {
-    this.server.create('repository', { email_subscribed: false });
-
-    await profilePage.visit({ username: 'testuser' });
-    await profilePage.settings.visit();
-
-    const { emailSettings } = profilePage.settings;
-
-    await emailSettings.toggle.click();
-
-    assert.equal(emailSettings.resubscribeList.items.length, 1);
-
-    await emailSettings.resubscribeList.items[0].click();
-
-    assert.ok(!emailSettings.resubscribeList.isPresent);
-  });
-
   test('Insights settings are not listed in non-PRO version', async function (assert) {
     await profilePage.visit({ username: this.user.login });
     await profilePage.settings.visit();

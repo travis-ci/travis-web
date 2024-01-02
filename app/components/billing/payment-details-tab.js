@@ -74,11 +74,6 @@ export default Component.extend({
   }),
 
   country: reads('billingInfo.country'),
-  firstName: reads('billingInfo.firstName'),
-  lastName: reads('billingInfo.lastName'),
-  nameOnCard: computed('firstName', 'lastName', function () {
-    return `${this.firstName || ''} ${this.lastName || ''}`;
-  }),
   hasLocalRegistration: reads('billingInfo.hasLocalRegistration'),
 
   isLoading: reads('updatePaymentDetails.isRunning'),
@@ -104,6 +99,7 @@ export default Component.extend({
       });
       if (token) {
         paymentDetails['token'] = token.id;
+        paymentDetails['fingerprint'] = token.card.fingerprint;
       }
       const endpoint = this.isV2SubscriptionEmpty ? 'subscription' : 'v2_subscription';
       yield this.api.patch(`/${endpoint}/${subscription.id}/payment_details`, {
@@ -161,14 +157,6 @@ export default Component.extend({
   actions: {
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
-    },
-    modifyNameOnCard(value) {
-      this.set('nameOnCard', value);
-      let ownerName = this.nameOnCard.trim();
-      this.billingInfo.setProperties({
-        firstName: ownerName.split(' ')[0],
-        lastName: ownerName.split(' ')[1]
-      });
     },
     onCaptchaResolved(reCaptchaResponse) {
       this.updatePaymentDetails.perform(reCaptchaResponse);

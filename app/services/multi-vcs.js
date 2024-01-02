@@ -9,13 +9,14 @@ export default Service.extend({
 
   isProVersion: reads('features.proVersion'),
 
-  enabled: or('enableAssemblaLogin', 'enableBitbucketLogin', 'enableGitlabLogin'),
+  enabled: or('enableAssemblaLogin', 'enableBitbucketLogin', 'enableGitlabLogin', 'enableTravisProxyLogin'),
   disabled: not('enabled'),
 
   get enableGithubLogin() { return this.isProviderEnabled('github'); },
   get enableAssemblaLogin() { return this.isProviderEnabled('assembla'); },
   get enableBitbucketLogin() { return this.isProviderEnabled('bitbucket'); },
   get enableGitlabLogin() { return this.isProviderEnabled('gitlab'); },
+  get enableTravisProxyLogin() { return this.isProviderEnabled('travisproxy'); },
 
   primaryProviderConfig: computed(() => defaultVcsConfig),
   primaryProvider: reads('primaryProviderConfig.urlPrefix'),

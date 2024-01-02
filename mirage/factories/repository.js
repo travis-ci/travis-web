@@ -49,6 +49,8 @@ export default Mirage.Factory.extend({
     description: 'Default',
   }),
 
+  vcsType: 'GithubRepository',
+
   slug: function () {
     return `${this.owner.login}/${this.name}`;
   },

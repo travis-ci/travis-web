@@ -56,7 +56,8 @@ export default Component.extend({
     const [owner, repo] = slug.split('/');
     const branch = this.get('build.branchName');
     const file = fileNameWithoutSha(source);
-    return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file });
+    const slugOwner = slug.split('/')[0];
+    return this.externalLinks.fileUrl(vcsType, { owner, repo, branch, file, slugOwner });
   }),
 
   codeblockId: computed('rawConfig.source', function () {
