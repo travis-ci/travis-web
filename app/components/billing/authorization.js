@@ -23,7 +23,6 @@ export default Component.extend({
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
   lastPaymentIntentError: reads('subscription.paymentIntent.last_payment_error'),
   retryAuthorizationClientSecret: reads('subscription.paymentIntent.client_secret'),
-  hasSubscriptionPermissions: reads('account.hasSubscriptionPermissions'),
   notChargeInvoiceSubscription: not('subscription.chargeUnpaidInvoices.lastSuccessful.value'),
   freeV2Plan: equal('subscription.plan.startingPrice', 0),
   isSubscribed: reads('subscription.isSubscribed'),
@@ -31,6 +30,10 @@ export default Component.extend({
   isComplete: not('isIncomplete'),
   canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', function () {
     return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial;
+  }),
+
+  hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function () {
+    return this.account.hasSubscriptionPermissions && (!this.account.isOrganization || this.account.permissions.plan_create);
   }),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   isTrial: reads('subscription.plan.isTrial'),
@@ -67,7 +70,7 @@ export default Component.extend({
         });
         const { client_secret: clientSecret } = yield this.subscription.chargeUnpaidInvoices.perform();
         yield this.stripe.handleStripePayment.perform(clientSecret);
-        yield this.accounts.fetchV2Subscriptions.perform();
+        yield this.accounts.fetchV2Subscriptions.linked().perform();
       }
     } catch (error) {
       this.flashes.error('An error occurred when creating your subscription. Please try again.');
@@ -77,7 +80,7 @@ export default Component.extend({
   editPlan: task(function* () {
     yield this.subscription.changePlan.perform(this.selectedPlan.id);
     yield this.accounts.fetchSubscriptions.perform();
-    yield this.accounts.fetchV2Subscriptions.perform();
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
     yield this.retryAuthorization.perform();
   }).drop(),
 
@@ -87,7 +90,7 @@ export default Component.extend({
       yield this.stripe.handleStripePayment.perform(result.payment_intent.client_secret);
     } else {
       yield this.accounts.fetchSubscriptions.perform();
-      yield this.accounts.fetchV2Subscriptions.perform();
+      yield this.accounts.fetchV2Subscriptions.linked().perform();
     }
   }).drop(),
 

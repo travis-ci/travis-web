@@ -45,14 +45,11 @@ module.exports = function (environment) {
     screens,
     tailwind,
     EmberENV: {
+      EXTEND_PROTOTYPES: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
-      EXTEND_PROTOTYPES: {
-        // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
     },
 
     APP: {
@@ -154,7 +151,7 @@ module.exports = function (environment) {
       hidePostalCode: true,
       style: {
         base: {
-          fontStyle: 'Source Sans Pro',
+          fontStyle: 'sans-serif',
           fontSize: '15px',
           color: '#666',
           '::placeholder': {
@@ -395,14 +392,6 @@ module.exports = function (environment) {
     ENV.skipConfirmations = true;
 
     ENV.logLimit = 100;
-
-    ENV.percy = {
-      breakpointsConfig: {
-        mobile: 375,
-        desktop: 1280
-      },
-      defaultBreakpoints: ['mobile', 'desktop']
-    };
 
     ENV.featureFlags['debug-logging'] = false;
     ENV.featureFlags['dashboard'] = false;

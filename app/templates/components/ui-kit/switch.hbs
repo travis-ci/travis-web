@@ -4,9 +4,7 @@
     rounded-full p-px
     bg-{{if this.active this.activeBgColor this.inactiveBgColor}}
     {{if this.active 'pl' 'pr'}}-{{this.spaceSize}}
-  "
-  {{on 'click' (action 'handleClick')}}
-  ...attributes
+  " ...attributes type="button" {{on 'click' (action 'handleClick')}}
 >
   <div
     class="

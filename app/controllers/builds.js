@@ -12,9 +12,10 @@ export default Controller.extend(...mixins, {
   features: service(),
   externalLinks: service(),
   permissions: service(),
+  refreshService: service(),
 
   buildsSorting: ['number:desc'],
-  builds: sort('model', 'buildsSorting'),
+  builds: sort('model.content', 'buildsSorting'),
   oldBuilds: [],
 
   repoController: controller('repo'),
@@ -35,7 +36,7 @@ export default Controller.extend(...mixins, {
   hasBuildBackups: reads('repo.hasBuildBackups'),
 
   displayShowMoreButton: computed('tab', 'loadMoreBuilds.isRunning', 'builds', function () {
-    const builds = this.get('builds');
+    const builds = this.builds;
     let tab = this.tab;
 
     if (this.oldBuilds.length === builds.length) {

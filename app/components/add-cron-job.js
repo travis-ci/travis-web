@@ -5,6 +5,7 @@ import BranchSearching from 'travis/mixins/branch-searching';
 
 export default Component.extend(BranchSearching, {
   store: service(),
+  flashes: service(),
 
   classNames: ['form--cron'],
 
@@ -41,7 +42,7 @@ export default Component.extend(BranchSearching, {
     const cron = this.store.createRecord('cron', {
       branch: this.selectedBranch,
       interval: this.selectedInterval.toLowerCase(),
-      dont_run_if_recent_build_exists: this.selectedOption.value
+      dont_run_if_recent_build_exists: this.selectedOption ? this.selectedOption.value : null
     });
     try {
       yield cron.save();

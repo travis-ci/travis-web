@@ -1,0 +1,13 @@
+diff --git a/node_modules/ember-prism/addon/components/code-inline.js b/node_modules/ember-prism/addon/components/code-inline.js
+index 08eadd3..c0bc1ff 100644
+--- a/node_modules/ember-prism/addon/components/code-inline.js
++++ b/node_modules/ember-prism/addon/components/code-inline.js
+@@ -9,7 +9,7 @@ export default class CodeInlineComponent extends Component {
+   @tracked prismCode = '';
+ 
+   get code() {
+-    const code = this.args.code;
++    const code = this.args.code || "{}";
+ 
+     assert(
+       "ember-prism's <CodeBlock/> and <CodeInline/> components require a `code` parameter to be passed in.",

@@ -1,6 +1,5 @@
-import { assign } from '@ember/polyfills';
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { module, test, skip } from 'qunit';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import {
   getContext,
   settled,
@@ -8,12 +7,11 @@ import {
 import page from 'travis/tests/pages/build-list';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo build list routes', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -71,7 +69,7 @@ module('Acceptance | repo build list routes', function (hooks) {
     };
     this.commitAttributes = commitAttributes;
 
-    lastBuild.createCommit(assign({
+    lastBuild.createCommit(Object.assign({
       message: 'A generic cron commit message'
     }, commitAttributes));
     lastBuild.save();
@@ -145,7 +143,6 @@ module('Acceptance | repo build list routes', function (hooks) {
     assert.expect(24);
 
     await page.visitBuildHistory({ organization: 'org-login', repo: 'repository-name' });
-
     assert.equal(page.builds.length, 4, 'expected four non-PR builds');
 
     const { owner } = getContext();
@@ -194,7 +191,7 @@ module('Acceptance | repo build list routes', function (hooks) {
     });
     olderBuild.save();
 
-    percySnapshot(assert);
+
 
     await page.showMoreButton.click();
 
@@ -228,14 +225,18 @@ module('Acceptance | repo build list routes', function (hooks) {
       branch: 'no-dapl'
     });
 
+    const buildAsPayload = generatePusherPayload(build);
+    buildAsPayload.commit = generatePusherPayload(commit);
+
     const createdData = {
-      build: generatePusherPayload(build),
+      build: buildAsPayload,
       commit: generatePusherPayload(commit),
       repository: generatePusherPayload(this.repository)
     };
     createdData.build.state = 'created';
     await app.pusher.receive('build:created', createdData);
     await settled();
+
     assert.equal(page.builds.length, 6, 'expected another build');
 
     page.builds[0].as(newBuild => {

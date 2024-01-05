@@ -113,6 +113,7 @@ export default create({
       scope: '[data-test-yaml]',
       text: text(),
       id: attribute('id'),
+      code: "{}"
     },
     source: text('.header')
   }),

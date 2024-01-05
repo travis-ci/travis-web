@@ -1,4 +1,19 @@
-{{#unless this.isSuccess}}
+{{#if this.isSuccess}}
+  <h1 class="header-main align-center" data-test-zendesk-form-success-header>
+    Thank you!
+  </h1>
+  <div class="success-image align-center" data-test-zendesk-form-success-image>
+    <SvgImage @name="hard-hat-success" />
+  </div>
+  <div class="subheading align-center" data-test-zendesk-form-success-message>
+    One of our support engineers will get back to you as soon as possible.
+  </div>
+  <div class="back-link align-center">
+    <a class="button--blue" {{action "goBack"}} data-test-zendesk-form-back-link>
+      Head back
+    </a>
+  </div>
+{{else}}
   {{#if this.showSupportForm}}
     <h1 class="header-main align-center" data-test-zendesk-form-header>
       Get help from our support engineers
@@ -22,7 +37,7 @@
         <form.field
           @label="Email"
           @value={{this.email}}
-          @required={{true}}
+          @requiredOverride={{true}}
           @validator={{form-validator form.validators.email}}
           @onChange={{action (mut this.email)}}
           data-test-zendesk-form-email="true"
@@ -39,7 +54,7 @@
         <form.field
           @label="Subject"
           @value={{this.subject}}
-          @required={{true}}
+          @requiredOverride={{true}}
           @disabled={{this.isSubmitting}}
           @onChange={{action (mut this.subject)}}
           data-test-zendesk-form-subject="true"
@@ -51,7 +66,7 @@
           @label="Description"
           @value={{this.description}}
           @disabled={{this.isSubmitting}}
-          @required={{true}}
+          @requiredOverride={{true}}
           @validator={{form-validator
             form.validators.difference
             this.descriptionTemplate
@@ -71,7 +86,7 @@
           <button
             onclick={{action form.submit}}
             class="submit-button button--blue button--large"
-            data-test-zendesk-form-submit
+            data-test-zendesk-form-submit type="button"
           >
             {{#if this.isSubmitting}}
               <LoadingIndicator @white={{true}} />
@@ -93,7 +108,7 @@
       <SvgImage @name="hard-hat" />
     </div>
     <div class="sign-in align-center">
-      <MultiSigninButton data-test-zendesk-form-log-in-button="" />
+      <MultiSigninButton data-test-zendesk-form-log-in-button />
     </div>
   {{else}}
     <h1
@@ -119,19 +134,4 @@
       <SvgImage @name="hard-hat" />
     </div>
   {{/if}}
-{{else}}
-  <h1 class="header-main align-center" data-test-zendesk-form-success-header>
-    Thank you!
-  </h1>
-  <div class="success-image align-center" data-test-zendesk-form-success-image>
-    <SvgImage @name="hard-hat-success" />
-  </div>
-  <div class="subheading align-center" data-test-zendesk-form-success-message>
-    One of our support engineers will get back to you as soon as possible.
-  </div>
-  <div class="back-link align-center">
-    <a class="button--blue" {{action "goBack"}} data-test-zendesk-form-back-link>
-      Head back
-    </a>
-  </div>
-{{/unless}}
+{{/if}}

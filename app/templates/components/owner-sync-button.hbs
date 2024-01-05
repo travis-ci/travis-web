@@ -1,7 +1,7 @@
 <div class="sync-button">
   {{#if this.owner.isSyncing}}
     <p>
-      <button class="button" disabled="disabled">
+      <button class="button" disabled="disabled" type="button">
         <span class="lading-indicator--white">
           <i></i>
           <i></i>
@@ -11,10 +11,10 @@
       </button>
     </p>
   {{else if this.owner.roMode}}
-    <button class="button" disabled="disabled"></button>
+    <button class="button" disabled="disabled" type="button"></button>
   {{else}}
     <p>
-      <button class="button" {{action this.sync}}>
+      <button class="button" type="button" {{action this.sync}}>
         <span class="icon icon-sync"></span> Sync account
       </button>
     </p>

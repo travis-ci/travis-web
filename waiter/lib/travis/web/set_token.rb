@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rack/request'
 require 'rack/response'
 require 'sanitize'
@@ -8,18 +10,23 @@ module Travis
       attr_accessor :app, :template
 
       def initialize(app)
-        @app, @template = app, File.read(__FILE__).split('__END__').last
+        @app = app
+        @template = File.read(__FILE__).split('__END__').last
       end
 
       def call(env)
         set_info(env) || app.call(env)
       end
 
-      def set_info(env)
+      def set_info(env) # rubocop:disable Naming/AccessorMethodName
         return unless env['REQUEST_METHOD'] == 'POST'
+
         request = Rack::Request.new(env)
-        token, rss_token, user, storage, become = request.params.values_at('token', 'rssToken', 'user', 'storage', 'become')
-        if token =~ /\A[a-zA-Z\-_\d]+\Z/
+        puts "WHAT"
+        puts  request.params
+        token, rss_token, user, storage, become = request.params.values_at('token', 'rssToken', 'user', 'storage',
+                                                                           'become')
+        if /\A[a-zA-Z\-_\d]+\Z/.match?(token)
           storage = 'sessionStorage' if storage != 'localStorage'
           become = become ? true : false
           info = [

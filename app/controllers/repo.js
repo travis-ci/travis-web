@@ -19,6 +19,7 @@ export default Controller.extend({
   queryParams: ['migrationStatus', 'serverType'],
   serverType: null,
   migrationStatus: null,
+  observing: false,
 
   jobController: controller('job'),
   buildController: controller('build'),
@@ -111,11 +112,15 @@ export default Controller.extend({
   },
 
   stopObservingLastBuild() {
+    if (!this.observing)
+      return;
+    this.set('observing', false);
     return this.removeObserver('repo.currentBuild', this, 'currentBuildDidChange');
   },
 
   observeLastBuild() {
     this.currentBuildDidChange();
+    this.set('observing', true);
     return this.addObserver('repo.currentBuild', this, 'currentBuildDidChange');
   }
 });

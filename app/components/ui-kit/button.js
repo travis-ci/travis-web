@@ -59,11 +59,14 @@ export default Component.extend({
   width: DEFAULT_WIDTH,
   invert: false,
   disabled: false,
+  customBgColor: null,
 
   onClick() {},
 
   // Private
-  bgColor: computed('color', 'disabled', 'invert', function () {
+  bgColor: computed('customBgColor', 'color', 'disabled', 'invert', function () {
+    if (this.customBgColor)
+      return this.customBgColor;
     return this.invert
       ? BG_COLORS['invert']
       : this.disabled

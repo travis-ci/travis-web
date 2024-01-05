@@ -12,11 +12,11 @@
       />
     </div>
     {{#if (eq index this.lastFieldIndex)}}
-      <button class="multiple-input__add-input-button cursor-pointer" {{on 'click' (action 'addInput')}} data-test-add-input>
+      <button class="multiple-input__add-input-button cursor-pointer" data-test-add-input type="button" {{on 'click' (action 'addInput')}}>
         <SvgImage @name='icon-plus' @class='multiple-input__add-icon' />
       </button>
     {{else}}
-      <button class="cursor-pointer multiple-input__remove-input-button" {{on 'click' (action 'removeInput' index)}} >
+      <button class="cursor-pointer multiple-input__remove-input-button" type="button" {{on 'click' (action 'removeInput' index)}} >
         <SvgImage @name='icon-close' @class='multiple-input__remove-icon' />
       </button>
     {{/if}}

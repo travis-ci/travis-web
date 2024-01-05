@@ -9,6 +9,7 @@ export default EmberObject.extend({
   features: service(),
   auth: service(),
   storage: service(),
+  logToLogContent: service(),
 
   version: 0,
   length: 0,
@@ -68,7 +69,11 @@ export default EmberObject.extend({
         this.noRendering) {
       return;
     }
-    return this.parts.pushObject(part);
+
+
+    const pushed =  this.parts.pushObject(part);
+    this.logToLogContent.logContent.partsDidChange(this.parts, this.parts.length -1, null, this.parts.length)
+    return pushed;
   },
 
   loadParts(parts) {

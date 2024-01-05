@@ -15,6 +15,7 @@ let sourceToWords = {
 export default Model.extend({
   api: service(),
   accounts: service(),
+  store: service(),
 
   source: attr(),
   status: attr(),
@@ -32,7 +33,7 @@ export default Model.extend({
   creditCardInfo: belongsTo('credit-card-info', { async: false }),
   invoices: hasMany('invoice'),
   owner: belongsTo('owner', { polymorphic: true }),
-  plan: belongsTo(),
+  plan: belongsTo('plan'),
 
   isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),

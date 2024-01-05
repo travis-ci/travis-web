@@ -2,7 +2,7 @@
   @isVisible={{this.isOpen}}
   @closeOnClickOverlay={{false}}
   @closeButton={{true}}
-  @onClose={{fn @onClose}}
+  @onClose={{@onClose}}
 >
   <div class="migrate-beta-dialog" data-test-migrate-dialog="true">
     <div class="migrate-beta-dialog__image">
@@ -53,7 +53,7 @@
         class="button--blue {{if this.register.isRunning 'disabled'}}"
         disabled={{this.register.isRunning}}
         onclick={{perform this.register}}
-        data-test-migrate-submit="true"
+        data-test-migrate-submit="true" type="button"
       >
         {{#if this.register.isRunning}}
           <LoadingIndicator @white={{true}} @inline={{true}} /> Joining...

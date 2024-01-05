@@ -22,8 +22,8 @@
 <div class="custom-key-action ssh-key-action">
   <CopyButton
     class="no-button ssh-delete"
-    @clipboardText={{this.key.public_key}}
-    @title="Copy to clipboard"
+    @text={{this.key.public_key}}
+    title="Copy to clipboard"
   >
     <SvgImage @name="icon-copy" @class="icon" />
   </CopyButton>
@@ -70,18 +70,14 @@
   </div>
   <div class="custom-key-modal__controls">
     <button
-      data-test-custom-key-modal-cancel-button
-      role="button"
-      class="button button--red"
-      onclick={{action "toggleConfirmationModal"}}
+      data-test-custom-key-modal-cancel-button class="button button--red"
+      onclick={{action "toggleConfirmationModal"}} type="button"
     >
       Cancel
     </button>
     <button
-      data-test-custom-key-modal-confirm-button
-      role="button"
-      class="button button--blue"
-      onclick={{action "confirm"}}
+      data-test-custom-key-modal-confirm-button class="button button--blue"
+      onclick={{action "confirm"}} type="button"
     >
       Confirm
     </button>

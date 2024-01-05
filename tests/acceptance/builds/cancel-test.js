@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { visit, click } from '@ember/test-helpers';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | builds/cancel', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

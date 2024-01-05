@@ -1,47 +1,57 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { computed, action } from '@ember/object';
 import { reads, empty, bool, not, and, or } from '@ember/object/computed';
+import {tracked} from "@glimmer/tracking";
 
-export default Component.extend({
-  store: service(),
-  accounts: service(),
+export default class BillingAccount extends Component {
+  @service store;
+  @service accounts;
 
-  account: null,
+  @tracked account = null;
 
-  subscription: reads('account.subscription'),
-  v2subscription: reads('account.v2subscription'),
-  isV2SubscriptionEmpty: empty('v2subscription'),
-  isSubscriptionEmpty: empty('subscription'),
-  isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
-  hasV2Subscription: not('isV2SubscriptionEmpty'),
-  trial: reads('account.trial'),
-  isEducationalAccount: bool('account.education'),
-  isNotEducationalAccount: not('isEducationalAccount'),
+  @reads('account.subscription') subscription;
+  @reads('account.v2subscription') v2subscription;
+  @empty('v2subscription') isV2SubscriptionEmpty;
+  @empty('subscription') isSubscriptionEmpty;
+  @and('isSubscriptionEmpty', 'isV2SubscriptionEmpty') isSubscriptionsEmpty;
+  @not('isV2SubscriptionEmpty') hasV2Subscription;
+  @reads('account.trial') trial;
+  @bool('account.education') isEducationalAccount;
+  @not('isEducationalAccount') isNotEducationalAccount;
 
-  isTrial: and('isSubscriptionsEmpty', 'isNotEducationalAccount'),
-  isManual: bool('subscription.isManual'),
-  isManaged: bool('subscription.managedSubscription'),
-  isEducation: and('isSubscriptionsEmpty', 'isEducationalAccount'),
-  isSubscription: computed('isManaged', 'hasV2Subscription', 'isTrialProcessCompleted', 'isEduProcessCompleted', function () {
+  @and('isSubscriptionsEmpty', 'isNotEducationalAccount') isTrial;
+  @bool('subscription.isManual') isManual;
+  @bool('subscription.managedSubscription') isManaged;
+  @and('isSubscriptionsEmpty', 'isEducationalAccount') isEducation;
+
+  @computed('isManaged', 'hasV2Subscription', 'isTrialProcessCompleted', 'isEduProcessCompleted')
+  get isSubscription() {
     return (this.isManaged || this.hasV2Subscription) && this.isTrialProcessCompleted && this.isEduProcessCompleted;
-  }),
-  showInvoices: computed('showPlansSelector', 'showAddonsSelector', function () {
+  }
+
+  @computed('showPlansSelector', 'showAddonsSelector')
+  get showInvoices() {
     return !this.showPlansSelector && !this.showAddonsSelector && this.invoices;
-  }),
+  }
 
-  isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
+  @or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning') isLoading;
 
-  showPlansSelector: false,
-  showAddonsSelector: false,
-  isTrialProcessCompleted: computed(function () {
+  showPlansSelector = false;
+  showAddonsSelector = false;
+
+  @computed('isTrial')
+  get isTrialProcessCompleted() {
     return !this.isTrial;
-  }),
-  isEduProcessCompleted: computed(function () {
-    return !this.isEducation;
-  }),
+  }
 
-  newV2Subscription: computed(function () {
+  @computed('isEducation')
+  get isEduProcessCompleted() {
+    return !this.isEducation;
+  }
+
+  @computed('store')
+  get newV2Subscription() {
     const plan = this.store.createRecord('v2-plan-config');
     const billingInfo = this.store.createRecord('v2-billing-info');
     const creditCardInfo = this.store.createRecord('v2-credit-card-info');
@@ -63,9 +73,10 @@ export default Component.extend({
       plan,
       creditCardInfo,
     });
-  }),
+  }
 
-  invoices: computed('subscription.id', 'v2subscription.id', function () {
+  @computed('subscription.id', 'v2subscription.id')
+  get invoices() {
     const subscriptionId = this.isV2SubscriptionEmpty ? this.get('subscription.id') : this.get('v2subscription.id');
     const type = this.isV2SubscriptionEmpty ? 1 : 2;
     if (subscriptionId) {
@@ -73,5 +84,5 @@ export default Component.extend({
     } else {
       return [];
     }
-  }),
-});
+  }
+}

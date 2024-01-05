@@ -7,9 +7,10 @@ export default TravisRoute.extend({
   tabStates: service(),
   api: service(),
   auth: service(),
+  tasks: service(),
 
   model() {
-    const repoId = this.modelFor('repo').get('id');
+    const repoId = this.modelFor('repo').id;
     let allTheBranches = ArrayProxy.create();
 
     const path = `/repo/${repoId}/branches`;
@@ -32,7 +33,7 @@ export default TravisRoute.extend({
   beforeModel() {
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
-      repo.fetchRepoOwnerAllowance.perform();
+      this.tasks.fetchRepoOwnerAllowance.perform(repo);
     }
   }
 });

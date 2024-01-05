@@ -1,4 +1,4 @@
-<nav id="navigation" class="navigation {{if isOpen 'is-open'}}">
+<nav id="navigation" class="navigation {{if this.isOpen 'is-open'}}">
   <ul>
     {{#unless this.features.enterpriseVersion}}
       {{#unless this.features.proVersion}}
@@ -50,15 +50,15 @@
       {{#if this.features.proVersion}}
         {{#if this.auth.signedIn}}
           <li>
-            {{#unless this.isActivation}}
-            <LinkTo @route="dashboard" class="navigation-anchor">
+            {{#if this.isActivation}}
+            <LinkTo @route="dashboard" @disabled="true" class="navigation-anchor-disabled navigation-anchor" title="For using the Dashboard please activate your account">
               Dashboard
             </LinkTo>
             {{else}}
-            <LinkTo @route="dashboard" @disabled=true class="navigation-anchor-disabled navigation-anchor" @title="For using the Dashboard please activate your account">
+            <LinkTo @route="dashboard" class="navigation-anchor">
               Dashboard
             </LinkTo>
-            {{/unless}}
+            {{/if}}
           </li>
           <li>
             <ExternalLinkTo

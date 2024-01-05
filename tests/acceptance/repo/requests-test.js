@@ -1,13 +1,12 @@
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { module, test, skip } from 'qunit';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { prettyDate } from 'travis/helpers/pretty-date';
-import { percySnapshot } from 'ember-percy';
 
 import requestsPage from 'travis/tests/pages/requests';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo | requests', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -75,6 +74,8 @@ module('Acceptance | repo | requests', function (hooks) {
 
     await requestsPage.visit({organization: 'travis-ci', repo: 'travis-web', requestId: approvedRequest.id});
 
+    await new Promise(r => setTimeout(r, 20000));
+
     requestsPage.requests[0].as(request => {
       assert.ok(request.isApproved);
       assert.ok(request.isHighlighted, 'expected the request to be highlighted because of the query param');
@@ -111,7 +112,7 @@ module('Acceptance | repo | requests', function (hooks) {
 
     assert.ok(requestsPage.missingNotice.isHidden);
 
-    percySnapshot(assert);
+
   });
 
   test('a placeholder shows when there are no requests', async function (assert) {

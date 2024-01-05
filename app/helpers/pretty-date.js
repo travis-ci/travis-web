@@ -1,4 +1,4 @@
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 
 import { helper } from '@ember/component/helper';
 
@@ -6,7 +6,9 @@ import moment from 'moment';
 
 export function prettyDate(params) {
   let date = new Date(params[0]);
-  return new htmlSafe(moment(date).format('MMMM D, YYYY H:mm:ss') || '-');
+  const theMoment = moment(date).format('MMMM D, YYYY H:mm:ss') || '-';
+
+  return new htmlSafe(`${theMoment}`);
 }
 
 export default helper(prettyDate);

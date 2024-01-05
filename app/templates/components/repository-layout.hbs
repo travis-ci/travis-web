@@ -7,15 +7,13 @@
       <h1 data-test-repo-header-title class="inline-block vertical-align">
         <LinkTo @route="owner" @models={{array this.repo.provider this.repo.ownerName}} >
           {{this.repo.owner.login}}
-        </LinkTo>
-        /
+        </LinkTo>        /
         <LinkTo
           @route="repo" @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
           @query={{hash serverType=this.repo.serverType}}
         >
           {{this.repo.name}}
-        </LinkTo>
-      </h1>
+        </LinkTo>      </h1>
     </div>
     <div>
       <ExternalLinkTo
@@ -53,7 +51,7 @@
       />
     </div>
     <div class="travistab-body repo-body">
-      {{#if hasBlock}}
+      {{#if (has-block)}}
         {{yield}}
       {{else}}
         <BuildLayout @build={{this.build}} @repo={{this.repo}} />

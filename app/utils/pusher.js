@@ -102,7 +102,7 @@ TravisPusher.prototype.unsubscribe = function (channelName) {
 };
 
 TravisPusher.prototype.receive = function (event, data) {
-  if (event.substr(0, 6) === 'pusher') {
+  if (event.substring(0, 6) === 'pusher') {
     return;
   }
   if (data.id) {
@@ -120,6 +120,7 @@ TravisPusher.prototype.receive = function (event, data) {
 
   next(() => this.pusherService.receive(event, data));
 };
+
 
 TravisPusher.prototype.normalize = function (event, data) {
   switch (event) {

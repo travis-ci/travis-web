@@ -38,6 +38,7 @@ export default Model.extend({
   build: belongsTo('build', { async: true }),
 
   api: service(),
+  tasks: service(),
 
   isAccepted: computed('result', 'build.id', function () {
     // For some reason some of the requests have a null result beside the fact that
@@ -57,22 +58,13 @@ export default Model.extend({
 
   isDraft: equal('pullRequestMergeable', PULL_REQUEST_MERGEABLE.DRAFT),
 
-  messages: computed('repo.id', 'build.request.id', 'fetchMessages.last.value', function () {
-    const messages = this.fetchMessages.get('lastSuccessful.value');
+  messages: computed('repo.id', 'build.request.id', 'tasks.fetchMessages.last.value', function () {
+    const messages = this.tasks.fetchMessages.lastSuccessful.value;
     if (!messages) {
-      this.fetchMessages.perform();
+      this.tasks.fetchMessages.perform();
     }
     return messages || [];
   }),
-
-  fetchMessages: task(function* () {
-    const repoId = this.get('repo.id');
-    const requestId = this.get('build.request.id');
-    if (repoId && requestId) {
-      const response = yield this.api.get(`/repo/${repoId}/request/${requestId}/messages`) || {};
-      return response.messages;
-    }
-  }).drop(),
 
   hasMessages: gt('messages.length', 0),
 });

@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { or, reads } from '@ember/object/computed';
+import { capitalize } from "@ember/string";
 
 export default Component.extend({
   tagName: '',
@@ -13,7 +14,8 @@ export default Component.extend({
   account: null,
 
   isSignup: false,
-  provider: or('account.provider', 'multiVcs.primaryProvider'),
+  overriddenProvider: null,
+  provider: or('overriddenProvider', 'account.provider', 'multiVcs.primaryProvider'),
   isLogoVisible: true,
   isLogoSeparatorVisible: true,
   isBetaBadgeVisible: reads('isBetaProvider'),
@@ -21,8 +23,13 @@ export default Component.extend({
 
   isLoading: false,
 
+  vcnTypeOverride: null,
+
   vcsType: computed('provider', function () {
-    return `${this.provider.replace('-', '').capitalize()}User`;
+    if (this.vcsTypeOverride)
+      return this.vcsTypeOverride;
+
+    return `${capitalize(this.provider.replace('-', ''))}User`;
   }),
 
   isPrimaryProvider: computed('provider', function () {

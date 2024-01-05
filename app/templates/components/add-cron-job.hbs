@@ -6,17 +6,18 @@
     <form.field
       @label="Branch"
       @value={{this.selectedBranch}}
-      required={{true}}
+      requiredOverride={{true}}
       class="branch-selector"
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.select
         @searchField="name"
         @placeholder="Select branch"
         @selected={{this.selectedBranch}}
-        @onchange={{action (mut this.selectedBranch)}}
+        @onChange={{action (mut this.selectedBranch)}}
         @search={{perform this.search}}
+        @searchEnabled={{true}}
         as |branch|
       >
         {{branch.name}}
@@ -26,10 +27,10 @@
   <div class="form-elem select">
     <form.field
       @label="Interval"
-      @required={{true}}
+      @requiredOverride={{true}}
       @value={{this.selectedInterval}}
       @onChange={{action (mut this.selectedInterval)}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.select @options={{this.intervals}} as |interval|>
@@ -40,10 +41,10 @@
   <div class="form-elem select">
     <form.field
       @label="Options"
-      @required={{true}}
+      @requiredOverride={{true}}
       @value={{this.selectedOption}}
       @onChange={{action (mut this.selectedOption)}}
-      @showValidationStatusIcons={{false}}
+      @showValidationStatusIconsOverride={{false}}
       as |field|
     >
       <field.select @options={{this.options}} as |option|>
@@ -55,7 +56,7 @@
     {{#if this.save.isRunning}}
       <LoadingIndicator />
     {{else}}
-      <button onclick={{action form.submit}} class="cron-form-submit form-submit">
+      <button onclick={{action form.submit}} class="cron-form-submit form-submit" type="button">
         Add
       </button>
     {{/if}}

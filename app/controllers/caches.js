@@ -2,33 +2,47 @@ import EmberObject, { computed } from '@ember/object';
 import Controller from '@ember/controller';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
-import { alias } from '@ember/object/computed';
+import { alias, reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+import {tracked} from "@glimmer/tracking";
 
-export default Controller.extend({
-  api: service(),
-  flashes: service(),
+export default class extends Controller {
+  @service api;
+  @service flashes;
 
-  repo: alias('model.repo'),
+  config = config;
 
-  config,
+  @tracked pushes;
+  @tracked pullRequests;
+  @tracked repo;
 
-  cachesExist: computed('model.pushes.[]', 'model.pullRequests.[]', function () {
-    let pushes = this.get('model.pushes');
-    let pullRequests = this.get('model.pullRequests');
-    if (pushes || pullRequests) {
-      return pushes.length || pullRequests.length;
-    }
-  }),
+  constructor() {
+    super(...arguments);
+  }
 
-  deleteRepoCache: task(function* () {
+  @computed('pushes.[]', 'pullRequests.[]')
+  get cachesExist() {
+    return this.pushes?.length || this.pullRequests?.length;
+  }
+
+  @task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
       try {
-        yield this.api.delete(`/repo/${this.get('repo.id')}/caches`);
-        this.set('model', EmberObject.create());
+        yield this.api.delete(`/repo/${this.repo.id}/caches`);
+        this.set('pullRequests', EmberObject.create());
+        this.set('pushes', EmberObject.create());
       } catch (e) {
         this.flashes.error('Could not delete the caches');
       }
     }
   }).drop()
-});
+  deleteRepoCache;
+
+  reassignPullRequests(val, component) {
+    component.set('pullRequests', val);
+  }
+
+  reassignPushes(val, component) {
+    component.set('pushes', val);
+  }
+}

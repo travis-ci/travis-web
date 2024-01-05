@@ -5,6 +5,7 @@ import config from 'travis/config/environment';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
 import { computed } from '@ember/object';
+import { A } from '@ember/array';
 
 export default Service.extend({
   auth: service(),
@@ -28,7 +29,7 @@ export default Service.extend({
 
   loadingData: computed('tasks.@each.isRunning', function () {
     let tasks = this.tasks;
-    return tasks.any(task => task.get('isRunning'));
+    return tasks.any(task => task.isRunning);
   }),
 
   performSearchRequest: task(function* () {
@@ -87,10 +88,8 @@ export default Service.extend({
   ),
 
   sortData(repos) {
-    if (repos && repos.toArray) {
+    if (repos && repos.toArray)
       repos = repos.toArray();
-    }
-
     if (repos && repos.sort) {
       return repos.sort((repo1, repo2) => {
         let buildId1 = repo1.get('currentBuild.id');

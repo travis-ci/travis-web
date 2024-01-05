@@ -30,7 +30,7 @@ export default Component.extend({
   actions: {
     nextStep() {
       this.updateStep.perform(1);
-      if (this.wizardStep > 3) this.get('onClose')();
+      if (this.wizardStep > 3) this.onClose();
     },
     previousStep() {
       this.updateStep.perform(-1);

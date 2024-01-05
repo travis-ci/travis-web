@@ -1,6 +1,6 @@
 <Modal
   @isVisible={{@isOpen}}
-  @onClose={{fn @onClose}}
+  @onClose={{@onClose}}
   @closeButton={{true}}
 >
   <div data-test-user-management-modal="true" class="user-management-modal">
@@ -58,7 +58,7 @@
             </TravisForm>
           </th>
           <th>
-            <button onclick={{action "sortList" "user.name"}} class="sort-button">
+            <button onclick={{action "sortList" "user.name"}} class="sort-button" type="button">
               Name
               {{#if (eq this.sortField 'user.name')}}
                 {{#if (eq this.sortWay 'asc')}}
@@ -70,7 +70,7 @@
             </button>
           </th>
           <th>
-            <button onclick={{action "sortList" "role"}} class="sort-button">
+            <button onclick={{action "sortList" "role"}} class="sort-button" type="button">
               Permission
               {{#if (eq this.sortField 'role')}}
                 {{#if (eq this.sortWay 'asc')}}
@@ -82,7 +82,7 @@
             </button>
           </th>
           <th>
-            <button onclick={{action "sortList" "permission"}} class="sort-button">
+            <button onclick={{action "sortList" "permission"}} class="sort-button" type="button">
               Active
               {{#if (eq this.sortField 'permission')}}
                 {{#if (eq this.sortWay 'asc')}}
@@ -132,14 +132,7 @@
       </tbody>
     </table>
     {{#if (gt this.filteredBuildPermissionsCount this.perPage)}}
-      {{pagination-links
-        currentPage=this.page
-        showFirstAndLast=false
-        lastPage=this.maxPages
-        prevPageIcon='Prev'
-        nextPageIcon='Next'
-        goToPage=(action 'setPage')
-      }}
+      <PaginationLinks @currentPage={{this.page}} @showFirstAndLast={{false}} @lastPage={{this.maxPages}} @prevPageIcon="Prev" @nextPageIcon="Next" @goToPage={{action "setPage"}} />
     {{/if}}
   </div>
 </Modal>

@@ -4,6 +4,7 @@ import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 import { or, reads, filterBy } from '@ember/object/computed';
+import { A } from '@ember/array';
 
 export default Component.extend({
   accounts: service(),
@@ -20,7 +21,11 @@ export default Component.extend({
 
   displayedPlans: reads('availablePlans'),
 
-  selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', function () {
+  selectedPlanOverride: null,
+  selectedPlan: computed('selectedPlanOverride', 'displayedPlans.[].name', 'defaultPlanName', function () {
+    if (this.selectedPlanOverride !== null)
+      return this.selectedPlanOverride;
+
     return this.displayedPlans.findBy('name', this.defaultPlanName);
   }),
 
@@ -30,6 +35,9 @@ export default Component.extend({
     } else {
       return false;
     }
+  }),
+  hasPlanChangePermission: computed('account', function () {
+    return !this.account.isOrganization || this.account.permissions.plan_create;
   }),
 
   save: task(function* () {
@@ -41,13 +49,13 @@ export default Component.extend({
   }).drop(),
 
   reactivatePlan(plan, form) {
-    this.set('selectedPlan', plan);
+    this.set('selectedPlanOverride', plan);
     this.set('isReactivation', true);
     later(form.submit, 500);
   },
 
   selectAndSubmit(plan, form) {
-    this.set('selectedPlan', plan);
+    this.set('selectedPlanOverride', plan);
     later(form.submit, 500);
   },
 
@@ -78,6 +86,6 @@ export default Component.extend({
 
     hideCalculator() {
       this.set('showCalculator', false);
-    }
+    },
   }
 });

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { visit } from '@ember/test-helpers';
 import proHeader from 'travis/tests/pages/header/pro';
 import proLayout from 'travis/tests/pages/layouts/pro';
@@ -8,7 +8,7 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | layouts/pro', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   test('header layout when unauthenticated', async function (assert) {

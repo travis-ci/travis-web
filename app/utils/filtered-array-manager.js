@@ -1,8 +1,12 @@
 import { Promise as EmberPromise, resolve } from 'rsvp';
-import EmberObject, { computed, defineProperty } from '@ember/object';
+import EmberObject, {
+  computed,
+  defineProperty
+} from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import stringHash from 'travis/utils/string-hash';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+import { A } from '@ember/array'
 
 const PromiseArray = ArrayProxy.extend(PromiseProxyMixin);
 
@@ -126,6 +130,7 @@ let FilteredArrayManagerForType = EmberObject.extend({
       dependencies
     }));
 
+
     let promise = new EmberPromise((resolve, reject) => {
       // TODO: think about error handling, at the moment it will just pass the
       // reject from store.query
@@ -181,7 +186,6 @@ let FilteredArrayManager = EmberObject.extend({
 
   filter(modelName, queryParams, filterFunction, dependencies) {
     const filterArray = this.filteredArrayManagerForType(modelName).getFilterArray(queryParams, filterFunction, dependencies);
-
     if (queryParams) {
       let currentRecords = this.store.peekAll(modelName);
       if (filterFunction) {
@@ -192,7 +196,7 @@ let FilteredArrayManager = EmberObject.extend({
       return PromiseArray.create({ promise });
     }
 
-    return filterArray;
+    return resolve(filterArray);
   },
 
   fetchArray(modelName, ...rest) {

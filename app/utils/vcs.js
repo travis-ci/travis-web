@@ -1,5 +1,6 @@
 import { assert } from '@ember/debug';
 import config from 'travis/config/environment';
+import { A } from '@ember/array';
 
 const {
   providers,

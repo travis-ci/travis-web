@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import config from 'travis/config/environment';
+import { A } from '@ember/array';
 
 module('Unit | Service | raven', function (hooks) {
   setupTest(hooks);
@@ -11,7 +12,7 @@ module('Unit | Service | raven', function (hooks) {
     let unfilteredError = { message: 'throw' };
 
     service.shouldReportError = () => true;
-    service.set('benignErrors', ['foo', 'bar', 'baz']);
+    service.set('benignErrors', A(['foo', 'bar', 'baz']));
 
     assert.ok(service.ignoreError(filteredError), 'Service should ignore benign error');
     assert.notOk(service.ignoreError(unfilteredError), 'Service should not ignore serious error');

@@ -2,12 +2,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { and, notEmpty } from '@ember/object/computed';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { typeOf } from '@ember/utils';
 import { codeblockName } from 'travis/utils/format-config';
-import Ember from 'ember';
-
-const { escapeExpression: escape } = Ember.Handlebars.Utils;
+import { escape } from 'travis/helpers/format-message';
 
 export default Component.extend({
   tagName: '',
@@ -16,7 +14,7 @@ export default Component.extend({
     const { code, key, args } = this.message;
 
     if (this[code]) {
-      return htmlSafe(this[code](key, args));
+      return htmlSafe(`${this[code](key, args)}`);
     } else {
       return htmlSafe(`unrecognised message code ${format(code)}`);
     }

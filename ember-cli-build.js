@@ -4,7 +4,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const SVGO = require('svgo');
 
-module.exports = function () {
+module.exports = function (defaults) {
   let fingerprint;
 
   if (process.env.DISABLE_FINGERPRINTS) {
@@ -31,9 +31,10 @@ module.exports = function () {
     }
   }
 
-  const app = new EmberApp({
+  const app = new EmberApp(defaults, {
     'ember-cli-babel': {
       includePolyfill: true,
+      sourceMaps: 'inline'
     },
     fingerprint: fingerprint,
     sourcemaps: {
@@ -76,6 +77,20 @@ module.exports = function () {
         ]
       }
     },
+    emberData: {
+      compatWith: '3.12',
+      debug: {
+        LOG_PAYLOADS: false, // data store received to update cache with
+        LOG_OPERATIONS: false, // updates to cache remote state
+        LOG_MUTATIONS: false, // updates to cache local state
+        LOG_NOTIFICATIONS: false,
+        LOG_REQUESTS: false, // log Requests issued via the request manager
+        LOG_REQUEST_STATUS: false,
+        LOG_IDENTIFIERS: false,
+        LOG_GRAPH: false, // relationship storage
+        LOG_INSTANCE_CACHE: false, // instance creation/deletion
+      },
+    },
     'ember-composable-helpers': {
       only: ['sort-by', 'compute', 'contains', 'toggle']
     },
@@ -112,7 +127,7 @@ module.exports = function () {
   importNpmDependency(app, 'node_modules/emoji-js/lib/emoji.js');
   importNpmDependency(app, 'node_modules/visibilityjs/index.js');
   importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
-  importNpmDependency(app, 'node_modules/yamljs/index.js');
+  importNpmDependency(app, 'node_modules/js-yaml/index.js');
   importNpmDependency(app, 'node_modules/deep-freeze/index.js');
 
   return app.toTree(emojiAssets);

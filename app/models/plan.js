@@ -1,4 +1,4 @@
-import Model, { attr } from '@ember-data/model';
+import Model, { attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed';
 
 export default Model.extend({
@@ -13,5 +13,6 @@ export default Model.extend({
   isEnabled: attr('boolean'),
   isDefault: attr('boolean'),
   isAnnual: attr('boolean'),
-  isFree: equal('price', 0)
+  isFree: equal('price', 0),
+  subscriptions: hasMany('subscription')
 });

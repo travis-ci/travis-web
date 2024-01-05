@@ -4,7 +4,7 @@ import {
   visit,
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { UTM_FIELDS } from 'travis/services/utm';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { timeout } from 'ember-concurrency';
@@ -23,7 +23,7 @@ const TEST_QUERY_PARAMS = Object.entries(TEST_DATA).map(([key, val]) => `${key}=
 const INITIAL_URL = `/?${TEST_QUERY_PARAMS.join('&')}`;
 
 module('Acceptance | utm capture', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

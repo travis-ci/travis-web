@@ -44,12 +44,12 @@
     </div>
     <div class="flex flex--wrap {{if this.account.hasSubscriptionPermissions 'billing-subscription__buttons'}}">
       <div class="billing-subscription__buttons--change">
-        <button onclick={{action 'selectAndSubmit' form}} class='button--blue {{if this.isButtonDisabled 'disabled'}}' data-test-buy-addons='true' disabled={{this.isButtonDisabled}}>
+        <button onclick={{action 'selectAndSubmit' form}} class='button--blue {{if this.isButtonDisabled 'disabled'}}' data-test-buy-addons='true' disabled={{this.isButtonDisabled}} type="button">
           Buy Addons
         </button>
       </div>
       <div class='billing-subscription__buttons--addons'>
-        <button onclick={{action 'cancel'}} class='button--white-and-teal button--hover' data-test-buy-addons-cancel='true'>
+        <button onclick={{action 'cancel'}} class='button--white-and-teal button--hover' data-test-buy-addons-cancel='true' type="button">
           Cancel
         </button>
       </div>

@@ -8,12 +8,12 @@ import EmberObject from '@ember/object';
 
 module('Unit | Instance Initializer | enterprise environment', function (hooks) {
   hooks.beforeEach(function () {
-    this.TestApplication = Application.extend();
-    this.TestApplication.instanceInitializer({
+    const TestApplication = Application.extend();
+    TestApplication.instanceInitializer({
       name: 'initializer under test',
       initialize
     });
-    this.application = this.TestApplication.create({ autoboot: false });
+    this.application = TestApplication.create({ autoboot: false });
     this.application.register('config:environment', EmberObject.create({ featureFlags: { 'enterprise-version': true }}));
     this.instance = this.application.buildInstance();
   });

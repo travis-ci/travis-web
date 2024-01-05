@@ -3,13 +3,11 @@
     <li>
       <LinkTo @query={{hash tab="repositories" timeInterval=this.defaultTimeInterval}} >
         Repositories
-      </LinkTo>
-    </li>
+      </LinkTo>    </li>
     <li>
       <LinkTo @query={{hash tab="insights" timeInterval=this.timeInterval page=1}}>
         Insights
-      </LinkTo>
-    </li>
+      </LinkTo>    </li>
   </ul>
 </nav>
 <div class="owner-repo">
@@ -71,7 +69,9 @@
       <LoadingScreen @center={{true}} @margin={{true}} />
     {{/if}}
   {{else}}
-    {{#unless this.reposLoading}}
+    {{#if this.reposLoading}}
+      <LoadingScreen @center={{true}} @margin={{true}} />
+    {{else}}
       <ul class="owner-tiles">
         {{#each this.repos as |repo|}}
           <OwnerRepoTile @repo={{repo}} />
@@ -85,8 +85,6 @@
         @inner={{6}}
         @outer={{2}}
       />
-    {{else}}
-      <LoadingScreen @center={{true}} @margin={{true}} />
-    {{/unless}}
+    {{/if}}
   {{/if}}
 </div>

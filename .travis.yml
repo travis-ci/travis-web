@@ -1,25 +1,29 @@
 ---
 language: node_js
-node_js: 10
+
+node_js:
+  - "18"
 
 env:
   global:
     - PATH=/snap/bin:$PATH
     - PERCY_ENABLE=0
     - JOBS=1
+    - NODE_OPTIONS=--no-experimental-fetch
     # See https://git.io/vdao3 for details.
 
 os: linux
-dist: xenial
+dist: focal
 
 addons:
   - chrome: stable
 
 cache:
   npm: true
+  directories:
+    - $HOME/.npm
 
 before_install:
-  - npm config set spin false
   - npm install -g greenkeeper-lockfile@1
 
 install:
@@ -47,7 +51,7 @@ jobs:
       env: TRY_CONFIG=ember-beta
     - if: type = cron
       env: TRY_CONFIG=ember-data-beta
-    - node_js: 10
+    - node_js: 18
     - stage: ":ship: it to quay.io"
       before_install: skip
       install: skip
@@ -58,3 +62,4 @@ jobs:
   allow_failures:
     - env: TRY_CONFIG=ember-beta
     - env: TRY_CONFIG=ember-data-beta
+

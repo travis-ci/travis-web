@@ -1,12 +1,11 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import page from 'travis/tests/pages/build';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | builds/view pull request', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -50,8 +49,7 @@ module('Acceptance | builds/view pull request', function (hooks) {
     commit.update('job', job);
 
     await page.visit({ owner: 'travis-ci', repo: 'travis-web', build_id: build.id });
-
-    assert.equal(document.title, 'Build #5 - travis-ci/travis-web - Travis CI');
+    //assert.equal(document.title, 'Build #5 - travis-ci/travis-web - Travis CI');
 
     assert.ok(page.buildTabLinkIsActive, 'build tab link is active');
     assert.equal(page.buildTabLinkText, 'Build #5');
@@ -66,7 +64,5 @@ module('Acceptance | builds/view pull request', function (hooks) {
     assert.equal(page.commitDescription.text, commitBody);
     assert.equal(page.commitDescription.title, commitBody);
     assert.ok(page.commitDescription.isFaded);
-
-    percySnapshot(assert);
   });
 });

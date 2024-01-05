@@ -31,6 +31,8 @@ const Repo = VcsEntity.extend({
   auth: service(),
   features: service(),
   store: service(),
+  tasks: service(),
+  refreshService: service(),
 
   permissions: attr(),
   slug: attr('string'),
@@ -51,9 +53,11 @@ const Repo = VcsEntity.extend({
   historyMigrationStatus: attr('string'),
   scanFailedAt: attr('date'),
   serverType: attr('string', { defaultValue: 'git' }),
+  buildsRefreshToken: null,
+  requestsRefreshToken: null,
 
   currentScan: computed('scanFailedAt', function () {
-    let scanFailedAt = this.get('scanFailedAt');
+    let scanFailedAt = this.scanFailedAt;
     return {
       icon: scanFailedAt ? 'errored' : 'passed',
       state: scanFailedAt ? 'issue' : 'passed'
@@ -91,14 +95,7 @@ const Repo = VcsEntity.extend({
       return this.repoOwnerAllowance;
   }),
 
-  repoOwnerAllowance: reads('fetchRepoOwnerAllowance.lastSuccessful.value'),
-
-  fetchRepoOwnerAllowance: task(function* () {
-    const allowance = this.store.peekRecord('allowance', this.owner.id);
-    if (allowance)
-      return allowance;
-    return yield this.store.queryRecord('allowance', { login: this.owner.login, provider: this.provider });
-  }).drop(),
+  repoOwnerAllowance: reads('tasks.fetchRepoOwnerAllowance.lastSuccessful.value'),
 
   buildPermissions: reads('fetchBuildPermissions.lastSuccessful.value'),
 
@@ -132,7 +129,7 @@ const Repo = VcsEntity.extend({
       return false;
     const isPro = this.get('features.proVersion');
     const enterprise = !!this.get('features.enterpriseVersion');
-    const roMode = this.get('owner').ro_mode || false;
+    const roMode = this.owner.ro_mode || false;
 
     if (!isPro || enterprise) {
       return !roMode;
@@ -161,6 +158,7 @@ const Repo = VcsEntity.extend({
   _branches: hasMany('branch'),
 
   isCurrentUserACollaborator: computed('auth.currentUser.permissions.[]', function () {
+    console.log("I am isCurrentUserACollaborator");
     let permissions = this.get('auth.currentUser.permissions');
 
     if (permissions) {
@@ -182,7 +180,7 @@ const Repo = VcsEntity.extend({
 
   urlOwnerName: computed('slug', function () {
     const { slug = '', ownerName } = this;
-    return slug.split('/').firstObject || ownerName;
+    return slug.split('/') && slug.split('/').firstObject || ownerName;
   }),
 
   formattedSlug: computed('owner.login', 'name', function () {
@@ -193,7 +191,7 @@ const Repo = VcsEntity.extend({
 
   sshKey: function () {
     this.store.find('ssh_key', this.id);
-    return this.store.recordForId('ssh_key', this.id);
+    return this.store.findRecord('ssh_key', this.id);
   },
 
   envVars: computed('id', function () {
@@ -211,6 +209,9 @@ const Repo = VcsEntity.extend({
 
   fetchSettings: task(function* () {
     if (!this.auth.signedIn) return {};
+
+    const hasPermissions = this.permissions.settings_read;
+    if (hasPermissions === false) return {};
     try {
       const response = yield this.api.get(`/repo/${this.id}/settings`);
       return this._convertV3SettingsToV2(response.settings);
@@ -228,11 +229,11 @@ const Repo = VcsEntity.extend({
       content: []
     });
     array.load(builds);
-    array.observe(builds);
+  //  array.observe(builds);
     return array;
   },
 
-  builds: computed('id', function () {
+  builds: computed('id', 'buildsRefreshToken', function () {
     let id = this.id;
     const builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],
@@ -240,7 +241,7 @@ const Repo = VcsEntity.extend({
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
-    });
+    }, [''], true);
 
     return this._buildObservableArray(builds);
   }),
@@ -255,11 +256,11 @@ const Repo = VcsEntity.extend({
       content: []
     });
     array.load(requests);
-    array.observe(requests);
+   // array.observe(requests);
     return array;
   },
 
-  requests: computed('id', function () {
+  requests: computed('id', 'requestsRefreshToken', function () {
     let id = this.id;
     const requests = this.store.filter(
       'request',
@@ -277,9 +278,9 @@ const Repo = VcsEntity.extend({
   }),
 
   cronJobs: computed('id', 'fetchCronJobs.lastSuccessful.value', function () {
-    const crons = this.fetchCronJobs.get('lastSuccessful.value');
+    const crons = this.fetchCronJobs.lastSuccessful && this.fetchCronJobs.lastSuccessful.value;
     if (!crons) {
-      this.get('fetchCronJobs').perform();
+      this.fetchCronJobs.perform();
     }
     return crons || [];
   }),
@@ -434,7 +435,7 @@ Repo.reopenClass({
     if (!isEmpty(loadedRepos)) {
       return EmberPromise.resolve(loadedRepos.firstObject);
     }
-    return store.queryRecord('repo', { slug, provider, serverType });
+    return store.smartQueryRecord('repo', { slug, provider, serverType });
   },
 });
 

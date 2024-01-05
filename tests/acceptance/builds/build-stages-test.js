@@ -1,13 +1,12 @@
 import { visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
 import { prettyDate } from 'travis/helpers/pretty-date';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | build stages', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   const jobTime = new Date();
@@ -39,7 +38,7 @@ module('Acceptance | build stages', function (hooks) {
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
     // TODO: I'm not sure why it's needed now
-    await waitFor('.jobs.stage .stage-header.passed');
+    // await waitFor('.jobs.stage .stage-header.passed');
 
     assert.equal(buildPage.stages.length, 1, 'expected one build stage');
 
@@ -47,7 +46,6 @@ module('Acceptance | build stages', function (hooks) {
       assert.ok(stage.isPassed);
     });
 
-    percySnapshot(assert);
   });
 
   test('visiting build with stages', async function (assert) {
@@ -79,7 +77,7 @@ module('Acceptance | build stages', function (hooks) {
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
     // TODO: I'm not sure why it's needed now
-    await waitFor('.jobs.stage .stage-header.passed');
+    // await waitFor('.jobs.stage .stage-header.passed');
 
     assert.equal(buildPage.stages.length, 2, 'expected two build stages');
 
@@ -108,6 +106,5 @@ module('Acceptance | build stages', function (hooks) {
       assert.equal(stage.jobs[0].number, '1234.999');
       assert.ok(stage.allowFailures.isHidden, 'expected no allowed failures text');
     });
-    percySnapshot(assert);
   });
 });

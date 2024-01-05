@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import config from 'travis/config/environment';
 
 module('Acceptance | config/oss feature flags', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
 
   test('configures feature flags', function (assert) {
     const { featureFlags } = config;

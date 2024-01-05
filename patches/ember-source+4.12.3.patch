@@ -1,0 +1,13 @@
+diff --git a/node_modules/ember-source/dist/dependencies/@glimmer/runtime.js b/node_modules/ember-source/dist/dependencies/@glimmer/runtime.js
+index 4665de5..72a6eb2 100644
+--- a/node_modules/ember-source/dist/dependencies/@glimmer/runtime.js
++++ b/node_modules/ember-source/dist/dependencies/@glimmer/runtime.js
+@@ -232,7 +232,7 @@ function clear(bounds) {
+ 
+   while (true) {
+     let next = current.nextSibling;
+-    parent.removeChild(current);
++    try{parent.removeChild(current);} catch {}
+ 
+     if (current === last) {
+       return next;

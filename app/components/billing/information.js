@@ -7,8 +7,9 @@ export default Component.extend({
   billingInfo: reads('subscription.billingInfo'),
 
   actions: {
-    updateEmails(values) {
+    updateEmails(values)
+    {
       this.billingInfo.set('billingEmail', values.join(','));
-    },
+    }
   }
 });

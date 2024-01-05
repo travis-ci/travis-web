@@ -6,7 +6,7 @@
 The new Share ssh keys with forks ({{vcs-vocab this.repo.vcsType 'pr' plural=true}}) repository setting are present and set
 to ON for <LinkTo @route="account.repositories">repositories</LinkTo> already in Travis CI in order to not break existing build
 setups.
-            <button class="close-btn" {{action "closeLicenseBanner"}}>
+            <button class="close-btn" type="button" {{action "closeLicenseBanner"}}>
                 <SvgImage @name="flash-close" @class="close-icon" />
             </button>
         </p>

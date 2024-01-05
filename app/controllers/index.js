@@ -19,7 +19,7 @@ export default Controller.extend({
   init() {
     this._super(...arguments);
     if (!Ember.testing) {
-      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
+     return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
 

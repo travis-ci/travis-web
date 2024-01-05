@@ -11,9 +11,11 @@
     <TopBar />
   {{/if}}
   <FlashDisplay />
+
   <div class="wrapper-main">
     <div id="main" class="main" role="main">
       {{#if this.repo.isLoaded}}
+
         <RepositoryLayout
           @repo={{this.repo}}
           @build={{this.build}}

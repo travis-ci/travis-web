@@ -4,7 +4,7 @@ import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { or, notEmpty } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import fuzzyMatch from 'travis/utils/fuzzy-match';
 
 export default Component.extend({
@@ -25,7 +25,8 @@ export default Component.extend({
   }).restartable(),
 
   computeName(name, query) {
-    return isPresent(query) ? htmlSafe(fuzzyMatch(name, query)) : name;
+    const fuzzyMatchConst = fuzzyMatch(name, query)
+    return isPresent(query) ? htmlSafe(`${fuzzyMatchConst}`) : name;
   },
 
   didReceiveAttrs() {

@@ -33,6 +33,7 @@ export default Controller.extend({
   auth: service(),
   preferences: service(),
   flashes: service(),
+  store: service(),
 
   queryParams: ['section'],
   section: SECTION.NONE,
@@ -116,11 +117,11 @@ export default Controller.extend({
       this.toggleProperty('isShowingAddKeyModal');
     },
     customKeyDeleted(key) {
-      const keys = this.get('customKeysLoaded');
+      const keys = this.customKeysLoaded;
       this.set('customKeysLoaded', keys.filter(obj => obj.id !== key.id));
     },
     customKeyAdded(key) {
-      this.get('customKeysLoaded').pushObject(key);
+      this.customKeysLoaded.pushObject(key);
     }
   },
 

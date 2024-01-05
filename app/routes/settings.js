@@ -10,6 +10,7 @@ export default TravisRoute.extend({
   permissions: service(),
   raven: service(),
   flashes: service(),
+  store: service(),
 
   needsAuth: true,
 
@@ -28,7 +29,7 @@ export default TravisRoute.extend({
   fetchCustomSshKey() {
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
-      return this.store.find('ssh_key', repo.get('id')).then(((result) => {
+      return this.store.find('ssh_key', repo.id).then(((result) => {
         if (!result.get('isNew')) {
           return result;
         }
@@ -61,28 +62,30 @@ export default TravisRoute.extend({
   },
 
   fetchRepositoryActiveFlag() {
-    const repoId = this.modelFor('repo').get('id');
+    const repoId = this.modelFor('repo').id;
     return this.api.get(`/repo/${repoId}`).then(response => response.active);
   },
 
   beforeModel() {
     const repo = this.modelFor('repo');
-    const hasPushPermission = this.permissions.hasPushPermission(repo);
-    if (!hasPushPermission) {
+    if (!repo.permissions?.settings_read) {
       this.transitionTo('repo.index');
       this.flashes.error('Your permissions are insufficient to access this repository\'s settings');
     }
   },
 
-  model() {
+  model(params) {
     const repo = this.modelFor('repo');
+    let sshKey;
+    if (params.ssh_key_id)
+      sshKey = this.store.findRecord('ssh_key', params.ssh_key_id);
 
     return hash({
       settings: repo.fetchSettings.perform(),
       repository: repo,
       envVars: this.fetchEnvVars(),
       sshKey: this.fetchSshKey(),
-      customSshKey: this.fetchCustomSshKey(),
+      customSshKey: this.fetchCustomSshKey() || sshKey,
       hasPushAccess: this.permissions.hasPushPermission(repo),
       repositoryActive: this.fetchRepositoryActiveFlag()
     });

@@ -1,9 +1,8 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import page from 'travis/tests/pages/build-list';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { settled } from '@ember/test-helpers';
 import config from 'travis/config/environment';
@@ -11,7 +10,7 @@ import config from 'travis/config/environment';
 const { repoBuildsPerPage } = config.pagination;
 
 module('Acceptance | builds/pull requests', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -109,7 +108,6 @@ module('Acceptance | builds/pull requests', function (hooks) {
       assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
     });
 
-    percySnapshot(assert);
 
     await page.builds[0].cancelButton.click();
 

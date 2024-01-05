@@ -1,6 +1,6 @@
 <Modal
   @isVisible={{@isOpen}}
-  @onClose={{fn @onClose}}
+  @onClose={{@onClose}}
   @closeButton={{true}}
 >
   <div data-test-switchtofree-subscription-modal="true" class="flex flex--v-center flex--center flex--col switchtofree-subscription-modal">
@@ -11,7 +11,7 @@
     <h5>Reason for changing your plan</h5>
     <div class="flex switchtofree-subscription-modal__reason-options">
       {{#each this.switchToFreeReasons as |reason|}}
-        <div data-test-switchtofree-reason-option='true' onClick={{action 'selectSwitchToFreeReason' reason}} class='{{if (eq selectedSwitchToFreeReason reason.name) 'selected'}}'>
+        <div data-test-switchtofree-reason-option='true' onClick={{action 'selectSwitchToFreeReason' reason}} class='{{if (eq this.selectedSwitchToFreeReason reason.name) 'selected'}}'>
           <p>{{reason.name}}</p>
         </div>
       {{/each}}
@@ -47,13 +47,13 @@
           {{#if this.switchToFreeSubscription.isRunning}}
             <LoadingIndicator />
           {{else}}
-            <button data-test-switchtofree-subscription="true" {{action (perform this.switchToFreeSubscription)}} class="button--red switchtofree-cancellation-button">
-              {{#if (not this.selectedSwitchToFreeReason)}}
+            <button data-test-switchtofree-subscription="true" class="button--red switchtofree-cancellation-button" type="button" {{action (perform this.switchToFreeSubscription)}}>
+              {{#unless this.selectedSwitchToFreeReason}}
                 <EmberTooltip @text="Please select a reason for switching the plan." />
-              {{/if}}
+              {{/unless}}
               Confirm &amp; switch to Free Plan
             </button>
-            <a class="link" {{on 'click' (fn @onClose)}}>
+            <a class="link" {{on 'click' @onClose}}>
               I changed my mind
             </a>
           {{/if}}

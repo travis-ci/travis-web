@@ -2,6 +2,7 @@ import { isNone } from '@ember/utils';
 import { get, computed } from '@ember/object';
 import Controller, { inject as controller } from '@ember/controller';
 import { alias, notEmpty, filter } from '@ember/object/computed';
+import {A} from '@ember/array';
 
 export default Controller.extend({
   repoController: controller('repo'),
@@ -34,8 +35,7 @@ export default Controller.extend({
       return isNone(finishedAt);
     });
 
-    const sortedFinished = branches
-      .filterBy('last_build.finished_at')
+    const sortedFinished = A(branches.filterBy('last_build.finished_at'))
       .sortBy('last_build.finished_at')
       .reverse();
 

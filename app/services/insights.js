@@ -1,6 +1,6 @@
 import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
-import { assign } from '@ember/polyfills';
+
 import { task } from 'ember-concurrency';
 import { singularize } from 'ember-inflector';
 
@@ -54,7 +54,7 @@ export default Service.extend({
     // deep so all we need to do is loop through each interval and do a shallow merge
     const settings =  Object.values(INSIGHTS_INTERVALS).reduce((settings, interval) => {
       settings[interval] = {};
-      assign(settings[interval], defaultIntervalSettings[interval], customIntervalSettings[interval]);
+      Object.assign(settings[interval], defaultIntervalSettings[interval], customIntervalSettings[interval]);
       return settings;
     }, {});
     return settings;
@@ -150,7 +150,7 @@ function getMetricAPISettings(subject, func, subInterval, metricNames, owner, st
 }
 
 function mergeMetricSettings(options, func) {
-  const currentOptions = assign({}, defaultOptions, options);
+  const currentOptions = Object.assign({}, defaultOptions, options);
   currentOptions.aggregator = currentOptions.aggregator || func;
   currentOptions.serializer = currentOptions.serializer || func;
   return currentOptions;
@@ -200,7 +200,7 @@ function formatTimeKey(time, subInterval) {
 
 function aggregateMetrics(metricNames, metrics, aggregatorName, labels, subInterval) {
   const defaultData = metricNames.reduce((map, metric) => {
-    map[metric] = assign({}, labels);
+    map[metric] = Object.assign({}, labels);
     return map;
   }, {});
 

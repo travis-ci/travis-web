@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 // import wait from 'ember-test-helpers/wait';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 const ajaxStub = Service.extend({
   ajax() {
@@ -62,7 +62,7 @@ module('Integration | Component | dashboard row', function (hooks) {
     });
 
     this.set('repo', repo);
-    await render(hbs`{{dashboard-row repo=repo}}`);
+    await render(hbs`{{dashboard-row repo=this.repo}}`);
 
     assert.dom('.dash-header .row-label a').hasText('travis-ci');
     assert.dom('.dash-header .row-label a').hasAttribute('title', 'travis-ci');

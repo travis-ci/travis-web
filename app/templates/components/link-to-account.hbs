@@ -1,8 +1,7 @@
 {{#if this.routeModel}}
   <LinkTo @route={{this.routeName}} @model={{this.routeModel}} class={{@class}}>
     {{yield}}
-  </LinkTo>
-{{else}}
+  </LinkTo>{{else}}
   <LinkTo @route={{this.routeName}} class={{@class}}>
     {{yield}}
   </LinkTo>

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import profilePage from 'travis/tests/pages/profile';
 
 module('Integration | Component | billing-summary-status', function (hooks) {
@@ -26,8 +26,8 @@ module('Integration | Component | billing-summary-status', function (hooks) {
   test('it renders active status', async function (assert) {
 
     await render(hbs`<BillingSummaryStatus
-      @subscription={{subscription}}
-      @isPending={{isPending}}
+      @subscription={{this.subscription}}
+      @isPending={{this.isPending}}
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan active');
@@ -43,8 +43,8 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     });
 
     await render(hbs`<BillingSummaryStatus
-      @subscription={{subscription}}
-      @isPending={{isPending}}
+      @subscription={{this.subscription}}
+      @isPending={{this.isPending}}
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan expired');
@@ -60,8 +60,8 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     });
 
     await render(hbs`<BillingSummaryStatus
-      @subscription={{subscription}}
-      @isPending={{isPending}}
+      @subscription={{this.subscription}}
+      @isPending={{this.isPending}}
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan incomplete');
@@ -77,8 +77,8 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     });
 
     await render(hbs`<BillingSummaryStatus
-      @subscription={{subscription}}
-      @isPending={{isPending}}
+      @subscription={{this.subscription}}
+      @isPending={{this.isPending}}
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan pending');
@@ -96,7 +96,7 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     });
 
     await render(hbs`<BillingSummaryStatus
-      @subscription={{subscription}}
+      @subscription={{this.subscription}}
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan canceled');

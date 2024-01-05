@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | forms/form-slider', function (hooks) {
   setupRenderingTest(hooks);
@@ -16,9 +16,9 @@ module('Integration | Component | forms/form-slider', function (hooks) {
 
     // Template block usage:
     await render(hbs`
-      {{#forms/form-slider}}
+      <Forms::FormSlider>
         template block text
-      {{/forms/form-slider}}
+      </Forms::FormSlider>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

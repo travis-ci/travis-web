@@ -6,7 +6,7 @@
     <form.field
       @value={{this.currentState}}
       @onChange={{action "selectInsightScope"}}
-      @showFrame={{this.showFrame}}
+      @disableFrame={{not this.showFrame}}
       data-test-insights-privacy-selector-main-field={{true}}
       as |field|
     >

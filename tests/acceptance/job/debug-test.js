@@ -1,14 +1,13 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import jobPage from 'travis/tests/pages/job';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | jobs/debug', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   test('debugging job', async function (assert) {
@@ -47,6 +46,5 @@ module('Acceptance | jobs/debug', function (hooks) {
 
     assert.deepEqual(requestBodies.pop(), { quiet: true });
     assert.equal(topPage.flashMessage.text, 'The job was successfully restarted in debug mode but make sure to watch the log for a host to connect to.');
-    percySnapshot(assert);
   });
 });

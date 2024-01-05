@@ -7,17 +7,16 @@ import {
   waitFor
 } from '@ember/test-helpers';
 import { module, test, skip } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { percySnapshot } from 'ember-percy';
 import { prettyDate } from 'travis/helpers/pretty-date';
 import page from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 module('Acceptance | dashboard/repositories', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
@@ -135,7 +134,9 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       currentBuild: permissionBuild,
       defaultBranch: permissionBranch,
       permissions: {
-        create_request: true
+        create_request: true,
+        build_create: true,
+        build_restart: true
       }
     });
   });
@@ -203,7 +204,6 @@ module('Acceptance | dashboard/repositories', function (hooks) {
     assert.dom('[data-test-page-pagination-link]').exists({ count: 2 });
     assert.dom('[data-test-next-pagination-link]').exists();
 
-    percySnapshot(assert);
 
     await click('[data-test-page-pagination-link="2"]');
 
@@ -216,8 +216,6 @@ module('Acceptance | dashboard/repositories', function (hooks) {
 
     await page.visit();
     await page.myBuilds.visit();
-
-    percySnapshot(assert);
 
     assert.equal(currentURL(), '/dashboard/builds');
     assert.equal(page.myBuilds.builds.length, 4);

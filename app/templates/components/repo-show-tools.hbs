@@ -16,20 +16,17 @@
     <li>
       <LinkTo @route="settings" @model={{this.repo}}>
         Settings
-      </LinkTo>
-    </li>
+      </LinkTo>    </li>
   {{/if}}
   <li>
     <LinkTo @route="requests" @model={{this.repo}}>
       Requests
-    </LinkTo>
-  </li>
+    </LinkTo>  </li>
   {{#if this.displayCachesLink}}
     <li>
       <LinkTo @route="caches" @model={{this.repo}}>
         Caches
-      </LinkTo>
-    </li>
+      </LinkTo>    </li>
   {{/if}}
   {{#if (and this.displayTriggerBuildLink this.canOwnerBuild)}}
     <li>

@@ -1,5 +1,5 @@
 import { module, skip } from 'qunit';
-import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
+import { setupApplicationTestCustom } from 'travis/tests/helpers/setup-application-test';
 import { waitFor } from '@ember/test-helpers';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -12,7 +12,7 @@ async function finishSyncingUser(user) {
 }
 
 module('Acceptance | profile/sync', function (hooks) {
-  setupApplicationTest(hooks);
+  setupApplicationTestCustom(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

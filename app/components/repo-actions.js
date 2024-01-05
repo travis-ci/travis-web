@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 import { alias, and, not, or, reads } from '@ember/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
+import { capitalize } from "@ember/string";
 
 export default Component.extend({
   flashes: service(),
@@ -38,6 +39,7 @@ export default Component.extend({
   userHasPermissionForRepo: computed('repo.id', 'user', 'user.permissions.[]', function () {
     let repo = this.repo;
     let user = this.user;
+
     if (user && repo) {
       return user.hasAccessToRepo(repo);
     }
@@ -58,6 +60,27 @@ export default Component.extend({
       return user.hasPushAccessToRepo(repo);
     }
   }),
+  userHasCancelPermissionForRepo: computed('repo.id', 'user', function () {
+    let repo = this.repo;
+    let user = this.user;
+    if (user && repo) {
+      return user.hasPermissionToRepo(repo, 'build_cancel');
+    }
+  }),
+  userHasRestartPermissionForRepo: computed('repo.id', 'user', function () {
+    let repo = this.repo;
+    let user = this.user;
+    if (user && repo) {
+      return user.hasPermissionToRepo(repo, 'build_restart');
+    }
+  }),
+  userHasDebugPermissionForRepo: computed('repo.id', 'user', function () {
+    let repo = this.repo;
+    let user = this.user;
+    if (user && repo) {
+      return user.hasPermissionToRepo(repo, 'build_debug');
+    }
+  }),
 
   canOwnerBuild: reads('repo.canOwnerBuild'),
   ownerRoMode: reads('repo.owner.ro_mode'),
@@ -68,9 +91,9 @@ export default Component.extend({
 
   showPriority: true,
   showPrioritizeBuildModal: false,
-  canCancel: and('userHasPullPermissionForRepo', 'item.canCancel'),
-  canRestart: and('userHasPullPermissionForRepo', 'item.canRestart'),
-  canDebug: and('userHasPushPermissionForRepo', 'item.canDebug'),
+  canCancel: and('userHasCancelPermissionForRepo', 'item.canCancel'),
+  canRestart: and('userHasRestartPermissionForRepo', 'item.canRestart'),
+  canDebug: and('userHasDebugPermissionForRepo', 'item.canDebug'),
   isHighPriority: or('item.priority', 'item.build.priority'),
   isNotAlreadyHighPriority: not('isHighPriority'),
   hasPrioritizePermission: or('item.permissions.prioritize', 'item.build.permissions.prioritize'),
@@ -83,7 +106,7 @@ export default Component.extend({
 
     yield eventually(this.item, (record) => {
       record.cancel().then(() => {
-        this.flashes.success(`${type.capitalize()} has been successfully cancelled.`);
+        this.flashes.success(`${capitalize(type)} has been successfully cancelled.`);
       }, (xhr) => {
         this.displayFlashError(xhr.status, 'cancel');
       });

@@ -74,7 +74,7 @@ export default Component.extend({
     try {
       yield repository.toggle();
       yield repository.reload();
-      this.pusher.subscribe(`repo-${repository.id}`);
+      Travis.pusher.subscribe(`repo-${repository.id}`);
     } catch (error) {
       this.set('apiError', error);
     }

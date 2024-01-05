@@ -1,5 +1,5 @@
 import EmberRouter from '@ember/routing/router';
-import config from './config/environment';
+import config from 'travis/config/environment';
 
 const Router = EmberRouter.extend({
   location: config.locationType,
@@ -63,6 +63,10 @@ Router.map(function () {
   });
 
   this.route('repo', { path: '/:provider/:owner/:name' }, function () {
+    this.route('active-on-org');
+    this.route('not-active');
+    this.route('no-build');
+
     this.route('index', { path: '/' });
     this.route('branches', { path: '/branches', resetNamespace: true });
     this.route('builds', { path: '/builds', resetNamespace: true });

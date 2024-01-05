@@ -45,7 +45,7 @@
             enterprise@travis-ci.com
           </a>
           {{#unless this.expiringSoon}}
-            <button class="close-btn" {{action "closeLicenseBanner"}}>
+            <button class="close-btn" type="button" {{action "closeLicenseBanner"}}>
               <SvgImage @name="flash-close" @class="close-icon" />
             </button>
           {{/unless}}
@@ -74,7 +74,7 @@
             enterprise@travis-ci.com
           </a>
           if you need more seats.
-          <button class="close-btn" {{action "closeSeatsBanner"}}>
+          <button class="close-btn" type="button" {{action "closeSeatsBanner"}}>
             <SvgImage @name="flash-close" @class="close-icon" />
           </button>
         </p>

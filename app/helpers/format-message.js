@@ -1,5 +1,5 @@
 import { helper } from '@ember/component/helper';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { get } from '@ember/object';
 
 import EmojiConvertor from 'emoji-js';
@@ -12,8 +12,8 @@ emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;
 emojiConvertor.include_title = true;
 emojiConvertor.allow_native = false;
 
-function escape(text) {
-  return text
+export function escape(text) {
+  return text.toString()
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
@@ -68,6 +68,7 @@ function formatMessage(message, options) {
   message = handleEventType(message, options.eventType);
   message = emojiConvertor.replace_colons(message);
 
+  console.log(message);
   return message;
 }
 
@@ -130,5 +131,5 @@ export default helper((params, options) => {
   const message = params[0] || '';
   const formattedMessage = formatMessage(message, options);
 
-  return new htmlSafe(formattedMessage);
+  return new htmlSafe(`${formattedMessage}`);
 });

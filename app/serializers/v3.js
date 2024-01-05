@@ -2,7 +2,7 @@ import { underscore } from '@ember/string';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { isNone, typeOf } from '@ember/utils';
-import JSONSerializer from 'ember-data/serializers/json';
+import JSONSerializer from '@ember-data/serializer/json';
 import wrapWithArray from 'travis/utils/wrap-with-array';
 import traverse from 'travis/utils/traverse-payload';
 
@@ -163,8 +163,8 @@ export default JSONSerializer.extend({
   keyForRelationship(key/* , typeClass, method*/) {
     if (key === 'repo') {
       return 'repository';
-    } else if (key && key.underscore) {
-      return key.underscore();
+    } else if (key) {
+      return underscore(key);
     } else {
       return key;
     }
@@ -211,9 +211,12 @@ export default JSONSerializer.extend({
     if (type) {
       items = payload[type];
     } else {
-      const plural = `${primaryModelClass.modelName.underscore()}s`;
+      const plural = `${underscore(primaryModelClass.modelName)}s`;
       items = payload[plural];
     }
+
+    if (!items)
+      return {data: []};
 
     documentHash.data = items.map((item) => {
       let { data, included } = this.normalize(primaryModelClass, item);

@@ -52,9 +52,7 @@
     Manage build emails subscription for this organization
     <span class="button-container">
       <button
-         class="button--white button--compact unsubscribe-button subscription-button"
-          {{action 'unsubscribe'}}
-          data-test-email-org-unsubscribe-button
+         class="button--white button--compact unsubscribe-button subscription-button" data-test-email-org-unsubscribe-button type="button" {{action 'unsubscribe'}}
       >
         {{#if this.owner.unsubscribe.isRunning}}
           <LoadingIndicator @inline={{true}} />
@@ -64,9 +62,7 @@
         {{/if}}      
       </button>
       <button
-         class="button--white button--compact subscribe-button subscription-button"
-          {{action 'subscribe'}}
-          data-test-email-org-subscribe-button
+         class="button--white button--compact subscribe-button subscription-button" data-test-email-org-subscribe-button type="button" {{action 'subscribe'}}
       >
         {{#if this.owner.subscribe.isRunning}}
           <LoadingIndicator @inline={{true}} />

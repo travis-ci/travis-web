@@ -1,3 +1,4 @@
+/* TODO use new syntax for creating models for ember-cli mirage
 import V2Serializer from 'travis/mirage/serializers/v2';
 
 import Schema from 'ember-cli-mirage/orm/schema';
@@ -9,8 +10,8 @@ import { belongsTo, hasMany } from 'ember-cli-mirage';
 
 import { module, test } from 'qunit';
 
-module('Integration | Mirage Serializer | V2Serializer', {
-  beforeEach() {
+module('Integration | Mirage Serializer | V2Serializer', function (hooks) {
+  hooks.beforeEach(function () {
     let db = new Db();
     this.schema = new Schema(db);
     this.schema.registerModels({
@@ -33,67 +34,68 @@ module('Integration | Mirage Serializer | V2Serializer', {
     this.registry = new SerializerRegistry(this.schema, {
       application: V2Serializer
     });
-  },
+  });
 
-  afterEach() {
+  hooks.afterEach(function () {
     this.schema.db.emptyData();
-  }
-});
-
-test('it serialises with underscored property keys', function (assert) {
-  const books = this.schema.books.all();
-  const result = this.registry.serialize(books);
-
-  assert.deepEqual(result, {
-    books: [{
-      id: '1',
-      author_id: '1',
-      title: 'A Book'
-    }, {
-      id: '2',
-      author_id: '1',
-      title: 'A Different Book'
-    }]
-  });
-});
-
-test('it sideloads included resources', function (assert) {
-  const registryWithInclusion = new SerializerRegistry(this.schema, {
-    application: V2Serializer,
-    author: V2Serializer.extend({
-      include: Object.freeze(['books'])
-    })
   });
 
-  const authors = this.schema.authors.all();
-  const result = registryWithInclusion.serialize(authors);
+  test('it serialises with underscored property keys', function (assert) {
+    const books = this.schema.books.all();
+    const result = this.registry.serialize(books);
 
-  assert.deepEqual(result, {
-    authors: [{
-      id: '1',
-      book_ids: ['1', '2'],
-      name: 'User Name'
-    }],
-    books: [{
-      id: '1',
-      author_id: '1',
-      title: 'A Book'
-    }, {
-      id: '2',
-      author_id: '1',
-      title: 'A Different Book'
-    }]
+    assert.deepEqual(result, {
+      books: [{
+        id: '1',
+        author_id: '1',
+        title: 'A Book'
+      }, {
+        id: '2',
+        author_id: '1',
+        title: 'A Different Book'
+      }]
+    });
+  });
+
+  test('it sideloads included resources', function (assert) {
+    const registryWithInclusion = new SerializerRegistry(this.schema, {
+      application: V2Serializer,
+      author: V2Serializer.extend({
+        include: Object.freeze(['books'])
+      })
+    });
+
+    const authors = this.schema.authors.all();
+    const result = registryWithInclusion.serialize(authors);
+
+    assert.deepEqual(result, {
+      authors: [{
+        id: '1',
+        book_ids: ['1', '2'],
+        name: 'User Name'
+      }],
+      books: [{
+        id: '1',
+        author_id: '1',
+        title: 'A Book'
+      }, {
+        id: '2',
+        author_id: '1',
+        title: 'A Different Book'
+      }]
+    });
+  });
+
+  test('it uses an underscored container key', function (assert) {
+    const blogPost = this.schema.blogPosts.find(1);
+    const result = this.registry.serialize(blogPost);
+
+    assert.deepEqual(result, {
+      blog_post: {
+        id: '1',
+        title: 'A Blog Post'
+      }
+    });
   });
 });
-
-test('it uses an underscored container key', function (assert) {
-  const blogPost = this.schema.blogPosts.find(1);
-  const result = this.registry.serialize(blogPost);
-
-  assert.deepEqual(result, {
-    blog_post: {
-      id: '1',
-      title: 'A Blog Post'
-    }
-  });
-});
+*/

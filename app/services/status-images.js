@@ -26,11 +26,11 @@ export default Service.extend({
       prefix = config.apiEndpoint;
     }
 
-    let slug = repo.get('slug');
+    let slug = repo.slug;
 
     // In Enterprise you can toggle public mode, where even "public" repositories are hidden
     // in which cases we need to generate a token for all images
-    if (!config.publicMode || repo.get('private')) {
+    if (!config.publicMode || repo.private) {
       const token = this.auth.assetToken;
       return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
     } else {

@@ -13,6 +13,7 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
+import { A } from '@ember/array';
 
 export default Component.extend({
   classNames: ['visibility-setting-list'],
@@ -33,7 +34,7 @@ export default Component.extend({
   // `displayValue` is used to generate text for the modal
   // `description` is for the label next to the radio button
   // `modalText` can be used to override the generated modal text
-  options: computed(() => []),
+  options: [],
 
   isEmpty: empty('options'),
   isVisible: not('isEmpty'),
