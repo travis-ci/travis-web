@@ -505,7 +505,7 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   // TODO: Test started to fail after URM marge, temp skip to see if build will pass
-  skip('view billing tab with marketplace trial subscription', async function (assert) {
+  test('view billing tab with marketplace trial subscription', async function (assert) {
     let trial = this.server.create('trial', {
       builds_remaining: 0,
       owner: this.organization,
@@ -534,13 +534,28 @@ module('Acceptance | profile/billing', function (hooks) {
 
     trial.save();
     this.subscription.save();
-
+    console.log("before visit")
+    logPropertyValues();
     await profilePage.visitOrganization({ name: 'org-login' });
+    console.log("during visit")
+    logPropertyValues();
     await profilePage.billing.visit();
+    console.log("after visit")
+    logPropertyValues();
 
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan trial github marketplace subscription');
+
+    function logPropertyValues() {
+      const component = this.owner.lookup('component:profile-nav');
+      console.log('showSubscriptionTab:', component.get('showSubscriptionTab'));
+      console.log('isOrganization:', component.get('isOrganization'));
+      console.log('isOrganizationAdmin:', component.get('isOrganizationAdmin'));
+      console.log('hasBillingViewPermissions:', component.get('hasBillingViewPermissions'));
+      console.log('hasInvoicesViewPermissions:', component.get('hasInvoicesViewPermissions'));
+      console.log('isNotGithubOrManual:', component.get('model.isNotGithubOrManual'));
+    }
   });
 
   skip('view billing tab when marketplace trial subscription has ended', async function (assert) {
