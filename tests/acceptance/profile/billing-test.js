@@ -535,15 +535,15 @@ module('Acceptance | profile/billing', function (hooks) {
     trial.save();
     this.subscription.save();
     // eslint-disable-next-line no-console
-    console.log("before visit");
+    console.log('before visit');
     logPropertyValues();
     await profilePage.visitOrganization({ name: 'org-login' });
     // eslint-disable-next-line no-console
-    console.log("during visit");
+    console.log('during visit');
     logPropertyValues();
     await profilePage.billing.visit();
     // eslint-disable-next-line no-console
-    console.log("after visit");
+    console.log('after visit');
     logPropertyValues();
 
     percySnapshot(assert);
