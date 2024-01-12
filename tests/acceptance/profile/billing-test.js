@@ -534,13 +534,16 @@ module('Acceptance | profile/billing', function (hooks) {
 
     trial.save();
     this.subscription.save();
-    console.log("before visit")
+    // eslint-disable-next-line no-console
+    console.log("before visit");
     logPropertyValues();
     await profilePage.visitOrganization({ name: 'org-login' });
-    console.log("during visit")
+    // eslint-disable-next-line no-console
+    console.log("during visit");
     logPropertyValues();
     await profilePage.billing.visit();
-    console.log("after visit")
+    // eslint-disable-next-line no-console
+    console.log("after visit");
     logPropertyValues();
 
     percySnapshot(assert);
