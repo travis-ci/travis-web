@@ -514,57 +514,33 @@ module('Acceptance | profile/billing', function (hooks) {
       created_at: new Date(2018, 7, 16),
       permissions: {
         read: true,
-        write: true
-        // plan_view: true,
-        // billing_view: true,
+        write: true,
+        plan_view: true,
+        billing_view: true,
       }
     });
 
-    // this.organization.permissions = {
-    //   plan_view: true,
-    //   plan_create: true,
-    //   billing_view: true,
-    //   billing_update: true,
-    //   plan_usage: true,
-    //   plan_invoices: true,
-    // };
+    this.organization.permissions = {
+      plan_view: true,
+      plan_create: true,
+      billing_view: true,
+      billing_update: true,
+      plan_usage: true,
+      plan_invoices: true,
+    };
 
     this.subscription.owner = this.organization;
     this.subscription.source = 'github';
 
     trial.save();
     this.subscription.save();
-    // eslint-disable-next-line no-console
-    // console.log('before visit');
-    // logPropertyValues();
     await profilePage.visitOrganization({ name: 'org-login' });
-    // eslint-disable-next-line no-console
-    // console.log('during visit');
-    // logPropertyValues();
     await profilePage.billing.visit();
-    // eslint-disable-next-line no-console
-    // console.log('after visit');
-    // logPropertyValues();
 
     percySnapshot(assert);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan trial github marketplace subscription');
 
-    // function logPropertyValues() {
-    //   const component = this.owner.lookup('component:profile-nav');
-    //   // eslint-disable-next-line no-console
-    //   console.log('showSubscriptionTab:', component.get('showSubscriptionTab'));
-    //   // eslint-disable-next-line no-console
-    //   console.log('isOrganization:', component.get('isOrganization'));
-    //   // eslint-disable-next-line no-console
-    //   console.log('isOrganizationAdmin:', component.get('isOrganizationAdmin'));
-    //   // eslint-disable-next-line no-console
-    //   console.log('hasBillingViewPermissions:', component.get('hasBillingViewPermissions'));
-    //   // eslint-disable-next-line no-console
-    //   console.log('hasInvoicesViewPermissions:', component.get('hasInvoicesViewPermissions'));
-    //   // eslint-disable-next-line no-console
-    //   console.log('isNotGithubOrManual:', component.get('model.isNotGithubOrManual'));
-    // };
   });
 
   skip('view billing tab when marketplace trial subscription has ended', async function (assert) {
