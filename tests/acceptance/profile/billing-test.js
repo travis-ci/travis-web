@@ -549,13 +549,19 @@ module('Acceptance | profile/billing', function (hooks) {
 
     function logPropertyValues() {
       const component = this.owner.lookup('component:profile-nav');
+      // eslint-disable-next-line no-console
       console.log('showSubscriptionTab:', component.get('showSubscriptionTab'));
+      // eslint-disable-next-line no-console
       console.log('isOrganization:', component.get('isOrganization'));
+      // eslint-disable-next-line no-console
       console.log('isOrganizationAdmin:', component.get('isOrganizationAdmin'));
+      // eslint-disable-next-line no-console
       console.log('hasBillingViewPermissions:', component.get('hasBillingViewPermissions'));
+      // eslint-disable-next-line no-console
       console.log('hasInvoicesViewPermissions:', component.get('hasInvoicesViewPermissions'));
+      // eslint-disable-next-line no-console
       console.log('isNotGithubOrManual:', component.get('model.isNotGithubOrManual'));
-    }
+    };
   });
 
   skip('view billing tab when marketplace trial subscription has ended', async function (assert) {
