@@ -9,6 +9,7 @@ export default Component.extend({
   stripe: service(),
   accounts: service(),
   store: service(),
+  flashes: service(),
 
   stripeElement: null,
   account: null,
@@ -28,8 +29,9 @@ export default Component.extend({
   isSubscribed: reads('subscription.isSubscribed'),
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
-  canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', function () {
-    return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial;
+  cancellationRequested: reads('subscription.cancellationRequested'),
+  canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', 'cancellationRequested', function () {
+    return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial && !this.cancellationRequested;
   }),
 
   hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function () {
@@ -117,6 +119,15 @@ export default Component.extend({
       creditCardInfo,
     });
   }),
+
+  cancelSubscription: task(function* () {
+    try {
+      yield this.subscription.cancelSubscription.perform();
+      this.set('showCancelModal', true);
+    } catch (error) {
+      this.flashes.error('An error occurred when submitting your cancellation request. Please try again.');
+    }
+  }).drop(),
 
   actions: {
     complete(stripeElement) {

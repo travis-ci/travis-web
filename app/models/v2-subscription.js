@@ -24,6 +24,7 @@ export default Model.extend({
   clientSecret: attr('string'),
   paymentIntent: attr(),
   scheduledPlanName: attr('string'),
+  cancellationRequested: attr('boolean'),
   canceledAt: attr('date'),
 
   v1SubscriptionId: attr('number'),
@@ -234,7 +235,7 @@ export default Model.extend({
   }).drop(),
 
   cancelSubscription: task(function* (data) {
-    yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
+    yield this.api.post(`/v2_subscription/${this.id}/pause`, {
       data
     });
     yield this.accounts.fetchV2Subscriptions.perform();
