@@ -10,7 +10,7 @@
     </p>
     <div class="full-width">
       <div class="flex flex--v-center flex--center">
-          <a class="button--red confirm-cancellation-button" {{on 'click' (fn @onClose)}}>
+          <a data-test-cancel-subscription="true" class="button--red confirm-cancellation-button" {{on 'click' (fn @onClose)}}>
             OK
           </a>
       </div>

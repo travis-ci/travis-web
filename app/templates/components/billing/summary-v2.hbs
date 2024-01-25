@@ -35,11 +35,7 @@
                 {{else}}
                   Unknown plan
                 {{/if}}
-                  {{#if this.subscription.cancellationRequested}}
-                    <span class="badge grey square grey-badge" data-test-grey-status='true'>
-                      cancellation requested
-                    </span>
-                  {{else if this.subscription.isSubscribed}}
+                  {{#if this.subscription.isSubscribed}}
                     <span class="badge green square" data-test-active-status='true'>
                       active
                     </span>
