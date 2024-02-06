@@ -1,6 +1,7 @@
 import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
+import topPage from 'travis/tests/pages/top';
 import moment from 'moment';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { selectChoose } from 'ember-power-select/test-support';
@@ -418,8 +419,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
     await profilePage.billing.openCancelSubscriptionModal.click();
 
-    assert.ok(profilePage.billing.dataTestCancelSubscriptionModal.isPresent);
-    await profilePage.billing.cancelSubscriptionButton.click();
+    assert.equal(topPage.flashMessage.text, 'Your cancellation request has been forwarded to Support. Our Support team will contact you soon.');
 
     assert.ok(profilePage.billing.cancellationRequestedButton.isPresent);
   });
