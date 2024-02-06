@@ -123,7 +123,10 @@ export default Component.extend({
   cancelSubscription: task(function* () {
     try {
       yield this.subscription.cancelSubscription.perform();
-      this.flashes.successWithClose('Your cancellation request has been forwarded to Support. Our Support team will contact you soon.', "We’re sorry to see you go");
+      this.flashes.successWithClose(
+        'Your cancellation request has been forwarded to Support. Our Support team will contact you soon.',
+        'We’re sorry to see you go'
+      );
       // this.set('showCancelModal', true);
     } catch (error) {
       this.flashes.error('An error occurred when submitting your cancellation request. Please try again.');

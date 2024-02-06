@@ -113,7 +113,7 @@ export default Service.extend({
   notice(message, preamble = messageTypeToPreamble['notice'], aboveOverlay = false) {
     this.display('notice', message, preamble, aboveOverlay);
   },
-  
+
   successWithClose(message, preamble = messageTypeToPreamble['success-with-close'], aboveOverlay = false) {
     this.display('success-with-close', message, preamble, aboveOverlay);
   },
