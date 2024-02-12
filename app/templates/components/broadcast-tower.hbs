@@ -1,7 +1,7 @@
 <span
   class="icon-broadcast {{this.status}} {{if this.isOpen 'is-open'}}"
   title="broadcasts"
-  onclick={{action (perform toggle)}}
+  onclick={{action (perform this.toggle)}}
 >
   <SvgImage @name="icon-broadcast" />
   {{#if this.count}}

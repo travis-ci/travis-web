@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | caches item', function (hooks) {
   setupRenderingTest(hooks);
@@ -15,7 +15,7 @@ module('Integration | Component | caches item', function (hooks) {
       type: 'push'
     };
     this.cache = cache;
-    await render(hbs`{{caches-item cache=cache}}`);
+    await render(hbs`{{caches-item cache=this.cache}}`);
 
     assert.dom('.cache-item').hasClass('push', 'component should have a type class (push)');
     assert.dom('.row-item:first-child .label-align').hasText('master', 'branch name should be displayed');

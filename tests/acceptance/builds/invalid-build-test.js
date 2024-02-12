@@ -1,5 +1,5 @@
 import { visit } from '@ember/test-helpers';
-import Ember from 'ember';
+import {Logger, Test } from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
@@ -12,17 +12,6 @@ module('Acceptance | builds/invalid build', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    adapterException = Ember.Test.adapter.exception;
-    loggerError = Ember.Logger.error;
-    Ember.Test.adapter.exception = () => {};
-    Ember.Logger.error = () => null;
-  });
-
-  hooks.afterEach(function () {
-    Ember.Test.adapter.exception = adapterException;
-    Ember.Logger.error = loggerError;
-  });
 
   test('viewing invalid build shows error', async function (assert) {
     // create incorrect repository as this is resolved first, errors otherwise

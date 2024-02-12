@@ -3,7 +3,7 @@
     <li>
       <LinkTo
         @route="build.index"
-        @models={{array this.build.repo build}}
+        @models={{array this.build.repo this.build}}
         @title="Look at this build’s jobs"
         class={{if this.isLog 'active'}}
         data-test-build-matrix-tab="true"
@@ -36,5 +36,9 @@
   </ul>
 </nav>
 <div class="travistab-body">
-  {{outlet}}
+{{#if this.isConfig}}
+<AnnotatedYaml @request={{this.build.request}} />
+{{else}}
+  <BuildJobs @build={{this.build}} @models={{array this.build.repo this.build}}/>
+{{/if}}
 </div>

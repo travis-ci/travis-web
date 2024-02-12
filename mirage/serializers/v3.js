@@ -1,9 +1,9 @@
-import { JSONAPISerializer } from 'ember-cli-mirage';
+import { JSONAPISerializer } from 'miragejs';
 import { singularize, pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import apiSpec from '../api-spec';
 
-export default JSONAPISerializer.extend({
+export default class V3Serializer extends JSONAPISerializer {
   serialize(data, request) {
     let result;
 
@@ -18,7 +18,7 @@ export default JSONAPISerializer.extend({
     }
 
     return result;
-  },
+  }
 
   serializeCollection(data, request, options) {
     let type = pluralize(data.modelName),
@@ -77,7 +77,7 @@ export default JSONAPISerializer.extend({
       '@pagination': pagination,
       [type]: data.models.map(model => this.serializeSingle(model, request, options)),
     };
-  },
+  }
 
   serializeSingle(model, request, options = {}) {
     const type = model.modelName;
@@ -126,9 +126,11 @@ export default JSONAPISerializer.extend({
           result[attributeName] = serialized;
         } else {
           // hasMany
-          result[attributeName] = relationship.models.map(
-            m => serializer.serializeSingle(m, request, serializeOptions)
-          );
+          if (relationship.models) {
+            result[attributeName] = relationship.models.map(
+              m => serializer.serializeSingle(m, request, serializeOptions)
+            );
+          }
         }
       } else {
         result[attributeName] = model.attrs[attributeName];
@@ -136,7 +138,7 @@ export default JSONAPISerializer.extend({
     });
 
     return result;
-  },
+  }
 
   getAttributes(type, representation, request) {
     let resource = apiSpec.resources[type];
@@ -161,7 +163,7 @@ export default JSONAPISerializer.extend({
     }
 
     return attributes;
-  },
+  }
 
   isIncluded(type, key, request) {
     let include = request.queryParams.include;
@@ -183,15 +185,15 @@ export default JSONAPISerializer.extend({
       // The true API always returns these as standard representations.
       return true;
     }
-  },
+  }
 
   includeAttribute(key, type, representation) {
     return this.getAttributes(key, type, representation).includes(key);
-  },
+  }
 
   relationships() {
     return [];
-  },
+  }
 
   serializerFor(type) {
     const serializersMap = {
@@ -201,20 +203,20 @@ export default JSONAPISerializer.extend({
     type = serializersMap[type] || type;
 
     return this.registry.serializerFor(type);
-  },
+  }
 
   hrefForCollection(type/* , collection, request */) {
     return `/${type}`;
-  },
+  }
 
   hrefForSingle(type, model) {
     return `/${type}/${model.id}`;
-  },
+  }
 
   alreadyProcessed(model, request) {
     let findFn = r => r.id === model.id && r.modelName === model.modelName;
     return request._processedRecords.find(findFn);
-  },
+  }
 
   normalizeId({modelName}, id) {
     // plan IDs can be strings
@@ -223,7 +225,7 @@ export default JSONAPISerializer.extend({
     } else {
       return parseInt(id);
     }
-  },
+  }
 
   representation(model, request, options) {
     if (options.representation) {
@@ -234,4 +236,4 @@ export default JSONAPISerializer.extend({
       return 'minimal';
     }
   }
-});
+}

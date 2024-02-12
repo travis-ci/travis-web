@@ -53,7 +53,7 @@
       />
     </div>
     <div class="travistab-body repo-body">
-      {{#if hasBlock}}
+      {{#if (has-block)}}
         {{yield}}
       {{else}}
         <BuildLayout @build={{this.build}} @repo={{this.repo}} />

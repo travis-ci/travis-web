@@ -1,4 +1,4 @@
-import { getWithDefault, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
@@ -28,7 +28,8 @@ export default TravisRoute.extend(ScrollResetMixin, {
       if (!this.get('tabStates.sidebarTab', 'search')) {
         this.tabStates.set('sidebarTab', 'owned');
       }
-      this.set('tabStates.mainTab', null);
+      console.log("RESET MAIN TAB");
+ //     this.set('tabStates.mainTab', null);
     }
   },
 
@@ -45,7 +46,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   serialize(repo) {
     // slugs are sometimes unknown ???
-    const slug = getWithDefault(repo, 'slug', 'unknown/unknown');
+    const slug = repo ? repo.get('slug') :  'unknown/unknown';
     const [owner, name] = slug.split('/');
     const provider = repo.get('vcsProvider.urlPrefix');
 
@@ -55,10 +56,14 @@ export default TravisRoute.extend(ScrollResetMixin, {
   model({ provider, owner, name, serverType }) {
     const slug = `${owner}/${name}`;
     this.set('slug', slug);
-    return Repo.fetchBySlug(this.store, slug, provider, serverType);
+    let res =  Repo.fetchBySlug(this.store, slug, provider, serverType);
+    console.log("REPOmODEL");
+    console.log(res);
+    return res;
   },
 
   beforeModel() {
+    console.log("REPOROUTEBEF");
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
       repo.fetchRepoOwnerAllowance.perform();

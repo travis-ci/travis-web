@@ -38,7 +38,7 @@ module.exports = function (environment) {
     modulePrefix: 'travis',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'history',
     defaultTitle: 'Travis CI',
     providers,
     plans,
@@ -353,6 +353,7 @@ module.exports = function (environment) {
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
+    ENV.APP.autoboot = false;
 
     ENV.validAuthToken = 'testUserToken';
 

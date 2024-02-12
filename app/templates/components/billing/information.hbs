@@ -1,5 +1,5 @@
 {{#if (eq this.skipBillingInfo true)}}
-  {{action next}}
+  {{action this.next}}
 {{/if}}
 <div class='billing-information-form'>
   <h3 data-test-contact-details-title='true'>
@@ -24,7 +24,7 @@
       @subscription={{this.subscription}}
     />
   {{/if}}
-  <TravisForm @onSubmit={{action next}} as |form|>
+  <TravisForm @onSubmit={{action this.next}} as |form|>
     <div data-test-billing-form>
       <div class='flex flex--col flex-md-row'>
         <div class='full-width form-elem inline-form-elem'>
@@ -71,7 +71,7 @@
           @showRequiredMark={{true}}
           @showValidationStatusIcons={{false}}
           @validator={{form-validator form.validators.email}}
-          @initialValue={{this.billingInfo.billingEmail}}
+          @initialValue={{this.billingInfo.billingEmailRO}}
           as |Field|
         >
           <Field.multipleInputs @updateValues={{action 'updateEmails'}}/>
@@ -89,7 +89,7 @@
         >
           Proceed to Payment
         </button>
-        <span data-test-back-to-plans='true' onClick={{action back}} class='link back-button'>
+        <span data-test-back-to-plans='true' onClick={{action this.back}} class='link back-button'>
           Back to plans
         </span>
       </div>

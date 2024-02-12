@@ -41,7 +41,7 @@ export default Service.extend({
   api: service(),
   router: service(),
   flashes: service(),
-  intercom: service(),
+  //intercom: service(),
   store: service(),
   localStorage: service('storage'),
   sessionStorage: service(),
@@ -187,8 +187,9 @@ export default Service.extend({
     this.set('state', STATE.SIGNING_IN);
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
+
       return promise
-        .then(() => this.permissionsService.fetchPermissions.perform())
+        .then(() => { this.permissionsService.fetchPermissions.perform();  })
         .then(() => {
           const { currentUser } = this;
           this.set('state', STATE.SIGNED_IN);
@@ -212,7 +213,6 @@ export default Service.extend({
     storage.clearLoginData();
 
     if (!user || !token) throw new Error('No login data');
-
     const userData = getProperties(user, USER_FIELDS);
     const installationData = getProperties(user, ['installation']);
     if (installationData && installationData.installation) {
@@ -224,7 +224,10 @@ export default Service.extend({
     userRecord.set('authToken', token);
 
     return this.reloadUser(userRecord).then(() => {
-      storage.accounts.addObject(userRecord);
+   //   let acc = storage.accounts;
+  //    acc.push(userRecord);
+  //    storage.accounts.set(acc);
+      storage.pushAccount(userRecord);
       storage.set('activeAccount', userRecord);
       this.reportNewUser();
       this.reportToIntercom();
@@ -238,7 +241,11 @@ export default Service.extend({
 
   reloadUser(userRecord, include = []) {
     includes = includes.concat(include).uniq();
-    return this.fetchUser.perform(userRecord);
+    let res =  this.fetchUser.perform(userRecord);
+    console.log("FETCH");
+    console.log(res);
+    console.log(userRecord);
+    return res;
   },
 
   fetchUser: task(function* (userRecord) {
@@ -273,8 +280,8 @@ export default Service.extend({
       secureUserHash: userHash,
       vcsProvider = {}
     } = this.currentUser;
-    const email = userEmail || emails && emails.firstObject;
-    this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
+    const email = userEmail || emails && emails.at(0);
+   // this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
   },
 
   reportNewUser() {
@@ -332,7 +339,8 @@ export default Service.extend({
     const currentUser = this.currentUser;
     this.storage.accounts.removeObject(currentUser);
     currentUser.set('authToken', token);
-    this.storage.accounts.addObject(currentUser);
+    let acc = this.storage.accounts;
+    this.storage.accounts = acc.addObject(userRecord);
     this.reloadUser(currentUser);
     this.storage.set('activeAccount', currentUser);
     this.storage.setRegeneratedToken(token);
@@ -356,7 +364,10 @@ export default Service.extend({
 });
 
 function pushUserToStore(store, user) {
+  console.log(store);
   const record = store.push(store.normalize('user', user));
+  console.log("PUSH");
+  console.log(record);
   const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
   record.setProperties({ installation });
   return record;

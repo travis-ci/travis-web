@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   tabStates: service(),
+  store: service(),
 
   titleToken(model) {
     return `Build #${model.get('number')}`;
@@ -17,7 +18,7 @@ export default TravisRoute.extend({
 
   setupController(controller, model) {
     if (model && !model.get) {
-      model = this.store.recordForId('build', model);
+      model = this.store.peekRecord('build', model);
       this.store.find('build', model);
     }
     const repo = this.controllerFor('repo');
@@ -30,13 +31,25 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    return this.store.findRecord('build', params.build_id);
+ //   let res =  this.store.findRecord('build', params.build_id);
+    let m = this.store.peekRecord('build', params.build_id);
+    let res = this.store.find('build', params.build_id);
+    return res;
   },
 
   afterModel(model) {
     const slug = this.modelFor('repo').get('slug');
     this.ensureBuildOwnership(model, slug);
-    return model.get('request').then(request => request && request.fetchMessages.perform());
+    let request = model.request;
+    console.log("REQUEST");
+    try {
+      if(request) request.fetchMessages.perform();
+    }
+    catch(e) {
+      console.log("FETCH ERR");
+      console.log(e);
+    }
+    console.log("AFTER REQUEST");
   },
 
   beforeModel() {
@@ -47,11 +60,20 @@ export default TravisRoute.extend({
   },
 
   ensureBuildOwnership(build, urlSlug) {
-    const buildRepoSlug = build.get('repo.slug');
 
-    if (buildRepoSlug !== urlSlug) {
-      throw (new Error('invalidBuildId'));
-    }
+      const buildRepoSlug = build.get('repo.slug');
+      console.log(`BUILDSLUG ${buildRepoSlug} , url: ${urlSlug}`);
+      if (buildRepoSlug !== urlSlug) {
+        throw (new Error('invalidBuildId'));
+      }
+    return;
+    build.repo.then(e =>{
+      const buildRepoSlug = build.get('repo.slug');
+      console.log(`BUILDSLUG ${buildRepoSlug} , url: ${urlSlug}`);
+      if (buildRepoSlug !== urlSlug) {
+        throw (new Error('invalidBuildId'));
+      }
+    });
   },
 
   deactivate() {

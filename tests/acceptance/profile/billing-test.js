@@ -14,6 +14,7 @@ import {
   BILLING_INFO_ADD_EMAIL,
 } from 'travis/tests/helpers/selectors';
 
+import { pauseTest } from '@ember/test-helpers';
 
 module('Acceptance | profile/billing', function (hooks) {
   setupApplicationTest(hooks);
@@ -640,6 +641,8 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
+
+    await pauseTest();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
     assert.equal(profilePage.billing.planMessage.text, 'Cancelled on June 19, 2018');

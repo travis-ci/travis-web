@@ -26,13 +26,15 @@ export default Component.extend({
     return false;
   }),
 
-  migratedOnOrg: computed(
+  migratedOnOrg: computed('repo',
     'features.{enterpriseVersion,proVersion}',
     'repo.migrationStatus',
     function () {
       let enterprise = this.get('features.enterpriseVersion');
       let pro = this.get('features.proVersion');
       let migrationStatus = this.get('repo.migrationStatus');
+      console.log(`MIGRATIONSTATUS: ${migrationStatus}`);
+      console.log(this.repo);
       return !enterprise && !pro && migrationStatus === 'migrated';
     }
   ),

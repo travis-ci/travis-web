@@ -5,6 +5,7 @@ import BranchSearching from 'travis/mixins/branch-searching';
 
 export default Component.extend(BranchSearching, {
   store: service(),
+  flashes: service(),
 
   classNames: ['form--cron'],
 
@@ -47,6 +48,8 @@ export default Component.extend(BranchSearching, {
       yield cron.save();
       this.reset();
     } catch (error) {
+      console.log("CRON ERR: ");
+      console.log(error);
       cron.unloadRecord();
       this.flashes.error('There was an error saving the cron task. Please try again.');
     }

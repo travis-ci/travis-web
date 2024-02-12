@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, waitFor } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { INSIGHTS_INTERVALS } from 'travis/services/insights';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -22,7 +22,7 @@ module('Integration | Component | queue-times', function (hooks) {
 
     this.server.createList('insight-metric', 15);
 
-    await render(hbs`{{queue-times interval=interval owner=ownerData private=private}}`);
+    await render(hbs`{{queue-times interval=this.interval owner=this.ownerData private=this.private}}`);
     await settled();
 
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
@@ -37,7 +37,7 @@ module('Integration | Component | queue-times', function (hooks) {
   test('loading state renders', async function (assert) {
     this.set('interval', INSIGHTS_INTERVALS.WEEK);
 
-    render(hbs`{{queue-times interval=interval owner=ownerData private=private}}`);
+    render(hbs`{{queue-times interval=this.interval owner=this.ownerData private=this.private}}`);
     await waitFor('.insights-glance--loading');
 
     assert.dom('.insights-glance').hasClass('insights-glance--loading');

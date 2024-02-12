@@ -4,10 +4,11 @@ import { hash } from 'rsvp';
 
 export default TravisRoute.extend({
   features: service(),
+  router: service(),
 
   beforeModel() {
     if (!this.get('features.proVersion')) {
-      this.transitionTo('organization.repositories', this.modelFor('organization'));
+      this.router.transitionTo('organization.repositories', this.modelFor('organization'));
     }
   },
 

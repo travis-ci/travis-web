@@ -33,10 +33,57 @@ export default Service.extend({
     return this.parseWithDefault('travis.billing_info', {});
   },
   set billingInfo(value) {
-    this.setItem('travis.billing_info', JSON.stringify(value));
+    if(!value)
+      return this.setItem('travis.billing_info', value);
+
+    const data
+        = (({
+              address,
+              address2,
+              billingEmail,
+              billingEmailRO,
+              city,
+              company,
+              country,
+              firstName,
+              lastName,
+              hasLocalRegistration,
+              id,
+              isReloading,
+              state,
+              subscription,
+              vatId,
+              zipCode,
+              notifications}) =>
+        ({
+          address,
+          address2,
+          billingEmail,
+          billingEmailRead,
+          city,
+          company,
+          country,
+          firstName,
+          lastName,
+          hasLocalRegistration,
+          id,
+          isReloading,
+          state,
+          subscription,
+          vatId,
+          zipCode,
+          notifications
+        }))(value);
+
+    return this.dataSubscription(data).then((datum) => {
+      return this.setItem('travis.billing_info', JSON.stringify(datum));
+    });
+
   },
 
   get billingPlan() {
+    console.log("BPLAN");
+    console.log(this.storage);
     return this.parseWithDefault('travis.billing_plan', {});
   },
   set billingPlan(value) {

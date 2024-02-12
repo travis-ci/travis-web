@@ -19,7 +19,10 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.modelFor('repo').get('builds');
+    let res =  this.modelFor('repo').get('builds');
+    console.log("BMODEL");
+    console.log(res.length);
+    return res;
   },
 
   beforeModel() {

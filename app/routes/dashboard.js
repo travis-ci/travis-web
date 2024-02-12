@@ -7,6 +7,7 @@ export default TravisRoute.extend({
 
   features: service(),
   accounts: service(),
+  store: service(),
 
   model(params) {
     return hash({

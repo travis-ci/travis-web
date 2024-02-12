@@ -85,7 +85,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
       test('it allows to cancel unsubscription', async function (assert) {
         const { secondaryButton } = emailUnsubscribe;
         await secondaryButton.click();
-        assert.equal(currentRouteName(), 'repo.index');
+        assert.equal(currentRouteName(), 'repo.no-build');
       });
     });
 
@@ -129,7 +129,7 @@ module('Acceptance | profile/unsubscribe', function (hooks) {
       test('it allows to leave the page', async function (assert) {
         const { secondaryButton } = emailUnsubscribe;
         await secondaryButton.click();
-        assert.equal(currentRouteName(), 'repo.index');
+        assert.equal(currentRouteName(), 'repo.no-build');
       });
     });
   });

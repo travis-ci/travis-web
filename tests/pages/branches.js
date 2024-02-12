@@ -3,7 +3,6 @@ import {
   create,
   collection,
   hasClass,
-  is,
   text,
   visitable
 } from 'ember-cli-page-object';
@@ -33,7 +32,7 @@ const branchRowComponent = {
     passed: hasClass('passed'),
     failed: hasClass('failed'),
     errored: hasClass('errored'),
-    empty: is(':empty'),
+    empty: text(''),
 
     number: text('.build-tile-number')
   })

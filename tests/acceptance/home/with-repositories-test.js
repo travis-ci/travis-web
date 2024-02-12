@@ -8,6 +8,7 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { prettyDate } from 'travis/helpers/pretty-date';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
+import { pauseTest } from '@ember/test-helpers';
 const repoId = 100;
 
 const repositoryTemplate = {
@@ -73,6 +74,7 @@ module('Acceptance | home/with repositories', function (hooks) {
     await visit('/');
     await settled();
 
+
     assert.equal(sidebarPage.sidebarRepositories.length, 3, 'expected three repositories in the sidebar');
 
     sidebarPage.sidebarRepositories[0].as(yetAnother => {
@@ -94,12 +96,17 @@ module('Acceptance | home/with repositories', function (hooks) {
   });
 
   test('Pusher events change the main display', async function (assert) {
+
+    console.log("TEST1");
     assert.expect(5);
     await visit('/');
     await settled();
 
+    console.log("TEST1.1");
+    console.log("TEST2");
     assert.equal(sidebarPage.repoTitle, 'org-login / yet-another-repository-name', 'expected the displayed repository to be the one with a running build');
 
+    console.log("TEST3");
     let createdBy = this.server.create('user', { login: 'srivera', name: 'Sylvia Rivera' });
 
     const commit = this.server.create('commit', {
@@ -109,7 +116,7 @@ module('Acceptance | home/with repositories', function (hooks) {
       message: 'Add new chapter',
       committed_at: '2016-12-02T22:02:34Z',
     });
-
+    console.log("CREATE BUILD");
     const build = this.branch.createBuild({
       id: 100,
       number: 15,
@@ -133,6 +140,7 @@ module('Acceptance | home/with repositories', function (hooks) {
       finished_at: '2017-03-27T12:00:00Z'
     });
 
+    console.log("CREATE JOB");
     this.repository.defaultBranch = this.branch;
     this.repository.save();
 
@@ -182,6 +190,7 @@ module('Acceptance | home/with repositories', function (hooks) {
     });
 
     await settled();
+    await pauseTest();
     assert.equal(jobPage.logLines[0].entireLineText, 'The first line');
     assert.ok(jobPage.logLines[0].isYellow, 'expected the first line to be yellow');
   });

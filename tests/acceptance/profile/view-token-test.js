@@ -7,6 +7,7 @@ import {
   triggerCopySuccess
 } from 'ember-cli-clipboard/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { pauseTest } from '@ember/test-helpers'
 
 module('Acceptance | profile/view token', function (hooks) {
   setupApplicationTest(hooks);
@@ -32,7 +33,7 @@ module('Acceptance | profile/view token', function (hooks) {
     await profilePage.settings.visit();
 
     assert.equal(profilePage.token.obfuscatedCharacters[0].text, '••••••••••••••••••••', 'expected token to be obfuscated by default');
-    assert.equal(profilePage.token.obfuscatedCharacters[1].text, '••••••••••••••••••••', 'expected asset token to be obfuscated by default');
+    assert.equal(profilePage.atomToken.obfuscatedCharacters[0].text, '••••••••••••••••••••', 'expected asset token to be obfuscated by default');
 
     await profilePage.token.show();
 
@@ -44,15 +45,15 @@ module('Acceptance | profile/view token', function (hooks) {
     await profilePage.settings.visit();
 
     assert.equal(profilePage.token.obfuscatedCharacters[0].text, '••••••••••••••••••••', 'expected token to be obfuscated by default');
-    assert.equal(profilePage.token.obfuscatedCharacters[1].text, '••••••••••••••••••••', 'expected asset token to be obfuscated by default');
+    assert.equal(profilePage.atomToken.obfuscatedCharacters[0].text, '••••••••••••••••••••', 'expected asset token to be obfuscated by default');
 
-    triggerCopySuccess();
+    triggerCopySuccess('.button-account-token');
 
     assert.equal(profilePage.token.tokenCopiedText, 'Token copied!');
 
     // ensure a second copy success does not show incorrect text/feel buggy
-    triggerCopySuccess();
+    triggerCopySuccess('.button-atom-token');
 
-    assert.equal(profilePage.token.tokenCopiedText, 'Token copied!');
+    assert.equal(profilePage.atomToken.tokenCopiedText, 'Token copied!');
   });
 });

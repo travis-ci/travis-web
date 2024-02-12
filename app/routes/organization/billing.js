@@ -6,7 +6,7 @@ export default TravisRoute.extend(AccountBillingMixin, {
   model() {
     const organization = this.modelFor('organization');
     if (organization.permissions && organization.permissions.plan_view !== true) {
-      this.transitionTo('organization.repositories', organization);
+      this.router.transitionTo('organization.repositories', organization);
     }
     return hash({
       account: organization,

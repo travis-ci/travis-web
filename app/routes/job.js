@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   router: service(),
+  store: service(),
 
   titleToken(model) {
     return `Job #${model.get('number')}`;
@@ -19,7 +20,7 @@ export default TravisRoute.extend({
     let buildController, repo;
 
     if (model && !model.get) {
-      model = this.store.recordForId('job', model);
+      model = this.store.peekRecord('job', model);
       this.store.find('job', model);
     }
     repo = this.controllerFor('repo');
@@ -30,7 +31,7 @@ export default TravisRoute.extend({
     let buildPromise = model.get('build');
     if (buildPromise) {
       buildPromise.then(build => {
-        build = this.store.recordForId('build', build.get('id'));
+        build = this.store.peekRecord('build', build.get('id'));
         return buildController.set('build', build);
       });
     }
@@ -48,9 +49,11 @@ export default TravisRoute.extend({
   afterModel(job) {
     const slug = this.modelFor('repo').get('slug');
     this.ensureJobOwnership(job, slug);
-    return job
-      .get('build.request')
-      .then(request => request && request.fetchMessages.perform());
+    job.get('build').then( (build) => {
+      if (build.request) {
+        build.request.fetchMessages.perform();
+      }
+    });
   },
 
   beforeModel() {

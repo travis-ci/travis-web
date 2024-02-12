@@ -128,6 +128,15 @@ export default create({
   }),
 
   token: {
+    scope: '[data-test-account-token]',
+    show: clickable('.token-actions button.show-token'),
+    value: text('.auth-token'),
+    obfuscatedCharacters: collection('.obfuscated-chars'),
+    tokenCopiedText: text('.token-copied-text'),
+  },
+
+  atomToken: {
+    scope: '[data-test-atom-token]',
     show: clickable('.token-actions button.show-token'),
     value: text('.auth-token'),
     obfuscatedCharacters: collection('.obfuscated-chars'),
@@ -222,7 +231,7 @@ export default create({
         items: collection(INSIGHTS_SETTINGS_LIST_ITEM, {
           click: clickable(),
           description: text(INSIGHTS_SETTINGS_LIST_ITEM_DESCRIPTION),
-          isSelected: is(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED),
+          isSelected: hasClass('visibility-setting-list-item--selected'),
         }),
       },
       submit: {
@@ -721,11 +730,11 @@ export default create({
     },
 
     billingSubscription: {
-      greyStatus: '[data-test-grey-status]',
-      activeStatus: '[data-test-active-status]',
-      canceledStatus: '[data-test-grey-status]',
-      expiredStatus: '[data-test-expired-status]',
-      manualStatus: '[data-test-manual-status]'
+      greyStatus: text('[data-test-grey-status]'),
+      activeStatus: text('[data-test-active-status]'),
+      canceledStatus: text('[data-test-grey-status]'),
+      expiredStatus: text('[data-test-expired-status]'),
+      manualStatus: text('[data-test-manual-status]')
     },
 
     userDetails: {

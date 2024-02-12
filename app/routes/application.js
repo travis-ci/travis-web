@@ -10,6 +10,8 @@ import {
 } from 'ember-keyboard-shortcuts';
 
 export default TravisRoute.extend(BuildFaviconMixin, {
+  router: service(),
+  store: service(),
   auth: service(),
   features: service(),
   featureFlags: service(),
@@ -42,7 +44,9 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.storage.selectedPlanId = model.selectedPlanId;
     }
     if (this.auth.signedIn) {
+
       this.wizard.fetch.perform().then(() => { this.storage.wizardStep = this.wizard.state; });
+
       return this.get('featureFlags.fetchTask').perform();
     }
   },
@@ -63,15 +67,34 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   // they're not a collaborator. It also sets up an observer to subscribe to any
   // new repo that enters the store.
   setupRepoSubscriptions() {
+    console.log("SETUP PSH SUBS");
     this.store.filter('repo', null,
       (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
       ['private', 'isCurrentUserACollaborator']
     ).then((repos) => {
       repos.forEach(repo => this.subscribeToRepo(repo));
+
+      let observer = {
+        get: function(target, name) {
+          console.log("GET!");
+          return target[name];
+        },
+        set: function(obj, prop, value) {
+          console.log("SET!");
+          obj[prop] = value;
+        }
+      };
+
+      this.store.subscribe(repos, 'repo', null,
+      (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
+      ['private', 'isCurrentUserACollaborator'], this.reposWillChange, this.reposDidChange);
+
+      new Proxy(repos, observer);
+      /*
       repos.addArrayObserver(this, {
         willChange: 'reposWillChange',
         didChange: 'reposDidChange'
-      });
+      });*/
     });
   },
 
@@ -92,7 +115,10 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   subscribeToRepo: function (repo) {
+    console.log("SUBSCRIBE PSH1");
     if (this.pusher) {
+
+    console.log("SUBSCRIBE PSH2");
       this.pusher.subscribe(`repo-${repo.get('id')}`);
     }
   },
@@ -143,7 +169,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
         const currentURL = new URL(window.location.href);
         const redirectUrl = currentURL.href;
         const queryParams = { redirectUrl };
-        return this.transitionTo('signin', { queryParams });
+        return this.router.transitionTo('signin', { queryParams });
       } else {
         return true;
       }
@@ -157,19 +183,20 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.set('auth.afterSignInTransition', null);
       return transition.retry();
     } else {
-      return this.transitionTo('index');
+      return this.router.transitionTo('index');
     }
   },
 
   afterSignOut() {
+    console.log("AFTER");
     try {
       this.featureFlags.reset();
       this.set('repositories.accessible', []);
       this.setDefault();
       if (this.get('features.enterpriseVersion')) {
-        return this.transitionTo('signin');
+        return this.router.transitionTo('signin');
       }
-      return this.transitionTo('index');
+      return this.router.transitionTo('index');
     } catch (error) {}
   },
 });

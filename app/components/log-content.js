@@ -12,6 +12,7 @@ import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, and, reads} from '@ember/object/computed';
+import  ArrayProxy  from '@ember/array/proxy';
 
 const SELECTORS = {
   CONTENT: '.log-body-content',
@@ -23,6 +24,43 @@ Log.LIMIT = config.logLimit;
 Log.Scroll = function (options = {}) {
   this.beforeScroll = options.beforeScroll;
   return this;
+};
+
+class LogProxy extends ArrayProxy {
+
+  constructor(innerArray, cb) {
+    console.log("LOG.CONS");
+    super(...arguments);
+    this.cb = cb;
+    this._inner = innerArray;
+  }
+  init(innerArray) {
+    console.log("LOG.INIT");
+    this._inner = innerArray;
+    this._super(...arguments);
+  }
+
+  content() {
+    console.log("LOG.CONT");
+    return this._inner;
+  }
+
+  get(target, prop) {
+    console.log("LOG.GETx");
+    //console.log(this._arrangedContent);
+    //console.log(this._length);
+    return this._super(...arguments);
+  }
+
+  set(target, prop) {
+    console.log("LOG.SET");
+    this._super(...arguments);
+  }
+  replace() {
+    console.log("LOG.REPLACE");
+    this._super(...arguments);
+    this.cb(this, 0, null, this.length);
+  }
 };
 
 Log.Scroll.prototype = Log.extend(new Log.Listener(), {
@@ -120,10 +158,13 @@ export default Component.extend({
     let parts, ref;
     if (log || (log = this.log)) {
       parts = log.get('parts');
+      /* [GATODO] 
       parts.removeArrayObserver(this, {
         didChange: 'partsDidChange',
         willChange: 'noop'
       });
+      */
+      log.unsubscribe(parts);
       parts.destroy();
       log.notifyPropertyChange('parts');
       if ((ref = this.lineSelector) != null) {
@@ -194,23 +235,28 @@ export default Component.extend({
     let parts;
     if (log || (log = this.log)) {
       parts = log.get('parts');
+      /* [GATODO]
       parts.addArrayObserver(this, {
         didChange: 'partsDidChange',
         willChange: 'noop'
       });
+      */
+      console.log("SUBSCRIBE!");
+      log.subscribe(parts,this, this.partsDidChange);
       parts = parts.slice(0);
-      this.partsDidChange(parts, 0, null, parts.length);
+      console.log(parts);
+      this.partsDidChange(this, parts, 0, null, parts.length);
     }
   },
 
-  partsDidChange(parts, start, _, added) {
-    schedule('afterRender', this, function () {
+  partsDidChange(caller, parts, start, _, added) {
+    schedule('afterRender', caller, function () {
       let i, j, len, part, ref, ref1, ref2, results;
-      if (this.get('features.debugLogging')) {
+      if (caller.get('features.debugLogging')) {
         // eslint-disable-next-line
         console.log('log view: parts did change');
       }
-      if (this._state !== 'inDOM') {
+      if (caller._state !== 'inDOM') {
         return;
       }
       ref = parts.slice(start, start + added);
@@ -219,10 +265,11 @@ export default Component.extend({
         part = ref[i];
         // My brain can't process this right now.
         // eslint-disable-next-line
-        if ((ref1 = this.engine) != null ? (ref2 = ref1.limit) != null ? ref2.limited : void 0 : void 0) {
+        if ((ref1 = caller.engine) != null ? (ref2 = ref1.limit) != null ? ref2.limited : void 0 : void 0) {
           break;
         }
-        results.push(this.engine.set(part.number, part.content));
+        console.log(`PUSH LOG PART [${part.number}]: ${part.content}`);
+        results.push(caller.engine.set(part.number, part.content));
       }
       return results;
     });

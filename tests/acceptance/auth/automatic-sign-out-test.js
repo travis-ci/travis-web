@@ -13,12 +13,18 @@ module('Acceptance | automatic sign out', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
+    try {
     const currentUser = this.server.create('user');
+
     enableFeature('proVersion');
     signInUser(currentUser);
+    } catch(e) {
+      console.log(e);
+    }
   });
 
   test('when token is invalid user should be signed out', async function (assert) {
+
     window.localStorage.setItem('travis.token', 'wrong-token');
 
     await visitWithAbortedTransition('/account');

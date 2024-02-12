@@ -1,5 +1,8 @@
 /* eslint-disable camelcase */
 import Store from 'ember-data/store';
+import {CacheHandler} from 'ember-data/store';
+import RequestManager from '@ember-data/request';
+import {LegacyNetworkHandler} from '@ember-data/legacy-compat';
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 import { inject as service } from '@ember/service';
 import FilteredArrayManager from 'travis/utils/filtered-array-manager';
@@ -10,11 +13,15 @@ export default Store.extend({
 
   defaultAdapter: 'application',
   adapter: 'application',
+  subscriptions: [],
 
   init() {
     this._super(...arguments);
     this.shouldAssertMethodCallsOnDestroyedStore = true;
     this.filteredArraysManager = FilteredArrayManager.create({ store: this });
+this.requestManager = new RequestManager();
+        this.requestManager.use([LegacyNetworkHandler]);
+        this.requestManager.useCache(CacheHandler);
   },
 
   // Fetch a filtered collection.
@@ -69,23 +76,59 @@ export default Store.extend({
   //
   // For more info you may also see comments in FilteredArraysManager.
   filter(modelName, queryParams, filterFunction, dependencies, forceReload) {
+    if(this.filteredArraysManager === undefined) {
+      console.log("cre FILTER");
+       this.filteredArraysManager = FilteredArrayManager.create({ store: this });
+    }
+    console.log("FILTER");
     if (arguments.length === 0) {
       throw new Error('store.filter called with no arguments');
     }
     if (arguments.length === 1) {
+
+      console.log("FILTER1");
       return this.peekAll(modelName);
     }
     if (arguments.length === 2) {
+
+      console.log("FILTER2");
       filterFunction = queryParams;
       return this.filteredArraysManager.filter(modelName, null, filterFunction, ['']);
     }
 
     if (!dependencies) {
+
+      console.log("FILTER3");
       return this.filteredArraysManager.filter(modelName, queryParams, filterFunction, ['']);
     } else {
+
+      console.log("FILTER4");
       return this.filteredArraysManager.fetchArray(modelName, queryParams, filterFunction, dependencies, forceReload);
     }
+    console.log("FILTER OUT");
   },
+
+
+  subscribe(obj, caller, modelName, queryParams, filterFunction, dependencies, forceReload, beforeCb, afterCb) {
+    let sub = {
+      object : obj,
+      caller: caller,
+      model : modelName,
+      query : queryParams,
+      filter: filterFunction,
+      dependencies : dependencies,
+      forceReload : forceReload,
+      beforeCb : beforeCb,
+      afterCb : afterCb
+    };
+    this.subscriptions.push(sub);
+  },
+
+  unsubscribe(obj) {
+    this.subscriptions = this.subscriptions.filter( function(sub) {sub.object !== obj });
+  },
+
+
 
   // Returns a collection with pagination data. If the first page is requested,
   // the collection will be live updated. Otherwise keeping the calculations and
@@ -136,12 +179,78 @@ export default Store.extend({
     }
   },
 
+  xcreateRecord(type, ...params) {
+    console.log(`CREATE RECORD ${type}`);
+    let res =  this._super(...arguments);
+    console.log(`RES: ${res}`);
+    return res;
+  },
+
+ smartQueryRecord(type, ...params) {
+        let res =  this.queryRecord(type, ...params);
+        console.log(res);
+        return res;
+    },
+
+    push(object) {
+        console.log(`single push ${JSON.stringify(object)}`)
+        const id = object.data.id
+        const type = object.data.type;
+
+        if (this.shouldAdd(object)) {
+            const included = object.included ? JSON.parse(JSON.stringify(object.included)) : null;
+            if (included) {
+                object.included = included.filter(single => {
+                    return this.shouldAdd({data: single})
+                });
+            }
+          
+            this.subscriptions.forEach(sub => {
+              if(sub.object.id == id && sub.modelType == type && sub.beforeCb) {
+                console.log("BEFORECB");
+               // sub.beforeCb(sub.object,sub.caller);
+              }
+            });
+            let res =  this._super(...arguments);
+
+            this.subscriptions.forEach(sub => {
+              if(sub.object.id == id && sub.modelType == type && sub.afterCb) {
+                console.log("AFTERCB");
+ //               sub.afterCb(sub.object, sub.caller);
+              }
+            });
+            
+            return res;
+        } else {
+            return this.peekRecord(type, id);
+        }
+    },
+
+    shouldAdd(object) {
+        const data = object.data;
+        const type = data.type;
+        const newUpdatedAt = data.attributes ? data.attributes.updatedAt : null;
+        const id = data.id
+        if (newUpdatedAt) {
+            const record = this.peekRecord(type, id);
+            if (record) {
+                const existingUpdatedAt = record.get('updatedAt');
+                return !existingUpdatedAt || existingUpdatedAt <= newUpdatedAt;
+            } else {
+                return true
+            }
+        } else {
+            return true
+        }
+    },
+
   // We shouldn't override private methods, but at the moment I don't see any
   // other way to prevent updating records with outdated data.
   // _pushInternalModel seems to be the entry point for all of the data loading
   // related functions, so it's the best place to override to check the
   // updated_at field
   _pushInternalModel(data) {
+    console.log("PUSHINTERNAL");
     let type = data.type;
     let newUpdatedAt = data.attributes ? data.attributes.updatedAt : null;
 
@@ -164,6 +273,8 @@ export default Store.extend({
 
   destroy() {
     this._super(...arguments);
-    this.filteredArraysManager.destroy();
+    if (this.filteredArraysManager) {
+      this.filteredArraysManager.destroy();
+    }
   }
 });

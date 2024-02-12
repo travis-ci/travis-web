@@ -51,12 +51,12 @@ export default Component.extend({
 
   discountByAmount: computed('coupon.amountOff', 'selectedPlan.startingPrice', function () {
     const { amountOff } = this.coupon || {};
-    return amountOff && this.selectedPlan.startingPrice && Math.max(0, this.selectedPlan.startingPrice - amountOff);
+    return amountOff &&this.selectedPlan && this.selectedPlan.startingPrice && Math.max(0, this.selectedPlan.startingPrice - amountOff);
   }),
 
   discountByPercentage: computed('coupon.percentOff', 'selectedPlan.startingPrice', function () {
     const { percentOff } = this.coupon || {};
-    if (percentOff && this.selectedPlan.startingPrice) {
+    if (percentOff && this.selectedPlan && this.selectedPlan.startingPrice) {
       const discountPrice = Math.max(0, this.selectedPlan.startingPrice - (this.selectedPlan.startingPrice * percentOff) / 100);
       return +discountPrice.toFixed(2);
     }
@@ -68,7 +68,7 @@ export default Component.extend({
     } else if (typeOf(this.discountByPercentage) === 'number' && this.discountByPercentage >= 0) {
       return this.discountByPercentage;
     } else {
-      return this.selectedPlan.startingPrice;
+      return this.selectedPlan ? this.selectedPlan.startingPrice : 0;
     }
   }),
 

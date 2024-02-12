@@ -37,7 +37,7 @@
         data-test-plans-page-product-list="true"
         as |grid|
       >
-        {{#each plans as |plan|}}
+        {{#each this.plans as |plan|}}
           {{#unless plan.isAnnual}}
             <grid.item>
               <UiKit::Box
@@ -153,7 +153,7 @@
           data-test-plans-page-product-list="true"
           as |grid|
         >
-          {{#each plans as |plan|}}
+          {{#each this.plans as |plan|}}
             {{#if plan.isAnnual }}
               <grid.item>
                 <UiKit::Box
@@ -407,7 +407,7 @@
             </UiKit::Text>
             <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
               A build has 120 minutes to run. Should your build take longer, you can split it up using a
-              <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='sm' @href={{buildMatrixUrl}}>build matrix</UiKit::Link>.
+              <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='sm' @href={{this.buildMatrixUrl}}>build matrix</UiKit::Link>.
             </UiKit::Text>
         </grid.item>
 
@@ -419,9 +419,9 @@
           <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
             You most certainly can! And you get 1 month for free &mdash; 12 months for the price of 11!
             Simply select the annual option when signing up for a subscription, or go to
-            <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='md' @href={{billingUrl}}>{{format-domain billingUrl}}</UiKit::Link>
+            <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='md' @href={{this.billingUrl}}>{{format-domain this.billingUrl}}</UiKit::Link>
             if you want to switch your current plan to annual.
-            For more flexible, usage based Plans please <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
+            For more flexible, usage based Plans please <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut this.scrollToContact true)}}>contact us</UiKit::Link>
           </UiKit::Text>
         </grid.item>
 
@@ -431,7 +431,7 @@
             </UiKit::Text>
             <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
               Absolutely! You can manage your account on your billing page. Go to
-              <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' @href={{billingUrl}}>{{format-domain billingUrl}}</UiKit::Link>
+              <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' @href={{this.billingUrl}}>{{format-domain this.billingUrl}}</UiKit::Link>
               and choose the account you want to cancel. Then switch to 'Free' Plan.
             </UiKit::Text>
         </grid.item>
@@ -443,7 +443,7 @@
           </UiKit::Text>
           <UiKit::Text @size='md' @leading='lg' @color='grey-concrete'>
             Yes! We have many plans available for your concurrency needs. You can change your plan subscription at any time on the billing page or
-            <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut scrollToContact true)}}>contact us</UiKit::Link>
+            <UiKit::Link @color='grey-concrete' @variant='link-underlined' @size='md' onclick={{fn (mut this.scrollToContact true)}}>contact us</UiKit::Link>
             if you’re looking for something custom.
           </UiKit::Text>
         </grid.item>
@@ -477,8 +477,8 @@
             </UiKit::Text>
             <UiKit::Text @size='md' @color='grey-concrete'>
               We most certainly do! You can find all details on
-              <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='sm' @href={{config.urls.education}}>
-                {{format-domain config.urls.education}}
+              <UiKit::Link @color='grey-concrete' @variant='link-underlined-hover' @size='sm' @href={{this.config.urls.education}}>
+                {{format-domain this.config.urls.education}}
               </UiKit::Link>
             </UiKit::Text>
         </grid.item>

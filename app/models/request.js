@@ -31,13 +31,14 @@ export default Model.extend({
   raw_configs: attr(),
   uniqRawConfigs: uniqBy('raw_configs', 'source'),
   noYaml: empty('raw_configs'),
-  repo: belongsTo('repo', { async: true }),
-  commit: belongsTo('commit', { async: true }),
+  repo: belongsTo('repo', { async: true , inverse: null}),
+  commit: belongsTo('commit', { async: true, inverse: null }),
 
   // API models this as hasMany but serializers:request#normalize overrides it
-  build: belongsTo('build', { async: true }),
+  build: belongsTo('build', { async: false, inverse: 'request' }),
 
   api: service(),
+  tasks: service(),
 
   isAccepted: computed('result', 'build.id', function () {
     // For some reason some of the requests have a null result beside the fact that
@@ -57,19 +58,27 @@ export default Model.extend({
 
   isDraft: equal('pullRequestMergeable', PULL_REQUEST_MERGEABLE.DRAFT),
 
-  messages: computed('repo.id', 'build.request.id', 'fetchMessages.last.value', function () {
-    const messages = this.fetchMessages.get('lastSuccessful.value');
+  messages: computed('repo.id', 'build.request.id', 'fetchMessages.lastSuccessful.value', function () {
+    const messages =  this.fetchMessages.lastSuccessful ? this.fetchMessages.lastSuccessful.value : [];
+    console.log("MSG PERFORM");
     if (!messages) {
       this.fetchMessages.perform();
     }
+    console.log(messages);
     return messages || [];
   }),
 
   fetchMessages: task(function* () {
+    console.log("FETCH MSG");
     const repoId = this.get('repo.id');
     const requestId = this.get('build.request.id');
+    console.log(`FETCH MSG ${repoId} ${requestId}`);
     if (repoId && requestId) {
+      console.log(this.api);
       const response = yield this.api.get(`/repo/${repoId}/request/${requestId}/messages`) || {};
+      console.log("RESP");
+      console.log(response);
+      console.log(response.messages);
       return response.messages;
     }
   }).drop(),

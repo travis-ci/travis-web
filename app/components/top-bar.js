@@ -5,9 +5,8 @@ import { computed, setProperties, set } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
-import InViewportMixin from 'ember-in-viewport';
 
-export default Component.extend(InViewportMixin, {
+export default Component.extend( {
   auth: service(),
   store: service(),
   externalLinks: service(),
@@ -15,6 +14,7 @@ export default Component.extend(InViewportMixin, {
   flashes: service(),
   router: service(),
   storage: service(),
+  inViewport: service(),
 
   tagName: 'header',
   classNames: ['top'],
@@ -23,6 +23,7 @@ export default Component.extend(InViewportMixin, {
   landingPage: false,
   isNavigationOpen: false,
   isActivation: false,
+  viewportTolerance: {top: 0, bottom: 0, left: 0, right: 0 },
 
   activeModel: null,
   model: reads('activeModel'),
@@ -82,6 +83,30 @@ export default Component.extend(InViewportMixin, {
   actions: {
     toggleNavigation() {
       this.toggleProperty('isNavigationOpen');
-    }
+    },
+  setupInViewport() {
+    const loader = document.getElementById('loader');
+    const viewportTolerance = { bottom: 200 };
+    const { onEnter, _onExit } = this.inViewport.watchElement(loader, { viewportTolerance });
+    // pass the bound method to `onEnter` or `onExit`
+    onEnter(this.didEnterViewport.bind(this));
+  },
+
+  willDestroy() {
+    // need to manage cache yourself if you don't use the mixin
+    const loader = document.getElementById('loader');
+    this.inViewport.stopWatching(loader);
+
+    super.willDestroy(...arguments);
+  },
+ 
+ didEnterViewport() {
+    this.flashes.set('topBarVisible', true);
+  },
+
+  didExitViewport() {
+    this.flashes.set('topBarVisible', false);
+  }
+
   }
 });

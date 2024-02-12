@@ -1,5 +1,5 @@
-import { ActiveModelSerializer } from 'ember-cli-mirage';
+import { ActiveModelSerializer } from 'miragejs';
 
-export default ActiveModelSerializer.extend({
-  serializeIds: 'always',
-});
+export default class V2Serializer extends ActiveModelSerializer{
+  serializeIds =  'always';
+}

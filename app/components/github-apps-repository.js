@@ -9,6 +9,7 @@ import {
 import hasErrorWithStatus from 'travis/utils/api-errors';
 import { task } from 'ember-concurrency';
 import { vcsLinks } from 'travis/services/external-links';
+import { capitalize } from '@ember/string';
 
 export default Component.extend({
   accounts: service(),
@@ -23,7 +24,7 @@ export default Component.extend({
   isNotMatchGithub: not('isMatchGithub'),
 
   repositoryProvider: computed('repository.provider', function () {
-    return this.repository.provider.capitalize();
+    return capitalize(this.repository.provider);
   }),
 
   repositoryType: computed('repository.serverType', function () {

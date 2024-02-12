@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
-import YAML from 'yamljs';
+import yaml from 'js-yaml';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import {
@@ -91,7 +91,7 @@ export default Component.extend(BranchSearching, {
     return {
       request: {
         branch,
-        config: YAML.parse(triggerBuildConfig),
+        config: yaml.load(triggerBuildConfig),
         message: message || undefined
       }
     };
@@ -124,6 +124,8 @@ export default Component.extend(BranchSearching, {
 
   displayError(e) {
     let message;
+    console.log("ERR");
+    console.log(e);
 
     if (e.status === 429) {
       message = 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.';

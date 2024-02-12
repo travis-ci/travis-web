@@ -19,7 +19,9 @@ export default Component.extend({
   scansEnabled: reads('features.logScanner'),
 
   classCurrent: computed('tab', function () {
+    console.log("CURRE!");
     let tab = this.tab;
+    console.log(tab);
     if (tab === 'current') {
       return 'active';
     }

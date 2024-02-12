@@ -2,7 +2,7 @@ import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import DS from 'ember-data';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -20,7 +20,7 @@ module('Integration | Component | env-var', function (hooks) {
       this.set('envVar', envVar);
     });
 
-    await render(hbs`{{env-var envVar=envVar}}`);
+    await render(hbs`{{env-var envVar=this.envVar}}`);
 
     assert.dom('.env-var-name').hasText('foo', 'name should be displayed');
     assert.dom('.env-var-value input').hasValue('••••••••••••••••', 'value should be hidden');
@@ -36,7 +36,7 @@ module('Integration | Component | env-var', function (hooks) {
       this.set('envVar', envVar);
     });
 
-    await render(hbs`{{env-var envVar=envVar}}`);
+    await render(hbs`{{env-var envVar=this.envVar}}`);
 
     assert.dom('.env-var-name').hasText('foo', 'name should be displayed');
     assert.dom('.env-var-value input').hasValue('bar', 'value should not be hidden');
@@ -52,7 +52,7 @@ module('Integration | Component | env-var', function (hooks) {
       this.set('envVar', envVar);
     });
 
-    await render(hbs`{{env-var envVar=envVar}}`);
+    await render(hbs`{{env-var envVar=this.envVar}}`);
 
     assert.equal(store.peekAll('envVar').get('length'), 1, 'precond: store should have an env-var');
 

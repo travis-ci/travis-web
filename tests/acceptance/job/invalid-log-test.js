@@ -12,18 +12,6 @@ module('Acceptance | job/invalid log', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    adapterException = Ember.Test.adapter.exception;
-    loggerError = Ember.Logger.error;
-    Ember.Test.adapter.exception = () => {};
-    Ember.Logger.error = () => null;
-  });
-
-  hooks.afterEach(function () {
-    Ember.Test.adapter.exception = adapterException;
-    Ember.Logger.error = loggerError;
-  });
-
   test('viewing invalid job shows error', async function (assert) {
     // create incorrect repository as this is resolved first, errors otherwise
     this.server.create('user', {login: 'travis-ci'});

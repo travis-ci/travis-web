@@ -4,11 +4,13 @@ import { inject as service } from '@ember/service';
 export default TravisRoute.extend({
   features: service(),
   tabStates: service(),
+  router: service(),
 
   afterModel(repo) {
     try {
-      return repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
+      repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
     } catch (error) {}
+    this.renderTemplate(repo);
   },
 
   setupController(controller, model) {
@@ -44,26 +46,32 @@ export default TravisRoute.extend({
   },
 
   beforeModel() {
+    this.set('tabStates.mainTab', 'current');
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
       repo.fetchRepoOwnerAllowance.perform();
     }
   },
 
-  renderTemplate() {
+  renderTemplate(repo) {
+    console.log("RENDER TEMPLATE!");
     let controller = this.controllerFor('repo');
-
+ //   this.set('tabStates.mainTab', 'current');
+    console.log(this.get('tabStates.mainTab'));
     if (this.get('features.github-apps') &&
-      controller.get('repo.active_on_org') &&
+      repo.active_on_org &&
       controller.migrationStatus !== 'success') {
-      this.render('repo/active-on-org');
-    } else if (!controller.get('repo.active')) {
-      this.render('repo/not-active');
-    } else if (!controller.get('repo.currentBuildId')) {
-      this.render('repo/no-build');
+      this.router.transitionTo('repo.active-on-org');
+    } else if (!repo.active) {
+      console.log("NOT ACTIVE!");
+      this.router.transitionTo('repo.not-active');
+    } else if (!repo.currentBuildId) {
+
+      console.log("NO BUILD!");
+      this.router.transitionTo('repo.no-build');
     } else {
-      this.render('build');
-      this.render('build/index', { into: 'build', controller: 'build' });
+      console.log("TO BUILD");
+      this.router.transitionTo('build.index', repo.currentBuildId);
     }
   }
 });

@@ -1,7 +1,7 @@
-import { Serializer } from 'ember-cli-mirage';
+import { Serializer } from 'miragejs';
 import { isArray } from '@ember/array';
 
-export default Serializer.extend({
+export default class extends Serializer {
   serialize(object) {
     if (isArray(object.models)) {
       const allowance = object.models[0];
@@ -19,4 +19,4 @@ export default Serializer.extend({
       };
     }
   }
-});
+}

@@ -10,6 +10,7 @@ const ANCHOR = {
 export default Controller.extend({
   queryParams: ['anchor'],
 
+  router: service(),
   auth: service(),
   metrics: service(),
 
@@ -29,7 +30,7 @@ export default Controller.extend({
     },
 
     signUp() {
-      this.transitionToRoute('signup');
+      this.router.transitionTo('signup');
     },
 
     toggleContactScroll() {
@@ -41,7 +42,7 @@ export default Controller.extend({
     },
 
     contactSuccess() {
-      this.transitionToRoute('plans.thank-you');
+      this.router.transitionTo('plans.thank-you');
     },
   }
 });

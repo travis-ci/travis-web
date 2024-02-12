@@ -1,4 +1,4 @@
-import { Factory } from 'ember-cli-mirage';
+import { Factory } from 'miragejs';
 import moment from 'moment';
 
 const valuePool = [20, 40, 60, 80, 100, 10, 20, 15, 10, 4, 20, 69];

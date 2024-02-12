@@ -27,12 +27,12 @@ export default Model.extend({
   paymentIntent: attr(),
   planName: attr(),
 
-  discount: belongsTo('discount', { async: false }),
-  billingInfo: belongsTo('billing-info', { async: false }),
-  creditCardInfo: belongsTo('credit-card-info', { async: false }),
-  invoices: hasMany('invoice'),
-  owner: belongsTo('owner', { polymorphic: true }),
-  plan: belongsTo(),
+  discount: belongsTo('discount', { async: false, inverse: 'subscription' }),
+  billingInfo: belongsTo('billing-info', { async: false, inverse: 'subscription' }),
+  creditCardInfo: belongsTo('credit-card-info', { async: false, inverse: 'subscription' }),
+  invoices: hasMany('invoice', { async: false, inverse: 'subscription'}),
+  owner: belongsTo('owner', { polymorphic: true, async: true, inverse: null }),
+  plan: belongsTo('plan', {async: false, inverse: null}),
 
   isSubscribed: equal('status', 'subscribed'),
   isCanceled: equal('status', 'canceled'),

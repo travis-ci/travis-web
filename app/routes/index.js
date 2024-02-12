@@ -1,12 +1,15 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
+import { alias } from '@ember/object/computed';
 
 export default Route.extend({
   auth: service(),
   tabStates: service(),
   repositories: service(),
   features: service(),
+  router: service(),
+  latestBuild: alias('repositories.accessible.firstObject.currentBuild'),
 
   beforeModel() {
     let pro = this.get('features.proVersion');
@@ -21,13 +24,17 @@ export default Route.extend({
       if (this.get('features.dashboard')) {
         this.transitionTo('dashboard');
       }
+      else {
+      }
     } else if (this.get('features.enterpriseVersion')) {
       this.transitionTo('signin');
     }
+    
   },
 
   renderTemplate(...args) {
     this._super(args);
+    console.log("RENDER TEMPLATE!");
     this.render('build/index', {into: 'index', controller: 'build/index'});
   },
 

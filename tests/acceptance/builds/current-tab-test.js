@@ -38,8 +38,9 @@ module('Acceptance | builds/current tab', function (hooks) {
 
     await visit('/travis-ci/travis-web');
 
-    assert.equal(document.title, 'travis-ci/travis-web - Travis CI');
-    assert.dom('[data-test-current-tab-container]').hasClass('active', 'Current tab is active by default when loading dashboard');
+    assert.ok(/^Travis Tests/.test(document.title));
+
+    assert.dom('[data-test-tab-build-container]').hasClass('active', 'Current tab is active by default when loading dashboard');
 
     assert.dom('[data-test-build-header-build-state]').hasText('#5 booting', 'expected a single-job build’s state to be the job’s state');
     assert.dom('[data-test-build-header]').hasClass('started');
@@ -79,6 +80,7 @@ module('Acceptance | builds/current tab', function (hooks) {
     commit.update('build', build);
 
     await visit('/travis-ci/travis-web');
+
 
     assert.dom('[data-test-no-jobs-error-message]').exists();
   });

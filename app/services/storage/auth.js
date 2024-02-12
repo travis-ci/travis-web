@@ -8,6 +8,7 @@ const storage = getStorage();
 export default Service.extend({
   store: service(),
 
+
   token: computed({
     get() {
       return storage.getItem('travis.token') || null;
@@ -42,27 +43,34 @@ export default Service.extend({
     }
   }),
 
-  accounts: computed({
-    get() {
+  get accounts() {
       const accountsData = storage.getItem('travis.auth.accounts');
-      const accounts = parseWithDefault(accountsData, []).map(account =>
+      this._accounts = parseWithDefault(accountsData, []).map(account =>
         extractAccountRecord(this.store, account)
       );
-      accounts.addArrayObserver(this, {
-        willChange: 'persistAccounts',
-        didChange: 'persistAccounts'
-      });
-      return accounts;
+      return this._accounts;
     },
-    set(key, accounts) {
+  set accounts(accounts) {
       this.persistAccounts(accounts);
-      return accounts;
-    }
-  }).volatile(),
+      return this._accounts;
+  },
+
+  pushAccount(account) {
+      this._accounts.push(account);
+      this.persistAccounts(this._accounts);
+      return this._accounts;
+  },
+
 
   persistAccounts(newValue) {
-    const records = (newValue || []).map(record => serializeUserRecord(record));
-    storage.setItem('travis.auth.accounts', JSON.stringify(records));
+    try {
+      const records = (newValue || []).map(record => serializeUserRecord(record));
+      storage.setItem('travis.auth.accounts', JSON.stringify(records));
+      this._accounts = records;
+    } catch(e) {
+      console.log("PERSIST failed, running tests?");
+      console.log(e);
+    }
   },
 
   activeAccountId: computed({

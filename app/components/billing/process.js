@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { equal, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
+import { isPresent } from '@ember/utils';
 
 const STEPS = {
   ONE: 1,
@@ -19,8 +20,17 @@ export default Component.extend({
 
   showCancelButton: false,
 
-  currentStep: computed(function () {
-    return this.storage.billingStep || STEPS.ONE;
+  currentStep: computed( {
+    get() {
+      if(isPresent(this._currentStep)) {
+        return this._currentStep;
+      }
+      return this.storage.billingStep || STEPS.ONE;
+    },
+    set(key,value) {
+      this.set('_currentStep', value);
+      return this._currentStep;
+    }
   }),
 
   billingInfoExists: computed('existingBillingInfo.{firstName,lastName,billingEmail,city,zipCode,country}', function () {

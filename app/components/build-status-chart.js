@@ -54,8 +54,13 @@ export default Component.extend({
   hasNoBuilds: and('isNotLoading', 'isEmpty'),
 
   // Chart component data
-  data: computed('passed.[]', 'failed.[]', 'errored.[]', 'cancelled.[]', 'labels.[]',
+  data: computed('passed.[]', 'failed.[]', 'errored.[]', 'cancelled.[]', 'labels',
     function () {
+      console.log("DATA1");
+      console.log(this.labels);
+      if( this.labels === undefined) {
+        return {};
+      }
       return {
         type: 'bar',
         x: 'x',

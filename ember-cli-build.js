@@ -4,7 +4,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const SVGO = require('svgo');
 
-module.exports = function () {
+module.exports = function (defaults) {
   let fingerprint;
 
   if (process.env.DISABLE_FINGERPRINTS) {
@@ -31,7 +31,7 @@ module.exports = function () {
     }
   }
 
-  const app = new EmberApp({
+  const app = new EmberApp(defaults, {
     'ember-cli-babel': {
       includePolyfill: true,
     },
@@ -112,7 +112,7 @@ module.exports = function () {
   importNpmDependency(app, 'node_modules/emoji-js/lib/emoji.js');
   importNpmDependency(app, 'node_modules/visibilityjs/index.js');
   importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
-  importNpmDependency(app, 'node_modules/yamljs/index.js');
+  importNpmDependency(app, 'node_modules/js-yaml/index.js');
   importNpmDependency(app, 'node_modules/deep-freeze/index.js');
 
   return app.toTree(emojiAssets);

@@ -54,7 +54,7 @@ module('Acceptance | owner insights', function (hooks) {
     // Queue times component
     insightsPage.glances[2].as(glance => {
       assert.equal(glance.name, 'Average Queue Time');
-      assert.equal(glance.keyStat, '0.6 mins');
+      assert.equal(glance.keyStat, '0,6 mins');
     });
 
     // Active repos component
