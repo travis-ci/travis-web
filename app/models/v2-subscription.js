@@ -48,6 +48,14 @@ export default Model.extend({
   isManual: equal('source', 'manual'),
   isNotManual: not('isManual'),
 
+  subscriptionExpiredByDate: computed('validTo', function () {
+    let validTo = this.validTo;
+    let today = new Date().toISOString();
+    let date = Date.parse(today);
+    let validToDate = Date.parse(validTo);
+    return date > validToDate;
+  }),
+
   isSubscribed: computed('status', function () {
     return this.status === null || this.status == 'subscribed';
   }),
