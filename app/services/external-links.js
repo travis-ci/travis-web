@@ -18,7 +18,17 @@ export const vcsLinks = {
 export default Service.extend({
   ...vcsLinks,
 
-  branchUrl: (vcsType, params) => vcsUrl('branch', vcsType, params),
+  branchUrl(vcsType, serverType, params) {
+    if (serverType === 'svn') {
+      delete params.commit;
+      return params.branch === 'trunk' ? vcsUrl('branchSvnTrunk', vcsType, params) : vcsUrl('branchSvn', vcsType, params);
+    } else if (serverType === 'perforce') {
+      return vcsUrl('branchPerforce', vcsType, params);
+    } else {
+      delete params.commit;
+      return vcsUrl('branch', vcsType, params);
+    }
+  },
 
   fileUrl: (vcsType, params) => vcsUrl('file', vcsType, params),
 
