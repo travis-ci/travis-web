@@ -19,7 +19,7 @@ export default Service.extend({
   ...vcsLinks,
 
   branchUrl(vcsType, serverType, params) {
-    if (serverType === 'svn') {
+    if (serverType === 'svn' || serverType === 'subversion') {
       delete params.commit;
       return params.branch === 'trunk' ? vcsUrl('branchSvnTrunk', vcsType, params) : vcsUrl('branchSvn', vcsType, params);
     } else if (serverType === 'perforce') {
