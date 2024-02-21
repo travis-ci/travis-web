@@ -407,3 +407,103 @@ $env-var-value-background: lighten($cement-grey, 20);
   }
 
 }
+
+.custom-key-modal {
+  padding: 16px 20px 20px;
+  font-style: normal;
+
+  & &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & &__close-button {
+    margin: 0;
+    padding: 0;
+    outline: none;
+  }
+
+  & &__header {
+    font-size: 22px;
+    font-weight: 300;
+    color: $oxide-blue;
+    margin: 0 2rem 0 0;
+  }
+
+  & &__body {
+    color: $asphalt-grey;
+  }
+
+  & &__controls .button {
+    margin: 0 1rem 0 0;
+  }
+}
+
+.custom-keys-header {
+  height: 36px;
+  margin-bottom: 20px;
+}
+
+.custom-keys-title {
+  float: left;
+  margin-bottom: 0;
+  margin-top: 3px;
+}
+
+.custom-keys-add-button {
+  float: right;
+}
+
+.custom-key-added-on {
+  padding-left: 15px;
+}
+
+.custom-key-title {
+  font-weight: bold;
+}
+
+.custom-key-action {
+  float: none;
+  width: 6%;
+}
+
+.custom-key-value {
+  resize: none;
+}
+
+.add-custom-key-modal {
+  min-width: 500px;
+  padding: 10px 10px 10px;
+  font-style: normal;
+
+  & &__hint-text {
+    padding-bottom: 10px;
+  }
+
+  h2 {
+    text-align: left;
+    margin-bottom: 5px;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  .custom-keys-footer {
+    justify-content: center;
+  }
+
+  .custom-keys-cancel {
+    margin-left: 20px;
+  }
+}
+
+.ember-tooltip {
+  min-width: 200px;
+  max-width: 1316px;
+
+  .tooltip-inner {
+  }
+
+}
