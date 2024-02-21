@@ -118,7 +118,7 @@
                 </UiKit::Box>
 
                 <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
-                  <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
+                  <UiKit::Button onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
                     {{#if plan.isFree}}
                       Start building for free
                     {{else}}
@@ -230,7 +230,7 @@
                   </UiKit::Box>
 
                   <UiKit::Box @margin={{hash bottom=6}} @padding={{hash x=10}} @textAlign={{hash base='center'}}>
-                    <UiKit::Button @onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
+                    <UiKit::Button onClick={{action 'signUp'}} @color='blue' @invert={{if plan.isDefault false true}} @bgColor={{if plan.isDefault 'blue'}} @width='full' data-test-plans-page-product-button='true'>
                       {{#if plan.isFree}}
                         Start building for free
                       {{else}}

@@ -73,7 +73,10 @@ export default Component.extend({
   }),
 
   signin() {
+    console.log("SIGNIN1");
     if (this.get('features.proVersion')) {
+      
+    console.log("SIGNIN1 - pro");
       if (this.account) {
         this.auth.switchAccount(this.account.id, this.auth.redirectUrl || '/');
       } else {
@@ -81,6 +84,9 @@ export default Component.extend({
         if (this.isSignup) {
           this.auth.signUp(this.provider);
         } else {
+
+        console.log("SIGNIN with");
+          console.log(this.provider);
           this.auth.signInWith(this.provider);
         }
       }
