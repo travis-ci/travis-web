@@ -7,6 +7,7 @@
           @route="build"
           @models={{array this.build.repo this.build}}
           @title={{concat "PR #" this.build.pullRequestNumber " " this.build.pullRequestTitle}}
+          title={{concat "PR #" this.build.pullRequestNumber " " this.build.pullRequestTitle}}
         >
           <small>
             PR #{{this.build.pullRequestNumber}}
@@ -22,6 +23,7 @@
           @route="build"
           @model={{this.build.id}}
           @title={{this.build.tag.name}}
+          title={{this.build.tag.name}}
         >
           {{this.build.tag.name}}
         </LinkTo>
@@ -30,6 +32,7 @@
           @route="build"
           @model={{this.build.id}}
           @title={{this.build.branchName}}
+          title={{this.build.branchName}}
         >
           {{this.build.branchName}}
         </LinkTo>

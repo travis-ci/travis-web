@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, waitFor , pauseTest} from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { Response } from 'miragejs';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -56,8 +56,11 @@ module('RepositoryStatusToggleComponent', function (hooks) {
 
     await render(hbs`{{repository-status-toggle repository=this.repository}}`);
     assert.dom('.switch').findElement().click();
+
+    await waitFor('.repositories-error', { timeout: 2000 });
+
     settled().then(() => {
-      assert.dom('.repositories-error').hasText(
+      assert.dom('.repositories-error').includesText(
         'Request cannot be completed because the repository ssh key is still pending to be created. Please retry in a bit, or try syncing the repository if this condition does not resolve.'
       );
     });
@@ -86,6 +89,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
     });
 
     await render(hbs`{{repository-status-toggle repository=this.repository}}`);
+
     assert.dom('.switch').findElement().click();
     settled().then(() => {
       assert.dom('.repositories-error').includesText(

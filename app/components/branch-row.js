@@ -4,7 +4,7 @@ import ArrayProxy from '@ember/array/proxy';
 import Component from '@ember/component';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { isPresent }  from '@ember/service';
+import { isPresent }  from '@ember/utils';
 
 export default Component.extend({
   api: service(),

@@ -56,11 +56,10 @@ export default Component.extend({
   // Chart component data
   data: computed('passed.[]', 'failed.[]', 'errored.[]', 'cancelled.[]', 'labels',
     function () {
-      console.log("DATA1");
-      console.log(this.labels);
       if( this.labels === undefined) {
         return {};
       }
+
       return {
         type: 'bar',
         x: 'x',

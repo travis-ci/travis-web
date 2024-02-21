@@ -3,6 +3,7 @@ import Service, { inject as service } from '@ember/service';
 export default Service.extend({
   auth: service('storage/auth'),
   utm: service('storage/utm'),
+  store: service(),
 
   get billingStep() {
     return +this.getItem('travis.billing_step');
@@ -59,7 +60,7 @@ export default Service.extend({
           address,
           address2,
           billingEmail,
-          billingEmailRead,
+          billingEmailRO,
           city,
           company,
           country,
@@ -81,12 +82,25 @@ export default Service.extend({
 
   },
 
+  async dataSubscription(data) {
+    data.subscription = await data.subscription;
+    const model = data.subscription;
+    const snapshot = model._createSnapshot();
+    const serializer = this.store.serializerFor('subscription');
+    const serializedData = serializer.serialize(snapshot);
+    data.subscription = serializedData;
+
+    return data;
+  },
+
   get billingPlan() {
     console.log("BPLAN");
     console.log(this.storage);
     return this.parseWithDefault('travis.billing_plan', {});
   },
   set billingPlan(value) {
+    console.log("SET BILLING PLAN");
+    console.log(value);
     this.setItem('travis.billing_plan', JSON.stringify(value));
   },
 

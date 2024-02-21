@@ -24,6 +24,7 @@
               @isPrivateViewable={{this.isPrivateInsightsViewable}}
               @includePrivate={{this.includePrivateInsights}}
               @setRequestPrivateInsights={{action "setRequestPrivateInsights"}}
+              data-test-insights-privacy-selector
             />
           </div>
           <InsightsTabs @selectedTab={{this.timeInterval}} />

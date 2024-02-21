@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import profilePage from 'travis/tests/pages/profile';
 
 module('Integration | Component | billing-summary-status', function (hooks) {
   setupRenderingTest(hooks);
@@ -31,7 +30,8 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan active');
-    assert.dom(profilePage.billing.billingSubscription.activeStatus).hasText('active');
+
+    assert.dom('[data-test-active-status]').hasText('active');
   });
 
   test('it renders expired status', async function (assert) {
@@ -48,7 +48,7 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan expired');
-    assert.dom(profilePage.billing.billingSubscription.expiredStatus).hasText('expired');
+    assert.dom('[data-test-expired-status]').hasText('expired');
   });
 
   test('it renders incomplete status', async function (assert) {
@@ -100,6 +100,6 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan canceled');
-    assert.dom(profilePage.billing.billingSubscription.canceledStatus).hasText('canceled');
+    assert.dom('[data-test-grey-status]').hasText('canceled');
   });
 });

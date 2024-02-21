@@ -72,9 +72,12 @@ export default Service.extend({
     this._super(...arguments);
     this.fetchOrganizations.perform();
     if (billingEndpoint) {
+      console.log("INIT!!!");
       this.fetchSubscriptions.perform();
       this.fetchV2Subscriptions.perform();
       this.fetchTrials.perform();
+
+      console.log("INIT!!!--");
     }
   },
 

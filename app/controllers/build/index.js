@@ -9,10 +9,7 @@ export default Controller.extend({
   latestCurrentBuild: alias('repositories.accessible.firstObject.currentBuild'),
 
   build: computed('model', 'latestCurrentBuild', function () {
-    console.log("BUILD!!!!!!!!!!!!!!!!!!");
     let model = this.model;
-    console.log('build model');
-    console.log(model);
     let latestCurrentBuild = this.latestCurrentBuild;
 
     if (model) {

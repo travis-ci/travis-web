@@ -8,7 +8,6 @@ import signInUser from 'travis/tests/helpers/sign-in-user';
 import { prettyDate } from 'travis/helpers/pretty-date';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-import { pauseTest } from '@ember/test-helpers';
 const repoId = 100;
 
 const repositoryTemplate = {
@@ -190,7 +189,6 @@ module('Acceptance | home/with repositories', function (hooks) {
     });
 
     await settled();
-    await pauseTest();
     assert.equal(jobPage.logLines[0].entireLineText, 'The first line');
     assert.ok(jobPage.logLines[0].isYellow, 'expected the first line to be yellow');
   });

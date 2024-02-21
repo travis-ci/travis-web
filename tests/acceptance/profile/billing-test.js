@@ -14,8 +14,6 @@ import {
   BILLING_INFO_ADD_EMAIL,
 } from 'travis/tests/helpers/selectors';
 
-import { pauseTest } from '@ember/test-helpers';
-
 module('Acceptance | profile/billing', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -100,6 +98,7 @@ module('Acceptance | profile/billing', function (hooks) {
     });
 
     this.subscription = subscription;
+    console.log("CREATED SUB");
 
     subscription.createBillingInfo({
       first_name: 'User',
@@ -118,6 +117,8 @@ module('Acceptance | profile/billing', function (hooks) {
     subscription.createCreditCardInfo({
       last_digits: '1919'
     });
+
+    console.log(this.subscription);
 
     let organization = this.server.create('organization', {
       name: 'Org Name',
@@ -641,8 +642,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
-
-    await pauseTest();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled github marketplace subscription');
     assert.equal(profilePage.billing.planMessage.text, 'Cancelled on June 19, 2018');

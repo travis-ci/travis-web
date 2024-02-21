@@ -13,6 +13,7 @@ import {
   bindKeyboardShortcuts,
   unbindKeyboardShortcuts
 } from 'ember-keyboard-shortcuts';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   classNames: ['visibility-setting-list'],
@@ -36,7 +37,19 @@ export default Component.extend({
   options: [],
 
   isEmpty: empty('options'),
-  isVisible: not('isEmpty'),
+  isVisible: computed( {
+    get(){
+      if( isPresent(this._isVisible)) {
+        return this._isVisible;
+      }
+
+      return !this.isEmpty;
+    },
+    set(k,v) {
+      this.set('_isVisible', v);
+      return this._isVisible;
+    }
+  }),
 
   isShowingConfirmationModal: false,
   isNotShowingConfirmationModal: not('isShowingConfirmationModal'),

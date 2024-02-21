@@ -3,9 +3,20 @@ import {
   create,
   collection,
   hasClass,
+  notHasClass,
   text,
   visitable
 } from 'ember-cli-page-object';
+import { getter } from 'ember-cli-page-object/macros';
+
+function isEmpty(selector) {
+  return getter(function (pageObjectKey) {
+    console.log("GETTER");
+    console.log(selector);
+    console.log(pageObjectKey);
+    return false;
+  });
+}
 
 const branchRowComponent = {
   scope: '.default-branch .branch-row',
@@ -32,8 +43,7 @@ const branchRowComponent = {
     passed: hasClass('passed'),
     failed: hasClass('failed'),
     errored: hasClass('errored'),
-    empty: text(''),
-
+    empty: notHasClass('passed') && notHasClass('failed') && notHasClass('errored'),
     number: text('.build-tile-number')
   })
 };

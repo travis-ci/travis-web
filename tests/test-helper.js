@@ -8,6 +8,7 @@ import { setup } from 'qunit-dom';
 import { registerDeprecationHandler } from '@ember/debug';
 registerDeprecationHandler((message, opts, next) => {});
 
+QUnit.config.testTimeout = 5000;
 setup(QUnit.assert); //'assert.dom is not a function'
 
 setApplication(Application.create(config.APP));

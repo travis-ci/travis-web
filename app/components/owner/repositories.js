@@ -35,7 +35,13 @@ export default Component.extend({
   isMatchGithub: match('owner.vcsType', /Github\S+$/),
   isOwnerVcsTypeEmpty: empty('owner.vcsType'),
   isNotGithubRepository: not('isGithubRepository'),
-  hasGitHubAppsInstallation: notEmpty('owner.installation'),
+  hasGitHubAppsInstallation: computed(function() {
+    console.log("HASGH");
+    console.log(this.owner);
+    console.log(this.owner.installation);
+    console.log(this.owner.subscription);
+    return this.owner && this.owner.installation;
+  }),
 
   isEnterprise: reads('features.enterpriseVersion'),
   isNotEnterprise: not('isEnterprise'),

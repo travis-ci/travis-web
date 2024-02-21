@@ -1,7 +1,8 @@
 import Component from '@ember/component';
-import { computed, isPresent } from '@ember/object';
+import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { format as d3format } from 'd3';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -28,11 +29,10 @@ export default Component.extend({
       return [];
     },
     set(k,v) {
-      console.log("SETL");
-      console.log(v);
+
       if(v === undefined) v=[];
-      this._labels = v;
-      console.log(this._labels);
+      this.set('_labels', v);
+
       return this._labels;
     }
   }),
@@ -45,7 +45,7 @@ export default Component.extend({
     },
     set(k,v) {
       if(v === undefined) v=[];
-      this._values = v;
+      this.set(_values, v);
       return this._values;
     }
   }),
@@ -56,7 +56,6 @@ export default Component.extend({
 
   // Chart component data
   data: computed( 'datasetTitle', function () {
-    console.log("DATA");
     if(this.labels === undefined) this.labels= [];
     if(this.values === undefined) this.values= [];
 

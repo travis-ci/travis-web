@@ -5,11 +5,13 @@ export default TravisRoute.extend({
   features: service(),
   tabStates: service(),
   router: service(),
+  pusher: service(),
 
   afterModel(repo) {
     try {
       repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
     } catch (error) {}
+    Travis.pusher.subscribe(`repo-${repo.id}`);
     this.renderTemplate(repo);
   },
 
@@ -20,6 +22,7 @@ export default TravisRoute.extend({
   },
 
   deactivate() {
+    console.log("DEACT");
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
     this.controllerFor('repo').set('migrationStatus', null);
@@ -28,6 +31,7 @@ export default TravisRoute.extend({
   },
 
   activate() {
+    console.log("ACTIVATE");
     this.observeRepoStatus();
     this.set('tabStates.mainTab', 'current');
     return this._super(...arguments);
@@ -37,12 +41,18 @@ export default TravisRoute.extend({
     let controller = this.controllerFor('repo');
     controller.addObserver('repo.active', this, 'renderTemplate');
     controller.addObserver('repo.currentBuildId', this, 'renderTemplate');
+    console.log("OBSERVE");
+    const repo = this.modelFor('repo');
+    Travis.pusher.subscribe(`repo-${repo.id}`);
   },
 
   stopObservingRepoStatus() {
     let controller = this.controllerFor('repo');
     controller.removeObserver('repo.active', this, 'renderTemplate');
     controller.removeObserver('repo.currentBuildId', this, 'renderTemplate');
+    const repo = this.modelFor('repo');
+    console.log("STOP OBSERVING");
+    Travis.pusher.unsubscribe(`repo-${repo.id}`);
   },
 
   beforeModel() {

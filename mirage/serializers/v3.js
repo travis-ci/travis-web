@@ -137,6 +137,11 @@ export default class V3Serializer extends JSONAPISerializer {
       }
     });
 
+    if(model.modelName == 'subscription') {
+    console.log("SERIALIZE SINGLE");
+    console.log(model);
+    console.log(result);
+    }
     return result;
   }
 

@@ -44,6 +44,7 @@ const App = Application.extend(Evented, {
   },
 
   subscribePusher(user) {
+    console.log(`SUBSCRIBEPUSHER ${user.channels}`);
     if (!user || !user.channels) {
       return;
     }

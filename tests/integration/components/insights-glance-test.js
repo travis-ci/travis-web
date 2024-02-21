@@ -12,7 +12,7 @@ module('Integration | Component | insights-glance', function (hooks) {
     await render(hbs`{{insights-glance isLoading=this.isLoading}}`);
     assert.dom('.insights-glance').hasClass('insights-glance--loading');
     assert.dom('.insights-glance__stat').hasText('');
-    assert.dom('.insights-glance__chart .chart-component').doesNotExist();
+    assert.dom('.insights-glance__chart .c3-chart-component').doesNotExist();
   });
 
   test('loaded state renders', async function (assert) {
@@ -27,7 +27,7 @@ module('Integration | Component | insights-glance', function (hooks) {
 
     assert.dom('.insights-glance__title').hasText('Test title');
     assert.dom('.insights-glance__stat').hasText('100');
-    assert.dom('.insights-glance__chart .chart-component').exists();
+    assert.dom('.insights-glance__chart .c3-chart-component').exists();
   });
 
   test('delta section renders', async function (assert) {

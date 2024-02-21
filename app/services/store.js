@@ -75,37 +75,27 @@ this.requestManager = new RequestManager();
   // once a first query is already finished.
   //
   // For more info you may also see comments in FilteredArraysManager.
-  filter(modelName, queryParams, filterFunction, dependencies, forceReload) {
+  filter(modelName, queryParams, filterFunction = undefined, dependencies = undefined, forceReload = false) {
     if(this.filteredArraysManager === undefined) {
-      console.log("cre FILTER");
        this.filteredArraysManager = FilteredArrayManager.create({ store: this });
     }
-    console.log("FILTER");
     if (arguments.length === 0) {
       throw new Error('store.filter called with no arguments');
     }
     if (arguments.length === 1) {
-
-      console.log("FILTER1");
-      return this.peekAll(modelName);
+      return this.findAll(modelName);
     }
     if (arguments.length === 2) {
 
-      console.log("FILTER2");
       filterFunction = queryParams;
       return this.filteredArraysManager.filter(modelName, null, filterFunction, ['']);
     }
 
     if (!dependencies) {
-
-      console.log("FILTER3");
       return this.filteredArraysManager.filter(modelName, queryParams, filterFunction, ['']);
     } else {
-
-      console.log("FILTER4");
       return this.filteredArraysManager.fetchArray(modelName, queryParams, filterFunction, dependencies, forceReload);
     }
-    console.log("FILTER OUT");
   },
 
 
@@ -180,22 +170,23 @@ this.requestManager = new RequestManager();
   },
 
   xcreateRecord(type, ...params) {
-    console.log(`CREATE RECORD ${type}`);
     let res =  this._super(...arguments);
-    console.log(`RES: ${res}`);
     return res;
   },
 
- smartQueryRecord(type, ...params) {
+    smartQueryRecord(type, ...params) {
         let res =  this.queryRecord(type, ...params);
-        console.log(res);
         return res;
     },
 
     push(object) {
-        console.log(`single push ${JSON.stringify(object)}`)
         const id = object.data.id
         const type = object.data.type;
+        console.log(`PUSH: ${id} ${type}`);
+        console.log(JSON.stringify(object));
+      if(id === undefined) {
+          console.log(new Error().stack);
+      }
 
         if (this.shouldAdd(object)) {
             const included = object.included ? JSON.parse(JSON.stringify(object.included)) : null;
@@ -206,17 +197,17 @@ this.requestManager = new RequestManager();
             }
           
             this.subscriptions.forEach(sub => {
-              if(sub.object.id == id && sub.modelType == type && sub.beforeCb) {
+              if(sub.modelType == type && sub.beforeCb) {
                 console.log("BEFORECB");
-               // sub.beforeCb(sub.object,sub.caller);
+                sub.beforeCb(sub.object,sub.caller);
               }
             });
             let res =  this._super(...arguments);
 
             this.subscriptions.forEach(sub => {
-              if(sub.object.id == id && sub.modelType == type && sub.afterCb) {
+              if(sub.modelType == type && sub.afterCb) {
                 console.log("AFTERCB");
- //               sub.afterCb(sub.object, sub.caller);
+                sub.afterCb(sub.object, sub.caller);
               }
             });
             
@@ -250,7 +241,6 @@ this.requestManager = new RequestManager();
   // related functions, so it's the best place to override to check the
   // updated_at field
   _pushInternalModel(data) {
-    console.log("PUSHINTERNAL");
     let type = data.type;
     let newUpdatedAt = data.attributes ? data.attributes.updatedAt : null;
 

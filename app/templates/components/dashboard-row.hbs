@@ -24,6 +24,7 @@
           @route="owner"
           @models={{array this.repo.provider this.repo.ownerName}}
           @title={{this.repo.owner.login}}
+          title={{this.repo.owner.login}}
         >
           {{this.repo.owner.login}}
         </LinkTo>
@@ -33,6 +34,7 @@
           @route="repo"
           @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
           @title={{this.repo.name}}
+          title={{this.repo.name}}
           @query={{hash serverType=this.repo.serverType}}
         >
           {{this.repo.name}}

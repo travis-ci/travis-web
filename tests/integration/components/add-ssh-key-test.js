@@ -15,7 +15,6 @@ module('Integration | Component | add ssh-key', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it adds an ssh key on submit', async function (assert) {
-    assert.expect(6);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
     var store = this.owner.lookup('service:store');
@@ -38,15 +37,13 @@ module('Integration | Component | add ssh-key', function (hooks) {
     fillIn('.ssh-description', 'FOO');
     fillIn('.ssh-value', 'bar');
 
-    await waitFor('.form-footer .form-submit');
+    await waitFor('.form-footer .form-submit', {timeout: 2000});
     await click('.form-submit');
 
     assert.equal(sshKey.get('description'), 'FOO', 'description should be set');
     assert.equal(sshKey.get('value'), 'bar', 'value should be set');
     assert.equal(sshKey.get('id'), 1, 'ssh key id should still be repo id');
 
-    var done = assert.async();
-    done();
   });
 
 

@@ -77,7 +77,7 @@ export default Component.extend({
         : BG_COLORS[this.color];
     },
     set(k,v) {
-      this._bgColor = v;
+      this.set('_bgColor', v);
       return this._bgColor;
     }
   }),

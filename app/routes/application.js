@@ -71,25 +71,12 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     this.store.filter('repo', null,
       (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
       ['private', 'isCurrentUserACollaborator']
-    ).then((repos) => {
-      repos.forEach(repo => this.subscribeToRepo(repo));
-
-      let observer = {
-        get: function(target, name) {
-          console.log("GET!");
-          return target[name];
-        },
-        set: function(obj, prop, value) {
-          console.log("SET!");
-          obj[prop] = value;
-        }
-      };
-
+    ).then(repos =>
+      {
       this.store.subscribe(repos, 'repo', null,
       (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
       ['private', 'isCurrentUserACollaborator'], this.reposWillChange, this.reposDidChange);
 
-      new Proxy(repos, observer);
       /*
       repos.addArrayObserver(this, {
         willChange: 'reposWillChange',
@@ -98,14 +85,15 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     });
   },
 
-  reposWillChange(array, start, removedCount, addedCount) {
-    let removedRepos = array.slice(start, start + removedCount);
-    return removedRepos.forEach(repo => this.unsubscribeFromRepo(repo));
+  reposWillChange(repos, thiz) {
+    console.log("BEFORE");
+    repos.forEach(repo => console.log(repo));
   },
 
-  reposDidChange(array, start, removedCount, addedCount) {
-    let addedRepos = array.slice(start, start + addedCount);
-    return addedRepos.forEach(repo => this.subscribeToRepo(repo));
+  reposDidChange(repos, thiz) {
+    console.log("AFTER");
+    repos.forEach(repo => console.log(repo));
+    repos.forEach(repo => thiz.subscribeToRepo(repo));
   },
 
   unsubscribeFromRepo: function (repo) {

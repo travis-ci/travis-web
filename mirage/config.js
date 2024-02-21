@@ -440,7 +440,7 @@ function routes () {
 
     this.get('/subscriptions', function (schema, params) {
       let response = this.serialize(schema.subscriptions.all());
-
+      console.log("GET SUBS");
       let owners = schema.organizations.all().models.slice();
       owners.push(schema.users.first());
 

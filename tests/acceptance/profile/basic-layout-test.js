@@ -14,12 +14,14 @@ import { percySnapshot } from 'ember-percy';
 import { stubService } from 'travis/tests/helpers/stub-service';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
+import { pauseTest } from '@ember/test-helpers';
 module('Acceptance | profile/basic layout', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
     resetWindow();
+    console.log("BEF!");
 
     this.user = this.server.create('user', {
       name: 'User Name of exceeding length',
@@ -188,8 +190,6 @@ module('Acceptance | profile/basic layout', function (hooks) {
     enableFeature('github-apps');
     await profilePage.visit();
     await settled();
-
- //   assert.equal(document.title, 'User Name of exceeding length - Profile - Travis CI');
 
     assert.equal(profilePage.name, 'User Name of exceeding length');
     assert.equal(profilePage.login, '@user-login');

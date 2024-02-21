@@ -27,7 +27,7 @@ module('Integration | Component | active-repo-count', function (hooks) {
     assert.dom('.insights-glance').doesNotHaveClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Active Repositories');
     assert.dom('.insights-glance__stat').hasText('75');
-    assert.dom('.insights-glance__chart .chart-component').exists();
+    assert.dom('.insights-glance__chart .c3-chart-component').exists();
   });
 
   test('loading state renders', async function (assert) {
@@ -37,7 +37,7 @@ module('Integration | Component | active-repo-count', function (hooks) {
     assert.dom('.insights-glance').hasClass('insights-glance--loading');
     assert.dom('.insights-glance__title').hasText('Active Repositories');
     assert.dom('.insights-glance__stat').hasText('');
-    assert.dom('.insights-glance__chart .chart-component').doesNotExist();
+    assert.dom('.insights-glance__chart .c3-chart-component').doesNotExist();
     assert.dom('.insights-glance__chart-placeholder').exists();
   });
 });

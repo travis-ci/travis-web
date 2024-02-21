@@ -31,7 +31,7 @@ export default Component.extend({
       return this.providerParam || (this.account && this.account.provider) || this.multiVcs.primaryProvider;
     },
     set(k,v) {
-      this._provider = v;
+      this.set('_provider', v);
       return this._provider;
 
     }
@@ -44,7 +44,7 @@ export default Component.extend({
       return capitalize(this.provider.replace('-', '')) + 'User';
     },
     set(k,v) {
-      this._vcsType = v;
+      this.set('_vcsType', v);
       return this._vcsType;
     }
   }),

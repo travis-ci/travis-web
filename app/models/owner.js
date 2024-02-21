@@ -155,10 +155,11 @@ export default VcsEntity.extend({
     'login',
     function () {
       let subscriptions = this.subscriptions || [];
-      return subscriptions.filter(el => el['owner.login'] == this.login);
+      let login = this.login;
+      return subscriptions.filter( function(el) { return el.owner.login == login; });
     }),
 
-  activeAccountSubscriptions: filter('accountSubscriptions', el => el.isSubscribed),
+  activeAccountSubscriptions: filterBy('accountSubscriptions', 'isSubscribed'),
   incompleteAccountSubscriptions: filterBy('accountSubscriptions', 'isIncomplete'),
   pendingAccountSubscriptions: filterBy('accountSubscriptions', 'isPending'),
   expiredAccountSubscriptions: filterBy('accountSubscriptions', 'isExpired'),
@@ -181,6 +182,7 @@ export default VcsEntity.extend({
         this.incompleteAccountSubscriptions.length > 1) {
         this.logMultipleSubscriptionsError();
       }
+      console.log("GET SUBSCRIPTION FOR OWNER");
       return this.activeAccountSubscriptions.get('firstObject') ||
         this.pendingAccountSubscriptions.get('firstObject') ||
         this.incompleteAccountSubscriptions.get('firstObject') ||

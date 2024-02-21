@@ -31,7 +31,7 @@ export default Model.extend({
   billingInfo: belongsTo('billing-info', { async: false, inverse: 'subscription' }),
   creditCardInfo: belongsTo('credit-card-info', { async: false, inverse: 'subscription' }),
   invoices: hasMany('invoice', { async: false, inverse: 'subscription'}),
-  owner: belongsTo('owner', { polymorphic: true, async: true, inverse: null }),
+  owner: belongsTo('owner', { polymorphic: true, async: false}),
   plan: belongsTo('plan', {async: false, inverse: null}),
 
   isSubscribed: equal('status', 'subscribed'),

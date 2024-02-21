@@ -41,7 +41,7 @@ export default Service.extend({
   api: service(),
   router: service(),
   flashes: service(),
-  //intercom: service(),
+ // intercom: service(),
   store: service(),
   localStorage: service('storage'),
   sessionStorage: service(),
@@ -281,7 +281,7 @@ export default Service.extend({
       vcsProvider = {}
     } = this.currentUser;
     const email = userEmail || emails && emails.at(0);
-   // this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
+    //this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
   },
 
   reportNewUser() {
