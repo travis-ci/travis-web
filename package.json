@@ -33,7 +33,7 @@
     "@ember-data/model": "4.12",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "ansiparse": "artursmirnov/ansiparse",
+    "ansiparse": "travis-ci/ansiparse",
     "babel-preset-env": "^1.7.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-funnel": "^2.0.1",
