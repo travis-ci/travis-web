@@ -1,5 +1,5 @@
 <div class="topbar {{if this.isNavigationOpen 'expanded'}} {{if this.showBroadcasts 'expanded'}}" >
-  <HeaderBurgerMenu @isOpen={{this.isNavigationOpen}} @onClick={{action 'toggleNavigation'}} />
+  <HeaderBurgerMenu @isOpen={{this.isNavigationOpen}} onClick={{action 'toggleNavigation'}} @onClick={{action 'toggleNavigation'}}/>
   <h1 id="logo" class="logo">
     <ExternalLinkTo
       @content="Travis CI"

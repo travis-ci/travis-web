@@ -1,4 +1,4 @@
-{{#if true}}
+{{#if this.model.isLoaded}}
   <ul class="build-list">
     {{#each this.builds as |build|}}
       <BuildsItem @build={{build}} @vcsType={{this.repo.vcsType}} />

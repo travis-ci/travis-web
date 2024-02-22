@@ -35,7 +35,7 @@
         </span>
       </div>
       {{/if}}
-      <RepoStatusBadge @repo={{this.repo}} @onClick={{action 'toggleStatusBadgeModal'}} />
+      <RepoStatusBadge @repo={{this.repo}} onClick={{action 'toggleStatusBadgeModal'}} @onClick={{action 'toggleStatusBadgeModal'}} />
       {{#if this.scansEnabled}}
       <LogScanStatusBadge @repo={{this.repo}} />
       {{/if}}

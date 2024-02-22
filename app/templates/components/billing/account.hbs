@@ -1,10 +1,6 @@
 {{#if this.isLoading}}
   <LoadingIndicator/>
 {{else}}
-
-BLABLA{{this.account}}ALB<br/>
-BLABLA{{this.account.subscription}}ALB<br/>
-BLABLA{{this.subscription}}ALB
   <section class="billing">
 
     {{#if (or this.isEducation (not this.isEduProcessCompleted))}}
