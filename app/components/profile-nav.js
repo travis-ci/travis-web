@@ -73,7 +73,7 @@ export default Component.extend({
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
   showOrganizationSettings: computed('isOrganizationAdmin', 'isProVersion', 'hasSettingsReadPermissions', function () {
     const forOrganization = !this.isOrganization || this.hasSettingsReadPermissions;
-    return (this.isOrganizationAdmin || forOrgaznization) && this.isProVersion;
+    return (this.isOrganizationAdmin || forOrganization) && this.isProVersion;
   }),
 
   showSubscriptionTab: computed('features.enterpriseVersion', 'hasPlanViewPermissions',
