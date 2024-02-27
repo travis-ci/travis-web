@@ -49,7 +49,7 @@ export default Route.extend({
   deactivate() {
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
-    this.stopObservingRepoStatus();
+ //   this.stopObservingRepoStatus();
     return this._super(...arguments);
   },
 

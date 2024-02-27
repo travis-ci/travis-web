@@ -190,7 +190,7 @@ class Travis::Web::App
     config['featureFlags'] ||= {}
 
     options[:enable_feature_flags]&.split(',')&.each do |flag|
-      config['featureFlags'][flag] = true
+      config['featureFlags'][flag.strip] = true
     end
 
     if options[:pro]

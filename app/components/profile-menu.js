@@ -40,6 +40,7 @@ export default Component.extend({
 
   openMenu() {
     if (!this.isMenuOpen) {
+      console.log("OPEN MENU");
       this.set('isMenuOpen', true);
       next(() => this.enableAutoClose());
     }
@@ -75,6 +76,8 @@ export default Component.extend({
     },
 
     toggleMenu() {
+      console.log("TOGGLE MENU");
+      console.log(this.isMenuOpen);
       if (this.isMenuOpen) {
         this.closeMenu();
       } else {

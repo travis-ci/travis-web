@@ -20,6 +20,8 @@ import fetchAll from 'travis/utils/fetch-all';
 const { providers } = config;
 const { appName, migrationRepositoryCountLimit } = config.githubApps;
 
+import { isPresent } from '@ember/utils';
+
 export default Component.extend({
   features: service(),
   store: service(),
@@ -88,10 +90,20 @@ export default Component.extend({
   wizardStep: reads('storage.wizardStep'),
   wizardState: reads('wizard.state'),
 
-  showWizard: computed('wizardStep', function () {
+  showWizard: computed('wizardStep', {
+    get() {
+    if(isPresent(this._showWizard)) {
+      return this._showWizard;
+    }
+
     let state = this.wizardStep;
 
     return state && state <= 3;
+    },
+    set(k,v) {
+      this.set('_showWizard', v);
+      return this._showWizard;
+    }
   }),
 
 
