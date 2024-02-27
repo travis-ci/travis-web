@@ -230,7 +230,6 @@ export default Service.extend({
       storage.pushAccount(userRecord);
       storage.set('activeAccount', userRecord);
       this.reportNewUser();
-      this.reportToIntercom();
     });
   },
 
@@ -268,20 +267,6 @@ export default Service.extend({
     if (!hasAllFields || !hasCorrectScopes) {
       throw new Error('User validation failed');
     }
-  },
-
-  reportToIntercom() {
-    const {
-      id,
-      name,
-      emails,
-      email: userEmail,
-      firstLoggedInAt: createdAt,
-      secureUserHash: userHash,
-      vcsProvider = {}
-    } = this.currentUser;
-    const email = userEmail || emails && emails.at(0);
-    //this.intercom.set('user', { id, name, email, createdAt, userHash, provider: vcsProvider.name });
   },
 
   reportNewUser() {
