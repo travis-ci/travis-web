@@ -10,7 +10,7 @@ env:
     # See https://git.io/vdao3 for details.
 
 os: linux
-dist: xenial
+dist: focal
 
 addons:
   - chrome: stable
