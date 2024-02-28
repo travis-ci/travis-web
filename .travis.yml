@@ -19,7 +19,6 @@ cache:
   npm: true
 
 before_install:
-  - npm config set spin false
   - npm install -g greenkeeper-lockfile@1
 
 install:
