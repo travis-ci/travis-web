@@ -191,6 +191,9 @@ export default function () {
               'migrate': false,
               'star': false,
               'unstar': false,
+              'build_cancel': true,
+              'build_restart': true,
+              'build_debug': true,
               'create_cron': false,
               'create_env_var': false,
               'create_key_pair': false
@@ -247,6 +250,9 @@ export default function () {
               'migrate': false,
               'star': false,
               'unstar': false,
+              'build_cancel': true,
+              'build_restart': true,
+              'build_debug': true,
               'create_cron': false,
               'create_env_var': false,
               'create_key_pair': false
@@ -303,6 +309,9 @@ export default function () {
               'migrate': false,
               'star': false,
               'unstar': false,
+              'build_cancel': true,
+              'build_restart': true,
+              'build_debug': true,
               'create_cron': false,
               'create_env_var': false,
               'create_key_pair': false

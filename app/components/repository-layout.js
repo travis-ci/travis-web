@@ -13,6 +13,7 @@ export default Component.extend({
   isShowingStatusBadgeModal: false,
   currentUser: alias('auth.currentUser'),
   userRoMode: reads('currentUser.roMode'),
+  scansEnabled: reads('features.logScanner'),
 
   repositoryProvider: computed('repo.provider', function () {
     return this.repo.provider.capitalize();
@@ -29,13 +30,14 @@ export default Component.extend({
     }
   }),
 
-  repoUrl: computed('repo.{ownerName,vcsName,vcsType}', function () {
+  repoUrl: computed('repo.{ownerName,slug,vcsName,vcsType}', function () {
     const owner = this.get('repo.ownerName');
     const repo = this.get('repo.vcsName');
     const vcsType = this.get('repo.vcsType');
     const vcsId = this.get('repo.vcsId');
+    const slugOwner = this.get('repo.slug').split('/')[0];
 
-    return this.externalLinks.repoUrl(vcsType, { owner, repo, vcsId});
+    return this.externalLinks.repoUrl(vcsType, { owner, repo, vcsId, slugOwner });
   }),
 
   orgBuildHistoryLink: computed('repo.slug', function () {

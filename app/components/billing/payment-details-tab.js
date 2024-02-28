@@ -15,6 +15,8 @@ export default Component.extend({
   metrics: service(),
 
   countries,
+
+  model: reads('activeModel'),
   states: computed('country', function () {
     const { country } = this;
 
@@ -37,6 +39,12 @@ export default Component.extend({
   isV2SubscriptionEmpty: empty('v2subscription'),
   isSubscriptionEmpty: empty('v1subscription'),
   isSubscriptionsEmpty: and('isSubscriptionEmpty', 'isV2SubscriptionEmpty'),
+  canViewBilling: computed('model', function () {
+    return !this.account.isOrganization || this.account.permissions.billing_view;
+  }),
+  canEditBilling: computed('model', function () {
+    return !this.account.isOrganization || this.account.permissions.billing_update;
+  }),
   hasV2Subscription: not('isV2SubscriptionEmpty'),
   subscription: computed('v1subscription', 'v2subscription', function () {
     return this.isV2SubscriptionEmpty ? this.get('v1subscription') : this.get('v2subscription');
@@ -66,11 +74,6 @@ export default Component.extend({
   }),
 
   country: reads('billingInfo.country'),
-  firstName: reads('billingInfo.firstName'),
-  lastName: reads('billingInfo.lastName'),
-  nameOnCard: computed('firstName', 'lastName', function () {
-    return `${this.firstName || ''} ${this.lastName || ''}`;
-  }),
   hasLocalRegistration: reads('billingInfo.hasLocalRegistration'),
 
   isLoading: reads('updatePaymentDetails.isRunning'),
@@ -96,6 +99,7 @@ export default Component.extend({
       });
       if (token) {
         paymentDetails['token'] = token.id;
+        paymentDetails['fingerprint'] = token.card.fingerprint;
       }
       const endpoint = this.isV2SubscriptionEmpty ? 'subscription' : 'v2_subscription';
       yield this.api.patch(`/${endpoint}/${subscription.id}/payment_details`, {
@@ -153,14 +157,6 @@ export default Component.extend({
   actions: {
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
-    },
-    modifyNameOnCard(value) {
-      this.set('nameOnCard', value);
-      let ownerName = this.nameOnCard.trim();
-      this.billingInfo.setProperties({
-        firstName: ownerName.split(' ')[0],
-        lastName: ownerName.split(' ')[1]
-      });
     },
     onCaptchaResolved(reCaptchaResponse) {
       this.updatePaymentDetails.perform(reCaptchaResponse);

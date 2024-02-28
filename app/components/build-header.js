@@ -61,34 +61,37 @@ export default Component.extend({
     return !['api', 'cron'].includes(eventType);
   }),
 
-  commitUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'commit.sha', function () {
+  commitUrl: computed('item.repo.{ownerName,vcsName,vcsType,slug}', 'commit.sha', function () {
     const owner = this.get('item.repo.ownerName');
     const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const vcsId = this.get('item.repo.vcsId');
     const commit = this.get('commit.sha');
+    const slugOwner = this.get('item.repo.slug').split('/')[0];
 
-    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId });
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId, slugOwner });
   }),
 
-  branchUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'build.branchName', function () {
+  branchUrl: computed('item.repo.{ownerName,vcsName,vcsType,slug}', 'build.branchName', function () {
     const owner = this.get('item.repo.ownerName');
     const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const vcsId = this.get('item.repo.vcsId');
     const branch = this.get('build.branchName');
+    const slugOwner = this.get('item.repo.slug').split('/')[0];
 
-    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch, vcsId });
+    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch, vcsId, slugOwner });
   }),
 
-  tagUrl: computed('item.repo.{ownerName,vcsName,vcsType}', 'build.tag.name', function () {
+  tagUrl: computed('item.repo.{ownerName,vcsName,vcsType,slug}', 'build.tag.name', function () {
     const owner = this.get('item.repo.ownerName');
     const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const vcsId = this.get('item.repo.vcsId');
     const tag = this.get('build.tag.name');
+    const slugOwner = this.get('item.repo.slug').split('/')[0];
 
-    return this.externalLinks.tagUrl(vcsType, { owner, repo, tag, vcsId });
+    return this.externalLinks.tagUrl(vcsType, { owner, repo, tag, vcsId, slugOwner });
   }),
 
   buildState: computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix', function () {
@@ -99,6 +102,18 @@ export default Component.extend({
       return buildState;
     } else {
       return jobState || buildState;
+    }
+  }),
+
+  serverTypeIcon: reads('item.repo.serverType'),
+
+  serverType: computed('item.repo.serverType', function () {
+    let serverType = this.get('item.repo.serverType');
+    if (!serverType) return '';
+    if (serverType === 'svn') {
+      return 'SVN';
+    } else {
+      return serverType.capitalize();
     }
   }),
 

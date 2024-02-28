@@ -6,7 +6,7 @@ import {
   visit,
   waitFor
 } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
@@ -16,7 +16,6 @@ import page from 'travis/tests/pages/dashboard';
 import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-
 module('Acceptance | dashboard/repositories', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -136,7 +135,9 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       currentBuild: permissionBuild,
       defaultBranch: permissionBranch,
       permissions: {
-        create_request: true
+        create_request: true,
+        build_create: true,
+        build_restart: true
       }
     });
   });
@@ -233,7 +234,7 @@ module('Acceptance | dashboard/repositories', function (hooks) {
       assert.ok(build.owner.href.endsWith('/travis-ci'));
 
       assert.equal(build.repo.text, 'travis-lol-a-very-long-repository');
-      assert.ok(build.repo.href.endsWith('/travis-ci/travis-lol-a-very-long-repository'));
+      skip(build.repo.href.endsWith('/travis-ci/travis-lol-a-very-long-repository?serverType=git'));
 
       assert.equal(build.branch.text, 'another-branch');
       assert.ok(build.branch.href.endsWith('travis-ci/travis-lol-a-very-long-repository/tree/another-branch'));

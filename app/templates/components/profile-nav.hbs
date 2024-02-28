@@ -106,10 +106,10 @@
               Repositories
             </LinkTo>
             <EmberPopover @isShown={{this.showWizard}} @event="none" class="rounded" @side="bottom">
-            <Owner::Wizard  @showWizard="{{this.showWizard}}" 
-                  @wizardStep={{this.wizardStep}} 
+            <Owner::Wizard  @showWizard="{{this.showWizard}}"
+                  @wizardStep={{this.wizardStep}}
                   @onClose={{action 'onWizardClose'}}
-            /> 
+            />
           </EmberPopover>
 
           </li>
@@ -181,7 +181,7 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if (and this.showPlanUsageTab this.isOrganizationAdmin)}}
+          {{#if this.showPlanUsageTab}}
             <li data-test-plan-usage-tab>
               <LinkTo @route="organization.plan_usage" @model={{this.model}}>
                 Plan usage

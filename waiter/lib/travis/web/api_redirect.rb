@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 
 class Travis::Web::ApiRedirect < Sinatra::Base
@@ -5,21 +7,9 @@ class Travis::Web::ApiRedirect < Sinatra::Base
   set api_endpoint: 'https://api.travis-ci.org'
   set redirect_png: ENV['REDIRECT_PNG']
 
-  class NotPublicImages
-    Match = Struct.new(:captures)
+  get %r{/([^/]+)/([^/]+)\.(png|svg)} do
+    pass if %r{/images/}.match?(request.path_info)
 
-    def initialize(pattern, except)
-      @except   = except
-      @pattern  = pattern
-      @captures = Match.new([])
-    end
-
-    def match(str)
-      @captures if str =~ @pattern && str !~ @except
-    end
-  end
-
-  get NotPublicImages.new(%r{^/([^/]+)/([^/]+)\.(png|svg)$}, %r{^/images/}) do
     if settings.redirect_png
       redirect!(request.fullpath.gsub(/\.png$/, '.svg'))
     else
@@ -33,12 +23,12 @@ class Travis::Web::ApiRedirect < Sinatra::Base
 
   private
 
-    def public_image?
-      params[:owner_name] == 'images'
-    end
+  def public_image?
+    params[:owner_name] == 'images'
+  end
 
-    def redirect!(path = nil)
-      path = File.join(settings.api_endpoint, path || request.fullpath)
-      redirect(path, 301)
-    end
+  def redirect!(path = nil)
+    path = File.join(settings.api_endpoint, path || request.fullpath)
+    redirect(path, 301)
+  end
 end

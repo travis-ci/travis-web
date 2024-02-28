@@ -18,6 +18,17 @@ $profile-breakpoint: 600px;
     color: $oxide-blue;
   }
 
+  .subscription-section {
+    margin-bottom: 5px;
+    .button-container {
+      margin-left: 20px;
+    }
+
+    .subscription-button {
+      width: 120px;
+    }
+  }
+
   .profile-aside {
     flex: 0 0 180px;
     margin-right: 55px;
@@ -140,6 +151,44 @@ $profile-breakpoint: 600px;
   @include resetul;
 
   font-size: $font-size-m;
+
+  .email-switch-container {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    margin-left: 5px;
+    margin-bottom: 3px;
+  }
+
+  .email-switch {
+    margin-left: 0px;
+    margin-right: 0px;
+    div {
+      display: inline-block;
+    }
+    $switch-height: 20px;
+    $switch-width: 20px;
+    $switch-gap: 1px;
+    $switch-inner-height: $switch-height - $switch-gap*2;
+    $switch-inner-width: $switch-inner-height;
+    .switch-inner {
+    width: $switch-width;
+    height: $switch-height;
+    border-radius: $switch-inner-width;
+    span {
+      width: $switch-inner-width;
+      height: $switch-inner-height;
+      border-radius: $switch-inner-width;
+    }
+    .on {
+      margin-left: 0%;
+    }
+
+    .off {
+      margin-left: 0%;
+    }
+  }
+  }
 
   li {
     display: flex;
@@ -361,6 +410,14 @@ $profile-breakpoint: 600px;
   }
 }
 
+.token-field-regen {
+  line-height: 30px;
+}
+
+.token-actions-regen {
+  width: 19em !important;
+}
+
 .token-actions {
   width: 15em;
   display: flex;
@@ -369,6 +426,10 @@ $profile-breakpoint: 600px;
 
 .obfuscated-chars {
   padding-left: 0.4em;
+}
+
+.token-actions-regen button {
+  width: calc(1/3*100% - (1 - 1/3)*0.5em) !important;
 }
 
 .token-actions button {

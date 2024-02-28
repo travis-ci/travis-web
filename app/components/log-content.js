@@ -11,7 +11,7 @@ import config from 'travis/config/environment';
 
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and } from '@ember/object/computed';
+import { alias, and, reads} from '@ember/object/computed';
 
 const SELECTORS = {
   CONTENT: '.log-body-content',
@@ -77,6 +77,21 @@ export default Component.extend({
   router: service(),
   scroller: service(),
 
+  globalEnv: reads('job.build.content.request.content.config.env.global'),
+  jobEnv: reads('job.build.content.request.content.config.env.jobs'),
+
+  jobEnvVars: computed('globalEnv', 'jobEnv', function () {
+    const envMap = {};
+    [(this.globalEnv || []), (this.jobEnv || [])].forEach(envList => {
+      envList.forEach(vars => {
+        Object.entries(vars).forEach(([key, value]) => {
+          envMap[key] = value;
+        });
+      });
+    });
+    return envMap;
+  }),
+
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
 
@@ -140,13 +155,16 @@ export default Component.extend({
           this.unfoldHighlight();
         }
       });
-      this.limit = new Log.Limit(Log.LIMIT, () => {
-        run(() => {
-          if (!this.isDestroying) {
-            this.set('limited', true);
-          }
+      let logLimit = this.jobEnvVars['log_limit'] || Log.LIMIT;
+      this.limit = new Log.Limit(
+        logLimit,
+        () => {
+          run(() => {
+            if (!this.isDestroying) {
+              this.set('limited', true);
+            }
+          });
         });
-      });
       this.engine = Log.create({
         listeners: [this.scroll, this.limit]
       });
@@ -220,12 +238,13 @@ export default Component.extend({
     return this.permissions.hasPermission(repo);
   }),
 
-  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', function () {
+  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', 'currentUser', function () {
     let job = this.job;
     let canRemoveLog = this.get('job.canRemoveLog');
     let hasPermission = this.hasPermission;
+    let access = this.currentUser && this.currentUser.hasPermissionToRepo(this.get('job.repo'), 'log_delete');
     if (job) {
-      return canRemoveLog && hasPermission;
+      return canRemoveLog && hasPermission && access;
     }
   }),
 
@@ -247,7 +266,14 @@ export default Component.extend({
     },
 
     toggleLog() {
-      this.toggleProperty('logIsVisible');
+      let access = this.currentUser && this.currentUser.hasPermissionToRepo(this.get('job.repo'), 'log_view');
+      if (access) {
+        this.toggleProperty('logIsVisible');
+      } else {
+        if (this.logIsVisible) {
+          this.toggleProperty('logIsVisible');
+        }
+      }
     },
 
     toggleRemoveLogModal() {

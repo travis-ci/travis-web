@@ -154,7 +154,7 @@ module.exports = function (environment) {
       hidePostalCode: true,
       style: {
         base: {
-          fontStyle: 'Source Sans Pro',
+          fontStyle: 'sans-serif',
           fontSize: '15px',
           color: '#666',
           '::placeholder': {
@@ -213,6 +213,8 @@ module.exports = function (environment) {
     'enable-bitbucket-login': false,
     'enable-gitlab-login': false,
     'gitlab-login': false,
+    'enable-travisproxy-login': false,
+    'travisproxy-login': false,
   };
 
   if (TRAVIS_PRO) {

@@ -16,6 +16,7 @@ export default Service.extend({
     this._super();
     this._setEnableAssemblaLogin();
     this._setEnableGitlabLogin();
+    this._setEnableTravisProxyLogin();
   },
 
   _setEnableAssemblaLogin() {
@@ -32,6 +33,15 @@ export default Service.extend({
       this.features.enable('gitlab-login');
     else if (enableGitlabLogin == 'false')
       this.features.disable('gitlab-login');
+  },
+
+  _setEnableTravisProxyLogin() {
+    const { enableTravisProxyLogin } = window.localStorage;
+    if (enableTravisProxyLogin === 'true') {
+      this.features.enable('travisproxy-login');
+    } else {
+      this.features.disable('travisproxy-login');
+    }
   },
 
   _setFlagState(flag) {

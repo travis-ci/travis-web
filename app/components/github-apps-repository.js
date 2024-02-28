@@ -41,9 +41,40 @@ export default Component.extend({
     return this.user && vcsLinks.accessSettingsUrl(this.user.vcsType, { owner: this.user.login });
   }),
 
+  hasActivatePermission: computed('permissions.all', 'repository', function () {
+    let repo = this.repository;
+    let forRepo = (repo.owner.id == this.user.id && repo.ownerType == 'user') ||
+                  ((repo.shared || repo.ownerType != 'user') && repo.permissions.activate);
+    return forRepo;
+  }),
+
   hasSettingsPermission: computed('permissions.all', 'repository', function () {
     let repo = this.repository;
-    return this.permissions.hasPushPermission(repo);
+    let forRepo = (repo.owner.id == this.user.id && repo.ownerType == 'user') ||
+                  ((repo.shared || repo.ownerType != 'user') && repo.permissions.settings_read);
+    return this.permissions.hasPushPermission(repo) && forRepo;
+  }),
+
+  hasEmailSubscription: computed('repository', 'repository.emailSubscribed', function () {
+    return this.repository.emailSubscribed;
+  }),
+
+  emailSubscriptionDescription: computed('repository', 'repository.emailSubscribed', function () {
+    return `${this.repository.emailSubscribed ? 'Disable ' : 'Enable '} build mails for ${this.repository.name}`;
+  }),
+
+  toggleRepositoryEmailSubscription: task(function* () {
+    const repository = this.repository;
+    try {
+      if (repository.emailSubscribed) {
+        yield repository.unsubscribe.perform();
+      } else {
+        yield repository.subscribe.perform();
+      }
+      yield repository.reload();
+    } catch (error) {
+      this.set('apiError', error);
+    }
   }),
 
   toggleRepositoryTask: task(function* () {

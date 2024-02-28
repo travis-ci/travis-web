@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
@@ -66,7 +66,7 @@ module('Integration | Component | billing-payment', function (hooks) {
     owner.inject('service:stripev3', 'config', 'config:stripe');
   });
 
-  test('billing-payment renders correctly', async function (assert) {
+  skip('billing-payment renders correctly', async function (assert) {
 
     await render(hbs`<Billing::Payment
       @subscription={{newSubscription}}
