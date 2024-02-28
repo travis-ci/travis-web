@@ -49,7 +49,10 @@ const arrayContainsArray = (superset, subset) => (
 export const vcsUrl = (resource, vcsType, params = {}) => {
   const vcs = vcsConfig(vcsType);
   const endpoint = isEnterprise && sourceEndpoint || vcs.endpoint;
-  const url = endpoint + vcs.paths[resource];
+  let url = endpoint + vcs.paths[resource];
+  if (vcs.name === 'Assembla') {
+    url = vcs.endpointPortfolio.replace('{portfolio}', params.slugOwner) + vcs.paths[resource];
+  }
   params.vcsId = params.vcsId || params.repo && params.repo.vcsId;
 
   assert(`Missing url params. URL: ${url}, PARAMS: ${JSON.stringify(params)}`, paramsValid(url, params));

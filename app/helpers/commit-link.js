@@ -21,7 +21,8 @@ export default Helper.extend({
     }
 
     const [owner, repo] = slug.split('/');
-    const commitUrl = this.externalLinks.commitUrl(vcsType, { owner, repo, commit });
+    const slugOwner = slug.split('/')[0];
+    const commitUrl = this.externalLinks.commitUrl(vcsType, { owner, repo, commit, slugOwner });
     const url = escape(commitUrl);
     const string = `<a class="github-link only-on-hover" href="${url}">${commit}</a>`;
     return new htmlSafe(string);

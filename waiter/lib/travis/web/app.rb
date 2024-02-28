@@ -246,6 +246,7 @@ class Travis::Web::App
     config['githubOrgsOauthAccessSettingsUrl'] = options[:github_orgs_oauth_access_settings_url]
     config['ajaxPolling'] = true if options[:ajax_polling]
     config['userlike'] = true if options[:userlike]
+    config['logLimit'] = options[:log_limit] if options[:log_limit]
 
     config['endpoints'] = {
       'sshKey' => options[:ssh_key_enabled],

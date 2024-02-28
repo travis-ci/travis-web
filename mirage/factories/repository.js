@@ -20,6 +20,17 @@ export default Mirage.Factory.extend({
     deactivate: false,
     star: false,
     unstar: false,
+    build_cancel: true,
+    build_restart: true,
+    build_debug: true,
+    log_view: true,
+    log_delete: true,
+    cache_view: true,
+    cache_delete: true,
+    settings_read: true,
+    settings_create: true,
+    settings_update: true,
+    settings_delete: true,
     create_request: false,
     create_cron: false,
     change_settings: false,
@@ -37,6 +48,8 @@ export default Mirage.Factory.extend({
     fingerprint: 'aa:bb:cc:dd',
     description: 'Default',
   }),
+
+  vcsType: 'GithubRepository',
 
   slug: function () {
     return `${this.owner.login}/${this.name}`;

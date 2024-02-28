@@ -5,7 +5,9 @@ const deepFreeze = require('deep-freeze');
 
 const {
   GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL,
-  DEFAULT_PROVIDER
+  ENDPOINT_PORTFOLIO,
+  DEFAULT_PROVIDER,
+  VCS_PROXY_PROVIDER_URL,
 } = process && process.env || {};
 
 const VCS_TYPES = {
@@ -28,6 +30,11 @@ const VCS_TYPES = {
     ORG: 'GithubOrganization',
     REPO: 'GithubRepository',
     USER: 'GithubUser'
+  },
+  TRAVIS_PROXY: {
+    ORG: 'TravisproxyOrganization',
+    REPO: 'TravisproxyRepository',
+    USER: 'TravisproxyUser'
   }
 };
 
@@ -37,6 +44,7 @@ module.exports = deepFreeze({
     isDefault: DEFAULT_PROVIDER === 'assembla',
     isBeta: true,
     vcsTypes: [VCS_TYPES.ASSEMBLA.ORG, VCS_TYPES.ASSEMBLA.REPO, VCS_TYPES.ASSEMBLA.USER],
+    endpointPortfolio: ENDPOINT_PORTFOLIO,
     endpoint: 'https://app.assembla.com',
     icon: 'icon-assembla',
     name: 'Assembla',
@@ -146,6 +154,35 @@ module.exports = deepFreeze({
     colors: {
       main: 'grey-dark',
       light: 'grey',
+    },
+  },
+
+  travisproxy: {
+    isDefault: DEFAULT_PROVIDER === 'travisproxy',
+    isBeta: true,
+    vcsTypes: [VCS_TYPES.TRAVIS_PROXY.ORG, VCS_TYPES.TRAVIS_PROXY.REPO, VCS_TYPES.TRAVIS_PROXY.USER],
+    endpoint: VCS_PROXY_PROVIDER_URL,
+    icon: 'icon-travis-proxy',
+    name: 'Travis CI VCS Proxy',
+    urlPrefix: 'travisproxy',
+    paths: {
+      branch: '/:owner/:repo/-/tree/:branch',
+      commit: '/:owner/:repo/-/tree/:commit',
+      file: '/:owner/:repo/-/blob/:branch/:file',
+      issue: '/:owner/:repo/-/issues/:issue',
+      profile: '/:owner',
+      repo: '/:owner/:repo',
+      tag: '/:owner/:repo/-/tree/:tag',
+      accessSettings: '/',
+    },
+    vocabulary: {
+      organization: 'VCS Server',
+      pullRequest: 'Merge Request',
+      pr: 'MR',
+    },
+    colors: {
+      main: 'red-300',
+      light: 'red-300',
     },
   },
 });
