@@ -26,24 +26,26 @@ export default Component.extend({
     this.engine.set(0, this.scanResult.formattedContent);
   },
 
-  commitUrl: computed('repo.{ownerName,vcsName,vcsType}', 'scanResult.commitSha', function () {
+  commitUrl: computed('repo.{ownerName,vcsName,vcsType,slug}', 'scanResult.commitSha', function () {
     const owner = this.get('repo.ownerName');
     const repo = this.get('repo.vcsName');
     const vcsType = this.get('repo.vcsType');
     const vcsId = this.get('repo.vcsId');
     const commit = this.get('scanResult.commitSha');
+    const slugOwner = this.get('repo.slug').split('/')[0];
 
-    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId });
+    return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId, slugOwner });
   }),
 
-  branchUrl: computed('repo.{ownerName,vcsName,vcsType}', 'scanResult.commitBranch', function () {
+  branchUrl: computed('repo.{ownerName,vcsName,vcsType,slug}', 'scanResult.commitBranch', function () {
     const owner = this.get('repo.ownerName');
     const repo = this.get('repo.vcsName');
     const vcsType = this.get('repo.vcsType');
     const vcsId = this.get('repo.vcsId');
     const branch = this.get('scanResult.commitBranch');
+    const slugOwner = this.get('repo.slug').split('/')[0];
 
-    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch, vcsId });
+    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch, vcsId, slugOwner });
   }),
 
 

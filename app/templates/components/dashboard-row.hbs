@@ -103,6 +103,7 @@
             </LinkTo>
           </p>
         </section>
+        {{#if this.scansEnabled }}
         <section class="dash-last {{this.repo.currentScan.icon}}">
           <h3 class="label">
             Log Scan
@@ -116,6 +117,7 @@
             </LinkTo>
           </p>
         </section>
+        {{/if}}
         <section class="dash-commit">
           <h3 class="label">
             Commit

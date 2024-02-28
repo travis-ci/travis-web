@@ -28,6 +28,7 @@
     {{/if}}
   </li>
   {{#if this.auth.currentUser}}
+  {{#if this.scansEnabled}}
   <li id="tab_scan_results" class={{this.classScanResults}}>
     {{#if this.repo.slug}}
       <LinkTo @route="scanResults" @model={{this.repo}}>
@@ -45,6 +46,7 @@
       {{/if}}
     {{/if}}
   </li>
+  {{/if}}
   {{/if}}
   <li id="tab_build" class={{this.classBuild}}>
     {{#if this.build.id}}

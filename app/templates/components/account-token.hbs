@@ -2,7 +2,7 @@
   <span class="label">
     Token
   </span>
-  <span class="token-field">
+  <span class="token-field {{if this.showRegenerateButton 'token-field-regen' ''}}">
     {{#if this.showCopySuccess}}
       <span class="token-copied-text">
         Token copied!
@@ -18,7 +18,7 @@
     {{/if}}
   </span>
 </div>
-<div class="token-actions">
+<div class="{{if this.showRegenerateButton 'token-actions-regen' ''}} token-actions">
   <CopyButton
     class="copy-button"
     @clipboardText={{this.token}}
@@ -34,4 +34,12 @@
       {{if this.tokenIsVisible "Hide token" "View token"}}
     </span>
   </button>
+  {{#if this.showRegenerateButton}}
+  <button class="show-token" onclick={{action "regenerateToken"}}>
+    <SvgImage @name="icon-restart" @class="icon" />
+    <span>
+      Regenerate
+    </span>
+  </button>
+  {{/if}}
 </div>

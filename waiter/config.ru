@@ -99,5 +99,6 @@ run Travis::Web::App.build(
   github_apps_app_name: ENV['GITHUB_APPS_APP_NAME'],
   enable_feature_flags: ENV['ENABLE_FEATURE_FLAGS'],
   stripe_publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
-  default_provider: ENV['DEFAULT_PROVIDER']
+  default_provider: ENV['DEFAULT_PROVIDER'],
+  log_limit: ENV['LOG_LIMIT']
 )

@@ -169,7 +169,7 @@ export default Service.extend({
       url.pathname = '/';
     }
     const providerSegment = provider ? `/${provider}` : '';
-    const path = `/auth/handshake${providerSegment}`;
+    const path = `/auth/handshake${providerSegment.replace('-', '')}`;
     window.location.href = `${authEndpoint || apiEndpoint}${path}?redirect_uri=${url}`;
   },
 
@@ -327,6 +327,16 @@ export default Service.extend({
       return this.router.transitionTo('first_sync');
     }
   }),
+
+  handleTokenRegeneration(token) {
+    const currentUser = this.currentUser;
+    this.storage.accounts.removeObject(currentUser);
+    currentUser.set('authToken', token);
+    this.storage.accounts.addObject(currentUser);
+    this.reloadUser(currentUser);
+    this.storage.set('activeAccount', currentUser);
+    this.storage.setRegeneratedToken(token);
+  },
 
   actions: {
 
