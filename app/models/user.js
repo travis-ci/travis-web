@@ -122,8 +122,6 @@ export default Owner.extend({
   reload(options = {}) {
     const { authToken } = this;
     let res = this.store.queryRecord('user', Object.assign({}, options, { current: true, authToken }));
-    console.log("RELOAD1");
-    console.log(res);
     return res;
   },
 

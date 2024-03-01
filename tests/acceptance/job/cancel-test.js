@@ -5,7 +5,6 @@ import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-import { pauseTest } from '@ember/test-helpers';
 module('Acceptance | jobs/cancel', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -34,10 +33,6 @@ module('Acceptance | jobs/cancel', function (hooks) {
     await jobPage
       .visit()
       .cancelJob();
-
-    console.log("FLSH");
-    console.log(topPage.flashMessage);
-    console.log(topPage.flashMessage.text);
 
     assert.equal(topPage.flashMessage.text, 'Job has been successfully cancelled.', 'cancelled job notification should be displayed');
   });

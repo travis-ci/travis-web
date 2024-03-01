@@ -7,16 +7,6 @@ import {
   text,
   visitable
 } from 'ember-cli-page-object';
-import { getter } from 'ember-cli-page-object/macros';
-
-function isEmpty(selector) {
-  return getter(function (pageObjectKey) {
-    console.log("GETTER");
-    console.log(selector);
-    console.log(pageObjectKey);
-    return false;
-  });
-}
 
 const branchRowComponent = {
   scope: '.default-branch .branch-row',

@@ -3,7 +3,6 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import nonExistentRepoPage from 'travis/tests/pages/repo/non-existent';
-import { percySnapshot } from 'ember-percy';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -32,7 +31,6 @@ module('Acceptance | repo/not found', function (hooks) {
     enableFeature('proVersion');
     await nonExistentRepoPage.visit();
 
-    percySnapshot(assert);
     assert.equal(currentURL(), '/non-existent/repository');
     assert.ok(nonExistentRepoPage.showsBarricadeIllustration, 'Shows image for aesthetics');
     assert.equal(nonExistentRepoPage.errorMessage, 'We couldn\'t display the repository non-existent/repository', 'Shows message that repository was not found');

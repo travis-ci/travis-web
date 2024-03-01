@@ -116,8 +116,6 @@ module('Acceptance | config/yaml', function (hooks) {
         assert.equal(page.yaml[0].codeblock.id, codeblockName(msg1.src));
         assert.equal(message.link.href, `#${codeblockName(msg1.src)}.${msg1.line + 1}`);
       });
-
-      percySnapshot(assert);
     });
 
     test('hides the tab when no yaml is found', async function (assert) {

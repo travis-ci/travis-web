@@ -6,7 +6,6 @@ import topPage from 'travis/tests/pages/top';
 import { Response } from 'ember-cli-mirage';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo/trigger build', function (hooks) {
@@ -124,7 +123,6 @@ module('Acceptance | repo/trigger build', function (hooks) {
 
     await triggerBuildPage.writeMessage('This is a demo build');
     await triggerBuildPage.writeConfig('script: echo "Hello World"');
-    percySnapshot(assert);
     await triggerBuildPage.clickSubmit();
 
     assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden again');

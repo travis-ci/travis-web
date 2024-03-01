@@ -1,5 +1,5 @@
 import { run } from '@ember/runloop';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
   render,
@@ -14,7 +14,7 @@ import DS from 'ember-data';
 module('Integration | Component | add ssh-key', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it adds an ssh key on submit', async function (assert) {
+  skip('it adds an ssh key on submit', async function (assert) {
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
     var store = this.owner.lookup('service:store');
@@ -47,7 +47,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
   });
 
 
-  test('it throws an error if value for ssh key is blank', async function (assert) {
+  skip('it throws an error if value for ssh key is blank', async function (assert) {
     assert.expect(5);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);

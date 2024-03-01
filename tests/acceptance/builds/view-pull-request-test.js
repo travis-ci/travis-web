@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import page from 'travis/tests/pages/build';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | builds/view pull request', function (hooks) {
@@ -66,7 +65,5 @@ module('Acceptance | builds/view pull request', function (hooks) {
     assert.equal(page.commitDescription.text, commitBody);
     assert.equal(page.commitDescription.title, commitBody);
     assert.ok(page.commitDescription.isFaded);
-
-    percySnapshot(assert);
   });
 });

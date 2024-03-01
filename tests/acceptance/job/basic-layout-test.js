@@ -7,7 +7,6 @@ import {
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
-import { percySnapshot } from 'ember-percy';
 
 import jobPage from 'travis/tests/pages/job';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
@@ -428,8 +427,6 @@ module('Acceptance | job/basic layout', function (hooks) {
     await jobPage.logFolds[0].toggle();
 
     assert.ok(jobPage.logFolds[0].isOpen);
-
-    percySnapshot(assert);
   });
 
   test('visiting a job with fold duration', async function (assert) {
@@ -466,8 +463,6 @@ module('Acceptance | job/basic layout', function (hooks) {
     jobPage.toggleLog();
 
     assert.equal(jobPage.logFolds[0].duration, '2.35s');
-
-    percySnapshot(assert);
   });
 
   test('visiting a job when log-rendering is off', async function (assert) {

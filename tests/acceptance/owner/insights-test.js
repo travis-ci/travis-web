@@ -4,7 +4,6 @@ import insightsPage from 'travis/tests/pages/insights-owner';
 import { settled } from '@ember/test-helpers';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { INSIGHTS_PRIVACY_OPTIONS } from 'travis/components/insights-privacy-selector';
-import { percySnapshot } from 'ember-percy';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -71,8 +70,6 @@ module('Acceptance | owner insights', function (hooks) {
 
     // No Build Overlay
     assert.ok(insightsPage.noBuildOverlay.isHidden);
-
-    percySnapshot(assert);
   });
 
   test('the owner insights page handles a lack of data', async function (assert) {

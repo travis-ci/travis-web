@@ -7,7 +7,6 @@ import {
   triggerCopySuccess
 } from 'ember-cli-clipboard/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { pauseTest } from '@ember/test-helpers'
 
 module('Acceptance | profile/view token', function (hooks) {
   setupApplicationTest(hooks);

@@ -23,7 +23,6 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
         id: user.id
       }
     });
-    console.log("REPOADDED");
 
     await page.visit({ organization: 'musterfrau', repo: 'a-repo' });
 

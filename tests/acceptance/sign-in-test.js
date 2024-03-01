@@ -4,7 +4,6 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import Service from '@ember/service';
 import { stubService } from 'travis/tests/helpers/stub-service';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { percySnapshot } from 'ember-percy';
 import { enableFeature } from 'ember-feature-flags/test-support';
 
 const SELECTORS = {
@@ -51,7 +50,5 @@ module('Acceptance | sign in', function (hooks) {
     await click(SELECTORS.BUTTON_PRIMARY);
 
     assert.equal(signinRequest, 'github');
-
-    percySnapshot(assert);
   });
 });

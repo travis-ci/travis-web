@@ -6,7 +6,6 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import nonExistentOwnerPage from 'travis/tests/pages/owner/non-existent';
-import { percySnapshot } from 'ember-percy';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -34,7 +33,6 @@ module('Acceptance | owner/not found', function (hooks) {
     enableFeature('proVersion');
     await visit('/non-existent-owner');
 
-    percySnapshot(assert);
     assert.equal(currentURL(), '/non-existent-owner');
     assert.ok(nonExistentOwnerPage.showsBarricadeIllustration, 'Shows image for aesthetics');
     assert.equal(nonExistentOwnerPage.errorMessage, 'We couldn\'t find the owner non-existent-owner', 'Shows message that repository was not found');

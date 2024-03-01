@@ -3,7 +3,6 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import { settled } from '@ember/test-helpers';
 import page from 'travis/tests/pages/caches';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | repo caches', function (hooks) {
@@ -73,7 +72,6 @@ module('Acceptance | repo caches', function (hooks) {
     });
 
     assert.notOk(page.noCachesExist, 'expected the message that no caches exist to not be present');
-    percySnapshot(assert);
 
     const branchQueryParams = [];
 

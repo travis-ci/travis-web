@@ -10,18 +10,15 @@ import Service from '@ember/service';
 import { settled } from '@ember/test-helpers';
 import config from 'travis/config/environment';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { percySnapshot } from 'ember-percy';
 import { stubService } from 'travis/tests/helpers/stub-service';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-import { pauseTest } from '@ember/test-helpers';
 module('Acceptance | profile/basic layout', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
     resetWindow();
-    console.log("BEF!");
 
     this.user = this.server.create('user', {
       name: 'User Name of exceeding length',
@@ -232,8 +229,6 @@ module('Acceptance | profile/basic layout', function (hooks) {
       assert.ok(repository.isPublic);
       assert.notOk(repository.settings.isDisabled);
     });
-
-    percySnapshot(assert);
   });
 
   test('view profile that has an expired subscription', async function (assert) {
@@ -346,7 +341,6 @@ module('Acceptance | profile/basic layout', function (hooks) {
     enableFeature('github-apps');
     await profilePage.visitOrganization({ name: 'org0' });
 
-    percySnapshot(assert);
     assert.dom('#administerable-repositories').doesNotExist();
     assert.ok(profilePage.githubAppsInvitation.isExpanded, 'expected the invitation to be expanded in the absence of legacy repositories');
   });

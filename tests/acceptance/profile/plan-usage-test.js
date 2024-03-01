@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | profile/plan usage', function (hooks) {
@@ -63,8 +62,6 @@ module('Acceptance | profile/plan usage', function (hooks) {
   test('view plan usage', async function (assert) {
     await profilePage.visit();
     await profilePage.planUsage.visit();
-
-    percySnapshot(assert);
 
     assert.equal(profilePage.planUsage.page.macMinutes.text, '3 min');
     assert.equal(profilePage.planUsage.page.windowsMinutes.text, '2 min');
