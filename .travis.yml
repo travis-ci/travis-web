@@ -25,7 +25,7 @@ install:
   - npm ci
 
 before_script:
-  - if [ $TRAVIS_PULL_REQUEST = 'false' ] && [ $TRAVIS_EVENT_TYPE != 'cron' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; else export PERCY_ENABLE=0; fi
+  - if [ $TRAVIS_PULL_REQUEST = 'false' ] && [ $TRAVIS_EVENT_TYPE != 'cron' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=0; else export PERCY_ENABLE=0; fi
   - echo $PERCY_ENABLE
   - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
   - echo $RANDOMISE
