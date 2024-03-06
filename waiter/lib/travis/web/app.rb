@@ -8,6 +8,7 @@ require 'time'
 require 'json'
 require 'travis/utils/deep_merge'
 require 'digest/md5'
+require 'erb'
 
 class Travis::Web::App
   autoload :AltVersions,    'travis/web/app/alt_versions'
@@ -265,7 +266,7 @@ class Travis::Web::App
       ember_config = JSON.parse(CGI.unescape(::Regexp.last_match(1)))
 
       config = deep_merge ember_config, config
-      config = CGI.escape config.to_json
+      config = ERB::Util.url_encode config.to_json
 
       %(<meta name="travis/config/environment" content="#{config}")
     end
