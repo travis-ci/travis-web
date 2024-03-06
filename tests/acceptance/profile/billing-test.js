@@ -9,6 +9,7 @@ import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubService, stubConfig } from 'travis/tests/helpers/stub-service';
 import { getContext, click } from '@ember/test-helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { pauseTest } from '@ember/test-helpers';
 import {
   BILLING_INFO_ADD_EMAIL,
 } from 'travis/tests/helpers/selectors';
@@ -97,7 +98,6 @@ module('Acceptance | profile/billing', function (hooks) {
     });
 
     this.subscription = subscription;
-    console.log("CREATED SUB");
 
     subscription.createBillingInfo({
       first_name: 'User',
@@ -116,8 +116,6 @@ module('Acceptance | profile/billing', function (hooks) {
     subscription.createCreditCardInfo({
       last_digits: '1919'
     });
-
-    console.log(this.subscription);
 
     let organization = this.server.create('organization', {
       name: 'Org Name',
@@ -462,7 +460,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan active manual subscription');
-    assert.dom(profilePage.billing.billingSubscription.manualStatus).hasText('manual subscription');
+    assert.equal(profilePage.billing.billingSubscription.manualStatus, 'manual subscription');
     assert.ok(profilePage.billing.planMessage.isPresent);
     assert.ok(profilePage.billing.manualSubscription.banner.isPresent);
     assert.dom(profilePage.billing.manualSubscription.banner.scope).hasText('This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan, contact our support team.');
@@ -522,7 +520,9 @@ module('Acceptance | profile/billing', function (hooks) {
     this.subscription.save();
 
     await profilePage.visitOrganization({ name: 'org-login' });
+
     await profilePage.billing.visit();
+
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan trial github marketplace subscription');
   });
@@ -978,6 +978,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.billing.billingPlanChoices.lastBox.visit();
 
+
     const { billingForm, selectedPlan, billingPaymentForm } = profilePage.billing;
     await selectedPlan.subscribeButton.click();
 
@@ -995,6 +996,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.billingEmails.objectAt(0).fillEmail('john@doe.com');
 
     await billingForm.proceedPayment.click();
+
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.defaultV2Plan.name}`);
     assert.equal(profilePage.billing.selectedPlanOverview.credits.text, `${this.defaultV2Plan.privateCredits * (this.defaultV2Plan.isAnnual ? 12 : 1)} Credits`);

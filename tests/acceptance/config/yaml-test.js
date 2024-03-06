@@ -53,9 +53,6 @@ module('Acceptance | config/yaml', function (hooks) {
     this.request = this.server.create('request', { repository: this.repository, raw_configs: rawConfigs });
     this.build = this.server.create('build', { number: '5', state: 'started', repository: this.repository, branch, request: this.request });
     this.job = this.server.create('job', { number: '1234.1', state: 'received', build: this.build, repository: this.repository, config: { language: 'Hello' } });
-    console.log("CREATE!!!");
-    console.log(this.request);
-    console.log(this.build);
   });
 
   module('with a multi-job build', function (hooks) {
@@ -64,7 +61,6 @@ module('Acceptance | config/yaml', function (hooks) {
     });
 
     test('renders build yaml', async function (assert) {
-      console.log(`visit /travis-ci/travis-web/builds/${this.build.id}`);
       await visit(`/travis-ci/travis-web/builds/${this.build.id}`);
 
  //     assert.equal(document.title, `Build #${this.build.number} - travis-ci/travis-web - Travis CI`);

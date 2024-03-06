@@ -68,7 +68,6 @@ module('Unit | store.filter', function (hooks) {
     let processedRecords = [];
     let result = store.filter('repo', {}, function (repo) {
       processedRecords.push(repo.get('id'));
-
       return repo.get('starred');
     }, ['starred']);
 
@@ -76,9 +75,8 @@ module('Unit | store.filter', function (hooks) {
 
     result.then((collection) => {
       done();
-
-      assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
       assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+      assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
     });
   });
 
@@ -122,8 +120,8 @@ module('Unit | store.filter', function (hooks) {
     result.then((collection) => {
       done();
 
-      assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
       assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+      assert.deepEqual(processedRecords, ['1', '2'], 'all repo records should be processed');
 
       let repo1 = store.peekRecord('repo', 1);
       let repo2 = store.peekRecord('repo', 2);

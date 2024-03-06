@@ -440,7 +440,6 @@ function routes () {
 
     this.get('/subscriptions', function (schema, params) {
       let response = this.serialize(schema.subscriptions.all());
-      console.log("GET SUBS");
       let owners = schema.organizations.all().models.slice();
       owners.push(schema.users.first());
 
@@ -897,7 +896,6 @@ function routes () {
     });
 
     this.post('/settings/env_vars', function (schema, request) {
-      console.log("POST!");
       const envVar = server.create('env_var', request.params);
       let res = {
         env_var: {
@@ -907,8 +905,6 @@ function routes () {
           repository_id: request.params.repository_id,
         },
       };
-      console.log(`RES: ${res}`);
-      console.log(res);
       return res;
     });
 
@@ -1011,6 +1007,7 @@ function routes () {
           }
         ]
       };
+
       return response;
     });
 
@@ -1203,14 +1200,12 @@ function routes () {
     });
 
     this.get('/repo/:repo_id/requests', function (schema, { params: { repo_id: repoId } }) {
-
       let requests = schema.requests.where({ repositoryId: repoId });
 
       return requests;
     });
 
     this.post('/repo/:repo_id/requests', function (schema, request) {
-
       const requestBody = JSON.parse(request.requestBody);
       const fakeRequestId = 5678;
       let repository = schema.find('repository', request.params.repo_id);

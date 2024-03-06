@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
+import { pauseTest } from '@ember/test-helpers';
 import {
   INSIGHTS_SETTINGS_LIST_ITEM,
   INSIGHTS_SETTINGS_LIST_ITEM_SELECTED,
@@ -62,7 +63,7 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
       selectionKey: 'private',
     });
 
-    await render(hbs`{{visibility-setting-list  initialKey=this.initialKey isShowingConfirmationModal=this.showModal selectionKey=this.selectionKey}}`);
+    await render(hbs`{{visibility-setting-list  options=this.options initialKey=this.initialKey isShowingConfirmationModal=true selectionKey=this.selectionKey}}`);
 
     assert.dom(INSIGHTS_SETTINGS_MODAL).exists();
     assert.dom(INSIGHTS_SETTINGS_MODAL_TITLE).hasText('Restrict visibility of your private build insights');

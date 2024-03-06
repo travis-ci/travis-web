@@ -5,6 +5,8 @@ import sidebarPage from 'travis/tests/pages/sidebar';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
+import { pauseTest } from '@ember/test-helpers';
+
 module('Acceptance | search/flow', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -21,6 +23,9 @@ module('Acceptance | search/flow', function (hooks) {
       .pressEnter();
 
     await settled();
+  
+    console.log(currentURL());
+
     assert.equal(currentURL(), '/search/foo');
   });
 

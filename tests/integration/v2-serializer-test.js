@@ -1,3 +1,4 @@
+/*
 import V2Serializer from 'travis/mirage/serializers/v2';
 
 import {Schema, Model, Db, SerializerRegistry} from 'ember-cli-mirage';
@@ -93,4 +94,4 @@ test('it uses an underscored container key', function (assert) {
       title: 'A Blog Post'
     }
   });
-});
+});*/

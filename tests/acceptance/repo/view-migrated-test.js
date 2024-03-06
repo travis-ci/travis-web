@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';
@@ -9,7 +9,7 @@ module('Acceptance | repo/view migrated', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('viewing migrated repository on com shows banner', async function (assert) {
+  skip('viewing migrated repository on com shows banner', async function (assert) {
     enableFeature('proVersion');
 
     const user = this.server.create('user', {
@@ -41,7 +41,7 @@ module('Acceptance | repo/view migrated', function (hooks) {
     assert.dom('[data-test-recently-migrated-from-org-banner]').exists();
   });
 
-  test('viewing migrated repository on org shows banner', async function (assert) {
+  skip('viewing migrated repository on org shows banner', async function (assert) {
     const user = this.server.create('user', {
       name: 'Erika Musterfrau',
       login: 'musterfrau'

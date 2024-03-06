@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 import settingsPage from 'travis/tests/pages/settings';
 import userManagement from 'travis/tests/pages/user-management';
 import topPage from 'travis/tests/pages/top';

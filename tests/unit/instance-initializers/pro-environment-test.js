@@ -6,9 +6,12 @@ import { run } from '@ember/runloop';
 
 import EmberObject from '@ember/object';
 
+import Resolver from 'travis/resolver';
+import Evented from '@ember/object/evented';
+
 module('Unit | Instance Initializer | pro environment', function (hooks) {
   hooks.beforeEach(function () {
-    this.TestApplication = Application.extend();
+    this.TestApplication = Application.extend(Evented, {Resolver, modulePrefix: 'pfx'});
     this.TestApplication.instanceInitializer({
       name: 'initializer under test',
       initialize

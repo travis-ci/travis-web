@@ -96,16 +96,12 @@ module('Acceptance | home/with repositories', function (hooks) {
 
   test('Pusher events change the main display', async function (assert) {
 
-    console.log("TEST1");
     assert.expect(5);
     await visit('/');
     await settled();
 
-    console.log("TEST1.1");
-    console.log("TEST2");
     assert.equal(sidebarPage.repoTitle, 'org-login / yet-another-repository-name', 'expected the displayed repository to be the one with a running build');
 
-    console.log("TEST3");
     let createdBy = this.server.create('user', { login: 'srivera', name: 'Sylvia Rivera' });
 
     const commit = this.server.create('commit', {
@@ -115,7 +111,6 @@ module('Acceptance | home/with repositories', function (hooks) {
       message: 'Add new chapter',
       committed_at: '2016-12-02T22:02:34Z',
     });
-    console.log("CREATE BUILD");
     const build = this.branch.createBuild({
       id: 100,
       number: 15,
@@ -139,7 +134,6 @@ module('Acceptance | home/with repositories', function (hooks) {
       finished_at: '2017-03-27T12:00:00Z'
     });
 
-    console.log("CREATE JOB");
     this.repository.defaultBranch = this.branch;
     this.repository.save();
 
