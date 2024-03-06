@@ -115,7 +115,6 @@ export default Component.extend({
   // Actions
   actions: {
     handleClick() {
-      console.log("HANDLE CLICK!");
       return this.onClick();
     }
   }

@@ -26,9 +26,6 @@ const App = Application.extend(Evented, {
   LOG_STACKTRACE_ON_DEPRECATION: true,
 
   ready() {
-    console.log("DEBUG!");
-    console.log(debuggingEnabled);
-
     let rdh = registerDeprecationHandler((message, options, next)=> {});
     this.on('user:signed_in', (user) => Travis.onUserUpdate(user));
     this.on('user:refreshed', (user) => Travis.onUserUpdate(user));
@@ -44,7 +41,6 @@ const App = Application.extend(Evented, {
   },
 
   subscribePusher(user) {
-    console.log(`SUBSCRIBEPUSHER ${user.channels}`);
     if (!user || !user.channels) {
       return;
     }

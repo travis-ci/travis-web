@@ -167,7 +167,7 @@
               </LinkTo>
             </li>
           {{/if}}
-          {{#if (and this.showSubscriptionTab this.isOrganizationAdmin)}}
+          {{#if this.showSubscriptionTab }}
             <li data-test-billing-tab>
               <LinkTo @route="organization.billing" @model={{this.model}}>
                 Plan

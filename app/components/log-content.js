@@ -29,35 +29,27 @@ Log.Scroll = function (options = {}) {
 class LogProxy extends ArrayProxy {
 
   constructor(innerArray, cb) {
-    console.log("LOG.CONS");
     super(...arguments);
     this.cb = cb;
     this._inner = innerArray;
   }
   init(innerArray) {
-    console.log("LOG.INIT");
     this._inner = innerArray;
     this._super(...arguments);
   }
 
   content() {
-    console.log("LOG.CONT");
     return this._inner;
   }
 
   get(target, prop) {
-    console.log("LOG.GETx");
-    //console.log(this._arrangedContent);
-    //console.log(this._length);
     return this._super(...arguments);
   }
 
   set(target, prop) {
-    console.log("LOG.SET");
     this._super(...arguments);
   }
   replace() {
-    console.log("LOG.REPLACE");
     this._super(...arguments);
     this.cb(this, 0, null, this.length);
   }
@@ -241,10 +233,8 @@ export default Component.extend({
         willChange: 'noop'
       });
       */
-      console.log("SUBSCRIBE!");
       log.subscribe(parts,this, this.partsDidChange);
       parts = parts.slice(0);
-      console.log(parts);
       this.partsDidChange(this, parts, 0, null, parts.length);
     }
   },
@@ -268,7 +258,6 @@ export default Component.extend({
         if ((ref1 = caller.engine) != null ? (ref2 = ref1.limit) != null ? ref2.limited : void 0 : void 0) {
           break;
         }
-        console.log(`PUSH LOG PART [${part.number}]: ${part.content}`);
         results.push(caller.engine.set(part.number, part.content));
       }
       return results;

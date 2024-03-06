@@ -59,6 +59,8 @@ export default Service.extend({
 
       return subscriptions;
     } catch (e) {
+      console.log("SUBS FETCH ERROR");
+      console.log(e);
       this.set('v2SubscriptionError', true);
     }
   }),
@@ -72,12 +74,9 @@ export default Service.extend({
     this._super(...arguments);
     this.fetchOrganizations.perform();
     if (billingEndpoint) {
-      console.log("INIT!!!");
       this.fetchSubscriptions.perform();
       this.fetchV2Subscriptions.perform();
       this.fetchTrials.perform();
-
-      console.log("INIT!!!--");
     }
   },
 

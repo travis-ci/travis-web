@@ -67,7 +67,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   // they're not a collaborator. It also sets up an observer to subscribe to any
   // new repo that enters the store.
   setupRepoSubscriptions() {
-    console.log("SETUP PSH SUBS");
     this.store.filter('repo', null,
       (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
       ['private', 'isCurrentUserACollaborator']

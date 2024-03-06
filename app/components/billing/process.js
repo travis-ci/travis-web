@@ -62,7 +62,6 @@ export default Component.extend({
   },
 
   persistBillingData(step) {
-    console.log("PERSIST BILLING DATA");
     this.storage.billingStep = step;
     this.storage.billingPlan = this.selectedPlan.getProperties(['id', 'name', 'startingPrice', 'startingUsers', 'privateCredits',
       'publicCredits', 'concurrencyLimit', 'planType', 'availableStandaloneAddons', 'addonConfigs']);

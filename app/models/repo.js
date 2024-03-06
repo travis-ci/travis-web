@@ -227,8 +227,6 @@ const Repo = VcsEntity.extend({
   },
 
   _buildObservableArray(builds) {
-    console.log("BUILDS");
-    console.log(builds.length);
     const array = ExpandableRecordArray.create({
       type: 'build',
       content: []
@@ -442,8 +440,6 @@ Repo.search = function(store, query) {
 
 Repo.fetchBySlug = function(store, slug, provider = defaultVcsConfig.urlPrefix, serverType = undefined) {
     let loadedRepos = store.peekAll('repo').filter(e => e.provider == provider).filter(e => e.slug == slug);
-    console.log('loadedRepos');
-    console.log(loadedRepos);
     if (serverType) {
       loadedRepos = loadedRepos.filter(e => e.serverType == serverType);
     }

@@ -94,13 +94,9 @@ export default Service.extend({
   },
 
   get billingPlan() {
-    console.log("BPLAN");
-    console.log(this.storage);
     return this.parseWithDefault('travis.billing_plan', {});
   },
   set billingPlan(value) {
-    console.log("SET BILLING PLAN");
-    console.log(value);
     this.setItem('travis.billing_plan', JSON.stringify(value));
   },
 

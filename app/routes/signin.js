@@ -13,11 +13,8 @@ export default Route.extend(TailwindBaseMixin, {
   },
 
   model({ redirectUrl }) {
-    console.log("SIGNIN");
     if (redirectUrl) {
       this.auth.setProperties({ redirectUrl });
     }
-
-    console.log("SIGNIN2");
   }
 });

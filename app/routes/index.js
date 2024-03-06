@@ -34,7 +34,6 @@ export default Route.extend({
 
   renderTemplate(...args) {
     this._super(args);
-    console.log("RENDER TEMPLATE!");
     this.render('build/index', {into: 'index', controller: 'build/index'});
   },
 

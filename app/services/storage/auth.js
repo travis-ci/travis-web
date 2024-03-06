@@ -68,8 +68,6 @@ export default Service.extend({
       storage.setItem('travis.auth.accounts', JSON.stringify(records));
       this._accounts = records;
     } catch(e) {
-      console.log("PERSIST failed, running tests?");
-      console.log(e);
     }
   },
 

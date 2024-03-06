@@ -112,8 +112,6 @@ export default Component.extend({
           const { clientSecret } = yield subscription.save();
           this.stripe.handleStripePayment.linked().perform(clientSecret);
 
-
-      console.log("UPPLAN 9");
         } else {
           this.metrics.trackEvent({
             action: 'Change Plan Pay Button Clicked',
@@ -128,7 +126,6 @@ export default Component.extend({
       this.set('showPlansSelector', false);
       this.set('showAddonsSelector', false);
       this.set('isProcessCompleted', true);
-      console.log("UPPLAN DONE");
     }
   }).drop(),
 
@@ -158,12 +155,12 @@ export default Component.extend({
   }).drop(),
 
   createSubscription: task(function* () {
-    console.log("CREATE SUBS!");
     this.metrics.trackEvent({
       action: 'Pay Button Clicked',
       category: 'Subscription',
     });
     const { stripeElement, account, subscription, selectedPlan } = this;
+
     try {
       const { token } = yield this.stripe.createStripeToken.perform(stripeElement);
       if (token) {
@@ -175,6 +172,7 @@ export default Component.extend({
           plan: plan,
           v1SubscriptionId: this.v1SubscriptionId,
         });
+
         if (!this.subscription.id) {
           subscription.creditCardInfo.setProperties({
             token: token.id,
@@ -185,8 +183,10 @@ export default Component.extend({
             coupon: this.couponId
           });
           const { clientSecret } = yield subscription.save();
-          yield this.stripe.handleStripePayment.perform(clientSecret);
+
+          yield this.stripe.handleStripePayment.linked().perform(clientSecret);
         } else {
+
           yield this.subscription.creditCardInfo.updateToken.perform({
             subscriptionId: this.subscription.id,
             tokenId: token.id,
@@ -194,6 +194,7 @@ export default Component.extend({
           });
           yield subscription.save();
           yield subscription.changePlan.perform(selectedPlan.id, this.couponId);
+
           yield this.accounts.fetchV2Subscriptions.perform();
           yield this.retryAuthorization.perform();
         }
@@ -203,6 +204,7 @@ export default Component.extend({
         this.set('isProcessCompleted', true);
       }
     } catch (error) {
+      console.log(error);
       this.handleError(error);
     }
   }).drop(),

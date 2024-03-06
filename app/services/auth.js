@@ -241,9 +241,6 @@ export default Service.extend({
   reloadUser(userRecord, include = []) {
     includes = includes.concat(include).uniq();
     let res =  this.fetchUser.perform(userRecord);
-    console.log("FETCH");
-    console.log(res);
-    console.log(userRecord);
     return res;
   },
 
@@ -349,10 +346,7 @@ export default Service.extend({
 });
 
 function pushUserToStore(store, user) {
-  console.log(store);
   const record = store.push(store.normalize('user', user));
-  console.log("PUSH");
-  console.log(record);
   const installation = store.peekAll('installation').findBy('owner.id', user.id) || null;
   record.setProperties({ installation });
   return record;

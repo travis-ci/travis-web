@@ -10,7 +10,6 @@ export default Route.extend(TailwindBaseMixin, {
   needsAuth: false,
 
   beforeModel() {
-    console.log("SIGNUP");
     if (this.get('auth.signedIn')) {
       this.router.transitionTo('index');
     }

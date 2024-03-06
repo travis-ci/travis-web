@@ -28,7 +28,6 @@ export default TravisRoute.extend(ScrollResetMixin, {
       if (!this.get('tabStates.sidebarTab', 'search')) {
         this.tabStates.set('sidebarTab', 'owned');
       }
-      console.log("RESET MAIN TAB");
  //     this.set('tabStates.mainTab', null);
     }
   },
@@ -57,13 +56,10 @@ export default TravisRoute.extend(ScrollResetMixin, {
     const slug = `${owner}/${name}`;
     this.set('slug', slug);
     let res =  Repo.fetchBySlug(this.store, slug, provider, serverType);
-    console.log("REPOmODEL");
-    console.log(res);
     return res;
   },
 
   beforeModel() {
-    console.log("REPOROUTEBEF");
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
       repo.fetchRepoOwnerAllowance.perform();

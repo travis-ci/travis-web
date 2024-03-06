@@ -41,15 +41,11 @@ export default TravisRoute.extend({
     const slug = this.modelFor('repo').get('slug');
     this.ensureBuildOwnership(model, slug);
     let request = model.request;
-    console.log("REQUEST");
     try {
       if(request) request.fetchMessages.perform();
     }
     catch(e) {
-      console.log("FETCH ERR");
-      console.log(e);
     }
-    console.log("AFTER REQUEST");
   },
 
   beforeModel() {
@@ -62,14 +58,12 @@ export default TravisRoute.extend({
   ensureBuildOwnership(build, urlSlug) {
 
       const buildRepoSlug = build.get('repo.slug');
-      console.log(`BUILDSLUG ${buildRepoSlug} , url: ${urlSlug}`);
       if (buildRepoSlug !== urlSlug) {
         throw (new Error('invalidBuildId'));
       }
     return;
     build.repo.then(e =>{
       const buildRepoSlug = build.get('repo.slug');
-      console.log(`BUILDSLUG ${buildRepoSlug} , url: ${urlSlug}`);
       if (buildRepoSlug !== urlSlug) {
         throw (new Error('invalidBuildId'));
       }

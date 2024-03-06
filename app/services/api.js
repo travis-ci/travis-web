@@ -6,7 +6,6 @@ export default Service.extend({
   auth: service(),
 
   get(url, options = {}) {
-    console.log(`GET ${url}`);
     return this.request(url, 'GET', options);
   },
 

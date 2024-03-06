@@ -73,16 +73,13 @@ export default EmberObject.extend({
 
   pushObject(part) {
     let result = this.parts.pushObject(part);
-    console.log(`PUSHED ${result}`);
     this.subscribers.forEach(s => {
 
       if(s.cb) {
-        console.log("CALLBACK CALLED!");
         s.cb(s.caller, this.parts.content, this.parts.content.length - 1, this.parts.content.length, 1);
       }
     });
 
-    console.log(`NOTIFIED ${result}`);
     return result;
   },
 
@@ -93,7 +90,6 @@ export default EmberObject.extend({
       return;
     }
 
-    console.log(`PUSH PART`);
     return this.pushObject(part);
   },
 
@@ -102,7 +98,6 @@ export default EmberObject.extend({
     this.debug('log model: load parts');
     for (i = 0, len = parts.length; i < len; i++) {
       part = parts[i];
-      console.log(`Append part: ${part}`);
       this.append(part);
     }
   },

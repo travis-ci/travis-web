@@ -182,7 +182,6 @@ export default VcsEntity.extend({
         this.incompleteAccountSubscriptions.length > 1) {
         this.logMultipleSubscriptionsError();
       }
-      console.log("GET SUBSCRIPTION FOR OWNER");
       return this.activeAccountSubscriptions.get('firstObject') ||
         this.pendingAccountSubscriptions.get('firstObject') ||
         this.incompleteAccountSubscriptions.get('firstObject') ||

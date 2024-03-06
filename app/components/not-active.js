@@ -33,8 +33,6 @@ export default Component.extend({
       let enterprise = this.get('features.enterpriseVersion');
       let pro = this.get('features.proVersion');
       let migrationStatus = this.get('repo.migrationStatus');
-      console.log(`MIGRATIONSTATUS: ${migrationStatus}`);
-      console.log(this.repo);
       return !enterprise && !pro && migrationStatus === 'migrated';
     }
   ),

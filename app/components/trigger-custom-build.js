@@ -124,8 +124,6 @@ export default Component.extend(BranchSearching, {
 
   displayError(e) {
     let message;
-    console.log("ERR");
-    console.log(e);
 
     if (e.status === 429) {
       message = 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.';

@@ -22,7 +22,6 @@ export default TravisRoute.extend({
   },
 
   deactivate() {
-    console.log("DEACT");
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
     this.controllerFor('repo').set('migrationStatus', null);
@@ -31,7 +30,6 @@ export default TravisRoute.extend({
   },
 
   activate() {
-    console.log("ACTIVATE");
     this.observeRepoStatus();
     this.set('tabStates.mainTab', 'current');
     return this._super(...arguments);
@@ -64,23 +62,17 @@ export default TravisRoute.extend({
   },
 
   renderTemplate(repo) {
-    console.log("RENDER TEMPLATE!");
     let controller = this.controllerFor('repo');
  //   this.set('tabStates.mainTab', 'current');
-    console.log(this.get('tabStates.mainTab'));
     if (this.get('features.github-apps') &&
       repo.active_on_org &&
       controller.migrationStatus !== 'success') {
       this.router.transitionTo('repo.active-on-org');
     } else if (!repo.active) {
-      console.log("NOT ACTIVE!");
       this.router.transitionTo('repo.not-active');
     } else if (!repo.currentBuildId) {
-
-      console.log("NO BUILD!");
       this.router.transitionTo('repo.no-build');
     } else {
-      console.log("TO BUILD");
       this.router.transitionTo('build.index', repo.currentBuildId);
     }
   }

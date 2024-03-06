@@ -60,25 +60,18 @@ export default Model.extend({
 
   messages: computed('repo.id', 'build.request.id', 'fetchMessages.lastSuccessful.value', function () {
     const messages =  this.fetchMessages.lastSuccessful ? this.fetchMessages.lastSuccessful.value : [];
-    console.log("MSG PERFORM");
     if (!messages) {
       this.fetchMessages.perform();
     }
-    console.log(messages);
+
     return messages || [];
   }),
 
   fetchMessages: task(function* () {
-    console.log("FETCH MSG");
     const repoId = this.get('repo.id');
     const requestId = this.get('build.request.id');
-    console.log(`FETCH MSG ${repoId} ${requestId}`);
     if (repoId && requestId) {
-      console.log(this.api);
       const response = yield this.api.get(`/repo/${repoId}/request/${requestId}/messages`) || {};
-      console.log("RESP");
-      console.log(response);
-      console.log(response.messages);
       return response.messages;
     }
   }).drop(),

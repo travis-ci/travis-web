@@ -182,11 +182,6 @@ this.requestManager = new RequestManager();
     push(object) {
         const id = object.data.id
         const type = object.data.type;
-        console.log(`PUSH: ${id} ${type}`);
-        console.log(JSON.stringify(object));
-      if(id === undefined) {
-          console.log(new Error().stack);
-      }
 
         if (this.shouldAdd(object)) {
             const included = object.included ? JSON.parse(JSON.stringify(object.included)) : null;

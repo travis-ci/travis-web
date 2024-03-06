@@ -1,6 +1,6 @@
 import FaviconManager from 'travis/utils/favicon-manager';
 
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 
 module('Favicon manager', function (hooks) {
   hooks.beforeEach(function () {
@@ -24,7 +24,7 @@ module('Favicon manager', function (hooks) {
     assert.equal(this.manager.getHeadTag(), document.querySelector('head'));
   });
 
-  skip('set favicon if there is no link tag in head', function (assert) {
+  test('set favicon if there is no link tag in head', function (assert) {
     let done = assert.async();
     assert.equal(this.fakeHead.querySelectorAll('link').length, 0, 'there should be no link tags initially');
     this.manager.setFavicon('foobar');
@@ -38,7 +38,7 @@ module('Favicon manager', function (hooks) {
     }, 20);
   });
 
-  skip('replace existing link tag', function (assert) {
+  test('replace existing link tag', function (assert) {
     let done = assert.async();
     const fooLink = document.createElement('link');
     fooLink.setAttribute('id', 'foo');

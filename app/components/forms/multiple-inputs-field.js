@@ -1,32 +1,29 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import { isPresent } from  '@ember/utils';
+import { isPresent}  from '@ember/utils';
 
 export default Component.extend({
   tagName: '',
   delimeter: ',',
   initialValue: '',
-  value: reads('initialValue'),
-
-  fieldsValue: computed('value', {
+  value: computed( {
     get() {
-      return (this.value || '').split(this.delimiter).map(value => ({ value }));
+      if(isPresent(this._value)) return this._value;
+
+      return this.initialValue;
     },
-    set(_, value) {
-      // Handle the setter logic if needed.
-      // For example, you can parse the 'value' and update it.
-      this.set('value', value.join(this.delimiter));
-      return value;
+    set(k,v) {
+      this.set('_value',v);
+      return this._value;
     }
   }),
 
-  fields: computed('fieldsValue', {
+  fields: computed({
     get() {
-      return this.fieldsValue;
+      return (this.value || '').split(this.delimeter).map(value => ({ value }));
     },
     set(_, value) {
-      this.set('fieldsValue', value);
       return value;
     }
   }),
@@ -54,7 +51,8 @@ export default Component.extend({
     handleBlur() {
       const values = this.fields.map(input => input.value);
       this.handleValidation(values);
-      this.set('fieldsValue', values);
+      const value = values.join(this.delimeter);
+      this.set('value', value);
     },
 
     handleChange(index, { target }) {
@@ -63,7 +61,7 @@ export default Component.extend({
       fields[index] = { value };
       const values = fields.map(input => input.value);
       this.handleValidation(values);
-      this.set('fieldsValue', fields);
+      this.set('fields', fields);
     },
 
     removeInput(inputIndex, e) {
@@ -71,12 +69,12 @@ export default Component.extend({
       const filteredFields = this.fields.filter((_, index) => index !== inputIndex);
       const values = filteredFields.map(input => input.value);
       this.handleValidation(values);
-      this.set('fieldsValue', filteredFields);
+      this.set('fields', filteredFields);
     },
 
     addInput(e) {
       e.preventDefault();
-      this.set('fieldsValue', [...this.fields, { value: '' }]);
+      this.set('fields', [...this.fields, { value: '' }]);
     },
   }
 });
