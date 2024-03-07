@@ -26,11 +26,11 @@
     "@babel/plugin-proposal-decorators": "^7.21.0",
     "@babel/template": "^7.22.15",
     "@csstools/postcss-sass": "^4.0.0",
+    "@ember-data/model": "4.12",
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.0.1",
     "@ember/test-helpers": "^3.2.1",
     "@embroider/util": "^1.12.0",
-    "@ember-data/model": "4.12",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "ansiparse": "travis-ci/ansiparse",
@@ -65,7 +65,6 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
     "ember-cli-test-loader": "^3.1.0",
-    "ember-cli-uglify": "^3.0.0",
     "ember-composable-helpers": "^5.0.0",
     "ember-concurrency": "^3.1.1",
     "ember-concurrency-scroll": "^1.0.0",
@@ -115,6 +114,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-qunit": "^8.0.1",
     "fuzzysort": "^1.0.1",
+    "js-yaml": "^4.1.0",
     "loader.js": "^4.7.0",
     "lodash": "^4.17.21",
     "miragejs": "^0.1.48",
@@ -131,8 +131,7 @@
     "tracked-built-ins": "^3.1.1",
     "url-polyfill": "^1.1.12",
     "visibilityjs": "^2.0.2",
-    "webpack": "^5.89.0",
-    "js-yaml": "^4.1.0"
+    "webpack": "^5.89.0"
   },
   "engines": {
     "node": "14.* || 16.* || >= 18"
