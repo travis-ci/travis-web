@@ -8,6 +8,7 @@ import { computed } from '@ember/object';
 import { and, filterBy, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
+import fetchAll from 'travis/utils/fetch-all';
 
 
 export default Component.extend({
@@ -18,6 +19,8 @@ export default Component.extend({
   features: service(),
   auth: service(),
   router: service(),
+  store: service(),
+
   classNames: ['repository-sidebar'],
 
   didInsertElement(...args) {
@@ -77,6 +80,7 @@ export default Component.extend({
   jobsLoaded: reads('jobState.jobsLoaded'),
 
   viewOwned: task(function* () {
+    const repos = yield this.get('fetchRepositories').perform();
     const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     console.log("OWNED REPOS");
     console.log(ownedRepositories);
@@ -89,6 +93,13 @@ export default Component.extend({
 
   isTabRunning: reads('tabStates.isSidebarRunning'),
   isTabSearch: reads('tabStates.isSidebarSearch'),
+
+  fetchRepositories: task(function* () {
+    console.log("FETCH REPOS!");
+    yield fetchAll(this.store, 'repo', {});
+    return this.store.peekAll('repo');
+  }).drop(),
+
 
   repositoryResults: computed('isTabSearch', 'repositories.searchResults.[]', 'repositories.accessible.[]', function () {
     const { isTabSearch, repositories } = this;
