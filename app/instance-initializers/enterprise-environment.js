@@ -1,5 +1,4 @@
 export function initialize(appInstance) {
-  console.log("INI");
   const config = appInstance.resolveRegistration('config:environment');
 
   const { featureFlags } = config;
