@@ -55,12 +55,20 @@ export default Service.extend({
   }).restartable(),
 
   requestOwnedRepositories: task(function* () {
+    console.log("REQUEST OWNED");
+    console.log(this.ownedRepos);
     if (!isEmpty(this.ownedRepos)) {
       return this.set('_repos', this.ownedRepos);
     } else {
       let user = this.get('auth.currentUser');
+      console.log("USER");
+      console.log(user);
       if (user) {
+        console.log("ACCESSIBLE");
+        console.log(user.pullPermissions);
         const repositories = yield Repo.accessibleBy(this.store, user.pullPermissions);
+        console.log("AREPOS:");
+        console.log(repositories);
         this.set('_repos', repositories);
         this.set('ownedRepos', repositories);
         return repositories;

@@ -78,6 +78,8 @@ export default Component.extend({
 
   viewOwned: task(function* () {
     const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
+    console.log("OWNED REPOS");
+    console.log(ownedRepositories);
     const onIndexPage = this.get('router.currentRouteName') === 'index';
 
     if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage) {
