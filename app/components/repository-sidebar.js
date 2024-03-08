@@ -80,8 +80,12 @@ export default Component.extend({
   jobsLoaded: reads('jobState.jobsLoaded'),
 
   viewOwned: task(function* () {
-    const repos = yield this.get('fetchRepositories').perform();
-    const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
+    let ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
+    if(isEmpty(ownedRepositories)) {
+      console.log("RELOADING REPOS");
+      yield this.get('fetchRepositories').perform();
+      ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
+    }
     console.log("OWNED REPOS");
     console.log(ownedRepositories);
     const onIndexPage = this.get('router.currentRouteName') === 'index';
