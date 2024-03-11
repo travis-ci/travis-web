@@ -29,7 +29,7 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
     await settled();
 
     const { owner } = getContext();
-    let subscribed = owner.lookup('pusher:main').active_channels.includes(`repo-${repo.id}`);
+    let subscribed = Travis.pusher.active_channels.includes(`repo-${repo.id}`);
 
     assert.ok(subscribed, 'user is subscribed to a repo channel');
   });
@@ -57,7 +57,9 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
     await settled();
 
     const { owner } = getContext();
-    let subscribed = owner.lookup('pusher:main').active_channels.includes(`repo-${repository.id}`);
+
+    let subscribed = Travis.pusher.active_channels.includes(`repo-${repository.id}`);
+
     assert.notOk(subscribed, 'user is not subscribed to a repo channel');
   });
 
@@ -84,7 +86,7 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
     await settled();
     const { owner } = getContext();
 
-    let subscribed = owner.lookup('pusher:main').active_channels.includes(`repo-${repository.id}`);
+    let subscribed = Travis.pusher.active_channels.includes(`repo-${repository.id}`);
     assert.ok(subscribed, 'user is subscribed to a repo channel');
   });
 });
