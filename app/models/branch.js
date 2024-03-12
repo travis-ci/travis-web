@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 export default Model.extend({
   name: attr('string'),
   defaultBranch: attr('boolean'),
-  lastBuild: belongsTo('build', { async: true, inverse: null } ),
+  lastBuild: belongsTo('build', { async: true, inverse: null }),
   exists_on_github: attr('boolean'),
 
   builds: hasMany('builds', { async: true, inverse: 'branch' }),

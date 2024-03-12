@@ -38,6 +38,6 @@ export default Factory.extend({
         synced_at: null,
       });
       user.save();
-    }
+    },
   }),
 });

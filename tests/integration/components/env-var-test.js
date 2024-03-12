@@ -14,9 +14,9 @@ module('Integration | Component | env-var', function (hooks) {
     assert.expect(2);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
-    var store = this.owner.lookup('service:store');
+    let store = this.owner.lookup('service:store');
     run(() => {
-      var envVar = store.push({ data: { id: 1, type: 'env-var', attributes: { name: 'foo', value: 'bar', public: false } } });
+      let envVar = store.push({ data: { id: 1, type: 'env-var', attributes: { name: 'foo', value: 'bar', public: false } } });
       this.set('envVar', envVar);
     });
 
@@ -30,9 +30,9 @@ module('Integration | Component | env-var', function (hooks) {
     assert.expect(2);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
-    var store = this.owner.lookup('service:store');
+    let store = this.owner.lookup('service:store');
     run(() => {
-      var envVar = store.push({ data: { id: 1, type: 'env-var', attributes: { name: 'foo', value: 'bar', public: true } } });
+      let envVar = store.push({ data: { id: 1, type: 'env-var', attributes: { name: 'foo', value: 'bar', public: true } } });
       this.set('envVar', envVar);
     });
 
@@ -60,6 +60,5 @@ module('Integration | Component | env-var', function (hooks) {
     await settled();
 
     assert.equal(store.peekAll('envVar').get('length'), 0, 'env-var should be deleted');
-
   });
 });

@@ -34,29 +34,13 @@ export default Service.extend({
     return this.parseWithDefault('travis.billing_info', {});
   },
   set billingInfo(value) {
-    if(!value)
-      return this.setItem('travis.billing_info', value);
+    if (!value) {
+      this.setItem('travis.billing_info', value);
+      return;
+    }
 
     const data
         = (({
-              address,
-              address2,
-              billingEmail,
-              billingEmailRO,
-              city,
-              company,
-              country,
-              firstName,
-              lastName,
-              hasLocalRegistration,
-              id,
-              isReloading,
-              state,
-              subscription,
-              vatId,
-              zipCode,
-              notifications}) =>
-        ({
           address,
           address2,
           billingEmail,
@@ -73,13 +57,28 @@ export default Service.extend({
           subscription,
           vatId,
           zipCode,
-          notifications
-        }))(value);
+          notifications}) =>
+          ({
+            address,
+            address2,
+            billingEmail,
+            billingEmailRO,
+            city,
+            company,
+            country,
+            firstName,
+            lastName,
+            hasLocalRegistration,
+            id,
+            isReloading,
+            state,
+            subscription,
+            vatId,
+            zipCode,
+            notifications
+          }))(value);
 
-    return this.dataSubscription(data).then((datum) => {
-      return this.setItem('travis.billing_info', JSON.stringify(datum));
-    });
-
+    this.dataSubscription(data).then((datum) => this.setItem('travis.billing_info', JSON.stringify(datum)));
   },
 
   async dataSubscription(data) {

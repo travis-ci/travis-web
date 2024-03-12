@@ -44,21 +44,20 @@ export default Service.extend({
   }),
 
   get accounts() {
-      const accountsData = storage.getItem('travis.auth.accounts');
-      this._accounts = parseWithDefault(accountsData, []).map(account =>
-        extractAccountRecord(this.store, account)
-      );
-      return this._accounts;
-    },
+    const accountsData = storage.getItem('travis.auth.accounts');
+    this._accounts = parseWithDefault(accountsData, []).map(account =>
+      extractAccountRecord(this.store, account)
+    );
+    return this._accounts;
+  },
   set accounts(accounts) {
-      this.persistAccounts(accounts);
-      return this._accounts;
+    this.persistAccounts(accounts);
   },
 
   pushAccount(account) {
-      this._accounts.push(account);
-      this.persistAccounts(this._accounts);
-      return this._accounts;
+    this._accounts.push(account);
+    this.persistAccounts(this._accounts);
+    return this._accounts;
   },
 
 
@@ -67,7 +66,7 @@ export default Service.extend({
       const records = (newValue || []).map(record => serializeUserRecord(record));
       storage.setItem('travis.auth.accounts', JSON.stringify(records));
       this._accounts = records;
-    } catch(e) {
+    } catch (e) {
     }
   },
 

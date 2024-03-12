@@ -1,4 +1,4 @@
-import { visit, waitFor } from '@ember/test-helpers';
+import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
@@ -45,7 +45,6 @@ module('Acceptance | build stages', function (hooks) {
     buildPage.stages[0].as(stage => {
       assert.ok(stage.isPassed);
     });
-
   });
 
   test('visiting build with stages', async function (assert) {

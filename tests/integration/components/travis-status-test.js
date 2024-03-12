@@ -27,9 +27,7 @@ module('Integration | Component | travis-status', function (hooks) {
   // });
 
   test('shows unknown status when statuspage returns error', async function (assert) {
-    this.server.get(config.statusPageStatusUrl, () => {
-      return new Response(500, {}, {});
-    });
+    this.server.get(config.statusPageStatusUrl, () => new Response(500, {}, {}));
 
     await render(hbs`{{travis-status}}`);
 

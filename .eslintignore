@@ -3,6 +3,8 @@
 /vendor/
 /public/
 /server/
+# temporary
+/app/components/forms/form-select.js
 
 # compiled output
 /dist/

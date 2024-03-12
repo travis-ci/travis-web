@@ -12,7 +12,6 @@ import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, and, reads} from '@ember/object/computed';
-import  ArrayProxy  from '@ember/array/proxy';
 
 const SELECTORS = {
   CONTENT: '.log-body-content',
@@ -25,9 +24,8 @@ Log.Scroll = function (options = {}) {
   this.beforeScroll = options.beforeScroll;
   return this;
 };
-
+/*
 class LogProxy extends ArrayProxy {
-
   constructor(innerArray, cb) {
     super(...arguments);
     this.cb = cb;
@@ -53,7 +51,7 @@ class LogProxy extends ArrayProxy {
     this._super(...arguments);
     this.cb(this, 0, null, this.length);
   }
-};
+}*/
 
 Log.Scroll.prototype = Log.extend(new Log.Listener(), {
   insert() {
@@ -150,7 +148,7 @@ export default Component.extend({
     let parts, ref;
     if (log || (log = this.log)) {
       parts = log.get('parts');
-      /* [GATODO] 
+      /* [GATODO]
       parts.removeArrayObserver(this, {
         didChange: 'partsDidChange',
         willChange: 'noop'
@@ -233,14 +231,14 @@ export default Component.extend({
         willChange: 'noop'
       });
       */
-      log.subscribe(parts,this, this.partsDidChange);
+      log.subscribe(parts, this, this.partsDidChange);
       parts = parts.slice(0);
       this.partsDidChange(this, parts, 0, null, parts.length);
     }
   },
 
   partsDidChange(caller, parts, start, _, added) {
-    schedule('afterRender', caller, function () {
+    schedule('afterRender', caller, () => {
       let i, j, len, part, ref, ref1, ref2, results;
       if (caller.get('features.debugLogging')) {
         // eslint-disable-next-line

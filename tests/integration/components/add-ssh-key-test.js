@@ -1,5 +1,5 @@
 import { run } from '@ember/runloop';
-import { module, test, skip } from 'qunit';
+import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
   render,
@@ -15,11 +15,10 @@ module('Integration | Component | add ssh-key', function (hooks) {
   setupRenderingTest(hooks);
 
   skip('it adds an ssh key on submit', async function (assert) {
-
     this.owner.register('transform:boolean', DS.BooleanTransform);
-    var store = this.owner.lookup('service:store');
+    let store = this.owner.lookup('service:store');
 
-    var repo;
+    let repo;
     run(function () {
       repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
     });
@@ -28,7 +27,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
 
     await render(hbs`{{add-ssh-key repo=this.repo sshKeyAdded="sshKeyAdded"}}`);
 
-    var sshKey = store.peekAll('ssh_key').objectAt(0);
+    let sshKey = store.peekAll('ssh_key').objectAt(0);
 
     assert.ok(! sshKey.get('description'), 'description should be blank');
     assert.ok(! sshKey.get('value'), 'value should be blank');
@@ -43,7 +42,6 @@ module('Integration | Component | add ssh-key', function (hooks) {
     assert.equal(sshKey.get('description'), 'FOO', 'description should be set');
     assert.equal(sshKey.get('value'), 'bar', 'value should be set');
     assert.equal(sshKey.get('id'), 1, 'ssh key id should still be repo id');
-
   });
 
 
@@ -51,9 +49,9 @@ module('Integration | Component | add ssh-key', function (hooks) {
     assert.expect(5);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
-    var store = this.owner.lookup('service:store');
+    let store = this.owner.lookup('service:store');
 
-    var repo;
+    let repo;
     run(function () {
       repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
     });
@@ -62,7 +60,7 @@ module('Integration | Component | add ssh-key', function (hooks) {
 
     await render(hbs`{{add-ssh-key repo=this.repo sshKeyAdded="sshKeyAdded"}}`);
 
-    var sshKey = store.peekAll('ssh_key').objectAt(0);
+    let sshKey = store.peekAll('ssh_key').objectAt(0);
 
     assert.ok(! sshKey.get('description'), 'description should be blank');
     assert.ok(! sshKey.get('value'), 'value should be blank');

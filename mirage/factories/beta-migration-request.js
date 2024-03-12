@@ -6,5 +6,5 @@ export default Factory.extend({
   accepted_at: null,
   organizations() {
     return [];
-  }
+  },
 });

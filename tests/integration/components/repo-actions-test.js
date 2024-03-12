@@ -5,7 +5,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { stubService } from 'travis/tests/helpers/stub-service';
-import RepoActions from "travis/components/repo-actions";
+import RepoActions from 'travis/components/repo-actions';
 
 // stub auth service
 const authStub = Service.extend({
@@ -25,7 +25,6 @@ module('Integration | Component | repo actions', function (hooks) {
     this.owner.register('component:repo-actions', RepoActions.extend({userHasCancelPermissionForRepo: false}));
     await render(hbs`{{repo-actions job=this.job}}`);
     assert.dom('button[aria-label="Cancel job"]').doesNotExist();
-
   });
 
   test('it shows cancel button only if job is cancelable - with permissions to cancel for repo', async function (assert) {
@@ -34,7 +33,6 @@ module('Integration | Component | repo actions', function (hooks) {
     this.owner.register('component:repo-actions', RepoActions.extend({userHasCancelPermissionForRepo: true}));
     await render(hbs`{{repo-actions job=this.job}}`);
     assert.dom('button[aria-label="Cancel job"]').exists();
-
   });
 
   test('it shows cancel button for build only if build is cancelable - no cancel permissions for repo', async function (assert) {
@@ -43,7 +41,6 @@ module('Integration | Component | repo actions', function (hooks) {
     this.owner.register('component:repo-actions', RepoActions.extend({userHasCancelPermissionForRepo: false}));
     await render(hbs`{{repo-actions build=this.build}}`);
     assert.dom('button[aria-label="Cancel build"]').doesNotExist();
-
   });
 
   test('it shows cancel button for build only if build is cancelable - with permissions to cancel for repo', async function (assert) {
@@ -52,7 +49,6 @@ module('Integration | Component | repo actions', function (hooks) {
     this.owner.register('component:repo-actions', RepoActions.extend({userHasCancelPermissionForRepo: true}));
     await render(hbs`{{repo-actions build=this.build}}`);
     assert.dom('button[aria-label="Cancel build"]').exists();
-
   });
 
   test('it shows restart button only if job is restartable - no cancel permissions for repo', async function (assert) {

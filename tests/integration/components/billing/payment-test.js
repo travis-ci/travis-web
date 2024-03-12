@@ -1,10 +1,9 @@
 import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, getContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubConfig } from 'travis/tests/helpers/stub-service';
-import { getContext } from '@ember/test-helpers';
 import profilePage from 'travis/tests/pages/profile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -13,7 +12,6 @@ module('Integration | Component | billing-payment', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-
     const selectedPlan = {
       id: 1,
       name: 'A',
@@ -67,7 +65,6 @@ module('Integration | Component | billing-payment', function (hooks) {
   });
 
   skip('billing-payment renders correctly', async function (assert) {
-
     await render(hbs`<Billing::Payment
       @subscription={{newSubscription}}
       @selectedPlan={{this.selectedPlan}}

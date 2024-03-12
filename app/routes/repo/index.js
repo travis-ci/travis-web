@@ -1,3 +1,4 @@
+/* global Travis */
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
 
@@ -8,10 +9,14 @@ export default TravisRoute.extend({
   pusher: service(),
 
   afterModel(repo) {
+    console.log('INDEX - after model');
     try {
       repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
     } catch (error) {}
+    console.log('SUBSCRIBE');
     Travis.pusher.subscribe(`repo-${repo.id}`);
+
+    console.log('SUBSCRIBE--');
     this.renderTemplate(repo);
   },
 
@@ -39,8 +44,10 @@ export default TravisRoute.extend({
     let controller = this.controllerFor('repo');
     controller.addObserver('repo.active', this, 'renderTemplate');
     controller.addObserver('repo.currentBuildId', this, 'renderTemplate');
-    console.log("OBSERVE");
+    console.log('OBSERVE');
     const repo = this.modelFor('repo');
+
+    console.log('UNSUBSCRIBE');
     Travis.pusher.subscribe(`repo-${repo.id}`);
   },
 
@@ -49,7 +56,7 @@ export default TravisRoute.extend({
     controller.removeObserver('repo.active', this, 'renderTemplate');
     controller.removeObserver('repo.currentBuildId', this, 'renderTemplate');
     const repo = this.modelFor('repo');
-    console.log("STOP OBSERVING");
+    console.log('STOP OBSERVING');
     Travis.pusher.unsubscribe(`repo-${repo.id}`);
   },
 
@@ -63,7 +70,7 @@ export default TravisRoute.extend({
 
   renderTemplate(repo) {
     let controller = this.controllerFor('repo');
- //   this.set('tabStates.mainTab', 'current');
+    //   this.set('tabStates.mainTab', 'current');
     if (this.get('features.github-apps') &&
       repo.active_on_org &&
       controller.migrationStatus !== 'success') {

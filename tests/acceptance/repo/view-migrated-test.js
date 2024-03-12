@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, skip } from 'qunit';
 import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import { enableFeature } from 'ember-feature-flags/test-support';

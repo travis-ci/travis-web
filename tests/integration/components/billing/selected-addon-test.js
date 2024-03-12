@@ -8,7 +8,6 @@ module('Integration | Component | selected-addon', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-
     this['actions'] = {
       goToFirstStep: () => { }
     };

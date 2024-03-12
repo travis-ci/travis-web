@@ -51,7 +51,7 @@ export default Component.extend({
 
   discountByAmount: computed('coupon.amountOff', 'selectedPlan.startingPrice', function () {
     const { amountOff } = this.coupon || {};
-    return amountOff &&this.selectedPlan && this.selectedPlan.startingPrice && Math.max(0, this.selectedPlan.startingPrice - amountOff);
+    return amountOff && this.selectedPlan && this.selectedPlan.startingPrice && Math.max(0, this.selectedPlan.startingPrice - amountOff);
   }),
 
   discountByPercentage: computed('coupon.percentOff', 'selectedPlan.startingPrice', function () {
@@ -111,7 +111,6 @@ export default Component.extend({
           });
           const { clientSecret } = yield subscription.save();
           this.stripe.handleStripePayment.linked().perform(clientSecret);
-
         } else {
           this.metrics.trackEvent({
             action: 'Change Plan Pay Button Clicked',
@@ -186,7 +185,6 @@ export default Component.extend({
 
           yield this.stripe.handleStripePayment.linked().perform(clientSecret);
         } else {
-
           yield this.subscription.creditCardInfo.updateToken.perform({
             subscriptionId: this.subscription.id,
             tokenId: token.id,

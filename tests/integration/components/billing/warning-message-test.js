@@ -1,3 +1,5 @@
+/* eslint max-len: 0 */
+
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import profilePage from 'travis/tests/pages/profile';
@@ -8,7 +10,6 @@ module('Integration | Component | warning-message', function (hooks) {
   setupRenderingTest(hooks);
 
   test('sameAddons', async function (assert) {
-
     const selectedPlan = {
       id: 1,
       name: 'Startup',
@@ -49,7 +50,6 @@ module('Integration | Component | warning-message', function (hooks) {
   });
 
   test('other addons', async function (assert) {
-
     const selectedPlan = {
       id: 1,
       name: 'Startup',
@@ -85,7 +85,6 @@ module('Integration | Component | warning-message', function (hooks) {
   });
 
   test('negative ballance', async function (assert) {
-
     const selectedPlan = {
       id: 1,
       name: 'Startup',

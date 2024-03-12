@@ -30,7 +30,8 @@ export default class V3Serializer extends JSONAPISerializer {
         limit = request.queryParams.limit || 10,
         isFirst = false,
         isLast = offset + limit >= count,
-        next, prev;
+        next,
+        prev;
 
       if (offset == 0) {
         isFirst = true;
@@ -39,7 +40,7 @@ export default class V3Serializer extends JSONAPISerializer {
       if (!isLast) {
         next = {
           offset: offset + limit,
-          limit: limit
+          limit: limit,
         };
       }
 
@@ -47,7 +48,7 @@ export default class V3Serializer extends JSONAPISerializer {
         let prevOffset = offset - limit;
         prev = {
           offset: prevOffset < 0 ? 0 : prevOffset,
-          limit: limit
+          limit: limit,
         };
       }
 
@@ -58,7 +59,7 @@ export default class V3Serializer extends JSONAPISerializer {
         is_first: isFirst,
         is_last: isLast,
         next,
-        prev
+        prev,
       };
 
       if (offset) {
@@ -75,7 +76,9 @@ export default class V3Serializer extends JSONAPISerializer {
       '@representation': 'standard',
       '@type': type,
       '@pagination': pagination,
-      [type]: data.models.map(model => this.serializeSingle(model, request, options)),
+      [type]: data.models.map((model) =>
+        this.serializeSingle(model, request, options),
+      ),
     };
   }
 
@@ -85,7 +88,7 @@ export default class V3Serializer extends JSONAPISerializer {
 
     if (this.alreadyProcessed(model, request)) {
       return {
-        '@href': this.hrefForSingle(type, model, request)
+        '@href': this.hrefForSingle(type, model, request),
       };
     } else if (representation === 'standard') {
       request._processedRecords.push(model);
@@ -104,43 +107,49 @@ export default class V3Serializer extends JSONAPISerializer {
       result['@permissions'] = permissions;
     }
 
-    this.getAttributes(type, representation, request).forEach((attributeName) => {
-      let relationship = model[camelize(attributeName)];
+    this.getAttributes(type, representation, request).forEach(
+      (attributeName) => {
+        let relationship = model[camelize(attributeName)];
 
-      if (attributeName === 'id') {
-        result['id'] = this.normalizeId(model, model.attrs.id);
-      } else if (relationship && relationship.modelName) {
-        // we're dealing with relationship
-        let relationType = singularize(relationship.modelName);
-        let serializer = this.serializerFor(relationType);
+        if (attributeName === 'id') {
+          result['id'] = this.normalizeId(model, model.attrs.id);
+        } else if (relationship && relationship.modelName) {
+          // we're dealing with relationship
+          let relationType = singularize(relationship.modelName);
+          let serializer = this.serializerFor(relationType);
 
-        let serializeOptions = {};
+          let serializeOptions = {};
 
-        if (this.isIncluded(type, attributeName, request)) {
-          serializeOptions.representation = 'standard';
-        }
-
-        if (relationship.attrs) {
-          // belongsTo
-          let serialized = serializer.serializeSingle(relationship, request, serializeOptions);
-          result[attributeName] = serialized;
-        } else {
-          // hasMany
-          if (relationship.models) {
-            result[attributeName] = relationship.models.map(
-              m => serializer.serializeSingle(m, request, serializeOptions)
-            );
+          if (this.isIncluded(type, attributeName, request)) {
+            serializeOptions.representation = 'standard';
           }
-        }
-      } else {
-        result[attributeName] = model.attrs[attributeName];
-      }
-    });
 
-    if(model.modelName == 'subscription') {
-    console.log("SERIALIZE SINGLE");
-    console.log(model);
-    console.log(result);
+          if (relationship.attrs) {
+            // belongsTo
+            let serialized = serializer.serializeSingle(
+              relationship,
+              request,
+              serializeOptions,
+            );
+            result[attributeName] = serialized;
+          } else {
+            // hasMany
+            if (relationship.models) {
+              result[attributeName] = relationship.models.map((m) =>
+                serializer.serializeSingle(m, request, serializeOptions),
+              );
+            }
+          }
+        } else {
+          result[attributeName] = model.attrs[attributeName];
+        }
+      },
+    );
+
+    if (model.modelName == 'subscription') {
+      console.log('SERIALIZE SINGLE');
+      console.log(model);
+      console.log(result);
     }
     return result;
   }
@@ -158,8 +167,10 @@ export default class V3Serializer extends JSONAPISerializer {
     if (include) {
       include.split(',').forEach((includeSegment) => {
         let [includeType, includeAttribute] = includeSegment.split('.');
-        let includeTypeIsThis = (includeType === type) ||
-          (includeType === 'owner' && (type === 'user' || type === 'organization'));
+        let includeTypeIsThis =
+          includeType === type ||
+          (includeType === 'owner' &&
+            (type === 'user' || type === 'organization'));
 
         if (includeTypeIsThis && !attributes.includes(includeAttribute)) {
           attributes.push(includeAttribute);
@@ -173,7 +184,12 @@ export default class V3Serializer extends JSONAPISerializer {
   isIncluded(type, key, request) {
     let include = request.queryParams.include;
     let ownerAliases = ['user', 'organization'];
-    let subscriptionInclusions = ['billing_info', 'credit_card_info', 'discount', 'plan'];
+    let subscriptionInclusions = [
+      'billing_info',
+      'credit_card_info',
+      'discount',
+      'plan',
+    ];
 
     if (ownerAliases.includes(type)) {
       type = 'owner';
@@ -181,12 +197,15 @@ export default class V3Serializer extends JSONAPISerializer {
 
     if (include) {
       return !!include
-        .split(',').map(s => s.split('.'))
+        .split(',')
+        .map((s) => s.split('.'))
         .filter(([includeType, includeAttribute]) => {
           return includeType === type && includeAttribute === key;
-        })
-        .length;
-    } else if (type === 'subscription' && subscriptionInclusions.includes(key)) {
+        }).length;
+    } else if (
+      type === 'subscription' &&
+      subscriptionInclusions.includes(key)
+    ) {
       // The true API always returns these as standard representations.
       return true;
     }
@@ -202,15 +221,15 @@ export default class V3Serializer extends JSONAPISerializer {
 
   serializerFor(type) {
     const serializersMap = {
-      'commit': 'commit-v3',
-      'user': 'user-v3',
+      commit: 'commit-v3',
+      user: 'user-v3',
     };
     type = serializersMap[type] || type;
 
     return this.registry.serializerFor(type);
   }
 
-  hrefForCollection(type/* , collection, request */) {
+  hrefForCollection(type /* , collection, request */) {
     return `/${type}`;
   }
 
@@ -219,11 +238,11 @@ export default class V3Serializer extends JSONAPISerializer {
   }
 
   alreadyProcessed(model, request) {
-    let findFn = r => r.id === model.id && r.modelName === model.modelName;
+    let findFn = (r) => r.id === model.id && r.modelName === model.modelName;
     return request._processedRecords.find(findFn);
   }
 
-  normalizeId({modelName}, id) {
+  normalizeId({ modelName }, id) {
     // plan IDs can be strings
     if (modelName === 'plan') {
       return id;

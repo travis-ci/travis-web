@@ -15,7 +15,7 @@ import {
 } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
-import { sortBy, filter } from 'lodash';
+import { sortBy } from 'lodash';
 
 const { profileReposPerPage: limit } = config.pagination;
 
@@ -156,7 +156,7 @@ export default VcsEntity.extend({
     function () {
       let subscriptions = this.subscriptions || [];
       let login = this.login;
-      return subscriptions.filter( function(el) { return el.owner.login == login; });
+      return subscriptions.filter((el) => el.owner.login == login);
     }),
 
   activeAccountSubscriptions: filterBy('accountSubscriptions', 'isSubscribed'),

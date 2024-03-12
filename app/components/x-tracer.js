@@ -1,5 +1,5 @@
 /* global TravisTracer, window */
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }]*/
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "config" }], no-redeclare: 0 */
 
 import { next } from '@ember/runloop';
 import Component from '@ember/component';

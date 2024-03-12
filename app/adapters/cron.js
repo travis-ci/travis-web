@@ -16,10 +16,10 @@ export default V3Adapter.extend({
       }
     }).then(response => {
       if (!response.id) {
-        response.id = 'temp-id-' + new Date().getTime(); // we do not need id at least in tests but Ember needs it.
+        response.id = `temp-id-${new Date().getTime()}`; // we do not need id at least in tests but Ember needs it.
       }
       return response;
-    });;
+    });
   },
 
   query(store, type, query) {

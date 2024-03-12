@@ -37,8 +37,8 @@ export default Component.extend({
   isMatchGithub: match('owner.vcsType', /Github\S+$/),
   isOwnerVcsTypeEmpty: empty('owner.vcsType'),
   isNotGithubRepository: not('isGithubRepository'),
-  hasGitHubAppsInstallation: computed(function() {
-    console.log("HAS GHAPP");
+  hasGitHubAppsInstallation: computed(function () {
+    console.log('HAS GHAPP');
     console.log(this.owner);
     console.log(this.owner.installation);
     console.log(this.owner.subscription);
@@ -92,15 +92,15 @@ export default Component.extend({
 
   showWizard: computed('wizardStep', {
     get() {
-    if(isPresent(this._showWizard)) {
-      return this._showWizard;
-    }
+      if (isPresent(this._showWizard)) {
+        return this._showWizard;
+      }
 
-    let state = this.wizardStep;
+      let state = this.wizardStep;
 
-    return state && state <= 3;
+      return state && state <= 3;
     },
-    set(k,v) {
+    set(k, v) {
       this.set('_showWizard', v);
       return this._showWizard;
     }

@@ -19,5 +19,5 @@ export default Model.extend({
   didUpdate() {
     this.setAttribute('billingEmailRO', this.billingEmail);
   }
-                
+
 });

@@ -9,7 +9,6 @@ import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubService, stubConfig } from 'travis/tests/helpers/stub-service';
 import { getContext, click } from '@ember/test-helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { pauseTest } from '@ember/test-helpers';
 import {
   BILLING_INFO_ADD_EMAIL,
 } from 'travis/tests/helpers/selectors';
@@ -188,7 +187,6 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   skip('view billing information with invoices year changes correctly', async function (assert) {
-
     this.subscription.createInvoice({
       id: '2009',
       created_at: new Date(2009, 4, 15),
@@ -306,7 +304,6 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   skip('edit subscription contact updates user billing info', async function (assert) {
-
     await profilePage.visit();
     await profilePage.billing.visit();
     await profilePage.billing.editContactAddressButton.click();
@@ -330,7 +327,6 @@ module('Acceptance | profile/billing', function (hooks) {
   });
 
   skip('edit subscription billing updates user billing info', async function (assert) {
-
     await profilePage.visit();
     await profilePage.billing.visit();
     await profilePage.billing.editBillingAddressButton.click();

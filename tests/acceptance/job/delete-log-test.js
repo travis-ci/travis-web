@@ -52,9 +52,7 @@ module('Acceptance | job/delete log', function (hooks) {
   });
 
   test('deleting job log when error occurs', async function (assert) {
-    this.server.delete('/job/:id/log', (schema, request) => {
-      return new Response(500, {}, {});
-    });
+    this.server.delete('/job/:id/log', (schema, request) => new Response(500, {}, {}));
 
     await jobPage
       .visit()

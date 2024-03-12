@@ -14,7 +14,8 @@ export default class extends V3Serializer {
   hrefForSingle(type, model, request) {
     // TODO: do we need to try request? it seems like branch should always
     // belong to a repository
-    let repositoryId = request.params.repository_id ||
+    let repositoryId =
+      request.params.repository_id ||
       request.params.repo_id ||
       (model.repository && model.repository.id);
 
@@ -22,8 +23,9 @@ export default class extends V3Serializer {
   }
 
   hrefForCollection(type, collection, request) {
-    let repositoryId = request.params.repository_id ||
-                       (collection.models.length && collection.models[0].repository.id);
+    let repositoryId =
+      request.params.repository_id ||
+      (collection.models.length && collection.models[0].repository.id);
 
     return `/repo/${repositoryId}/branches`;
   }

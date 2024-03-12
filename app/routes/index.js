@@ -24,12 +24,9 @@ export default Route.extend({
       if (this.get('features.dashboard')) {
         this.transitionTo('dashboard');
       }
-      else {
-      }
     } else if (this.get('features.enterpriseVersion')) {
       this.transitionTo('signin');
     }
-    
   },
 
   renderTemplate(...args) {
@@ -48,7 +45,7 @@ export default Route.extend({
   deactivate() {
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
- //   this.stopObservingRepoStatus();
+    //   this.stopObservingRepoStatus();
     return this._super(...arguments);
   },
 

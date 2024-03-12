@@ -10,7 +10,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-
     this['actions'] = {
       next: () => { }
     };
@@ -54,7 +53,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
   });
 
   skip('it renders default selected plan', async function (assert) {
-
     await render(hbs`<Billing::SelectPlan
       @displayedPlans={{this.displayedPlans}}
       @selectedPlanOverride={{this.selectedPlan}}

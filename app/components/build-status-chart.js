@@ -56,7 +56,7 @@ export default Component.extend({
   // Chart component data
   data: computed('passed.[]', 'failed.[]', 'errored.[]', 'cancelled.[]', 'labels',
     function () {
-      if( this.labels === undefined) {
+      if (this.labels === undefined) {
         return {};
       }
 

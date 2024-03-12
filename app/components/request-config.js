@@ -17,9 +17,9 @@ export default Component.extend({
   formattedConfig: computed('config', 'slug', function () {
     const config = this.config;
     try {
-      return config ? JSON.stringify(config, null, 2) : "{}";
+      return config ? JSON.stringify(config, null, 2) : '{}';
     } catch (e) {
-      return config ? config : "{}";
+      return config || '{}';
     }
   }),
 

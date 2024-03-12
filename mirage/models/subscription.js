@@ -6,5 +6,5 @@ export default Model.extend({
   creditCardInfo: belongsTo(),
   discount: belongsTo(),
   owner: belongsTo({ polymorphic: true }),
-  invoices: hasMany()
+  invoices: hasMany(),
 });

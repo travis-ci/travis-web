@@ -44,7 +44,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.storage.selectedPlanId = model.selectedPlanId;
     }
     if (this.auth.signedIn) {
-
       this.wizard.fetch.perform().then(() => { this.storage.wizardStep = this.wizard.state; });
 
       return this.get('featureFlags.fetchTask').perform();
@@ -70,11 +69,10 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     this.store.filter('repo', null,
       (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
       ['private', 'isCurrentUserACollaborator']
-    ).then(repos =>
-      {
+    ).then(repos => {
       this.store.subscribe(repos, 'repo', null,
-      (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
-      ['private', 'isCurrentUserACollaborator'], this.reposWillChange, this.reposDidChange);
+        (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
+        ['private', 'isCurrentUserACollaborator'], this.reposWillChange, this.reposDidChange);
 
       /*
       repos.addArrayObserver(this, {
@@ -85,27 +83,27 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   reposWillChange(repos, thiz) {
-    console.log("BEFORE");
+    console.log('BEFORE');
     repos.forEach(repo => console.log(repo));
   },
 
   reposDidChange(repos, thiz) {
-    console.log("AFTER");
+    console.log('AFTER');
     repos.forEach(repo => console.log(repo));
     repos.forEach(repo => thiz.subscribeToRepo(repo));
   },
 
   unsubscribeFromRepo: function (repo) {
+    console.log('PUSHER UNSUBSCRIBE!!!');
     if (this.pusher && repo) {
       this.pusher.unsubscribe(`repo-${repo.get('id')}`);
     }
   },
 
   subscribeToRepo: function (repo) {
-    console.log("SUBSCRIBE PSH1");
+    console.log('SUBSCRIBE PSH1');
     if (this.pusher) {
-
-    console.log("SUBSCRIBE PSH2");
+      console.log('SUBSCRIBE PSH2');
       this.pusher.subscribe(`repo-${repo.get('id')}`);
     }
   },
@@ -175,7 +173,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   afterSignOut() {
-    console.log("AFTER");
+    console.log('AFTER');
     try {
       this.featureFlags.reset();
       this.set('repositories.accessible', []);

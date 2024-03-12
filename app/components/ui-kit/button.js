@@ -66,17 +66,17 @@ export default Component.extend({
   // Private
   bgColor: computed('color', 'disabled', 'invert', {
     get() {
-      if(isPresent(this._bgColor)){
+      if (isPresent(this._bgColor)) {
         return this._bgColor;
       }
 
       return this.invert
         ? BG_COLORS['invert']
         : this.disabled
-        ? BG_COLORS['disabled']
-        : BG_COLORS[this.color];
+          ? BG_COLORS['disabled']
+          : BG_COLORS[this.color];
     },
-    set(k,v) {
+    set(k, v) {
       this.set('_bgColor', v);
       return this._bgColor;
     }

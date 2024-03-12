@@ -81,12 +81,12 @@ export default Component.extend({
 
   viewOwned: task(function* () {
     let ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
-    if(isEmpty(ownedRepositories)) {
-      console.log("RELOADING REPOS");
+    if (isEmpty(ownedRepositories)) {
+      console.log('RELOADING REPOS');
       yield this.get('fetchRepositories').perform();
       ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     }
-    console.log("OWNED REPOS");
+    console.log('OWNED REPOS');
     console.log(ownedRepositories);
     const onIndexPage = this.get('router.currentRouteName') === 'index';
 
@@ -99,7 +99,7 @@ export default Component.extend({
   isTabSearch: reads('tabStates.isSidebarSearch'),
 
   fetchRepositories: task(function* () {
-    console.log("FETCH REPOS!");
+    console.log('FETCH REPOS!');
     yield fetchAll(this.store, 'repo', {});
     return this.store.peekAll('repo');
   }).drop(),

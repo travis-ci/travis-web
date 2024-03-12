@@ -2,40 +2,23 @@
 
 module.exports = {
   root: true,
-  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
     requireConfigFile: false,
-    // allowImportExportEverywhere: true,
-    babelOptions: {
-      plugins: [
-        ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
-      ],
-    },
     ecmaFeatures: {
       modules: true,
     },
   },
-  plugins: ['ember'],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:prettier/recommended',
-  ],
+  parser: '@babel/eslint-parser',
+  extends: 'eslint:recommended',
   env: {
-    browser: true,
-    es2021: true,
+    'browser': true,
+    'es2021': true,
   },
   rules: {
-    // Don't allow unused vars, but allow unused arguments
-    'no-unused-vars': [
-      'error',
-      { vars: 'all', args: 'none', ignoreRestSiblings: false },
-    ],
-
     // TODO: Remove this to ensure we handle errors properly in UI
-    'no-empty': ['error', { allowEmptyCatch: true }],
+    'no-empty': ['error', { 'allowEmptyCatch': true }],
 
     // enforce spacing inside array brackets
     'array-bracket-spacing': [2, 'never'],
@@ -48,7 +31,7 @@ module.exports = {
     'brace-style': [2, '1tbs', { allowSingleLine: true }],
 
     // require camel case names
-    camelcase: [2, { properties: 'never' }],
+    'camelcase': [2, { properties: 'never' }],
 
     // enforce spacing before and after comma
     'comma-spacing': [2, { before: false, after: true }],
@@ -81,24 +64,21 @@ module.exports = {
 
     // this option sets a specific tab width for your code
     // http://eslint.org/docs/rules/indent
-    indent: [2, 2, { SwitchCase: 1, VariableDeclarator: 1 }],
+    'indent': [2, 2, { SwitchCase: 1, VariableDeclarator: 1}],
 
     // enforces spacing between keys and values in object literal properties
     'key-spacing': [2, { beforeColon: false, afterColon: true }],
 
     // require a space before & after certain keywords
-    'keyword-spacing': [
-      2,
-      {
-        before: true,
-        after: true,
-        overrides: {
-          return: { after: true },
-          throw: { after: true },
-          case: { after: true },
-        },
-      },
-    ],
+    'keyword-spacing': [2, {
+      before: true,
+      after: true,
+      overrides: {
+        return: { after: true },
+        throw: { after: true },
+        case: { after: true }
+      }
+    }],
 
     // disallow mixed 'LF' and 'CRLF' as linebreaks
     'linebreak-style': 0,
@@ -111,26 +91,18 @@ module.exports = {
 
     // specify the maximum length of a line in your program
     // http://eslint.org/docs/rules/max-len
-    'max-len': [
-      2,
-      150,
-      2,
-      {
-        ignoreUrls: true,
-        ignoreComments: false,
-      },
-    ],
+    'max-len': [2, 300, 2, {
+      ignoreUrls: true,
+      ignoreComments: false
+    }],
 
     // specify the max number of lines in a file
     // http://eslint.org/docs/rules/max-lines
-    'max-lines': [
-      0,
-      {
-        max: 300,
-        skipBlankLines: true,
-        skipComments: true,
-      },
-    ],
+    'max-lines': [0, {
+      max: 300,
+      skipBlankLines: true,
+      skipComments: true
+    }],
 
     // specify the maximum depth callbacks can be nested
     'max-nested-callbacks': 0,
@@ -212,7 +184,6 @@ module.exports = {
     // disallow use of the Object constructor
     'no-new-object': 2,
 
-    'no-prototype-builtins': 0,
     // disallow use of unary operators, ++ and --
     'no-plusplus': 0,
 
@@ -255,13 +226,10 @@ module.exports = {
     // enforce line breaks between braces
     // http://eslint.org/docs/rules/object-curly-newline
     // TODO: enable once https://github.com/eslint/eslint/issues/6488 is resolved
-    'object-curly-newline': [
-      0,
-      {
-        ObjectExpression: { minProperties: 0, multiline: true },
-        ObjectPattern: { minProperties: 0, multiline: true },
-      },
-    ],
+    'object-curly-newline': [0, {
+      ObjectExpression: { minProperties: 0, multiline: true },
+      ObjectPattern: { minProperties: 0, multiline: true }
+    }],
 
     // TODO: Rule not found
     // enforce "same line" or "multiple line" on object properties.
@@ -287,7 +255,7 @@ module.exports = {
     'operator-linebreak': 0,
 
     // enforce padding within blocks
-    'padded-blocks': 0,
+    'padded-blocks': [2, 'never'],
 
     // TODO: Wait on enforcing this until we figure out a way to handle AJAX
     // Headers in a sane way. We should use unquoted always unless numbers,
@@ -329,14 +297,10 @@ module.exports = {
     'space-unary-ops': 0,
 
     // require or disallow a space immediately following the // or /* in a comment
-    'spaced-comment': [
-      2,
-      'always',
-      {
-        exceptions: ['-', '+'],
-        markers: ['=', '!'], // space here to support sprockets directives
-      },
-    ],
+    'spaced-comment': [2, 'always', {
+      exceptions: ['-', '+'],
+      markers: ['=', '!']           // space here to support sprockets directives
+    }],
 
     // require or disallow the Unicode Byte Order Mark
     // http://eslint.org/docs/rules/unicode-bom
@@ -344,59 +308,142 @@ module.exports = {
 
     // require regex literals to be wrapped in parentheses
     'wrap-regex': 0,
-  },
-  overrides: [
-    // node files
-    {
-      files: [
-        './.eslintrc.js',
-        './.prettierrc.js',
-        './.stylelintrc.js',
-        './.template-lintrc.js',
-        './ember-cli-build.js',
-        './testem.js',
-        './blueprints/*/index.js',
-        './config/**/*.js',
-        './lib/*/index.js',
-        './server/**/*.js',
-      ],
-      parserOptions: {
-        sourceType: 'script',
-      },
-      env: {
-        browser: false,
-        node: true,
-      },
-    },
 
-    // test files
-    {
-      files: ['tests/**/*.js'],
-      excludedFiles: ['tests/dummy/**/*.js'],
-      env: {
-        embertest: true,
-      },
-      globals: {
-        triggerCopySuccess: true,
-        triggerCopyError: true,
-        signInUser: true,
-        withFeature: true,
-        waitForElement: true,
-      },
-      plugins: ['node'],
-      extends: ['plugin:node/recommended'],
-      rules: {
-        // this can be removed once the following is fixed
-        // https://github.com/mysticatea/eslint-plugin-node/issues/77
-        'node/no-unpublished-require': 'off',
-        'max-len': 0,
-        'no-useless-escape': 0,
-      },
-    },
-    {
-      // test files
-      files: ['tests/**/*-test.{js,ts}'],
-      extends: ['plugin:qunit/recommended'],
-    },
-  ],
+    // enforces no braces where they can be omitted
+    // http://eslint.org/docs/rules/arrow-body-style
+    'arrow-body-style': [2, 'as-needed'],
+
+    // require parens in arrow function arguments
+    'arrow-parens': 0,
+
+    // require space before/after arrow function's arrow
+    // http://eslint.org/docs/rules/arrow-spacing
+    'arrow-spacing': [2, { before: true, after: true }],
+
+    // verify super() callings in constructors
+    'constructor-super': 0,
+
+    // enforce the spacing around the * in generator functions
+    // http://eslint.org/docs/rules/generator-star-spacing
+    'generator-star-spacing': [2, { before: false, after: true }],
+
+    // disallow modifying variables of class declarations
+    // http://eslint.org/docs/rules/no-class-assign
+    'no-class-assign': 2,
+
+    // disallow arrow functions where they could be confused with comparisons
+    // http://eslint.org/docs/rules/no-confusing-arrow
+    'no-confusing-arrow': [2, {
+      allowParens: true,
+    }],
+
+    // disallow modifying variables that are declared using const
+    'no-const-assign': 2,
+
+    // disallow duplicate class members
+    // http://eslint.org/docs/rules/no-dupe-class-members
+    'no-dupe-class-members': 2,
+
+    // disallow importing from the same path more than once
+    // http://eslint.org/docs/rules/no-duplicate-imports
+    'no-duplicate-imports': 2,
+
+    // disallow symbol constructor
+    // http://eslint.org/docs/rules/no-new-symbol
+    'no-new-symbol': 2,
+
+    'no-prototype-builtins': 0,
+
+    // disallow specific imports
+    // http://eslint.org/docs/rules/no-restricted-imports
+    'no-restricted-imports': 0,
+
+    // disallow to use this/super before super() calling in constructors.
+    // http://eslint.org/docs/rules/no-this-before-super
+    'no-this-before-super': 2,
+
+    // disallow useless computed property keys
+    // http://eslint.org/docs/rules/no-useless-computed-key
+    'no-useless-computed-key': 2,
+
+    // disallow unnecessary constructor
+    // http://eslint.org/docs/rules/no-useless-constructor
+    'no-useless-constructor': 2,
+
+    // disallow renaming import, export, and destructured assignments to the same name
+    // http://eslint.org/docs/rules/no-useless-rename
+    'no-useless-rename': [2, {
+      ignoreDestructuring: false,
+      ignoreImport: false,
+      ignoreExport: false,
+    }],
+
+    // require let or const instead of var
+    'no-var': 2,
+
+    // TODO: ESLint complains about current config
+    // require method and property shorthand syntax for object literals
+    // http://eslint.org/docs/rules/object-shorthand
+    // 'object-shorthand': [2, 'always', {
+    //   ignoreConstructors: false,
+    //   avoidQuotes: true,
+    // }],
+
+    // TODO: ESLint complains about current config
+    // suggest using of const declaration for variables that are never modified after declared
+    // 'prefer-const': [2, {
+    //   destructuring: 'any',
+    //   ignoreReadBeforeAssign: true,
+    // }],
+
+    // suggest using Reflect methods where applicable
+    // http://eslint.org/docs/rules/prefer-reflect
+    // TODO: enable
+    'prefer-reflect': 0,
+
+    // TODO: Figure out how to incorporate this with Ember's encouraged use of
+    // this._super(...arguments);
+    // use rest parameters instead of arguments
+    // http://eslint.org/docs/rules/prefer-rest-params
+    // 'prefer-rest-params': 2,
+
+    // suggest using the spread operator instead of .apply()
+    // http://eslint.org/docs/rules/prefer-spread
+    'prefer-spread': 0,
+
+    // suggest using template literals instead of string concatenation
+    // http://eslint.org/docs/rules/prefer-template
+    'prefer-template': 2,
+
+    // disallow generator functions that do not have yield
+    // http://eslint.org/docs/rules/require-yield
+    'require-yield': 2,
+
+    // enforce spacing between object rest-spread
+    // http://eslint.org/docs/rules/rest-spread-spacing
+    'rest-spread-spacing': [2, 'never'],
+
+    // import sorting
+    // http://eslint.org/docs/rules/sort-imports
+    'sort-imports': 0,
+
+    // enforce usage of spacing in template strings
+    // http://eslint.org/docs/rules/template-curly-spacing
+    'template-curly-spacing': 2,
+
+    // enforce spacing around the * in yield* expressions
+    // http://eslint.org/docs/rules/yield-star-spacing
+    'yield-star-spacing': [2, 'after'],
+
+    // Don't allow unused vars, but allow unused arguments
+    'no-unused-vars': ['error',
+      { 'vars': 'all', 'args': 'none', 'ignoreRestSiblings': false, 'varsIgnorePattern': '^_$' }
+    ],
+
+    // Don't allow "useless" escape characters. Disabling due to regex false
+    // positives
+    'no-useless-escape': 0,
+  },
+  globals: {
+  }
 };

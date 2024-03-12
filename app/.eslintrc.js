@@ -3,14 +3,18 @@
 module.exports = {
   root: true,
   parserOptions: {
-    ecmaVersion: 6,
-    sourceType: 'module'
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    requireConfigFile: false,
+    ecmaFeatures: {
+      modules: true,
+    },
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   extends: 'eslint:recommended',
   env: {
     'browser': true,
-    es6: true
+    'es2021': true,
   },
   rules: {
     // TODO: Remove this to ensure we handle errors properly in UI
@@ -182,6 +186,8 @@ module.exports = {
 
     // disallow use of unary operators, ++ and --
     'no-plusplus': 0,
+
+    'no-prototype-builtins': 0,
 
     // disallow certain syntax forms
     // http://eslint.org/docs/rules/no-restricted-syntax

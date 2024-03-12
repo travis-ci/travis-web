@@ -19,12 +19,12 @@ export default EmberObject.extend({
     content: []
   })),
 
-  subscribe(parts,caller, cb) {
-    this.subscribers.push({parts: parts,caller: caller, cb: cb});
+  subscribe(parts, caller, cb) {
+    this.subscribers.push({parts: parts, caller: caller, cb: cb});
   },
 
   unsubscribe(parts, cb) {
-    this.subscribers = this.subscribers.filter(function(e) { return e.parts !== parts })
+    this.subscribers = this.subscribers.filter((e) => e.parts !== parts);
   },
 
   noRendering: computed(function () {
@@ -74,8 +74,7 @@ export default EmberObject.extend({
   pushObject(part) {
     let result = this.parts.pushObject(part);
     this.subscribers.forEach(s => {
-
-      if(s.cb) {
+      if (s.cb) {
         s.cb(s.caller, this.parts.content, this.parts.content.length - 1, this.parts.content.length, 1);
       }
     });

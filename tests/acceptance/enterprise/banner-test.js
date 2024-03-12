@@ -14,15 +14,13 @@ module('Acceptance | enterprise/banner', function (hooks) {
     const currentUser = this.server.create('user');
     signInUser(currentUser);
 
-    this.server.get('/v3/enterprise_license', (schema, request) => {
-      return {
-        'license_id': 'ad12345',
-        'seats': '30',
-        'active_users': '21',
-        'license_type': 'trial',
-        'expiration_time': '2019-01-01T00:00:00Z'
-      };
-    });
+    this.server.get('/v3/enterprise_license', (schema, request) => ({
+      'license_id': 'ad12345',
+      'seats': '30',
+      'active_users': '21',
+      'license_type': 'trial',
+      'expiration_time': '2019-01-01T00:00:00Z'
+    }));
   });
 
   test('banner is rendered in enterprise mode', async function (assert) {

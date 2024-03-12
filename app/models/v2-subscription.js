@@ -19,7 +19,7 @@ export default Model.extend({
   status: attr('string'),
   createdAt: attr('date'),
   validTo: attr('date'),
-  organization: belongsTo('organization',  { async: false, inverse: null } ),
+  organization: belongsTo('organization',  { async: false, inverse: null }),
   coupon: attr('string'),
   clientSecret: attr('string'),
   paymentIntent: attr(),

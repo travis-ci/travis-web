@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-import { pauseTest } from '@ember/test-helpers';
 import {
   INSIGHTS_SETTINGS_LIST_ITEM,
   INSIGHTS_SETTINGS_LIST_ITEM_SELECTED,

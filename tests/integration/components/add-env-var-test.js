@@ -25,10 +25,10 @@ module('Integration | Component | add env-var', function (hooks) {
   test('it adds an env var on submit', async function (assert) {
     assert.expect(7);
 
-    var store = this.owner.lookup('service:store');
+    let store = this.owner.lookup('service:store');
     assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
-    var repo;
+    let repo;
     run(function () {
       repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
     });
@@ -42,7 +42,7 @@ module('Integration | Component | add env-var', function (hooks) {
     await click('.form-submit');
     assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
 
-    var envVar = store.peekAll('envVar').objectAt(0);
+    let envVar = store.peekAll('envVar').objectAt(0);
 
     assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
     assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
@@ -50,7 +50,7 @@ module('Integration | Component | add env-var', function (hooks) {
     assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
     assert.ok(!envVar.get('public'), 'env var should be private');
 
-    var done = assert.async();
+    let done = assert.async();
     done();
   });
 
@@ -85,10 +85,10 @@ module('Integration | Component | add env-var', function (hooks) {
     assert.expect(6);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
-    var store = this.owner.lookup('service:store');
+    let store = this.owner.lookup('service:store');
     assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
-    var repo;
+    let repo;
     run(function () {
       repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
     });
@@ -106,14 +106,14 @@ module('Integration | Component | add env-var', function (hooks) {
 
     assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
 
-    var envVar = store.peekAll('envVar').objectAt(0);
+    let envVar = store.peekAll('envVar').objectAt(0);
 
     assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
     assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
     assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
     assert.ok(envVar.get('public'), 'env var should be public');
 
-    var done = assert.async();
+    let done = assert.async();
     done();
   });
 
@@ -121,10 +121,10 @@ module('Integration | Component | add env-var', function (hooks) {
     assert.expect(7);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
-    var store = this.owner.lookup('service:store');
+    let store = this.owner.lookup('service:store');
     assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
-    var repo;
+    let repo;
     run(function () {
       repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
     });
@@ -152,7 +152,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
 
-    var envVar = store.peekAll('envVar').objectAt(0);
+    let envVar = store.peekAll('envVar').objectAt(0);
 
     assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
     assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
@@ -160,7 +160,7 @@ module('Integration | Component | add env-var', function (hooks) {
     assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
     assert.ok(!envVar.get('public'), 'env var should be private');
 
-    var done = assert.async();
+    let done = assert.async();
     done();
   });
 
@@ -168,10 +168,10 @@ module('Integration | Component | add env-var', function (hooks) {
     assert.expect(3);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
-    var store = this.owner.lookup('service:store');
+    let store = this.owner.lookup('service:store');
     assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
-    var repo;
+    let repo;
     run(function () {
       repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
     });
@@ -211,7 +211,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     assert.equal(store.peekAll('envVar').get('length'), 1, 'second env var with same name & branch should not be added to store');
 
-    var done = assert.async();
+    let done = assert.async();
     done();
   });
 
@@ -219,10 +219,10 @@ module('Integration | Component | add env-var', function (hooks) {
     assert.expect(3);
 
     this.owner.register('transform:boolean', DS.BooleanTransform);
-    var store = this.owner.lookup('service:store');
+    let store = this.owner.lookup('service:store');
     assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
-    var repo;
+    let repo;
     run(function () {
       repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
     });
@@ -247,7 +247,7 @@ module('Integration | Component | add env-var', function (hooks) {
 
     assert.equal(store.peekAll('envVar').get('length'), 1, 'second env var with same name (without branch) should not be added to store');
 
-    var done = assert.async();
+    let done = assert.async();
     done();
   });
 });

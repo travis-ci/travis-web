@@ -8,15 +8,15 @@ export default Serializer.extend({
         '@type': 'features',
         '@href': '/features',
         '@representation': 'standard',
-        features: object.models.map(feature => feature.attrs)
+        features: object.models.map((feature) => feature.attrs),
       };
     } else {
       let metadata = {
         '@type': 'features',
         '@href': '/features',
-        '@representation': 'standard'
+        '@representation': 'standard',
       };
       return Object.assign(metadata, object.attrs);
     }
-  }
+  },
 });

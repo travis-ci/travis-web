@@ -28,7 +28,6 @@ export default Mixin.create({
   },
 
   selectedPlan() {
-
     const savedPlan = this.storage.billingPlan;
     const selectedPlan = savedPlan && savedPlan.id && this.store.peekRecord('v2-plan-config', savedPlan.id);
     return selectedPlan || this.store.createRecord('v2-plan-config', this.storage.billingPlan);

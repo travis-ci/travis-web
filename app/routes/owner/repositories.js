@@ -37,9 +37,9 @@ export default TravisRoute.extend({
     const offset = (page - 1) * limit;
     const { owner, provider } = this.paramsFor('owner');
     const type = 'byOwner';
-    const sort_by = 'default_branch.last_build:desc'; // eslint-disable-line
+    const sortBy = 'default_branch.last_build:desc'; // eslint-disable-line
 
-    const queryParams = { offset, limit, sort_by, provider, custom: { owner, type, }};
+    const queryParams = { offset, limit, sortBy, provider, custom: { owner, type, }};
 
     if (this.features.get('github-apps')) {
       queryParams['repository.active'] = true;

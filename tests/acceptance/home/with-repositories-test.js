@@ -95,7 +95,6 @@ module('Acceptance | home/with repositories', function (hooks) {
   });
 
   test('Pusher events change the main display', async function (assert) {
-
     assert.expect(5);
     await visit('/');
     await settled();
