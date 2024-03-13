@@ -4,6 +4,7 @@
 /public/
 /server/
 # temporary
+/app/routes/repo/not-active.js
 /app/components/forms/form-select.js
 
 # compiled output
