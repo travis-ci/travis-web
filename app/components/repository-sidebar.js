@@ -83,7 +83,7 @@ export default Component.extend({
     let ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     if (isEmpty(ownedRepositories)) {
       console.log('RELOADING REPOS');
-      yield this.get('fetchRepositories').perform();
+    //  yield this.get('fetchRepositories').perform();
       ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     }
     console.log('OWNED REPOS');
@@ -101,7 +101,7 @@ export default Component.extend({
   fetchRepositories: task(function* () {
     console.log('FETCH REPOS!');
     yield fetchAll(this.store, 'repo', {});
-    return this.store.findAll('repo');
+    return this.store.peekAll('repo');
   }).drop(),
 
 
