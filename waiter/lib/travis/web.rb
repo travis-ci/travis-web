@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Travis
   module Web
     autoload :Allow,             'travis/web/allow'
@@ -9,6 +11,6 @@ module Travis
   end
 
   def self.config
-    @config ||= Travis::Web::Config.new
+    @_config ||= Travis::Web::Config.new
   end
 end

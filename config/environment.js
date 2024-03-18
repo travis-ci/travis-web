@@ -30,7 +30,9 @@ const {
   DISABLE_SENTRY,
   TRAVIS_COMMIT,
   SOURCE_VERSION,
-  DEPLOY_TARGET
+  DEPLOY_TARGET,
+  TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED,
+  TEMPORARY_ANNOUNCEMENT_MESSAGE
 } = process.env;
 
 module.exports = function (environment) {
@@ -154,7 +156,7 @@ module.exports = function (environment) {
       hidePostalCode: true,
       style: {
         base: {
-          fontStyle: 'Source Sans Pro',
+          fontStyle: 'sans-serif',
           fontSize: '15px',
           color: '#666',
           '::placeholder': {
@@ -171,6 +173,10 @@ module.exports = function (environment) {
     gReCaptcha: {
       siteKey: GOOGLE_RECAPTCHA_SITE_KEY
     },
+    tempBanner: {
+      tempBannerEnabled: TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED || false,
+      tempBannerMessage: TEMPORARY_ANNOUNCEMENT_MESSAGE || ''
+    }
   };
 
   ENV.metricsAdapters = [];
