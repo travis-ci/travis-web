@@ -101,7 +101,7 @@ export default Component.extend({
   fetchRepositories: task(function* () {
     console.log('FETCH REPOS!');
     yield fetchAll(this.store, 'repo', {});
-    return this.store.peekAll('repo');
+    return this.store.findAll('repo');
   }).drop(),
 
 
