@@ -85,8 +85,14 @@ export default Store.extend({
       return this.findAll(modelName);
     }
     if (arguments.length === 2) {
+      console.log("FILTER1");
       filterFunction = queryParams;
-      return this.filteredArraysManager.filter(modelName, null, filterFunction, ['']);
+      let res = this.filteredArraysManager.filter(modelName, null, filterFunction, ['']);
+      console.log("FILTER1--");
+      console.log(res);
+      console.log("FILTER1---");
+
+      return res;
     }
 
     if (!dependencies) {
