@@ -34,7 +34,10 @@
   </span>
 </div>
 <div class="row-item fade-out" data-requests-item-commit-message>
-  {{{format-message this.request.commit.message short="true" repo=this.build.repo}}}
+  <span id='requests-item-{{request.id}}-commit-message'>
+    <EmberTooltip @text={{this.request.commit.message}} @targetId='requests-item-{{request.id}}-commit-message' @popperContainer='body'/>
+    {{{format-message this.request.commit.message short="true" repo=this.build.repo}}}
+  </span>
 </div>
 <div class="row-item" data-requests-item-build>
   {{#if this.build}}

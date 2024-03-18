@@ -18,6 +18,7 @@
           @route="repo"
           @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
           @query={{hash serverType=this.repo.serverType}}
+          @title={{this.repo.name}}
           class="label-align"
         >
           <span class="repo-title-text">
