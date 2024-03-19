@@ -88,6 +88,8 @@ export default Component.extend({
       console.log(repos);
       ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     }
+    console.log("rs.ACCESSIBLE");
+    console.log(this.repositories.accessible);
     console.log('OWNED REPOS');
     console.log(ownedRepositories);
     const onIndexPage = this.get('router.currentRouteName') === 'index';

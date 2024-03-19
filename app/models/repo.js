@@ -416,7 +416,7 @@ Repo.recent = function () {
 
 Repo.accessibleBy = function (store, reposIdsOrlogin) {
   let repos, reposIds;
-  console.log("GET ACCESSIBLE");
+  console.log("rm. GET ACCESSIBLE");
   console.log(reposIdsOrlogin);
   reposIds = reposIdsOrlogin || [];
   repos = store.filter('repo', (repo) => {
@@ -424,8 +424,6 @@ Repo.accessibleBy = function (store, reposIdsOrlogin) {
     console.log(`filter.repoid: ${repoId}`);
     return reposIds.includes(repoId);
   });
-  console.log("REPOS acc");
-  console.log(repos)
  return new EmberPromise((resolve, reject) => {
     const params = {
       'repository.active': 'true',

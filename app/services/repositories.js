@@ -88,6 +88,8 @@ export default Service.extend({
     '_repos.@each.{currentBuildFinishedAt,currentBuildId}',
     function () {
       let repos = this._repos;
+      console.log("svc. ACCESSIBLE");
+      console.log(repos);
       return this.sortData(repos);
     }
   ),
