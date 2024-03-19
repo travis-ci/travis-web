@@ -86,6 +86,8 @@ export default Component.extend({
       console.log('RELOADING REPOS');
       repos = yield this.get('getAllRepos').perform();
       console.log(repos);
+      repos = yield this.get('fetchRepositories').perform();
+      console.log(repos);
       ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     }
     console.log("rs.ACCESSIBLE");
@@ -93,7 +95,6 @@ export default Component.extend({
     console.log('OWNED REPOS');
     console.log(ownedRepositories);
     const onIndexPage = this.get('router.currentRouteName') === 'index';
-    const hasReposAccess = yield this.get('repositories.hasReposAccess').perform();
 
     if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage && isEmpty(repos)) {
       this.router.transitionTo('getting_started');

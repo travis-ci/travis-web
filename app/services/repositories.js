@@ -54,15 +54,6 @@ export default Service.extend({
     this.router.transitionTo('search', query);
   }).restartable(),
 
-  hasReposAccess: task(function* () {
-    let user = this.get('auth.currentUser');
-    const repos = yield Repo.accessibleBy(this.store, user.pullPermissions);
-    console.log("hasreposaccess");
-    console.log(user.pullPermissions);
-    console.log(repos);
-    return !(isEmpty(user.pullPermissions) && isEmpty(repos));
-  }),
-
   requestOwnedRepositories: task(function* () {
     if (!isEmpty(this.ownedRepos)) {
       return this.set('_repos', this.ownedRepos);
@@ -71,7 +62,6 @@ export default Service.extend({
       if (user) {
         console.log("GET ACCESSIBLE.s");
         console.log(user);
-        console.log(user.pullPermissions);
         const repositories = yield Repo.accessibleBy(this.store, user.pullPermissions);
         console.log("GET ACCESSIBLE.s1");
 
