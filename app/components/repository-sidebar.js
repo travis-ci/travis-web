@@ -86,19 +86,14 @@ export default Component.extend({
   jobsLoaded: reads('jobState.jobsLoaded'),
 
   viewOwned: task(function* () {
-     this.permissionsService.fetchPermissions.perform();
-    console.log("AFTER PERMISSIONS");
-    let ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
+    this.permissionsService.fetchPermissions.perform();
     let repos = [];
-    if (isEmpty(ownedRepositories)) {
-      console.log('RELOADING REPOS');
-      repos = yield this.get('getAllRepos').perform();
-      console.log(repos);
-      ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
-    }
+    repos = yield this.get('getAllRepos').perform();
+    console.log("AFTER PERMISSIONS");
+    let ownedRepositories =  yield this.get('repositories.requestOwnedRepositories').perform();
+    
     console.log("rs.ACCESSIBLE");
-    //console.log(this.repositories);
-    console.log(this.repositories.accessible);
+    //console.log(this.repositories.accessible);
 
     console.log('OWNED REPOS');
     console.log(ownedRepositories);
