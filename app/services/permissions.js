@@ -38,6 +38,9 @@ export default Service.extend({
   },
 
   fetchPermissions: task(function* () {
-    return yield this.api.get('/users/permissions', { travisApiVersion: null });
+    let res = yield this.api.get('/users/permissions', { travisApiVersion: null });
+    console.log(`PERMISSIONS ${res}`);
+    console.log(res);
+    return res;
   }).drop()
 });

@@ -15,6 +15,7 @@ export default Component.extend({
   tabStates: service(),
   jobState: service(),
   updateTimesService: service('updateTimes'),
+  permissionsService: service('permissions'),
   repositories: service(),
   features: service(),
   auth: service(),
@@ -47,6 +48,8 @@ export default Component.extend({
       yield this.viewOwned.perform();
       this.set('_data', this.get('repositories.accessible'));
     }
+
+    console.log(this._data);
 
     if (!Ember.testing) {
       Visibility.every(config.intervals.updateTimes, () => {
@@ -83,18 +86,19 @@ export default Component.extend({
   jobsLoaded: reads('jobState.jobsLoaded'),
 
   viewOwned: task(function* () {
+    yield this.permissionsService.fetchPermissions.perform();
     let ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     let repos = [];
     if (isEmpty(ownedRepositories)) {
       console.log('RELOADING REPOS');
       repos = yield this.get('getAllRepos').perform();
       console.log(repos);
-      repos = yield this.get('fetchRepositories').perform();
-      console.log(repos);
       ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     }
     console.log("rs.ACCESSIBLE");
+    //console.log(this.repositories);
     console.log(this.repositories.accessible);
+
     console.log('OWNED REPOS');
     console.log(ownedRepositories);
     const onIndexPage = this.get('router.currentRouteName') === 'index';

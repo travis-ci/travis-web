@@ -62,6 +62,8 @@ export default Service.extend({
       if (user) {
         console.log("GET ACCESSIBLE.s");
         console.log(user);
+        console.log(user.pullPermissions);
+
         const repositories = yield Repo.accessibleBy(this.store, user.pullPermissions);
         console.log("GET ACCESSIBLE.s1");
 
