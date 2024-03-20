@@ -187,7 +187,8 @@ export default Service.extend({
     this.set('state', STATE.SIGNING_IN);
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
-
+      console.log("svca. AUTOSIGNIN");
+      console.log(this.storage.user);
       return promise
         .then(() => { this.permissionsService.fetchPermissions.perform();  })
         .then(() => {
@@ -224,6 +225,7 @@ export default Service.extend({
     userRecord.set('authToken', token);
 
     return this.reloadUser(userRecord).then(() => {
+      console.log("RELOAD");
       //   let acc = storage.accounts;
       //    acc.push(userRecord);
       //    storage.accounts.set(acc);
@@ -235,6 +237,7 @@ export default Service.extend({
 
   reloadCurrentUser(include = []) {
     if (!this.currentUser) throw new Error('No active account');
+    console.log("RELOAD CURRENT");
     return this.reloadUser(this.currentUser, include);
   },
 

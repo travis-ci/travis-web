@@ -100,6 +100,7 @@ export default Owner.extend({
       if (this.isSyncing) {
         this.schedulePoll();
       } else {
+        console.log("um FETCH PERMISSIONS");
         this.permissionsService.fetchPermissions.perform();
         this.wizardStateService.fetch.perform();
         this.accounts.fetchOrganizations.perform();
