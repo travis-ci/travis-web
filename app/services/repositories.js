@@ -56,6 +56,8 @@ export default Service.extend({
 
   requestOwnedRepositories: task(function* () {
     if (!isEmpty(this.ownedRepos)) {
+      console.log("RETURNING OWNED REPOS");
+      console.log(this.ownedRepos);
       return this.set('_repos', this.ownedRepos);
     } else {
       let user = this.get('auth.currentUser');
@@ -71,6 +73,8 @@ export default Service.extend({
         this.set('_repos', repositories);
         this.set('ownedRepos', repositories);
         return repositories;
+      } else {
+        console.log("NO USER");
       }
     }
   }).drop(),
