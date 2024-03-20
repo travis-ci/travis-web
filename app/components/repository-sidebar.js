@@ -94,8 +94,6 @@ export default Component.extend({
       ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     }
     console.log("rs.ACCESSIBLE");
-    console.log(this.get('repositories.accessible'));
-
     console.log(this.repositories.accessible);
     console.log('OWNED REPOS');
     console.log(ownedRepositories);
