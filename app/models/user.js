@@ -106,7 +106,6 @@ export default Owner.extend({
         this.accounts.fetchOrganizations.perform();
         this.accounts.fetchSubscriptions.perform();
         this.accounts.fetchV2Subscriptions.perform();
-
         this.applyReposFilter();
         Travis.trigger('user:synced', this);
         this.set('isSyncing', false);

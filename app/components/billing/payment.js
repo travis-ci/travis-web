@@ -193,7 +193,9 @@ export default Component.extend({
           yield subscription.save();
           yield subscription.changePlan.perform(selectedPlan.id, this.couponId);
 
-          yield this.accounts.fetchV2Subscriptions.perform();
+          let subs = yield this.accounts.fetchV2Subscriptions.perform();
+          console.log("SUBS");
+          console.log(subs);
           yield this.retryAuthorization.perform();
         }
         this.metrics.trackEvent({ button: 'pay-button' });

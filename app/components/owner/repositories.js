@@ -66,7 +66,10 @@ export default Component.extend({
   isLoadingLegacyRepos: reads('legacyRepos.isLoading'),
   shouldShowLegacyReposFilter: or('hasLegacyRepos', 'isFilteringLegacyRepos', 'isLoadingLegacyRepos'),
 
-  appsRepos: reads('owner.githubAppsRepositories'),
+  appsRepos: computed('owner.githubAppsRepositories', function () {
+    this.owner.githubAppsRepositories.reload();
+    return this.owner.githubAppsRepositories;
+  }),
   appsReposCount: reads('appsRepos.total'),
   isFilteringAppsRepos: notEmpty('appsRepos.filterTerm'),
   hasAppsRepos: bool('appsReposCount'),
