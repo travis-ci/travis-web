@@ -31,8 +31,15 @@ export default Component.extend({
     console.log("VTO");
     console.log(this.subscription);
     console.log(this.subscription.validTo);
+    try {
     if (this.subscription.validTo == null) {
-      this.accounts.fetchV2Subscriptions.linked().perform();
+      console.log("SUB FETCH++");
+      this.accounts.fetchV2Subscriptions.perform();
+      console.log("SUB FETCH--");
+    }
+    } catch(e) {
+      console.log("ERR");
+      console.log(e);
     }
     return this.subscription.validTo;
   }),
