@@ -416,18 +416,13 @@ Repo.recent = function () {
 
 Repo.accessibleBy = function (store, reposIdsOrlogin) {
   let repos, reposIds;
-  console.log("rm. GET ACCESSIBLE");
-  console.log(reposIdsOrlogin);
   reposIds = reposIdsOrlogin || [];
   
   repos = store.filter('repo', (repo) => {
     let repoId = parseInt(repo.get('id'));
-    console.log(`filter.repoid: ${repoId}`);
     return reposIds.includes(repoId);
   });
   
- console.log("accby");
- console.log(repos);
 
  return new EmberPromise((resolve, reject) => {
     const params = {

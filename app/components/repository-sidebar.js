@@ -30,7 +30,6 @@ export default Component.extend({
     // But I'm otherwise unable to reference that state within two separate
     // templates...
     schedule('afterRender', () => {
-      console.log("AFTER RENDER");
       this.fetchRepositoryData.perform();
       if (this.get('features.showRunningJobsInSidebar')) {
         this.get('jobState.fetchUnfinishedJobs').perform();
@@ -39,8 +38,6 @@ export default Component.extend({
   },
 
   fetchRepositoryData: task(function* () {
-    console.log("FETCHREPODATA");
-
     if (this.get('repositories.searchQuery')) {
       yield this.get('repositories.performSearchRequest').perform();
       this.set('_data', this.get('repositories.searchResults'));
@@ -48,8 +45,6 @@ export default Component.extend({
       yield this.viewOwned.perform();
       this.set('_data', this.get('repositories.accessible'));
     }
-
-    console.log(this._data);
 
     if (!Ember.testing) {
       Visibility.every(config.intervals.updateTimes, () => {
@@ -89,14 +84,8 @@ export default Component.extend({
     this.permissionsService.fetchPermissions.perform();
     let repos = [];
     repos = yield this.get('getAllRepos').perform();
-    console.log("AFTER PERMISSIONS");
     let ownedRepositories =  yield this.get('repositories.requestOwnedRepositories').perform();
-    
-    console.log("rs.ACCESSIBLE");
-    //console.log(this.repositories.accessible);
 
-    console.log('OWNED REPOS');
-    console.log(ownedRepositories);
     const onIndexPage = this.get('router.currentRouteName') === 'index';
 
     if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage && isEmpty(repos)) {
@@ -112,7 +101,6 @@ export default Component.extend({
   }).drop(),
 
   fetchRepositories: task(function* () {
-    console.log('FETCH REPOS!');
     yield fetchAll(this.store, 'repo', {});
     return this.store.peekAll('repo');
   }).drop(),

@@ -184,6 +184,11 @@ export default Component.extend({
           const { clientSecret } = yield subscription.save();
 
           yield this.stripe.handleStripePayment.linked().perform(clientSecret);
+
+          let subs = yield this.accounts.fetchV2Subscriptions.perform();
+          console.log("SUBS- noid");
+          console.log(subs);
+          subs.forEach(s => console.log(s));
         } else {
           yield this.subscription.creditCardInfo.updateToken.perform({
             subscriptionId: this.subscription.id,
@@ -196,6 +201,7 @@ export default Component.extend({
           let subs = yield this.accounts.fetchV2Subscriptions.perform();
           console.log("SUBS");
           console.log(subs);
+          subs.forEach(s => console.log(s));
           yield this.retryAuthorization.perform();
         }
         this.metrics.trackEvent({ button: 'pay-button' });

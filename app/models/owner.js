@@ -54,11 +54,7 @@ export default VcsEntity.extend({
   title: or('name', 'login'),
 
   githubAppsRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
-    console.log("APPS REPOS++")
-    let result =  yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });
-    console.log("APPS REPOS--")
-    console.log(result);
-    return result;
+    return  yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });
   }),
 
   githubAppsRepositoriesOnOrg: dynamicQuery(function* ({ page = 1, filter = '' }) {
@@ -78,7 +74,7 @@ export default VcsEntity.extend({
     const type = 'byOwner';
     const shouldSkip = ghApps && !this.features.get('github-apps');
 
-    let res =  shouldSkip ? [] : this.store.paginated('repo', {
+    return shouldSkip ? [] : this.store.paginated('repo', {
       'repository.managed_by_installation': ghApps,
       'repository.active_on_org': activeOnOrg,
       'repository.active': active,
@@ -89,8 +85,6 @@ export default VcsEntity.extend({
       provider,
       custom: { owner, type, },
     }, { live: false });
-    console.log(res);
-    return res;
   },
 
   fetchPlans: task(function* () {

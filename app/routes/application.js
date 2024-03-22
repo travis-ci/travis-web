@@ -36,7 +36,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   beforeModel() {
-    console.log("APP SIGNIN");
     return this.auth.autoSignIn();
   },
 
@@ -174,7 +173,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   afterSignOut() {
-    console.log('AFTER');
     try {
       this.featureFlags.reset();
       this.set('repositories.accessible', []);

@@ -56,25 +56,14 @@ export default Service.extend({
 
   requestOwnedRepositories: task(function* () {
     if (!isEmpty(this.ownedRepos)) {
-      console.log("RETURNING OWNED REPOS");
-      console.log(this.ownedRepos);
       return this.set('_repos', this.ownedRepos);
     } else {
       let user = this.get('auth.currentUser');
       if (user) {
-        console.log("GET ACCESSIBLE.s");
-        console.log(user);
-        console.log(user.pullPermissions);
-
         const repositories = yield Repo.accessibleBy(this.store, user.pullPermissions);
-        console.log("GET ACCESSIBLE.s1");
-
-        console.log(repositories);
         this.set('_repos', repositories);
         this.set('ownedRepos', repositories);
         return repositories;
-      } else {
-        console.log("NO USER");
       }
     }
   }).drop(),
@@ -84,8 +73,6 @@ export default Service.extend({
     '_repos.@each.{currentBuildFinishedAt,currentBuildId}',
     function () {
       let repos = this._repos;
-      console.log("svc. ACCESSIBLE");
-      console.log(repos);
       return this.sortData(repos);
     }
   ),

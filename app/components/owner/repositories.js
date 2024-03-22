@@ -38,10 +38,6 @@ export default Component.extend({
   isOwnerVcsTypeEmpty: empty('owner.vcsType'),
   isNotGithubRepository: not('isGithubRepository'),
   hasGitHubAppsInstallation: computed(function () {
-    console.log('HAS GHAPP');
-    console.log(this.owner);
-    console.log(this.owner.installation);
-    console.log(this.owner.subscription);
     return this.owner && this.owner.installation;
   }),
 

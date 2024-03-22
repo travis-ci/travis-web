@@ -24,7 +24,7 @@ export default Service.extend({
     if (clientSecret) {
       yield this.stripev3.handleCardPayment(clientSecret);
     }
-    let res = this.accounts.fetchV2Subscriptions.unlinked().perform().then( (subs) => { console.log("SUBS"); console.log(subs); });
+    let res = this.accounts.fetchV2Subscriptions.unlinked().perform().then( (subs) => { console.log("st.SUBS"); console.log(subs); });
   }).drop(),
 
   handleError(stripeError) {
