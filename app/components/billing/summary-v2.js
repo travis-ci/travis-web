@@ -1,8 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads, or, not, and, bool } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+
+  accounts: service(),
 
   subscription: null,
   account: null,
@@ -21,12 +24,16 @@ export default Component.extend({
   isSubscribed: computed('subscription.isSubscribed', function() {
     console.log("IS SUBS");
     console.log(this.subscription);
+    console.log(this.subscription.validTo);
     return this.subscription.isSubscribed;
   }),
   validto: computed('subscription.validTo', function() {
     console.log("VTO");
     console.log(this.subscription);
     console.log(this.subscription.validTo);
+    if (this.subscription.validTo == null) {
+      this.accounts.fetchV2Subscriptions.linked().perform();
+    }
     return this.subscription.validTo;
   }),
   isExpired: or('subscription.isExpired', 'subscription.manualSubscriptionExpired'),
