@@ -185,11 +185,9 @@ export default Component.extend({
 
           yield this.stripe.handleStripePayment.linked().perform(clientSecret);
 
+          this.accounts.fetchV2Subscriptions.perform();
+
           console.log("SUBS- noid1");
-          let subs = yield this.accounts.fetchV2Subscriptions.perform();
-          console.log("SUBS- noid2");
-          console.log(subs);
-          subs.forEach(s => console.log(s));
         } else {
           yield this.subscription.creditCardInfo.updateToken.perform({
             subscriptionId: this.subscription.id,

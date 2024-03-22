@@ -18,7 +18,17 @@ export default Component.extend({
   isNotPending: not('isPending'),
   hasNotExpired: not('isExpired'),
   isCanceled: reads('subscription.isCanceled'),
-  isSubscribed: reads('subscription.isSubscribed'),
+  isSubscribed: computed('subscription.isSubscribed', function() {
+    console.log("IS SUBS");
+    console.log(this.subscription);
+    return this.subscription.isSubscribed;
+  }),
+  validto: computed('subscription.validTo', function() {
+    console.log("VTO");
+    console.log(this.subscription);
+    console.log(this.subscription.validTo);
+    return this.subscription.validTo;
+  }),
   isExpired: or('subscription.isExpired', 'subscription.manualSubscriptionExpired'),
   canceledOrExpired: or('isExpired', 'isCanceled'),
   isCompleteAndNotExpired: and('hasNotExpired', 'isComplete'),

@@ -54,6 +54,7 @@
                   >
                     {{#if this.isSubscribed}}
                       Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                      Valid2 until {{moment-format this.validto "MMMM D, YYYY"}}
                     {{else if this.isIncomplete}}
                       Incomplete
                     {{else if (and this.isComplete this.isCanceled)}}
