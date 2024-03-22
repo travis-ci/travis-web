@@ -480,6 +480,20 @@ export default function () {
     );
   });
 
+  this.post('/subscription/:subscription_id/pause', function (schema, { params, requestBody }) {
+    const subscription = schema.subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'cancellation_requested', true
+    );
+  });
+
+  this.post('/v2_subscription/:subscription_id/pause', function (schema, { params, requestBody }) {
+    const subscription = schema.v2Subscriptions.where({ id: params.subscription_id });
+    subscription.update(
+      'cancellation_requested', true
+    );
+  });
+
   this.patch('/subscription/:subscription_id/resubscribe', function (schema, { params, requestBody }) {
     const subscription = schema.subscriptions.where({ id: params.subscription_id });
     subscription.update(

@@ -13,7 +13,7 @@
     width: 100%;
   }
 
-  li.notice, li.success, li.error, li.warning {
+  li.notice, li.success, li.error, li.warning, li.success-with-close {
     opacity: 1;
 
     @include z-index(flashes);
@@ -52,6 +52,19 @@
     @include colorSVGFill($turf-green);
 
     animation: fadeFlashOut 7s 1 ease forwards;
+
+    .flash-message svg {
+      height: 38px;
+      width: 32px;
+      margin-top: -5px;
+    }
+  }
+
+  .success-with-close {
+    color: $turf-green;
+    background-color: $seed-green;
+
+    @include colorSVGFill($turf-green);
 
     .flash-message svg {
       height: 38px;
