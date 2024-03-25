@@ -9,14 +9,11 @@ export default TravisRoute.extend({
   pusher: service(),
 
   afterModel(repo) {
-    console.log('INDEX - after model');
     try {
       repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
     } catch (error) {}
-    console.log('SUBSCRIBE');
     Travis.pusher.subscribe(`repo-${repo.id}`);
 
-    console.log('SUBSCRIBE--');
     this.renderTemplate(repo);
   },
 
@@ -44,10 +41,8 @@ export default TravisRoute.extend({
     let controller = this.controllerFor('repo');
     controller.addObserver('repo.active', this, 'renderTemplate');
     controller.addObserver('repo.currentBuildId', this, 'renderTemplate');
-    console.log('OBSERVE');
     const repo = this.modelFor('repo');
 
-    console.log('UNSUBSCRIBE');
     Travis.pusher.subscribe(`repo-${repo.id}`);
   },
 
@@ -56,7 +51,6 @@ export default TravisRoute.extend({
     controller.removeObserver('repo.active', this, 'renderTemplate');
     controller.removeObserver('repo.currentBuildId', this, 'renderTemplate');
     const repo = this.modelFor('repo');
-    console.log('STOP OBSERVING');
     Travis.pusher.unsubscribe(`repo-${repo.id}`);
   },
 

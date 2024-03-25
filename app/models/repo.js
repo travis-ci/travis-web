@@ -419,9 +419,9 @@ Repo.accessibleBy = function (store, reposIdsOrlogin) {
   reposIds = reposIdsOrlogin || [];
   repos = store.filter('repo', (repo) => {
     let repoId = parseInt(repo.get('id'));
-    console.log(`repoid: ${repoId}`);
     return reposIds.includes(repoId);
   });
+
   return new EmberPromise((resolve, reject) => {
     const params = {
       'repository.active': 'true',

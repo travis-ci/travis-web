@@ -38,10 +38,6 @@ export default Component.extend({
   isOwnerVcsTypeEmpty: empty('owner.vcsType'),
   isNotGithubRepository: not('isGithubRepository'),
   hasGitHubAppsInstallation: computed(function () {
-    console.log('HAS GHAPP');
-    console.log(this.owner);
-    console.log(this.owner.installation);
-    console.log(this.owner.subscription);
     return this.owner && this.owner.installation;
   }),
 
@@ -66,7 +62,10 @@ export default Component.extend({
   isLoadingLegacyRepos: reads('legacyRepos.isLoading'),
   shouldShowLegacyReposFilter: or('hasLegacyRepos', 'isFilteringLegacyRepos', 'isLoadingLegacyRepos'),
 
-  appsRepos: reads('owner.githubAppsRepositories'),
+  appsRepos: computed('owner.githubAppsRepositories', function () {
+    this.owner.githubAppsRepositories.reload();
+    return this.owner.githubAppsRepositories;
+  }),
   appsReposCount: reads('appsRepos.total'),
   isFilteringAppsRepos: notEmpty('appsRepos.filterTerm'),
   hasAppsRepos: bool('appsReposCount'),

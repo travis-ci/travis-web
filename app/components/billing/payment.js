@@ -184,6 +184,8 @@ export default Component.extend({
           const { clientSecret } = yield subscription.save();
 
           yield this.stripe.handleStripePayment.linked().perform(clientSecret);
+
+          this.accounts.fetchV2Subscriptions.perform();
         } else {
           yield this.subscription.creditCardInfo.updateToken.perform({
             subscriptionId: this.subscription.id,

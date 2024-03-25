@@ -94,16 +94,13 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   unsubscribeFromRepo: function (repo) {
-    console.log('PUSHER UNSUBSCRIBE!!!');
     if (this.pusher && repo) {
       this.pusher.unsubscribe(`repo-${repo.get('id')}`);
     }
   },
 
   subscribeToRepo: function (repo) {
-    console.log('SUBSCRIBE PSH1');
     if (this.pusher) {
-      console.log('SUBSCRIBE PSH2');
       this.pusher.subscribe(`repo-${repo.get('id')}`);
     }
   },
@@ -173,7 +170,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   afterSignOut() {
-    console.log('AFTER');
     try {
       this.featureFlags.reset();
       this.set('repositories.accessible', []);

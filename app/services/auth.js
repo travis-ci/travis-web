@@ -187,7 +187,6 @@ export default Service.extend({
     this.set('state', STATE.SIGNING_IN);
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
-
       return promise
         .then(() => { this.permissionsService.fetchPermissions.perform();  })
         .then(() => {

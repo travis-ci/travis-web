@@ -59,8 +59,6 @@ export default Service.extend({
 
       return subscriptions;
     } catch (e) {
-      console.log('SUBS FETCH ERROR');
-      console.log(e);
       this.set('v2SubscriptionError', true);
     }
   }),

@@ -15,6 +15,7 @@ export default Component.extend({
   tabStates: service(),
   jobState: service(),
   updateTimesService: service('updateTimes'),
+  permissionsService: service('permissions'),
   repositories: service(),
   features: service(),
   auth: service(),
@@ -80,17 +81,14 @@ export default Component.extend({
   jobsLoaded: reads('jobState.jobsLoaded'),
 
   viewOwned: task(function* () {
-    let ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
-    if (isEmpty(ownedRepositories)) {
-      console.log('RELOADING REPOS');
-      yield this.get('fetchRepositories').perform();
-      ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
-    }
-    console.log('OWNED REPOS');
-    console.log(ownedRepositories);
+    this.permissionsService.fetchPermissions.perform();
+    let repos = [];
+    repos = yield this.get('getAllRepos').perform();
+    let ownedRepositories =  yield this.get('repositories.requestOwnedRepositories').perform();
+
     const onIndexPage = this.get('router.currentRouteName') === 'index';
 
-    if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage) {
+    if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage && isEmpty(repos)) {
       this.router.transitionTo('getting_started');
     }
   }),
@@ -98,8 +96,12 @@ export default Component.extend({
   isTabRunning: reads('tabStates.isSidebarRunning'),
   isTabSearch: reads('tabStates.isSidebarSearch'),
 
+  getAllRepos: task(function* () {
+    yield fetchAll(this.store, 'repo', {});
+    return this.store.findAll('repo');
+  }).drop(),
+
   fetchRepositories: task(function* () {
-    console.log('FETCH REPOS!');
     yield fetchAll(this.store, 'repo', {});
     return this.store.peekAll('repo');
   }).drop(),
