@@ -53,7 +53,7 @@
                     {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
                   >
                     {{#if this.isSubscribed}}
-                      Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                      Valid until {{moment-format this.validto "MMMM D, YYYY"}}
                     {{else if this.isIncomplete}}
                       Incomplete
                     {{else if (and this.isComplete this.isCanceled)}}
