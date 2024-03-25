@@ -4,7 +4,6 @@ import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import { get } from 'lodash';
 
 export default Component.extend({
   flashes: service(),
@@ -22,7 +21,7 @@ export default Component.extend({
 
   selectedThreshold: computed('autoRefillThreshold', {
     get() {
-      if(isPresent(this._selectedThreshold)) {
+      if (isPresent(this._selectedThreshold)) {
         return this._selectedThreshold;
       }
       return this.autoRefillThreshold;
@@ -41,7 +40,7 @@ export default Component.extend({
       return this.autoRefillAmount;
     },
     set(k, v) {
-      this.set("_selectedAmount", v);
+      this.set('_selectedAmount', v);
       this.set('autoRefillAmount', v);
     }
   }),

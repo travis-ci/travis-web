@@ -417,14 +417,12 @@ Repo.recent = function () {
 Repo.accessibleBy = function (store, reposIdsOrlogin) {
   let repos, reposIds;
   reposIds = reposIdsOrlogin || [];
-  
   repos = store.filter('repo', (repo) => {
     let repoId = parseInt(repo.get('id'));
     return reposIds.includes(repoId);
   });
-  
 
- return new EmberPromise((resolve, reject) => {
+  return new EmberPromise((resolve, reject) => {
     const params = {
       'repository.active': 'true',
       sort_by: 'current_build:desc',

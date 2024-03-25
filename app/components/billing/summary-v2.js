@@ -21,17 +21,17 @@ export default Component.extend({
   isNotPending: not('isPending'),
   hasNotExpired: not('isExpired'),
   isCanceled: reads('subscription.isCanceled'),
-  isSubscribed: computed('subscription.isSubscribed', function() {
+  isSubscribed: computed('subscription.isSubscribed', function () {
     return this.subscription.isSubscribed;
   }),
-  validto: computed('subscription.validTo', function() {
+  validto: computed('subscription.validTo', function () {
     try {
       if (this.subscription.validTo == null) {
         this.accounts.fetchV2Subscriptions.perform();
       }
-      } catch(e) {
-        console.log(e);
-      }
+    } catch (e) {
+      console.log(e);
+    }
     return this.subscription.validTo;
   }),
   isExpired: or('subscription.isExpired', 'subscription.manualSubscriptionExpired'),
