@@ -31,6 +31,8 @@ const {
   TRAVIS_COMMIT,
   SOURCE_VERSION,
   DEPLOY_TARGET,
+  TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED,
+  TEMPORARY_ANNOUNCEMENT_MESSAGE
 } = process.env;
 
 module.exports = function (environment) {
@@ -180,6 +182,10 @@ module.exports = function (environment) {
     gReCaptcha: {
       siteKey: GOOGLE_RECAPTCHA_SITE_KEY,
     },
+    tempBanner: {
+      tempBannerEnabled: TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED || false,
+      tempBannerMessage: TEMPORARY_ANNOUNCEMENT_MESSAGE || ''
+    }
   };
 
   ENV.metricsAdapters = [];
