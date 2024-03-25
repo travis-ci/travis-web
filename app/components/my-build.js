@@ -18,8 +18,10 @@ export default Component.extend({
     const vcsId = this.get('build.repo.vcsId');
     const branch = this.get('build.branchName');
     const slugOwner = (this.get('build.repo.slug') || '').split('/')[0];
+    const repoType = this.get('item.repo.serverType');
+    const commit = this.get('commit.sha');
 
-    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch, vcsId, slugOwner });
+    return this.externalLinks.branchUrl(vcsType, repoType, { owner, repo, branch, vcsId, slugOwner, commit });
   }),
 
   commitUrl: computed('build.repo.{slug,vcsType}', 'build.commit.sha', function () {
