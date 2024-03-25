@@ -22,25 +22,16 @@ export default Component.extend({
   hasNotExpired: not('isExpired'),
   isCanceled: reads('subscription.isCanceled'),
   isSubscribed: computed('subscription.isSubscribed', function() {
-    console.log("IS SUBS");
-    console.log(this.subscription);
-    console.log(this.subscription.validTo);
     return this.subscription.isSubscribed;
   }),
   validto: computed('subscription.validTo', function() {
-    console.log("VTO");
-    console.log(this.subscription);
-    console.log(this.subscription.validTo);
     try {
-    if (this.subscription.validTo == null) {
-      console.log("SUB FETCH++");
-      this.accounts.fetchV2Subscriptions.perform();
-      console.log("SUB FETCH--");
-    }
-    } catch(e) {
-      console.log("ERR");
-      console.log(e);
-    }
+      if (this.subscription.validTo == null) {
+        this.accounts.fetchV2Subscriptions.perform();
+      }
+      } catch(e) {
+        console.log(e);
+      }
     return this.subscription.validTo;
   }),
   isExpired: or('subscription.isExpired', 'subscription.manualSubscriptionExpired'),
