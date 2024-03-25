@@ -69,5 +69,4 @@ module('Acceptance | profile/plan usage', function (hooks) {
     assert.equal(profilePage.planUsage.page.creditsTotal.text, '60');
     assert.equal(profilePage.planUsage.page.minutesTotal.text, '6');
   });
-
 });

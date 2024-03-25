@@ -1,4 +1,3 @@
-import { Factory }/* , {faker} */ from 'miragejs';
+import { Factory /* , {faker} */ } from 'miragejs';
 
-export default Factory.extend({
-});
+export default Factory.extend({});

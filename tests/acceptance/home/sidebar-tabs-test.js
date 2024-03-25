@@ -22,7 +22,6 @@ module('Acceptance | home/sidebar tabs', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-
     const currentUser = this.server.create('user', {
       name: 'User Name',
       login: 'user-login'

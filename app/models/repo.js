@@ -227,13 +227,15 @@ const Repo = VcsEntity.extend({
   },
 
   _buildObservableArray(builds) {
+    /*
     const array = ExpandableRecordArray.create({
       type: 'build',
       content: []
     });
+    */
     return builds;
-    array.load(builds);
-    return  array.observe(builds);
+    // array.load(builds);
+    // return  array.observe(builds);
   },
 
   builds: computed('id', function () {
@@ -255,7 +257,7 @@ const Repo = VcsEntity.extend({
     });
 
     return builds;
-    //return this._buildObservableArray(builds);
+    // return this._buildObservableArray(builds);
   }),
 
   _requestRepoMatches(request, id) {
@@ -279,7 +281,7 @@ const Repo = VcsEntity.extend({
       (b) => this._requestRepoMatches(b, id));
     this.store.subscribe(requests, 'request', {repository_id: id}, (b) => this._requestRepoMatches(b, id));
 
-    return requests; //this._requestObservableArray(requests);
+    return requests; // this._requestObservableArray(requests);
   }),
 
   branches: computed('id', function () {
@@ -408,48 +410,46 @@ const Repo = VcsEntity.extend({
   })
 });
 
-Repo.recent = function() {
-    return this.find();
-}
+Repo.recent = function () {
+  return this.find();
+};
 
-Repo.accessibleBy = function(store, reposIdsOrlogin) {
-    let repos, reposIds;
-    reposIds = reposIdsOrlogin || [];
-    console.log("ACCESSIBLEBY");
-    console.log(reposIds);
-    repos = store.filter('repo', (repo) => {
-      let repoId = parseInt(repo.get('id'));
-      console.log(`repoid: ${repoId}`);
-      return reposIds.includes(repoId);
-    });
-    return new EmberPromise((resolve, reject) => {
-      const params = {
-        'repository.active': 'true',
-        sort_by: 'current_build:desc',
-        limit: 30,
-      };
-      return store.query('repo', params)
-        .then(() => resolve(repos), () => reject());
-    });
-  }
+Repo.accessibleBy = function (store, reposIdsOrlogin) {
+  let repos, reposIds;
+  reposIds = reposIdsOrlogin || [];
+  repos = store.filter('repo', (repo) => {
+    let repoId = parseInt(repo.get('id'));
+    return reposIds.includes(repoId);
+  });
 
-Repo.search = function(store, query) {
-    return store.query('repo', {
-      name_filter: query,
-      sort_by: 'name_filter:desc',
-      limit: 10
-    });
-  }
+  return new EmberPromise((resolve, reject) => {
+    const params = {
+      'repository.active': 'true',
+      sort_by: 'current_build:desc',
+      limit: 30,
+    };
+    return store.query('repo', params)
+      .then(() => resolve(repos), () => reject());
+  });
+};
 
-Repo.fetchBySlug = function(store, slug, provider = defaultVcsConfig.urlPrefix, serverType = undefined) {
-    let loadedRepos = store.peekAll('repo').filter(e => e.provider == provider).filter(e => e.slug == slug);
-    if (serverType) {
-      loadedRepos = loadedRepos.filter(e => e.serverType == serverType);
-    }
-    if (!isEmpty(loadedRepos)) {
-      return EmberPromise.resolve(loadedRepos.at(0));
-    }
-    return store.queryRecord('repo', { slug, provider, serverType });
+Repo.search = function (store, query) {
+  return store.query('repo', {
+    name_filter: query,
+    sort_by: 'name_filter:desc',
+    limit: 10
+  });
+};
+
+Repo.fetchBySlug = function (store, slug, provider = defaultVcsConfig.urlPrefix, serverType = undefined) {
+  let loadedRepos = store.peekAll('repo').filter(e => e.provider == provider).filter(e => e.slug == slug);
+  if (serverType) {
+    loadedRepos = loadedRepos.filter(e => e.serverType == serverType);
   }
+  if (!isEmpty(loadedRepos)) {
+    return EmberPromise.resolve(loadedRepos.at(0));
+  }
+  return store.queryRecord('repo', { slug, provider, serverType });
+};
 
 export default Repo;

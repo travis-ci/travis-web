@@ -49,7 +49,7 @@ export default TravisRoute.extend({
   afterModel(job) {
     const slug = this.modelFor('repo').get('slug');
     this.ensureJobOwnership(job, slug);
-    job.get('build').then( (build) => {
+    job.get('build').then((build) => {
       if (build.request) {
         build.request.fetchMessages.perform();
       }

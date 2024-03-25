@@ -35,7 +35,7 @@ export default Component.extend({
 
   showPlansSelector: false,
   showAddonsSelector: false,
-  isTrialProcessCompleted: computed( {
+  isTrialProcessCompleted: computed({
     get() {
       if (isPresent(this._isTrialProcessCompleted)) {
         return this._isTrialProcessCompleted;
@@ -43,19 +43,19 @@ export default Component.extend({
 
       return !this.isTrial;
     },
-    set(k,v) {
+    set(k, v) {
       this.set('_isTrialProcessCompleted', v);
       return this._isTrialProcessCompleted;
     }
   }),
-  isEduProcessCompleted: computed( {
+  isEduProcessCompleted: computed({
     get() {
-      if(isPresent(this._isEduProcessCompleted)) {
+      if (isPresent(this._isEduProcessCompleted)) {
         return this._isEduProcessCompleted;
       }
-    return !this.isEducation;
+      return !this.isEducation;
     },
-    set(k,v) {
+    set(k, v) {
       this.set('_isEduProcessCompleted', v);
       return this._isEduProcessCompleted;
     }

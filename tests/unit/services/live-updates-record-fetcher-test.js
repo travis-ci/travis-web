@@ -104,6 +104,5 @@ module('Unit | Service | live updates record fetcher', function (hooks) {
       }, 30);
     }, 30);
   });
-
 });
 

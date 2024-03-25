@@ -5,5 +5,5 @@ export default Model.extend({
   committer: belongsTo('git-user'),
   author: belongsTo('git-user'),
   job: belongsTo('job'),
-  request: belongsTo()
+  request: belongsTo(),
 });

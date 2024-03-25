@@ -427,7 +427,7 @@ Object.defineProperty(Log.Span.prototype, 'line', {
     }
     this._line = line;
     if (this.line) {
-      return this.line.add(this);
+      this.line.add(this);
     }
   }
 });

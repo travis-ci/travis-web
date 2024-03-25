@@ -23,30 +23,26 @@ export default Component.extend({
 
   labelsx: computed({
     get() {
-      if(isPresent(this._labels)) {
+      if (isPresent(this._labels)) {
         return this._labels;
       }
       return [];
     },
-    set(k,v) {
-
-      if(v === undefined) v=[];
+    set(k, v) {
+      if (v === undefined) v = [];
       this.set('_labels', v);
-
-      return this._labels;
     }
   }),
   valuesx: computed({
     get() {
-      if(isPresent(this._values)) {
+      if (isPresent(this._values)) {
         return this._values;
       }
       return [];
     },
-    set(k,v) {
-      if(v === undefined) v=[];
-      this.set(_values, v);
-      return this._values;
+    set(k, v) {
+      if (v === undefined) v = [];
+      this.set('_values', v);
     }
   }),
   datasetTitle: 'Data',
@@ -55,9 +51,9 @@ export default Component.extend({
   showPlaceholder: or('isLoading', 'isEmpty'),
 
   // Chart component data
-  data: computed( 'datasetTitle', function () {
-    if(this.labels === undefined) this.labels= [];
-    if(this.values === undefined) this.values= [];
+  data: computed('datasetTitle', function () {
+    if (this.labels === undefined) this.labels = [];
+    if (this.values === undefined) this.values = [];
 
     return {
       type: 'spline',

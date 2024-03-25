@@ -15,7 +15,7 @@ import {
 } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
-import { sortBy, filter } from 'lodash';
+import { sortBy } from 'lodash';
 
 const { profileReposPerPage: limit } = config.pagination;
 
@@ -54,7 +54,7 @@ export default VcsEntity.extend({
   title: or('name', 'login'),
 
   githubAppsRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
-    return yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });
+    return  yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });
   }),
 
   githubAppsRepositoriesOnOrg: dynamicQuery(function* ({ page = 1, filter = '' }) {
@@ -64,8 +64,9 @@ export default VcsEntity.extend({
   legacyRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
     const isGithubAppsEnabled = this.features.get('github-apps');
     const active = isGithubAppsEnabled ? true : undefined;
-    return yield this.fetchRepositories({ page, filter, ghApps: false, active });
+    return  yield this.fetchRepositories({ page, filter, ghApps: false, active });
   }),
+
 
   fetchRepositories({ page, filter, ghApps, active, activeOnOrg }) {
     const { provider, login: owner } = this;
@@ -156,7 +157,7 @@ export default VcsEntity.extend({
     function () {
       let subscriptions = this.subscriptions || [];
       let login = this.login;
-      return subscriptions.filter( function(el) { return el.owner.login == login; });
+      return subscriptions.filter((el) => el.owner.login == login);
     }),
 
   activeAccountSubscriptions: filterBy('accountSubscriptions', 'isSubscribed'),

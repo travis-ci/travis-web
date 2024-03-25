@@ -136,7 +136,7 @@ module('Unit | Serializer | repo', function (hooks) {
     assert.equal(attributes.name, 'travis-web');
     assert.deepEqual(Object.keys(relationships).sort(), ['currentBuild', 'defaultBranch']);
 
-    let includedRecords = result.included.map(({ id, type }) => { return { id, type }; });
+    let includedRecords = result.included.map(({ id, type }) => ({ id, type }));
     let expectedIncludedRecords = [
       { id: '/repo/1/branch/master', type: 'branch' },
       { id: '1', type: 'build' },

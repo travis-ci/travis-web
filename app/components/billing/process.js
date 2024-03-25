@@ -20,14 +20,14 @@ export default Component.extend({
 
   showCancelButton: false,
 
-  currentStep: computed( {
+  currentStep: computed({
     get() {
-      if(isPresent(this._currentStep)) {
+      if (isPresent(this._currentStep)) {
         return this._currentStep;
       }
       return this.storage.billingStep || STEPS.ONE;
     },
-    set(key,value) {
+    set(key, value) {
       this.set('_currentStep', value);
       return this._currentStep;
     }

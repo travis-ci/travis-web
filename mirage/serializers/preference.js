@@ -8,15 +8,15 @@ export default Serializer.extend({
         '@type': 'preferences',
         '@href': '/v3/preferences',
         '@representation': 'standard',
-        preferences: object.models.map(preference => preference.attrs)
+        preferences: object.models.map((preference) => preference.attrs),
       };
     } else {
       let metadata = {
         '@type': 'preference',
         '@href': '/v3/preferences',
-        '@representation': 'standard'
+        '@representation': 'standard',
       };
       return Object.assign(metadata, object.attrs);
     }
-  }
+  },
 });

@@ -38,21 +38,21 @@ export default Component.extend({
 
   selectedPlan: computed('displayedPlans.[].id', 'defaultPlanId', {
     get() {
-    if(isPresent(this._selectedPlan)) {
+      if (isPresent(this._selectedPlan)) {
+        return this._selectedPlan;
+      }
+
+      let plan = this.storage.selectedPlanId;
+      if (plan == null) {
+        plan = this.defaultPlanId;
+      }
+
+      return this.displayedPlans.findBy('id', plan);
+    },
+    set(k, v) {
+      this.set('_selectedPlan', v);
       return this._selectedPlan;
-    }
-
-    let plan = this.storage.selectedPlanId;
-    if (plan == null) {
-      plan = this.defaultPlanId;
-    }
-
-    return this.displayedPlans.findBy('id', plan);
-  },
-  set(k,v) {
-    this.set('_selectedPlan', v);
-    return this._selectedPlan;
-  }}),
+    }}),
 
   isTrial: computed('selectedPlan', function () {
     let plan = this.selectedPlan;

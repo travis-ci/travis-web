@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { or, reads } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import {capitalize } from '@ember/string';
 import { isPresent } from '@ember/utils';
 
@@ -15,7 +15,7 @@ export default Component.extend({
   account: null,
 
   isSignup: false,
-  providerParam: null, 
+  providerParam: null,
   isLogoVisible: true,
   isLogoSeparatorVisible: true,
   isBetaBadgeVisible: reads('isBetaProvider'),
@@ -25,15 +25,14 @@ export default Component.extend({
 
   provider: computed('providerParam', 'account.provider', 'multiVcs.primaryProvider', {
     get() {
-      if(isPresent(this._provider)) {
+      if (isPresent(this._provider)) {
         return this._provider;
       }
       return this.providerParam || (this.account && this.account.provider) || this.multiVcs.primaryProvider;
     },
-    set(k,v) {
+    set(k, v) {
       this.set('_provider', v);
       return this._provider;
-
     }
   }),
   vcsType: computed('provider', {
@@ -41,9 +40,9 @@ export default Component.extend({
       if (isPresent(this._vcsType)) {
         return this._vcsType;
       }
-      return capitalize(this.provider.replace('-', '')) + 'User';
+      return `${capitalize(this.provider.replace('-', ''))}User`;
     },
-    set(k,v) {
+    set(k, v) {
       this.set('_vcsType', v);
       return this._vcsType;
     }
@@ -74,7 +73,6 @@ export default Component.extend({
 
   signin() {
     if (this.get('features.proVersion')) {
-      
       if (this.account) {
         this.auth.switchAccount(this.account.id, this.auth.redirectUrl || '/');
       } else {

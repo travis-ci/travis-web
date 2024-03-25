@@ -37,15 +37,15 @@ export default Component.extend({
   options: [],
 
   isEmpty: empty('options'),
-  isVisible: computed( {
-    get(){
-      if( isPresent(this._isVisible)) {
+  isVisible: computed({
+    get() {
+      if (isPresent(this._isVisible)) {
         return this._isVisible;
       }
 
       return !this.isEmpty;
     },
-    set(k,v) {
+    set(k, v) {
       this.set('_isVisible', v);
       return this._isVisible;
     }

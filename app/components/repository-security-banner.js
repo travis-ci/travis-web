@@ -9,9 +9,9 @@ export default Component.extend({
 
   bannerKey: 'travis.repository-security-banner',
 
-  showLicenseBanner: computed( {
+  showLicenseBanner: computed({
     get() {
-      if ( isPresent(this._showLicenseBanner)) {
+      if (isPresent(this._showLicenseBanner)) {
         return this._showLicenseBanner;
       }
       return !this.storage.getItem(this.bannerKey);

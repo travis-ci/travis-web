@@ -10,7 +10,6 @@ module('Integration | Component | billing-select-addon', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-
     this['actions'] = {
       next: () => { }
     };

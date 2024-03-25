@@ -3,6 +3,7 @@ import { reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   flashes: service(),
@@ -18,12 +19,30 @@ export default Component.extend({
 
   creditsTotal: reads('subscription.addonUsage.private.totalCredits'),
 
-  selectedThreshold: computed('autoRefillThreshold', function () {
-    return this.autoRefillThreshold;
+  selectedThreshold: computed('autoRefillThreshold', {
+    get() {
+      if (isPresent(this._selectedThreshold)) {
+        return this._selectedThreshold;
+      }
+      return this.autoRefillThreshold;
+    },
+    set(k, v) {
+      this.set('_selectedThreshold', v);
+      this.set('autoRefillThreshold', v);
+    }
   }),
 
-  selectedAmount: computed('autoRefillAmount', function () {
-    return this.autoRefillAmount;
+  selectedAmount: computed('autoRefillAmount', {
+    get() {
+      if (isPresent(this._selectedAmount)) {
+        return this._selectedAmount;
+      }
+      return this.autoRefillAmount;
+    },
+    set(k, v) {
+      this.set('_selectedAmount', v);
+      this.set('autoRefillAmount', v);
+    }
   }),
 
   autoRefillCredits: computed('creditsTotal', 'autoRefillAmount', function () {
@@ -56,7 +75,7 @@ export default Component.extend({
 
   updateAutoRefill: task(function* () {
     try {
-      yield this.subscription.autoRefillUpdate.perform(this.selectedThreshold, this.selectedAmount);
+      yield this.subscription.autoRefillUpdate.perform(this.autoRefillThreshold, this.autoRefillAmount);
     } catch (err) {
       this.flashes.clear();
       this.flashes.error('Something went wrong and your Auto Refill settings were not saved.');

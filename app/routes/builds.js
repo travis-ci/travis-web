@@ -24,7 +24,6 @@ export default TravisRoute.extend({
   },
 
   beforeModel() {
-
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
       repo.fetchRepoOwnerAllowance.perform();

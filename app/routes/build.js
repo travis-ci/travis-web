@@ -31,8 +31,7 @@ export default TravisRoute.extend({
   },
 
   model(params) {
- //   let res =  this.store.findRecord('build', params.build_id);
-    let m = this.store.peekRecord('build', params.build_id);
+    //   let res =  this.store.findRecord('build', params.build_id);
     let res = this.store.find('build', params.build_id);
     return res;
   },
@@ -42,9 +41,8 @@ export default TravisRoute.extend({
     this.ensureBuildOwnership(model, slug);
     let request = model.request;
     try {
-      if(request) request.fetchMessages.perform();
-    }
-    catch(e) {
+      if (request) request.fetchMessages.perform();
+    } catch (e) {
     }
   },
 
@@ -56,18 +54,18 @@ export default TravisRoute.extend({
   },
 
   ensureBuildOwnership(build, urlSlug) {
-
-      const buildRepoSlug = build.get('repo.slug');
-      if (buildRepoSlug !== urlSlug) {
-        throw (new Error('invalidBuildId'));
-      }
+    const buildRepoSlug = build.get('repo.slug');
+    if (buildRepoSlug !== urlSlug) {
+      throw (new Error('invalidBuildId'));
+    }
     return;
-    build.repo.then(e =>{
+    /*
+    build.repo.then(e => {
       const buildRepoSlug = build.get('repo.slug');
       if (buildRepoSlug !== urlSlug) {
         throw (new Error('invalidBuildId'));
       }
-    });
+    }); */
   },
 
   deactivate() {

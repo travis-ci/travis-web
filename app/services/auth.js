@@ -41,7 +41,7 @@ export default Service.extend({
   api: service(),
   router: service(),
   flashes: service(),
- // intercom: service(),
+  // intercom: service(),
   store: service(),
   localStorage: service('storage'),
   sessionStorage: service(),
@@ -187,7 +187,6 @@ export default Service.extend({
     this.set('state', STATE.SIGNING_IN);
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
-
       return promise
         .then(() => { this.permissionsService.fetchPermissions.perform();  })
         .then(() => {
@@ -224,9 +223,9 @@ export default Service.extend({
     userRecord.set('authToken', token);
 
     return this.reloadUser(userRecord).then(() => {
-   //   let acc = storage.accounts;
-  //    acc.push(userRecord);
-  //    storage.accounts.set(acc);
+      //   let acc = storage.accounts;
+      //    acc.push(userRecord);
+      //    storage.accounts.set(acc);
       storage.pushAccount(userRecord);
       storage.set('activeAccount', userRecord);
       this.reportNewUser();
@@ -322,7 +321,7 @@ export default Service.extend({
     this.storage.accounts.removeObject(currentUser);
     currentUser.set('authToken', token);
     let acc = this.storage.accounts;
-    this.storage.accounts = acc.addObject(userRecord);
+    this.storage.accounts = acc.addObject(currentUser);
     this.reloadUser(currentUser);
     this.storage.set('activeAccount', currentUser);
     this.storage.setRegeneratedToken(token);

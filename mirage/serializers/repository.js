@@ -5,7 +5,9 @@ export default V3Serializer.extend({
     this.fixOwnerAndName(repository);
 
     if (!repository.defaultBranch && repository.branches) {
-      let defaultBranch = repository.branches.models.find(branch => branch.default_branch);
+      let defaultBranch = repository.branches.models.find(
+        (branch) => branch.default_branch,
+      );
       repository.defaultBranch = defaultBranch;
     }
 
@@ -27,7 +29,8 @@ export default V3Serializer.extend({
   // also name and owner data to make the payload more similar to what we get in
   // production.
   fixOwnerAndName(repository) {
-    let owner, name,
+    let owner,
+      name,
       attrs = repository.attrs;
 
     if (attrs.slug) {
@@ -43,5 +46,5 @@ export default V3Serializer.extend({
     if (name && !attrs.name) {
       attrs.name = name;
     }
-  }
+  },
 });

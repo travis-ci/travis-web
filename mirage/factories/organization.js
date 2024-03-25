@@ -1,4 +1,3 @@
 import { Factory } from 'miragejs';
 
-export default Factory.extend({
-});
+export default Factory.extend({});

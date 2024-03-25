@@ -8,34 +8,34 @@ const {
   ENDPOINT_PORTFOLIO,
   DEFAULT_PROVIDER,
   VCS_PROXY_PROVIDER_URL,
-} = process && process.env || {};
+} = (process && process.env) || {};
 
 const VCS_TYPES = {
   ASSEMBLA: {
     ORG: 'AssemblaOrganization',
     REPO: 'AssemblaRepository',
-    USER: 'AssemblaUser'
+    USER: 'AssemblaUser',
   },
   BITBUCKET: {
     ORG: 'BitbucketOrganization',
     REPO: 'BitbucketRepository',
-    USER: 'BitbucketUser'
+    USER: 'BitbucketUser',
   },
   GITLAB: {
     ORG: 'GitlabOrganization',
     REPO: 'GitlabRepository',
-    USER: 'GitlabUser'
+    USER: 'GitlabUser',
   },
   GITHUB: {
     ORG: 'GithubOrganization',
     REPO: 'GithubRepository',
-    USER: 'GithubUser'
+    USER: 'GithubUser',
   },
   TRAVIS_PROXY: {
     ORG: 'TravisproxyOrganization',
     REPO: 'TravisproxyRepository',
-    USER: 'TravisproxyUser'
-  }
+    USER: 'TravisproxyUser',
+  },
 };
 
 // keys sorted alphabetically
@@ -43,7 +43,11 @@ module.exports = deepFreeze({
   assembla: {
     isDefault: DEFAULT_PROVIDER === 'assembla',
     isBeta: true,
-    vcsTypes: [VCS_TYPES.ASSEMBLA.ORG, VCS_TYPES.ASSEMBLA.REPO, VCS_TYPES.ASSEMBLA.USER],
+    vcsTypes: [
+      VCS_TYPES.ASSEMBLA.ORG,
+      VCS_TYPES.ASSEMBLA.REPO,
+      VCS_TYPES.ASSEMBLA.USER,
+    ],
     endpointPortfolio: ENDPOINT_PORTFOLIO,
     endpoint: 'https://app.assembla.com',
     icon: 'icon-assembla',
@@ -73,7 +77,11 @@ module.exports = deepFreeze({
   bitbucket: {
     isDefault: DEFAULT_PROVIDER === 'bitbucket',
     isBeta: true,
-    vcsTypes: [VCS_TYPES.BITBUCKET.ORG, VCS_TYPES.BITBUCKET.REPO, VCS_TYPES.BITBUCKET.USER],
+    vcsTypes: [
+      VCS_TYPES.BITBUCKET.ORG,
+      VCS_TYPES.BITBUCKET.REPO,
+      VCS_TYPES.BITBUCKET.USER,
+    ],
     endpoint: 'https://bitbucket.org',
     icon: 'icon-bitbucket',
     name: 'Bitbucket',
@@ -102,7 +110,11 @@ module.exports = deepFreeze({
   gitlab: {
     isDefault: DEFAULT_PROVIDER === 'gitlab',
     isBeta: true,
-    vcsTypes: [VCS_TYPES.GITLAB.ORG, VCS_TYPES.GITLAB.REPO, VCS_TYPES.GITLAB.USER],
+    vcsTypes: [
+      VCS_TYPES.GITLAB.ORG,
+      VCS_TYPES.GITLAB.REPO,
+      VCS_TYPES.GITLAB.USER,
+    ],
     endpoint: 'https://gitlab.com',
     icon: 'icon-gitlab',
     name: 'GitLab',
@@ -131,7 +143,11 @@ module.exports = deepFreeze({
   github: {
     isDefault: DEFAULT_PROVIDER === 'github' || !DEFAULT_PROVIDER,
     isBeta: false,
-    vcsTypes: [VCS_TYPES.GITHUB.ORG, VCS_TYPES.GITHUB.REPO, VCS_TYPES.GITHUB.USER],
+    vcsTypes: [
+      VCS_TYPES.GITHUB.ORG,
+      VCS_TYPES.GITHUB.REPO,
+      VCS_TYPES.GITHUB.USER,
+    ],
     endpoint: 'https://github.com',
     icon: 'icon-repooctocat',
     name: 'GitHub',
@@ -160,7 +176,11 @@ module.exports = deepFreeze({
   travisproxy: {
     isDefault: DEFAULT_PROVIDER === 'travisproxy',
     isBeta: true,
-    vcsTypes: [VCS_TYPES.TRAVIS_PROXY.ORG, VCS_TYPES.TRAVIS_PROXY.REPO, VCS_TYPES.TRAVIS_PROXY.USER],
+    vcsTypes: [
+      VCS_TYPES.TRAVIS_PROXY.ORG,
+      VCS_TYPES.TRAVIS_PROXY.REPO,
+      VCS_TYPES.TRAVIS_PROXY.USER,
+    ],
     endpoint: VCS_PROXY_PROVIDER_URL,
     icon: 'icon-travis-proxy',
     name: 'Travis CI VCS Proxy',

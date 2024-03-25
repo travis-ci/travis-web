@@ -1,3 +1,4 @@
+/* global Travis */
 import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';

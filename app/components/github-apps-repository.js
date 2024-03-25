@@ -1,3 +1,4 @@
+/* global Travis */
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
@@ -53,7 +54,7 @@ export default Component.extend({
     let repo = this.repository;
     let forRepo = (repo.owner.id == this.user.id && repo.ownerType == 'user') ||
                   ((repo.shared || repo.ownerType != 'user') && repo.permissions?.settings_read);
-    return forRepo &&this.permissions.hasPushPermission(repo);
+    return forRepo && this.permissions.hasPushPermission(repo);
   }),
 
   hasEmailSubscription: computed('repository', 'repository.emailSubscribed', function () {

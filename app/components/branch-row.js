@@ -44,7 +44,7 @@ export default Component.extend({
 
   vcsType: computed('branch.repository.id', {
     get() {
-      if(isPresent(this._vcsType)) {
+      if (isPresent(this._vcsType)) {
         return this._vcsType;
       }
       const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));

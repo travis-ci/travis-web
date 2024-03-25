@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-import Store from 'ember-data/store';
-import {CacheHandler} from 'ember-data/store';
+import Store, { CacheHandler } from 'ember-data/store';
 import RequestManager from '@ember-data/request';
 import {LegacyNetworkHandler} from '@ember-data/legacy-compat';
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
@@ -19,9 +18,9 @@ export default Store.extend({
     this._super(...arguments);
     this.shouldAssertMethodCallsOnDestroyedStore = true;
     this.filteredArraysManager = FilteredArrayManager.create({ store: this });
-this.requestManager = new RequestManager();
-        this.requestManager.use([LegacyNetworkHandler]);
-        this.requestManager.useCache(CacheHandler);
+    this.requestManager = new RequestManager();
+    this.requestManager.use([LegacyNetworkHandler]);
+    this.requestManager.useCache(CacheHandler);
   },
 
   // Fetch a filtered collection.
@@ -76,8 +75,8 @@ this.requestManager = new RequestManager();
   //
   // For more info you may also see comments in FilteredArraysManager.
   filter(modelName, queryParams, filterFunction = undefined, dependencies = undefined, forceReload = false) {
-    if(this.filteredArraysManager === undefined) {
-       this.filteredArraysManager = FilteredArrayManager.create({ store: this });
+    if (this.filteredArraysManager === undefined) {
+      this.filteredArraysManager = FilteredArrayManager.create({ store: this });
     }
     if (arguments.length === 0) {
       throw new Error('store.filter called with no arguments');
@@ -86,7 +85,6 @@ this.requestManager = new RequestManager();
       return this.findAll(modelName);
     }
     if (arguments.length === 2) {
-
       filterFunction = queryParams;
       return this.filteredArraysManager.filter(modelName, null, filterFunction, ['']);
     }
@@ -101,23 +99,22 @@ this.requestManager = new RequestManager();
 
   subscribe(obj, caller, modelName, queryParams, filterFunction, dependencies, forceReload, beforeCb, afterCb) {
     let sub = {
-      object : obj,
+      object: obj,
       caller: caller,
-      model : modelName,
-      query : queryParams,
+      model: modelName,
+      query: queryParams,
       filter: filterFunction,
-      dependencies : dependencies,
-      forceReload : forceReload,
-      beforeCb : beforeCb,
-      afterCb : afterCb
+      dependencies: dependencies,
+      forceReload: forceReload,
+      beforeCb: beforeCb,
+      afterCb: afterCb
     };
     this.subscriptions.push(sub);
   },
 
   unsubscribe(obj) {
-    this.subscriptions = this.subscriptions.filter( function(sub) {sub.object !== obj });
+    this.subscriptions = this.subscriptions.filter((sub) => { sub.object !== obj; });
   },
-
 
 
   // Returns a collection with pagination data. If the first page is requested,
@@ -174,61 +171,59 @@ this.requestManager = new RequestManager();
     return res;
   },
 
-    smartQueryRecord(type, ...params) {
-        let res =  this.queryRecord(type, ...params);
-        return res;
-    },
+  smartQueryRecord(type, ...params) {
+    let res =  this.queryRecord(type, ...params);
+    return res;
+  },
 
-    push(object) {
-        const id = object.data.id
-        const type = object.data.type;
+  push(object) {
+    const id = object.data.id;
+    const type = object.data.type;
 
-        if (this.shouldAdd(object)) {
-            const included = object.included ? JSON.parse(JSON.stringify(object.included)) : null;
-            if (included) {
-                object.included = included.filter(single => {
-                    return this.shouldAdd({data: single})
-                });
-            }
-          
-            this.subscriptions.forEach(sub => {
-              if(sub.modelType == type && sub.beforeCb) {
-                console.log("BEFORECB");
-                sub.beforeCb(sub.object,sub.caller);
-              }
-            });
-            let res =  this._super(...arguments);
+    if (this.shouldAdd(object)) {
+      const included = object.included ? JSON.parse(JSON.stringify(object.included)) : null;
+      if (included) {
+        object.included = included.filter(single => this.shouldAdd({data: single}));
+      }
 
-            this.subscriptions.forEach(sub => {
-              if(sub.modelType == type && sub.afterCb) {
-                console.log("AFTERCB");
-                sub.afterCb(sub.object, sub.caller);
-              }
-            });
-            
-            return res;
-        } else {
-            return this.peekRecord(type, id);
+      this.subscriptions.forEach(sub => {
+        if (sub.modelType == type && sub.beforeCb) {
+          console.log('BEFORECB');
+          sub.beforeCb(sub.object, sub.caller);
         }
-    },
+      });
+      let res =  this._super(...arguments);
 
-    shouldAdd(object) {
-        const data = object.data;
-        const type = data.type;
-        const newUpdatedAt = data.attributes ? data.attributes.updatedAt : null;
-        const id = data.id
-        if (newUpdatedAt) {
-            const record = this.peekRecord(type, id);
-            if (record) {
-                const existingUpdatedAt = record.get('updatedAt');
-                return !existingUpdatedAt || existingUpdatedAt <= newUpdatedAt;
-            } else {
-                return true
-            }
-        } else {
-            return true
+      this.subscriptions.forEach(sub => {
+        if (sub.modelType == type && sub.afterCb) {
+          console.log('AFTERCB');
+          sub.afterCb(sub.object, sub.caller);
         }
-    },
+      });
+
+      return res;
+    } else {
+      return this.peekRecord(type, id);
+    }
+  },
+
+  shouldAdd(object) {
+    const data = object.data;
+    const type = data.type;
+    const newUpdatedAt = data.attributes ? data.attributes.updatedAt : null;
+    const id = data.id;
+    if (newUpdatedAt) {
+      const record = this.peekRecord(type, id);
+      if (record) {
+        const existingUpdatedAt = record.get('updatedAt');
+        return !existingUpdatedAt || existingUpdatedAt <= newUpdatedAt;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  },
 
   // We shouldn't override private methods, but at the moment I don't see any
   // other way to prevent updating records with outdated data.

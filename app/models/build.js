@@ -41,7 +41,7 @@ export default Model.extend(DurationCalculations, {
   stagesSort: ['number'],
   sortedStages: sort('stages', 'stagesSort'),
 
-  createdBy: belongsTo('user', { async: false, inverse: null} ),
+  createdBy: belongsTo('user', { async: false, inverse: null}),
 
   stagesAreLoaded: alias('stages.isSettled'),
 

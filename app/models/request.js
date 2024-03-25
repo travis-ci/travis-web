@@ -31,7 +31,7 @@ export default Model.extend({
   raw_configs: attr(),
   uniqRawConfigs: uniqBy('raw_configs', 'source'),
   noYaml: empty('raw_configs'),
-  repo: belongsTo('repo', { async: true , inverse: null}),
+  repo: belongsTo('repo', { async: true, inverse: null}),
   commit: belongsTo('commit', { async: true, inverse: null }),
 
   // API models this as hasMany but serializers:request#normalize overrides it

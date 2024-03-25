@@ -40,7 +40,7 @@ export default Factory.extend({
   customSshKey: Object.freeze({
     description: 'Custom',
     fingerprint: 'dd:cc:bb:aa',
-    type: 'custom'
+    type: 'custom',
   }),
 
   defaultSshKey: Object.freeze({
@@ -64,5 +64,5 @@ export default Factory.extend({
       const user = server.schema.users.all().models[0] || null;
       server.create('permissions', { user, repository });
     }
-  }
+  },
 });

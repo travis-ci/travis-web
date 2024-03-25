@@ -20,7 +20,7 @@ module('Acceptance | profile/not found', function (hooks) {
   test('try to view account that does not exist', async function (assert) {
     await profilePage.visitOrganization({ name: 'random-org' });
 
- //   assert.equal(document.title, 'Account - Profile - Travis CI');
+    //   assert.equal(document.title, 'Account - Profile - Travis CI');
     assert.equal(profilePage.notFoundOrgName, 'random-org');
   });
 });

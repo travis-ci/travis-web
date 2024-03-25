@@ -17,7 +17,7 @@ export default Component.extend({
   isV2SubscriptionEmpty: empty('account.v2subscription'),
   hasV2Subscription: not('isV2SubscriptionEmpty'),
 
-  isProcessCompleted: computed( {
+  isProcessCompleted: computed({
     get() {
       if (isPresent(this._isProcessCompleted)) {
         return this._isProcessCompleted;
@@ -25,7 +25,7 @@ export default Component.extend({
 
       return this.hasV2Subscription;
     },
-    set(k,v) {
+    set(k, v) {
       this.set('_isProcessCompleted', v);
       return this._isProcessCompleted;
     }

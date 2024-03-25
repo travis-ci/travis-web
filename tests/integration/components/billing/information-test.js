@@ -84,7 +84,7 @@ module('Integration | Component | billing-information', function (hooks) {
   test('it renders billing information form correctly', async function (assert) {
     assert.expect(1);
 
-    this.set('back', () => { return assert.ok(true) });
+    this.set('back', () => assert.ok(true));
 
     await render(hbs`
       <Billing::Information

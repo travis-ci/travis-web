@@ -12,7 +12,7 @@ export default class extends Serializer {
         '@type': 'v2_plans',
         '@href': '/v2_plans_for',
         '@representation': 'standard',
-        v2_plans: object.models.map(plan => {
+        v2_plans: object.models.map((plan) => {
           return {
             id: plan.attrs.id,
             name: plan.attrs.name,
@@ -22,9 +22,9 @@ export default class extends Serializer {
             public_credits: plan.attrs.publicCredits,
             addon_configs: plan.attrs.addonConfigs,
             plan_type: plan.attrs.planType,
-            annual: plan.attrs.isAnnual
+            annual: plan.attrs.isAnnual,
           };
-        })
+        }),
       };
     } else {
       let metadata = {

@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { presense } from 'travis/utils/form-validators';
 import { combineValidators } from 'travis/helpers/combine-validators';
 import { computed } from '@ember/object';
-import { equal, or, and, notEmpty, not } from '@ember/object/computed';
+import { equal, or, and, notEmpty } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 
 export const FIELD_STATE = {
@@ -70,14 +70,14 @@ export default Component.extend({
 
   showClear: and('allowClear', 'value'),
   showIcon: notEmpty('icon'),
-  showFrame:  computed('disableFrame', {
+  showFrame: computed('disableFrame', {
     get() {
-      if(isPresent(this._showFrame)) {
+      if (isPresent(this._showFrame)) {
         return this._showFrame;
       }
       return !this.disableFrame;
     },
-    set(k,v) {
+    set(k, v) {
       this._showFrame = v;
       return this._showFrame;
     }

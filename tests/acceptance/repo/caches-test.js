@@ -48,7 +48,6 @@ module('Acceptance | repo caches', function (hooks) {
       permissions: { cache_view: true, cache_delete: true },
       owner: {login: 'user-login', id: currentUser.id}
     });
-
   });
 
   test('view and delete caches', async function (assert) {

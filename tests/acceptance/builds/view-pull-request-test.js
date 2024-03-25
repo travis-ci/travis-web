@@ -50,7 +50,7 @@ module('Acceptance | builds/view pull request', function (hooks) {
 
     await page.visit({ owner: 'travis-ci', repo: 'travis-web', build_id: build.id });
 
- //   assert.equal(document.title, 'Build #5 - travis-ci/travis-web - Travis CI');
+    //   assert.equal(document.title, 'Build #5 - travis-ci/travis-web - Travis CI');
 
     assert.ok(page.buildTabLinkIsActive, 'build tab link is active');
     assert.equal(page.buildTabLinkText, 'Build #5');

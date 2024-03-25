@@ -1,6 +1,7 @@
+/* eslint no-undef: 0 */
 import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
-import { settled, getContext } from '@ember/test-helpers';
+import { settled } from '@ember/test-helpers';
 import page from 'travis/tests/pages/repo-not-active';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -28,7 +29,6 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
 
     await settled();
 
-    const { owner } = getContext();
     let subscribed = Travis.pusher.active_channels.includes(`repo-${repo.id}`);
 
     assert.ok(subscribed, 'user is subscribed to a repo channel');
@@ -56,8 +56,6 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
 
     await settled();
 
-    const { owner } = getContext();
-
     let subscribed = Travis.pusher.active_channels.includes(`repo-${repository.id}`);
 
     assert.notOk(subscribed, 'user is not subscribed to a repo channel');
@@ -84,8 +82,6 @@ module('Acceptance | subscribing pusher to public repo', function (hooks) {
     await page.visit({ organization: 'musterfrau', repo: 'a-repo' });
 
     await settled();
-    const { owner } = getContext();
-
     let subscribed = Travis.pusher.active_channels.includes(`repo-${repository.id}`);
     assert.ok(subscribed, 'user is subscribed to a repo channel');
   });

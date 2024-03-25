@@ -6,7 +6,7 @@ import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 
-export default Component.extend( {
+export default Component.extend({
   auth: service(),
   store: service(),
   externalLinks: service(),
@@ -84,29 +84,29 @@ export default Component.extend( {
     toggleNavigation() {
       this.toggleProperty('isNavigationOpen');
     },
-  setupInViewport() {
-    const loader = document.getElementById('loader');
-    const viewportTolerance = { bottom: 200 };
-    const { onEnter, _onExit } = this.inViewport.watchElement(loader, { viewportTolerance });
-    // pass the bound method to `onEnter` or `onExit`
-    onEnter(this.didEnterViewport.bind(this));
-  },
+    setupInViewport() {
+      const loader = document.getElementById('loader');
+      const viewportTolerance = { bottom: 200 };
+      const { onEnter, _ } = this.inViewport.watchElement(loader, { viewportTolerance });
+      // pass the bound method to `onEnter` or `onExit`
+      onEnter(this.didEnterViewport.bind(this));
+    },
 
-  willDestroy() {
+    willDestroy() {
     // need to manage cache yourself if you don't use the mixin
-    const loader = document.getElementById('loader');
-    this.inViewport.stopWatching(loader);
+      const loader = document.getElementById('loader');
+      this.inViewport.stopWatching(loader);
 
-    super.willDestroy(...arguments);
-  },
- 
- didEnterViewport() {
-    this.flashes.set('topBarVisible', true);
-  },
+      super.willDestroy(...arguments);
+    },
 
-  didExitViewport() {
-    this.flashes.set('topBarVisible', false);
-  }
+    didEnterViewport() {
+      this.flashes.set('topBarVisible', true);
+    },
+
+    didExitViewport() {
+      this.flashes.set('topBarVisible', false);
+    }
 
   }
 });

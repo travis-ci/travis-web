@@ -97,7 +97,7 @@ module('Acceptance | profile/filtering', function (hooks) {
 
     for (let i = 0; i < 15; i++) {
       this.server.create('repository', {
-        name: `github-apps-public-repository-${(i + '').padStart(3, '0')}`,
+        name: `github-apps-public-repository-${(`${i}`).padStart(3, '0')}`,
         owner: {
           login: 'user-login',
         },

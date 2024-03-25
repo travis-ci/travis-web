@@ -11,7 +11,6 @@ import EmberObject from '@ember/object';
 
 module('Unit | Instance Initializer | enterprise environment', function (hooks) {
   hooks.beforeEach(function () {
-
     const TestApplication = Application.extend(Evented, {Resolver, modulePrefix: 'pfx'});
     TestApplication.instanceInitializer({
       name: 'initializer under test',

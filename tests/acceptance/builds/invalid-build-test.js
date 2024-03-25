@@ -1,12 +1,11 @@
 import { visit } from '@ember/test-helpers';
-import {Logger, Test } from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import buildPage from 'travis/tests/pages/build';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-let adapterException;
-let loggerError;
+// let adapterException;
+// let loggerError;
 
 module('Acceptance | builds/invalid build', function (hooks) {
   setupApplicationTest(hooks);

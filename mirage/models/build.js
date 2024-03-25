@@ -7,5 +7,5 @@ export default Model.extend({
   branch: belongsTo('branch'),
   jobs: hasMany('job'),
   stages: hasMany('stage'),
-  request: belongsTo('request')
+  request: belongsTo('request'),
 });

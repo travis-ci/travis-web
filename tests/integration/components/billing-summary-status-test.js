@@ -23,7 +23,6 @@ module('Integration | Component | billing-summary-status', function (hooks) {
   });
 
   test('it renders active status', async function (assert) {
-
     await render(hbs`<BillingSummaryStatus
       @subscription={{this.subscription}}
       @isPending={{this.isPending}}
@@ -65,7 +64,7 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan incomplete');
-    //assert.dom(profilePage.billing.billingSubscription.greyStatus).hasText('incomplete');
+    // assert.dom(profilePage.billing.billingSubscription.greyStatus).hasText('incomplete');
   });
 
   test('it renders pending status', async function (assert) {
@@ -82,7 +81,7 @@ module('Integration | Component | billing-summary-status', function (hooks) {
     />`);
 
     assert.dom('[data-test-plan-name]').hasText('Bootstrap plan pending');
- //   assert.dom(profilePage.billing.billingSubscription.greyStatus).hasText('pending');
+    //   assert.dom(profilePage.billing.billingSubscription.greyStatus).hasText('pending');
   });
 
   test('it renders canceled status', async function (assert) {

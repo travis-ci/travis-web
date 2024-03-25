@@ -109,7 +109,6 @@ module('Acceptance | repo | requests', function (hooks) {
     });
 
     assert.ok(requestsPage.missingNotice.isHidden);
-
   });
 
   test('a placeholder shows when there are no requests', async function (assert) {

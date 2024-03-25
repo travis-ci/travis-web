@@ -1,3 +1,4 @@
+/* eslint no-redeclare: 0 */
 /* global window, XMLHttpRequest */
 
 import config from 'travis/config/environment';

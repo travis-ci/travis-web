@@ -1,6 +1,6 @@
-import { module, test,skip } from 'qunit';
+import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, waitFor , pauseTest} from '@ember/test-helpers';
+import { render, settled, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { Response } from 'miragejs';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -50,9 +50,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
 
     this.set('repository', repo);
 
-    this.server.post('/repo/:id/activate', (schema, request) => {
-      return new Response(409, {}, {});
-    });
+    this.server.post('/repo/:id/activate', (schema, request) => new Response(409, {}, {}));
 
     await render(hbs`{{repository-status-toggle repository=this.repository}}`);
     assert.dom('.switch').findElement().click();
@@ -84,9 +82,7 @@ module('RepositoryStatusToggleComponent', function (hooks) {
 
     this.set('repository', repo);
 
-    this.server.post('/repo/:id/activate', (schema, request) => {
-      return new Response(404, {}, {});
-    });
+    this.server.post('/repo/:id/activate', (schema, request) => new Response(404, {}, {}));
 
     await render(hbs`{{repository-status-toggle repository=this.repository}}`);
 

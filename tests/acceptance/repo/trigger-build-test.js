@@ -7,7 +7,6 @@ import { Response } from 'miragejs';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import {pauseTest } from '@ember/test-helpers';
 
 module('Acceptance | repo/trigger build', function (hooks) {
   setupApplicationTest(hooks);

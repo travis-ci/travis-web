@@ -2,7 +2,7 @@ import {
   currentURL,
   visit,
 } from '@ember/test-helpers';
-import Ember from 'ember';
+// import Ember from 'ember';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import nonExistentOwnerPage from 'travis/tests/pages/owner/non-existent';
@@ -10,8 +10,8 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-let adapterException;
-let loggerError;
+// let adapterException;
+// let loggerError;
 
 module('Acceptance | owner/not found', function (hooks) {
   setupApplicationTest(hooks);
