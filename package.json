@@ -30,7 +30,7 @@
     "broccoli-merge-trees": "^3.0.0",
     "ember-animated": "^0.9.0",
     "ember-c3": "^2.0.0",
-    "ember-cli": "~3.12.0",
+    "ember-cli": "^3.27.0",
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-autoprefixer": "^0.8.1",
     "ember-cli-babel": "^7.7.3",
@@ -113,6 +113,8 @@
   "dependencies": {
     "@adopted-ember-addons/ember-stripe-elements": "^1.0.0-rc.2",
     "deep-freeze": "0.0.1",
+    "minimist": "^1.2.6",
+    "path-parse": "^1.0.7",
     "watchman": "^1.0.0",
     "xss-clean": "^0.1.1"
   },

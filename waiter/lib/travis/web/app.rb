@@ -207,7 +207,8 @@ class Travis::Web::App
     if options[:github_apps_app_name]
       config['githubApps'] ||= {}
       config['githubApps']['appName'] = options[:github_apps_app_name]
-    end
+    config['githubApps']['migrationRepositoryCountLimit'] = 50
+      end
 
     config['publicMode'] = !options[:public_mode].nil? && (options[:public_mode] == 'false' || options[:public_mode] == false)
 
@@ -261,7 +262,14 @@ class Travis::Web::App
       config['providers'][provider]['isDefault'] = true
     end
 
-    regexp = %r{<meta name="travis/config/environment"\s+content="([^"]+)"}
+    if ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
+        config['providers'] ||= {}
+        config['providers']['github'] ||= {}
+        config['providers']['github']['paths'] ||= {}
+        config['providers']['github']['paths']['accessSettings'] = ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
+      end
+
+      regexp = %r{<meta name="travis/config/environment"\s+content="([^"]+)"}
     string.gsub!(regexp) do
       ember_config = JSON.parse(CGI.unescape(::Regexp.last_match(1)))
 

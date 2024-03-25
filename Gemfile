@@ -7,11 +7,12 @@ source 'https://rubygems.org'
 gem 'hashr'
 gem 'puma', '~> 6'
 gem 'rack-mobile-detect'
-gem 'rack-protection', '~> 3.0'
+gem 'rack-protection', '~> 3.0', '~> 2'
 gem 'rack-ssl', '~> 1.4'
 gem 'sanitize'
 gem 'sinatra'
 gem 'travis-web', path: 'waiter'
+gem 'nokogiri', '~> 1.13.6'
 
 group :development, :test do
   gem 'rake'
