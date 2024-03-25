@@ -176,6 +176,12 @@ export default Component.extend({
 
   envExpanded: false,
 
+  isNewBranchBuild: computed('item.commit.compareUrl', function () {
+    const url = this.get('item.commit.compareUrl');
+    const path = (url || '').split('/').pop();
+    return path !== '' && path.indexOf('...') < 0;
+  }),
+
   actions: {
     closeEnv() {
       this.set('envExpanded', false);
