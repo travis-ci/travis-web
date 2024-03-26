@@ -35,7 +35,7 @@ export default Component.extend({
   isMatchGithub: match('owner.vcsType', /Github\S+$/),
   isOwnerVcsTypeEmpty: empty('owner.vcsType'),
   isNotGithubRepository: not('isGithubRepository'),
-
+  hasGitHubAppsInstallation: notEmpty('owner.installation'),
   isEnterprise: reads('features.enterpriseVersion'),
   isNotEnterprise: not('isEnterprise'),
   isPro: reads('features.proVersion'),
