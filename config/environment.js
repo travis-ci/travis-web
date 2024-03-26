@@ -32,7 +32,7 @@ const {
   SOURCE_VERSION,
   DEPLOY_TARGET,
   TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED,
-  TEMPORARY_ANNOUNCEMENT_MESSAGE
+  TEMPORARY_ANNOUNCEMENT_MESSAGE,
 } = process.env;
 
 module.exports = function (environment) {
@@ -184,8 +184,8 @@ module.exports = function (environment) {
     },
     tempBanner: {
       tempBannerEnabled: TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED || false,
-      tempBannerMessage: TEMPORARY_ANNOUNCEMENT_MESSAGE || ''
-    }
+      tempBannerMessage: TEMPORARY_ANNOUNCEMENT_MESSAGE || '',
+    },
   };
 
   ENV.metricsAdapters = [];
