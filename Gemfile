@@ -12,6 +12,7 @@ gem 'rack-ssl', '~> 1.4'
 gem 'sanitize'
 gem 'sinatra'
 gem 'travis-web', path: 'waiter'
+gem 'nokogiri', '~> 1.13.6'
 
 group :development, :test do
   gem 'rake'

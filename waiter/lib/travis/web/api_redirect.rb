@@ -9,7 +9,6 @@ class Travis::Web::ApiRedirect < Sinatra::Base
 
   get %r{/([^/]+)/([^/]+)\.(png|svg)} do
     pass if %r{/images/}.match?(request.path_info)
-
     if settings.redirect_png
       redirect!(request.fullpath.gsub(/\.png$/, '.svg'))
     else
