@@ -51,6 +51,9 @@ module.exports = deepFreeze({
     urlPrefix: 'assembla',
     paths: {
       branch: '/spaces/:owner/:vcsId/source/:branch?type=branch',
+      branchSvn: '/spaces/:owner/:vcsId/source/HEAD/branches/:branch',
+      branchSvnTrunk: '/spaces/:owner/:vcsId/source/HEAD/:branch',
+      branchPerforce: '/spaces/:owner/:vcsId/source/:commit/depot/:branch',
       commit: '/spaces/:owner/:vcsId/commits/:commit',
       file: '/spaces/:owner/:vcsId/source/:branch/:file',
       issue: '/spaces/:owner/tickets/:issue',
