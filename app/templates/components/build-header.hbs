@@ -186,6 +186,12 @@
               <span class="label-align">Manually triggered by {{this.item.createdBy.login}}</span>
             </li>
           {{/if}}
+          {{#if this.isNewBranchBuild}}
+            <li>
+              <SvgImage @name="icon-branch" @class="icon" />
+              <span class="label-align">New branch build</span>
+            </li>
+          {{/if}}
         {{/unless}}
         {{#if this.item.restartedBy}}
           <li>
