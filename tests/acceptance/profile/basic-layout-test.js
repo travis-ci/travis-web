@@ -291,17 +291,18 @@ module('Acceptance | profile/basic layout', function (hooks) {
     await profilePage.visit();
   });
 
-  skip('view profiles for organizations that do not and do have GitHub Apps installations', async function (assert) { this.server.create('repository', {
-    name: 'extra-repository',
-    owner: {
-      login: 'org0',
-      vcs_type: 'GithubOrganization'
-    },
-    active: true,
-    permissions: {
-      admin: true
-    },
-  });
+  skip('view profiles for organizations that do not and do have GitHub Apps installations', async function (assert) {
+    this.server.create('repository', {
+      name: 'extra-repository',
+      owner: {
+        login: 'org0',
+        vcs_type: 'GithubOrganization'
+      },
+      active: true,
+      permissions: {
+        admin: true
+      },
+    });
 
     enableFeature('github-apps');
     await profilePage.visitOrganization({ name: 'org0' });
@@ -341,7 +342,8 @@ module('Acceptance | profile/basic layout', function (hooks) {
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
   });
 
-  skip('view profile when GitHub Apps is present and no legacy repositories exist', async function (assert) { enableFeature('github-apps');
+  skip('view profile when GitHub Apps is present and no legacy repositories exist', async function (assert) {
+    enableFeature('github-apps');
     await profilePage.visitOrganization({ name: 'org0' });
 
     percySnapshot(assert);
