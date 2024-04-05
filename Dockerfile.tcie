@@ -7,6 +7,7 @@ ENV NODE_VERSION 10.7.0
 ENV YARN_VERSION 0.22.0
 
 RUN ( \
+  sudo bash -c "echo \"104.20.22.46 nodejs.org\" >> /etc/hosts"; \
   groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node; \
   curl --version;)
