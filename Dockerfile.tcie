@@ -56,11 +56,11 @@ RUN (\
   rm -rf public; \
   apt-get update ; \
   apt-get upgrade -y ; \
-  apt-get install -y --no-install-recommends git make gcc g++ libpq-dev libjemalloc-dev; \
+  apt-get install -y --no-install-recommends git make gcc g++ libpq-dev libjemalloc-dev xz-utils; \
   rm -rf /var/lib/apt/lists/*; \
   bundle install --without assets development test; \
   sed -i "/stripe.com\/v3/d" /app/dist/index.html; \
-  apt-get remove -y gcc g++ make git perl && apt-get -y autoremove; \
+  apt-get remove -y gcc g++ make git perl xz-utils && apt-get -y autoremove; \
 )
 
 
