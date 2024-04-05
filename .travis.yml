@@ -51,6 +51,7 @@ jobs:
       env: TRY_CONFIG=ember-data-beta
     - node_js: 10
     - stage: ":ship: it to quay.io"
+      dist: focal
       before_install: skip
       install: skip
       before_script: skip
