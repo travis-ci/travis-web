@@ -19,7 +19,7 @@ export default Component.extend({
   hasNotExpired: not('isExpired'),
   isCanceled: reads('subscription.isCanceled'),
   isSubscribed: reads('subscription.isSubscribed'),
-  isExpired: or('subscription.isExpired', 'subscription.manualSubscriptionExpired'),
+  isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   canceledOrExpired: or('isExpired', 'isCanceled'),
   isCompleteAndNotExpired: and('hasNotExpired', 'isComplete'),
   trial: reads('account.trial'),
