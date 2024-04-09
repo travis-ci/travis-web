@@ -37,10 +37,6 @@ export default Component.extend({
   hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function () {
     return this.account.hasSubscriptionPermissions && (!this.account.isOrganization || this.account.permissions.plan_create);
   }),
-
-  hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function () {
-    return this.account.hasSubscriptionPermissions && (!this.account.isOrganization || this.account.permissions.plan_create);
-  }),
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   isTrial: reads('subscription.plan.isTrial'),
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
