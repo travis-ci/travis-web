@@ -215,12 +215,12 @@ export default Model.extend({
   changePlan: task(function* (plan, coupon) {
     const data = { plan, coupon };
     yield this.api.patch(`/v2_subscription/${this.id}/plan`, { data });
-    yield this.accounts.fetchV2Subscriptions.perform();
+    this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   buyAddon: task(function* (addon) {
     yield this.api.post(`/v2_subscription/${this.id}/addon/${addon.id}`);
-    yield this.accounts.fetchV2Subscriptions.perform();
+    this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   autoRefillToggle: task(function* (ownerId, value) {
