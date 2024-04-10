@@ -74,7 +74,7 @@
         </p>
       </section>
       {{#if (eq this.repo.provider 'assembla')}}
-        <section class="dash-last">
+        <section class="dash-repo-type">
           <h3 class="label">
             Repo type
           </h3>
@@ -106,7 +106,7 @@
           </p>
         </section>
         {{#if this.scansEnabled }}
-        <section class="dash-last {{this.repo.currentScan.icon}}">
+        <section class="dash-log-scan {{this.repo.currentScan.icon}}">
           <h3 class="label">
             Log Scan
           </h3>
