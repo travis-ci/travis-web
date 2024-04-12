@@ -210,6 +210,7 @@ module.exports = function (environment) {
     'repository-filtering': true,
     'debug-logging': false,
     'landing-page-cta': true,
+    'log-scanner': false,
     'show-running-jobs-in-sidebar': false,
     'debug-builds': false,
     'broadcasts': true,
