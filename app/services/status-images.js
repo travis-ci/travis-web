@@ -30,8 +30,12 @@ export default Service.extend({
 
     // In Enterprise you can toggle public mode, where even "public" repositories are hidden
     // in which cases we need to generate a token for all images
+    console.log("PULIC MODE");
+    console.log(config.publicMode);
     if (!config.publicMode || repo.get('private')) {
       const token = this.auth.assetToken;
+      console.log("TOKEN");
+      console.log(token);
       return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
     } else {
       return `${prefix}/${slug}.svg${branch ? `?branch=${encodeURIComponent(branch)}` : ''}`;
