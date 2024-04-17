@@ -42,7 +42,7 @@ export default SimpleLayoutRoute.extend({
     if (!controller.isSyncing) {
 
       if (!!this.get('features.enterpriseVersion')) {
-        this.transitionTo(this.getTransition();
+        this.transitionTo(this.getTransition());
         return;
       }
       this.accounts.fetchSubscriptions.perform()
