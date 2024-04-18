@@ -9,7 +9,6 @@ export function initialize(appInstance) {
     featureFlags['landing-page-cta'] = false;
     featureFlags['show-running-jobs-in-sidebar'] = true;
     featureFlags['debug-builds'] = false;
-    featureFlags['log-scanner'] = false;
     featureFlags['broadcasts'] = false;
     featureFlags['beta-features'] = false;
   }

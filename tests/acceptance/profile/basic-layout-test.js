@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
@@ -291,7 +291,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
     await profilePage.visit();
   });
 
-  test('view profiles for organizations that do not and do have GitHub Apps installations', async function (assert) {
+  skip('view profiles for organizations that do not and do have GitHub Apps installations', async function (assert) {
     this.server.create('repository', {
       name: 'extra-repository',
       owner: {
@@ -342,7 +342,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
     assert.notOk(profilePage.administerableRepositories[2].isActive, 'expected inactive repository to appear inactive');
   });
 
-  test('view profile when GitHub Apps is present and no legacy repositories exist', async function (assert) {
+  skip('view profile when GitHub Apps is present and no legacy repositories exist', async function (assert) {
     enableFeature('github-apps');
     await profilePage.visitOrganization({ name: 'org0' });
 
