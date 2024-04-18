@@ -210,7 +210,7 @@ class Travis::Web::App
       config['githubApps']['migrationRepositoryCountLimit'] = 50
       end
 
-    config['publicMode'] = !options[:public_mode].nil? && (options[:public_mode] == 'false' || options[:public_mode] == false)
+    config['publicMode'] = !options[:public_mode].nil? && (options[:public_mode] == 'true' || options[:public_mode] == true)
 
     if config['enterprise']
       config['pagesEndpoint'] = false
