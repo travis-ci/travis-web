@@ -1,7 +1,6 @@
 import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';
-import topPage from 'travis/tests/pages/top';
 import moment from 'moment';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { selectChoose } from 'ember-power-select/test-support';
@@ -396,14 +395,31 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('cancel a stripe plan', async function (assert) {
     this.subscription.status = 'subscribed';
+    const momentFromNow = moment(this.subscription.valid_to.getTime()).fromNow();
 
     await profilePage.visit();
     await profilePage.billing.visit();
     await profilePage.billing.openCancelSubscriptionModal.click();
 
-    assert.equal(topPage.flashMessage.text, 'Your cancellation request has been forwarded to Support. Our Support team will contact you soon.');
+    assert.ok(profilePage.billing.dataTestCancelSubscriptionModal.isPresent);
 
-    assert.ok(profilePage.billing.cancellationRequestedButton.isPresent);
+    await profilePage.billing.cancelSubscriptionButton.click();
+
+    assert.ok(profilePage.billing.dataTestCancelSubscriptionModal.error.isPresent);
+    assert.equal(profilePage.billing.dataTestCancelSubscriptionModal.cancelReasonOptions.length, 5);
+
+    await profilePage.billing.dataTestCancelSubscriptionModal.cancelReasonOptions[0].click();
+    await profilePage.billing.cancelSubscriptionButton.click();
+
+    assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
+    assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
+
+    assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
+
+    assert.equal(profilePage.billing.price.text, '$69');
+    assert.equal(profilePage.billing.period.text, '/month');
+
+    assert.dom(profilePage.billing.changePlanResubscribe.scope).hasTextContaining('Subscribe to different plan');
   });
 
   test('change and resubscribe to a canceled stripe plan', async function (assert) {

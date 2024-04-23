@@ -96,19 +96,13 @@
             </button>
           {{/if}}
         </div>
-        {{#if this.canCancelSubscription}}
         <div class='billing-subscription__buttons--cancel'>
-          <a {{on 'click' (action (perform this.cancelSubscription))}} href='javascript: void(0);' class='link' data-test-open-cancel-subscription-modal='true'>
-            Cancel subscription
-          </a>
+          {{#if this.canCancelSubscription}}
+            <a {{on 'click' (fn (mut this.showCancelModal) true)}} href='javascript: void(0);' class='link' data-test-open-cancel-subscription-modal='true'>
+              Cancel subscription
+            </a>
+          {{/if}}
         </div>
-        {{else if this.subscription.cancellationRequested}}
-        <div class='billing-subscription__buttons--cancel'>
-          <a href='javascript: void(0);' class='link' data-test-cancellation-requested-button='true'>
-            Cancellation requested
-          </a>
-        </div>
-        {{/if}}
       {{/if}}
     </div>
     {{/if}}

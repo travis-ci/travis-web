@@ -24,7 +24,6 @@ export default Model.extend({
   clientSecret: attr('string'),
   paymentIntent: attr(),
   scheduledPlanName: attr('string'),
-  cancellationRequested: attr('boolean'),
   canceledAt: attr('date'),
 
   v1SubscriptionId: attr('number'),
@@ -47,14 +46,6 @@ export default Model.extend({
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
   isNotManual: not('isManual'),
-
-  subscriptionExpiredByDate: computed('validTo', function () {
-    let validTo = this.validTo;
-    let today = new Date().toISOString();
-    let date = Date.parse(today);
-    let validToDate = Date.parse(validTo);
-    return date > validToDate;
-  }),
 
   isSubscribed: computed('status', function () {
     return this.status === null || this.status == 'subscribed';
@@ -243,7 +234,7 @@ export default Model.extend({
   }).drop(),
 
   cancelSubscription: task(function* (data) {
-    yield this.api.post(`/v2_subscription/${this.id}/pause`, {
+    yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
       data
     });
     yield this.accounts.fetchV2Subscriptions.perform();

@@ -26,7 +26,6 @@ export default Model.extend({
   clientSecret: attr(),
   paymentIntent: attr(),
   planName: attr(),
-  cancellationRequested: attr('boolean'),
 
   discount: belongsTo('discount', { async: false, inverse: 'subscription' }),
   billingInfo: belongsTo('billing-info', { async: false, inverse: 'subscription' }),
@@ -129,7 +128,7 @@ export default Model.extend({
   }).drop(),
 
   cancelSubscription: task(function* (data) {
-    yield this.api.post(`/subscription/${this.id}/pause`, {
+    yield this.api.post(`/subscription/${this.id}/cancel`, {
       data
     });
     yield this.accounts.fetchSubscriptions.perform();

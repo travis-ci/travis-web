@@ -2117,7 +2117,6 @@ export default {
         "valid_to",
         "created_at",
         "source",
-        "cancellation_requested"
       ],
       "representations":  {
         "standard":       [
@@ -2130,8 +2129,7 @@ export default {
           "status",
           "valid_to",
           "created_at",
-          "source",
-          "cancellation_requested"
+          "source"
         ],
         "minimal":       [
           "id",
@@ -2156,7 +2154,6 @@ export default {
         "owner",
         "created_at",
         "source",
-        "cancellation_requested",
       ],
       "representations":  {
         "standard":       [
@@ -2169,7 +2166,6 @@ export default {
           "owner",
           "created_at",
           "source",
-          "cancellation_requested",
         ],
       },
     },

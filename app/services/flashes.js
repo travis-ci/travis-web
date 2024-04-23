@@ -7,21 +7,18 @@ import { assert } from '@ember/debug';
 const messageTypeToIcon = {
   notice: 'icon-flag',
   success: 'flash-success',
-  'success-with-close': 'flash-success',
   error: 'flash-error'
 };
 
 const messageTypeToPreamble = {
   notice: 'Heads up!',
   success: 'Hooray!',
-  'success-with-close': 'Hooray!',
   error: 'Oh no!'
 };
 
 const messageTypeToCloseButton = {
   notice: true,
   success: false,
-  'success-with-close': true,
   error: true
 };
 
@@ -94,7 +91,7 @@ export default Service.extend({
   },
 
   display(type, message, preamble, aboveOverlay = false) {
-    if (!['error', 'notice', 'success', 'success-with-close'].includes(type)) {
+    if (!['error', 'notice', 'success'].includes(type)) {
       // eslint-disable-next-line
       console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
     }
@@ -112,10 +109,6 @@ export default Service.extend({
 
   notice(message, preamble = messageTypeToPreamble['notice'], aboveOverlay = false) {
     this.display('notice', message, preamble, aboveOverlay);
-  },
-
-  successWithClose(message, preamble = messageTypeToPreamble['success-with-close'], aboveOverlay = false) {
-    this.display('success-with-close', message, preamble, aboveOverlay);
   },
 
   custom(component, data = {}, className = null) {

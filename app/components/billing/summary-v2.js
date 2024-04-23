@@ -34,7 +34,7 @@ export default Component.extend({
     }
     return this.subscription.validTo;
   }),
-  isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
+  isExpired: or('subscription.isExpired', 'subscription.manualSubscriptionExpired'),
   canceledOrExpired: or('isExpired', 'isCanceled'),
   isCompleteAndNotExpired: and('hasNotExpired', 'isComplete'),
   trial: reads('account.trial'),
