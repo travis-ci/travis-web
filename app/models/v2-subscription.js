@@ -24,6 +24,7 @@ export default Model.extend({
   clientSecret: attr('string'),
   paymentIntent: attr(),
   scheduledPlanName: attr('string'),
+  cancellationRequested: attr('boolean'),
   canceledAt: attr('date'),
 
   v1SubscriptionId: attr('number'),
@@ -46,6 +47,14 @@ export default Model.extend({
   isGithub: equal('source', 'github'),
   isManual: equal('source', 'manual'),
   isNotManual: not('isManual'),
+
+  subscriptionExpiredByDate: computed('validTo', function () {
+    let validTo = this.validTo;
+    let today = new Date().toISOString();
+    let date = Date.parse(today);
+    let validToDate = Date.parse(validTo);
+    return date > validToDate;
+  }),
 
   isSubscribed: computed('status', function () {
     return this.status === null || this.status == 'subscribed';
@@ -206,12 +215,12 @@ export default Model.extend({
   changePlan: task(function* (plan, coupon) {
     const data = { plan, coupon };
     yield this.api.patch(`/v2_subscription/${this.id}/plan`, { data });
-    yield this.accounts.fetchV2Subscriptions.perform();
+    this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   buyAddon: task(function* (addon) {
     yield this.api.post(`/v2_subscription/${this.id}/addon/${addon.id}`);
-    yield this.accounts.fetchV2Subscriptions.perform();
+    this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   autoRefillToggle: task(function* (ownerId, value) {
@@ -234,7 +243,7 @@ export default Model.extend({
   }).drop(),
 
   cancelSubscription: task(function* (data) {
-    yield this.api.post(`/v2_subscription/${this.id}/cancel`, {
+    yield this.api.post(`/v2_subscription/${this.id}/pause`, {
       data
     });
     yield this.accounts.fetchV2Subscriptions.perform();

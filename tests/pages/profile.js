@@ -318,6 +318,10 @@ export default create({
       scope: '[data-test-open-cancel-subscription-modal]'
     },
 
+    cancellationRequestedButton: {
+      scope: '[data-test-cancellation-requested-button]'
+    },
+
     dataTestCancelSubscriptionModal: {
       scope: '[data-test-cancel-subscription-modal]',
 
