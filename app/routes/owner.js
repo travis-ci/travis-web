@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   auth: service(),
+  store: service(),
   deactivate() {
     return this.controllerFor('loading').set('layoutName', null);
   },

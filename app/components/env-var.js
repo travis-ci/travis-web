@@ -26,7 +26,7 @@ export default Component.extend({
 
   delete: task(function* () {
     yield this.envVar.destroyRecord().catch(({ errors }) => {
-      if (errors.any(error => error.status == '404')) {
+      if (errors.some(error => error.status == '404')) {
         this.flashes.error('This environment variable has already been deleted.' +
           ' Try refreshing.');
       } else {

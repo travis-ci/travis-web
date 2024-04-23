@@ -1,7 +1,7 @@
 import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import profilePage from 'travis/tests/pages/profile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -10,7 +10,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-
     this['actions'] = {
       next: () => { }
     };
@@ -54,10 +53,9 @@ module('Integration | Component | billing-select-plan', function (hooks) {
   });
 
   skip('it renders default selected plan', async function (assert) {
-
     await render(hbs`<Billing::SelectPlan
-      @displayedPlans={{displayedPlans}}
-      @selectedPlan={{selectedPlan}}
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlanOverride={{this.selectedPlan}}
       @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );
@@ -70,8 +68,8 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     this.set('selectedPlan', this.plan2);
 
     await render(hbs`<Billing::SelectPlan
-      @displayedPlans={{displayedPlans}}
-      @selectedPlan={{selectedPlan}}
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlanOverride={{this.selectedPlan}}
       @showPlansSelector={{true}}
       @next={{action 'next'}}/>`
     );

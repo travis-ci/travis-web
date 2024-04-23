@@ -1,7 +1,9 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { or, reads } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
+import {capitalize } from '@ember/string';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   tagName: '',
@@ -13,7 +15,7 @@ export default Component.extend({
   account: null,
 
   isSignup: false,
-  provider: or('account.provider', 'multiVcs.primaryProvider'),
+  providerParam: null,
   isLogoVisible: true,
   isLogoSeparatorVisible: true,
   isBetaBadgeVisible: reads('isBetaProvider'),
@@ -21,8 +23,29 @@ export default Component.extend({
 
   isLoading: false,
 
-  vcsType: computed('provider', function () {
-    return `${this.provider.replace('-', '').capitalize()}User`;
+  provider: computed('providerParam', 'account.provider', 'multiVcs.primaryProvider', {
+    get() {
+      if (isPresent(this._provider)) {
+        return this._provider;
+      }
+      return this.providerParam || (this.account && this.account.provider) || this.multiVcs.primaryProvider;
+    },
+    set(k, v) {
+      this.set('_provider', v);
+      return this._provider;
+    }
+  }),
+  vcsType: computed('provider', {
+    get() {
+      if (isPresent(this._vcsType)) {
+        return this._vcsType;
+      }
+      return `${capitalize(this.provider.replace('-', ''))}User`;
+    },
+    set(k, v) {
+      this.set('_vcsType', v);
+      return this._vcsType;
+    }
   }),
 
   isPrimaryProvider: computed('provider', function () {

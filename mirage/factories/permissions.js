@@ -1,8 +1,8 @@
-import { Factory } from 'ember-cli-mirage';
+import { Factory } from 'miragejs';
 
 export default Factory.extend({
   admin: true,
   push: true,
   pull: true,
-  permissions: true
+  permissions: true,
 });

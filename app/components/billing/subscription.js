@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { reads, bool, empty, not } from '@ember/object/computed';
 import { computed } from '@ember/object';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   store: service(),
@@ -16,8 +17,18 @@ export default Component.extend({
   isV2SubscriptionEmpty: empty('account.v2subscription'),
   hasV2Subscription: not('isV2SubscriptionEmpty'),
 
-  isProcessCompleted: computed(function () {
-    return this.hasV2Subscription;
+  isProcessCompleted: computed({
+    get() {
+      if (isPresent(this._isProcessCompleted)) {
+        return this._isProcessCompleted;
+      }
+
+      return this.hasV2Subscription;
+    },
+    set(k, v) {
+      this.set('_isProcessCompleted', v);
+      return this._isProcessCompleted;
+    }
   }),
 
   newSubscription: computed(function () {

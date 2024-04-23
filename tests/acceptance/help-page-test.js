@@ -255,9 +255,7 @@ module('Acceptance | help page', function (hooks) {
 
       hooks.beforeEach(function () {
         this.requestHandler = (request) => JSON.parse(request.requestBody);
-        this.server.post(`${apiHost}${createRequestEndpoint}`, (schema, request) => {
-          return this.requestHandler(request);
-        });
+        this.server.post(`${apiHost}${createRequestEndpoint}`, (schema, request) => this.requestHandler(request));
       });
 
       test('succeeds when all fields filled properly', async function (assert) {

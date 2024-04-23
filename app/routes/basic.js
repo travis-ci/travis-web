@@ -4,15 +4,16 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
   auth: service(),
+  router: service(),
   featureFlags: service(),
   storage: service(),
 
   activate() {
     if (this.storage.wizardStep > 0 && this.storage.wizardStep <= 3) {
       if (this.storage.wizardStep == 1) {
-        this.transitionTo('account_activation');
+        this.router.transitionTo('account_activation');
       } else {
-        this.transitionTo('account.repositories');
+        this.router.transitionTo('account.repositories');
       }
       return this._super(...arguments);
     }
@@ -27,7 +28,7 @@ export default Route.extend({
     if (!this.auth.signedIn && this.needsAuth) {
       return reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
-      return this.transitionTo('account');
+      return this.router.transitionTo('account');
     } else {
       return this._super(...arguments);
     }
@@ -38,7 +39,7 @@ export default Route.extend({
     let { owner } = this.paramsFor('owner');
     if (targetName === 'owner.repositories' &&
       owner === 'profile') {
-      this.transitionTo('account', {
+      this.router.transitionTo('account', {
         queryParams: { offset: 0 }
       });
     }

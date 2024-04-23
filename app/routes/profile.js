@@ -8,6 +8,7 @@ const SECTION_ROUTE_MAP = {
 
 export default TravisRoute.extend({
   accounts: service(),
+  router: service(),
 
   beforeModel({ targetName }) {
     const { section, login } = this.paramsFor('profile') || {};
@@ -17,9 +18,9 @@ export default TravisRoute.extend({
     const routeName = `${root}${section ? `.${SECTION_ROUTE_MAP[section] || section}` : ''}`;
 
     if (isUserAccount) {
-      this.transitionTo(routeName);
+      this.router.transitionTo(routeName);
     } else {
-      this.transitionTo(routeName, login);
+      this.router.transitionTo(routeName, login);
     }
   }
 });

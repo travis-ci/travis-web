@@ -48,7 +48,7 @@
   </li>
   {{/if}}
   {{/if}}
-  <li id="tab_build" class={{this.classBuild}}>
+  <li data-test-tab-build-container id="tab_build" class={{this.classBuild}}>
     {{#if this.build.id}}
       {{#if this.repo.slug}}
         <SvgImage @name="icon-arrowtabs" @class="tab-arrow" />

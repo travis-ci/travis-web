@@ -4,6 +4,7 @@ import ArrayProxy from '@ember/array/proxy';
 import Component from '@ember/component';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { isPresent }  from '@ember/utils';
 
 export default Component.extend({
   api: service(),
@@ -41,9 +42,18 @@ export default Component.extend({
     }
   ),
 
-  vcsType: computed('branch.repository.id', function () {
-    const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
-    return repository.vcsType;
+  vcsType: computed('branch.repository.id', {
+    get() {
+      if (isPresent(this._vcsType)) {
+        return this._vcsType;
+      }
+      const repository = this.store.peekRecord('repo', this.get('branch.repository.id'));
+      return repository.vcsType;
+    },
+    set(key, value) {
+      this.set('_vcsType', value);
+      return this._vcsType;
+    }
   }),
 
   provider: computed('vcsType', function () {

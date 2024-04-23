@@ -27,8 +27,11 @@ export default create({
     scope: '.commit-author',
 
     href: attribute('href', 'a'),
-    text: text('.label-align', { multiple: true }),
+    _text: collection('.label-align'),
     avatarSrc: attribute('src', 'img'),
+    get text() {
+      return this._text.map((t) => t.text);
+    }
   },
 
   waitingStates: {

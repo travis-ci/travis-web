@@ -46,7 +46,7 @@ export default RavenLogger.extend({
     } else {
       const message = error.message;
       if (message) {
-        return this.benignErrors.any(error => message.includes(error));
+        return this.benignErrors.some(error => message.includes(error));
       } else {
         return false;
       }

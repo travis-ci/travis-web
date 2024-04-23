@@ -80,6 +80,9 @@ Router.map(function () {
       this.route('caches', { path: '/caches', resetNamespace: true });
     }
     this.route('settings', { resetNamespace: true });
+    this.route('active-on-org');
+    this.route('not-active');
+    this.route('no-build');
   });
 
   this.route('owner', { path: '/:provider/:owner', resetNamespace: true }, function () {

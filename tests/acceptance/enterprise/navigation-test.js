@@ -10,15 +10,13 @@ module('Acceptance | enterprise/navigation', function (hooks) {
 
   hooks.beforeEach(function () {
     enableFeature('proVersion');
-    this.server.get('/v3/enterprise_license', (schema, response) => {
-      return {
-        'license_id': 'ad12345',
-        'seats': '30',
-        'active_users': '21',
-        'license_type': 'trial',
-        'expiration_time': new Date(new Date().getTime() + 1000).toISOString()
-      };
-    });
+    this.server.get('/v3/enterprise_license', (schema, response) => ({
+      'license_id': 'ad12345',
+      'seats': '30',
+      'active_users': '21',
+      'license_type': 'trial',
+      'expiration_time': new Date(new Date().getTime() + 1000).toISOString()
+    }));
   });
 
   test('visiting `/` without being authenticated redirects to `/signin`', async function (assert) {

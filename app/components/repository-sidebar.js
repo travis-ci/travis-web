@@ -8,16 +8,20 @@ import { computed } from '@ember/object';
 import { and, filterBy, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
+import fetchAll from 'travis/utils/fetch-all';
 
 
 export default Component.extend({
   tabStates: service(),
   jobState: service(),
   updateTimesService: service('updateTimes'),
+  permissionsService: service('permissions'),
   repositories: service(),
   features: service(),
   auth: service(),
   router: service(),
+  store: service(),
+
   classNames: ['repository-sidebar'],
 
   didInsertElement(...args) {
@@ -61,6 +65,10 @@ export default Component.extend({
   },
 
   onQueryChange(query) {
+    if (query.target) {
+      query = query.target.value;
+    }
+
     if (query === '' || query === this.get('repositories.searchQuery')) { return; }
     this.set('repositories.searchQuery', query);
     this.get('repositories.showSearchResults').perform();
@@ -73,16 +81,31 @@ export default Component.extend({
   jobsLoaded: reads('jobState.jobsLoaded'),
 
   viewOwned: task(function* () {
-    const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
+    this.permissionsService.fetchPermissions.perform();
+    let repos = [];
+    repos = yield this.get('getAllRepos').perform();
+    let ownedRepositories =  yield this.get('repositories.requestOwnedRepositories').perform();
+
     const onIndexPage = this.get('router.currentRouteName') === 'index';
 
-    if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage) {
+    if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage && isEmpty(repos)) {
       this.router.transitionTo('getting_started');
     }
   }),
 
   isTabRunning: reads('tabStates.isSidebarRunning'),
   isTabSearch: reads('tabStates.isSidebarSearch'),
+
+  getAllRepos: task(function* () {
+    yield fetchAll(this.store, 'repo', {});
+    return this.store.findAll('repo');
+  }).drop(),
+
+  fetchRepositories: task(function* () {
+    yield fetchAll(this.store, 'repo', {});
+    return this.store.peekAll('repo');
+  }).drop(),
+
 
   repositoryResults: computed('isTabSearch', 'repositories.searchResults.[]', 'repositories.accessible.[]', function () {
     const { isTabSearch, repositories } = this;

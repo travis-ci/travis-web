@@ -1,6 +1,6 @@
 import V2Serializer from './v2';
 
-export default V2Serializer.extend({
+export default class extends V2Serializer {
   serialize(record) {
     const json = V2Serializer.prototype.serialize.apply(this, arguments);
     if (record.installation) {
@@ -9,4 +9,4 @@ export default V2Serializer.extend({
     }
     return json;
   }
-});
+}

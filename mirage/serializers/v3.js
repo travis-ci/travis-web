@@ -1,9 +1,9 @@
-import { JSONAPISerializer } from 'ember-cli-mirage';
+import { JSONAPISerializer } from 'miragejs';
 import { singularize, pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import apiSpec from '../api-spec';
 
-export default JSONAPISerializer.extend({
+export default class V3Serializer extends JSONAPISerializer {
   serialize(data, request) {
     let result;
 
@@ -18,7 +18,7 @@ export default JSONAPISerializer.extend({
     }
 
     return result;
-  },
+  }
 
   serializeCollection(data, request, options) {
     let type = pluralize(data.modelName),
@@ -30,7 +30,8 @@ export default JSONAPISerializer.extend({
         limit = request.queryParams.limit || 10,
         isFirst = false,
         isLast = offset + limit >= count,
-        next, prev;
+        next,
+        prev;
 
       if (offset == 0) {
         isFirst = true;
@@ -39,7 +40,7 @@ export default JSONAPISerializer.extend({
       if (!isLast) {
         next = {
           offset: offset + limit,
-          limit: limit
+          limit: limit,
         };
       }
 
@@ -47,7 +48,7 @@ export default JSONAPISerializer.extend({
         let prevOffset = offset - limit;
         prev = {
           offset: prevOffset < 0 ? 0 : prevOffset,
-          limit: limit
+          limit: limit,
         };
       }
 
@@ -58,7 +59,7 @@ export default JSONAPISerializer.extend({
         is_first: isFirst,
         is_last: isLast,
         next,
-        prev
+        prev,
       };
 
       if (offset) {
@@ -75,9 +76,11 @@ export default JSONAPISerializer.extend({
       '@representation': 'standard',
       '@type': type,
       '@pagination': pagination,
-      [type]: data.models.map(model => this.serializeSingle(model, request, options)),
+      [type]: data.models.map((model) =>
+        this.serializeSingle(model, request, options),
+      ),
     };
-  },
+  }
 
   serializeSingle(model, request, options = {}) {
     const type = model.modelName;
@@ -85,7 +88,7 @@ export default JSONAPISerializer.extend({
 
     if (this.alreadyProcessed(model, request)) {
       return {
-        '@href': this.hrefForSingle(type, model, request)
+        '@href': this.hrefForSingle(type, model, request),
       };
     } else if (representation === 'standard') {
       request._processedRecords.push(model);
@@ -104,39 +107,52 @@ export default JSONAPISerializer.extend({
       result['@permissions'] = permissions;
     }
 
-    this.getAttributes(type, representation, request).forEach((attributeName) => {
-      let relationship = model[camelize(attributeName)];
+    this.getAttributes(type, representation, request).forEach(
+      (attributeName) => {
+        let relationship = model[camelize(attributeName)];
 
-      if (attributeName === 'id') {
-        result['id'] = this.normalizeId(model, model.attrs.id);
-      } else if (relationship && relationship.modelName) {
-        // we're dealing with relationship
-        let relationType = singularize(relationship.modelName);
-        let serializer = this.serializerFor(relationType);
+        if (attributeName === 'id') {
+          result['id'] = this.normalizeId(model, model.attrs.id);
+        } else if (relationship && relationship.modelName) {
+          // we're dealing with relationship
+          let relationType = singularize(relationship.modelName);
+          let serializer = this.serializerFor(relationType);
 
-        let serializeOptions = {};
+          let serializeOptions = {};
 
-        if (this.isIncluded(type, attributeName, request)) {
-          serializeOptions.representation = 'standard';
-        }
+          if (this.isIncluded(type, attributeName, request)) {
+            serializeOptions.representation = 'standard';
+          }
 
-        if (relationship.attrs) {
-          // belongsTo
-          let serialized = serializer.serializeSingle(relationship, request, serializeOptions);
-          result[attributeName] = serialized;
+          if (relationship.attrs) {
+            // belongsTo
+            let serialized = serializer.serializeSingle(
+              relationship,
+              request,
+              serializeOptions,
+            );
+            result[attributeName] = serialized;
+          } else {
+            // hasMany
+            if (relationship.models) {
+              result[attributeName] = relationship.models.map((m) =>
+                serializer.serializeSingle(m, request, serializeOptions),
+              );
+            }
+          }
         } else {
-          // hasMany
-          result[attributeName] = relationship.models.map(
-            m => serializer.serializeSingle(m, request, serializeOptions)
-          );
+          result[attributeName] = model.attrs[attributeName];
         }
-      } else {
-        result[attributeName] = model.attrs[attributeName];
-      }
-    });
+      },
+    );
 
+    if (model.modelName == 'subscription') {
+      console.log('SERIALIZE SINGLE');
+      console.log(model);
+      console.log(result);
+    }
     return result;
-  },
+  }
 
   getAttributes(type, representation, request) {
     let resource = apiSpec.resources[type];
@@ -151,8 +167,10 @@ export default JSONAPISerializer.extend({
     if (include) {
       include.split(',').forEach((includeSegment) => {
         let [includeType, includeAttribute] = includeSegment.split('.');
-        let includeTypeIsThis = (includeType === type) ||
-          (includeType === 'owner' && (type === 'user' || type === 'organization'));
+        let includeTypeIsThis =
+          includeType === type ||
+          (includeType === 'owner' &&
+            (type === 'user' || type === 'organization'));
 
         if (includeTypeIsThis && !attributes.includes(includeAttribute)) {
           attributes.push(includeAttribute);
@@ -161,12 +179,17 @@ export default JSONAPISerializer.extend({
     }
 
     return attributes;
-  },
+  }
 
   isIncluded(type, key, request) {
     let include = request.queryParams.include;
     let ownerAliases = ['user', 'organization'];
-    let subscriptionInclusions = ['billing_info', 'credit_card_info', 'discount', 'plan'];
+    let subscriptionInclusions = [
+      'billing_info',
+      'credit_card_info',
+      'discount',
+      'plan',
+    ];
 
     if (ownerAliases.includes(type)) {
       type = 'owner';
@@ -174,56 +197,59 @@ export default JSONAPISerializer.extend({
 
     if (include) {
       return !!include
-        .split(',').map(s => s.split('.'))
+        .split(',')
+        .map((s) => s.split('.'))
         .filter(([includeType, includeAttribute]) => {
           return includeType === type && includeAttribute === key;
-        })
-        .length;
-    } else if (type === 'subscription' && subscriptionInclusions.includes(key)) {
+        }).length;
+    } else if (
+      type === 'subscription' &&
+      subscriptionInclusions.includes(key)
+    ) {
       // The true API always returns these as standard representations.
       return true;
     }
-  },
+  }
 
   includeAttribute(key, type, representation) {
     return this.getAttributes(key, type, representation).includes(key);
-  },
+  }
 
   relationships() {
     return [];
-  },
+  }
 
   serializerFor(type) {
     const serializersMap = {
-      'commit': 'commit-v3',
-      'user': 'user-v3',
+      commit: 'commit-v3',
+      user: 'user-v3',
     };
     type = serializersMap[type] || type;
 
     return this.registry.serializerFor(type);
-  },
+  }
 
-  hrefForCollection(type/* , collection, request */) {
+  hrefForCollection(type /* , collection, request */) {
     return `/${type}`;
-  },
+  }
 
   hrefForSingle(type, model) {
     return `/${type}/${model.id}`;
-  },
+  }
 
   alreadyProcessed(model, request) {
-    let findFn = r => r.id === model.id && r.modelName === model.modelName;
+    let findFn = (r) => r.id === model.id && r.modelName === model.modelName;
     return request._processedRecords.find(findFn);
-  },
+  }
 
-  normalizeId({modelName}, id) {
+  normalizeId({ modelName }, id) {
     // plan IDs can be strings
     if (modelName === 'plan') {
       return id;
     } else {
       return parseInt(id);
     }
-  },
+  }
 
   representation(model, request, options) {
     if (options.representation) {
@@ -234,4 +260,4 @@ export default JSONAPISerializer.extend({
       return 'minimal';
     }
   }
-});
+}

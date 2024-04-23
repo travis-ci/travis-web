@@ -6,5 +6,5 @@ export default Model.extend({
   'public': attr('boolean'),
   branch: attr('string'),
 
-  repo: belongsTo('repo', { async: true })
+  repo: belongsTo('repo', { async: true, inverse: null })
 });

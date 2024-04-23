@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { checkDictionary } from 'travis/utils/ui-kit/assertions';
+import { isPresent } from '@ember/utils';
 
 // Public dictionaries
 export const COLORS = {
@@ -63,12 +64,22 @@ export default Component.extend({
   onClick() {},
 
   // Private
-  bgColor: computed('color', 'disabled', 'invert', function () {
-    return this.invert
-      ? BG_COLORS['invert']
-      : this.disabled
-        ? BG_COLORS['disabled']
-        : BG_COLORS[this.color];
+  bgColor: computed('color', 'disabled', 'invert', {
+    get() {
+      if (isPresent(this._bgColor)) {
+        return this._bgColor;
+      }
+
+      return this.invert
+        ? BG_COLORS['invert']
+        : this.disabled
+          ? BG_COLORS['disabled']
+          : BG_COLORS[this.color];
+    },
+    set(k, v) {
+      this.set('_bgColor', v);
+      return this._bgColor;
+    }
   }),
   hoverBgColor: computed('color', 'disabled', 'invert', 'bgColor', function () {
     return this.disabled

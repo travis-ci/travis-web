@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | feature toggle', function (hooks) {
   setupRenderingTest(hooks);
@@ -17,7 +17,7 @@ module('Integration | Component | feature toggle', function (hooks) {
 
     this.set('feature', feature);
 
-    await render(hbs`{{feature-toggle feature=feature}}`);
+    await render(hbs`{{feature-toggle feature=this.feature}}`);
 
     assert.dom('button.switch').hasClass('active');
 

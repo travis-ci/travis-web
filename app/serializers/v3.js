@@ -163,8 +163,8 @@ export default JSONSerializer.extend({
   keyForRelationship(key/* , typeClass, method*/) {
     if (key === 'repo') {
       return 'repository';
-    } else if (key && key.underscore) {
-      return key.underscore();
+    } else if (key) {
+      return underscore(key);
     } else {
       return key;
     }
@@ -211,7 +211,7 @@ export default JSONSerializer.extend({
     if (type) {
       items = payload[type];
     } else {
-      const plural = `${primaryModelClass.modelName.underscore()}s`;
+      const plural = `${underscore(primaryModelClass.modelName)}s`;
       items = payload[plural];
     }
 

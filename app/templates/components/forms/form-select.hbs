@@ -1,0 +1,18 @@
+<PowerSelect
+  @selected={{this.args.selected}}
+  @options={{this.args.options}}
+  @onChange={{this.args.onChange}}
+  @triggerClass={{this.triggerClass}}
+  @searchEnabled={{this.searchEnabled}}
+  @search={{this.args.search}}
+  @searchPlaceholder={{this.searchPlaceholder}}
+  @allowClear={{this.allowClear}}
+  @placeholder={{this.placeholder}}
+  @horizontalPosition={{this.horizontalPosition}}
+  @verticalPosition={{this.verticalPosition}}
+  @placeholder={{this.placeholder}}
+  as |name|
+>
+  {{name}}
+</PowerSelect>
+{{yield}}

@@ -37,6 +37,7 @@ export default Component.extend({
   hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function () {
     return this.account.hasSubscriptionPermissions && (!this.account.isOrganization || this.account.permissions.plan_create);
   }),
+
   cancelSubscriptionLoading: reads('subscription.cancelSubscription.isRunning'),
   isTrial: reads('subscription.plan.isTrial'),
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
@@ -122,11 +123,11 @@ export default Component.extend({
 
   cancelSubscription: task(function* () {
     try {
-      yield this.subscription.cancelSubscription.perform();
       this.flashes.successWithClose(
         'Your cancellation request has been forwarded to Support. Our Support team will contact you soon.',
         'We’re sorry to see you go'
       );
+      yield this.subscription.cancelSubscription.perform();
       // this.set('showCancelModal', true);
     } catch (error) {
       this.flashes.error('An error occurred when submitting your cancellation request. Please try again.');

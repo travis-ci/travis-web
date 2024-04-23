@@ -3,6 +3,7 @@ import Service, { inject as service } from '@ember/service';
 export default Service.extend({
   auth: service('storage/auth'),
   utm: service('storage/utm'),
+  store: service(),
 
   get billingStep() {
     return +this.getItem('travis.billing_step');
@@ -33,7 +34,62 @@ export default Service.extend({
     return this.parseWithDefault('travis.billing_info', {});
   },
   set billingInfo(value) {
-    this.setItem('travis.billing_info', JSON.stringify(value));
+    if (!value) {
+      this.setItem('travis.billing_info', value);
+      return;
+    }
+
+    const data
+        = (({
+          address,
+          address2,
+          billingEmail,
+          billingEmailRO,
+          city,
+          company,
+          country,
+          firstName,
+          lastName,
+          hasLocalRegistration,
+          id,
+          isReloading,
+          state,
+          subscription,
+          vatId,
+          zipCode,
+          notifications}) =>
+          ({
+            address,
+            address2,
+            billingEmail,
+            billingEmailRO,
+            city,
+            company,
+            country,
+            firstName,
+            lastName,
+            hasLocalRegistration,
+            id,
+            isReloading,
+            state,
+            subscription,
+            vatId,
+            zipCode,
+            notifications
+          }))(value);
+
+    this.dataSubscription(data).then((datum) => this.setItem('travis.billing_info', JSON.stringify(datum)));
+  },
+
+  async dataSubscription(data) {
+    data.subscription = await data.subscription;
+    const model = data.subscription;
+    const snapshot = model._createSnapshot();
+    const serializer = this.store.serializerFor('subscription');
+    const serializedData = serializer.serialize(snapshot);
+    data.subscription = serializedData;
+
+    return data;
   },
 
   get billingPlan() {

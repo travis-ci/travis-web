@@ -4,6 +4,7 @@ import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import fetchAll from 'travis/utils/fetch-all';
+import { sortBy } from 'lodash';
 
 const { billingEndpoint } = config;
 
@@ -37,11 +38,11 @@ export default Service.extend({
     try {
       const subscriptions = yield this.store.findAll('subscription') || [];
 
-      if (subscriptions.any(s => s.isSubscribed && !s.belongsTo('plan').id())) {
+      if (subscriptions.some(s => s.isSubscribed && !s.belongsTo('plan').id())) {
         this.logMissingPlanException();
       }
 
-      return subscriptions.sortBy('validTo');
+      return sortBy(subscriptions, 'validTo');
     } catch (e) {
       this.set('subscriptionError', true);
     }
@@ -52,7 +53,7 @@ export default Service.extend({
     try {
       const subscriptions = yield this.store.findAll('v2-subscription') || [];
 
-      if (subscriptions.any(s => s.isSubscribed && !s.belongsTo('plan').id())) {
+      if (subscriptions.some(s => s.isSubscribed && !s.belongsTo('plan').id())) {
         this.logMissingPlanException();
       }
 
@@ -64,7 +65,7 @@ export default Service.extend({
 
   fetchTrials: task(function* () {
     const trials = yield this.store.findAll('trial') || [];
-    return trials.sortBy('created_at');
+    return sortBy(trials, 'created_at');
   }),
 
   init() {

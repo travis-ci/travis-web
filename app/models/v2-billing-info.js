@@ -12,7 +12,12 @@ export default Model.extend({
   country: attr('string'),
   vatId: attr('string'),
   billingEmail: attr('string'),
+  billingEmailRO: attr('string'),
   hasLocalRegistration: attr('boolean'),
 
-  subscription: belongsTo('v2-subscription')
+  subscription: belongsTo('v2-subscription', { async: false, inverse: 'billingInfo'}),
+  didUpdate() {
+    this.setAttribute('billingEmailRO', this.billingEmail);
+  }
+
 });

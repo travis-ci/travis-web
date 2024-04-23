@@ -5,7 +5,7 @@ import { not, reads, filterBy, alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
-
+import { isPresent } from '@ember/utils';
 export default Component.extend({
   stripe: service(),
   store: service(),
@@ -36,14 +36,23 @@ export default Component.extend({
 
   displayedPlans: reads('availablePlans'),
 
-  selectedPlan: computed('displayedPlans.[].id', 'defaultPlanId', function () {
-    let plan = this.storage.selectedPlanId;
-    if (plan == null) {
-      plan = this.defaultPlanId;
-    }
+  selectedPlan: computed('displayedPlans.[].id', 'defaultPlanId', {
+    get() {
+      if (isPresent(this._selectedPlan)) {
+        return this._selectedPlan;
+      }
 
-    return this.displayedPlans.findBy('id', plan);
-  }),
+      let plan = this.storage.selectedPlanId;
+      if (plan == null) {
+        plan = this.defaultPlanId;
+      }
+
+      return this.displayedPlans.findBy('id', plan);
+    },
+    set(k, v) {
+      this.set('_selectedPlan', v);
+      return this._selectedPlan;
+    }}),
 
   isTrial: computed('selectedPlan', function () {
     let plan = this.selectedPlan;
@@ -51,6 +60,7 @@ export default Component.extend({
   }),
 
   hasLocalRegistration: false,
+
   firstName: '',
   lastName: '',
   company: '',
@@ -196,15 +206,6 @@ export default Component.extend({
     }
   }).drop(),
 
-
-  skipSubscription() {
-    this.storage.clearBillingData();
-    this.storage.clearSelectedPlanId();
-    this.storage.wizardStep = 2;
-    this.wizard.update.perform(2);
-    this.router.transitionTo('account.repositories');
-  },
-
   newV2Subscription() {
     const plan = this.store.createRecord('v2-plan-config');
     const billingInfo = this.store.createRecord('v2-billing-info');
@@ -289,12 +290,9 @@ export default Component.extend({
         this.createSubscription.perform();
       }
     },
-    skipActivation() {
-      this.skipSubscription();
-    },
     changeCountry(country) {
       this.set('country', country);
-      this.hasLocalRegistration = false;
+      this.set('hasLocalRegistration', false);
     },
     togglePlanDetails() {
       this.set('planDetailsVisible', !this.planDetailsVisible);

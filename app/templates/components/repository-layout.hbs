@@ -35,7 +35,7 @@
         </span>
       </div>
       {{/if}}
-      <RepoStatusBadge @repo={{this.repo}} @onClick={{action 'toggleStatusBadgeModal'}} />
+      <RepoStatusBadge @repo={{this.repo}} onClick={{action 'toggleStatusBadgeModal'}} @onClick={{action 'toggleStatusBadgeModal'}} />
       {{#if this.scansEnabled}}
       <LogScanStatusBadge @repo={{this.repo}} />
       {{/if}}
@@ -53,7 +53,7 @@
       />
     </div>
     <div class="travistab-body repo-body">
-      {{#if hasBlock}}
+      {{#if (has-block)}}
         {{yield}}
       {{else}}
         <BuildLayout @build={{this.build}} @repo={{this.repo}} />

@@ -12,5 +12,5 @@ export default Model.extend({
   creditCardBlockDuration: attr('number'),
   captchaBlockDuration: attr('number'),
 
-  owner: belongsTo('owner')
+  owner: belongsTo('owner', { polymorphic: true, async: true, inverse: 'allowance', as: 'allowance' })
 });

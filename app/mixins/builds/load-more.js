@@ -4,6 +4,7 @@ import { task } from 'ember-concurrency';
 
 export default Mixin.create({
   tabStates: service(),
+  store: service(),
 
   loadMoreBuilds: task(function* () {
     let number = this.get('builds.lastObject.number');

@@ -28,7 +28,7 @@
     </p>
     <AccountToken @token={{this.auth.token}} @showRegenerateButton={{true}}/>
   </section>
-  <section>
+  <section data-test-account-token>
     <h3>
       Assets authentication
     </h3>
@@ -39,16 +39,16 @@
         docs
       </ExternalLinkTo>.
     </p>
-    <AccountToken @token={{this.auth.assetToken}}/>
+    <AccountToken @token={{this.auth.assetToken}} @buttonClass='button-account-token'/>
   </section>
-  <section>
+  <section data-test-atom-token>
     <h3>
       Atom and RSS feeds authentication
     </h3>
     <p>
       RSS tokens could be used for getting atom and RSS feeds.
     </p>
-    <AccountToken @token={{this.auth.rssToken}}/>
+    <AccountToken @token={{this.auth.rssToken}} @buttonClass='button-atom-token'/>
   </section>
   {{#if this.features.betaFeatures}}
     {{#if this.scrollToFeatures}}

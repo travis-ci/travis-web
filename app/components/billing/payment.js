@@ -51,12 +51,12 @@ export default Component.extend({
 
   discountByAmount: computed('coupon.amountOff', 'selectedPlan.startingPrice', function () {
     const { amountOff } = this.coupon || {};
-    return amountOff && this.selectedPlan.startingPrice && Math.max(0, this.selectedPlan.startingPrice - amountOff);
+    return amountOff && this.selectedPlan && this.selectedPlan.startingPrice && Math.max(0, this.selectedPlan.startingPrice - amountOff);
   }),
 
   discountByPercentage: computed('coupon.percentOff', 'selectedPlan.startingPrice', function () {
     const { percentOff } = this.coupon || {};
-    if (percentOff && this.selectedPlan.startingPrice) {
+    if (percentOff && this.selectedPlan && this.selectedPlan.startingPrice) {
       const discountPrice = Math.max(0, this.selectedPlan.startingPrice - (this.selectedPlan.startingPrice * percentOff) / 100);
       return +discountPrice.toFixed(2);
     }
@@ -68,7 +68,7 @@ export default Component.extend({
     } else if (typeOf(this.discountByPercentage) === 'number' && this.discountByPercentage >= 0) {
       return this.discountByPercentage;
     } else {
-      return this.selectedPlan.startingPrice;
+      return this.selectedPlan ? this.selectedPlan.startingPrice : 0;
     }
   }),
 
@@ -110,7 +110,7 @@ export default Component.extend({
             v1SubscriptionId: this.v1SubscriptionId,
           });
           const { clientSecret } = yield subscription.save();
-          yield this.stripe.handleStripePayment.perform(clientSecret);
+          this.stripe.handleStripePayment.linked().perform(clientSecret);
         } else {
           this.metrics.trackEvent({
             action: 'Change Plan Pay Button Clicked',
@@ -119,8 +119,8 @@ export default Component.extend({
           yield this.subscription.changePlan.perform(this.selectedPlan.id, this.couponId);
         }
       }
-      yield this.accounts.fetchV2Subscriptions.perform();
-      yield this.retryAuthorization.perform();
+      this.accounts.fetchV2Subscriptions.linked().perform();
+      yield this.retryAuthorization.linked().perform();
       this.storage.clearBillingData();
       this.set('showPlansSelector', false);
       this.set('showAddonsSelector', false);
@@ -159,6 +159,7 @@ export default Component.extend({
       category: 'Subscription',
     });
     const { stripeElement, account, subscription, selectedPlan } = this;
+
     try {
       const { token } = yield this.stripe.createStripeToken.perform(stripeElement);
       if (token) {
@@ -170,6 +171,7 @@ export default Component.extend({
           plan: plan,
           v1SubscriptionId: this.v1SubscriptionId,
         });
+
         if (!this.subscription.id) {
           subscription.creditCardInfo.setProperties({
             token: token.id,
@@ -180,7 +182,10 @@ export default Component.extend({
             coupon: this.couponId
           });
           const { clientSecret } = yield subscription.save();
-          yield this.stripe.handleStripePayment.perform(clientSecret);
+
+          yield this.stripe.handleStripePayment.linked().perform(clientSecret);
+
+          this.accounts.fetchV2Subscriptions.perform();
         } else {
           yield this.subscription.creditCardInfo.updateToken.perform({
             subscriptionId: this.subscription.id,
@@ -189,6 +194,7 @@ export default Component.extend({
           });
           yield subscription.save();
           yield subscription.changePlan.perform(selectedPlan.id, this.couponId);
+
           yield this.accounts.fetchV2Subscriptions.perform();
           yield this.retryAuthorization.perform();
         }
@@ -198,6 +204,7 @@ export default Component.extend({
         this.set('isProcessCompleted', true);
       }
     } catch (error) {
+      console.log(error);
       this.handleError(error);
     }
   }).drop(),

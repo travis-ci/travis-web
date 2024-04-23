@@ -15,6 +15,7 @@ import {
 } from '@ember/object/computed';
 import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
+import { sortBy } from 'lodash';
 
 const { profileReposPerPage: limit } = config.pagination;
 
@@ -43,7 +44,7 @@ export default VcsEntity.extend({
   isOrganization: equal('type', 'organization'),
   isAssembla: match('vcsType', /Assembla\S+$/),
 
-  allowance: belongsTo('allowance', { async: true }),
+  allowance: belongsTo('allowance', { async: true, inverse: 'owner', polymorphic: true, as: 'owner' }),
 
   // This is set by serializers:subscription
   subscriptionPermissions: attr(),
@@ -53,7 +54,7 @@ export default VcsEntity.extend({
   title: or('name', 'login'),
 
   githubAppsRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
-    return yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });
+    return  yield this.fetchRepositories({ page, filter, ghApps: true, activeOnOrg: false });
   }),
 
   githubAppsRepositoriesOnOrg: dynamicQuery(function* ({ page = 1, filter = '' }) {
@@ -63,8 +64,9 @@ export default VcsEntity.extend({
   legacyRepositories: dynamicQuery(function* ({ page = 1, filter = '' }) {
     const isGithubAppsEnabled = this.features.get('github-apps');
     const active = isGithubAppsEnabled ? true : undefined;
-    return yield this.fetchRepositories({ page, filter, ghApps: false, active });
+    return  yield this.fetchRepositories({ page, filter, ghApps: false, active });
   }),
+
 
   fetchRepositories({ page, filter, ghApps, active, activeOnOrg }) {
     const { provider, login: owner } = this;
@@ -105,13 +107,13 @@ export default VcsEntity.extend({
 
   monthlyPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
     const filteredMonthlyPlans = this.nonGithubPlans.filter(plan => !plan.annual && plan.builds);
-    return filteredMonthlyPlans.sortBy('builds');
+    return sortBy(filteredMonthlyPlans, 'builds');
   }),
 
   annualPlans: computed('nonGithubPlans.@each.{name,annual,builds}', function () {
     const nonGithubPlans = this.nonGithubPlans || [];
     const filteredAnnualPlans = nonGithubPlans.filter(plan => plan.annual && plan.builds);
-    return filteredAnnualPlans.sortBy('builds');
+    return sortBy(filteredAnnualPlans, 'builds');
   }),
 
   fetchV2Plans: task(function* () {
@@ -131,7 +133,9 @@ export default VcsEntity.extend({
   },
 
   migrationBetaRequests: computed('tasks.fetchBetaMigrationRequestsTask.lastSuccessful.value.[]', 'login', function () {
-    const requests = this.tasks.fetchBetaMigrationRequestsTask.get('lastSuccessful.value') || [];
+    const last = this.tasks.fetchBetaMigrationRequestsTask.lastSuccessful;
+
+    const requests = (last && last.value) ? last.value : [];
     return requests.filter(request =>
       this.isUser && request.ownerName == this.login || request.organizations.mapBy('login').includes(this.login)
     );
@@ -152,7 +156,8 @@ export default VcsEntity.extend({
     'login',
     function () {
       let subscriptions = this.subscriptions || [];
-      return subscriptions.filterBy('owner.login', this.login);
+      let login = this.login;
+      return subscriptions.filter((el) => el.owner.login == login);
     }),
 
   activeAccountSubscriptions: filterBy('accountSubscriptions', 'isSubscribed'),

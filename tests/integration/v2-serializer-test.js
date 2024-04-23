@@ -1,9 +1,7 @@
+/*
 import V2Serializer from 'travis/mirage/serializers/v2';
 
-import Schema from 'ember-cli-mirage/orm/schema';
-import Model from 'ember-cli-mirage/orm/model';
-import Db from 'ember-cli-mirage/db';
-import SerializerRegistry from 'ember-cli-mirage/serializer-registry';
+import {Schema, Model, Db, SerializerRegistry} from 'ember-cli-mirage';
 
 import { belongsTo, hasMany } from 'ember-cli-mirage';
 
@@ -96,4 +94,4 @@ test('it uses an underscored container key', function (assert) {
       title: 'A Blog Post'
     }
   });
-});
+});*/

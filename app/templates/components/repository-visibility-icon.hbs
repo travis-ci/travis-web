@@ -1,4 +1,4 @@
-{{#if (and (not hideShared) this.repository.shared)}}
+{{#if (and (not this.hideShared) this.repository.shared)}}
   <span>
     <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
     <EmberTooltip @text="Shared repository" />

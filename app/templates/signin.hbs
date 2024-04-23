@@ -50,11 +50,11 @@
         </UiKit::Text>
       {{/if}}
 
-      <UiKit::ButtonSignin @provider='github' />
-      <UiKit::ButtonSignin @provider='bitbucket' />
-      <UiKit::ButtonSignin @provider='gitlab' />
-      <UiKit::ButtonSignin @provider='assembla' />
-      <UiKit::ButtonSignin @provider='travisproxy' />
+      <UiKit::ButtonSignin @providerParam='github' />
+      <UiKit::ButtonSignin @providerParam='bitbucket' />
+      <UiKit::ButtonSignin @providerParam='gitlab' />
+      <UiKit::ButtonSignin @providerParam='assembla' />
+      <UiKit::ButtonSignin @providerParam='travisproxy' />
 
       {{#unless this.hasAccounts}}
         {{#if this.features.proVersion}}
@@ -77,4 +77,5 @@
       <SvgImage @name="red-dash-circle" />
     </UiKit::Box>
   </UiKit::Box>
+
 </TravisLayout>

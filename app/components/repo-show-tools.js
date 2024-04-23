@@ -27,16 +27,16 @@ export default Component.extend({
 
   displaySettingsLink: computed('permissions.all', 'repo', function () {
     let repo = this.repo;
-    const forRepo = repo.permissions.settings_read;
+    const forRepo = repo.permissions?.settings_read;
 
-    return this.permissions.hasPushPermission(repo) && forRepo;
+    return forRepo && this.permissions.hasPushPermission(repo);
   }),
 
   displayCachesLink: computed('permissions.all', 'repo', function () {
     let repo = this.repo;
-    const forRepo = repo.permissions.cache_view;
+    const forRepo = repo.permissions?.cache_view;
 
-    return this.permissions.hasPushPermission(repo) && config.endpoints.caches && forRepo;
+    return forRepo && this.permissions.hasPushPermission(repo) && config.endpoints.caches;
   }),
 
   displayStatusImages: computed('permissions.all', 'repo', function () {
@@ -53,7 +53,7 @@ export default Component.extend({
       let canTriggerBuild = this.get('repo.permissions.create_request');
       let enterprise = this.get('features.enterpriseVersion');
       let pro = this.get('features.proVersion');
-      const forRepo = this.repo.permissions.build_create;
+      const forRepo = this.repo.permissions?.build_create;
 
       if (enterprise || pro) {
         return canTriggerBuild && forRepo;

@@ -15,7 +15,7 @@
       width: 473px;
       max-width: $max-width;
       margin: 0 auto;
-      padding: $column-gutter/2;
+      padding: math.div($column-gutter, 2);
 
     }
 
@@ -93,18 +93,6 @@
   #first-plan-activate-button {
     margin-top: 44px;
     margin-bottom: 44px;
-  }
-
-  #first-plan-skip {
-    margin-top: 60px;
-    margin-bottom: 10px;
-  }
-  #first-plan-skip-button {
-    margin-right: -140px;
-    padding-left: 110px;
-    font-size: 14px;
-    font-weight: 600;
-    color: $ansi-green;
   }
 
   .not-required-form-elem {

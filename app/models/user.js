@@ -105,7 +105,6 @@ export default Owner.extend({
         this.accounts.fetchOrganizations.perform();
         this.accounts.fetchSubscriptions.perform();
         this.accounts.fetchV2Subscriptions.perform();
-
         this.applyReposFilter();
         Travis.trigger('user:synced', this);
         this.set('isSyncing', false);
@@ -121,7 +120,8 @@ export default Owner.extend({
 
   reload(options = {}) {
     const { authToken } = this;
-    return this.store.queryRecord('user', Object.assign({}, options, { current: true, authToken }));
+    let res = this.store.queryRecord('user', Object.assign({}, options, { current: true, authToken }));
+    return res;
   },
 
   applyReposFilter() {

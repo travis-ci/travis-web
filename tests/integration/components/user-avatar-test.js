@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | user avatar', function (hooks) {
   setupRenderingTest(hooks);
@@ -11,7 +11,7 @@ module('Integration | Component | user avatar', function (hooks) {
     this.set('url', '/images/tiny.gif');
     this.set('size', 38);
 
-    await render(hbs`{{user-avatar name=name url=url size=size}}`);
+    await render(hbs`{{user-avatar name=this.name url=this.url size=this.size}}`);
 
     assert.dom('.pseudo-avatar').hasAttribute('data-initials', 'HT', 'initials should be correct');
     assert.dom('.real-avatar').hasAttribute('src', '/images/tiny.gif?v=3&s=38', 'avatar should display fallback image');

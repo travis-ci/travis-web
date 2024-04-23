@@ -6,11 +6,11 @@ StripeMock.prototype.elements = function () {
   return {
     create: function () {
       return {
-        mount: function () { },
-        on: function () { },
-        unmount: function () { }
+        mount: function () {},
+        on: function () {},
+        unmount: function () {},
       };
-    }
+    },
   };
 };
 
@@ -19,13 +19,13 @@ StripeMock.prototype.createToken = function (data) {
     token: {
       id: 'stripeToken',
       card: {
-        last4: '3242'
-      }
-    }
+        last4: '3242',
+      },
+    },
   });
 };
-StripeMock.prototype.createSource = function () { };
-StripeMock.prototype.retrieveSource = function () { };
-StripeMock.prototype.paymentRequest = function () { };
+StripeMock.prototype.createSource = function () {};
+StripeMock.prototype.retrieveSource = function () {};
+StripeMock.prototype.paymentRequest = function () {};
 
 export default StripeMock;

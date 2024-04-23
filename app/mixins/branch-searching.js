@@ -17,6 +17,6 @@ export default Mixin.create({
         exists_on_github: true
       }
     });
-    return branches.reject(branch => (filter.includes(branch.name)));
+    return  branches.filter(branch => (!filter.includes(branch.name)));
   }).restartable()
 });

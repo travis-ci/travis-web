@@ -142,7 +142,7 @@ export default Component.extend({
 
   didUpdateAttrs() {
     this._super(...arguments);
-    this.page = 1;
+    this.set('page', 1);
     this.set('filter', '');
   },
 });
