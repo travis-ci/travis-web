@@ -206,6 +206,15 @@ export default Component.extend({
     }
   }).drop(),
 
+
+  skipSubscription() {
+    this.storage.clearBillingData();
+    this.storage.clearSelectedPlanId();
+    this.storage.wizardStep = 2;
+    this.wizard.update.perform(2);
+    this.router.transitionTo('account.repositories');
+  },
+
   newV2Subscription() {
     const plan = this.store.createRecord('v2-plan-config');
     const billingInfo = this.store.createRecord('v2-billing-info');
@@ -289,6 +298,9 @@ export default Component.extend({
       if  (this.canActivate) {
         this.createSubscription.perform();
       }
+    },
+    skipActivation() {
+      this.skipSubscription();
     },
     changeCountry(country) {
       this.set('country', country);
