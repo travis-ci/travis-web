@@ -9,7 +9,7 @@ import { registerDeprecationHandler } from '@ember/debug';
 
 
 // This can be set per environment in config/environment.js
-const debuggingEnabled = true; // config.featureFlags['debug-logging'];
+const debuggingEnabled = config.featureFlags['debug-logging'];
 
 const App = Application.extend(Evented, {
   modulePrefix: config.modulePrefix,

@@ -9,6 +9,7 @@ import { and, filterBy, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 import fetchAll from 'travis/utils/fetch-all';
+import fetchSome from 'travis/utils/fetch-some';
 
 
 export default Component.extend({
@@ -97,8 +98,9 @@ export default Component.extend({
   isTabSearch: reads('tabStates.isSidebarSearch'),
 
   getAllRepos: task(function* () {
-    yield fetchAll(this.store, 'repo', {});
-    return this.store.findAll('repo');
+    yield fetchSome(this.store, 'repo', {limit: 1, offset: 0});
+
+    return this.store.peekAll('repo');
   }).drop(),
 
   fetchRepositories: task(function* () {
