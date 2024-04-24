@@ -98,9 +98,9 @@ export default Component.extend({
   isTabSearch: reads('tabStates.isSidebarSearch'),
 
   getAllRepos: task(function* () {
-    yield fetchSome(this.store, 'repo', {limit: 50, offset: 0});
+    yield fetchSome(this.store, 'repo', {limit: 1, offset: 0});
 
-    return this.store.findAll('repo');
+    return this.store.peekAll('repo');
   }).drop(),
 
   fetchRepositories: task(function* () {
