@@ -262,6 +262,12 @@ class Travis::Web::App
       config['providers'][provider]['isDefault'] = true
     end
 
+    if ENV['ENDPOINT_PORTFOLIO']
+      config['providers'] ||= {}
+      config['providers']['assembla'] ||= {}
+      config['providers']['assembla']['endpointPortfolio'] = ENV['ENDPOINT_PORTFOLIO']
+    end
+
     if ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
         config['providers'] ||= {}
         config['providers']['github'] ||= {}
