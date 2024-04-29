@@ -7,7 +7,7 @@
 </p>
 <PaperBlock class="profile-repolist-wrapper">
   <ul class="profile-repositorylist">
-    {{#each repositories as |repository|}}
+    {{#each this.repositories as |repository|}}
       <li class="profile-repolist-item">
         <RepositoryVisibilityIcon @repository={{repository}} />
         <span class="profile-repo">
@@ -32,7 +32,7 @@
   <button
     data-test-repository-migration-modal-cancel-migration-button
     class="migration-modal-cancel button"
-    onclick={{action onClose}}
+    onclick={{action this.onClose}}
   >
     Cancel
   </button>
@@ -48,7 +48,7 @@
   type="button"
   title="Close modal"
   class="modal-close pointer"
-  onclick={{action onClose}}
+  onclick={{action this.onClose}}
 >
   <SvgImage @name="icon-failed" @class="icon" />
 </button>

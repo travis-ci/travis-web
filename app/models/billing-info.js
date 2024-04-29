@@ -14,5 +14,5 @@ export default Model.extend({
   billingEmail: attr('string'),
   hasLocalRegistration: attr('boolean'),
 
-  subscription: belongsTo('subscription')
+  subscription: belongsTo('subscription', { async: false, inverse: 'billingInfo'})
 });

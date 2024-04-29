@@ -1,6 +1,6 @@
 {{#if this.isProviderEnabled}}
   <UiKit::Button
-    @onClick={{action this.signin}}
+    onClick={{action this.signin}}
     @color={{vcs-color this.vcsType 'main'}}
     @invert={{true}}
     class="{{this.minWidthClass}} mb-4 text-left relative pointer"

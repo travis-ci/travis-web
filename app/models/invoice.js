@@ -8,7 +8,7 @@ export default Model.extend({
   amountDue: attr('number'),
   ccLastDigits: attr('string'),
 
-  subscription: belongsTo('subscription'),
+  subscription: belongsTo('subscription',  { async: false, inverse: 'invoices' }),
 
   year: computed('createdAt', function () {
     return this.createdAt.getFullYear();

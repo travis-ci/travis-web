@@ -31,13 +31,13 @@ export default Model.extend({
 
   addonConfigs: attr(),
   hasCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
-    return this.addonConfigs.filter(addon => addon.type === 'credit_private').length > 0;
+    return (this.addonConfigs || []).filter(addon => addon.type === 'credit_private').length > 0;
   }),
   hasOSSCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
-    return this.addonConfigs.filter(addon => addon.type === 'credit_public').length > 0;
+    return (this.addonConfigs || []).filter(addon => addon.type === 'credit_public').length > 0;
   }),
   hasUserLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
-    return this.addonConfigs.filter(addon => addon.type === 'user_license').length > 0;
+    return (this.addonConfigs || []).filter(addon => addon.type === 'user_license').length > 0;
   }),
   hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons'),
 

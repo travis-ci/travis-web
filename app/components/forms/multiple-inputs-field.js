@@ -1,14 +1,24 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { isPresent}  from '@ember/utils';
 
 export default Component.extend({
   tagName: '',
   delimeter: ',',
   initialValue: '',
-  value: reads('initialValue'),
+  value: computed({
+    get() {
+      if (isPresent(this._value)) return this._value;
 
-  fields: computed('value', {
+      return this.initialValue;
+    },
+    set(k, v) {
+      this.set('_value', v);
+      return this._value;
+    }
+  }),
+
+  fields: computed({
     get() {
       return (this.value || '').split(this.delimeter).map(value => ({ value }));
     },

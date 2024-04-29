@@ -1,11 +1,8 @@
 module.exports = {
   test_page: 'tests/index.html?hidepassed&dockcontainer',
   disable_watching: true,
-  launch_in_ci: [
-    'Chrome'
-  ],
-  launch_in_dev: [
-  ],
+  launch_in_ci: ['Chrome'],
+  launch_in_dev: [],
   browser_args: {
     Chrome: [
       // --no-sandbox is needed when running Chrome inside a container
@@ -15,7 +12,7 @@ module.exports = {
       '--disable-software-rasterizer',
       '--mute-audio',
       '--remote-debugging-port=0',
-      '--window-size=1440,900'
-    ].filter(Boolean)
-  }
+      '--window-size=1440,900',
+    ].filter(Boolean),
+  },
 };

@@ -1,5 +1,5 @@
-import { Factory } from 'ember-cli-mirage';
+import { Factory } from 'miragejs';
 
 export default Factory.extend({
-  sha: 'abc123'
+  sha: 'abc123',
 });

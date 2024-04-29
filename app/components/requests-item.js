@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
+import { capitalize } from '@ember/string';
 
 export default Component.extend({
   classNames: ['request-item'],
@@ -24,7 +25,7 @@ export default Component.extend({
 
   status: computed('request.result', function () {
     let result = this.get('request.result');
-    return result.capitalize();
+    return capitalize(result);
   }),
 
   message: computed('features.proVersion', 'request.message', function () {

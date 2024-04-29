@@ -6,7 +6,7 @@ export default Model.extend({
   api: service(),
   lastDigits: attr('string'),
 
-  subscription: belongsTo('v2-subscription'),
+  subscription: belongsTo('v2-subscription', { async: false, inverse: 'creditCardInfo' }),
   token: attr('string'),
   fingerprint: attr('string'),
 

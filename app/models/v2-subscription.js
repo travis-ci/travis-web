@@ -19,7 +19,7 @@ export default Model.extend({
   status: attr('string'),
   createdAt: attr('date'),
   validTo: attr('date'),
-  organization: belongsTo('organization'),
+  organization: belongsTo('organization',  { async: false, inverse: null }),
   coupon: attr('string'),
   clientSecret: attr('string'),
   paymentIntent: attr(),
@@ -29,12 +29,12 @@ export default Model.extend({
 
   v1SubscriptionId: attr('number'),
 
-  discount: belongsTo('discount', { async: false }),
-  billingInfo: belongsTo('v2-billing-info', { async: false }),
-  creditCardInfo: belongsTo('v2-credit-card-info', { async: false }),
-  invoices: hasMany('invoice'),
-  owner: belongsTo('owner', { polymorphic: true }),
-  plan: belongsTo('v2-plan-config'),
+  discount: belongsTo('discount', { async: false, inverse: null }),
+  billingInfo: belongsTo('v2-billing-info', { async: false, inverse: 'subscription' }),
+  creditCardInfo: belongsTo('v2-credit-card-info', { async: false, inverse: 'subscription' }),
+  invoices: hasMany('invoice', { async: false, inverse: 'subscription'}),
+  owner: belongsTo('owner', { polymorphic: true, async: true, inverse: null }),
+  plan: belongsTo('v2-plan-config', {async: false, inverse: null}),
   addons: attr(),
   auto_refill: attr(),
 
@@ -215,12 +215,12 @@ export default Model.extend({
   changePlan: task(function* (plan, coupon) {
     const data = { plan, coupon };
     yield this.api.patch(`/v2_subscription/${this.id}/plan`, { data });
-    yield this.accounts.fetchV2Subscriptions.perform();
+    this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   buyAddon: task(function* (addon) {
     yield this.api.post(`/v2_subscription/${this.id}/addon/${addon.id}`);
-    yield this.accounts.fetchV2Subscriptions.perform();
+    this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   autoRefillToggle: task(function* (ownerId, value) {

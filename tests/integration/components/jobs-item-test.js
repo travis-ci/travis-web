@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { prettyDate } from 'travis/helpers/pretty-date';
 
 module('Integration | Component | jobs item', function (hooks) {
@@ -28,7 +28,7 @@ module('Integration | Component | jobs item', function (hooks) {
       os: 'linux',
     };
     this.job = job;
-    await render(hbs`{{jobs-item job=job}}`);
+    await render(hbs`{{jobs-item job=this.job}}`);
 
     assert.dom('.jobs-item').hasClass('passed', 'component should have a state class (passed)');
     assert.dom('.job-number .label-align').hasText('2', 'job number should be displayed');
@@ -43,7 +43,7 @@ module('Integration | Component | jobs item', function (hooks) {
   test('outputs info on not set properties', async function (assert) {
     const job = {};
     this.job = job;
-    await render(hbs`{{jobs-item job=job}}`);
+    await render(hbs`{{jobs-item job=this.job}}`);
 
     assert.dom('.job-env').hasText(/no environment variables set/, 'a message for no env vars should be displayed');
     assert.dom('.job-lang').hasText(/no language set/, 'a message about no language being set should be displayed');
@@ -62,7 +62,7 @@ module('Integration | Component | jobs item', function (hooks) {
     };
 
     this.job = job;
-    await render(hbs`{{jobs-item job=job}}`);
+    await render(hbs`{{jobs-item job=this.job}}`);
 
     assert.dom('.job-name .label-align').hasText('that name', 'name should be displayed');
     assert.dom('.job-language .label-align').doesNotExist();
@@ -82,7 +82,7 @@ module('Integration | Component | jobs item', function (hooks) {
     };
 
     this.job = job;
-    await render(hbs`{{jobs-item job=job}}`);
+    await render(hbs`{{jobs-item job=this.job}}`);
 
     assert.dom('.job-lang .label-align').hasText('Ruby: 2.1.2', 'langauges list should be displayed');
     assert.dom('.job-env .label-align').hasText('Gemfile: foo/Gemfile', 'env should be displayed');
@@ -101,7 +101,7 @@ module('Integration | Component | jobs item', function (hooks) {
       duration: 100
     };
     this.job = job;
-    await render(hbs`{{jobs-item job=job}}`);
+    await render(hbs`{{jobs-item job=this.job}}`);
 
     assert.dom('.job-lang .label-align').hasText('Ruby: 2.1.2 Gemfile: foo/Gemfile', 'Gemfile should be displayed in languages section');
     assert.dom('.job-env .label-align').hasText('FOO=bar', 'env should be displayed');

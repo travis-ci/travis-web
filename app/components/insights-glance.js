@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { format as d3format } from 'd3';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   classNames: ['insights-glance'],
@@ -17,16 +18,43 @@ export default Component.extend({
   delta: 0,
   deltaTitle: '',
   deltaText: '',
+  labels: [],
+  values: [],
 
-  labels: computed(() => []),
-  values: computed(() => []),
+  labelsx: computed({
+    get() {
+      if (isPresent(this._labels)) {
+        return this._labels;
+      }
+      return [];
+    },
+    set(k, v) {
+      if (v === undefined) v = [];
+      this.set('_labels', v);
+    }
+  }),
+  valuesx: computed({
+    get() {
+      if (isPresent(this._values)) {
+        return this._values;
+      }
+      return [];
+    },
+    set(k, v) {
+      if (v === undefined) v = [];
+      this.set('_values', v);
+    }
+  }),
   datasetTitle: 'Data',
   centerline: null,
 
   showPlaceholder: or('isLoading', 'isEmpty'),
 
   // Chart component data
-  data: computed('values.[]', 'labels.[]', 'datasetTitle', function () {
+  data: computed('datasetTitle', function () {
+    if (this.labels === undefined) this.labels = [];
+    if (this.values === undefined) this.values = [];
+
     return {
       type: 'spline',
       x: 'x',

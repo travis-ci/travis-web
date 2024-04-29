@@ -32,7 +32,7 @@ const {
   SOURCE_VERSION,
   DEPLOY_TARGET,
   TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED,
-  TEMPORARY_ANNOUNCEMENT_MESSAGE
+  TEMPORARY_ANNOUNCEMENT_MESSAGE,
 } = process.env;
 
 module.exports = function (environment) {
@@ -40,7 +40,7 @@ module.exports = function (environment) {
     modulePrefix: 'travis',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'history',
     defaultTitle: 'Travis CI',
     providers,
     plans,
@@ -53,8 +53,8 @@ module.exports = function (environment) {
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        Date: false,
+      },
     },
 
     APP: {
@@ -69,7 +69,7 @@ module.exports = function (environment) {
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
-      debug: false
+      debug: false,
     },
     intercom: {
       appId: INTERCOM_APP_ID || 'placeholder',
@@ -80,22 +80,26 @@ module.exports = function (environment) {
         nameProp: 'name',
         createdAtProp: 'firstLoggedInAt',
         userHashProp: 'secureUserHash',
-      }
+      },
     },
     urls: {
       about: 'https://about.travis-ci.com',
-      bestpracticessecurity: 'https://docs.travis-ci.com/user/best-practices-security#recommendations-on-how-to-avoid-leaking-secrets-to-build-logs',
+      bestpracticessecurity:
+        'https://docs.travis-ci.com/user/best-practices-security#recommendations-on-how-to-avoid-leaking-secrets-to-build-logs',
       blog: 'https://blog.travis-ci.com',
       buildMatrix: 'https://docs.travis-ci.com/user/build-matrix/',
-      buildConfigValidation: 'https://docs.travis-ci.com/user/build-config-validation/',
-      caseStudy: 'https://blog.travis-ci.com/2019-06-5-case-study-ibm-cloud-kubernetes-service',
+      buildConfigValidation:
+        'https://docs.travis-ci.com/user/build-config-validation/',
+      caseStudy:
+        'https://blog.travis-ci.com/2019-06-5-case-study-ibm-cloud-kubernetes-service',
       changelog: 'https://changelog.travis-ci.com',
       community: 'https://travis-ci.community',
       communityEarlyReleases: 'https://travis-ci.community/c/early-releases',
       dashboard: 'https://travis-ci.com/dashboard',
       docker: 'https://docs.travis-ci.com/user/docker/',
       docs: 'https://docs.travis-ci.com',
-      gettingStarted: 'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
+      gettingStarted:
+        'https://docs.travis-ci.com/user/getting-started/#to-get-started-with-travis-ci',
       education: 'https://education.travis-ci.com',
       emailSupport: 'mailto:support@travis-ci.com',
       enterprise: 'https://enterprise.travis-ci.com',
@@ -105,7 +109,8 @@ module.exports = function (environment) {
       languages: 'https://docs.travis-ci.com/user/language-specific/',
       multiOS: 'https://docs.travis-ci.com/user/multi-os/',
       node: 'https://docs.travis-ci.com/user/languages/javascript-with-nodejs/',
-      noRun: 'https://docs.travis-ci.com/user/common-build-problems/#i-pushed-a-commit-and-cant-fin',
+      noRun:
+        'https://docs.travis-ci.com/user/common-build-problems/#i-pushed-a-commit-and-cant-fin',
       plans: 'https://travis-ci.com/plans',
       status: 'https://www.traviscistatus.com/',
       support: 'mailto:support@travis-ci.com',
@@ -115,8 +120,10 @@ module.exports = function (environment) {
       pardotHost: 'https://info.travis-ci.com',
       pardotForm: '/l/845883/2020-02-03/257j',
       planDocs: 'https://docs.travis-ci.com/user/billing-overview/',
-      planCreditDocs: 'https://docs.travis-ci.com/user/billing-overview/#usage---credits',
-      planUsersDocs: 'https://docs.travis-ci.com/user/billing-overview/#usage---user-licenses',
+      planCreditDocs:
+        'https://docs.travis-ci.com/user/billing-overview/#usage---credits',
+      planUsersDocs:
+        'https://docs.travis-ci.com/user/billing-overview/#usage---user-licenses',
       billingOverview: 'https://docs.travis-ci.com/user/billing-overview/',
       autoRefill: 'https://docs.travis-ci.com/user/billing-autorefill/',
       billingFaq: 'https://docs.travis-ci.com/user/billing-faq/',
@@ -137,19 +144,21 @@ module.exports = function (environment) {
       syncingPolling: 3000,
       githubAppsInstallationPolling: 4000,
     },
-    apiTraceEndpoint: 'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
+    apiTraceEndpoint:
+      'https://papertrailapp.com/systems/travis-org-api-production/events?q=program%3Aapp%2Fweb%20log-tracing%20',
     ajaxPolling: false,
     logLimit: 100000,
     emojiPrepend: '',
-    statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
+    statusPageStatusUrl:
+      'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
 
     zendesk: {
       apiHost: 'https://travisci.zendesk.com',
-      createRequestEndpoint: '/api/v2/requests.json'
+      createRequestEndpoint: '/api/v2/requests.json',
     },
 
     moment: {
-      includeTimezone: 'subset'
+      includeTimezone: 'subset',
     },
 
     stripeOptions: {
@@ -160,23 +169,23 @@ module.exports = function (environment) {
           fontSize: '15px',
           color: '#666',
           '::placeholder': {
-            color: '#aaa'
+            color: '#aaa',
           },
         },
         invalid: {
           color: 'red',
-          iconColor: 'red'
-        }
-      }
+          iconColor: 'red',
+        },
+      },
     },
 
     gReCaptcha: {
-      siteKey: GOOGLE_RECAPTCHA_SITE_KEY
+      siteKey: GOOGLE_RECAPTCHA_SITE_KEY,
     },
     tempBanner: {
       tempBannerEnabled: TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED || false,
-      tempBannerMessage: TEMPORARY_ANNOUNCEMENT_MESSAGE || ''
-    }
+      tempBannerMessage: TEMPORARY_ANNOUNCEMENT_MESSAGE || '',
+    },
   };
 
   ENV.metricsAdapters = [];
@@ -192,7 +201,7 @@ module.exports = function (environment) {
         trace: environment === 'development',
         // Ensure development env hits aren't sent to GA
         sendHitTask: environment !== 'development',
-      }
+      },
     });
   }
 
@@ -202,7 +211,7 @@ module.exports = function (environment) {
       config: {
         id: GOOGLE_TAGS_CONTAINER_ID,
         envParams: GOOGLE_TAGS_PARAMS,
-      }
+      },
     });
   }
 
@@ -212,7 +221,7 @@ module.exports = function (environment) {
     'landing-page-cta': true,
     'show-running-jobs-in-sidebar': false,
     'debug-builds': false,
-    'broadcasts': true,
+    broadcasts: true,
     'beta-features': true,
     'github-apps': false,
     'enable-assembla-login': false,
@@ -255,7 +264,7 @@ module.exports = function (environment) {
   }
 
   try {
-    Object.keys(ENV.featureFlags).forEach(flagKey => {
+    Object.keys(ENV.featureFlags).forEach((flagKey) => {
       const envFlagName = `FLAG_${flagKey.toUpperCase().replace(/-/g, '_')}`;
       const envFlagVal = process.env[envFlagName];
 
@@ -271,7 +280,7 @@ module.exports = function (environment) {
     try {
       const devFlags = ENABLE_FEATURE_FLAGS.split(',');
       if (devFlags.length) {
-        devFlags.forEach(flagKey => {
+        devFlags.forEach((flagKey) => {
           ENV.featureFlags[flagKey] = true;
         });
       }
@@ -281,12 +290,15 @@ module.exports = function (environment) {
   ENV.sentry = {
     dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
     whitelistUrls: [
-      /https:\/\/cdn\.travis-ci\.(org|com)\/assets\/(vendor|travis)-.+.js/
-    ]
+      /https:\/\/cdn\.travis-ci\.(org|com)\/assets\/(vendor|travis)-.+.js/,
+    ],
   };
 
   if (typeof process !== 'undefined') {
-    if (ENV.featureFlags['pro-version'] && !ENV.featureFlags['enterprise-version']) {
+    if (
+      ENV.featureFlags['pro-version'] &&
+      !ENV.featureFlags['enterprise-version']
+    ) {
       // set defaults for pro if it's used
       // TODO: we have the same defaults also in ruby process,
       //       it would be nice to move it to one place. In theory
@@ -300,14 +312,14 @@ module.exports = function (environment) {
       ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
       ENV.endpoints = {
         sshKey: true,
-        caches: true
+        caches: true,
       };
       ENV.userlike = true;
 
       if (GITHUB_APPS_APP_NAME) {
         ENV.githubApps = {
           appName: GITHUB_APPS_APP_NAME,
-          migrationRepositoryCountLimit: 50
+          migrationRepositoryCountLimit: 50,
         };
       }
     }
@@ -348,17 +360,18 @@ module.exports = function (environment) {
 
   if (environment === 'development') {
     ENV['ember-cli-mirage'] = {
-      enabled: false
+      enabled: false,
     };
 
     ENV.sentry = {
-      development: true
+      development: true,
     };
   }
 
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
+    ENV.APP.autoboot = false;
 
     ENV.validAuthToken = 'testUserToken';
 
@@ -378,12 +391,12 @@ module.exports = function (environment) {
     ENV.APP.autoboot = false;
 
     ENV.sentry = {
-      development: true
+      development: true,
     };
 
     ENV.endpoints = {
       sshKey: true,
-      caches: true
+      caches: true,
     };
 
     ENV.stripe = {
@@ -395,7 +408,7 @@ module.exports = function (environment) {
 
     ENV.githubApps = {
       appName: 'travis-ci-testing',
-      migrationRepositoryCountLimit: 20
+      migrationRepositoryCountLimit: 20,
     };
 
     ENV.skipConfirmations = true;
@@ -405,9 +418,9 @@ module.exports = function (environment) {
     ENV.percy = {
       breakpointsConfig: {
         mobile: 375,
-        desktop: 1280
+        desktop: 1280,
       },
-      defaultBreakpoints: ['mobile', 'desktop']
+      defaultBreakpoints: ['mobile', 'desktop'],
     };
 
     ENV.featureFlags['debug-logging'] = false;
@@ -426,7 +439,7 @@ module.exports = function (environment) {
     ENV.release = SOURCE_VERSION || TRAVIS_COMMIT || '-';
     if (DISABLE_SENTRY) {
       ENV.sentry = {
-        development: true
+        development: true,
       };
     }
   }

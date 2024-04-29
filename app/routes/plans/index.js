@@ -5,6 +5,7 @@ import config from 'travis/config/environment';
 export default TravisRoute.extend({
   auth: service(),
   router: service(),
+  store: service(),
 
   beforeModel() {
     if (this.auth.signedIn) {

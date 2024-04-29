@@ -8,6 +8,6 @@ export default TravisRoute.extend({
   },
 
   afterModel(request) {
-    return request.fetchMessages.perform();
+    // return request.fetchMessages.perform();
   }
 });

@@ -3,7 +3,7 @@
   @route="repo"
   @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}
   @query={{hash serverType=this.repository.serverType}}
-  class="profile-repo"
+  class="profile-repo non-admin"
   @classNameBindings="admin:admin:non-admin"
 >
   {{this.name}}

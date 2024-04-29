@@ -7,5 +7,5 @@ export default Model.extend({
   valid: attr('boolean'),
   duration: attr('string'),
   durationInMonths: attr('number'),
-  subscription: belongsTo('subscription')
+  subscription: belongsTo('subscription', { async: false, inverse: 'discount' })
 });

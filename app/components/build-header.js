@@ -4,6 +4,7 @@ import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { reads, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { capitalize } from '@ember/string';
 
 const commitMessageLimit = 72;
 
@@ -61,13 +62,14 @@ export default Component.extend({
     return !['api', 'cron'].includes(eventType);
   }),
 
+
   commitUrl: computed('item.repo.{ownerName,vcsName,vcsType,slug}', 'commit.sha', function () {
-    const owner = this.get('item.repo.ownerName');
-    const repo = this.get('item.repo.vcsName');
-    const vcsType = this.get('item.repo.vcsType');
-    const vcsId = this.get('item.repo.vcsId');
+    const owner = this.get('repo.ownerName');
+    const repo = this.get('repo.vcsName');
+    const vcsType = this.get('repo.vcsType');
+    const vcsId = this.get('repo.vcsId');
     const commit = this.get('commit.sha');
-    const slugOwner = this.get('item.repo.slug').split('/')[0];
+    const slugOwner = this.get('repo.slug')?.split('/')[0];
 
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId, slugOwner });
   }),
@@ -115,7 +117,7 @@ export default Component.extend({
     if (serverType === 'svn') {
       return 'SVN';
     } else {
-      return serverType.capitalize();
+      return capitalize(serverType);
     }
   }),
 

@@ -1,14 +1,20 @@
+/* global Travis */
 import TravisRoute from 'travis/routes/basic';
 import { inject as service } from '@ember/service';
 
 export default TravisRoute.extend({
   features: service(),
   tabStates: service(),
+  router: service(),
+  pusher: service(),
 
   afterModel(repo) {
     try {
-      return repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
+      repo.get('currentBuild.request').then(request => request && request.fetchMessages.perform());
     } catch (error) {}
+    Travis.pusher.subscribe(`repo-${repo.id}`);
+
+    this.renderTemplate(repo);
   },
 
   setupController(controller, model) {
@@ -35,35 +41,40 @@ export default TravisRoute.extend({
     let controller = this.controllerFor('repo');
     controller.addObserver('repo.active', this, 'renderTemplate');
     controller.addObserver('repo.currentBuildId', this, 'renderTemplate');
+    const repo = this.modelFor('repo');
+
+    Travis.pusher.subscribe(`repo-${repo.id}`);
   },
 
   stopObservingRepoStatus() {
     let controller = this.controllerFor('repo');
     controller.removeObserver('repo.active', this, 'renderTemplate');
     controller.removeObserver('repo.currentBuildId', this, 'renderTemplate');
+    const repo = this.modelFor('repo');
+    Travis.pusher.unsubscribe(`repo-${repo.id}`);
   },
 
   beforeModel() {
+    this.set('tabStates.mainTab', 'current');
     const repo = this.modelFor('repo');
     if (repo && !repo.repoOwnerAllowance) {
       repo.fetchRepoOwnerAllowance.perform();
     }
   },
 
-  renderTemplate() {
+  renderTemplate(repo) {
     let controller = this.controllerFor('repo');
-
+    //   this.set('tabStates.mainTab', 'current');
     if (this.get('features.github-apps') &&
-      controller.get('repo.active_on_org') &&
+      repo.active_on_org &&
       controller.migrationStatus !== 'success') {
-      this.render('repo/active-on-org');
-    } else if (!controller.get('repo.active')) {
-      this.render('repo/not-active');
-    } else if (!controller.get('repo.currentBuildId')) {
-      this.render('repo/no-build');
+      this.router.transitionTo('repo.active-on-org');
+    } else if (!repo.active) {
+      this.router.transitionTo('repo.not-active');
+    } else if (!repo.currentBuildId) {
+      this.router.transitionTo('repo.no-build');
     } else {
-      this.render('build');
-      this.render('build/index', { into: 'build', controller: 'build' });
+      this.router.transitionTo('build.index', repo.currentBuildId);
     }
   }
 });

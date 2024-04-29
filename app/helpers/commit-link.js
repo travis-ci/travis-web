@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
 import formatCommit from 'travis/utils/format-commit';

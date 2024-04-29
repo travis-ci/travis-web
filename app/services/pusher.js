@@ -76,7 +76,7 @@ export default Service.extend({
 
     if (event === 'job:log') {
       data = data.job ? data.job : data;
-      job = store.recordForId('job', data.id);
+      job = store.peekRecord('job', data.id);
       return job.appendLog({
         number: parseInt(data.number),
         content: data._log,

@@ -47,10 +47,10 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   updatedAt: attr('date'),
   _config: attr(),
 
-  repo: belongsTo('repo'),
-  build: belongsTo('build', { async: true }),
-  commit: belongsTo('commit', { async: true }),
-  stage: belongsTo('stage', { async: true }),
+  repo: belongsTo('repo', { async: true, inverse: null }),
+  build: belongsTo('build', { async: true, inverse: 'jobs'  }),
+  commit: belongsTo('commit', { async: true, inverse: null }),
+  stage: belongsTo('stage', { async: true, inverse: null }),
 
   isPullRequest: alias('build.isPullRequest'),
   pullRequestNumber: alias('build.pullRequestNumber'),

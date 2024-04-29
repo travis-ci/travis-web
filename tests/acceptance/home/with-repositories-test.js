@@ -73,6 +73,7 @@ module('Acceptance | home/with repositories', function (hooks) {
     await visit('/');
     await settled();
 
+
     assert.equal(sidebarPage.sidebarRepositories.length, 3, 'expected three repositories in the sidebar');
 
     sidebarPage.sidebarRepositories[0].as(yetAnother => {
@@ -109,7 +110,6 @@ module('Acceptance | home/with repositories', function (hooks) {
       message: 'Add new chapter',
       committed_at: '2016-12-02T22:02:34Z',
     });
-
     const build = this.branch.createBuild({
       id: 100,
       number: 15,

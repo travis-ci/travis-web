@@ -52,6 +52,7 @@ export default Controller.extend({
         this.storage.selectedPlanId = this.selectedPlanId;
       }
     });
+
     this.utm.capture();
   }
 });

@@ -1,5 +1,5 @@
-import { Model, belongsTo } from 'ember-cli-mirage';
+import { Model, belongsTo } from 'miragejs';
 
 export default Model.extend({
-  owner: belongsTo('owner', { polymorphic: true, inverse: 'installation' })
+  owner: belongsTo('owner', { polymorphic: true, inverse: 'installation' }),
 });

@@ -63,11 +63,11 @@ $badge-size: 10px;
     content: '';
     position: absolute;
     left: 100%;
-    top: $badge-size / 10;
-    margin-left: $badge-size / 5;
+    top: math.div($badge-size, 10);
+    margin-left: math.div($badge-size, 5);
     height: $badge-size;
     width: $badge-size;
-    border-radius: $badge-size / 2;
+    border-radius: math.div($badge-size, 2);
     background-color: $oxide-blue;
   }
 

@@ -1,4 +1,4 @@
-import { Model, belongsTo, hasMany } from 'ember-cli-mirage';
+import { Model, belongsTo, hasMany } from 'miragejs';
 
 export default Model.extend({
   repository: belongsTo('repository'),
@@ -7,5 +7,5 @@ export default Model.extend({
   branch: belongsTo('branch'),
   jobs: hasMany('job'),
   stages: hasMany('stage'),
-  request: belongsTo('request')
+  request: belongsTo('request'),
 });

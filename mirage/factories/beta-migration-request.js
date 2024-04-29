@@ -1,4 +1,4 @@
-import { Factory } from 'ember-cli-mirage';
+import { Factory } from 'miragejs';
 
 export default Factory.extend({
   owner_id: null,
@@ -6,5 +6,5 @@ export default Factory.extend({
   accepted_at: null,
   organizations() {
     return [];
-  }
+  },
 });

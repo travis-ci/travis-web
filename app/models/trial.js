@@ -3,7 +3,7 @@ import { equal, or } from '@ember/object/computed';
 
 export default Model.extend({
   buildsRemaining: attr(),
-  owner: belongsTo('owner', { polymorphic: true }),
+  owner: belongsTo('owner', { polymorphic: true, async: true, inverse: null }),
   permissions: attr(),
   status: attr(),
   type: attr(),

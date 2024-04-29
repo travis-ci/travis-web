@@ -16,6 +16,7 @@ export default Component.extend({
   tokenIsVisible: false,
   showCopySuccess: false,
   showRegenerateButton: false,
+  buttonClass: '',
 
   actions: {
     tokenVisibility() {

@@ -6,7 +6,7 @@ export default Model.extend({
   api: service(),
   lastDigits: attr(),
 
-  subscription: belongsTo('subscription'),
+  subscription: belongsTo('subscription', { async: false, inverse: 'creditCardInfo'}),
   token: attr('string'),
 
   updateToken: task(function* (data) {

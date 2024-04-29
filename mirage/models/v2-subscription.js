@@ -1,4 +1,4 @@
-import { Model, belongsTo, hasMany } from 'ember-cli-mirage';
+import { Model, belongsTo, hasMany } from 'miragejs';
 
 export default Model.extend({
   plan: belongsTo('v2-plan-config'),
@@ -6,5 +6,5 @@ export default Model.extend({
   creditCardInfo: belongsTo('v2-credit-card-info'),
   discount: belongsTo(),
   owner: belongsTo({ polymorphic: true }),
-  invoices: hasMany()
+  invoices: hasMany(),
 });

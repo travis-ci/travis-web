@@ -1,4 +1,4 @@
-import { Factory } from 'ember-cli-mirage';
+import { Factory } from 'miragejs';
 
 export default Factory.extend({
   name(i) {
@@ -9,5 +9,5 @@ export default Factory.extend({
     return `Some Feature ${i} will make Travis so much better!`;
   },
 
-  enabled: false
+  enabled: false,
 });

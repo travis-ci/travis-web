@@ -1,3 +1,4 @@
+import { underscore } from '@ember/string';
 import { isArray } from '@ember/array';
 import V3Serializer from 'travis/serializers/v3';
 import wrapWithArray from 'travis/utils/wrap-with-array';
@@ -14,7 +15,7 @@ export default V3Serializer.extend({
         // V2 API payload
         let relationship = null;
         let relationshipKey = this.keyForV2Relationship(key, relationshipMeta.kind, 'deserialize');
-        let alternativeRelationshipKey = key.underscore();
+        let alternativeRelationshipKey = underscore(key);
         let hashWithAltRelKey = resourceHash[alternativeRelationshipKey];
         let hashWithRelKey = resourceHash[relationshipKey];
 
@@ -101,6 +102,6 @@ export default V3Serializer.extend({
     if (key === 'repo') {
       return 'repository';
     }
-    return `${key.underscore()}_id`;
+    return `${underscore(key)}_id`;
   }
 });

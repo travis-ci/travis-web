@@ -5,6 +5,8 @@ import Application from '@ember/application';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
+import { registerDeprecationHandler } from '@ember/debug';
+
 
 // This can be set per environment in config/environment.js
 const debuggingEnabled = config.featureFlags['debug-logging'];
@@ -20,8 +22,11 @@ const App = Application.extend(Evented, {
   LOG_ACTIVE_GENERATION: debuggingEnabled,
   LOG_MODULE_RESOLVER: debuggingEnabled,
   LOG_VIEW_LOOKUPS: debuggingEnabled,
+  RAISE_ON_DEPRECATION: true,
+  LOG_STACKTRACE_ON_DEPRECATION: true,
 
   ready() {
+    registerDeprecationHandler((message, options, next) => {});
     this.on('user:signed_in', (user) => Travis.onUserUpdate(user));
     this.on('user:refreshed', (user) => Travis.onUserUpdate(user));
     this.on('user:synced', (user) => Travis.onUserUpdate(user));

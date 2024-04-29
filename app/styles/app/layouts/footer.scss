@@ -25,7 +25,7 @@ $styleguide-medium: 800px;
     padding: 0 0 $styleguide-layout-gutter;
   }
   @media (min-width: $styleguide-medium) {
-    padding: $styleguide-layout-gutter / 2 0;
+    padding: math.div($styleguide-layout-gutter, 2) 0;
   }
   svg {
     opacity: 0.8;
@@ -76,7 +76,7 @@ $styleguide-medium: 800px;
     .layout-inner {
       max-width: $styleguide-layout-max-width;
       margin: auto;
-      padding: 0 $styleguide-layout-gutter/2;
+      padding: 0 math.div($styleguide-layout-gutter, 2);
     }
   }
 }

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import profilePage from 'travis/tests/pages/profile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -52,9 +52,9 @@ module('Integration | Component | billing-summary', function (hooks) {
     const date = moment(this.subscription.validTo.getTime()).format('MMMM D, YYYY');
 
     await render(hbs`<Billing::Summary
-      @subscription={{subscription}}
-      @account={{account}}
-      @planMessage={{planMessage}}
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+      @planMessage={{this.planMessage}}
     />`);
 
     assert.dom('h3').hasText('Plan information');
@@ -77,9 +77,9 @@ module('Integration | Component | billing-summary', function (hooks) {
     this.set('planMessage', 'Expires');
 
     await render(hbs`<Billing::Summary
-      @subscription={{subscription}}
-      @account={{account}}
-      @planMessage={{planMessage}}
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+      @planMessage={{this.planMessage}}
     />`);
 
     assert.dom('h3').hasText('Plan information');
@@ -102,9 +102,9 @@ module('Integration | Component | billing-summary', function (hooks) {
     this.set('planMessage', 'Expired');
 
     await render(hbs`<Billing::Summary
-      @subscription={{subscription}}
-      @account={{account}}
-      @planMessage={{planMessage}}
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+      @planMessage={{this.planMessage}}
     />`);
 
     assert.dom('h3').hasText('Plan information');
@@ -125,9 +125,9 @@ module('Integration | Component | billing-summary', function (hooks) {
     this.set('planMessage', 'Expired');
 
     await render(hbs`<Billing::Summary
-      @subscription={{subscription}}
-      @account={{account}}
-      @isPending={{isPending}}
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+      @isPendingOverride={{this.isPending}}
     />`);
 
     assert.dom('h3').hasText('Plan information');
@@ -146,9 +146,9 @@ module('Integration | Component | billing-summary', function (hooks) {
     this.set('planMessage', 'Incomplete');
 
     await render(hbs`<Billing::Summary
-      @subscription={{subscription}}
-      @account={{account}}
-      @planMessage={{planMessage}}
+      @subscription={{this.subscription}}
+      @account={{this.account}}
+      @planMessage={{this.planMessage}}
     />`);
 
     assert.dom('h3').hasText('Plan information');

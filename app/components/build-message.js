@@ -2,7 +2,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { and, notEmpty } from '@ember/object/computed';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { typeOf } from '@ember/utils';
 import { codeblockName } from 'travis/utils/format-config';
 import Ember from 'ember';

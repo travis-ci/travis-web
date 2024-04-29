@@ -4,7 +4,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const SVGO = require('svgo');
 
-module.exports = function () {
+module.exports = function (defaults) {
   let fingerprint;
 
   if (process.env.DISABLE_FINGERPRINTS) {
@@ -12,7 +12,7 @@ module.exports = function () {
   } else {
     fingerprint = {
       exclude: ['images/emoji', 'images/logos'],
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg'],
     };
 
     if (process.env.TRAVIS_ENTERPRISE) {
@@ -25,34 +25,29 @@ module.exports = function () {
         }
         fingerprint.prepend = assetsHost;
       } else if (process.env.DEPLOY_TARGET) {
-        const s3Bucket = require('./config/deploy')(process.env.DEPLOY_TARGET).s3.bucket;
+        const s3Bucket = require('./config/deploy')(process.env.DEPLOY_TARGET)
+          .s3.bucket;
         fingerprint.prepend = '//' + s3Bucket + '.s3.amazonaws.com/';
       }
     }
   }
 
-  const app = new EmberApp({
+  const app = new EmberApp(defaults, {
     'ember-cli-babel': {
       includePolyfill: true,
     },
     fingerprint: fingerprint,
     sourcemaps: {
       enabled: true,
-      extensions: ['js']
+      extensions: ['js'],
     },
     'ember-prism': {
-      'components': ['yaml'],
-      plugins: [
-        'line-numbers',
-        'line-highlight'
-      ],
+      components: ['yaml'],
+      plugins: ['line-numbers', 'line-highlight'],
     },
     svg: {
       optimize: false,
-      paths: [
-        'public/images/stroke-icons',
-        'public/images/svg'
-      ]
+      paths: ['public/images/stroke-icons', 'public/images/svg'],
     },
     svgJar: {
       optimizer: {
@@ -65,22 +60,22 @@ module.exports = function () {
           {
             removeUnknownsAndDefaults: {
               unknownContent: false,
-            }
+            },
           },
           {
             inlineStyles: {
               onlyMatchedOnce: false,
-              removeMatchedSelectors: true
-            }
-          }
-        ]
-      }
+              removeMatchedSelectors: true,
+            },
+          },
+        ],
+      },
     },
     'ember-composable-helpers': {
-      only: ['sort-by', 'compute', 'contains', 'toggle']
+      only: ['sort-by', 'compute', 'contains', 'toggle'],
     },
     'ember-power-select': {
-      theme: false
+      theme: false,
     },
     postcssOptions: {
       compile: {
@@ -89,22 +84,25 @@ module.exports = function () {
         parser: require('postcss-scss'),
         plugins: [
           require('@csstools/postcss-sass'),
-          require('tailwindcss')('./config/tailwind.js')
-        ]
-      }
+          require('tailwindcss')('./config/tailwind.js'),
+        ],
+      },
     },
     outputPaths: {
       app: {
         css: {
-          'tailwind/base': '/assets/tailwind-base.css'
-        }
-      }
-    }
+          'tailwind/base': '/assets/tailwind-base.css',
+        },
+      },
+    },
   });
 
-  const emojiAssets = new Funnel('node_modules/emoji-datasource-apple/img/apple/64', {
-    destDir: '/images/emoji'
-  });
+  const emojiAssets = new Funnel(
+    'node_modules/emoji-datasource-apple/img/apple/64',
+    {
+      destDir: '/images/emoji',
+    },
+  );
 
   importNpmDependency(app, 'node_modules/fuzzysort/fuzzysort.js');
   importNpmDependency(app, 'node_modules/pusher-js/dist/web/pusher.js');
@@ -112,7 +110,7 @@ module.exports = function () {
   importNpmDependency(app, 'node_modules/emoji-js/lib/emoji.js');
   importNpmDependency(app, 'node_modules/visibilityjs/index.js');
   importNpmDependency(app, 'node_modules/ansiparse/lib/ansiparse.js', 'amd');
-  importNpmDependency(app, 'node_modules/yamljs/index.js');
+  importNpmDependency(app, 'node_modules/js-yaml/index.js');
   importNpmDependency(app, 'node_modules/deep-freeze/index.js');
 
   return app.toTree(emojiAssets);

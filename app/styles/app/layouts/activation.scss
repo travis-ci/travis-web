@@ -15,7 +15,7 @@
       width: 473px;
       max-width: $max-width;
       margin: 0 auto;
-      padding: $column-gutter/2;
+      padding: math.div($column-gutter, 2);
 
     }
 

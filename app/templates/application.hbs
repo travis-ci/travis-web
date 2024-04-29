@@ -1,11 +1,12 @@
-{{#let this.features as |f|}}
-  <HeadLayout />
-  <div class="feature-wrapper {{if f.dashboard 'dashboard'}} {{if f.pride 'travis-pride'}} {{if f.comicSans 'travis-comicsans'}}">
-    {{outlet}}
-    <PageFooter />
-  </div>
-  {{#if f.tracer}}
-    <XTracer />
-  {{/if}}
-  <IntercomIo />
-{{/let}}
+<div class="ember-view">
+  {{#let this.features as |f|}}
+    <HeadLayout />
+    <div class="feature-wrapper {{if f.dashboard 'dashboard'}} {{if f.pride 'travis-pride'}} {{if f.comicSans 'travis-comicsans'}}">
+      {{outlet}}
+      <PageFooter />
+    </div>
+    {{#if f.tracer}}
+      <XTracer />
+    {{/if}}
+  {{/let}}
+</div>

@@ -1,4 +1,4 @@
-import { Factory, trait } from 'ember-cli-mirage';
+import { Factory, trait } from 'miragejs';
 
 export default Factory.extend({
   name: 'Test User',
@@ -38,6 +38,6 @@ export default Factory.extend({
         synced_at: null,
       });
       user.save();
-    }
+    },
   }),
 });
