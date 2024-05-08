@@ -1,0 +1,73 @@
+.AskTravis {
+  position: absolute;
+  right: 10px;
+  bottom: 220px;
+  margin: 15px;
+}
+#asktravis {
+  float: right;
+  width: 60px;
+  height: 60px;
+}
+
+#asktravis-content {
+  display: none;
+  width: 374px;
+  height: 534px;
+}
+
+#asktravis-button {
+  width: 100px;
+  height: 100px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.asktravis-button-inactive {
+  background: url(/images/svg/open-chat.svg) no-repeat 50% 50%;
+  animation: asktravis-close 0.1s 1 linear;
+}
+
+.asktravis-button-active {
+  background: url(/images/svg/close-chat-icon.svg) no-repeat 50% 50%;
+  animation: asktravis-rotate 0.1s 1 linear;
+}
+
+
+.asktravis-button-activate {
+}
+
+.asktravis-button-deactivate {
+}
+
+@keyframes asktravis-rotate {
+  0% {
+    transform: rotateZ(0deg);
+    background: url(/images/svg/open-chat.svg) no-repeat 50% 50%;
+  }
+  50% {
+    transform: rotateZ(45deg);
+    background: url(/images/svg/close-chat-icon.svg) no-repeat 50% 50%;
+  }
+
+  100% {
+    transform: rotateZ(90deg);
+    background: url(/images/svg/close-chat-icon.svg) no-repeat 50% 50%;
+  }
+}
+
+@keyframes asktravis-close {
+  0% {
+    transform: rotateZ(90deg);
+    background: url(/images/svg/close-chat-icon.svg) no-repeat 50% 50%;
+  }
+  50% {
+    transform: rotateZ(45deg);
+    background: url(/images/svg/close-chat-icon.svg) no-repeat 50% 50%;
+  }
+
+  100% {
+    transform: rotateZ(0deg);
+    background: url(/images/svg/open-chat.svg) no-repeat 50% 50%;
+  }
+}
