@@ -8,6 +8,8 @@ RUN groupadd --gid 1000 node \
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 18.19.0
 
+RUN git config --global url."https://$GITHUB_PERSONAL_TOKEN@github.com/".insteadOf ssh://git@github.com
+
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
