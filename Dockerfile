@@ -37,7 +37,7 @@ RUN npm install --silent -g ember-cli
 
 COPY . /app
 
-RUN git config --global url."https://$GITHUB_PERSONAL_TOKEN@github.com/".insteadOf ssh://git@github.com
+RUN --mount=type=secret,id=GITHUB_PERSONAL_TOKEN export GITHUB_PERSONAL_TOKEN=$(cat /run/secrets/GITHUB_PERSONAL_TOKEN) && git config --global url."https://$GITHUB_PERSONAL_TOKEN@github.com/".insteadOf ssh://git@github.com
 
 RUN npm ci
 RUN ember build --environment=production
