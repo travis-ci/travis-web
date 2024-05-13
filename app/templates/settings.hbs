@@ -44,6 +44,14 @@
         </ExternalLinkTo>
       </li>
       <li>
+        <SettingsSwitch
+          @active={{this.model.settings.build_releases}}
+          @repo={{this.repo}}
+          @description="Build pushed releases"
+          @key="build_releases"
+        />
+      </li>
+      <li>
         <button class="button--blue" {{on 'click' (fn (mut this.showUserManagementModal) true)}} data-test-repo-settings-show-user-management-modal='true'>
           User management
         </button>
