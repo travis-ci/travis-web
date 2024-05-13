@@ -19,6 +19,8 @@ GEM
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.9)
+    nokogiri (1.15.2-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.15.2-x86_64-linux)
       racc (~> 1.4)
     parallel (1.23.0)
@@ -113,6 +115,7 @@ GEM
     unicode-display_width (2.4.2)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
