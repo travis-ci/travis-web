@@ -43,6 +43,7 @@
           <SvgImage @name="icon-help" @class="icon-help" />
         </ExternalLinkTo>
       </li>
+      {{#if (eq this.repo.vcsType 'github')}}
       <li>
         <SettingsSwitch
           @active={{this.model.settings.build_releases}}
@@ -50,6 +51,12 @@
           @description="Build pushed releases"
           @key="build_releases"
         />
+      </li>
+      {{/if}}
+      <li>
+        <button class="button--blue" {{on 'click' (fn (mut this.showUserManagementModal) true)}} data-test-repo-settings-show-user-management-modal='true'>
+          User management
+        </button>
       </li>
     </ul>
   </section>
