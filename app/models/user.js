@@ -101,10 +101,7 @@ export default Owner.extend({
       if (this.isSyncing) {
         this.schedulePoll();
       } else {
-
         const enterprise = !!this.get('features.enterpriseVersion');
-        console.log("ENTERPRISE");
-        console.log(enterprise);
         this.permissionsService.fetchPermissions.perform();
         if (!enterprise) {
           this.wizardStateService.fetch.perform();
