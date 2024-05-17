@@ -6,7 +6,7 @@ const eventToIcon = {
   pull_request: 'pullrequest',
   cron: 'cronjobs',
   api: 'api',
-  release: 'api',
+  release: 'release',
   default: 'nobuilds'
 };
 
