@@ -3,7 +3,7 @@
   @route="repo"
   @models={{array this.repository.provider this.repository.urlOwnerName this.repository.urlName}}
   @query={{hash serverType=this.repository.serverType}}
-  class="profile-repo"
+  class="profile-repo {{if (not (eq this.repository.provider 'assembla')) 'profile-repo-flex'}}"
 >
   <span class="profile-repo-name">{{this.name}}</span>
   {{#if this.repository.shared}}
