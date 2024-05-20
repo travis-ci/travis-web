@@ -27,6 +27,21 @@ module('Unit | Service | status images', function (hooks) {
 
   const { apiEndpoint } = config;
 
+  test('it generates an image url without a token when user is not signed in', function (assert) {
+    const service = this.owner.lookup('service:status-images');
+
+    // Mock the auth service to return undefined for assetToken
+    service.set('auth', {
+      assetToken: undefined
+    });
+
+    this.repo.set('private', true);
+    const url = service.imageUrl(this.repo);
+
+    // Expect the URL to not include the token query parameter
+    assert.equal(url, `${root}/travis-ci/travis-web.svg`);
+  });
+
   test('it generates an image url with a token for a private repo', function (assert) {
     const service = this.owner.lookup('service:status-images');
     this.repo.set('private', true);
