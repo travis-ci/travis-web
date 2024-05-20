@@ -273,6 +273,12 @@ export default Component.extend({
     }
   }),
 
+  trialEndDate: computed(() => {
+    let futureDate = new Date();
+    futureDate.setMonth(futureDate.getMonth() + 1);
+    return futureDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }),
+
   actions: {
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
