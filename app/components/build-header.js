@@ -59,7 +59,7 @@ export default Component.extend({
 
   displayCompare: computed('item.eventType', function () {
     let eventType = this.get('item.eventType');
-    return !['api', 'cron'].includes(eventType);
+    return !['api', 'cron', 'release'].includes(eventType);
   }),
 
 
