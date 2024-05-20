@@ -27,8 +27,8 @@ export default Service.extend({
     }
 
     let slug = repo.get('slug');
-    let token = this.auth.assetToken;
-    let branchQuery = branch ? `&branch=${branch}` : '';
+    const token = this.auth.assetToken;
+    const branchQuery = branch ? `&branch=${branch}` : '';
     // In Enterprise you can toggle public mode, where even "public" repositories are hidden
     // in which cases we need to generate a token for all images
     if (!config.publicMode || repo.get('private')) {
