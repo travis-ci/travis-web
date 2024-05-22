@@ -524,7 +524,7 @@ header.legacy-services-integration {
 
 section.billing {
   font-size: $font-size-m;
-  border-bottom: 2px #f1f1f1 solid;
+  border-bottom: 2px $pebble-grey solid;
 
   .plan-status-message {
     color: $asphalt-grey;
