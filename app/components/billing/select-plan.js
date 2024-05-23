@@ -19,7 +19,13 @@ export default Component.extend({
   showAnnual: false,
   showCalculator: false,
 
-  displayedPlans: reads('availablePlans'),
+  displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
+    if (this.subscription && this.subscription.plan) {
+      return this.availablePlans.filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
+    } else {
+      return this.availablePlans;
+    }
+  }),
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', {
     get() {
@@ -92,6 +98,15 @@ export default Component.extend({
 
     hideCalculator() {
       this.set('showCalculator', false);
+    },
+  },
+
+  // This hook is needed to determine if the user has an annual plan or monthly Premium so we can show the annual plans immediately in the UI
+  didInsertElement() {
+    this._super(...arguments);
+    if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.subscription.plan.name === 'Premium')) {
+      console.log(`This is plan: ${this.subscription.plan.planType}`);
+      this.set('showAnnual', true);
     }
-  }
+  },
 });
