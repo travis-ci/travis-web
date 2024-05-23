@@ -1,4 +1,4 @@
-import { module, skip } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
@@ -76,5 +76,29 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan2.name}`);
     assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan2.startingPrice / 100}/${this.plan2.isAnnual ? 'annualy' : 'monthly'}`);
+  });
+
+  test('displayedPlans should filter availablePlans based on subscription.plan.startingPrice', async function(assert) {
+    let availablePlans = [
+      { name: 'Plan 1', startingPrice: 100 },
+      { name: 'Plan 2', startingPrice: 200 },
+      { name: 'Plan 3', startingPrice: 300 }
+    ];
+    let subscription = { plan: { startingPrice: 150 } };
+
+    await render(hbs`<Billing::SelectPlan @next={{action 'next'}}/>`);
+
+    let component = this.owner.lookup('component:billing/select-plan');
+    component.set('availablePlans', availablePlans);
+    component.set('subscription', subscription);
+
+    // This is forcing the computed property to be calculated
+    component.get('displayedPlans');
+    let displayedPlans = component.get('displayedPlans');
+
+    assert.ok(displayedPlans, 'displayedPlans should be defined');
+    assert.equal(displayedPlans.length, 2);
+    assert.equal(displayedPlans[0].name, 'Plan 2');
+    assert.equal(displayedPlans[1].name, 'Plan 3');
   });
 });
