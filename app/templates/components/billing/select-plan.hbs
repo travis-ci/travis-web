@@ -6,18 +6,25 @@
       <h3 data-test-billing-info-title>
         Select Plan
       </h3>
+      <h2>
+        Questions about plans? <a class='credits-calculator-button' href="mailto:customer.success@travis-ci.com">Contact our Customer Success Team</a>
+      </h2>
       <nav class="travistab-nav">
         <ul>
-          <li>
-            <a class={{if (not this.showAnnual) 'active'}} onclick={{action 'showMonthlyPlans'}}>
-              Monthly Plans
-            </a>
-          </li>
-          <li>
-            <a class={{if this.showAnnual 'active'}} onclick={{action 'showAnnualPlans'}}>
-              Annual Plans
-            </a>
-          </li>
+          {{#unless (or this.subscription.plan.isAnnual (eq this.subscription.plan.name 'Premium'))}}
+            <li>
+              <a class={{if (not this.showAnnual) 'active'}} onclick={{action 'showMonthlyPlans'}}>
+                Monthly Plans
+              </a>
+            </li>
+          {{/unless}}
+          {{#unless (and this.subscription.plan.isAnnual (eq this.subscription.plan.name 'Premium'))}}
+            <li>
+              <a class={{if this.showAnnual 'active'}} onclick={{action 'showAnnualPlans'}}>
+                Annual Plans
+              </a>
+            </li>
+          {{/unless}}
         </ul>
       </nav>
       <div class='plan-selector'>
