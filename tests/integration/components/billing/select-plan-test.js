@@ -27,6 +27,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       hasCreditAddons: true,
       hasOSSCreditAddons: true,
       hasUserLicenseAddons: true,
+      planType: 'hybrid annual',
     };
     this.plan1 = plan1;
 
@@ -43,6 +44,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       hasCreditAddons: true,
       hasOSSCreditAddons: true,
       hasUserLicenseAddons: true,
+      planType: 'hybrid annual',
     };
     this.plan2 = plan2;
 
@@ -78,27 +80,21 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan2.startingPrice / 100}/${this.plan2.isAnnual ? 'annualy' : 'monthly'}`);
   });
 
-  test('displayedPlans should filter availablePlans based on subscription.plan.startingPrice', async function(assert) {
-    let availablePlans = [
-      { name: 'Plan 1', startingPrice: 100 },
-      { name: 'Plan 2', startingPrice: 200 },
-      { name: 'Plan 3', startingPrice: 300 }
-    ];
-    let subscription = { plan: { startingPrice: 150 } };
-
-    await render(hbs`<Billing::SelectPlan @next={{action 'next'}}/>`);
-
+  test('displayedPlans should filter availablePlans based on subscription.plan.startingPrice', function (assert) {
     let component = this.owner.lookup('component:billing/select-plan');
-    component.set('availablePlans', availablePlans);
-    component.set('subscription', subscription);
+    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false } };
 
-    // This is forcing the computed property to be calculated
-    component.get('displayedPlans');
+    component.set('availablePlans', [this.plan1, this.plan2]);
+    component.set('subscription', subscription);
+    const referencePlan = component.get('availablePlans')
+      .find(plan => plan.name === component.get('subscription').plan.name && plan.planType === 'hybrid annual');
+
+    component.set('referencePlan', referencePlan);
+
     let displayedPlans = component.get('displayedPlans');
 
     assert.ok(displayedPlans, 'displayedPlans should be defined');
-    assert.equal(displayedPlans.length, 2);
-    assert.equal(displayedPlans[0].name, 'Plan 2');
-    assert.equal(displayedPlans[1].name, 'Plan 3');
+    assert.equal(displayedPlans.length, 1, 'displayedPlans should contain 1 plan');
+    assert.deepEqual(displayedPlans, [this.plan2], 'displayedPlans should contain the correct plan');
   });
 });
