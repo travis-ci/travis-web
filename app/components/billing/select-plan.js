@@ -20,8 +20,24 @@ export default Component.extend({
   showCalculator: false,
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
-    if (this.subscription && this.subscription.plan) {
-      return this.availablePlans.filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
+    if (this.subscription && this.subscription.plan && !this.subscription.plan.trialPlan) {
+      const referencePlan = this.availablePlans
+        .find(plan => plan.name === this.subscription.plan.name && plan.planType === 'hybrid annual');
+
+      if (!referencePlan) {
+        return this.availablePlans;
+      }
+
+      const higherTierPlans = this.availablePlans
+        .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice)
+        .filter(plan => plan.planType === referencePlan.planType && plan.startingPrice < referencePlan.startingPrice);
+
+      let filteredPlans = this.availablePlans
+        .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
+
+      filteredPlans = filteredPlans.filter(plan => !higherTierPlans.includes(plan));
+
+      return filteredPlans;
     } else {
       return this.availablePlans;
     }
@@ -105,7 +121,6 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
     if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.subscription.plan.name === 'Premium')) {
-      console.log(`This is plan: ${this.subscription.plan.planType}`);
       this.set('showAnnual', true);
     }
   },
