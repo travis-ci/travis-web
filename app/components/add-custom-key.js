@@ -12,6 +12,7 @@ export default Component.extend({
   classNames: ['form--sshkey'],
   classNameBindings: ['valueError:form-error'],
   isSaving: false,
+  publicKey: null,
 
   currentUserId: reads('auth.currentUser.id'),
 
@@ -54,7 +55,8 @@ export default Component.extend({
               name: this.name,
               private_key: this.value,
               description: this.description,
-              added_by: this.currentUserId
+              added_by: this.currentUserId,
+              public_key: this.publicKey
             }
           }
         ).then((data) => {
@@ -62,6 +64,7 @@ export default Component.extend({
           this.set('value', '');
           this.set('name', '');
           this.set('description', '');
+          this.set('publicKey',null);
         });
       } catch (errors) {
         errors.clone().json().then((error) => {
