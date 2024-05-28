@@ -18,9 +18,13 @@ export default Component.extend({
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
   showAnnual: false,
   showCalculator: false,
+  areAllAnnualPlans: false,
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
     if (this.subscription && this.subscription.plan && !this.subscription.plan.trialPlan) {
+      let filteredPlans = this.availablePlans
+        .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
+
       const referencePlan = this.availablePlans
         .find(plan => plan.name === this.subscription.plan.name && plan.planType === 'hybrid annual');
 
@@ -32,10 +36,10 @@ export default Component.extend({
         .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice)
         .filter(plan => plan.planType === referencePlan.planType && plan.startingPrice < referencePlan.startingPrice);
 
-      let filteredPlans = this.availablePlans
-        .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
-
       filteredPlans = filteredPlans.filter(plan => !higherTierPlans.includes(plan));
+
+      if (filteredPlans.every(plan => plan.planType === 'hybrid annual'))
+        this.set('annualPlans', filteredPlans);
 
       return filteredPlans;
     } else {
@@ -117,10 +121,13 @@ export default Component.extend({
     },
   },
 
-  // This hook is needed to determine if the user has an annual plan or monthly Premium so we can show the annual plans immediately in the UI
+  // Determine if the user has either an annual plan or all displayed plans are annual so we can show the annual card immediately in the UI
   didInsertElement() {
     this._super(...arguments);
-    if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.subscription.plan.name === 'Premium')) {
+
+    this.set('areAllAnnualPlans', this.annualPlans);
+
+    if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.areAllAnnualPlans)) {
       this.set('showAnnual', true);
     }
   },
