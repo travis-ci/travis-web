@@ -64,7 +64,7 @@ export default Component.extend({
           this.set('value', '');
           this.set('name', '');
           this.set('description', '');
-          this.set('publicKey',null);
+          this.set('publicKey', null);
         });
       } catch (errors) {
         errors.clone().json().then((error) => {
