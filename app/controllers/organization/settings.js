@@ -47,7 +47,7 @@ export default Controller.extend({
     }, {});
   }),
   privateInsightsVisibility: reads('preferences.private_insights_visibility.value'),
-  showOrganizationSettings: and('features.proVersion', 'organization.permissions.admin'),
+  showOrganizationSettings: and('features.proVersion', 'organization.permissions.settings_read'),
 
   insightsVisibilityOptions: computed(() => INSIGHTS_VIS_OPTIONS),
 
