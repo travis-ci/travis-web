@@ -18,7 +18,7 @@
               </a>
             </li>
           {{/unless}}
-          {{#unless this.subscription.plan.isAnnual}}
+          {{#unless (and this.subscription.plan.isAnnual (eq this.emptyPlans))}}
             <li>
               <a class={{if this.showAnnual 'active'}} onclick={{action 'showAnnualPlans'}}>
                 Annual Plans
