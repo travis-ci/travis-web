@@ -41,8 +41,6 @@ export default Component.extend({
       if (filteredPlans.every(plan => plan.planType === 'hybrid annual'))
         this.set('annualPlans', filteredPlans);
 
-      this.set('filteredPlans', filteredPlans.lenght === 0);
-
       return filteredPlans;
     } else {
       return this.availablePlans;
@@ -128,7 +126,6 @@ export default Component.extend({
     this._super(...arguments);
 
     this.set('areAllAnnualPlans', this.annualPlans);
-    this.set('emptyPlans', this.filteredPlans);
 
     if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.areAllAnnualPlans)) {
       this.set('showAnnual', true);
