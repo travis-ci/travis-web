@@ -22,8 +22,8 @@
   width: 374px;
   height: 534px;
   position: fixed;
-  bottom: 100px;
-  right: 30px;
+  bottom: 88px;
+  right: 16px;
 }
 
 #asktravis-button {
@@ -31,6 +31,8 @@
   height: 56px;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px 0 rgb(0, 0, 0, 0.1);
 }
 
 .asktravis-button-inactive {
