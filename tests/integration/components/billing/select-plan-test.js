@@ -94,7 +94,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     let displayedPlans = component.get('displayedPlans');
 
     assert.ok(displayedPlans, 'displayedPlans should be defined');
-    assert.equal(displayedPlans.length, 1, 'displayedPlans should contain 1 plan');
-    assert.deepEqual(displayedPlans, [this.plan2], 'displayedPlans should contain the correct plan');
+    assert.equal(displayedPlans.length, 2, 'displayedPlans should contain 2 plans');
+    assert.deepEqual(displayedPlans, [this.plan1, this.plan2], 'displayedPlans should contain the correct plans');
   });
 });
