@@ -71,7 +71,8 @@ export default Component.extend({
   hasInvoicesViewPermissions: reads('model.permissions.plan_invoices'),
   hasSettingsReadPermissions: reads('model.permissions.settings_read'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
-  showOrganizationSettings: computed('isOrganizationAdmin', 'isProVersion', 'hasSettingsReadPermissions', function () {
+
+  showOrganizationSettings: computed('isOrganization', 'isOrganizationAdmin', 'isProVersion', 'hasSettingsReadPermissions', function () {
     const forOrganization = !this.isOrganization || this.hasSettingsReadPermissions;
     return (this.isOrganizationAdmin || forOrganization) && this.isProVersion;
   }),
