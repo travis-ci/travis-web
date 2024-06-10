@@ -21,11 +21,19 @@ export default Service.extend({
   consumeOSSCredits: reads('hash.consume_oss_credits.value'),
 
   fetchPreferences: task(function* (id, isOrganization) {
+    console.log(`Fetching preferences with ID: ${id} and isOrganization: ${isOrganization}`);
     if (isOrganization) {
-      return yield this.store.query('preference', { organization_id: id });
+      console.log(`this store: ${this.store}`);
+      return yield this.store.query('preference', { organization_id: id }).catch((error) => {
+        console.error(`Error fetching organization preferences: ${error}`);
+        throw error;
+      });
     }
 
-    return yield this.store.findAll('preference');
+    return yield this.store.findAll('preference').catch((error) => {
+      console.error(`Error fetching all preferences: ${error}`);
+      throw error;
+    });
   }).drop(),
 
   set(key, value, id = null, isOrganization = null) {
