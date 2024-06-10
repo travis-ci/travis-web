@@ -15,7 +15,10 @@ export default TravisRoute.extend({
 
   model() {
     const organization = this.modelFor('organization');
-    const preferences = this.store.query('preference', { organization_id: organization.id });
-    return hash({ organization, preferences });
-  },
+    // const preferences = this.store.query('preference', { organization_id: organization.id });
+    return this.store.query('preference', { organization_id: organization.id })
+      .then(preferences => hash({ organization, preferences })).catch(error => {
+        console.error('Error fetching preferences:', error);
+      });
+  }
 });

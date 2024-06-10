@@ -72,8 +72,6 @@ export default Component.extend({
   hasSettingsReadPermissions: reads('model.permissions.settings_create'),
   isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
   showOrganizationSettings: computed('isOrganization', 'isOrganizationAdmin', 'isProVersion', 'hasSettingsReadPermissions', function () {
-    console.log(this.model);
-
     const forOrganization = !this.isOrganization || this.hasSettingsReadPermissions;
     return (this.isOrganizationAdmin || forOrganization) && this.isProVersion;
   }),
