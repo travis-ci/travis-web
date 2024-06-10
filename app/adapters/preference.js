@@ -6,7 +6,7 @@ export default V3Adapter.extend({
 
     // Handle queries for organization settings
     if (type === 'query' && query.organization_id) {
-      prefix += `/org/${query.organization_id}`;
+      prefix += `/com/${query.organization_id}`;
       // Remove unnecessary query param from API call
       delete query.organization_id;
     }
@@ -16,7 +16,7 @@ export default V3Adapter.extend({
       (typeof snapshot.adapterOptions) !== 'undefined' &&
       snapshot.adapterOptions.hasOwnProperty('organization_id')
     ) {
-      prefix += `/org/${snapshot.adapterOptions.organization_id}`;
+      prefix += `/com/${snapshot.adapterOptions.organization_id}`;
     }
 
     return prefix;
