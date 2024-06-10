@@ -5,6 +5,7 @@ import { hash } from 'rsvp';
 export default TravisRoute.extend({
   features: service(),
   router: service(),
+  store: service(),
 
   beforeModel() {
     if (!this.get('features.proVersion')) {
