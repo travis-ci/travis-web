@@ -29,6 +29,15 @@
         </p>
       {{/if}}
     </div>
+
+    <div class="form-elem">
+      <Textarea
+        @value={{this.publicKey}}
+        @rows="10"
+        class="ssh-value custom-key-value"
+        placeholder="SSH Public Key"
+      />
+    </div>
     <div class="form-elem form-footer custom-keys-footer">
       {{#if this.save.isRunning}}
         <LoadingIndicator />
