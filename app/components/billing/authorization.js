@@ -29,6 +29,7 @@ export default Component.extend({
   isSubscribed: reads('subscription.isSubscribed'),
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
+  isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   cancellationRequested: reads('subscription.cancellationRequested'),
   canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', 'cancellationRequested', function () {
     return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial && !this.cancellationRequested;
@@ -53,6 +54,10 @@ export default Component.extend({
     if (this.lastPaymentIntentError) {
       return this.handleError(this.lastPaymentIntentError);
     }
+  }),
+
+  canBuyAddons: computed('cancellationRequested', function () {
+    return !this.cancellationRequested && this.subscription.status && !this.isExpired;
   }),
 
   retryAuthorization: task(function* () {
