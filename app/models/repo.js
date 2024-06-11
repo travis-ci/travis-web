@@ -153,41 +153,6 @@ const Repo = VcsEntity.extend({
       let eventTypes = ['push', 'api', 'cron', 'release'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
     });
-
-    this.store.subscribe(builds, 'build', {
-      event_type: ['push', 'api', 'cron', 'release'],
-      repository_id: id,
-    }, (b) => {
-      let eventTypes = ['push', 'api', 'cron', 'release'];
-      return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
-    });
-
-    return builds;
-    // return this._buildObservableArray(builds);
-  }),
-
-  _requestRepoMatches(request, id) {
-    return `${request.get('repo.id')}` === `${id}`;
-  },
-
-  _requestObservableArray(requests) {
-    const array = ExpandableRecordArray.create({
-      type: 'request',
-      content: []
-    });
-    array.load(requests);
-    return array.observe(requests);
-  },
-
-  requests: computed('id', function () {
-    let id = this.id;
-    const requests = this.store.filter(
-      'request',
-      { repository_id: id },
-      (b) => this._requestRepoMatches(b, id));
-    this.store.subscribe(requests, 'request', {repository_id: id}, (b) => this._requestRepoMatches(b, id));
-
-    return requests; // this._requestObservableArray(requests);
     return this._buildObservableArray(builds);
   }),
 
