@@ -43,6 +43,16 @@
           <SvgImage @name="icon-help" @class="icon-help" />
         </ExternalLinkTo>
       </li>
+      {{#if (eq this.repo.provider 'github')}}
+      <li>
+        <SettingsSwitch
+          @active={{this.model.settings.build_releases}}
+          @repo={{this.repo}}
+          @description="Build pushed releases"
+          @key="build_releases"
+        />
+      </li>
+      {{/if}}
     </ul>
   </section>
   <section class="settings-section">
