@@ -44,7 +44,7 @@ export default Component.extend({
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
   canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', function () {
-    return !this.freeV2Plan && !this.subscription.isCanceled && !this.isTrial;
+    return !this.freeV2Plan && !this.subscription.isCanceled && !this.isTrial && !this.cancellationRequested && this.subscription.status && !this.isExpired;
   }),
 
   handleError: reads('stripe.handleError'),
@@ -54,10 +54,6 @@ export default Component.extend({
     if (this.lastPaymentIntentError) {
       return this.handleError(this.lastPaymentIntentError);
     }
-  }),
-
-  canBuyAddons: computed('cancellationRequested', function () {
-    return !this.cancellationRequested && this.subscription.status && !this.isExpired;
   }),
 
   retryAuthorization: task(function* () {
