@@ -230,6 +230,7 @@ $profile-breakpoint: 600px;
   color: $asphalt-grey;
   padding: 0.3rem 0.4rem;
   margin: 0.3rem 0;
+  margin-left: auto;
   transform: translateY(1px);
 
   .icon {
@@ -286,6 +287,10 @@ $profile-breakpoint: 600px;
   .sync-spinner {
     vertical-align: top;
   }
+}
+
+.profile-repo-flex {
+  flex: 1;
 }
 
 .profile-repo-type {
@@ -519,6 +524,7 @@ header.legacy-services-integration {
 
 section.billing {
   font-size: $font-size-m;
+  border-bottom: 2px $pebble-grey solid;
 
   .plan-status-message {
     color: $asphalt-grey;
