@@ -146,7 +146,6 @@ export default Component.extend({
 
     if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.areAllAnnualPlans)) {
       this.set('showAnnual', true);
-      console.log(`dali e 0 ${this.annualPlans === 0}`);
     }
   },
 });
