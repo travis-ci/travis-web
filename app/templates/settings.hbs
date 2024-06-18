@@ -244,6 +244,8 @@
       {{/each}}
     </ul>
     <AddCronJob @repository={{this.model.repository}} />
+    {{ log 'Testing settings'}}
+    {{ log @respository }}
   </section>
   {{#if (and (and (config-get 'endpoints.sshKey') (or this.features.enterpriseVersion this.repo.private)) (not (eq this.repo.serverType 'perforce')))}}
     <section class="settings-section" data-test-ssh-key-section>
