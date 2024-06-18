@@ -21,6 +21,16 @@ export default Component.extend({
   areAllAnnualPlans: false,
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
+    if (this.subscription && this.subscription.canceledAt) {
+      const canceledAtDate = new Date(this.subscription.canceledAt);
+      let oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+      // If canceledAt is more than a month old, return all available plans
+      if (canceledAtDate < oneMonthAgo) {
+        return this.availablePlans;
+      }
+    }
     if (this.subscription && this.subscription.plan && !this.subscription.plan.trialPlan) {
       let allowedHybridPlans = this.availablePlans.filter(plan => plan.planType.includes('hybrid'));
       let allowedMeteredPlans = this.availablePlans.filter(plan => plan.planType.includes('metered'));
