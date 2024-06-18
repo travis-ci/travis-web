@@ -243,9 +243,9 @@
         <CronJob @cron={{cron}} />
       {{/each}}
     </ul>
-    <AddCronJob @repository={{this.model.repository}} />
-    {{ log 'Testing settings'}}
+    {{ log 'log from settings.hbs' }}
     {{ log @respository }}
+    <AddCronJob @repository={{this.model.repository}} />
   </section>
   {{#if (and (and (config-get 'endpoints.sshKey') (or this.features.enterpriseVersion this.repo.private)) (not (eq this.repo.serverType 'perforce')))}}
     <section class="settings-section" data-test-ssh-key-section>
