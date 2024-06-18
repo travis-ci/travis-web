@@ -31,6 +31,7 @@ export default Component.extend(BranchSearching, {
       selectedInterval: this.intervals.firstObject,
       selectedOption: this.options[0]
     });
+    console.log('Selected Option:', this.selectedOption);
   },
 
   search: task(function* (query) {
