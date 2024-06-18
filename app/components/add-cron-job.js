@@ -3,7 +3,6 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import BranchSearching from 'travis/mixins/branch-searching';
 
-
 export default Component.extend(BranchSearching, {
   store: service(),
   flashes: service(),
@@ -31,7 +30,6 @@ export default Component.extend(BranchSearching, {
       selectedInterval: this.intervals.firstObject,
       selectedOption: this.options[0]
     });
-    console.log('Selected Option:', this.selectedOption);
   },
 
   search: task(function* (query) {

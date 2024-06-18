@@ -240,7 +240,6 @@
     </h2>
     <ul class="settings-list--crons">
       {{#each this.cronJobs as |cron|}}
-        {{ log cron }}
         <CronJob @cron={{cron}} />
       {{/each}}
     </ul>
