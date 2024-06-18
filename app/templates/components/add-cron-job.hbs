@@ -38,22 +38,23 @@
       </field.select>
     </form.field>
   </div>
-  <div class="form-elem select">
-    <form.field
-      @label="Options"
-      @required={{true}}
-      @value={{this.selectedOption}}
-      @onChange={{action (mut this.selectedOption)}}
-      @showValidationStatusIcons={{false}}
-      as |field|
-    >
-      {{ log this.options }}
-      <field.select @options={{this.options}} as |option|>
-        {{ log option.name}}
-        {{option.name}}
-      </field.select>
-    </form.field>
-  </div>
+  {{#each this.options as |option|}}
+    <div class="form-elem select">
+      <form.field
+        @label="Options"
+        @required={{true}}
+        @value={{this.selectedOption}}
+        @onChange={{action (mut this.selectedOption)}}
+        @showValidationStatusIcons={{false}}
+        as |field|
+      >
+        {{ log this.options }}
+        <field.select @options={{this.option}} as |option|>
+          {{option.name}}
+        </field.select>
+      </form.field>
+    </div>
+  {{/each}}
   <div class="form-elem">
     {{#if this.save.isRunning}}
       <LoadingIndicator />
@@ -63,4 +64,7 @@
       </button>
     {{/if}}
   </div>
+  {{#each this.options as |option|}}
+    {{option.name}}
+  {{/each}}
 </TravisForm>
