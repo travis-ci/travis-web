@@ -22,7 +22,6 @@ export default Component.extend(BranchSearching, {
   init() {
     this.reset();
     this._super(...arguments);
-    console.log(this.args.repository); // Log the @repository argument
   },
 
   reset() {
