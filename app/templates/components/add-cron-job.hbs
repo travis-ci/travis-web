@@ -47,6 +47,7 @@
       @showValidationStatusIcons={{false}}
       as |field|
     >
+      {{log this.options}}
       <field.select @options={{this.options}} as |option|>
         {{option.name}}
       </field.select>
