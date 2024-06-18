@@ -2,10 +2,6 @@
   @onSubmit={{perform this.save}}
   as |form|
 >
-  {{ log 'test from add-cron-job.hbs' }}
-  {{ log this.selectedBranch }}
-  {{ log this.selectedInterval }}
-  {{ log this.selectedOption }}
   <div class="form-elem select">
     <form.field
       @label="Branch"
@@ -51,8 +47,8 @@
       @showValidationStatusIcons={{false}}
       as |field|
     >
-      <field.select @options={{this.options}} as |option|>
-        {{option.name}}
+      <field.select @options={{this.formattedOptions}} as |option|>
+        {{option.label}}
       </field.select>
     </form.field>
   </div>

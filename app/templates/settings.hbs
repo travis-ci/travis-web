@@ -243,8 +243,6 @@
         <CronJob @cron={{cron}} />
       {{/each}}
     </ul>
-    {{ log 'log from settings.hbs' }}
-    {{ log @respository }}
     <AddCronJob @repository={{this.model.repository}} />
   </section>
   {{#if (and (and (config-get 'endpoints.sshKey') (or this.features.enterpriseVersion this.repo.private)) (not (eq this.repo.serverType 'perforce')))}}

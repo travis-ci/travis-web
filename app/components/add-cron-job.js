@@ -2,6 +2,8 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import BranchSearching from 'travis/mixins/branch-searching';
+import { computed } from '@ember/object';
+
 
 export default Component.extend(BranchSearching, {
   store: service(),
@@ -18,6 +20,10 @@ export default Component.extend(BranchSearching, {
     name: 'Do not run if there has been a build in the last 24h',
     value: true
   }],
+
+  formattedOptions: computed('options', function () {
+    return this.get('options').map(option => ({ label: option.name, value: option.value }));
+  }),
 
   init() {
     this.reset();
