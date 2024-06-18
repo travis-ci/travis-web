@@ -28,7 +28,7 @@ export default Component.extend(BranchSearching, {
     this.setProperties({
       selectedBranch: null,
       selectedInterval: this.intervals.firstObject,
-      selectedOption: this.options[0]
+      selectedOption: this.options[0].name
     });
   },
 

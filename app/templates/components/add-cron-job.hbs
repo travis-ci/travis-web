@@ -49,8 +49,8 @@
     >
       {{ log this.options }}
       <field.select @options={{this.options}} as |option|>
-        {{ log option }}
-        {{option.name}}
+        {{ log option.name}}
+        {{option[0].name}}
       </field.select>
     </form.field>
   </div>
