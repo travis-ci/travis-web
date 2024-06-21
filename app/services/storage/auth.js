@@ -8,6 +8,7 @@ const storage = getStorage();
 export default Service.extend({
   store: service(),
 
+
   token: computed({
     get() {
       return storage.getItem('travis.token') || null;
@@ -42,27 +43,31 @@ export default Service.extend({
     }
   }),
 
-  accounts: computed({
-    get() {
-      const accountsData = storage.getItem('travis.auth.accounts');
-      const accounts = parseWithDefault(accountsData, []).map(account =>
-        extractAccountRecord(this.store, account)
-      );
-      accounts.addArrayObserver(this, {
-        willChange: 'persistAccounts',
-        didChange: 'persistAccounts'
-      });
-      return accounts;
-    },
-    set(key, accounts) {
-      this.persistAccounts(accounts);
-      return accounts;
-    }
-  }).volatile(),
+  get accounts() {
+    const accountsData = storage.getItem('travis.auth.accounts');
+    this._accounts = parseWithDefault(accountsData, []).map(account =>
+      extractAccountRecord(this.store, account)
+    );
+    return this._accounts;
+  },
+  set accounts(accounts) {
+    this.persistAccounts(accounts);
+  },
+
+  pushAccount(account) {
+    this._accounts.push(account);
+    this.persistAccounts(this._accounts);
+    return this._accounts;
+  },
+
 
   persistAccounts(newValue) {
-    const records = (newValue || []).map(record => serializeUserRecord(record));
-    storage.setItem('travis.auth.accounts', JSON.stringify(records));
+    try {
+      const records = (newValue || []).map(record => serializeUserRecord(record));
+      storage.setItem('travis.auth.accounts', JSON.stringify(records));
+      this._accounts = records;
+    } catch (e) {
+    }
   },
 
   activeAccountId: computed({

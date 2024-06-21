@@ -10,6 +10,7 @@ import { reads } from '@ember/object/computed';
 const interval = config.intervals.githubAppsInstallationPolling;
 
 export default Controller.extend({
+  router: service(),
   auth: service(),
   raven: service(),
   localStorage: service('storage'),
@@ -37,7 +38,7 @@ export default Controller.extend({
       }
     }
     this.initialDelayPromise().then(() => this.fetchPromise().then(() => {
-      this.transitionToRoute(isSignup ? 'first_sync' : 'account');
+      this.router.transitionTo(isSignup ? 'first_sync' : 'account');
     }));
   },
 

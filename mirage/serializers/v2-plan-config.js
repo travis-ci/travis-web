@@ -1,11 +1,10 @@
-import { Serializer } from 'ember-cli-mirage';
+import { Serializer } from 'miragejs';
 import { isArray } from '@ember/array';
-import { assign } from '@ember/polyfills';
 
-export default Serializer.extend({
+export default class extends Serializer {
   serializeSingle(plan) {
     return plan.id;
-  },
+  }
 
   serialize(object) {
     if (isArray(object.models)) {
@@ -13,7 +12,7 @@ export default Serializer.extend({
         '@type': 'v2_plans',
         '@href': '/v2_plans_for',
         '@representation': 'standard',
-        v2_plans: object.models.map(plan => {
+        v2_plans: object.models.map((plan) => {
           return {
             id: plan.attrs.id,
             name: plan.attrs.name,
@@ -23,9 +22,9 @@ export default Serializer.extend({
             public_credits: plan.attrs.publicCredits,
             addon_configs: plan.attrs.addonConfigs,
             plan_type: plan.attrs.planType,
-            annual: plan.attrs.isAnnual
+            annual: plan.attrs.isAnnual,
           };
-        })
+        }),
       };
     } else {
       let metadata = {
@@ -33,7 +32,7 @@ export default Serializer.extend({
         '@href': '/v2_plans_for',
         '@representation': 'standard',
       };
-      return assign(metadata, object.attrs);
+      return Object.assign(metadata, object.attrs);
     }
   }
-});
+}

@@ -43,6 +43,16 @@
           <SvgImage @name="icon-help" @class="icon-help" />
         </ExternalLinkTo>
       </li>
+      {{#if (eq this.repo.provider 'github')}}
+      <li>
+        <SettingsSwitch
+          @active={{this.model.settings.build_releases}}
+          @repo={{this.repo}}
+          @description="Build pushed releases"
+          @key="build_releases"
+        />
+      </li>
+      {{/if}}
       <li>
         <button class="button--blue" {{on 'click' (fn (mut this.showUserManagementModal) true)}} data-test-repo-settings-show-user-management-modal='true'>
           User management
@@ -324,7 +334,7 @@
       >
         Edit settings on .com
       </ExternalLinkTo>
-      <LinkTo @route="repo.index" @models={{array repo.provider repo.ownerName repo.vcsName}} class="modal-close pointer">
+      <LinkTo @route="repo.index" @models={{array this.repo.provider this.repo.ownerName this.repo.vcsName}} class="modal-close pointer">
         <SvgImage @name="icon-failed" @class="icon" />
       </LinkTo>
     </div>

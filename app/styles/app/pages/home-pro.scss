@@ -16,7 +16,7 @@
   .inner {
     margin: auto;
     max-width: 1024px;
-    padding: 0 ($column-gutter / 2);
+    padding: 0 math.div($column-gutter, 2);
   }
 
   #logo {

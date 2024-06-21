@@ -1,19 +1,24 @@
 import Application from '@ember/application';
+import Evented from '@ember/object/evented';
 
 import { initialize } from 'travis/instance-initializers/enterprise-environment';
 import { module, test } from 'qunit';
 import { run } from '@ember/runloop';
 
+import Resolver from 'travis/resolver';
+
 import EmberObject from '@ember/object';
 
 module('Unit | Instance Initializer | enterprise environment', function (hooks) {
   hooks.beforeEach(function () {
-    this.TestApplication = Application.extend();
-    this.TestApplication.instanceInitializer({
+    const TestApplication = Application.extend(Evented, {Resolver, modulePrefix: 'pfx'});
+    TestApplication.instanceInitializer({
       name: 'initializer under test',
       initialize
     });
-    this.application = this.TestApplication.create({ autoboot: false });
+
+    this.application = TestApplication.create({ autoboot: false });
+
     this.application.register('config:environment', EmberObject.create({ featureFlags: { 'enterprise-version': true }}));
     this.instance = this.application.buildInstance();
   });

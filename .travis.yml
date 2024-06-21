@@ -1,26 +1,23 @@
 ---
 language: node_js
-node_js: 10
-group: edge
+node_js: 18
 
 env:
   global:
     - PATH=/snap/bin:$PATH
-    - PERCY_ENABLE=0
     - JOBS=1
     # See https://git.io/vdao3 for details.
 
 os: linux
-dist: xenial
+dist: focal
 
 addons:
   - chrome: stable
 
 cache:
-  npm: true
+  npm: false
 
 before_install:
-  - npm config set spin false
   - npm install -g greenkeeper-lockfile@1
   - gem install bundler:2.3.7
 
@@ -28,13 +25,12 @@ install:
   - npm ci
 
 before_script:
-  - if [ $TRAVIS_PULL_REQUEST = 'false' ] && [ $TRAVIS_EVENT_TYPE != 'cron' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; else export PERCY_ENABLE=0; fi
-  - echo $PERCY_ENABLE
-  - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
+  - export RANDOMISE=--random
   - echo $RANDOMISE
   - greenkeeper-lockfile-update
 
 script:
+  - ember -v
   - if [ -z "$TRY_CONFIG" ]; then npm run lint:js; fi
   - if [ -z "$TRY_CONFIG" ]; then ember exam --reporter dot $RANDOMISE; fi
   - if [[ ! -z "$TRY_CONFIG" ]]; then ember try:one $TRY_CONFIG --skip-cleanup; fi
@@ -49,14 +45,14 @@ jobs:
       env: TRY_CONFIG=ember-beta
     - if: type = cron
       env: TRY_CONFIG=ember-data-beta
-    - node_js: 10
+    - node_js: 18
     - stage: ":ship: it to quay.io"
       dist: focal
       before_install: skip
       install: skip
       before_script: skip
       script: make ship
-      if: (branch = master and type = push ) OR commit_message =~ /ship:docker/ OR env(SHIP_DOCKER) = true
+      if: (branch = enterprise-3.0 and type = push ) OR commit_message =~ /ship:docker/ OR env(SHIP_DOCKER) = true
       after_script: skip
   allow_failures:
     - env: TRY_CONFIG=ember-beta

@@ -4,5 +4,5 @@ export default Model.extend({
   createdAt: attr('date'),
   url: attr('string'),
 
-  subscription: belongsTo('subscription')
+  subscription: belongsTo('subscription', { async: false, inverse: 'invoices' })
 });

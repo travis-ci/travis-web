@@ -13,13 +13,21 @@ export default SimpleLayoutRoute.extend({
 
   activate() {
     const controller = this.controllerFor('firstSync');
+    console.log(`ADD OBSERVER ${this}`);
+
     controller.addObserver('isSyncing', this, 'isSyncingDidChange');
+    this.syncingObserver = true;
     this.isSyncingDidChange();
   },
 
   deactivate() {
-    const controller = this.controllerFor('firstSync');
-    return controller.removeObserver('controller.isSyncing', this, 'isSyncingDidChange');
+    // const controller = this.controllerFor('firstSync');
+
+    if (this.syncingObserver === true) {
+      this.syncingObserver = false;
+      console.log(`REMOVE OBSERVER ${this}`);
+      //    controller.removeObserver('controller.isSyncing', this, 'isSyncingDidChange');
+    }
   },
 
   getTransition() {

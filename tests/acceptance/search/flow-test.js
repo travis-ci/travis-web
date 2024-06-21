@@ -21,6 +21,9 @@ module('Acceptance | search/flow', function (hooks) {
       .pressEnter();
 
     await settled();
+
+    console.log(currentURL());
+
     assert.equal(currentURL(), '/search/foo');
   });
 

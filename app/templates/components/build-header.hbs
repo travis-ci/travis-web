@@ -114,7 +114,7 @@
           {{#if this.item.isTag}}
             <SvgImage @name="icon-tag" @class="{{this.item.state}} icon" />
           {{else}}
-            <RequestIcon @event={{this.item.eventType}} @state={{item.state}} />
+            <RequestIcon @event={{this.item.eventType}} @state={{this.item.state}} />
           {{/if}}
           <span data-test-build-header-build-state class="inner-underline">
             #{{this.item.jobNumber}} {{humanize-state this.item.state}}
@@ -125,7 +125,7 @@
           {{#if this.item.isTag}}
             <SvgImage @name="icon-tag" @class="{{this.item.state}} icon" />
           {{else}}
-            <RequestIcon @event={{this.item.eventType}} @state={{item.state}} />
+            <RequestIcon @event={{this.item.eventType}} @state={{this.item.state}} />
           {{/if}}
           <span data-test-build-header-build-state class="inner-underline">
             #{{this.item.number}} {{humanize-state this.buildState}}
@@ -186,6 +186,12 @@
               <span class="label-align">Manually triggered by {{this.item.createdBy.login}}</span>
             </li>
           {{/if}}
+          {{#if this.isNewBranchBuild}}
+            <li>
+              <SvgImage @name="icon-branch" @class="icon" />
+              <span class="label-align">New branch build</span>
+            </li>
+          {{/if}}
         {{/unless}}
         {{#if this.item.restartedBy}}
           <li>
@@ -217,7 +223,7 @@
     <div class="job-detail-container">
       <div class="detail-job-os {{this.os}}">
         <EmberTooltip @text='{{this.os}} {{this.osVersion}}' />
-        <SvgImage @name={{osIcon}} @class="icon" />
+        <SvgImage @name={{this.osIcon}} @class="icon" />
       </div>
       {{#if this.name}}
         <div class="detail-job-name">

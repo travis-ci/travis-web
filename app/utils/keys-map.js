@@ -1,5 +1,3 @@
-import { assign } from '@ember/polyfills';
-
 let configKeys, configKeysMap, languageConfigKeys, archConfigKeys;
 
 languageConfigKeys = {
@@ -62,7 +60,7 @@ archConfigKeys = {
   amd64: 'AMD64'
 };
 
-configKeysMap = assign(configKeys, languageConfigKeys);
+configKeysMap = Object.assign(configKeys, languageConfigKeys);
 
 export default configKeysMap;
 

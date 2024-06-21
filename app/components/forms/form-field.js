@@ -2,7 +2,8 @@ import Component from '@ember/component';
 import { presense } from 'travis/utils/form-validators';
 import { combineValidators } from 'travis/helpers/combine-validators';
 import { computed } from '@ember/object';
-import { equal, or, and, notEmpty, not } from '@ember/object/computed';
+import { equal, or, and, notEmpty } from '@ember/object/computed';
+import { isPresent } from '@ember/utils';
 
 export const FIELD_STATE = {
   DEFAULT: 'default',
@@ -43,7 +44,18 @@ export default Component.extend({
   multipleInputsValue: null,
 
   validator: null,
-  required: equal('validator.kind', presense),
+  required: computed('validator.kind', {
+    get() {
+      if (isPresent(this._required)) {
+        return this._required;
+      }
+      return this.validator && this.validator.kind === presense;
+    },
+    set(key, value) {
+      this.set('_required', value);
+      return this._required;
+    }
+  }),
 
   autoValidate: true,
 
@@ -58,8 +70,30 @@ export default Component.extend({
 
   showClear: and('allowClear', 'value'),
   showIcon: notEmpty('icon'),
-  showFrame: not('disableFrame'),
-  showValidationStatusIcons: and('enableValidationStatusIcons', 'requiresValidation'),
+  showFrame: computed('disableFrame', {
+    get() {
+      if (isPresent(this._showFrame)) {
+        return this._showFrame;
+      }
+      return !this.disableFrame;
+    },
+    set(k, v) {
+      this._showFrame = v;
+      return this._showFrame;
+    }
+  }),
+  showValidationStatusIcons: computed('enableValidationStatusIcons', 'requiresValidation', {
+    get() {
+      if (isPresent(this._showValidationStatusIcons)) {
+        return this._showValidationStatusIcons;
+      }
+      return this.enableValidationStatusIcons && this.requiresValidation;
+    },
+    set(key, value) {
+      this.set('_showValidationStatusIcons', value);
+      return this._showValidationStatusIcons;
+    }
+  }),
   showValidationStatusMessage: and('enableValidationStatusMessage', 'requiresValidation'),
 
   selectComponent: computed('multiple', function () {

@@ -2,7 +2,7 @@
 
 import { VERSION } from '@ember/version';
 import Component from '@ember/component';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';

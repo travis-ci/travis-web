@@ -103,12 +103,20 @@ section[class^="dash-"] {
   flex: 0 0 15%;
 }
 
+.dash-repo-type {
+  flex: 0 0 8%;
+}
+
+.dash-log-scan {
+  flex: 0 0 10%;
+}
+
 .dash-commit {
   flex: 0 0 13.5%;
 }
 
 .dash-finished {
-  flex: 0 0 21%;
+  flex: 0 0 20%;
 }
 
 .dash-no-build {

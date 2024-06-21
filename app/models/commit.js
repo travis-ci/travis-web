@@ -15,7 +15,7 @@ export default Model.extend({
   committerAvatarUrl: attr(),
   authorAvatarUrl: attr(),
 
-  build: belongsTo('build'),
+  build: belongsTo('build', {async: true, inverse: 'commit'}),
 
   externalLinks: service(),
 

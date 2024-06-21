@@ -3,6 +3,7 @@ import { later } from '@ember/runloop';
 import config from 'travis/config/environment';
 
 export default Service.extend({
+  auth: service(),
   store: service(),
   jobState: service(),
   liveUpdatesRecordFetcher: service(),
@@ -74,9 +75,13 @@ export default Service.extend({
       delete data.branch;
     }
 
+    if (event === 'user:logout') {
+      this.auth.signOut();
+    }
+
     if (event === 'job:log') {
       data = data.job ? data.job : data;
-      job = store.recordForId('job', data.id);
+      job = store.peekRecord('job', data.id);
       return job.appendLog({
         number: parseInt(data.number),
         content: data._log,

@@ -14,6 +14,11 @@ export default V3Adapter.extend({
         dont_run_if_recent_build_exists: data.dont_run_if_recent_build_exists,
         interval: data.interval
       }
+    }).then(response => {
+      if (!response.id) {
+        response.id = `temp-id-${new Date().getTime()}`; // we do not need id at least in tests but Ember needs it.
+      }
+      return response;
     });
   },
 

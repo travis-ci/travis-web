@@ -20,10 +20,9 @@
 </div>
 <div class="{{if this.showRegenerateButton 'token-actions-regen' ''}} token-actions">
   <CopyButton
-    class="copy-button"
-    @clipboardText={{this.token}}
-    @title="Copy to clipboard"
-    @success={{action "copyTokenSuccessful"}}
+    class="copy-button {{this.buttonClass}}"
+    @text={{this.token}}
+    @onSuccess={{action "copyTokenSuccessful"}}
   >
     <SvgImage @name="icon-copy" @class="icon" />
     <span>Copy token</span>

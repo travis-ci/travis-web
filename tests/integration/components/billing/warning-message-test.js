@@ -1,14 +1,15 @@
+/* eslint max-len: 0 */
+
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import profilePage from 'travis/tests/pages/profile';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | warning-message', function (hooks) {
   setupRenderingTest(hooks);
 
   test('sameAddons', async function (assert) {
-
     const selectedPlan = {
       id: 1,
       name: 'Startup',
@@ -40,8 +41,8 @@ module('Integration | Component | warning-message', function (hooks) {
 
     this.set('subscription', subscription);
     await render(hbs`<Billing::WarningMessage
-      @selectedPlan={{selectedPlan}}
-      @subscription={{subscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
       />`);
 
 
@@ -49,7 +50,6 @@ module('Integration | Component | warning-message', function (hooks) {
   });
 
   test('other addons', async function (assert) {
-
     const selectedPlan = {
       id: 1,
       name: 'Startup',
@@ -77,15 +77,14 @@ module('Integration | Component | warning-message', function (hooks) {
 
     this.set('subscription', subscription);
     await render(hbs`<Billing::WarningMessage
-      @selectedPlan={{selectedPlan}}
-      @subscription={{subscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
       />`);
 
     assert.equal(profilePage.billing.warningMessage.text, 'Pricing for number of users who are allowed to trigger builds may be changed. See our documentation for more details.');
   });
 
   test('negative ballance', async function (assert) {
-
     const selectedPlan = {
       id: 1,
       name: 'Startup',
@@ -118,8 +117,8 @@ module('Integration | Component | warning-message', function (hooks) {
     this.subscription = subscription;
     this.set('subscription', subscription);
     await render(hbs`<Billing::WarningMessage
-      @selectedPlan={{selectedPlan}}
-      @subscription={{subscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
       />`);
 
     assert.equal(profilePage.billing.warningMessage.text, 'Your Private or OSS Credit balance is negative. After upgrading to the Startup plan the negative Credit amount will be deducted from the respective new credit type balance. Please see our documentation for more details.');

@@ -5,8 +5,8 @@ export default Component.extend({
   sameAddons: computed('subscription.addons.[]', 'selectedPlan.addonConfigs.[]', function () {
     if (!this.selectedPlan.addonConfigs || !this.subscription.addons)
       return false;
-    return this.selectedPlan.addonConfigs.any(addonConfig => (
-      this.subscription.addons.any(addon => (
+    return this.selectedPlan.addonConfigs.some(addonConfig => (
+      this.subscription.addons.some(addon => (
         addon.name === addonConfig.name && addon.type === addonConfig.type
       ))
     ));

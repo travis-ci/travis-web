@@ -1,12 +1,15 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
+import { alias } from '@ember/object/computed';
 
 export default Route.extend({
   auth: service(),
   tabStates: service(),
   repositories: service(),
   features: service(),
+  router: service(),
+  latestBuild: alias('repositories.accessible.firstObject.currentBuild'),
 
   beforeModel() {
     let pro = this.get('features.proVersion');
@@ -42,7 +45,7 @@ export default Route.extend({
   deactivate() {
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
-    this.stopObservingRepoStatus();
+    //   this.stopObservingRepoStatus();
     return this._super(...arguments);
   },
 

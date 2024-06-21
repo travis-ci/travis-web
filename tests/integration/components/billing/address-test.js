@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import profilePage from 'travis/tests/pages/profile';
 
 module('Integration | Component | billing-address', function (hooks) {
@@ -27,7 +27,7 @@ module('Integration | Component | billing-address', function (hooks) {
       hasSubscriptionPermissions: true
     });
 
-    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
+    await render(hbs`<Billing::Address @account={{this.account}} @subscription={{this.subscription}}/>`);
 
     assert.dom('[data-test-user-details] section:nth-child(1)').hasText('contact name A B');
     assert.dom('[data-test-user-details] section:nth-child(2)').hasText('company name Company');
@@ -55,7 +55,7 @@ module('Integration | Component | billing-address', function (hooks) {
       hasSubscriptionPermissions: true
     });
 
-    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
+    await render(hbs`<Billing::Address @account={{this.account}} @subscription={{this.subscription}}/>`);
 
     assert.dom('[data-test-user-details] section:nth-child(1)').hasText('contact name A B');
     assert.dom('[data-test-billing-details] section:nth-child(1)').hasText('address Address');
@@ -81,7 +81,7 @@ module('Integration | Component | billing-address', function (hooks) {
       hasSubscriptionPermissions: true
     });
 
-    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
+    await render(hbs`<Billing::Address @account={{this.account}} @subscription={{this.subscription}}/>`);
 
     assert.dom('[data-test-user-details]').doesNotExist();
     assert.dom('[data-test-billing-details]').doesNotExist();
@@ -104,7 +104,7 @@ module('Integration | Component | billing-address', function (hooks) {
       hasSubscriptionPermissions: true
     });
 
-    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
+    await render(hbs`<Billing::Address @account={{this.account}} @subscription={{this.subscription}}/>`);
     await profilePage.billing.editContactAddressButton.click();
 
     assert.ok(profilePage.billing.editContactAddressForm.isPresent);
@@ -128,7 +128,7 @@ module('Integration | Component | billing-address', function (hooks) {
       hasSubscriptionPermissions: true
     });
 
-    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
+    await render(hbs`<Billing::Address @account={{this.account}} @subscription={{this.subscription}}/>`);
     await profilePage.billing.editContactAddressButton.click();
 
     assert.ok(profilePage.billing.editContactAddressForm.isPresent);
@@ -156,7 +156,7 @@ module('Integration | Component | billing-address', function (hooks) {
       hasSubscriptionPermissions: true
     });
 
-    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
+    await render(hbs`<Billing::Address @account={{this.account}} @subscription={{this.subscription}}/>`);
 
     await profilePage.billing.editBillingAddressButton.click();
 
@@ -181,7 +181,7 @@ module('Integration | Component | billing-address', function (hooks) {
       hasSubscriptionPermissions: true
     });
 
-    await render(hbs`<Billing::Address @account={{account}} @subscription={{subscription}}/>`);
+    await render(hbs`<Billing::Address @account={{this.account}} @subscription={{this.subscription}}/>`);
 
     await profilePage.billing.editBillingAddressButton.click();
 

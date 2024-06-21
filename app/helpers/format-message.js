@@ -1,5 +1,5 @@
 import { helper } from '@ember/component/helper';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { get } from '@ember/object';
 
 import EmojiConvertor from 'emoji-js';

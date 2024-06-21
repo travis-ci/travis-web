@@ -18,7 +18,7 @@
     <div class='billing-refill'>
       {{#each this.autoRefillThresholds as |value|}}
         <div
-          class='billing-refill__box pointer {{if (eq value this.selectedThreshold) 'highlight'}}'
+          class='billing-refill__box pointer {{if (eq value this.autoRefillThreshold) 'highlight'}}'
           onclick={{action (mut this.selectedThreshold) value}}
         >
           <p class='billing-refill__box--value'>
@@ -34,7 +34,7 @@
     <div class='billing-refill'>
       {{#each this.autoRefillAmounts as |value|}}
         <div
-          class='billing-refill__box pointer {{if (eq value.amount this.selectedAmount) 'highlight'}}'
+          class='billing-refill__box pointer {{if (eq value.amount this.autoRefillAmount) 'highlight'}}'
           onclick={{action (mut this.selectedAmount) value.amount}}
         >
           <p class='billing-refill__box--value'>

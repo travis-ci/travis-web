@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 import { MAX_ELEVATION } from 'travis/components/paper-block';
 
@@ -32,7 +32,7 @@ module('Integration | Component | paper-block', function (hooks) {
 
   test('it handles elevation properly', async function (assert) {
     this.set('elevation', 1);
-    await render(hbs`{{#paper-block elevation=elevation}}{{/paper-block}}`);
+    await render(hbs`{{#paper-block elevation=this.elevation}}{{/paper-block}}`);
 
     for (let i = 0; i <= MAX_ELEVATION + 1; i++) {
       this.set('elevation', i);
@@ -41,7 +41,7 @@ module('Integration | Component | paper-block', function (hooks) {
   });
 
   test('it handles padding properly', async function (assert) {
-    await render(hbs`{{#paper-block padding=padding}}{{/paper-block}}`);
+    await render(hbs`{{#paper-block padding=this.padding}}{{/paper-block}}`);
 
     assert.dom(this.element.firstChild).hasClass('no-padding');
 

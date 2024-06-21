@@ -18,8 +18,8 @@ let dashboardRowObject = {
   clickStarButton: clickable('.dash-head .dash-star'),
 
   menuButton: {
-    scope: '.dash-menu .dropup',
-    click: clickable('button')
+    scope: 'div.dash-menu div.dropup',
+    click: clickable('.dropup-tofu')
   },
 
   starButton: {

@@ -31,7 +31,7 @@ module('Acceptance | job/log error', function (hooks) {
     job.save();
     commit.save();
 
-    await visit('/travis-ci/travis-web/jobs/' + job.id);
+    await visit(`/travis-ci/travis-web/jobs/${job.id}`);
 
     await waitFor('.job-log > p');
     assert.equal(jobPage.branch, 'acceptance-tests');

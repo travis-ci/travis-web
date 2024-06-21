@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 import {
   INSIGHTS_SETTINGS_LIST_ITEM,
@@ -40,7 +40,7 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
 
   test('it is empty when explicitly invisible', async function (assert) {
     this.set('isVisible', false);
-    await render(hbs`{{visibility-setting-list options=options initialKey=initialKey isVisible=isVisible}}`);
+    await render(hbs`{{visibility-setting-list options=this.options initialKey=this.initialKey isVisible=this.isVisible}}`);
 
     assert.dom(this.element).hasText('');
   });
@@ -48,7 +48,7 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
   test('options display', async function (assert) {
     const selectedOption = this.options.find((item) => item.key === this.initialKey);
 
-    await render(hbs`{{visibility-setting-list options=options initialKey=initialKey}}`);
+    await render(hbs`{{visibility-setting-list options=this.options initialKey=this.initialKey}}`);
 
     assert.dom(INSIGHTS_SETTINGS_LIST_ITEM).exists({ count: this.options.length });
     assert.dom(INSIGHTS_SETTINGS_LIST_ITEM_SELECTED).exists({ count: 1 });
@@ -62,7 +62,7 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
       selectionKey: 'private',
     });
 
-    await render(hbs`{{visibility-setting-list options=options initialKey=initialKey isShowingConfirmationModal=showModal selectionKey=selectionKey}}`);
+    await render(hbs`{{visibility-setting-list  options=this.options initialKey=this.initialKey isShowingConfirmationModal=true selectionKey=this.selectionKey}}`);
 
     assert.dom(INSIGHTS_SETTINGS_MODAL).exists();
     assert.dom(INSIGHTS_SETTINGS_MODAL_TITLE).hasText('Restrict visibility of your private build insights');
@@ -75,7 +75,7 @@ module('Integration | Component | visibility-setting-list', function (hooks) {
       selectionKey: 'public',
     });
 
-    await render(hbs`{{visibility-setting-list options=options initialKey=initialKey isShowingConfirmationModal=showModal selectionKey=selectionKey}}`);
+    await render(hbs`{{visibility-setting-list options=this.options initialKey=this.initialKey isShowingConfirmationModal=this.showModal selectionKey=this.selectionKey}}`);
 
     assert.dom(INSIGHTS_SETTINGS_MODAL).exists();
     assert.dom(INSIGHTS_SETTINGS_MODAL_TITLE).hasText('Increase visibility of your private build insights');

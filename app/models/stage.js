@@ -8,7 +8,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   name: attr('string'),
   state: attr(),
 
-  build: belongsTo('build', { async: true }),
+  build: belongsTo('build', { async: true, inverse: 'stages' }),
 
   notStarted: computed('state', function () {
     let state = this.state;

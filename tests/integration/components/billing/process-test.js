@@ -1,17 +1,15 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { render, getContext } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 import StripeMock from 'travis/tests/helpers/stripe-mock';
 import { stubConfig, stubService } from 'travis/tests/helpers/stub-service';
-import { getContext } from '@ember/test-helpers';
 import Service from '@ember/service';
 
 module('Integration | Component | billing-process', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-
     const plans = [{
       id: 1,
       name: 'A',
@@ -67,13 +65,13 @@ module('Integration | Component | billing-process', function (hooks) {
   });
 
   test('deny subscription when user has no permission', async function (assert) {
-
-    this.set('currentStep', 'stepTwo');
+    this.set('currentStepOverride', 'stepTwo');
     this.set('account', { hasSubscriptionPermissions: false });
 
     await render(hbs`
-    <Billing::Process 
-      @account={{account}}
+    <Billing::Process
+      @account={{this.account}}
+      @currentStepOverride={{this.currentStepOverride}}
     />`);
 
     assert.dom('p').hasText("You don't have permission to create a subscription");

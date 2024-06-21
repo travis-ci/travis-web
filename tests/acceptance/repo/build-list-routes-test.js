@@ -1,4 +1,4 @@
-import { assign } from '@ember/polyfills';
+// import { assign } from '@ember/polyfills';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import {
@@ -8,7 +8,6 @@ import {
 import page from 'travis/tests/pages/build-list';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -71,7 +70,7 @@ module('Acceptance | repo build list routes', function (hooks) {
     };
     this.commitAttributes = commitAttributes;
 
-    lastBuild.createCommit(assign({
+    lastBuild.createCommit(Object.assign({
       message: 'A generic cron commit message'
     }, commitAttributes));
     lastBuild.save();
@@ -194,7 +193,6 @@ module('Acceptance | repo build list routes', function (hooks) {
     });
     olderBuild.save();
 
-    percySnapshot(assert);
 
     await page.showMoreButton.click();
 

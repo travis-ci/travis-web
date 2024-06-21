@@ -6,7 +6,6 @@ const DICTIONARY = {
 };
 
 module('Unit | Utility | ui-kit/assertions', function () {
-
   module('checkDictionary', function () {
     test('Finds present value', function (assert) {
       const result = checkDictionary('present', DICTIONARY);

@@ -1,3 +1,4 @@
+/* global Travis */
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
@@ -9,6 +10,7 @@ import {
 import hasErrorWithStatus from 'travis/utils/api-errors';
 import { task } from 'ember-concurrency';
 import { vcsLinks } from 'travis/services/external-links';
+import { capitalize } from '@ember/string';
 
 export default Component.extend({
   accounts: service(),
@@ -23,7 +25,7 @@ export default Component.extend({
   isNotMatchGithub: not('isMatchGithub'),
 
   repositoryProvider: computed('repository.provider', function () {
-    return this.repository.provider.capitalize();
+    return capitalize(this.repository.provider);
   }),
 
   repositoryType: computed('repository.serverType', function () {
@@ -44,15 +46,15 @@ export default Component.extend({
   hasActivatePermission: computed('permissions.all', 'repository', function () {
     let repo = this.repository;
     let forRepo = (repo.owner.id == this.user.id && repo.ownerType == 'user') ||
-                  ((repo.shared || repo.ownerType != 'user') && repo.permissions.activate);
+                  ((repo.shared || repo.ownerType != 'user') && repo.permissions?.activate);
     return forRepo;
   }),
 
   hasSettingsPermission: computed('permissions.all', 'repository', function () {
     let repo = this.repository;
     let forRepo = (repo.owner.id == this.user.id && repo.ownerType == 'user') ||
-                  ((repo.shared || repo.ownerType != 'user') && repo.permissions.settings_read);
-    return this.permissions.hasPushPermission(repo) && forRepo;
+                  ((repo.shared || repo.ownerType != 'user') && repo.permissions?.settings_read);
+    return forRepo && this.permissions.hasPushPermission(repo);
   }),
 
   hasEmailSubscription: computed('repository', 'repository.emailSubscribed', function () {
@@ -82,7 +84,7 @@ export default Component.extend({
     try {
       yield repository.toggle();
       yield repository.reload();
-      this.pusher.subscribe(`repo-${repository.id}`);
+      Travis.pusher.subscribe(`repo-${repository.id}`);
     } catch (error) {
       this.set('apiError', error);
     }

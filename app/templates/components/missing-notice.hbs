@@ -2,12 +2,12 @@
   <figure class="page-graphic">
     <SvgImage @name={{or this.image "icon-cones"}} @class="snapshot-hide" />
   </figure>
-  {{#if this.title}}
+  {{#if @title}}
     <h2 data-test-missing-notice-header class="page-title">
-      {{this.title}}
+      {{@title}}
     </h2>
   {{/if}}
-  {{#if hasBlock}}
+  {{#if (has-block) }}
     {{yield}}
   {{/if}}
 </div>

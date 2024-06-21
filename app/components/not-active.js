@@ -1,3 +1,4 @@
+/* global Travis */
 import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { inject as service } from '@ember/service';
@@ -26,7 +27,7 @@ export default Component.extend({
     return false;
   }),
 
-  migratedOnOrg: computed(
+  migratedOnOrg: computed('repo',
     'features.{enterpriseVersion,proVersion}',
     'repo.migrationStatus',
     function () {
@@ -64,7 +65,7 @@ export default Component.extend({
       const response = yield this.api.post(`/repo/${repoId}/activate`);
 
       if (response.active) {
-        this.pusher.subscribe(`repo-${repoId}`);
+        Travis.pusher.subscribe(`repo-${repoId}`);
 
         this.repo.set('active', true);
         this.flashes.success('Repository has been successfully activated.');

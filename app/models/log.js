@@ -13,10 +13,19 @@ export default EmberObject.extend({
   version: 0,
   length: 0,
   hasContent: gt('parts.length', 0),
+  subscribers: [],
 
   parts: computed(() => ArrayProxy.create({
     content: []
   })),
+
+  subscribe(parts, caller, cb) {
+    this.subscribers.push({parts: parts, caller: caller, cb: cb});
+  },
+
+  unsubscribe(parts, cb) {
+    this.subscribers = this.subscribers.filter((e) => e.parts !== parts);
+  },
 
   noRendering: computed(function () {
     return this.storage.getItem('travis.logRendering') === 'false';
@@ -39,7 +48,7 @@ export default EmberObject.extend({
 
     if (this.noRendering) {
       let text = "Log rendering is off because localStorage['travis.logRendering'] is `false`.";
-      this.parts.pushObject({content: `${text}\r\n`, number: 0, final: true});
+      this.pushObject({content: `${text}\r\n`, number: 0, final: true});
     } else {
       this.loadParts(json['log_parts']);
     }
@@ -62,13 +71,25 @@ export default EmberObject.extend({
     return this.set('onClearCallback', callback);
   },
 
+  pushObject(part) {
+    let result = this.parts.pushObject(part);
+    this.subscribers.forEach(s => {
+      if (s.cb) {
+        s.cb(s.caller, this.parts.content, this.parts.content.length - 1, this.parts.content.length, 1);
+      }
+    });
+
+    return result;
+  },
+
   append(part) {
     if (this.parts.isDestroying ||
         this.parts.isDestroyed ||
         this.noRendering) {
       return;
     }
-    return this.parts.pushObject(part);
+
+    return this.pushObject(part);
   },
 
   loadParts(parts) {

@@ -2,6 +2,7 @@
   <LoadingIndicator/>
 {{else}}
   <section class="billing">
+
     {{#if (or this.isEducation (not this.isEduProcessCompleted))}}
       <Billing::Education
         @account={{this.account}}

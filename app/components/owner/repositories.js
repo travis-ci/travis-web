@@ -20,6 +20,8 @@ import fetchAll from 'travis/utils/fetch-all';
 const { providers } = config;
 const { appName, migrationRepositoryCountLimit } = config.githubApps;
 
+import { isPresent } from '@ember/utils';
+
 export default Component.extend({
   features: service(),
   store: service(),
@@ -35,7 +37,10 @@ export default Component.extend({
   isMatchGithub: match('owner.vcsType', /Github\S+$/),
   isOwnerVcsTypeEmpty: empty('owner.vcsType'),
   isNotGithubRepository: not('isGithubRepository'),
-  hasGitHubAppsInstallation: notEmpty('owner.installation'),
+  hasGitHubAppsInstallation: computed(function () {
+    return this.owner && this.owner.installation;
+  }),
+
   isEnterprise: reads('features.enterpriseVersion'),
   isNotEnterprise: not('isEnterprise'),
   isPro: reads('features.proVersion'),
@@ -57,7 +62,10 @@ export default Component.extend({
   isLoadingLegacyRepos: reads('legacyRepos.isLoading'),
   shouldShowLegacyReposFilter: or('hasLegacyRepos', 'isFilteringLegacyRepos', 'isLoadingLegacyRepos'),
 
-  appsRepos: reads('owner.githubAppsRepositories'),
+  appsRepos: computed('owner.githubAppsRepositories', function () {
+    this.owner.githubAppsRepositories.reload();
+    return this.owner.githubAppsRepositories;
+  }),
   appsReposCount: reads('appsRepos.total'),
   isFilteringAppsRepos: notEmpty('appsRepos.filterTerm'),
   hasAppsRepos: bool('appsReposCount'),
@@ -81,10 +89,20 @@ export default Component.extend({
   wizardStep: reads('storage.wizardStep'),
   wizardState: reads('wizard.state'),
 
-  showWizard: computed('wizardStep', function () {
-    let state = this.wizardStep;
+  showWizard: computed('wizardStep', {
+    get() {
+      if (isPresent(this._showWizard)) {
+        return this._showWizard;
+      }
 
-    return state && state <= 3;
+      let state = this.wizardStep;
+
+      return state && state <= 3;
+    },
+    set(k, v) {
+      this.set('_showWizard', v);
+      return this._showWizard;
+    }
   }),
 
 

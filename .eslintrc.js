@@ -2,27 +2,40 @@
 
 module.exports = {
   root: true,
+  parser: '@babel/eslint-parser',
   parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module'
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    requireConfigFile: false,
+    // allowImportExportEverywhere: true,
+    babelOptions: {
+      plugins: [
+        ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
+      ],
+    },
+    ecmaFeatures: {
+      modules: true,
+    },
   },
-  plugins: [
-    'ember'
-  ],
+  plugins: ['ember'],
   extends: [
     'eslint:recommended',
-    'plugin:ember/recommended'
+    'plugin:ember/recommended',
+    'plugin:prettier/recommended',
   ],
   env: {
     browser: true,
-    es6: true
+    es2021: true,
   },
   rules: {
     // Don't allow unused vars, but allow unused arguments
-    'no-unused-vars': ['error', { 'vars': 'all', 'args': 'none', 'ignoreRestSiblings': false }],
+    'no-unused-vars': [
+      'error',
+      { vars: 'all', args: 'none', ignoreRestSiblings: false },
+    ],
 
     // TODO: Remove this to ensure we handle errors properly in UI
-    'no-empty': ['error', { 'allowEmptyCatch': true }],
+    'no-empty': ['error', { allowEmptyCatch: true }],
 
     // enforce spacing inside array brackets
     'array-bracket-spacing': [2, 'never'],
@@ -35,7 +48,7 @@ module.exports = {
     'brace-style': [2, '1tbs', { allowSingleLine: true }],
 
     // require camel case names
-    'camelcase': [2, { properties: 'never' }],
+    camelcase: [2, { properties: 'never' }],
 
     // enforce spacing before and after comma
     'comma-spacing': [2, { before: false, after: true }],
@@ -68,21 +81,24 @@ module.exports = {
 
     // this option sets a specific tab width for your code
     // http://eslint.org/docs/rules/indent
-    'indent': [2, 2, { SwitchCase: 1, VariableDeclarator: 1}],
+    indent: [2, 2, { SwitchCase: 1, VariableDeclarator: 1 }],
 
     // enforces spacing between keys and values in object literal properties
     'key-spacing': [2, { beforeColon: false, afterColon: true }],
 
     // require a space before & after certain keywords
-    'keyword-spacing': [2, {
-      before: true,
-      after: true,
-      overrides: {
-        return: { after: true },
-        throw: { after: true },
-        case: { after: true }
-      }
-    }],
+    'keyword-spacing': [
+      2,
+      {
+        before: true,
+        after: true,
+        overrides: {
+          return: { after: true },
+          throw: { after: true },
+          case: { after: true },
+        },
+      },
+    ],
 
     // disallow mixed 'LF' and 'CRLF' as linebreaks
     'linebreak-style': 0,
@@ -95,18 +111,26 @@ module.exports = {
 
     // specify the maximum length of a line in your program
     // http://eslint.org/docs/rules/max-len
-    'max-len': [2, 150, 2, {
-      ignoreUrls: true,
-      ignoreComments: false
-    }],
+    'max-len': [
+      2,
+      150,
+      2,
+      {
+        ignoreUrls: true,
+        ignoreComments: false,
+      },
+    ],
 
     // specify the max number of lines in a file
     // http://eslint.org/docs/rules/max-lines
-    'max-lines': [0, {
-      max: 300,
-      skipBlankLines: true,
-      skipComments: true
-    }],
+    'max-lines': [
+      0,
+      {
+        max: 300,
+        skipBlankLines: true,
+        skipComments: true,
+      },
+    ],
 
     // specify the maximum depth callbacks can be nested
     'max-nested-callbacks': 0,
@@ -188,6 +212,7 @@ module.exports = {
     // disallow use of the Object constructor
     'no-new-object': 2,
 
+    'no-prototype-builtins': 0,
     // disallow use of unary operators, ++ and --
     'no-plusplus': 0,
 
@@ -230,10 +255,13 @@ module.exports = {
     // enforce line breaks between braces
     // http://eslint.org/docs/rules/object-curly-newline
     // TODO: enable once https://github.com/eslint/eslint/issues/6488 is resolved
-    'object-curly-newline': [0, {
-      ObjectExpression: { minProperties: 0, multiline: true },
-      ObjectPattern: { minProperties: 0, multiline: true }
-    }],
+    'object-curly-newline': [
+      0,
+      {
+        ObjectExpression: { minProperties: 0, multiline: true },
+        ObjectPattern: { minProperties: 0, multiline: true },
+      },
+    ],
 
     // TODO: Rule not found
     // enforce "same line" or "multiple line" on object properties.
@@ -301,38 +329,44 @@ module.exports = {
     'space-unary-ops': 0,
 
     // require or disallow a space immediately following the // or /* in a comment
-    'spaced-comment': [2, 'always', {
-      exceptions: ['-', '+'],
-      markers: ['=', '!']           // space here to support sprockets directives
-    }],
+    'spaced-comment': [
+      2,
+      'always',
+      {
+        exceptions: ['-', '+'],
+        markers: ['=', '!'], // space here to support sprockets directives
+      },
+    ],
 
     // require or disallow the Unicode Byte Order Mark
     // http://eslint.org/docs/rules/unicode-bom
     'unicode-bom': [2, 'never'],
 
     // require regex literals to be wrapped in parentheses
-    'wrap-regex': 0
+    'wrap-regex': 0,
   },
   overrides: [
     // node files
     {
       files: [
-        '.eslintrc.js',
-        '.template-lintrc.js',
-        'ember-cli-build.js',
-        'testem.js',
-        'blueprints/*/index.js',
-        'config/**/*.js',
-        'lib/*/index.js',
-        'server/**/*.js'
+        './.eslintrc.js',
+        './.prettierrc.js',
+        './.stylelintrc.js',
+        './.template-lintrc.js',
+        './ember-cli-build.js',
+        './testem.js',
+        './blueprints/*/index.js',
+        './config/**/*.js',
+        './lib/*/index.js',
+        './server/**/*.js',
       ],
       parserOptions: {
-        sourceType: 'script'
+        sourceType: 'script',
       },
       env: {
         browser: false,
-        node: true
-      }
+        node: true,
+      },
     },
 
     // test files
@@ -340,20 +374,29 @@ module.exports = {
       files: ['tests/**/*.js'],
       excludedFiles: ['tests/dummy/**/*.js'],
       env: {
-        embertest: true
+        embertest: true,
       },
       globals: {
         triggerCopySuccess: true,
         triggerCopyError: true,
         signInUser: true,
         withFeature: true,
-        percySnapshot: true,
-        waitForElement: true
+        waitForElement: true,
       },
+      plugins: ['node'],
+      extends: ['plugin:node/recommended'],
       rules: {
+        // this can be removed once the following is fixed
+        // https://github.com/mysticatea/eslint-plugin-node/issues/77
+        'node/no-unpublished-require': 'off',
         'max-len': 0,
         'no-useless-escape': 0,
-      }
-    }
-  ]
+      },
+    },
+    {
+      // test files
+      files: ['tests/**/*-test.{js,ts}'],
+      extends: ['plugin:qunit/recommended'],
+    },
+  ],
 };

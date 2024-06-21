@@ -16,11 +16,11 @@ module.exports = function (/* environment, appConfig */) {
     icons: [
       {
         src: '/favicon.png',
-        sizes: '256x256'
-      }
+        sizes: '256x256',
+      },
     ],
     ms: {
-      tileColor: '#fff'
-    }
+      tileColor: '#fff',
+    },
   };
 };

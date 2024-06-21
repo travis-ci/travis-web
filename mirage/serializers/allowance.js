@@ -1,7 +1,7 @@
-import { Serializer } from 'ember-cli-mirage';
+import { Serializer } from 'miragejs';
 import { isArray } from '@ember/array';
 
-export default Serializer.extend({
+export default class extends Serializer {
   serialize(object) {
     if (isArray(object.models)) {
       const allowance = object.models[0];
@@ -9,14 +9,14 @@ export default Serializer.extend({
         '@type': 'allowance',
         '@href': '/owner/provider/login/allowance',
         '@representation': 'standard',
-        'id': allowance.id,
-        'subscription_type': allowance.subscription_type,
-        'public_repos': allowance.public_repos,
-        'private_repos': allowance.private_repos,
-        'user_usage': allowance.user_usage,
-        'pending_user_licenses': allowance.pending_user_licenses,
-        'concurrency_limit': allowance.concurrency_limit
+        id: allowance.id,
+        subscription_type: allowance.subscription_type,
+        public_repos: allowance.public_repos,
+        private_repos: allowance.private_repos,
+        user_usage: allowance.user_usage,
+        pending_user_licenses: allowance.pending_user_licenses,
+        concurrency_limit: allowance.concurrency_limit,
       };
     }
   }
-});
+}

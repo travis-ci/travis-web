@@ -1,6 +1,6 @@
-import Mirage from 'ember-cli-mirage';
+import { Factory } from 'miragejs';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   name: 'travis-web',
   vcs_name: 'travis-web',
   github_language: 'ruby',
@@ -40,7 +40,7 @@ export default Mirage.Factory.extend({
   customSshKey: Object.freeze({
     description: 'Custom',
     fingerprint: 'dd:cc:bb:aa',
-    type: 'custom'
+    type: 'custom',
   }),
 
   defaultSshKey: Object.freeze({
@@ -64,5 +64,5 @@ export default Mirage.Factory.extend({
       const user = server.schema.users.all().models[0] || null;
       server.create('permissions', { user, repository });
     }
-  }
+  },
 });

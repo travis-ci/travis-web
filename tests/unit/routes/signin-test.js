@@ -6,6 +6,6 @@ module('Unit | Route | signin', function (hooks) {
 
   test('it does not require auth', function (assert) {
     let route = this.owner.lookup('route:signin');
-    assert.ok(!route.get('needsAuth'));
+    assert.ok(!route.needsAuth);
   });
 });

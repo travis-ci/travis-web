@@ -1,5 +1,5 @@
 import Model, { attr } from '@ember-data/model';
-import { dasherize } from '@ember/string';
+import { dasherize, capitalize } from '@ember/string';
 import { computed } from '@ember/object';
 
 export default Model.extend({
@@ -15,7 +15,7 @@ export default Model.extend({
   displayName: computed('dasherizedName', function () {
     return this.dasherizedName
       .split('-')
-      .map(x => x.capitalize())
+      .map(x => capitalize(x))
       .join(' ');
   })
 });

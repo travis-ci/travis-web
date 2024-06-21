@@ -16,7 +16,7 @@
     {{#if this.repo.currentBuild.id}}
       <p class="tile-title float-right {{this.repo.currentBuild.state}}">
         <SvgImage @name="icon-hash" @class="icon" />
-        <LinkTo @route="build" @models={{array this.repo repo.currentBuild.id}}>
+        <LinkTo @route="build" @models={{array this.repo this.repo.currentBuild.id}}>
           <span class="label-align inner-underline">
             {{this.repo.currentBuild.number}}
           </span>

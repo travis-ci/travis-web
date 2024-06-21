@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
+import { capitalize } from '@ember/string';
 
 export default Component.extend({
   tagName: 'li',
@@ -69,7 +70,7 @@ export default Component.extend({
     if (serverType === 'svn') {
       return 'SVN';
     } else {
-      return serverType.capitalize();
+      return capitalize(serverType);
     }
   }),
 });

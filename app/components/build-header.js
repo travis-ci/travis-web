@@ -4,6 +4,7 @@ import jobConfigArch from 'travis/utils/job-config-arch';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 import { reads, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { capitalize } from '@ember/string';
 
 const commitMessageLimit = 72;
 
@@ -58,29 +59,32 @@ export default Component.extend({
 
   displayCompare: computed('item.eventType', function () {
     let eventType = this.get('item.eventType');
-    return !['api', 'cron'].includes(eventType);
+    return !['api', 'cron', 'release'].includes(eventType);
   }),
 
+
   commitUrl: computed('item.repo.{ownerName,vcsName,vcsType,slug}', 'commit.sha', function () {
-    const owner = this.get('item.repo.ownerName');
-    const repo = this.get('item.repo.vcsName');
-    const vcsType = this.get('item.repo.vcsType');
-    const vcsId = this.get('item.repo.vcsId');
+    const owner = this.get('repo.ownerName');
+    const repo = this.get('repo.vcsName');
+    const vcsType = this.get('repo.vcsType');
+    const vcsId = this.get('repo.vcsId');
     const commit = this.get('commit.sha');
-    const slugOwner = this.get('item.repo.slug').split('/')[0];
+    const slugOwner = this.get('repo.slug')?.split('/')[0];
 
     return this.externalLinks.commitUrl(vcsType, { owner, repo, commit, vcsId, slugOwner });
   }),
 
-  branchUrl: computed('item.repo.{ownerName,vcsName,vcsType,slug}', 'build.branchName', function () {
+  branchUrl: computed('item.repo.{ownerName,vcsName,vcsType,slug}', 'build.branchName', 'commit.sha', function () {
     const owner = this.get('item.repo.ownerName');
     const repo = this.get('item.repo.vcsName');
     const vcsType = this.get('item.repo.vcsType');
     const vcsId = this.get('item.repo.vcsId');
     const branch = this.get('build.branchName');
     const slugOwner = this.get('item.repo.slug').split('/')[0];
+    const repoType = this.get('item.repo.serverType');
+    const commit = this.get('commit.sha');
 
-    return this.externalLinks.branchUrl(vcsType, { owner, repo, branch, vcsId, slugOwner });
+    return this.externalLinks.branchUrl(vcsType, repoType, { owner, repo, branch, vcsId, slugOwner, commit });
   }),
 
   tagUrl: computed('item.repo.{ownerName,vcsName,vcsType,slug}', 'build.tag.name', function () {
@@ -113,7 +117,7 @@ export default Component.extend({
     if (serverType === 'svn') {
       return 'SVN';
     } else {
-      return serverType.capitalize();
+      return capitalize(serverType);
     }
   }),
 
@@ -175,6 +179,12 @@ export default Component.extend({
   isNotMatrix: not('item.isMatrix'),
 
   envExpanded: false,
+
+  isNewBranchBuild: computed('item.commit.compareUrl', function () {
+    const url = this.get('item.commit.compareUrl');
+    const path = (url || '').split('/').pop();
+    return path !== '' && path.indexOf('...') < 0;
+  }),
 
   actions: {
     closeEnv() {

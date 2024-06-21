@@ -28,20 +28,20 @@ export default Model.extend(DurationCalculations, {
   _config: attr(),
   updatedAt: attr('date'),
 
-  repo: belongsTo('repo'),
+  repo: belongsTo('repo',  { async: true, inverse: null}),
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
-  repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
-  commit: belongsTo('commit', { async: false }),
+  repoCurrentBuild: belongsTo('repo', { async: false, inverse: 'currentBuild' }),
+  commit: belongsTo('commit', { async: false, inverse: 'build' }),
 
-  request: belongsTo('request', { async: true }),
+  request: belongsTo('request', { async: false, inverse: 'build' }),
 
-  jobs: hasMany('job', { async: true }),
-  stages: hasMany('stage', { async: true }),
+  jobs: hasMany('job', { async: true, inverse: 'build' }),
+  stages: hasMany('stage', { async: true, inverse: 'build' }),
 
   stagesSort: ['number'],
   sortedStages: sort('stages', 'stagesSort'),
 
-  createdBy: belongsTo('user'),
+  createdBy: belongsTo('user', { async: false, inverse: null}),
 
   stagesAreLoaded: alias('stages.isSettled'),
 
@@ -151,7 +151,7 @@ export default Model.extend(DurationCalculations, {
   restartedBy: computed('jobs.@each.restartedBy', function () {
     let jobs = this.jobs;
     if (jobs.get('length') == 1) {
-      return jobs.get('firstObject').get('restartedBy');
+      return jobs.firstObject.restartedBy;
     } else {
       return null;
     }

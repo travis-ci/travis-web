@@ -2,13 +2,12 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import profilePage from 'travis/tests/pages/profile';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | selected-addon', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-
     this['actions'] = {
       goToFirstStep: () => { }
     };
@@ -24,7 +23,7 @@ module('Integration | Component | selected-addon', function (hooks) {
     this.set('selectedAddon', addonConfig);
 
     await render(hbs`<Billing::SelectedAddon
-      @selectedAddon={{selectedAddon}}
+      @selectedAddon={{this.selectedAddon}}
       @goToFirstStep={{action 'goToFirstStep'}}/>`);
 
     assert.equal(profilePage.billing.selectedAddonOverview.name.text, this.selectedAddon.name);

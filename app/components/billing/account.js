@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { reads, empty, bool, not, and, or } from '@ember/object/computed';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   store: service(),
@@ -34,11 +35,30 @@ export default Component.extend({
 
   showPlansSelector: false,
   showAddonsSelector: false,
-  isTrialProcessCompleted: computed(function () {
-    return !this.isTrial;
+  isTrialProcessCompleted: computed({
+    get() {
+      if (isPresent(this._isTrialProcessCompleted)) {
+        return this._isTrialProcessCompleted;
+      }
+
+      return !this.isTrial;
+    },
+    set(k, v) {
+      this.set('_isTrialProcessCompleted', v);
+      return this._isTrialProcessCompleted;
+    }
   }),
-  isEduProcessCompleted: computed(function () {
-    return !this.isEducation;
+  isEduProcessCompleted: computed({
+    get() {
+      if (isPresent(this._isEduProcessCompleted)) {
+        return this._isEduProcessCompleted;
+      }
+      return !this.isEducation;
+    },
+    set(k, v) {
+      this.set('_isEduProcessCompleted', v);
+      return this._isEduProcessCompleted;
+    }
   }),
 
   newV2Subscription: computed(function () {

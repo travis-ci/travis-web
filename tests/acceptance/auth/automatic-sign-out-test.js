@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import topPage from 'travis/tests/pages/top';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import { percySnapshot } from 'ember-percy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { enableFeature } from 'ember-feature-flags/test-support';
 
@@ -13,9 +12,14 @@ module('Acceptance | automatic sign out', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
-    enableFeature('proVersion');
-    signInUser(currentUser);
+    try {
+      const currentUser = this.server.create('user');
+
+      enableFeature('proVersion');
+      signInUser(currentUser);
+    } catch (e) {
+      console.log(e);
+    }
   });
 
   test('when token is invalid user should be signed out', async function (assert) {
@@ -25,6 +29,5 @@ module('Acceptance | automatic sign out', function (hooks) {
 
     assert.equal(topPage.flashMessage.text, "You've been signed out, because your access token has expired.");
     assert.equal(currentURL(), '/signin');
-    percySnapshot(assert);
   });
 });

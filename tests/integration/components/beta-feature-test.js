@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | beta feature', function (hooks) {
   setupRenderingTest(hooks);
@@ -15,7 +15,7 @@ module('Integration | Component | beta feature', function (hooks) {
       enabled: true
     };
     this.set('feature', feature);
-    await render(hbs`{{beta-feature feature=feature}}`);
+    await render(hbs`{{beta-feature feature=this.feature}}`);
 
     assert.dom('.name').hasText('Dashboard');
     assert.dom('.description').hasText('super awesome new Dashboard');

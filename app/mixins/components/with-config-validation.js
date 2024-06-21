@@ -2,6 +2,7 @@ import Mixin from '@ember/object/mixin';
 import { and, gt, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { sortBy } from 'lodash';
 
 export default Mixin.create({
   auth: service(),
@@ -17,7 +18,7 @@ export default Mixin.create({
 
   messagesMaxLevel: computed('messages.@each.level', function () {
     if (this.hasMessages) {
-      return this.messages.sortBy('level').lastObject.level;
+      return sortBy(this.messages, 'level').lastObject.level;
     }
   }),
 

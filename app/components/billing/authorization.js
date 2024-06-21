@@ -29,6 +29,7 @@ export default Component.extend({
   isSubscribed: reads('subscription.isSubscribed'),
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
+  isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   cancellationRequested: reads('subscription.cancellationRequested'),
   canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', 'cancellationRequested', function () {
     return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial && !this.cancellationRequested;
@@ -42,9 +43,12 @@ export default Component.extend({
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
-  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', function () {
-    return !this.freeV2Plan && !this.subscription.isCanceled && !this.isTrial;
-  }),
+  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', 'isExpired',
+    'cancellationRequested', 'subscription.status', function () {
+      return !this.freeV2Plan && !this.subscription.isCanceled &&
+           !this.isTrial && !this.cancellationRequested &&
+           this.subscription.status && !this.isExpired;
+    }),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,
@@ -122,11 +126,11 @@ export default Component.extend({
 
   cancelSubscription: task(function* () {
     try {
-      yield this.subscription.cancelSubscription.perform();
       this.flashes.successWithClose(
         'Your cancellation request has been forwarded to Support. Our Support team will contact you soon.',
         'We’re sorry to see you go'
       );
+      yield this.subscription.cancelSubscription.perform();
       // this.set('showCancelModal', true);
     } catch (error) {
       this.flashes.error('An error occurred when submitting your cancellation request. Please try again.');

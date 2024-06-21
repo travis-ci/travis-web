@@ -10,6 +10,8 @@ import {
 } from 'ember-keyboard-shortcuts';
 
 export default TravisRoute.extend(BuildFaviconMixin, {
+  router: service(),
+  store: service(),
   auth: service(),
   features: service(),
   featureFlags: service(),
@@ -43,6 +45,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     }
     if (this.auth.signedIn) {
       this.wizard.fetch.perform().then(() => { this.storage.wizardStep = this.wizard.state; });
+
       return this.get('featureFlags.fetchTask').perform();
     }
   },
@@ -66,23 +69,28 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     this.store.filter('repo', null,
       (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
       ['private', 'isCurrentUserACollaborator']
-    ).then((repos) => {
-      repos.forEach(repo => this.subscribeToRepo(repo));
+    ).then(repos => {
+      this.store.subscribe(repos, 'repo', null,
+        (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
+        ['private', 'isCurrentUserACollaborator'], this.reposWillChange, this.reposDidChange);
+
+      /*
       repos.addArrayObserver(this, {
         willChange: 'reposWillChange',
         didChange: 'reposDidChange'
-      });
+      });*/
     });
   },
 
-  reposWillChange(array, start, removedCount, addedCount) {
-    let removedRepos = array.slice(start, start + removedCount);
-    return removedRepos.forEach(repo => this.unsubscribeFromRepo(repo));
+  reposWillChange(repos, thiz) {
+    console.log('BEFORE');
+    repos.forEach(repo => console.log(repo));
   },
 
-  reposDidChange(array, start, removedCount, addedCount) {
-    let addedRepos = array.slice(start, start + addedCount);
-    return addedRepos.forEach(repo => this.subscribeToRepo(repo));
+  reposDidChange(repos, thiz) {
+    console.log('AFTER');
+    repos.forEach(repo => console.log(repo));
+    repos.forEach(repo => thiz.subscribeToRepo(repo));
   },
 
   unsubscribeFromRepo: function (repo) {
@@ -143,7 +151,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
         const currentURL = new URL(window.location.href);
         const redirectUrl = currentURL.href;
         const queryParams = { redirectUrl };
-        return this.transitionTo('signin', { queryParams });
+        return this.router.transitionTo('signin', { queryParams });
       } else {
         return true;
       }
@@ -157,7 +165,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.set('auth.afterSignInTransition', null);
       return transition.retry();
     } else {
-      return this.transitionTo('index');
+      return this.router.transitionTo('index');
     }
   },
 
@@ -167,9 +175,9 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.set('repositories.accessible', []);
       this.setDefault();
       if (this.get('features.enterpriseVersion')) {
-        return this.transitionTo('signin');
+        return this.router.transitionTo('signin');
       }
-      return this.transitionTo('index');
+      return this.router.transitionTo('index');
     } catch (error) {}
   },
 });

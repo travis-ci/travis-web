@@ -6,17 +6,17 @@ module.exports = {
       name: 'ember-beta',
       npm: {
         devDependencies: {
-          'ember-source': 'beta'
-        }
-      }
+          'ember-source': 'beta',
+        },
+      },
     },
     {
       name: 'ember-data-beta',
       npm: {
         devDependencies: {
-          'ember-data': 'beta'
-        }
-      }
-    }
+          'ember-data': 'beta',
+        },
+      },
+    },
   ],
 };

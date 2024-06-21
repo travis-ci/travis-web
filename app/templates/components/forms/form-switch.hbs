@@ -7,8 +7,8 @@
     {{/if}}
   </span>
   <span class="off">
-    {{#if offText}}
-      <span>{{offText}}</span>
+    {{#if this.offText}}
+      <span>{{this.offText}}</span>
     {{else}}
       <SvgImage @name="icon-failed" @class="icon-off" @alt="off" />
     {{/if}}
