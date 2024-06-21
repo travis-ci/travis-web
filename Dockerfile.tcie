@@ -27,7 +27,7 @@ COPY . /app
 WORKDIR /app
 
 RUN (\
-  npm install --silent -g ember-cli; \
+  npm install --silent -g ember-cli@4.12.0; \
   npm ci; \
   ember build --environment=production; \
   ls -l /app; \
