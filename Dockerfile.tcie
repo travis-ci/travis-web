@@ -3,7 +3,7 @@ FROM ruby:3.2.2 as build
 LABEL maintainer Travis CI GmbH <support+travis-web-docker-images@travis-ci.com>
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 10.7.0
+ENV NODE_VERSION 18.19.0
 ENV YARN_VERSION 0.22.0
 
 RUN ( \
@@ -27,7 +27,7 @@ COPY . /app
 WORKDIR /app
 
 RUN (\
-  npm install --silent -g ember-cli@4.12.0; \
+  npm install --silent -g ember-cli; \
   npm ci; \
   ember build --environment=production; \
   ls -l /app; \
