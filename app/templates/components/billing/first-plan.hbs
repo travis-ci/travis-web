@@ -226,6 +226,8 @@
       Your free Trial Plan ends on {{this.trialEndDate}}. If you cancel your free trial by that date you
 
       will not be able to use Travis CI features.
+
+      <a href="{{this.dataProcessingAgreementUrl}}" class="travis-link"  target="_blank">Data Processing Agreement</a>.
     {{else}}
 
       You'll be charged {{format-currency this.selectedPlan.startingPrice floor="true"}} {{ if
