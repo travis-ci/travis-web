@@ -47,7 +47,11 @@
       @showValidationStatusIcons={{false}}
       as |field|
     >
-      <field.select @options={{this.options}} as |option|>
+      <field.select
+        @searchField="name"
+        @options={{this.options}}
+        as |option|
+      >
         {{option.name}}
       </field.select>
     </form.field>

@@ -11,8 +11,13 @@
   @horizontalPosition={{this.horizontalPosition}}
   @verticalPosition={{this.verticalPosition}}
   @placeholder={{this.placeholder}}
+  @searchField={{this.args.searchField}}
   as |name|
 >
-  {{name}}
+   {{#if (get name @searchField)}}
+    {{get name @searchField}}
+  {{else}}
+    {{name}}
+  {{/if}}
 </PowerSelect>
 {{yield}}

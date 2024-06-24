@@ -5,6 +5,7 @@ import { hash } from 'rsvp';
 export default TravisRoute.extend({
   features: service(),
   router: service(),
+  store: service(),
 
   beforeModel() {
     if (!this.get('features.proVersion')) {
@@ -14,7 +15,9 @@ export default TravisRoute.extend({
 
   model() {
     const organization = this.modelFor('organization');
-    const preferences = this.store.query('preference', { organization_id: organization.id });
-    return hash({ organization, preferences });
-  },
+    return this.store.query('preference', { organization_id: organization.id })
+      .then(preferences => hash({ organization, preferences })).catch(error => {
+        console.error('Error fetching preferences:', error);
+      });
+  }
 });

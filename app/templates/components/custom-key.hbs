@@ -22,8 +22,8 @@
 <div class="custom-key-action ssh-key-action">
   <CopyButton
     class="no-button ssh-delete"
-    @clipboardText={{this.key.public_key}}
-    @title="Copy to clipboard"
+    @text={{this.key.public_key}}
+    title="Copy to clipboard"
   >
     <SvgImage @name="icon-copy" @class="icon" />
   </CopyButton>

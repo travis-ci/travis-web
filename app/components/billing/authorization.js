@@ -29,6 +29,7 @@ export default Component.extend({
   isSubscribed: reads('subscription.isSubscribed'),
   isIncomplete: reads('subscription.isIncomplete'),
   isComplete: not('isIncomplete'),
+  isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   cancellationRequested: reads('subscription.cancellationRequested'),
   canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', 'cancellationRequested', function () {
     return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial && !this.cancellationRequested;
@@ -42,9 +43,12 @@ export default Component.extend({
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
-  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', function () {
-    return !this.freeV2Plan && !this.subscription.isCanceled && !this.isTrial;
-  }),
+  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', 'isExpired',
+    'cancellationRequested', 'subscription.status', function () {
+      return !this.freeV2Plan && !this.subscription.isCanceled &&
+           !this.isTrial && !this.cancellationRequested &&
+           this.subscription.status && !this.isExpired;
+    }),
 
   handleError: reads('stripe.handleError'),
   options: config.stripeOptions,
