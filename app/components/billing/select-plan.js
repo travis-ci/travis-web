@@ -18,22 +18,14 @@ export default Component.extend({
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
   showAnnual: false,
   showCalculator: false,
+  annualPlans: [],
   areAllAnnualPlans: false,
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
-    if (this.subscription && this.subscription.canceledAt) {
-      const canceledAtDate = new Date(this.subscription.canceledAt);
-      let oneMonthAgo = new Date();
-      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-      // If canceledAt is more than a month old, return all available plans
-      if (canceledAtDate < oneMonthAgo) {
-        return this.availablePlans;
-      }
-    }
     if (this.subscription && this.subscription.plan && !this.subscription.plan.trialPlan) {
       let allowedHybridPlans = this.availablePlans.filter(plan => plan.planType.includes('hybrid'));
       let allowedMeteredPlans = this.availablePlans.filter(plan => plan.planType.includes('metered'));
+
       let filteredPlans = this.availablePlans
         .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
 
@@ -42,6 +34,13 @@ export default Component.extend({
           .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
 
         filteredPlans = filteredHybridPlans.filter(plan => !allowedMeteredPlans.includes(plan));
+
+        if (filteredPlans.every(plan => plan.planType === 'hybrid annual'))
+          this.set('annualPlans', filteredPlans);
+
+        if (this.subscription.canceledAt) {
+          return this.availablePlans;
+        }
 
         const referencePlan = this.availablePlans
           .find(plan => plan.name === this.subscription.plan.name && plan.planType === 'hybrid annual');
@@ -54,9 +53,6 @@ export default Component.extend({
           .filter(plan => plan.planType === referencePlan.planType && plan.startingPrice < referencePlan.startingPrice);
 
         filteredPlans = filteredPlans.filter(plan => !higherTierPlans.includes(plan));
-
-        if (filteredPlans.every(plan => plan.planType === 'hybrid annual'))
-          this.set('annualPlans', filteredPlans);
       } else if (this.subscription &&
          this.subscription.plan && this.subscription.plan.planType && this.subscription.plan.planType.includes('metered')) {
         let filteredMeteredPlans = allowedMeteredPlans
@@ -152,9 +148,12 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    this.set('areAllAnnualPlans', !!this.annualPlans);
+    this.set('areAllAnnualPlans', Array.isArray(this.annualPlans) && this.annualPlans.length > 0);
+    if (this.annualPlans.length === 0) {
+      this.set('emptyAnnualPlans', true);
+    }
 
-    if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.areAllAnnualPlans)) {
+    if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.areAllAnnualPlans) && !this.subscription.canceledAt) {
       this.set('showAnnual', true);
     }
   },
