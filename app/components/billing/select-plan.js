@@ -5,7 +5,6 @@ import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 import { or, reads, filterBy } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
-import { filter } from 'lodash';
 
 export default Component.extend({
   accounts: service(),
