@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 import { or, reads, filterBy } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
+import { filter } from 'lodash';
 
 export default Component.extend({
   accounts: service(),
@@ -22,53 +23,84 @@ export default Component.extend({
   areAllAnnualPlans: false,
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
-    if (this.subscription && this.subscription.plan && !this.subscription.plan.trialPlan) {
-      let allowedHybridPlans = this.availablePlans.filter(plan => plan.planType.includes('hybrid'));
-      let allowedMeteredPlans = this.availablePlans.filter(plan => plan.planType.includes('metered'));
+    if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
+      return this.availablePlans;
+    }
 
-      let filteredPlans = this.availablePlans
-        .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
+    let allowedHybridPlans = this.availablePlans.filter(plan => plan.planType.includes('hybrid'));
+    let allowedMeteredPlans = this.availablePlans.filter(plan => plan.planType.includes('metered'));
 
-      if (this.subscription && this.subscription.plan && this.subscription.plan.planType && this.subscription.plan.planType.includes('hybrid')) {
-        let filteredHybridPlans = allowedHybridPlans
-          .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
+    let filteredPlans = this.filterPlansByStartingPrice(this.availablePlans, this.subscription.plan.startingPrice);
 
-        filteredPlans = filteredHybridPlans.filter(plan => !allowedMeteredPlans.includes(plan));
-
-        if (filteredPlans.every(plan => plan.planType === 'hybrid annual'))
-          this.set('annualPlans', filteredPlans);
-
-        if (this.subscription.canceledAt) {
-          return this.availablePlans;
-        }
-
-        const referencePlan = this.availablePlans
-          .find(plan => plan.name === this.subscription.plan.name && plan.planType === 'hybrid annual');
-
-        if (!referencePlan) {
-          return this.availablePlans;
-        }
-        const higherTierPlans = this.availablePlans
-          .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice)
-          .filter(plan => plan.planType === referencePlan.planType && plan.startingPrice < referencePlan.startingPrice);
-
-        filteredPlans = filteredPlans.filter(plan => !higherTierPlans.includes(plan));
-      } else if (this.subscription &&
-         this.subscription.plan && this.subscription.plan.planType && this.subscription.plan.planType.includes('metered')) {
-        let filteredMeteredPlans = allowedMeteredPlans
-          .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
-
-        let filteredHybridPlans = allowedHybridPlans
-          .filter(plan => plan.startingPrice > this.subscription.plan.startingPrice);
-        filteredPlans = [...filteredMeteredPlans, ...filteredHybridPlans];
-      } else {
-        return this.availablePlans;
-      }
-      return filteredPlans;
+    if (this.isHybridPlan(this.subscription.plan)) {
+      return this.handleHybridPlans.call(this, filteredPlans, allowedHybridPlans, allowedMeteredPlans);
+    } else if (this.isMeteredPlan(this.subscription.plan)) {
+      return this.handleMeteredPlans.call(this, allowedHybridPlans, allowedMeteredPlans);
     } else {
       return this.availablePlans;
     }
   }),
+
+  filterPlansByStartingPrice(plans, startingPrice) {
+    return plans.filter(plan => plan.startingPrice > startingPrice);
+  },
+
+  isHybridPlan(plan) {
+    return plan.planType && plan.planType.includes('hybrid');
+  },
+
+  isMeteredPlan(plan) {
+    return plan.planType && plan.planType.includes('metered');
+  },
+
+  handleHybridPlans(filteredPlans, allowedHybridPlans, allowedMeteredPlans) {
+    let filteredHybridPlans = this.filterPlansByStartingPrice(allowedHybridPlans, this.subscription.plan.startingPrice);
+    filteredPlans = filteredHybridPlans.filter(plan => !allowedMeteredPlans.includes(plan));
+
+    if (filteredPlans.every(plan => plan.planType === 'hybrid annual')) {
+      this.set('annualPlans', filteredPlans);
+    }
+
+    if (this.subscription.canceledAt) {
+      return this.availablePlans;
+    }
+
+    const referencePlan = this.findReferencePlan('hybrid annual');
+    if (!referencePlan) {
+      return this.availablePlans;
+    }
+
+    const higherTierPlans = this.filterHigherTierPlans(referencePlan);
+    filteredPlans = filteredPlans.filter(plan => !higherTierPlans.includes(plan));
+
+    return filteredPlans;
+  },
+
+  handleMeteredPlans(allowedHybridPlans, allowedMeteredPlans) {
+    let filteredMeteredPlans = this.filterPlansByStartingPrice(allowedMeteredPlans, this.subscription.plan.startingPrice);
+    let filteredHybridPlans = this.filterPlansByStartingPrice(allowedHybridPlans, this.subscription.plan.startingPrice);
+
+    let filteredPlans = [...filteredMeteredPlans, ...filteredHybridPlans];
+    if (filteredPlans.length > 0) {
+      this.set('annualPlans', true);
+    }
+
+    return filteredPlans;
+  },
+
+  findReferencePlan(planType) {
+    return this.availablePlans.find(plan =>
+      plan.name === this.subscription.plan.name && plan.planType === planType
+    );
+  },
+
+  filterHigherTierPlans(referencePlan) {
+    return this.availablePlans.filter(plan =>
+      plan.startingPrice > this.subscription.plan.startingPrice &&
+      plan.planType === referencePlan.planType &&
+      plan.startingPrice < referencePlan.startingPrice
+    );
+  },
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', {
     get() {
@@ -81,7 +113,7 @@ export default Component.extend({
     set(key, value) {
       this.set('_selectedPlan', value);
       return this._selectedPlan;
-    }
+    },
   }),
 
   allowReactivation: computed(function () {
