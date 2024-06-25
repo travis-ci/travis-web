@@ -81,7 +81,7 @@ export default Component.extend({
 
     let filteredPlans = [...filteredMeteredPlans, ...filteredHybridPlans];
     if (filteredPlans.length > 0) {
-      this.set('annualPlans', true);
+      this.set('annualPlans', filteredPlans);
     }
 
     return filteredPlans;
