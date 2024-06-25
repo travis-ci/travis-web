@@ -7,7 +7,7 @@ import config from 'travis/config/environment';
 import dynamicQuery from 'travis/utils/dynamic-query';
 
 const { repoBuildsPerPage: limit } = config.pagination;
-const MAIN_EVENT_TYPES = ['push', 'api', 'cron'];
+const MAIN_EVENT_TYPES = ['push', 'api', 'cron', 'release'];
 const SORT_PROPS = ['number:desc'];
 
 export default Component.extend({

@@ -6,6 +6,7 @@ const eventToIcon = {
   pull_request: 'pullrequest',
   cron: 'cronjobs',
   api: 'api',
+  release: 'release',
   default: 'nobuilds'
 };
 
@@ -14,6 +15,7 @@ const eventToTitle = {
   pull_request: 'Triggered from a pull request',
   cron: 'Triggered by a cron job',
   api: 'Triggered via the API',
+  release: 'Triggered by a release',
   default: 'Triggered via unknown means'
 };
 

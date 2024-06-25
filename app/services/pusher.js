@@ -3,6 +3,7 @@ import { later } from '@ember/runloop';
 import config from 'travis/config/environment';
 
 export default Service.extend({
+  auth: service(),
   store: service(),
   jobState: service(),
   liveUpdatesRecordFetcher: service(),
@@ -67,6 +68,10 @@ export default Service.extend({
       }, config.intervals.branchCreatedSyncDelay);
 
       delete data.branch;
+    }
+
+    if (event === 'user:logout') {
+      this.auth.signOut();
     }
 
     if (event === 'job:log') {

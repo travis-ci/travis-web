@@ -147,10 +147,10 @@ const Repo = VcsEntity.extend({
   builds: computed('id', function () {
     let id = this.id;
     const builds = this.store.filter('build', {
-      event_type: ['push', 'api', 'cron'],
+      event_type: ['push', 'api', 'cron', 'release'],
       repository_id: id,
     }, (b) => {
-      let eventTypes = ['push', 'api', 'cron'];
+      let eventTypes = ['push', 'api', 'cron', 'release'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
     });
     return this._buildObservableArray(builds);
