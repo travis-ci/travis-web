@@ -23,6 +23,15 @@
         {{branch.name}}
       </field.select>
     </form.field>
+    {{#if this.errorMessage}}
+      <div
+      style="margin-top: 5px;
+      color: #b22222;
+      opacity: 0.7;"
+      >
+        {{this.errorMessage}}
+      </div>
+    {{/if}}
   </div>
   <div class="form-elem select">
     <form.field
