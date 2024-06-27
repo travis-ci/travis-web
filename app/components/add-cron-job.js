@@ -21,6 +21,7 @@ export default Component.extend(BranchSearching, {
 
   init() {
     this.reset();
+    this.loadCurrentCronJobs();
     this._super(...arguments);
   },
 
@@ -28,17 +29,34 @@ export default Component.extend(BranchSearching, {
     this.setProperties({
       selectedBranch: null,
       selectedInterval: this.intervals.firstObject,
-      selectedOption: this.options[0]
+      selectedOption: this.options[0],
+      currentCronJobs: [],
+      errorMessage: null
+    });
+  },
+
+  loadCurrentCronJobs() {
+    this.store.query('cron', { repository_id: this.repository.id }).then(crons => {
+      this.set('currentCronJobs', crons.toArray());
     });
   },
 
   search: task(function* (query) {
-    const branchNames = this.currentCronJobsBranches;
-    const searchResults = yield this.searchBranch.perform(this.repository.id, query, branchNames);
+    const searchResults = yield this.searchBranch.perform(this.repository.id, query);
     return searchResults;
   }),
 
   save: task(function* () {
+    const selectedBranchName = this.selectedBranch?.name;
+    const existingCronJob = this.currentCronJobs
+      .find(cron => cron.branch?.name === selectedBranchName);
+
+    if (existingCronJob) {
+      this.set('errorMessage',
+        'You can create only one cron job per branch. If you want to create a new Cron Job for this branch please delete the existing one.');
+      return;
+    }
+
     const cron = this.store.createRecord('cron', {
       branch: this.selectedBranch,
       interval: this.selectedInterval.toLowerCase(),
@@ -47,6 +65,7 @@ export default Component.extend(BranchSearching, {
     try {
       yield cron.save();
       this.reset();
+      this.loadCurrentCronJobs();
     } catch (error) {
       console.log(error);
       cron.unloadRecord();

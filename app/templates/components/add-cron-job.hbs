@@ -23,6 +23,11 @@
         {{branch.name}}
       </field.select>
     </form.field>
+    {{#if this.errorMessage}}
+      <div class="error-same-branch-cron">
+        {{this.errorMessage}}
+      </div>
+    {{/if}}
   </div>
   <div class="form-elem select">
     <form.field
