@@ -83,7 +83,7 @@ export default Component.extend({
     if (filteredPlans.every(plan => plan.isAnnual)) {
       this.set('annualPlans', filteredPlans);
     }
-    console.log(this.annualPlans)
+
     return filteredPlans;
   },
 
