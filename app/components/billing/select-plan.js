@@ -79,7 +79,8 @@ export default Component.extend({
     let filteredHybridPlans = this.filterPlansByStartingPrice(allowedHybridPlans, this.subscription.plan.startingPrice);
 
     let filteredPlans = [...filteredMeteredPlans, ...filteredHybridPlans];
-    if (filteredPlans.length > 0) {
+
+    if (filteredPlans.every(plan => plan.isAnnual)) {
       this.set('annualPlans', true);
     }
 
