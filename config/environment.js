@@ -33,6 +33,8 @@ const {
   DEPLOY_TARGET,
   TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED,
   TEMPORARY_ANNOUNCEMENT_MESSAGE,
+  AIDA_CLIENT_ID,
+  AIDA_CLIENT_KEY,
 } = process.env;
 
 module.exports = function (environment) {
@@ -260,6 +262,13 @@ module.exports = function (environment) {
     ENV.stripe = {
       publishableKey: STRIPE_PUBLISHABLE_KEY,
       lazyLoad: true,
+    };
+  }
+
+  if (AIDA_CLIENT_ID) {
+    ENV.aida = {
+      clientId: AIDA_CLIENT_ID,
+      clientKey: AIDA_CLIENT_KEY,
     };
   }
 
