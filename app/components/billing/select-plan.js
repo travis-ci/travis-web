@@ -19,10 +19,9 @@ export default Component.extend({
   showAnnual: false,
   showCalculator: false,
   annualPlans: [],
-  areAllAnnualPlans: false,
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
-    if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
+    if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan || this.subscription.isCanceled) {
       return this.availablePlans;
     }
 
@@ -179,12 +178,16 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    this.set('areAllAnnualPlans', Array.isArray(this.annualPlans) && this.annualPlans.length > 0);
+    if (this.annualPlans !== true) {
+      this.set('areAllAnnualPlans', Array.isArray(this.annualPlans) && this.annualPlans.length > 0);
+    } else {
+      this.set('areAllAnnualPlans', this.annualPlans);
+    }
     if (this.annualPlans.length === 0) {
       this.set('emptyAnnualPlans', true);
     }
 
-    if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.areAllAnnualPlans) && !this.subscription.canceledAt) {
+    if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.areAllAnnualPlans)) {
       this.set('showAnnual', true);
     }
   },
