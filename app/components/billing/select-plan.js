@@ -81,9 +81,9 @@ export default Component.extend({
     let filteredPlans = [...filteredMeteredPlans, ...filteredHybridPlans];
 
     if (filteredPlans.every(plan => plan.isAnnual)) {
-      this.set('annualPlans', true);
+      this.set('annualPlans', filteredPlans);
     }
-
+    console.log(this.annualPlans)
     return filteredPlans;
   },
 
@@ -175,15 +175,12 @@ export default Component.extend({
     },
   },
 
-  // Determine if the user has either an annual plan or all displayed plans are annual so we can show the annual card immediately in the UI
+  // Determine if the user has either an annual plan or all to be displayed plans are annual so we can show the annual card immediately in the UI
   didInsertElement() {
     this._super(...arguments);
 
-    if (this.annualPlans !== true) {
-      this.set('areAllAnnualPlans', Array.isArray(this.annualPlans) && this.annualPlans.length > 0);
-    } else {
-      this.set('areAllAnnualPlans', this.annualPlans);
-    }
+    this.set('areAllAnnualPlans', Array.isArray(this.annualPlans) && this.annualPlans.length > 0);
+
     if (this.annualPlans.length === 0) {
       this.set('emptyAnnualPlans', true);
     }
