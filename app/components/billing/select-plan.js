@@ -21,8 +21,21 @@ export default Component.extend({
   annualPlans: [],
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
-    if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan || this.subscription.isCanceled) {
+    if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
       return this.availablePlans;
+    }
+
+    if (this.subscription && this.subscription.isCanceled) {
+      const canceledAtTime = new Date(this.subscription.canceledAt).getTime();
+      const currentDate = new Date();
+      currentDate.setMonth(currentDate.getMonth() - 1);
+
+      const oneMonthAgoTime = currentDate.getTime();
+
+      // If canceledAt is more than a month old, return all available plans
+      if (canceledAtTime < oneMonthAgoTime) {
+        return this.availablePlans;
+      }
     }
 
     let allowedHybridPlans = this.availablePlans.filter(plan => plan.planType.includes('hybrid'));
