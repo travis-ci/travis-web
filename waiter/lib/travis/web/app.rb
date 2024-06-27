@@ -261,6 +261,13 @@ class Travis::Web::App
       config['providers'][provider]['isDefault'] = true
     end
 
+    if ENV['AIDA_CLIENT_ID']
+      aida = {}
+      aida['clientId'] = ENV['AIDA_CLIENT_ID']
+      aida['clientKey'] = ENV['AIDA_CLIENT_KEY']
+      config['aida'] = aida
+    end
+
     regexp = %r{<meta name="travis/config/environment"\s+content="([^"]+)"}
     string.gsub!(regexp) do
       ember_config = JSON.parse(CGI.unescape(::Regexp.last_match(1)))
