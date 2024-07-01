@@ -33,6 +33,7 @@ const {
   DEPLOY_TARGET,
   TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED,
   TEMPORARY_ANNOUNCEMENT_MESSAGE,
+  DISABLE_AIDA,
   AIDA_CLIENT_ID,
   AIDA_CLIENT_KEY,
 } = process.env;
@@ -453,6 +454,8 @@ module.exports = function (environment) {
       };
     }
   }
+
+  ENV.disableAida = DISABLE_AIDA;
 
   if (DEPLOY_TARGET) {
     var s3Bucket = require('./deploy')(DEPLOY_TARGET).s3.bucket;
