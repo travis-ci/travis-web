@@ -141,6 +141,7 @@
     "edition": "octane"
   },
   "dependencies": {
+    "asktravis": "github:travis-ci/travis-aida",
     "deep-freeze": "0.0.1",
     "fs": "^0.0.1-security",
     "watchman": "^1.0.0",

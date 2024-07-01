@@ -269,13 +269,20 @@ class Travis::Web::App
     end
 
     if ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
-        config['providers'] ||= {}
-        config['providers']['github'] ||= {}
-        config['providers']['github']['paths'] ||= {}
-        config['providers']['github']['paths']['accessSettings'] = ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
-      end
+      config['providers'] ||= {}
+      config['providers']['github'] ||= {}
+      config['providers']['github']['paths'] ||= {}
+      config['providers']['github']['paths']['accessSettings'] = ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
+    end
 
-      regexp = %r{<meta name="travis/config/environment"\s+content="([^"]+)"}
+    if ENV['AIDA_CLIENT_ID']
+      aida = {}
+      aida['clientId'] = ENV['AIDA_CLIENT_ID']
+      aida['clientKey'] = ENV['AIDA_CLIENT_KEY']
+      config['aida'] = aida
+    end
+
+    regexp = %r{<meta name="travis/config/environment"\s+content="([^"]+)"}
     string.gsub!(regexp) do
       ember_config = JSON.parse(CGI.unescape(::Regexp.last_match(1)))
 
