@@ -11,14 +11,14 @@
       </h2>
       <nav class="travistab-nav">
         <ul>
-          {{#unless (or this.subscription.plan.isAnnual this.areAllAnnualPlans)}}
+          {{#unless (or (and this.subscription.plan.isAnnual (not this.isCancellationMoreThanOneMonthOld)) this.areAllAnnualPlans)}}
             <li>
               <a class={{if (not this.showAnnual) 'active'}} onclick={{action 'showMonthlyPlans'}}>
                 Monthly Plans
               </a>
             </li>
           {{/unless}}
-          {{#unless (and this.subscription.plan.isAnnual this.emptyAnnualPlans)}}
+          {{#unless (and (and this.subscription.plan.isAnnual (not this.isCancellationMoreThanOneMonthOld)) this.emptyAnnualPlans)}}
             <li>
               <a class={{if this.showAnnual 'active'}} onclick={{action 'showAnnualPlans'}}>
                 Annual Plans
