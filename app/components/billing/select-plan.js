@@ -20,22 +20,28 @@ export default Component.extend({
   showCalculator: false,
   annualPlans: [],
 
+  isCancellationMoreThanOneMonthOld: computed('subscription.{isCanceled,canceledAt}', function () {
+    if (!this.subscription || !this.subscription.isCanceled) {
+      return false;
+    }
+
+    const canceledAtTime = new Date(this.subscription.canceledAt).getTime();
+    const currentDate = new Date();
+    currentDate.setMonth(currentDate.getMonth() - 1);
+
+    const oneMonthAgoTime = currentDate.getTime();
+
+    return canceledAtTime < oneMonthAgoTime;
+  }),
+
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
     if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
       return this.availablePlans;
     }
 
-    if (this.subscription && this.subscription.isCanceled) {
-      const canceledAtTime = new Date(this.subscription.canceledAt).getTime();
-      const currentDate = new Date();
-      currentDate.setMonth(currentDate.getMonth() - 1);
-
-      const oneMonthAgoTime = currentDate.getTime();
-
-      // If canceledAt is more than a month old, return all available plans
-      if (canceledAtTime < oneMonthAgoTime) {
-        return this.availablePlans;
-      }
+    if (this.isCancellationMoreThanOneMonthOld) {
+      console.log(this.subscription.isCanceled);
+      return this.availablePlans;
     }
 
     let allowedHybridPlans = this.availablePlans.filter(plan => plan.planType.includes('hybrid'));
@@ -70,10 +76,6 @@ export default Component.extend({
 
     if (filteredPlans.every(plan => plan.planType === 'hybrid annual')) {
       this.set('annualPlans', filteredPlans);
-    }
-
-    if (this.subscription.canceledAt) {
-      return this.availablePlans;
     }
 
     const referencePlan = this.findReferencePlan('hybrid annual');
@@ -198,7 +200,8 @@ export default Component.extend({
       this.set('emptyAnnualPlans', true);
     }
 
-    if (this.subscription && this.subscription.plan && (this.subscription.plan.isAnnual || this.areAllAnnualPlans)) {
+    if (this.subscription && this.subscription.plan
+      && ((this.subscription.plan.isAnnual && !this.isCancellationMoreThanOneMonthOld) || this.areAllAnnualPlans)) {
       this.set('showAnnual', true);
     }
   },
