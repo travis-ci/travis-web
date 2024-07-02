@@ -35,12 +35,12 @@ export default Component.extend({
   }),
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
+    console.log(this.subscription.plan);
     if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
       return this.availablePlans;
     }
 
     if (this.isCancellationMoreThanOneMonthOld) {
-      console.log(this.subscription.isCanceled);
       return this.availablePlans;
     }
 
