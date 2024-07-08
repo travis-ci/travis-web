@@ -17,6 +17,10 @@ export default Route.extend({
     if (!this.auth.signedIn && config.environment !== 'test' && pro && redirect) {
       window.location.replace('https://www.travis-ci.com');
     }
+
+    if (this.auth.signedIn) {
+      document.cookie = 'travis_auth=true';
+    }
   },
 
   redirect() {

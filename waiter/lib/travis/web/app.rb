@@ -5,6 +5,7 @@ require 'rack/ssl'
 require 'rack/protection'
 require 'delegate'
 require 'time'
+require 'date'
 require 'json'
 require 'travis/utils/deep_merge'
 require 'digest/md5'
@@ -63,12 +64,12 @@ class Travis::Web::App
     @server_start = options.fetch(:server_start)
     @root         = options.fetch(:root)
     @age          = 60 * 60 * 24 * 365
-    @routers      = { default: create_router }
+    @routers      = { }#default: create_router }
   end
 
   def call(env)
     name = env['travis.alt'] || :default
-    routers[name] ||= create_router(alt: name)
+    routers[name] ||= create_router(alt: name, env: env)
     route = routers[name].call(env)
     route[1]['Date'] = Time.now.httpdate
     route
@@ -112,6 +113,12 @@ class Travis::Web::App
         'Vary' => vary_for(file),
         'ETag' => Digest::MD5.hexdigest(content)
       }
+    end
+
+    env = options[:env] || []
+    cookie = env['HTTP_COOKIE']
+    if cookie&.include? 'travis_auth='
+      headers['Set-Cookie'] = "travis_logged_in=#{cookie.include?('travis_auth=true').to_s};Domain=travis-ci.com;expires=#{(DateTime.parse(Time.now.to_s)+90).to_s};"
     end
 
     [200, headers, [content]]

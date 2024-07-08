@@ -115,6 +115,8 @@ export default Service.extend({
   signOut(runTeardown = true) {
     if (this.signedIn) this.api.get('/logout');
 
+    document.cookie = 'travis_auth=false';
+
     [this.localStorage, this.sessionStorage].forEach(storage => {
       storage.clearPreferencesData();
     });
