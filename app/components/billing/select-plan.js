@@ -35,7 +35,6 @@ export default Component.extend({
   }),
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
-    console.log(this.subscription.plan);
     if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
       return this.availablePlans;
     }
@@ -54,6 +53,10 @@ export default Component.extend({
     } else if (this.isMeteredPlan(this.subscription.plan)) {
       return this.handleMeteredPlans.call(this, allowedHybridPlans, allowedMeteredPlans);
     } else {
+      // set the annualPlans property for old subscriptions
+      if (this.availablePlans.every(plan => plan.isAnnual)) {
+        this.set('annualPlans', this.availablePlans);
+      }
       return this.availablePlans;
     }
   }),
