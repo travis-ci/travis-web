@@ -5,6 +5,7 @@ import { alias } from '@ember/object/computed';
 
 export default Route.extend({
   auth: service(),
+  cookies: service(),
   tabStates: service(),
   repositories: service(),
   features: service(),
@@ -19,7 +20,7 @@ export default Route.extend({
     }
 
     if (this.auth.signedIn) {
-      document.cookie = 'travis_auth=true';
+      this.cookies.setSignedInCookie(true);
     }
   },
 

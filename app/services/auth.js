@@ -50,6 +50,7 @@ export default Service.extend({
   utm: service(),
   permissionsService: service('permissions'),
   wizardStateService: service('wizard-state'),
+  cookies: service(),
 
   state: STATE.SIGNED_OUT,
 
@@ -98,6 +99,7 @@ export default Service.extend({
     const stillLoggedIn = accounts.isAny('vcsId', vcsId);
 
     if (!stillLoggedIn) {
+      this.cookies.setSignedInCookie(false);
       this.router.transitionTo('signin');
     }
   },
@@ -114,8 +116,7 @@ export default Service.extend({
 
   signOut(runTeardown = true) {
     if (this.signedIn) this.api.get('/logout');
-
-    document.cookie = 'travis_auth=false';
+    this.cookies.setSignedInCookie(false);
 
     [this.localStorage, this.sessionStorage].forEach(storage => {
       storage.clearPreferencesData();
@@ -151,6 +152,7 @@ export default Service.extend({
   },
 
   signUp(provider) {
+    this.cookies.setSignedInCookie(false);
     this.set('state', STATE.SIGNING_IN);
     const url = new URL(this.redirectUrl || window.location.href);
 
