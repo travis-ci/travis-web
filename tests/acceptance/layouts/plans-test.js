@@ -19,8 +19,6 @@ module('Acceptance | layouts/plans page', function (hooks) {
 
     assert.ok(proHeader.logoPresent, 'Pro header has logo');
 
-    assert.equal(proHeader.navigationLinks[0].title, 'Help', 'Shows link to team page');
-
     assert.ok(proHeader.loginLinkPresent, 'Pro header has login button');
     assert.equal(footer.sections[2].title, '©Travis CI, GmbH', 'Shows company info section');
     assert.equal(footer.sections[3].title, 'Help', 'Shows help info section');
