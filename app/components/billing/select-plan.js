@@ -34,12 +34,26 @@ export default Component.extend({
     return canceledAtTime < oneMonthAgoTime;
   }),
 
+  isValidityMoreThanOneMonthOld: computed('subscription.validTo', function () {
+    if (!this.subscription || !this.subscription.validTo) {
+      return false;
+    }
+
+    const validToTime = new Date(this.subscription.validTo).getTime();
+    const currentDate = new Date();
+    currentDate.setMonth(currentDate.getMonth() - 1);
+
+    const oneMonthAgoTime = currentDate.getTime();
+
+    return validToTime < oneMonthAgoTime;
+  }),
+
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
     if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
       return this.availablePlans;
     }
 
-    if (this.isCancellationMoreThanOneMonthOld) {
+    if (this.isCancellationMoreThanOneMonthOld || this.isValidityMoreThanOneMonthOld) {
       return this.availablePlans;
     }
 
