@@ -217,9 +217,16 @@ export default Component.extend({
       this.set('emptyAnnualPlans', true);
     }
 
-    if (this.subscription && this.subscription.plan
-      && ((this.subscription.plan.isAnnual && !this.isCancellationMoreThanOneMonthOld) || this.areAllAnnualPlans)) {
-      this.set('showAnnual', true);
+    if (this.subscription && this.subscription.plan) {
+      if (!this.subscription.isCanceled && !this.isValidityMoreThanOneMonthOld) {
+        if (this.subscription.plan.isAnnual || this.areAllAnnualPlans) {
+          this.set('showAnnual', true);
+        }
+      } else if (this.subscription.isCanceled && !this.isCancellationMoreThanOneMonthOld) {
+        if (this.subscription.plan.isAnnual || this.areAllAnnualPlans) {
+          this.set('showAnnual', true);
+        }
+      }
     }
   },
 });
