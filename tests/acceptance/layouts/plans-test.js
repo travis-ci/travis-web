@@ -22,6 +22,8 @@ module('Acceptance | layouts/plans page', function (hooks) {
     assert.equal(proHeader.navigationLinks[0].title, 'Help', 'Shows link to team page');
 
     assert.ok(proHeader.loginLinkPresent, 'Pro header has login button');
+
+    assert.equal(footer.sections[1].title, 'Privacy');
   });
 
   test('plans page redirects unless pro enabled', async function (assert) {

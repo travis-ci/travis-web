@@ -18,5 +18,7 @@ module('Acceptance | layouts/logo page', function (hooks) {
     assert.equal(defaultHeader.navigationLinks[1].title, 'Documentation', 'Shows link to Documentation');
 
     assert.ok(defaultHeader.loginLinkPresent, 'Default header has login button');
+
+    assert.equal(footer.sections[1].title, 'Privacy');
   });
 });
