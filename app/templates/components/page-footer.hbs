@@ -66,6 +66,7 @@
       </li>
     </ul>
   </div>
+  {{#unless this.features.enterpriseVersion}}
   <div class="footer-elem">
     <ul>
       <li>
@@ -73,6 +74,7 @@
       </li>
     </ul>
   </div>
+  {{/unless}}
 
 {{#if (and this.aidaEnabled this.auth.signedIn)}}
   <AskTravis/>
