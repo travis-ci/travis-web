@@ -118,7 +118,7 @@ class Travis::Web::App
     env = options[:env] || []
     cookie = env['HTTP_COOKIE']
     if cookie&.include? 'travis_auth='
-      headers['Set-Cookie'] = "travis_logged_in=#{cookie.include?('travis_auth=true').to_s};Domain=travis-ci.com;expires=#{(DateTime.parse(Time.now.to_s)+90).to_s};"
+      headers['Set-Cookie'] = "travis_logged_in=#{cookie.include?('travis_auth=true').to_s};Domain=travis-ci.com;Max-Age=#{86400*90};path=/;"
     end
 
     [200, headers, [content]]
