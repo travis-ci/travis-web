@@ -20,7 +20,6 @@ $styleguide-medium: 800px;
 .footer {
   position: relative;
   background: white;
-  box-shadow: 0 -2px 3px $styleguide-color-grey-light;
   @media (max-width: $styleguide-medium) {
     padding: 0 0 $styleguide-layout-gutter;
   }
@@ -28,8 +27,8 @@ $styleguide-medium: 800px;
     padding: math.div($styleguide-layout-gutter, 2) 0;
   }
   svg {
-    width: 70px;
-    height: 20px;
+    width: 74px;
+    height: 24px;
   }
   ul,
   address {
@@ -90,11 +89,13 @@ $styleguide-medium: 800px;
   }
   @media (min-width: $styleguide-medium) {
     padding-right: 20px;
+    padding-top: 2px;
     &:last-of-type {
       padding-right: 0;
     }
     &:first-of-type {
       padding-right: 54px;
+      padding-top: 0;
     }
   }
 
@@ -105,7 +106,8 @@ $styleguide-medium: 800px;
     font-size: 12px;
 
     span {
-      margin-top: 2px;
+      margin-top: 3px;
+      margin-left: 2px;
     }
   }
 }
