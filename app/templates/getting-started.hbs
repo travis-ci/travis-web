@@ -5,113 +5,92 @@
     </UiKit::Text>
 
     <div>
-      {{!-- Github --}}
-      {{#if this.showGithub}}
+      {{!-- Step 1 --}}
+      <GettingStartedStep
+        @number={{1}}
+        @provider={{'github'}}
+        @title='Activate your repositories'
+      >
+        <UiKit::Text @variant='p'>
+          Once you're signed in, go to your profile page to see all the organizations you're a member of.<br>
+          You can integrate your repositories with Travis Cl by clicking the Activate button for
+          each organization you want to use.
+        </UiKit::Text>
 
-        {{!-- Step 1 --}}
-        <GettingStartedStep
-          @number={{1}}
-          @provider='github'
-          @providerImg={{true}}
-          @title='Activate your GitHub repositories'
-        >
-          <UiKit::Text @variant='p'>
-            Once you're signed in, go to
-            <UiKit::Link @route='account.repositories' @variant='link-underlined'>your profile page</UiKit::Link>
-            where you'll see all the organizations you're a member of.
-          </UiKit::Text>
+        <UiKit::Note @variant='warn'>
+          <UiKit::Text @tag='span' @color={{null}} @weight='bold'>NOTE:</UiKit::Text>
+          You need to be an admin for any repositories you want to integrate with Travis CI.
+        </UiKit::Note>
 
-          <UiKit::Text @variant='p'>
-            You can install the GitHub App integration by clicking the Activate button for each
-            organization you would like to use with Travis CI.
-          </UiKit::Text>
+        <LinkTo @route='account.repositories'>
+          <UiKit::Button
+            @color={{vcs-color this.provider 'main'}}
+            @invert={{true}}
+          >
+            Activate All Repositories
+          </UiKit::Button>
+        </LinkTo>
+      </GettingStartedStep>
 
-          <UiKit::Note @variant='warn'>
-            <UiKit::Text @tag='span' @color={{null}} @weight='bold'>NOTE:</UiKit::Text>
-            You need to be an admin for any repositories you want to integrate with Travis CI.
-          </UiKit::Note>
+      {{!-- Step 2 --}}
+      <GettingStartedStep
+        @number={{2}}
+        @provider={{'github'}}
+        @title='Select the best plan for your needs'
+      >
+        <UiKit::Text @variant='p'>
+          If you haven't selected a plan yet, try our free plan or choose a paid one to unlock
+          the full capabilities of Travis Cl. For the free plan, we'll ask for your credit card
+          information and charge a small fee for verification, which we'll refund within a few
+          days.
+        </UiKit::Text>
 
-          <ButtonActivateAllGithub @useUiKit={{true}} />
-        </GettingStartedStep>
+        <UiKit::Text @variant='p'>
+          Read our <UiKit::Link @href={{config-get 'urls.docs'}} @variant='link-oxide-blue'>documentation</UiKit::Link> for more details.
+        </UiKit::Text>
+      </GettingStartedStep>
 
-        {{!-- Step 2 --}}
-        <GettingStartedStep
-          @number={{2}}
-          @provider={{@provider}}
-          @title='Select your Plan!'
-        >
-          <UiKit::Text @variant='p'>
-            <UiKit::Link @route='account.billing' @variant='link-underlined'>Select a plan</UiKit::Link>
-            (free trial or paid) in order to unlock the building. At free trial we will ask for credit card details
-            and put a small fee on the card in order to verify it. It will be returned to you in several days.
-          </UiKit::Text>
+      {{!-- Step 3 --}}
+      <GettingStartedStep
+        @number={{3}}
+        @provider={{'github'}}
+        @title='Add a .travis.yml file to your repository'
+      >
+        <UiKit::Text @variant='p'>
+          In order for Travis CI to build your project, you'll need to add a
+          <UiKit::Code>.travis.yml</UiKit::Code>
+          configuration file to the root directory of your repository.
+        </UiKit::Text>
 
-          <UiKit::Text @variant='p'>
-            Read our <UiKit::Link @href={{config-get 'urls.docs'}} @variant='link-underlined'>documentation</UiKit::Link> for more details.
-          </UiKit::Text>
-        </GettingStartedStep>
+        <UiKit::Text @variant='p'>
+          If a
+          <UiKit::Code>.travis.yml</UiKit::Code>
+          is not in your repository, or is not valid YAML, Travis CI will ignore it.
+        </UiKit::Text>
 
-        {{!-- Step 3 --}}
-        <GettingStartedStep
-          @number={{3}}
-          @provider='github'
-          @title='Add a .travis.yml file to your repository'
-        >
-          <UiKit::Text @variant='p'>
-            In order for Travis CI to build your project, you'll need to add a
-            <UiKit::Code>.travis.yml</UiKit::Code>
-            configuration file to the root directory of your repository.
-          </UiKit::Text>
+        <UiKit::Text @variant='p'>
+          You can find some of our
+          <UiKit::Link @href={{config-get 'urls.languages'}} @variant='link-oxide-blue'>Basic language examples</UiKit::Link> in our documentation.
+        </UiKit::Text>
+      </GettingStartedStep>
 
-          <UiKit::Text @variant='p'>
-            If a
-            <UiKit::Code>.travis.yml</UiKit::Code>
-            is not in your repository, or is not valid YAML, Travis CI will ignore it.
-          </UiKit::Text>
+      {{!-- Step 4 --}}
+      <GettingStartedStep
+        @number={{4}}
+        @provider={{'github'}}
+        @title='Trigger your first build'
+      >
+        <UiKit::Text @variant='p'>
+          So you've configured the repository integration and added a <UiKit::Code>.travis.yml</UiKit::Code> file.
+          Now, simply commit the changes to your local git history and push them to your repository.
+          That's it! Happy Building!
+        </UiKit::Text>
 
-          <UiKit::Text @variant='p'>
-            Here you can find some of our
-            <UiKit::Link @href={{config-get 'urls.languages'}} @variant='link-underlined'>basic language examples</UiKit::Link>.
-          </UiKit::Text>
-        </GettingStartedStep>
-
-        {{!-- Step 4 --}}
-        <GettingStartedStep
-          @number={{4}}
-          @provider='github'
-          @title='Trigger your first build'
-        >
-          <UiKit::Text @variant='p'>
-            So you've configured the GitHub App integration, and added a
-            <UiKit::Code>.travis.yml</UiKit::Code>
-            file to your repository. All you need to do now is
-            commit it to your local git history and
-            <UiKit::Code>git push</UiKit::Code>
-            it to GitHub.
-            <em>That's all there is to it!</em>
-          </UiKit::Text>
-
-          <UiKit::Text @variant='p'>
-            Want to learn more?
-            <UiKit::Link @href={{config-get 'urls.docs'}} @variant='link-underlined'>Read up on our docs</UiKit::Link>.
-          </UiKit::Text>
-        </GettingStartedStep>
-      {{/if}}
-
-      {{!-- Bitbucket --}}
-      {{#if this.showBitbucket}}
-        <GettingStartedStepsGeneric @provider='bitbucket' />
-      {{/if}}
-
-      {{!-- GitLab --}}
-      {{#if this.showGitlab}}
-        <GettingStartedStepsGeneric @provider='gitlab' />
-      {{/if}}
-
-      {{!-- Assembla --}}
-      {{#if this.showAssembla}}
-        <GettingStartedStepsGeneric @provider='assembla' />
-      {{/if}}
+        <UiKit::Text @variant='p'>
+          Want to learn more?
+          <UiKit::Link @href={{config-get 'urls.docs'}} @variant='link-oxide-blue'>Read up on our docs</UiKit::Link>.
+        </UiKit::Text>
+      </GettingStartedStep>
     </div>
   </UiKit::Box>
 </Layouts::Sidebar>
