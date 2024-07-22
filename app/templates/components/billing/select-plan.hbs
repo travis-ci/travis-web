@@ -45,15 +45,39 @@
                     {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>{{if plan.isAnnual '/annualy' '/monthly'}}</span>
                   {{/if}}
                 </p>
-                <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
-                </p>
-                <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
-                </p>
-                <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
-                </p>
+                {{#if (eq plan.planType "metered")}}
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-minutes="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Credits for {{pluralize plan.planMinutes "Linux build minute"}}  included
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Pay as you go using credits
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Use credits for builds and users
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-refill="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Auto-refill credits or buy bundle
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Premium VMs available
+                  </p>
+                {{else}}
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-minutes="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Unlimited build minutes
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
+                  </p>
+                {{/if}}
 
                 {{#if plan.hasOSSCreditAddons}}
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">

@@ -44,4 +44,8 @@ export default Model.extend({
   isNotStandardOrProTier: computed('isProTier', 'isStandardTier', function () {
     return !(this.isProTier || this.isStandardTier);
   }),
+
+  planMinutes: computed('privateCreditsTotal', 'publicCredits', function () {
+    return Math.floor((this.privateCreditsTotal + this.publicCredits) / 10);
+  }),
 });
