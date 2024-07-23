@@ -52,6 +52,54 @@
 .asktravis-button-deactivate {
 }
 
+.ask-travis-message {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  border-radius: 8px;
+  border: 1px solid #EAEAEA;
+  background: #F0F3F7;
+  box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.10);
+  padding: 12px 32px 12px 16px;
+  gap: 12px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  margin-bottom: 65px;
+  opacity: 0;
+  animation: showMessage 1s forwards;
+  animation-delay: 1s;
+}
+
+.ask-travis-message p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.asktravis-mascot{
+  width: 40px;
+  height: auto;
+  margin-right: 12px;
+}
+
+.close-ask-travis {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  color: #666;
+  margin-top: 7px;
+  margin-right: 7px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 25px;
+  line-height: 20px;
+}
+
 @keyframes asktravis-rotate {
   0% {
     transform: rotateZ(0deg);
@@ -81,5 +129,13 @@
   100% {
     transform: rotateZ(0deg);
     background: url(/images/svg/open-chat.svg) no-repeat 50% 50%;
+  }
+}
+@keyframes showMessage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

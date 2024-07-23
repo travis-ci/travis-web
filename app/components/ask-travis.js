@@ -18,6 +18,20 @@ export default Component.extend({
 
   tagName: 'AskTravis',
   classNames: ['AskTravis'],
+
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    if (sessionStorage.getItem('askTravisClosed') !== 'true') {
+      document.getElementById('ask-travis-message').style.display = 'flex';
+    }
+
+    document.getElementById('close-ask-travis').addEventListener('click', () => {
+      this.closeMessage();
+    });
+  },
+
   actions: {
     toggle() {
       console.log('TOGGLE');
@@ -39,5 +53,10 @@ export default Component.extend({
       }
       this.visible = !this.visible;
     }
+  },
+
+  closeMessage() {
+    document.getElementById('ask-travis-message').style.display = 'none';
+    sessionStorage.setItem('askTravisClosed', 'true');
   }
 });
