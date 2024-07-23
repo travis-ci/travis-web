@@ -13,7 +13,6 @@ export default Component.extend({
   visible: false,
   askWindow: null,
   user: alias('auth.currentUser'),
-  isClosed: false,
 
   config,
 
