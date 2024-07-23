@@ -13,6 +13,7 @@ export default Component.extend({
   visible: false,
   askWindow: null,
   user: alias('auth.currentUser'),
+  isClosed: false,
 
   config,
 
@@ -21,10 +22,6 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-
-    if (sessionStorage.getItem('askTravisClosed') !== 'true') {
-      document.getElementById('ask-travis-message').style.display = 'flex';
-    }
 
     document.getElementById('close-ask-travis').addEventListener('click', () => {
       this.closeMessage();
@@ -56,6 +53,5 @@ export default Component.extend({
 
   closeMessage() {
     document.getElementById('ask-travis-message').style.display = 'none';
-    sessionStorage.setItem('askTravisClosed', 'true');
   }
 });
