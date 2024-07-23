@@ -20,6 +20,7 @@ cache:
 before_install:
   - git config --global url."https://$GITHUB_PERSONAL_TOKEN@github.com/".insteadOf ssh://git@github.com
   - npm install -g greenkeeper-lockfile@1
+  - gem install bundler:2.3.7
 
 install:
   - npm ci
@@ -47,6 +48,7 @@ jobs:
       env: TRY_CONFIG=ember-data-beta
     - node_js: 18
     - stage: ":ship: it to quay.io"
+      dist: focal
       before_install: skip
       install: skip
       before_script: skip

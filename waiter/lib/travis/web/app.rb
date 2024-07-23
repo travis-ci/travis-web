@@ -207,9 +207,10 @@ class Travis::Web::App
     if options[:github_apps_app_name]
       config['githubApps'] ||= {}
       config['githubApps']['appName'] = options[:github_apps_app_name]
-    end
+      config['githubApps']['migrationRepositoryCountLimit'] = 50
+      end
 
-    config['publicMode'] = !options[:public_mode].nil? && (options[:public_mode] == 'false' || options[:public_mode] == false)
+    config['publicMode'] = !options[:public_mode].nil? && (options[:public_mode] == 'true' || options[:public_mode] == true)
 
     if config['enterprise']
       config['pagesEndpoint'] = false
@@ -259,6 +260,19 @@ class Travis::Web::App
       config['providers'] ||= {}
       config['providers'][provider] ||= {}
       config['providers'][provider]['isDefault'] = true
+    end
+
+    if ENV['ENDPOINT_PORTFOLIO']
+      config['providers'] ||= {}
+      config['providers']['assembla'] ||= {}
+      config['providers']['assembla']['endpointPortfolio'] = ENV['ENDPOINT_PORTFOLIO']
+    end
+
+    if ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
+      config['providers'] ||= {}
+      config['providers']['github'] ||= {}
+      config['providers']['github']['paths'] ||= {}
+      config['providers']['github']['paths']['accessSettings'] = ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
     end
 
     if ENV['AIDA_CLIENT_ID']

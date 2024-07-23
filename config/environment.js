@@ -33,6 +33,7 @@ const {
   DEPLOY_TARGET,
   TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED,
   TEMPORARY_ANNOUNCEMENT_MESSAGE,
+  DISABLE_AIDA,
   AIDA_CLIENT_ID,
   AIDA_CLIENT_KEY,
 } = process.env;
@@ -221,6 +222,7 @@ module.exports = function (environment) {
     'repository-filtering': true,
     'debug-logging': false,
     'landing-page-cta': true,
+    'log-scanner': false,
     'show-running-jobs-in-sidebar': false,
     'debug-builds': false,
     broadcasts: true,
@@ -452,6 +454,8 @@ module.exports = function (environment) {
       };
     }
   }
+
+  ENV.disableAida = DISABLE_AIDA;
 
   if (DEPLOY_TARGET) {
     var s3Bucket = require('./deploy')(DEPLOY_TARGET).s3.bucket;
