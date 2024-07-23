@@ -19,7 +19,6 @@ export default Component.extend({
   tagName: 'AskTravis',
   classNames: ['AskTravis'],
 
-
   didInsertElement() {
     this._super(...arguments);
 
