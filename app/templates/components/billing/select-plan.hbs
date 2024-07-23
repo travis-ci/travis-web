@@ -58,9 +58,11 @@
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
                     <SvgImage @name="stage-passed" @class="icon icon-desc" /> Use credits for builds and users
                   </p>
-                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-refill="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Auto-refill credits or buy bundle
-                  </p>
+                  {{#unless plan.isTrial}}
+                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-refill="true">
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> Auto-refill credits or buy bundle
+                    </p>
+                  {{/unless}}
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
                     <SvgImage @name="stage-passed" @class="icon icon-desc" /> Premium VMs available
                   </p>
