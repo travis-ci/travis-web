@@ -8,6 +8,7 @@ export default SimpleLayoutRoute.extend({
 
   storage: service(),
   accounts: service(),
+  features: service(),
   user: alias('accounts.user'),
 
   activate() {
@@ -30,6 +31,8 @@ export default SimpleLayoutRoute.extend({
   },
 
   getTransition() {
+    if (this.get('features.enterpriseVersion')) return 'account';
+
     if (this.user.vcsType == 'AssemblaUser') return 'account';
     if (this.user.collaborator ||
         this.user.hasV2Subscription ||
@@ -44,6 +47,10 @@ export default SimpleLayoutRoute.extend({
   isSyncingDidChange() {
     const controller = this.controllerFor('firstSync');
     if (!controller.isSyncing) {
+      if (this.get('features.enterpriseVersion')) {
+        this.transitionTo(this.getTransition());
+        return;
+      }
       this.accounts.fetchSubscriptions.perform()
         .then(() => this.accounts.fetchV2Subscriptions.perform())
         .then(() => {
