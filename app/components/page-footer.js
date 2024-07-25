@@ -14,5 +14,9 @@ export default Component.extend({
   tagName: 'footer',
   classNames: ['footer'],
 
-  aidaEnabled: !config.disableAida
+  aidaEnabled: !config.disableAida,
+
+  currentYear() {
+    return new Date().getFullYear();
+  }
 });

@@ -6,6 +6,6 @@ import {
 
 export default create({
   sections: collection('footer.footer .footer-elem', {
-    title: text('h3.footer-title'),
+    title: text('ul > li > a'),
   }),
 });
