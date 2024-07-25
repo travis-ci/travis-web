@@ -48,4 +48,12 @@ export default Model.extend({
   planMinutes: computed('privateCreditsTotal', 'publicCredits', function () {
     return Math.floor((this.privateCreditsTotal + this.publicCredits) / 10);
   }),
+
+  userLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+    return (this.addonConfigs || []).filter(addon => addon.type === 'user_license');
+  }),
+
+  hasPaidUserLicenseAddons: computed('addonConfigs', 'userLicenseAddons', 'hasUserLicenseAddons', 'addonConfigs.@each.free', function () {
+    return this.hasUserLicenseAddons && (this.userLicenseAddons || []).filter(addon => !addon.free).length > 0;
+  }),
 });
