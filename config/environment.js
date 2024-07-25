@@ -130,6 +130,7 @@ module.exports = function (environment) {
       billingOverview: 'https://docs.travis-ci.com/user/billing-overview/',
       autoRefill: 'https://docs.travis-ci.com/user/billing-autorefill/',
       billingFaq: 'https://docs.travis-ci.com/user/billing-faq/',
+      privacy: 'https://www.ideracorp.com/en/legal/privacypolicy',
     },
     endpoints: {},
     githubApps: false,
