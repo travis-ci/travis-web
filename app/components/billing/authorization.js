@@ -127,7 +127,8 @@ export default Component.extend({
   cancelSubscription: task(function* () {
     try {
       this.flashes.successWithClose(
-        'Your cancellation request has been forwarded to Support. Our Support team will contact you soon.',
+        'Your cancellation request has been forwarded to Support. Our Support team will contact you soon. ' +
+        'Please turn off auto-refill if you don\'t plan to use it anymore.',
         'We’re sorry to see you go'
       );
       yield this.subscription.cancelSubscription.perform();
