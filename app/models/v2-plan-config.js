@@ -46,15 +46,15 @@ export default Model.extend({
   }),
 
   planMinutes: computed('privateCreditsTotal', 'publicCredits', 'isAnnual', 'userLicenseAddons', 'hasPaidUserLicenseAddons', function () {
-    let userLicenseCreditsAmount = 0
+    let userLicenseCreditsAmount = 0;
     if (this.hasPaidUserLicenseAddons) {
       userLicenseCreditsAmount = (this.userLicenseAddons || []).filter(addon => !addon.free)[0].price || 0;
-    };
+    }
     if (this.isAnnual) {
       return Math.floor((this.privateCreditsTotal + this.publicCredits - (userLicenseCreditsAmount * 12)) / 10);
     } else {
       return Math.floor((this.privateCreditsTotal + this.publicCredits - userLicenseCreditsAmount) / 10);
-    };
+    }
   }),
 
   userLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
