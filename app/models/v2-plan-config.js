@@ -45,8 +45,13 @@ export default Model.extend({
     return !(this.isProTier || this.isStandardTier);
   }),
 
-  planMinutes: computed('privateCreditsTotal', 'publicCredits', function () {
-    return Math.floor((this.privateCreditsTotal + this.publicCredits) / 10);
+  planMinutes: computed('privateCreditsTotal', 'publicCredits', 'isAnnual', function () {
+    const userLicenseCreditsAmount = 25000;
+    if (this.isAnnual) {
+      return Math.floor((this.privateCreditsTotal + this.publicCredits - (userLicenseCreditsAmount * 12)) / 10);
+    } else {
+      return Math.floor((this.privateCreditsTotal + this.publicCredits - userLicenseCreditsAmount) / 10);
+    };
   }),
 
   userLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
