@@ -55,7 +55,7 @@ export default Model.extend({
       minutes = Math.floor((this.privateCreditsTotal + this.publicCredits - (userLicenseCreditsAmount * 12)) / 10);
     } else {
       minutes = Math.floor((this.privateCreditsTotal + this.publicCredits - userLicenseCreditsAmount) / 10);
-    };
+    }
     return Intl.NumberFormat('en', { notation: 'compact' }).format(minutes).toLowerCase();
   }),
 
