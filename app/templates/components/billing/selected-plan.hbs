@@ -17,7 +17,10 @@
       <p class='selected-plan__details--desc' data-test-selected-plan-users>
         {{#if this.selectedPlan.isUnlimitedUsers}}
           {{#if this.selectedPlan.hasPaidUserLicenseAddons}}
-            Unlimited unique users. Charge per active user applies.
+            Unlimited unique users.
+            <div data-test-selected-plan-period='true' class='selected-plan__period'>
+              Charged monthly per usage - check pricing
+            </div>
           {{else}}
             Unlimited unique users.
           {{/if}}
