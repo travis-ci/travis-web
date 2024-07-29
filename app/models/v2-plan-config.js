@@ -50,11 +50,13 @@ export default Model.extend({
     if (this.hasPaidUserLicenseAddons) {
       userLicenseCreditsAmount = (this.userLicenseAddons || []).filter(addon => !addon.free)[0].price || 0;
     }
+    let minutes = 0;
     if (this.isAnnual) {
-      return Math.floor((this.privateCreditsTotal + this.publicCredits - (userLicenseCreditsAmount * 12)) / 10);
+      minutes = Math.floor((this.privateCreditsTotal + this.publicCredits - (userLicenseCreditsAmount * 12)) / 10);
     } else {
-      return Math.floor((this.privateCreditsTotal + this.publicCredits - userLicenseCreditsAmount) / 10);
-    }
+      minutes = Math.floor((this.privateCreditsTotal + this.publicCredits - userLicenseCreditsAmount) / 10);
+    };
+    return Intl.NumberFormat('en', { notation: 'compact' }).format(minutes);
   }),
 
   userLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {

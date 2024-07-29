@@ -50,10 +50,7 @@
                     <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
                   </p>
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-minutes="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Credits for {{pluralize plan.planMinutes "Linux build minute"}}  included
-                  </p>
-                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-credits="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Pay as you go using credits
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Credits for {{plan.planMinutes}} Linux build minutes
                   </p>
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
                     <SvgImage @name="stage-passed" @class="icon icon-desc" /> Use credits for builds and users
