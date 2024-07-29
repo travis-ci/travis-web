@@ -12,5 +12,11 @@ export default Component.extend({
   config,
 
   tagName: 'footer',
-  classNames: ['footer']
+  classNames: ['footer'],
+
+  aidaEnabled: !config.disableAida,
+
+  currentYear() {
+    return new Date().getFullYear();
+  }
 });

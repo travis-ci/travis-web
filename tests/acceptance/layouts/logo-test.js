@@ -19,7 +19,6 @@ module('Acceptance | layouts/logo page', function (hooks) {
 
     assert.ok(defaultHeader.loginLinkPresent, 'Default header has login button');
 
-    assert.equal(footer.sections[2].title, '©Travis CI, GmbH', 'Shows company info section');
-    assert.equal(footer.sections[3].title, 'Help', 'Shows help info section');
+    assert.equal(footer.sections[1].title, 'Privacy');
   });
 });

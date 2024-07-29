@@ -20,7 +20,6 @@ $styleguide-medium: 800px;
 .footer {
   position: relative;
   background: white;
-  box-shadow: 0 -2px 3px $styleguide-color-grey-light;
   @media (max-width: $styleguide-medium) {
     padding: 0 0 $styleguide-layout-gutter;
   }
@@ -28,9 +27,8 @@ $styleguide-medium: 800px;
     padding: math.div($styleguide-layout-gutter, 2) 0;
   }
   svg {
-    opacity: 0.8;
-    margin-top: 0.9rem;
-    width: 142px;
+    width: 74px;
+    height: 24px;
   }
   ul,
   address {
@@ -59,7 +57,7 @@ $styleguide-medium: 800px;
   .layout-inner {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
     margin-left: 30px;
     margin-right: 30px;
@@ -90,9 +88,26 @@ $styleguide-medium: 800px;
     margin-top: 1.5rem;
   }
   @media (min-width: $styleguide-medium) {
-    padding-right: 2%;
+    padding-right: 20px;
+    padding-top: 2px;
     &:last-of-type {
       padding-right: 0;
+    }
+    &:first-of-type {
+      padding-right: 54px;
+      padding-top: 0;
+    }
+  }
+
+  .travis-footer {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: 12px;
+
+    span {
+      margin-top: 3px;
+      margin-left: 2px;
     }
   }
 }

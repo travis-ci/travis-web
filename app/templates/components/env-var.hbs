@@ -1,4 +1,5 @@
-<div class="env-var-name">
+<EmberTooltip @text={{this.envVar.name}} @targetId='env-var-name-{{this.envVar.id}}'  @popperContainer='body'/>
+<div class="env-var-name" id='env-var-name-{{this.envVar.id}}'>
   {{this.envVar.name}}
 </div>
 <div class="env-var-value">

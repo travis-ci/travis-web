@@ -10,6 +10,7 @@ import { or, reads } from '@ember/object/computed';
 export default Owner.extend({
   api: service(),
   accounts: service(),
+  features: service(),
   permissionsService: service('permissions'),
   wizardStateService: service('wizardState'),
 
@@ -100,11 +101,18 @@ export default Owner.extend({
       if (this.isSyncing) {
         this.schedulePoll();
       } else {
+        const enterprise = !!this.get('features.enterpriseVersion');
         this.permissionsService.fetchPermissions.perform();
-        this.wizardStateService.fetch.perform();
+        if (!enterprise) {
+          this.wizardStateService.fetch.perform();
+        }
         this.accounts.fetchOrganizations.perform();
-        this.accounts.fetchSubscriptions.perform();
-        this.accounts.fetchV2Subscriptions.perform();
+
+        if (!enterprise) {
+          this.accounts.fetchSubscriptions.perform();
+          this.accounts.fetchV2Subscriptions.perform();
+        }
+
         this.applyReposFilter();
         Travis.trigger('user:synced', this);
         this.set('isSyncing', false);

@@ -2,62 +2,34 @@
   <div class="footer-elem">
     <div class="travis-footer">
       <SvgImage @name="travisci-logo-grayscale" @class="travis-logo" />
+      <span>© {{this.currentYear}}</span>
     </div>
   </div>
-  <div class="footer-elem"></div>
-  {{#unless this.features.enterpriseVersion}}
-    <div class="footer-elem">
-      <h3 class="footer-title">
-        &copy;Travis CI, GmbH
-      </h3>
-      <address>
-        Bonner Strasse 12<br />
-        51379 Leverkusen, Germany
-      </address>
-      <ul>
-        <li>
-          <ExternalLinkTo
-            data-test-footer-jobs-link="true"
-            @href={{this.config.urls.jobs}}
-            @title="Jobs at Travis CI"
-          >
-            Work with Travis CI
-          </ExternalLinkTo>
-        </li>
-        <li>
-          <ExternalLinkTo
-            data-test-footer-blog-link="true"
-            @href={{this.config.urls.blog}}
-            @title="Travis CI Blog"
-          >
-            Blog
-          </ExternalLinkTo>
-        </li>
-        <li>
-          <ExternalLinkTo
-            data-test-footer-support-link="true"
-            @href={{this.config.urls.support}}
-            @title="Email Travis CI support"
-          >
-            Email
-          </ExternalLinkTo>
-        </li>
-        <li>
-          <ExternalLinkTo
-            data-test-footer-twitter-link="true"
-            @href={{this.config.urls.twitter}}
-            @title="Travis CI on Twitter"
-          >
-            Twitter
-          </ExternalLinkTo>
-        </li>
-      </ul>
-    </div>
-  {{/unless}}
   <div class="footer-elem">
-    <h3 class="footer-title">
-      Help
-    </h3>
+    <ul>
+      <li>
+        <ExternalLinkTo
+          @href={{this.config.urls.privacy}}
+          @title="Privacy"
+        >
+          Privacy
+        </ExternalLinkTo>
+      </li>
+    </ul>
+  </div>
+  <div class="footer-elem">
+    <ul>
+      <li>
+        <ExternalLinkTo
+          @href={{this.config.urls.legal}}
+          @title="Legal"
+        >
+          Legal
+        </ExternalLinkTo>
+      </li>
+    </ul>
+  </div>
+  <div class="footer-elem">
     <ul>
       <li>
         <ExternalLinkTo
@@ -67,83 +39,44 @@
           Documentation
         </ExternalLinkTo>
       </li>
-      {{#unless this.features.enterpriseVersion}}
-        <li>
-          <ExternalLinkTo
-            data-test-footer-community-link="true"
-            @href={{this.config.urls.community}}
-            @title="Travis CI Community"
-          >
-            Community
-          </ExternalLinkTo>
-        </li>
-        <li>
-          <ExternalLinkTo
-            data-test-footer-changelog-link="true"
-            @href={{this.config.urls.changelog}}
-            @title="Travis CI Changelog"
-          >
-            Changelog
-          </ExternalLinkTo>
-        </li>
-        {{#if this.features.proVersion}}
-          <li>
-          {{#if this.auth.signedIn}}
-            <a href='/account/plan?billingStep=1'>Plans and Pricing</a>
-          {{else}}
-            <a href='https://www.travis-ci.com/pricing/?_gl=1*1cv1tpb*_ga*NTc3MTcxMjQ3LjE2NDkzMzcwNjc.*_ga_XRYGSZFQ0P*MTY1MjM1OTkxMC45LjEuMTY1MjM2MDE5Ni42MA'>Plans and Pricing</a>
-          {{/if}}
-          </li>
-        {{/if}}
-        <li>
-          <ExternalLinkTo
-            data-test-footer-travis-vs-jenkins-link="true"
-            @href={{this.config.urls.travisVsJenkins}}
-            @title="Travis CI vs Jenkins"
-          >
-            Travis CI vs Jenkins
-          </ExternalLinkTo>
-        </li>
-      {{/unless}}
+    </ul>
+  </div>
+  <div class="footer-elem">
+    <ul>
+      <li>
+        <ExternalLinkTo
+          data-test-footer-changelog-link="true"
+          @href={{this.config.urls.changelog}}
+          @title="Travis CI Changelog"
+        >
+          Changelog
+        </ExternalLinkTo>
+      </li>
+    </ul>
+  </div>
+  <div class="footer-elem">
+    <ul>
+      <li>
+        <ExternalLinkTo
+          @href={{this.config.urls.support}}
+          @title="Contact"
+        >
+          Contact
+        </ExternalLinkTo>
+      </li>
     </ul>
   </div>
   {{#unless this.features.enterpriseVersion}}
-    <div class="footer-elem">
-      <h3 class="footer-title">
-        Company
-      </h3>
-      <ul>
-        <li>
-          <ExternalLinkTo
-            @href={{this.config.urls.imprint}}
-            @title="Imprint"
-          >
-            Imprint
-          </ExternalLinkTo>
-        </li>
-        <li>
-          <ExternalLinkTo
-            @href={{this.config.urls.legal}}
-            @title="Legal"
-          >
-            Legal
-          </ExternalLinkTo>
-        </li>
-      </ul>
-    </div>
-    <div class="footer-elem">
-      <h3 class="footer-title">
-        Travis CI Status
-      </h3>
-      <ul>
-        <li>
-          <TravisStatus @description={{null}} />
-        </li>
-      </ul>
-    </div>
-{{/unless}}
+  <div class="footer-elem">
+    <ul>
+      <li>
+        <TravisStatus @description={{null}} />
+      </li>
+    </ul>
+  </div>
+  {{/unless}}
 
-{{#if this.auth.signedIn}}
+{{#if (and this.aidaEnabled this.auth.signedIn)}}
   <AskTravis/>
 {{/if}}
 </div>
