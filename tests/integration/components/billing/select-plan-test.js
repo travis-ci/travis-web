@@ -1,4 +1,4 @@
-import { module, skip } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
@@ -27,6 +27,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       hasCreditAddons: true,
       hasOSSCreditAddons: true,
       hasUserLicenseAddons: true,
+      planType: 'hybrid annual',
     };
     this.plan1 = plan1;
 
@@ -43,6 +44,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       hasCreditAddons: true,
       hasOSSCreditAddons: true,
       hasUserLicenseAddons: true,
+      planType: 'hybrid annual',
     };
     this.plan2 = plan2;
 
@@ -76,5 +78,23 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
     assert.dom(profilePage.billing.selectedPlan.name.scope).hasText(`${this.plan2.name}`);
     assert.dom(profilePage.billing.selectedPlan.price.scope).hasText(`$${this.plan2.startingPrice / 100}/${this.plan2.isAnnual ? 'annualy' : 'monthly'}`);
+  });
+
+  test('displayedPlans should filter availablePlans based on subscription.plan.startingPrice', function (assert) {
+    let component = this.owner.lookup('component:billing/select-plan');
+    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false } };
+
+    component.set('availablePlans', [this.plan1, this.plan2]);
+    component.set('subscription', subscription);
+    const referencePlan = component.get('availablePlans')
+      .find(plan => plan.name === component.get('subscription').plan.name && plan.planType === 'hybrid annual');
+
+    component.set('referencePlan', referencePlan);
+
+    let displayedPlans = component.get('displayedPlans');
+
+    assert.ok(displayedPlans, 'displayedPlans should be defined');
+    assert.equal(displayedPlans.length, 2, 'displayedPlans should contain 2 plans');
+    assert.deepEqual(displayedPlans, [this.plan1, this.plan2], 'displayedPlans should contain the correct plans');
   });
 });

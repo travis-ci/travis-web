@@ -6,18 +6,25 @@
       <h3 data-test-billing-info-title>
         Select Plan
       </h3>
+      <h2>
+        Questions about plans? <a class='credits-calculator-button' href="mailto:customer.success@travis-ci.com">Contact our Customer Success Team</a>
+      </h2>
       <nav class="travistab-nav">
         <ul>
-          <li>
-            <a class={{if (not this.showAnnual) 'active'}} onclick={{action 'showMonthlyPlans'}}>
-              Monthly Plans
-            </a>
-          </li>
-          <li>
-            <a class={{if this.showAnnual 'active'}} onclick={{action 'showAnnualPlans'}}>
-              Annual Plans
-            </a>
-          </li>
+          {{#unless (or (and this.subscription.plan.isAnnual (or (not this.isCancellationMoreThanOneMonthOld this.isValidityMoreThanOneMonthOld))) this.areAllAnnualPlans)}}
+            <li>
+              <a class={{if (not this.showAnnual) 'active'}} onclick={{action 'showMonthlyPlans'}}>
+                Monthly Plans
+              </a>
+            </li>
+          {{/unless}}
+          {{#unless (and (and this.subscription.plan.isAnnual (or (not this.isCancellationMoreThanOneMonthOld this.isValidityMoreThanOneMonthOld))) this.emptyAnnualPlans)}}
+            <li>
+              <a class={{if this.showAnnual 'active'}} onclick={{action 'showAnnualPlans'}}>
+                Annual Plans
+              </a>
+            </li>
+          {{/unless}}
         </ul>
       </nav>
       <div class='plan-selector'>
@@ -45,15 +52,45 @@
                     {{format-currency plan.startingPrice floor="true"}}<span class='color-cement-grey'>{{if plan.isAnnual '/annualy' '/monthly'}}</span>
                   {{/if}}
                 </p>
-                <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
-                </p>
-                <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
-                </p>
-                <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
-                  <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux, Windows, macOS, FreeBSD
-                </p>
+                {{#if (eq plan.planType "metered")}}
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-minutes="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Credits for {{plan.planMinutes}} Linux build minutes
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
+                    {{#if (or plan.isFree plan.isTrial)}}
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> Unlimited users
+                    {{else}}
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> Use credits for builds &amp; users
+                    {{/if}}
+                  </p>
+                  {{#unless plan.isTrial}}
+                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-refill="true">
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> Auto-refill credits or buy bundle
+                    </p>
+                  {{/unless}}
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Premium VMs available
+                  </p>
+                {{else}}
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-minutes="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Unlimited build minutes
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Unlimited repositories
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Unlimited collaborators
+                  </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Unlimited VMs available
+                  </p>
+                {{/if}}
 
                 {{#if plan.hasOSSCreditAddons}}
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">

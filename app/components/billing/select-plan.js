@@ -18,8 +18,120 @@ export default Component.extend({
   isLoading: or('save.isRunning', 'accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning'),
   showAnnual: false,
   showCalculator: false,
+  annualPlans: [],
 
-  displayedPlans: reads('availablePlans'),
+  isCancellationMoreThanOneMonthOld: computed('subscription.{isCanceled,canceledAt}', function () {
+    if (!this.subscription || !this.subscription.isCanceled) {
+      return false;
+    }
+
+    const canceledAtTime = new Date(this.subscription.canceledAt).getTime();
+    const currentDate = new Date();
+    currentDate.setMonth(currentDate.getMonth() - 1);
+
+    const oneMonthAgoTime = currentDate.getTime();
+
+    return canceledAtTime < oneMonthAgoTime;
+  }),
+
+  isValidityMoreThanOneMonthOld: computed('subscription.validTo', function () {
+    if (!this.subscription || !this.subscription.validTo) {
+      return false;
+    }
+
+    const validToTime = new Date(this.subscription.validTo).getTime();
+    const currentDate = new Date();
+    currentDate.setMonth(currentDate.getMonth() - 1);
+
+    const oneMonthAgoTime = currentDate.getTime();
+
+    return validToTime < oneMonthAgoTime;
+  }),
+
+  displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
+    if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
+      return this.availablePlans;
+    }
+
+    if (this.isCancellationMoreThanOneMonthOld || this.isValidityMoreThanOneMonthOld) {
+      return this.availablePlans;
+    }
+
+    let allowedHybridPlans = this.availablePlans.filter(plan => plan.planType.includes('hybrid'));
+    let allowedMeteredPlans = this.availablePlans.filter(plan => plan.planType.includes('metered'));
+
+    let filteredPlans = this.filterPlansByStartingPrice(this.availablePlans, this.subscription.plan.startingPrice);
+
+    if (this.isHybridPlan(this.subscription.plan)) {
+      return this.handleHybridPlans.call(this, filteredPlans, allowedHybridPlans, allowedMeteredPlans);
+    } else if (this.isMeteredPlan(this.subscription.plan)) {
+      return this.handleMeteredPlans.call(this, allowedHybridPlans, allowedMeteredPlans);
+    } else {
+      // set the annualPlans property for old subscriptions
+      if (this.availablePlans.every(plan => plan.isAnnual)) {
+        this.set('annualPlans', this.availablePlans);
+      }
+      return this.availablePlans;
+    }
+  }),
+
+  filterPlansByStartingPrice(plans, startingPrice) {
+    return plans.filter(plan => plan.startingPrice > startingPrice);
+  },
+
+  isHybridPlan(plan) {
+    return plan.planType && plan.planType.includes('hybrid');
+  },
+
+  isMeteredPlan(plan) {
+    return plan.planType && plan.planType.includes('metered');
+  },
+
+  handleHybridPlans(filteredPlans, allowedHybridPlans, allowedMeteredPlans) {
+    let filteredHybridPlans = this.filterPlansByStartingPrice(allowedHybridPlans, this.subscription.plan.startingPrice);
+    filteredPlans = filteredHybridPlans.filter(plan => !allowedMeteredPlans.includes(plan));
+
+    if (filteredPlans.every(plan => plan.planType === 'hybrid annual')) {
+      this.set('annualPlans', filteredPlans);
+    }
+
+    const referencePlan = this.findReferencePlan('hybrid annual');
+    if (!referencePlan) {
+      return this.availablePlans;
+    }
+
+    const higherTierPlans = this.filterHigherTierPlans(referencePlan);
+    filteredPlans = filteredPlans.filter(plan => !higherTierPlans.includes(plan));
+
+    return filteredPlans;
+  },
+
+  handleMeteredPlans(allowedHybridPlans, allowedMeteredPlans) {
+    let filteredMeteredPlans = this.filterPlansByStartingPrice(allowedMeteredPlans, this.subscription.plan.startingPrice);
+    let filteredHybridPlans = this.filterPlansByStartingPrice(allowedHybridPlans, this.subscription.plan.startingPrice);
+
+    let filteredPlans = [...filteredMeteredPlans, ...filteredHybridPlans];
+
+    if (filteredPlans.every(plan => plan.isAnnual)) {
+      this.set('annualPlans', filteredPlans);
+    }
+
+    return filteredPlans;
+  },
+
+  findReferencePlan(planType) {
+    return this.availablePlans.find(plan =>
+      plan.name === this.subscription.plan.name && plan.planType === planType
+    );
+  },
+
+  filterHigherTierPlans(referencePlan) {
+    return this.availablePlans.filter(plan =>
+      plan.startingPrice > this.subscription.plan.startingPrice &&
+      plan.planType === referencePlan.planType &&
+      plan.startingPrice < referencePlan.startingPrice
+    );
+  },
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', {
     get() {
@@ -32,7 +144,7 @@ export default Component.extend({
     set(key, value) {
       this.set('_selectedPlan', value);
       return this._selectedPlan;
-    }
+    },
   }),
 
   allowReactivation: computed(function () {
@@ -92,6 +204,29 @@ export default Component.extend({
 
     hideCalculator() {
       this.set('showCalculator', false);
+    },
+  },
+
+  // Determine if the user has either an annual plan or all to be displayed plans are annual so we can show the annual card immediately in the UI
+  didInsertElement() {
+    this._super(...arguments);
+
+    this.set('areAllAnnualPlans', Array.isArray(this.annualPlans) && this.annualPlans.length > 0);
+
+    if (this.annualPlans.length === 0) {
+      this.set('emptyAnnualPlans', true);
     }
-  }
+
+    if (this.subscription && this.subscription.plan) {
+      if (!this.subscription.isCanceled && !this.isValidityMoreThanOneMonthOld) {
+        if (this.subscription.plan.isAnnual || this.areAllAnnualPlans) {
+          this.set('showAnnual', true);
+        }
+      } else if (this.subscription.isCanceled && !this.isCancellationMoreThanOneMonthOld) {
+        if (this.subscription.plan.isAnnual || this.areAllAnnualPlans) {
+          this.set('showAnnual', true);
+        }
+      }
+    }
+  },
 });
