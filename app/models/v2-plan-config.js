@@ -44,4 +44,26 @@ export default Model.extend({
   isNotStandardOrProTier: computed('isProTier', 'isStandardTier', function () {
     return !(this.isProTier || this.isStandardTier);
   }),
+
+  planMinutes: computed('privateCreditsTotal', 'publicCredits', 'isAnnual', 'userLicenseAddons', 'hasPaidUserLicenseAddons', function () {
+    let userLicenseCreditsAmount = 0;
+    if (this.hasPaidUserLicenseAddons) {
+      userLicenseCreditsAmount = (this.userLicenseAddons || []).filter(addon => !addon.free)[0].price || 0;
+    }
+    let minutes = 0;
+    if (this.isAnnual) {
+      minutes = Math.floor((this.privateCreditsTotal + this.publicCredits - (userLicenseCreditsAmount * 12)) / 10);
+    } else {
+      minutes = Math.floor((this.privateCreditsTotal + this.publicCredits - userLicenseCreditsAmount) / 10);
+    }
+    return Intl.NumberFormat('en', { notation: 'compact' }).format(minutes).toLowerCase();
+  }),
+
+  userLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+    return (this.addonConfigs || []).filter(addon => addon.type === 'user_license');
+  }),
+
+  hasPaidUserLicenseAddons: computed('addonConfigs', 'userLicenseAddons', 'hasUserLicenseAddons', 'addonConfigs.@each.free', function () {
+    return this.hasUserLicenseAddons && (this.userLicenseAddons || []).filter(addon => !addon.free).length > 0;
+  }),
 });
