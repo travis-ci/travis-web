@@ -56,7 +56,7 @@ export default Model.extend({
     } else {
       minutes = Math.floor((this.privateCreditsTotal + this.publicCredits - userLicenseCreditsAmount) / 10);
     };
-    return Intl.NumberFormat('en', { notation: 'compact' }).format(minutes);
+    return Intl.NumberFormat('en', { notation: 'compact' }).format(minutes).toLowerCase();
   }),
 
   userLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
