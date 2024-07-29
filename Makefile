@@ -27,7 +27,7 @@ DOCKER ?= docker
 
 .PHONY: docker-build
 docker-build:
-	$(DOCKER) build --pull --no-cache -t $(DOCKER_DEST) . -f Dockerfile.tcie
+	$(DOCKER) build --progress=plain  --pull --no-cache -t $(DOCKER_DEST) . -f Dockerfile.tcie --secret id=GITHUB_PERSONAL_TOKEN,env=GITHUB_PERSONAL_TOKEN
 
 .PHONY: docker-login
 docker-login:
