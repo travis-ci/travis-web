@@ -401,7 +401,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
     await profilePage.billing.openCancelSubscriptionModal.click();
 
-    assert.equal(topPage.flashMessage.text, 'Your cancellation request has been forwarded to Support. Our Support team will contact you soon.');
+    assert.equal(topPage.flashMessage.text, 'Your cancellation request has been forwarded to Support. Our Support team will contact you soon. Please turn off auto-refill if you don\'t plan to use it anymore.');
 
     assert.ok(profilePage.billing.cancellationRequestedButton.isPresent);
   });

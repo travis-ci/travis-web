@@ -18,6 +18,23 @@ export default Component.extend({
 
   tagName: 'AskTravis',
   classNames: ['AskTravis'],
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    const neverShowAgain = localStorage.getItem('askTravisNeverShowAgain');
+
+    if (!neverShowAgain) {
+      document.getElementById('ask-travis-message').style.display = 'flex';
+    } else {
+      document.getElementById('ask-travis-message').style.display = 'none';
+    }
+
+    document.getElementById('close-ask-travis').addEventListener('click', () => {
+      this.closeMessage();
+    });
+  },
+
   actions: {
     toggle() {
       console.log('TOGGLE');
@@ -38,6 +55,18 @@ export default Component.extend({
         content.style.display = this.visible ? 'none' : 'block';
       }
       this.visible = !this.visible;
+    }
+  },
+
+  closeMessage() {
+    document.getElementById('ask-travis-message').style.display = 'none';
+
+    let closeCount = localStorage.getItem('askTravisCloseCount') || 0;
+    closeCount = parseInt(closeCount, 10) + 1;
+    localStorage.setItem('askTravisCloseCount', closeCount);
+
+    if (closeCount >= 3) {
+      localStorage.setItem('askTravisNeverShowAgain', 'true');
     }
   }
 });
