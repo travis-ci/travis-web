@@ -57,7 +57,7 @@
                     <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
                   </p>
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-minutes="true">
-                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Credits for {{plan.planMinutes}} Linux build minutes
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Credits for {{plan.planMinutes}} Linux build mins
                   </p>
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-users="true">
                     {{#if (or plan.isFree plan.isTrial)}}
@@ -66,6 +66,11 @@
                       <SvgImage @name="stage-passed" @class="icon icon-desc" /> Use credits for builds &amp; users
                     {{/if}}
                   </p>
+                  {{#if (or plan.isFree plan.isTrial)}}
+                    <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
+                      <SvgImage @name="stage-passed" @class="icon icon-desc" /> Unlimited repositories
+                    </p>
+                  {{/if}}
                   {{#unless plan.isTrial}}
                     <p class='billing-plans__box-v2--desc' data-test-selected-plan-refill="true">
                       <SvgImage @name="stage-passed" @class="icon icon-desc" /> Auto-refill credits or buy bundle
