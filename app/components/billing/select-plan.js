@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 import { later } from '@ember/runloop';
 import { or, reads, filterBy } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
+import { A } from '@ember/array';
 
 export default Component.extend({
   accounts: service(),
@@ -71,7 +72,7 @@ export default Component.extend({
       if (this.availablePlans.every(plan => plan.isAnnual)) {
         this.set('annualPlans', this.availablePlans);
       }
-      return this.availablePlans;
+      return this.sortedPlans;
     }
   }),
 
@@ -131,6 +132,14 @@ export default Component.extend({
       plan.planType === referencePlan.planType &&
       plan.startingPrice < referencePlan.startingPrice
     );
+  },
+
+  sortedPlans: computed('availablePlans.@each.startingPrice', function () {
+    return this.sortByStartingPrice(this.availablePlans);
+  }),
+
+  sortByStartingPrice(plans) {
+    return A(plans).sortBy('startingPrice');
   },
 
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', {
