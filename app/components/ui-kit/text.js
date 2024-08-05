@@ -22,8 +22,9 @@ export const COLORS = {
   YELLOW_DARK: 'yellow-dark',
   WHITE: 'white',
   GREY_CONCRETE: 'grey-concrete',
+  OXIDE_BLUE: 'oxide-blue',
 };
-const DEFAULT_TEXT_COLOR = COLORS.GREY_DARK;
+export const DEFAULT_TEXT_COLOR = COLORS.GREY_DARK;
 
 const TEXT_COLORS = {
   [COLORS.BLUE_LIGHT]: 'blue-300',
@@ -35,6 +36,7 @@ const TEXT_COLORS = {
   [COLORS.YELLOW_DARK]: 'yellow-600',
   [COLORS.WHITE]: 'white',
   [COLORS.GREY_CONCRETE]: 'grey-concrete',
+  [COLORS.OXIDE_BLUE]: 'oxide-blue',
 };
 
 const FAMILIES = {
@@ -114,10 +116,11 @@ const VARIANTS = {
   H2: 'h2',
   P: 'p',
   LINK_BLUE: 'link-blue',
+  LINK_OXIDE_BLUE: 'link-oxide-blue',
   LINK_UNDER: 'link-underlined',
   LINK_UNDER_HOVER: 'link-underlined-hover',
 };
-const VARIANT_PROPS = {
+export const VARIANT_PROPS = {
   [VARIANTS.SMALLCAPS]: {
     size: 'xs',
     tracking: 'lg',
@@ -141,6 +144,9 @@ const VARIANT_PROPS = {
   },
   [VARIANTS.LINK_BLUE]: {
     color: 'blue',
+  },
+  [VARIANTS.LINK_OXIDE_BLUE]: {
+    color: 'oxide-blue',
   },
   [VARIANTS.LINK_UNDER]: {
     borderWidth: { bottom: 'px' },

@@ -123,15 +123,45 @@
     </svg>
   </figure>
   <h2 class="page-title">
-    No active repositories could be found
+    Activate your repositories to start working with Travis Cl.
   </h2>
-  <p class="page-notice">
-    Want to start testing your projects on Travis CI?
+  <p class="page-notice mb-12">
+    It looks like we need a tew more steps to set up your repositories.
   </p>
-  <ExternalLinkTo
-    href="http://docs.travis-ci.com/user/getting-started/"
-    class="button button--blue"
-  >
-    Read the Docs on Getting Started
-  </ExternalLinkTo>
+
+  <div class="ml-24">
+    <p class="text-2xl mb-4 text-grey-800 text-left leading-md font-sans tracking-md normal-case font-light">
+      Possible reasons why you are seeing this page:
+    </p>
+    <p class="mb-0 ml-4 mt-0 text-grey-800 text-left text-md leading-md font-sans tracking-md normal-case font-normal">
+      • You have not yet activated any repositories in Travis Cl.<br>
+      • You are not a member of any organization or a contributor to an account that has repositories enabled.<br>
+      • Your repositories are in the process of synchronizing with Travis Cl. This may take a while.<br>
+    </p>
+
+    <p class="text-2xl mt-70px mb-4 text-grey-800 text-left leading-md font-sans tracking-md normal-case font-light">
+      What You Can do?
+    </p>
+
+    <p class="mb-4 ml-4 mt-0 text-grey-800 text-md text-left leading-md font-sans tracking-md normal-case font-normal">
+      • Verify that you have activated repositories in Travis Cl.<br>
+      • Make sure you are a member of an organization or contributor to an account with repositories enabled.<br>
+      • Wait a while and refresh the page if you have recently activated repositories.<br>
+      • Or try to refresh synchronization:<br>
+    </p>
+  </div>
+
+  <div class="flex ml-130px">
+    {{#if this.user.isSyncing}}
+      <LoadingIndicator />
+    {{else}}
+      <button
+        class="button button--blue"
+        disabled={{if this.isSyncDisabled true false}}
+        {{action "sync" bubbles=false}}
+      >
+        Sync Now
+      </button>
+    {{/if}}
+  </div>
 </div>
