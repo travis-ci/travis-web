@@ -44,10 +44,10 @@ export default Component.extend({
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
   canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', 'isExpired',
-    'cancellationRequested', 'subscription.status', function () {
+    'cancellationRequested', 'isSubscribed', function () {
       return !this.freeV2Plan && !this.subscription.isCanceled &&
            !this.isTrial && !this.cancellationRequested &&
-           this.subscription.status && !this.isExpired;
+        !this.isExpired && this.isSubscribed;
     }),
 
   handleError: reads('stripe.handleError'),
