@@ -9,5 +9,9 @@ export default Component.extend({
     this._super(...arguments);
     this.set('enabled', config.tempBanner.tempBannerEnabled === 'true');
     this.set('message', config.tempBanner.tempBannerMessage || '');
+  },
+
+  closeBanner() {
+    this.set('enabled', false);
   }
 });

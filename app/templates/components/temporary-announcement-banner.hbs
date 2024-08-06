@@ -1,5 +1,6 @@
 {{#if this.enabled}}
   <div class="notice-banner--yellow align-center">
     {{this.message}}
+    <button class="close-button" {{action this.closeBanner}}>&times;</button>
   </div>
 {{/if}}
