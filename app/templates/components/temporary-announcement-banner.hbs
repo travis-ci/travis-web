@@ -1,6 +1,8 @@
 {{#if this.enabled}}
   <div class="notice-banner--yellow align-center">
     {{this.message}}
-    <button class="close-btn" {{action this.closeBanner}}>&times;</button>
+      <button type="button" class="no-button close" onclick={{action "closeBanner"}}>
+      <SvgImage @name="flash-close" @class="icon" />
+    </button>
   </div>
 {{/if}}
