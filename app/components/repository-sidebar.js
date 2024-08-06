@@ -98,13 +98,13 @@ export default Component.extend({
   isTabSearch: reads('tabStates.isSidebarSearch'),
 
   getAllRepos: task(function* () {
-    yield fetchSome(this.store, 'repo', {limit: 1, offset: 0});
+    yield fetchSome(this.store, 'repo', {limit: 1, offset: 0, noInclude: true, representation: 'list'});
 
     return this.store.peekAll('repo');
   }).drop(),
 
   fetchRepositories: task(function* () {
-    yield fetchAll(this.store, 'repo', {});
+    yield fetchAll(this.store, 'repo', { noInclude: true, representation: 'list'});
     return this.store.peekAll('repo');
   }).drop(),
 

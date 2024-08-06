@@ -30,7 +30,7 @@ export default Model.extend(DurationCalculations, {
 
   repo: belongsTo('repo',  { async: true, inverse: null}),
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
-  repoCurrentBuild: belongsTo('repo', { async: false, inverse: 'currentBuild' }),
+  repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
   commit: belongsTo('commit', { async: false, inverse: 'build' }),
 
   request: belongsTo('request', { async: false, inverse: 'build' }),

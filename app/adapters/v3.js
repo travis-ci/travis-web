@@ -39,6 +39,11 @@ export default RESTAdapter.extend({
       }
     }
 
+    if (options.data.noInclude) {
+      delete options.data.include;
+      delete options.data.noInclude;
+    }
+
     if (options.data.page_size) {
       options.data.limit = options.data.page_size;
       delete options.data.page_size;

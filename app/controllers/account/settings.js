@@ -46,7 +46,6 @@ export default Controller.extend({
   scrollToEmail: equal('section', SECTION.EMAIL),
   scrollToInsights: equal('section', SECTION.INSIGHTS),
 
-  repositories: reads('fetchRepositories.lastSuccessful.value'),
   buildEmails: reads('preferences.buildEmails'),
   showResubscribeList: and('buildEmails', 'unsubscribedRepos.length'),
 
@@ -62,11 +61,6 @@ export default Controller.extend({
 
   isShowingAddKeyModal: false,
 
-  unsubscribedRepos: computed('repositories.@each.emailSubscribed', function () {
-    let repositories = this.repositories || [];
-    return repositories.filter(repo => !repo.emailSubscribed);
-  }),
-
   userHasNoEmails: computed('auth.currentUser.emails', function () {
     return (!this.auth.currentUser.emails || this.auth.currentUser.emails.length === 0);
   }),
@@ -78,11 +72,6 @@ export default Controller.extend({
 
     return 'button--white-and-teal';
   }),
-
-  fetchRepositories: task(function* () {
-    yield fetchAll(this.store, 'repo', {});
-    return this.store.peekAll('repo');
-  }).drop(),
 
   toggleBuildEmails: task(function* (value) {
     try {
