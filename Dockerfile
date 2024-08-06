@@ -41,7 +41,9 @@ RUN --mount=type=secret,id=GITHUB_PERSONAL_TOKEN export GITHUB_PERSONAL_TOKEN=$(
 
 RUN npm ci
 
-RUN /build.sh
+COPY build.sh .
+RUN chmod +x build.sh
+RUN ./build.sh
 
 RUN cp -a public/* dist/
 
