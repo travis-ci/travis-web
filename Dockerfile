@@ -41,11 +41,9 @@ RUN --mount=type=secret,id=GITHUB_PERSONAL_TOKEN export GITHUB_PERSONAL_TOKEN=$(
 
 RUN npm ci
 
-RUN --mount=type=secret,id=AIDA_URL export AIDA_URL=$(cat /run/secrets/AIDA_URL)
-RUN echo "AIDA_URL is set to $AIDA_URL"
 COPY build.sh .
 RUN chmod +x build.sh
-RUN ./build.sh
+RUN --mount=type=secret,id=AIDA_URL export AIDA_URL=$(cat /run/secrets/AIDA_URL) && ./build.sh
 
 RUN cp -a public/* dist/
 

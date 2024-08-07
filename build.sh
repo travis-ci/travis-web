@@ -2,7 +2,7 @@
 
 # Check if AIDA_URL is not empty
 # this is not working for some reason AIDA_URL is not being recognized
-# echo "AIDA_URL: $AIDA_URL"
+printenv
 if [ -n "$AIDA_URL" ]; then
   echo "Downloading AIDA"
   curl -o /app/node_modules/asktravis/dist/aida.js "$AIDA_URL"
