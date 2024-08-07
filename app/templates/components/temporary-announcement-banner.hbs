@@ -1,7 +1,7 @@
 {{#if this.enabled}}
-  <div class="notice-banner--yellow align-center flash">
+  <div class="notice-banner--yellow align-center">
     {{this.message}}
-    <button type="button" class="no-button close" {{action this.closeBanner}}>
+    <button type="button" class="no-button flash close" {{action this.closeBanner}}>
       <SvgImage @name="flash-close" @class="icon" />
     </button>
   </div>
