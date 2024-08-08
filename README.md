@@ -156,3 +156,7 @@ pull request deployments. You can visit these deployments at:
 
 These deployments are also performed with the weekly cron build.
 
+
+### Ask Travis updates
+
+  Note that scripts/k8s-deploy.sh script is started on each deployment. If there's an AIDA_URL env defined - aida.js will be downloaded from this URL and replace the original delivered in asktravis package.

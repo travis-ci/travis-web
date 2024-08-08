@@ -23,11 +23,16 @@ ifdef $$TRAVIS_PULL_REQUEST
 	TRAVIS_PULL_REQUEST := $$TRAVIS_PULL_REQUEST
 endif
 
+
+ifndef $$AIDA_URL
+	AIDA_URL ?= $$AIDA_URL
+endif
+
 DOCKER ?= docker
 
 .PHONY: docker-build
 docker-build:
-	$(DOCKER) build --progress=plain  --pull --no-cache -t $(DOCKER_DEST) . -f Dockerfile.tcie --secret id=GITHUB_PERSONAL_TOKEN,env=GITHUB_PERSONAL_TOKEN
+	$(DOCKER) build --progress=plain  --pull --no-cache -t $(DOCKER_DEST) . -f Dockerfile.tcie --secret id=GITHUB_PERSONAL_TOKEN,env=GITHUB_PERSONAL_TOKEN --build-arg AIDA_URL="$(AIDA_URL)"
 
 .PHONY: docker-login
 docker-login:
