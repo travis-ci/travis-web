@@ -15,6 +15,8 @@ export default Model.extend({
   autoRefillThresholds: attr(),
   autoRefillAmounts: attr(),
   trialPlan: attr(),
+  travisPricingUrl: 'https://docs.travis-ci.com/user/billing-overview/#usage-based-plans',
+
 
   isFree: equal('startingPrice', 0),
   isTrial: equal('trialPlan', true),
