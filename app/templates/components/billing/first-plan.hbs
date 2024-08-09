@@ -164,9 +164,9 @@
         {{#if this.planDetailsVisible}}
         <div class='selected-plan__details'>
           {{#if (eq this.selectedPlan.planType 'hybrid')}}
-          <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
-            <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize this.selectedPlan.concurrencyLimit "concurrent job"}}
-          </p>
+            <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+              <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize this.selectedPlan.concurrencyLimit "concurrent job"}}
+            </p>
           {{/if}}
           <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
             <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
@@ -176,20 +176,20 @@
           </p>
 
           {{#if this.selectedPlan.hasOSSCreditAddons}}
-          <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-            <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{this.selectedPlan.publicCredits}} OSS Credits<span
-              class='color-cement-grey'>/month</span>
-          </p>
+            <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
+              <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{this.selectedPlan.publicCredits}} OSS Credits<span
+                class='color-cement-grey'>/month</span>
+            </p>
           {{/if}}
           {{#if this.selectedPlan.hasCreditAddons}}
-          <p class='selected-plan__details--desc' data-test-selected-plan-credits>
-            {{this.selectedPlan.privateCreditsTotal}} Credits
-          </p>
+            <p class='selected-plan__details--desc' data-test-selected-plan-credits>
+              {{this.selectedPlan.privateCreditsTotal}} Credits
+            </p>
           {{/if}}
           {{#if this.selectedPlan.hasOSSCreditAddons}}
-          <p class='selected-plan__details--desc' data-test-selected-plan-oss-credits>
-            {{this.selectedPlan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
-          </p>
+            <p class='selected-plan__details--desc' data-test-selected-plan-oss-credits>
+              {{this.selectedPlan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
+            </p>
           {{/if}}
           {{#if this.selectedPlan.hasUserLicenseAddons}}
           <p class='selected-plan__details--desc' data-test-selected-plan-users>
