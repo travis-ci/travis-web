@@ -10,7 +10,7 @@
   </span>
   <p class="auto-refill-description">
   Enable this option to ensure you never run out of credits and prevent unexpected builds stops.
-  With this feature enabled, whenever your credit balance goes below {{this.autoRefillMinimumCredits}} credits, your account will be replenished with {{this.autoRefillCredits}} credits purchased at the cost of ${{this.autoRefillPrice}}.
+  With this feature enabled, whenever your credit balance goes below {{format-number this.autoRefillMinimumCredits}} credits, your account will be replenished with {{format-number this.autoRefillCredits}} credits purchased at the cost of ${{this.autoRefillPrice}}.
   Auto-refill works with debit/credit cards. Read the <ExternalLinkTo @href={{config-get 'urls.docs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more information.
   </p>
   {{#if this.autoRefillEnabled}}
@@ -22,7 +22,7 @@
           onclick={{action (mut this.selectedThreshold) value}}
         >
           <p class='billing-refill__box--value'>
-            {{value}}
+            {{format-number value}}
           </p>
           <p class='billing-refill__box--description'>
             Credits
@@ -38,7 +38,7 @@
           onclick={{action (mut this.selectedAmount) value.amount}}
         >
           <p class='billing-refill__box--value'>
-            {{value.amount}}
+            {{format-number value.amount}}
           </p>
           <p class='billing-refill__box--description'>
             Credits - {{format-currency value.price floor="true"}}

@@ -40,7 +40,7 @@ module('Unit | Helper | format message', function () {
 
   test('it replaces colon-surrounded emoji names', assert => {
     const formattedWithEmoji = formatMessage(['a string with :joy: emoji'], {});
-    assert.equal(String(formattedWithEmoji), 'a string with <span class=\"emoji emoji-sizer\" style=\"background-image:url(/images/emoji/1f602.png)\" title=\"joy\" data-codepoints=\"1f602\"></span> emoji');
+    assert.equal(String(formattedWithEmoji), 'a string with <img src="/images/emoji/1f602.png" class="emoji" data-codepoints="1f602"  title="joy"/> emoji');
   });
 
   test('it adds GitHub links', assert => {
