@@ -19,7 +19,8 @@
           {{#if this.selectedPlan.hasPaidUserLicenseAddons}}
             Unlimited unique users.
             <div data-test-selected-plan-period='true' class='selected-plan__period'>
-              Charged monthly per usage - check pricing
+              Charged monthly per usage -
+              <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
             </div>
           {{else}}
             Unlimited unique users.
@@ -27,7 +28,8 @@
         {{else}}
           Up to {{this.selectedPlan.startingUsers}} unique users
           <div data-test-selected-plan-period='true' class='selected-plan__period'>
-            Charged monthly per usage - check pricing
+            Charged monthly per usage -
+              <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
           </div>
         {{/if}}
       </p>
