@@ -1,8 +1,10 @@
 {{#if this.enabled}}
   <div class="notice-banner--yellow align-center">
     {{this.message}}
-    <button type="button" class="no-button close-banner" {{action this.closeBanner}}>
-      <SvgImage @name="flash-close" @class="icon" />
-    </button>
+    <p class="flash-message">
+      <button type="button" class="no-button close" {{action this.closeBanner}}>
+        <SvgImage @name="flash-close" @class="icon" />
+      </button>
+    </p>
   </div>
 {{/if}}
