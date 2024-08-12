@@ -1,10 +1,10 @@
-<p class="flash-message">
-  {{#if this.enabled}}
-    <div class="notice-banner--yellow align-center">
+{{#if this.enabled}}
+  <div class="notice-banner--yellow align-center">
+    <p class="flash-message">
       {{this.message}}
         <button type="button" class="no-button close" {{action this.closeBanner}}>
           <SvgImage @name="flash-close" @class="icon" />
         </button>
-    </div>
-  {{/if}}
-</p>
+    </p>
+  </div>
+{{/if}}
