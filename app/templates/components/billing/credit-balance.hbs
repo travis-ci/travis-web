@@ -25,15 +25,15 @@
   <p class='avail-credits'>
     {{#if (eq this.creditsTab 1)}}
       {{#if (eq this.creditsAvailable 0)}}
-        {{this.creditsAvailable}} available credits
+        {{format-number this.creditsAvailable}} available credits
       {{else}}
-        {{this.creditsAvailable}} available credits (next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})
+        {{format-number this.creditsAvailable}} available credits (next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})
       {{/if}}
     {{else}}
       {{#if this.subscription.isCanceled}}
-        {{this.creditsAvailable}} available credits (expiry date: {{moment-format this.creditsValidityDate 'MMMM DD, YYYY'}})
+        {{format-number this.creditsAvailable}} available credits (expiry date: {{moment-format this.creditsValidityDate 'MMMM DD, YYYY'}})
       {{else}}
-        {{this.creditsAvailable}} available credits (purchase date: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}}
+        {{format-number this.creditsAvailable}} available credits (purchase date: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}}
       {{#if this.creditsPrivateValidDate}}
         , valid until: {{moment-format this.creditsPrivateValidDate 'MMMM DD, YYYY'}}
       {{/if}})
@@ -42,9 +42,9 @@
   </p>
   <p class='used-credits'>
     {{#if (eq this.creditsTab 1)}}
-      You have used {{this.creditsUsed}} of your {{this.creditsTotal}} monthly credits
+      You have used {{format-number this.creditsUsed}} of your {{format-number this.creditsTotal}} monthly credits
     {{else}}
-      You have used {{this.creditsUsed}} of {{this.creditsTotal}} credits
+      You have used {{format-number this.creditsUsed}} of {{format-number this.creditsTotal}} credits
     {{/if}}
   </p>
   <div class='credits-bar-bg'>
@@ -55,7 +55,7 @@
     {{/if}}
   </div>
   <p class='credits-bar-left'>
-    {{this.creditsAvailable}} available <span class='credits-bar-right'>{{this.creditsUsed}} used</span>
+    {{format-number this.creditsAvailable}} available <span class='credits-bar-right'>{{format-number this.creditsUsed}} used</span>
   </p>
   {{#if (not this.hideToggle)}}
     <Billing::OssCreditToggle @account={{this.account}} />
