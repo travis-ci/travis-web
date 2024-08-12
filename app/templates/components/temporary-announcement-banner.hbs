@@ -2,7 +2,7 @@
   <div class="notice-banner--yellow align-center">
     {{this.message}}
     <button type="button" class="no-button close-banner" {{action this.closeBanner}}>
-      &times;
+      <SvgImage @name="flash-close" @class="icon-close" />
     </button>
   </div>
 {{/if}}
