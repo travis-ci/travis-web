@@ -177,18 +177,18 @@
 
           {{#if this.selectedPlan.hasOSSCreditAddons}}
             <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-              <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{this.selectedPlan.publicCredits}} OSS Credits<span
+              <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{format-number this.selectedPlan.publicCredits}} OSS Credits<span
                 class='color-cement-grey'>/month</span>
             </p>
           {{/if}}
           {{#if this.selectedPlan.hasCreditAddons}}
             <p class='selected-plan__details--desc' data-test-selected-plan-credits>
-              {{this.selectedPlan.privateCreditsTotal}} Credits
+              {{format-number this.selectedPlan.privateCreditsTotal}} Credits
             </p>
           {{/if}}
           {{#if this.selectedPlan.hasOSSCreditAddons}}
             <p class='selected-plan__details--desc' data-test-selected-plan-oss-credits>
-              {{this.selectedPlan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
+              {{format-number this.selectedPlan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
             </p>
           {{/if}}
           {{#if this.selectedPlan.hasUserLicenseAddons}}
@@ -204,7 +204,7 @@
                 Unlimited unique users.
                 {{/if}}
               {{else}}
-                Up to {{this.selectedPlan.startingUsers}} unique users
+                Up to {{format-number this.selectedPlan.startingUsers}} unique users
                 <div data-test-selected-plan-period='true' class='selected-plan__period'>
                   Charged monthly per usage -
                   <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
