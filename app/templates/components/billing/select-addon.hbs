@@ -30,7 +30,7 @@
                 {{/if}}
               </p>
               <p class='billing-plans__addons_box--desc color-asphalt-grey' data-test-selected-addon-desc>
-                {{addon.quantity}}
+                {{format-number addon.quantity}}
                 {{#if (eq addon.type 'user_license')}}
                   user licenses
                 {{else}}

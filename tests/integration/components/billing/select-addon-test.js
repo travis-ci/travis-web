@@ -47,7 +47,7 @@ module('Integration | Component | billing-select-addon', function (hooks) {
     );
 
     assert.equal(profilePage.billing.selectedAddon.name.text, 'Additional credits');
-    assert.equal(profilePage.billing.selectedAddon.desc.text, `${this.addon1.quantity} credits`);
+    assert.equal(profilePage.billing.selectedAddon.desc.text, `${(this.addon1.quantity.toLocaleString())} credits`);
     assert.equal(profilePage.billing.selectedAddon.price.text, `$${this.addon1.price / 100}`);
   });
 });
