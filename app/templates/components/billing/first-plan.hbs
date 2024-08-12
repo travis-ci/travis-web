@@ -164,9 +164,9 @@
         {{#if this.planDetailsVisible}}
         <div class='selected-plan__details'>
           {{#if (eq this.selectedPlan.planType 'hybrid')}}
-          <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
-            <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize this.selectedPlan.concurrencyLimit "concurrent job"}}
-          </p>
+            <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
+              <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize this.selectedPlan.concurrencyLimit "concurrent job"}}
+            </p>
           {{/if}}
           <p class='billing-plans__box-v2--desc' data-test-selected-plan-repos="true">
             <SvgImage @name="stage-passed" @class="icon icon-desc" /> Private &amp; Open-Source repos
@@ -176,39 +176,41 @@
           </p>
 
           {{#if this.selectedPlan.hasOSSCreditAddons}}
-          <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
-            <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{format-number  this.selectedPlan.publicCredits}} OSS Credits<span
-              class='color-cement-grey'>/month</span>
-          </p>
+            <p class='billing-plans__box-v2--desc' data-test-selected-plan-oss-credits="true">
+              <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{format-number this.selectedPlan.publicCredits}} OSS Credits<span
+                class='color-cement-grey'>/month</span>
+            </p>
           {{/if}}
           {{#if this.selectedPlan.hasCreditAddons}}
-          <p class='selected-plan__details--desc' data-test-selected-plan-credits>
-            {{format-number this.selectedPlan.privateCreditsTotal}} Credits
-          </p>
+            <p class='selected-plan__details--desc' data-test-selected-plan-credits>
+              {{format-number this.selectedPlan.privateCreditsTotal}} Credits
+            </p>
           {{/if}}
           {{#if this.selectedPlan.hasOSSCreditAddons}}
-          <p class='selected-plan__details--desc' data-test-selected-plan-oss-credits>
-            {{format-number this.selectedPlan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
-          </p>
+            <p class='selected-plan__details--desc' data-test-selected-plan-oss-credits>
+              {{format-number this.selectedPlan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
+            </p>
           {{/if}}
           {{#if this.selectedPlan.hasUserLicenseAddons}}
-          <p class='selected-plan__details--desc' data-test-selected-plan-users>
-            {{#if this.selectedPlan.isUnlimitedUsers}}
-              {{#if this.selectedPlan.hasPaidUserLicenseAddons}}
-              Unlimited unique users.
-              <div data-test-selected-plan-period='true' class='selected-plan__period'>
-                Charged monthly per usage - check pricing
-              </div>
+            <p class='selected-plan__details--desc' data-test-selected-plan-users>
+              {{#if this.selectedPlan.isUnlimitedUsers}}
+                {{#if this.selectedPlan.hasPaidUserLicenseAddons}}
+                Unlimited unique users.
+                <div data-test-selected-plan-period='true' class='selected-plan__period'>
+                  Charged monthly per usage -
+                  <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
+                </div>
+                {{else}}
+                Unlimited unique users.
+                {{/if}}
               {{else}}
-              Unlimited unique users.
+                Up to {{format-number this.selectedPlan.startingUsers}} unique users
+                <div data-test-selected-plan-period='true' class='selected-plan__period'>
+                  Charged monthly per usage -
+                  <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
+                </div>
               {{/if}}
-            {{else}}
-            Up to {{format-number this.selectedPlan.startingUsers}} unique users
-          <div data-test-selected-plan-period='true' class='selected-plan__period'>
-            Charged monthly per usage - check pricing
-          </div>
-          {{/if}}
-          </p>
+            </p>
           {{/if}}
         </div>
         {{/if}}
