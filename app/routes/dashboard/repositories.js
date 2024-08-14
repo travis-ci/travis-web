@@ -32,8 +32,6 @@ export default TravisRoute.extend({
         sort_by: 'current_build:desc',
         offset,
         limit: this.recordsPerPage,
-        noInclude: true,
-        representation: 'minimal_with_build',
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
         sort: dashboardRepositoriesSort,
