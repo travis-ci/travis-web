@@ -122,6 +122,10 @@ module('Acceptance | show repo page', function (hooks) {
   });
 
   test('visiting the root shows the most recent current build', async function (assert) {
+
+    this.server.get(`/repo/2/branch/branch#what`, () => {
+      return this.branch;
+    });
     await visit('/');
     await settled();
 

@@ -139,6 +139,10 @@ module('Acceptance | dashboard/repositories', function (hooks) {
         build_restart: true
       }
     });
+
+    this.server.get(`/repo/${this.repository.id}/branch/master`, () => {
+      return this.branch;
+    });
   });
 
   test('visiting /dashboard/ with feature flag disabled', async function (assert) {
