@@ -1,6 +1,6 @@
 import Model, { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import { equal, or } from '@ember/object/computed';
+import { equal, or, gte } from '@ember/object/computed';
 
 export default Model.extend({
   name: attr('string'),
@@ -23,7 +23,7 @@ export default Model.extend({
   isProTier: equal('id', 'standard_tier_plan'),
   isStandardTier: equal('id', 'pro_tier_plan'),
 
-  isUnlimitedUsers: equal('startingUsers', 999999),
+  isUnlimitedUsers: gte('startingUsers', 999999),
 
   isAnnual: equal('annual', true),
 
