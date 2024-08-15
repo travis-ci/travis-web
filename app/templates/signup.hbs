@@ -40,9 +40,9 @@
 
       <UiKit::ButtonSignin @isSignup={{true}} />
       {{#if this.multiVcs.enabled}}
+        <UiKit::ButtonSignin @isSignup={{true}} @provider='assembla' />
         <UiKit::ButtonSignin @isSignup={{true}} @provider='bitbucket' />
         <UiKit::ButtonSignin @isSignup={{true}} @provider='gitlab' />
-        <UiKit::ButtonSignin @isSignup={{true}} @provider='assembla' />
         <UiKit::ButtonSignin @isSignup={{true}} @provider='travisproxy' />
       {{/if}}
 
