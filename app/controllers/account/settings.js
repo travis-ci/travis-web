@@ -3,7 +3,6 @@ import { reads, equal, and } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
-import fetchAll from 'travis/utils/fetch-all';
 
 export const SECTION = {
   NONE: '',

@@ -99,13 +99,9 @@ module('Acceptance | show repo page', function (hooks) {
     otherJob.save();
     otherCommit.save();
 
-    this.server.get(`/repo/2/branch/${this.otherBranch.name}`, () => {
-      return this.otherBranch;
-    });
+    this.server.get(`/repo/2/branch/${this.otherBranch.name}`, () => this.otherBranch);
 
-    this.server.get(`/repo/1/branch/feminist_yes`, () => {
-      return branch;
-    });
+    this.server.get('/repo/1/branch/feminist_yes', () => branch);
   });
 
   test('loading branches doesnt update the default branch on the repo', async function (assert) {
@@ -130,7 +126,6 @@ module('Acceptance | show repo page', function (hooks) {
   });
 
   test('visiting the root shows the most recent current build', async function (assert) {
-
     await visit('/');
     await settled();
 
