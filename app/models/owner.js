@@ -83,6 +83,8 @@ export default VcsEntity.extend({
       name_filter: filter,
       sort_by: 'name',
       provider,
+      noInclude: true,
+      representation: 'list',
       custom: { owner, type, },
     }, { live: false });
   },

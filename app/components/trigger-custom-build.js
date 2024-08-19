@@ -28,7 +28,7 @@ export default Component.extend(BranchSearching, {
 
   didInsertElement() {
     this._super(...arguments);
-    this.set('triggerBuildBranch', this.repo.defaultBranch.name);
+    this.set('triggerBuildBranch', this.get('repo.defaultBranch.name'));
     bindKeyboardShortcuts(this);
   },
 

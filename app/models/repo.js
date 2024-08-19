@@ -156,8 +156,8 @@ const Repo = VcsEntity.extend({
     return buildCredits && allowance.userUsage && !roMode;
   }),
 
-  defaultBranch: belongsTo('branch', { async: false, inverse: null }),
-  currentBuild: belongsTo('build', { async: false, inverse: 'repoCurrentBuild' }),
+  defaultBranch: belongsTo('branch', { async: true, inverse: null }),
+  currentBuild: belongsTo('build', { async: true, inverse: 'repoCurrentBuild' }),
 
   _branches: hasMany('branch', { async: true, inverse: 'repo'}),
 
@@ -427,6 +427,8 @@ Repo.accessibleBy = function (store, reposIdsOrlogin) {
       'repository.active': 'true',
       sort_by: 'current_build:desc',
       limit: 30,
+      noInclude: true,
+      representation: 'minimal_with_build'
     };
     return store.query('repo', params)
       .then(() => resolve(repos), () => reject());

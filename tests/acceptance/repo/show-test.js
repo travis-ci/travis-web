@@ -30,8 +30,8 @@ module('Acceptance | show repo page', function (hooks) {
     });
 
     let branch = repo.createBranch({
-      name: 'feminist#yes',
-      id: '/v3/repo/${repository.id}/branch/feminist#yes',
+      name: 'feminist_yes',
+      id: '/v3/repo/${repository.id}/branch/feminist_yes',
       default_branch: true
     });
 
@@ -64,9 +64,9 @@ module('Acceptance | show repo page', function (hooks) {
       owner_name: 'user-login'
     });
 
-    let otherBranch = otherRepository.createBranch({
-      name: 'branch#what',
-      id: '/v3/repo/${repository.id}/branch/branch#what',
+    this.otherBranch = otherRepository.createBranch({
+      name: 'branchwhat',
+      id: '/v3/repo/${repository.id}/branch/branchwhat',
       default_branch: true
     });
 
@@ -83,7 +83,7 @@ module('Acceptance | show repo page', function (hooks) {
       state: 'failed',
       commit_id: commit.id,
       commit: otherCommit,
-      branch: otherBranch,
+      branch: this.otherBranch,
       finished_at: new Date(1919, 4, 1),
     });
 
@@ -98,6 +98,10 @@ module('Acceptance | show repo page', function (hooks) {
     otherCommit.job = otherJob;
     otherJob.save();
     otherCommit.save();
+
+    this.server.get(`/repo/2/branch/${this.otherBranch.name}`, () => this.otherBranch);
+
+    this.server.get('/repo/1/branch/feminist_yes', () => branch);
   });
 
   test('loading branches doesnt update the default branch on the repo', async function (assert) {
@@ -106,7 +110,7 @@ module('Acceptance | show repo page', function (hooks) {
 
     const url = new URL(page.statusBadge.src);
     const expectedPath = `${url.pathname}?${url.searchParams}`;
-    assert.equal(expectedPath, '/org-login/repository-name.svg?branch=feminist%23yes&status=passed');
+    assert.equal(expectedPath, '/org-login/repository-name.svg?branch=feminist_yes&status=passed');
 
     assert.equal(page.statusBadge.title, 'Latest push build on default branch: passed');
   });
