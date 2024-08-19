@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 
-const { docs, languages } = config.urls;
+const { docs, languages, quickStart } = config.urls;
 
 
 export default Component.extend({
@@ -19,6 +19,7 @@ export default Component.extend({
   onClose: null,
   travisDocsUrl: computed(() => `${docs}`),
   travisBasicLanguageExamplesUrl: computed(() => `${languages}`),
+  travisQuickStartUrl: computed(() => `${quickStart}`),
 
   updateStep: task(function* (val) {
     let step = parseInt(this.wizardStep) + val;

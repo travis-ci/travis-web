@@ -414,6 +414,10 @@
     &__period {
       font-size: .7em;
       font-style: italic;
+
+      .travis-link {
+        text-decoration: underline;
+      }
     }
   }
 
