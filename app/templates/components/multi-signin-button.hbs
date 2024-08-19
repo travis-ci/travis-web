@@ -33,15 +33,6 @@
             <SvgImage @name={{vcs-icon 'GithubUser'}} @class="fill-current w-5 h-5 ml-2" />
           </button>
         {{/if}}
-        {{#if this.multiVcs.enableBitbucketLogin}}
-          <button
-            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center"
-            {{on 'click' (action this.signInWith 'bitbucket')}}
-          >
-            With Bitbucket
-            <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="fill-current w-5 h-5 ml-2" />
-          </button>
-        {{/if}}
         {{#if this.multiVcs.enableAssemblaLogin}}
           <button
             class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center"
@@ -49,6 +40,15 @@
           >
             With Assembla
             <SvgImage @name={{vcs-icon 'AssemblaUser'}} @class="fill-current w-5 h-5 ml-2" />
+          </button>
+        {{/if}}
+        {{#if this.multiVcs.enableBitbucketLogin}}
+          <button
+            class="multi-signin-button__vcs-button w-full cursor-pointer flex justify-center items-center"
+            {{on 'click' (action this.signInWith 'bitbucket')}}
+          >
+            With Bitbucket
+            <SvgImage @name={{vcs-icon 'BitbucketUser'}} @class="fill-current w-5 h-5 ml-2" />
           </button>
         {{/if}}
         {{#if this.multiVcs.enableGitlabLogin}}
