@@ -33,6 +33,7 @@ const {
   DEPLOY_TARGET,
   TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED,
   TEMPORARY_ANNOUNCEMENT_MESSAGE,
+  TRIAL_DAYS,
   DISABLE_AIDA,
   AIDA_CLIENT_ID,
   AIDA_CLIENT_KEY,
@@ -191,6 +192,8 @@ module.exports = function (environment) {
       tempBannerEnabled: TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED || false,
       tempBannerMessage: TEMPORARY_ANNOUNCEMENT_MESSAGE || '',
     },
+
+    trialDays: TRIAL_DAYS || 14,
   };
 
   ENV.metricsAdapters = [];

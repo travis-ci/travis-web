@@ -282,6 +282,10 @@ class Travis::Web::App
       config['aida'] = aida
     end
 
+    if ENV['TRIAL_DAYS']
+      config['trialDays'] = ENV['TRIAL_DAYS']
+    end
+
     regexp = %r{<meta name="travis/config/environment"\s+content="([^"]+)"}
     string.gsub!(regexp) do
       ember_config = JSON.parse(CGI.unescape(::Regexp.last_match(1)))
