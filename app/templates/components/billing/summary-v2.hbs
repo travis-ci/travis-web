@@ -119,33 +119,34 @@
           </span>
         </div>
         {{/if}}
-        {{#if this.subscription.isNotManual}}
-          {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
-            <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
-              <Billing::Authorization
-                @githubSubscription={{this.subscription}}
-                @subscription={{this.expiredStripeSubscription}}
-                @isV2Subscription={{true}}
-                @account={{this.account}}
-                @isPending={{this.isPending}}
-                @showPlansSelector={{this.showPlansSelector}}
-                @showAddonsSelector={{this.showAddonsSelector}}
-              />
-          {{/if}}
-          {{#if (or this.subscription.isStripe this.subscription.isManual)}}
+
+      </div>
+      {{#if this.subscription.isNotManual}}
+        {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
+          <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
             <Billing::Authorization
-              @selectedPlan={{this.selectedPlan}}
-              @selectedAddon={{this.selectedAddon}}
-              @subscription={{this.subscription}}
+              @githubSubscription={{this.subscription}}
+              @subscription={{this.expiredStripeSubscription}}
               @isV2Subscription={{true}}
               @account={{this.account}}
               @isPending={{this.isPending}}
               @showPlansSelector={{this.showPlansSelector}}
               @showAddonsSelector={{this.showAddonsSelector}}
             />
-          {{/if}}
         {{/if}}
-      </div>
+        {{#if (or this.subscription.isStripe this.subscription.isManual)}}
+          <Billing::Authorization
+            @selectedPlan={{this.selectedPlan}}
+            @selectedAddon={{this.selectedAddon}}
+            @subscription={{this.subscription}}
+            @isV2Subscription={{true}}
+            @account={{this.account}}
+            @isPending={{this.isPending}}
+            @showPlansSelector={{this.showPlansSelector}}
+            @showAddonsSelector={{this.showAddonsSelector}}
+          />
+        {{/if}}
+      {{/if}}
     {{/if}}
  <!--   </div> -->
 </div>
