@@ -106,47 +106,47 @@
               @account={{this.account}}
             />
           {{/if}}
-          {{#if this.subscription.isNotManual}}
-            {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
-              <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
-                <Billing::Authorization
-                  @githubSubscription={{this.subscription}}
-                  @subscription={{this.expiredStripeSubscription}}
-                  @isV2Subscription={{true}}
-                  @account={{this.account}}
-                  @isPending={{this.isPending}}
-                  @showPlansSelector={{this.showPlansSelector}}
-                  @showAddonsSelector={{this.showAddonsSelector}}
-                />
-              {{/if}}
-              {{#if (or this.subscription.isStripe this.subscription.isManual)}}
-                <Billing::Authorization
-                  @selectedPlan={{this.selectedPlan}}
-                  @selectedAddon={{this.selectedAddon}}
-                  @subscription={{this.subscription}}
-                  @isV2Subscription={{true}}
-                  @account={{this.account}}
-                  @isPending={{this.isPending}}
-                  @showPlansSelector={{this.showPlansSelector}}
-                  @showAddonsSelector={{this.showAddonsSelector}}
-                />
-              {{/if}}
-            {{/if}}
-            </div>
-          {{#if this.showPlanInfo}}
-          <div class='float-right flex plan-price-container'>
-            <span class="payment-details-label plan-price-label">Total:</span>
-            <span class="plan-price-info">
-              {{#if (or this.subscription.plan.isFree this.subscription.plan.isTrial)}}
-                Free
-              {{else}}
-                {{format-currency this.subscription.plan.startingPrice floor="true"}}
-              {{/if}}
-            </span>
-          </div>
-          {{/if}}
         </div>
-      {{/if}}
+        {{#if this.showPlanInfo}}
+        <div class='float-right flex plan-price-container'>
+          <span class="payment-details-label plan-price-label">Total:</span>
+          <span class="plan-price-info">
+            {{#if (or this.subscription.plan.isFree this.subscription.plan.isTrial)}}
+              Free
+            {{else}}
+              {{format-currency this.subscription.plan.startingPrice floor="true"}}
+            {{/if}}
+          </span>
+        </div>
+        {{/if}}
+        {{#if this.subscription.isNotManual}}
+          {{#if (and this.subscription.isGithub this.hasExpiredStripeSubscription)}}
+            <h4 class="resubscribe-stripe-heading">resubscribe via travis ci:</h4>
+              <Billing::Authorization
+                @githubSubscription={{this.subscription}}
+                @subscription={{this.expiredStripeSubscription}}
+                @isV2Subscription={{true}}
+                @account={{this.account}}
+                @isPending={{this.isPending}}
+                @showPlansSelector={{this.showPlansSelector}}
+                @showAddonsSelector={{this.showAddonsSelector}}
+              />
+          {{/if}}
+          {{#if (or this.subscription.isStripe this.subscription.isManual)}}
+            <Billing::Authorization
+              @selectedPlan={{this.selectedPlan}}
+              @selectedAddon={{this.selectedAddon}}
+              @subscription={{this.subscription}}
+              @isV2Subscription={{true}}
+              @account={{this.account}}
+              @isPending={{this.isPending}}
+              @showPlansSelector={{this.showPlansSelector}}
+              @showAddonsSelector={{this.showAddonsSelector}}
+            />
+          {{/if}}
+        {{/if}}
+      </div>
+    {{/if}}
  <!--   </div> -->
 </div>
 
