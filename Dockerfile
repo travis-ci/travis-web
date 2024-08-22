@@ -41,27 +41,23 @@ COPY . /app
 
 RUN --mount=type=secret,id=GITHUB_PERSONAL_TOKEN export GITHUB_PERSONAL_TOKEN=$(cat /run/secrets/GITHUB_PERSONAL_TOKEN) && git config --global url."https://$GITHUB_PERSONAL_TOKEN@github.com/".insteadOf ssh://git@github.com
 
-ARG GOOGLE_ANALYTICS_ID
-ENV GOOGLE_ANALYTICS_ID=$GOOGLE_ANALYTICS_ID
+RUN npm ci
 
-ARG GOOGLE_TAGS_CONTAINER_ID
-ENV GOOGLE_TAGS_CONTAINER_ID=$GOOGLE_TAGS_CONTAINER_ID
+RUN \
+    --mount=type=secret,id=GOOGLE_ANALYTICS_ID \
+    --mount=type=secret,id=TAGS_CONTAINER_ID \
+    --mount=type=secret,id=RECAPTCHA_SITE_KEY \
+    sh -c ' \
+    if test $AIDA_URL; then \
+      curl -o /app/node_modules/asktravis/dist/aida.js $AIDA_URL; \
+      curl -o /app/node_modules/asktravis/dist/aida.js.map $AIDA_URL.map || true; \
+    fi; \
+    export GOOGLE_ANALYTICS_ID=$(cat /run/secrets/GOOGLE_ANALYTICS_ID) && \
+    export GOOGLE_RECAPTCHA_SITE_KEY=$(cat /run/secrets/RECAPTCHA_SITE_KEY) && \
+    export GOOGLE_TAGS_CONTAINER_ID=$(cat /run/secrets/TAGS_CONTAINER_ID) && \
+    ember build --environment=production'
 
-ARG GOOGLE_TAGS_PARAMS
-ENV GOOGLE_TAGS_PARAMS=$GOOGLE_TAGS_PARAMS
-
-ARG GOOGLE_RECAPTCHA_SITE_KEY
-ENV GOOGLE_RECAPTCHA_SITE_KEY=$GOOGLE_RECAPTCHA_SITE_KEY
-
-RUN (\
-  npm ci; \
-  if test $AIDA_URL; then \
-   curl -o /app/node_modules/asktravis/dist/aida.js $AIDA_URL; \
-   curl -o /app/node_modules/asktravis/dist/aida.js.map $AIDA_URL.map || true; \
-  fi; \
-  ember build --environment=production; \
-)
-
+  
 RUN cp -a public/* dist/
 
 CMD bundle exec puma -I lib -p ${PORT:-4000} -t ${PUMA_MIN_THREADS:-8}:${PUMA_MAX_THREADS:-12} -w ${PUMA_WORKERS:-2} --preload waiter/config.ru
