@@ -134,6 +134,14 @@
       {{/if}}
     </h3>
     <ul class="list-icon">
+      {{#if this.isPremiumVM}}
+        <li class="commit-arch">
+          <SvgImage @name="icon-arch" @class="icon--m" />
+          <span class="label-align">
+            VM size: {{ this.vmSize }}
+          </span>
+        </li>
+      {{/if}}
       {{#if this.isJob}}
         <li class="commit-stopwatch">
           <SvgImage @name="icon-stopwatch" @class="icon--m" />
