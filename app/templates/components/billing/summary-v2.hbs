@@ -98,6 +98,18 @@
 
   {{#if this.subscription.isNotManual }}
     <div class="plan-button-container {{if this.showPlanInfo 'plan-grey plan-grey-buttons' 'plan-button-container-expanded'}}">
+      {{#if this.showPlanInfo}}
+        <div class='float-right flex plan-price-container'>
+          <span class="payment-details-label plan-price-label">Total:</span>
+          <span class="plan-price-info">
+            {{#if (or this.subscription.plan.isFree this.subscription.plan.isTrial)}}
+              Free
+            {{else}}
+              {{format-currency this.subscription.plan.startingPrice floor="true"}}
+            {{/if}}
+          </span>
+        </div>
+      {{/if}}
       <div class="float-left plan-buttons">
         {{#if this.subscription.isGithub}}
           <ManageSubscriptionButton @subscription={{this.subscription}} @account={{this.account}} />
@@ -131,19 +143,6 @@
           {{/if}}
         {{/if}}
       </div>
-
-      {{#if this.showPlanInfo}}
-        <div class='float-right flex plan-price-container'>
-          <span class="payment-details-label plan-price-label">Total:</span>
-          <span class="plan-price-info">
-            {{#if (or this.subscription.plan.isFree this.subscription.plan.isTrial)}}
-              Free
-            {{else}}
-              {{format-currency this.subscription.plan.startingPrice floor="true"}}
-            {{/if}}
-          </span>
-        </div>
-      {{/if}}
     </div>
   {{/if}}
 </div>
