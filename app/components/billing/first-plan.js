@@ -274,9 +274,11 @@ export default Component.extend({
     }
   }),
 
+  trialDays: computed(() => parseInt(config.trialDays)),
+
   trialEndDate: computed(() => {
     let futureDate = new Date();
-    futureDate.setMonth(futureDate.getMonth() + 1);
+    futureDate.setDate(futureDate.getDate() + parseInt(config.trialDays));
     return futureDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   }),
 
