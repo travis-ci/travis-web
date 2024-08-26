@@ -26,3 +26,11 @@
     margin-left: 0;
   }
 }
+
+.nav-logo {
+  background: url(/images/ui/travis-ci-logo.svg) no-repeat 0 calc(50% - 3px);
+  display: block;
+  height: $top-height;
+  text-indent: -9999px;
+  overflow: hidden;
+}
