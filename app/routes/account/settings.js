@@ -9,10 +9,5 @@ export default TravisRoute.extend({
     const featureFlags = this.featureFlags.fetchTask.perform({ forceServerRequest: true });
     const account = this.modelFor('account');
     return hash({ featureFlags, account });
-  },
-
-  setupController(controller, model) {
-    this._super(...arguments);
-    controller.fetchRepositories.perform();
   }
 });

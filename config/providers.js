@@ -42,7 +42,7 @@ const VCS_TYPES = {
 module.exports = deepFreeze({
   assembla: {
     isDefault: DEFAULT_PROVIDER === 'assembla',
-    isBeta: true,
+    isBeta: false,
     vcsTypes: [
       VCS_TYPES.ASSEMBLA.ORG,
       VCS_TYPES.ASSEMBLA.REPO,

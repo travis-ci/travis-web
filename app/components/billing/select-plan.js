@@ -51,11 +51,11 @@ export default Component.extend({
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
     if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
-      return this.availablePlans;
+      return this.sortedPlans;
     }
 
     if (this.isCancellationMoreThanOneMonthOld || this.isValidityMoreThanOneMonthOld) {
-      return this.availablePlans;
+      return this.sortedPlans;
     }
 
     let allowedHybridPlans = this.availablePlans.filter(plan => plan.planType.includes('hybrid'));
