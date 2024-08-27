@@ -143,8 +143,5 @@ export default Component.extend({
     complete(stripeElement) {
       this.set('stripeElement', stripeElement);
     },
-    handleStripeError(error) {
-      this.set('lastPaymentIntentError', error);
-    }
   }
 });

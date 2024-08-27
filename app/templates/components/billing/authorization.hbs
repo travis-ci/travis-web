@@ -12,9 +12,11 @@
   {{/if}}
 {{else if this.requiresSource}}
   <div class="pt-7">
-    <span class="notice-banner--red" data-test-payment-error='true'>
-      {{this.stripeErrorMessage}}
-    </span>
+    {{#if this.stripeErrorMessage}}
+      <span class="notice-banner--red" data-test-payment-error='true'>
+        {{this.stripeErrorMessage}}
+      </span>
+    {{/if}}
     <TravisForm
       data-test-stripe-form='true'
       @onSubmit={{perform this.retryPayment}}
