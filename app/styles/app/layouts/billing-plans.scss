@@ -303,22 +303,23 @@
   }
 
   .travis-modal {
-    transform: scale(0.8);
+    transform: scale(0.9);
+    
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
     .billing-select-plan {
       max-height: fit-content;
       width: max-content;
-      overflow: scroll;
       h3 {
         font-size: 48px;
         font-weight: 300;
         text-align: center;
       }
-      &::-webkit-scrollbar {
-        display: none;
-      }
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
   }
 
   .billing-select-plan {
