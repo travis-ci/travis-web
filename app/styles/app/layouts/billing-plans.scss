@@ -303,8 +303,10 @@
   }
 
   .travis-modal {
+    transform: scale(0.8);
     .billing-select-plan {
-      max-height: 600px;
+      max-height: fit-content;
+      width: max-content;
       overflow: scroll;
       h3 {
         font-size: 48px;
