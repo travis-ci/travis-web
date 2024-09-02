@@ -44,20 +44,19 @@ RUN --mount=type=secret,id=GITHUB_PERSONAL_TOKEN export GITHUB_PERSONAL_TOKEN=$(
 RUN npm ci
 
 RUN \
-    --mount=type=secret,id=GOOGLE_ANALYTICS_ID \
-    --mount=type=secret,id=TAGS_CONTAINER_ID \
-    --mount=type=secret,id=RECAPTCHA_SITE_KEY \
-    sh -c ' \
-    if test $AIDA_URL; then \
-      curl -o /app/node_modules/asktravis/dist/aida.js $AIDA_URL; \
-      curl -o /app/node_modules/asktravis/dist/aida.js.map $AIDA_URL.map || true; \
-    fi; \
-    export GOOGLE_ANALYTICS_ID=$(cat /run/secrets/GOOGLE_ANALYTICS_ID) && \
-    export GOOGLE_RECAPTCHA_SITE_KEY=$(cat /run/secrets/RECAPTCHA_SITE_KEY) && \
-    export GOOGLE_TAGS_CONTAINER_ID=$(cat /run/secrets/TAGS_CONTAINER_ID) && \
-    ember build --environment=production'
+  --mount=type=secret,id=GOOGLE_ANALYTICS_ID \
+  --mount=type=secret,id=TAGS_CONTAINER_ID \
+  --mount=type=secret,id=RECAPTCHA_SITE_KEY \
+  sh -c ' \
+  if test $AIDA_URL; then \
+    curl -o /app/node_modules/asktravis/dist/aida.js $AIDA_URL; \
+    curl -o /app/node_modules/asktravis/dist/aida.js.map $AIDA_URL.map || true; \
+  fi; \
+  export GOOGLE_ANALYTICS_ID=$(cat /run/secrets/GOOGLE_ANALYTICS_ID) && \
+  export GOOGLE_RECAPTCHA_SITE_KEY=$(cat /run/secrets/RECAPTCHA_SITE_KEY) && \
+  export GOOGLE_TAGS_CONTAINER_ID=$(cat /run/secrets/TAGS_CONTAINER_ID) && \
+  ember build --environment=production'
 
-  
 RUN cp -a public/* dist/
 
 CMD bundle exec puma -I lib -p ${PORT:-4000} -t ${PUMA_MIN_THREADS:-8}:${PUMA_MAX_THREADS:-12} -w ${PUMA_WORKERS:-2} --preload waiter/config.ru
