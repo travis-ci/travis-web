@@ -55,6 +55,27 @@ export default Component.extend({
     }
   }),
 
+  isPremiumVM: computed('job', 'isJob', function () {
+    if (this.isJob) return Boolean(this.job.vmSize);
+    let jobs = this.get('item.jobs');
+
+    if (jobs.length == 1) {
+      return Boolean(jobs.firstObject.vmSize);
+    }
+    return false;
+  }),
+
+  vmSize: computed('job', 'isJob', function () {
+    if (this.isJob) return this.job.vmSize;
+
+    let jobs = this.get('item.jobs');
+    if (jobs.length == 1) {
+      return jobs.firstObject.vmSize;
+    }
+
+    return '';
+  }),
+
   jobsConfig: reads('job.config'),
 
   displayCompare: computed('item.eventType', function () {
