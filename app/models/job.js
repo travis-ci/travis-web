@@ -62,6 +62,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   eventType: alias('build.eventType'),
 
   restartedBy: attr(),
+  vmSize: attr(),
 
   jobNumber: computed('number', 'jobIdNumber', function () {
     return this.jobIdNumber ? this.jobIdNumber : this.number;
