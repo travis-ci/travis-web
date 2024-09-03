@@ -11,6 +11,7 @@
     </button>
   {{/if}}
 {{else if this.requiresSource}}
+<div class="pt-24">
   <span class="notice-banner--red" data-test-payment-error='true'>
     {{this.stripeErrorMessage}}
   </span>
@@ -41,6 +42,7 @@
       {{/if}}
     </div>
   </TravisForm>
+</div>
 {{else if this.isPending}}
   <span class="notice-banner--yellow" data-test-trial-running-out='true'>
     We are currently waiting for Stripe to finish processing your order.
