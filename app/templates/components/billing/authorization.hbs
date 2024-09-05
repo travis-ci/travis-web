@@ -11,7 +11,7 @@
     </button>
   {{/if}}
 {{else if this.requiresSource}}
-<div class="pt-24">
+<div class="pt-24 stripe-error">
   {{#if this.stripeErrorMessage }}
   <span class="notice-banner--red" data-test-payment-error='true'>
     {{this.stripeErrorMessage}}
