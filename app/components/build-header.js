@@ -59,7 +59,7 @@ export default Component.extend({
     if (this.isJob) return Boolean(this.job.vmSize);
     let jobs = this.get('item.jobs');
 
-    if (jobs.length == 1) {
+    if (jobs && jobs.length == 1) {
       return Boolean(jobs.firstObject.vmSize);
     }
     return false;
@@ -69,7 +69,7 @@ export default Component.extend({
     if (this.isJob) return this.job.vmSize;
 
     let jobs = this.get('item.jobs');
-    if (jobs.length == 1) {
+    if (jobs && jobs.length == 1) {
       return jobs.firstObject.vmSize;
     }
 
