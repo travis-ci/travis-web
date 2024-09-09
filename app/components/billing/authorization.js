@@ -55,6 +55,7 @@ export default Component.extend({
 
   stripeErrorMessage: computed('lastPaymentIntentError', function () {
     if (this.lastPaymentIntentError) {
+      this.set('lastPaymentIntentError', this.handleError);
       return this.handleError(this.lastPaymentIntentError);
     }
   }),
