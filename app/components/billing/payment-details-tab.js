@@ -116,7 +116,10 @@ export default Component.extend({
         const err = yield error.json();
         this.account.allowance.reload();
         this.flashes.error(err['error_message']);
+      } else {
+        this.flashes.error('An error occurred while updating payment information.');
       }
+      yield this.billingInfo.reload();
     }
   }).drop(),
 
