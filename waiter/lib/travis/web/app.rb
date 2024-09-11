@@ -268,6 +268,7 @@ class Travis::Web::App
       config['providers'][provider]['isDefault'] = true
     end
 
+    config['intercom'] ||= {}
     config['intercom']['appid']= options[:intercom_app_id] || 'placeholder'
     config['intercom']['enabled'] = !!options[:intercom_app_id]
 
@@ -313,6 +314,7 @@ class Travis::Web::App
       })
     end
 
+    config['gReCaptcha'] ||= {}
     if ENV['GOOGLE_RECAPTCHA_SITE_KEY']
       config['gReCaptcha']['siteKey'] = ENV['GOOGLE_RECAPTCHA_SITE_KEY']
     end
@@ -326,6 +328,7 @@ class Travis::Web::App
       config['sentry']['development'] = true
     end
 
+    config['tempBanner'] ||= {}
     config['tempBanner']['tempBannerEnabled'] = ENV['TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED'] || false
     config['tempBanner']['tempBannerMessage'] = ENV['TEMPORARY_ANNOUNCEMENT_MESSAGE'] || ''
 
