@@ -82,8 +82,8 @@ module('Integration | Component | billing-summary', function (hooks) {
 
     assert.dom('h3').hasText('Plan information');
     assert.equal(profilePage.billing.plan.name, 'A plan canceled');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expired on June 19, 2018`);
-    assert.equal(profilePage.billing.planMessage.text, `Expired on June 19, 2018`);
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Expired on June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Expired on June 19, 2018');
     assert.equal(profilePage.billing.price.text, '$129');
     assert.equal(profilePage.billing.period.text, '/month');
   });
