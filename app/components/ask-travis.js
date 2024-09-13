@@ -37,7 +37,6 @@ export default Component.extend({
 
   actions: {
     toggle() {
-      console.log('TOGGLE');
       const content = document.getElementById('asktravis-content');
       const btn = document.getElementById('asktravis-button');
       document.getElementById('ask-travis-message').style.display = 'none';
