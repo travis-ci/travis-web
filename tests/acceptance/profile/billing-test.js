@@ -417,7 +417,6 @@ module('Acceptance | profile/billing', function (hooks) {
 
   test('view billing on a canceled stripe plan', async function (assert) {
     this.subscription.status = 'canceled';
-    const momentFromNow = moment(this.subscription.valid_to.getTime()).fromNow();
 
     await profilePage.visit();
     await profilePage.billing.visit();

@@ -66,8 +66,6 @@ module('Integration | Component | billing-summary', function (hooks) {
   });
 
   test('it renders canceled subscription', async function (assert) {
-    const momentFromNow = moment(this.subscription.validTo.getTime()).fromNow();
-
     this.set('subscription', {
       ...this.subscription,
       status: 'canceled',
