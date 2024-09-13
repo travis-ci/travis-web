@@ -56,9 +56,9 @@
                     {{else if this.isIncomplete}}
                       Incomplete
                     {{else if (and this.isComplete this.isCanceled)}}
-                      Expired on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                      {{this.subscriptionExpiredPrefix}} on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{else if (and this.isComplete this.isExpired)}}
-                      Expired on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                      {{this.subscriptionExpiredPrefix}} on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{/if}}
                   </span>
 

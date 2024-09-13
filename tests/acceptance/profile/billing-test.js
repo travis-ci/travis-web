@@ -423,9 +423,9 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan canceled');
-    assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
+    assert.equal(profilePage.billing.planMessage.text, `Expired on June 19, 2018`);
 
-    assert.dom(profilePage.billing.planMessage.scope).hasText(`Expires ${momentFromNow} on June 19`);
+    assert.dom(profilePage.billing.planMessage.scope).hasText(`Expired on June 19, 2018`);
 
     assert.equal(profilePage.billing.price.text, '$69');
     assert.equal(profilePage.billing.period.text, '/month');
@@ -455,8 +455,18 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired manual subscription');
-    assert.equal(profilePage.billing.planMessage.text, 'Expired July 16, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Expired on July 16, 2018');
     assert.equal(profilePage.billing.price.text, '$69');
+  });
+
+  test('view billing on an expired manual plan with future expiration date', async function (assert) {
+    this.subscription.status = 'canceled';
+    this.subscription.valid_to = new Date(2028, 6, 16).toISOString();
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+
+    assert.equal(profilePage.billing.planMessage.text, 'Expires on July 16, 2028');
   });
 
   test('view billing on a marketplace plan', async function (assert) {
@@ -626,7 +636,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
-    assert.equal(profilePage.billing.planMessage.text, 'Expired June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Expired on June 19, 2018');
   });
 
   test('view billing on an annual plan', async function (assert) {

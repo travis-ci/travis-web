@@ -38,4 +38,12 @@ export default Component.extend({
       return [];
     }
   }),
+
+  subscriptionExpiredPrefix: computed('subscription.validTo', function () {
+    const validTo = this.subscription.validTo;
+    const today = new Date().toISOString();
+    const date = Date.parse(today);
+    const validToDate = Date.parse(validTo);
+    return date > validToDate ? 'Expired' : 'Expires';
+  }),
 });
