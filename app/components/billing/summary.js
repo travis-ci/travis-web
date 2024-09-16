@@ -40,10 +40,6 @@ export default Component.extend({
   }),
 
   subscriptionExpiredPrefix: computed('subscription.validTo', function () {
-    const validTo = this.subscription.validTo;
-    const today = new Date().toISOString();
-    const date = Date.parse(today);
-    const validToDate = Date.parse(validTo);
-    return date > validToDate ? 'Expired' : 'Expires';
+    return Date.now() > Date.parse(this.subscription.validTo) ? 'Expired' : 'Expires';
   }),
 });
