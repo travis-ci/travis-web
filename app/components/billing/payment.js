@@ -78,53 +78,57 @@ export default Component.extend({
   }),
 
   updatePlan: task(function* () {
-    if (this.selectedPlan.isFree) {
-      this.set('showSwitchToFreeModal', true);
-    } else {
-      if (this.selectedAddon) {
-        this.metrics.trackEvent({
-          action: 'Buy Addon Pay Button Clicked',
-          category: 'Subscription',
-        });
-        yield this.subscription.buyAddon.perform(this.selectedAddon);
+    try {
+      if (this.selectedPlan.isFree) {
+        this.set('showSwitchToFreeModal', true);
       } else {
-        if (this.subscription.plan.get('planType') == 'metered'
-          && (this.selectedPlan.get('planType') == 'hybrid' || this.selectedPlan.get('planType') == 'hybrid annual')
-          && !this.showPlanSwitchWarning) {
-          this.set('showPlanSwitchWarning', true);
-          return;
-        }
-        if (!this.subscription.id && this.v1SubscriptionId) {
+        if (this.selectedAddon) {
           this.metrics.trackEvent({
-            action: 'Plan upgraded from Legacy Plan',
+            action: 'Buy Addon Pay Button Clicked',
             category: 'Subscription',
           });
-          this.set('showPlanSwitchWarning', false);
-          const { account, subscription, selectedPlan } = this;
-          const organizationId = account.type === 'organization' ? +(account.id) : null;
-          const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
-          const org = organizationId && this.store.peekRecord('organization', organizationId);
-          subscription.setProperties({
-            organization: org,
-            plan: plan,
-            v1SubscriptionId: this.v1SubscriptionId,
-          });
-          const { clientSecret } = yield subscription.save();
-          this.stripe.handleStripePayment.linked().perform(clientSecret);
+          yield this.subscription.buyAddon.perform(this.selectedAddon);
         } else {
-          this.metrics.trackEvent({
-            action: 'Change Plan Pay Button Clicked',
-            category: 'Subscription',
-          });
-          yield this.subscription.changePlan.perform(this.selectedPlan.id, this.couponId);
+          if (this.subscription.plan.get('planType') == 'metered'
+            && (this.selectedPlan.get('planType') == 'hybrid' || this.selectedPlan.get('planType') == 'hybrid annual')
+            && !this.showPlanSwitchWarning) {
+            this.set('showPlanSwitchWarning', true);
+            return;
+          }
+          if (!this.subscription.id && this.v1SubscriptionId) {
+            this.metrics.trackEvent({
+              action: 'Plan upgraded from Legacy Plan',
+              category: 'Subscription',
+            });
+            this.set('showPlanSwitchWarning', false);
+            const { account, subscription, selectedPlan } = this;
+            const organizationId = account.type === 'organization' ? +(account.id) : null;
+            const plan = selectedPlan && selectedPlan.id && this.store.peekRecord('v2-plan-config', selectedPlan.id);
+            const org = organizationId && this.store.peekRecord('organization', organizationId);
+            subscription.setProperties({
+              organization: org,
+              plan: plan,
+              v1SubscriptionId: this.v1SubscriptionId,
+            });
+            const { clientSecret } = yield subscription.save();
+            this.stripe.handleStripePayment.linked().perform(clientSecret);
+          } else {
+            this.metrics.trackEvent({
+              action: 'Change Plan Pay Button Clicked',
+              category: 'Subscription',
+            });
+            yield this.subscription.changePlan.perform(this.selectedPlan.id, this.couponId);
+          }
         }
+        this.accounts.fetchV2Subscriptions.linked().perform();
+        yield this.retryAuthorization.linked().perform();
+        this.storage.clearBillingData();
+        this.set('showPlansSelector', false);
+        this.set('showAddonsSelector', false);
+        this.set('isProcessCompleted', true);
       }
-      this.accounts.fetchV2Subscriptions.linked().perform();
-      yield this.retryAuthorization.linked().perform();
-      this.storage.clearBillingData();
-      this.set('showPlansSelector', false);
-      this.set('showAddonsSelector', false);
-      this.set('isProcessCompleted', true);
+    } catch (error) {
+      this.handleError(error);
     }
   }).drop(),
 
@@ -204,7 +208,6 @@ export default Component.extend({
         this.set('isProcessCompleted', true);
       }
     } catch (error) {
-      console.log(error);
       this.handleError(error);
     }
   }).drop(),
