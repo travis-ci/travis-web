@@ -1,13 +1,17 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { gt, reads } from '@ember/object/computed';
+import { gt } from '@ember/object/computed';
+import { computed } from '@ember/object';
 
 export default Controller.extend({
   auth: service(),
   multiVcs: service(),
   features: service(),
 
-  accounts: reads('auth.accounts'),
+  accounts: computed('auth.accounts.[]', function () {
+    const accounts = this.auth.accounts || [];
+    return [...new Set(accounts)];
+  }),
   hasAccounts: gt('accounts.length', 0),
 
   actions: {
