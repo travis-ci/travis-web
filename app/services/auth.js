@@ -66,7 +66,9 @@ export default Service.extend({
   inactiveAccounts: computed('accounts.@each.id', 'storage.activeAccount.id', function () {
     const { accounts, activeAccount } = this.storage;
     if (accounts && accounts.length > 0 && activeAccount) {
-      return accounts.filter(account => account.id !== activeAccount.id);
+      const uniqueAccounts = [...new Set(accounts.map(account => account.id))]
+        .map(id => accounts.find(account => account.id === id));
+      return uniqueAccounts.filter(account => account.id !== activeAccount.id);
     } else {
       return [];
     }
