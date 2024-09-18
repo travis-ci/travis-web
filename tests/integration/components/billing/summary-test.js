@@ -66,8 +66,6 @@ module('Integration | Component | billing-summary', function (hooks) {
   });
 
   test('it renders canceled subscription', async function (assert) {
-    const momentFromNow = moment(this.subscription.validTo.getTime()).fromNow();
-
     this.set('subscription', {
       ...this.subscription,
       status: 'canceled',
@@ -84,8 +82,8 @@ module('Integration | Component | billing-summary', function (hooks) {
 
     assert.dom('h3').hasText('Plan information');
     assert.equal(profilePage.billing.plan.name, 'A plan canceled');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expires ${momentFromNow} on June 19`);
-    assert.equal(profilePage.billing.planMessage.text, `Expires ${momentFromNow} on June 19`);
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('5 concurrent jobs Expired on June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Expired on June 19, 2018');
     assert.equal(profilePage.billing.price.text, '$129');
     assert.equal(profilePage.billing.period.text, '/month');
   });
@@ -109,8 +107,8 @@ module('Integration | Component | billing-summary', function (hooks) {
 
     assert.dom('h3').hasText('Plan information');
     assert.equal(profilePage.billing.plan.name, 'A plan expired');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expired ${date}`);
-    assert.equal(profilePage.billing.planMessage.text, `Expired ${date}`);
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining(`5 concurrent jobs Expired on ${date}`);
+    assert.equal(profilePage.billing.planMessage.text, `Expired on ${date}`);
     assert.equal(profilePage.billing.price.text, '$129');
     assert.equal(profilePage.billing.period.text, '/month');
   });

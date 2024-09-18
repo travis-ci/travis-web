@@ -45,4 +45,8 @@ export default Component.extend({
     return !this.showPlansSelector && !this.showAddonsSelector;
   }),
   showUserManagementModal: false,
+
+  subscriptionExpiredPrefix: computed('subscription.validTo', function () {
+    return Date.now() > Date.parse(this.subscription.validTo) ? 'Expired' : 'Expires';
+  }),
 });
