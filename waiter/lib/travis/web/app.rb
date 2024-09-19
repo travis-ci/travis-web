@@ -292,6 +292,10 @@ class Travis::Web::App
       config['aida'] = aida
     end
 
+    if ENV['DISABLE_AIDA']
+      config['disableAida'] = ENV['disableAida']
+    end
+
     config['metricsAdapters'] = []
     if ENV['GOOGLE_ANALYTICS_ID']
       config['metricsAdapters'].push( {
