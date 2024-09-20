@@ -293,7 +293,7 @@ class Travis::Web::App
     end
 
     if ENV['DISABLE_AIDA']
-      config['disableAida'] = ENV['disableAida']
+      config['disableAida'] = ENV['DISABLE_AIDA']
     end
 
     config['metricsAdapters'] = []
