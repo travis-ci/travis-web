@@ -30,7 +30,7 @@ module('Integration | Component | selected-billing-plan', function (hooks) {
       @goToFirstStep={{action 'goToFirstStep'}}/>`);
 
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plan1.name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.plan1.startingUsers} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `User licenses incl. in price: User licenses at discounted credits price: check pricing Users charged monthly per usage: check pricing Up to ${this.plan1.startingUsers} unique users Charged monthly per usage - check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plan1.startingPrice / 100}`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
   });

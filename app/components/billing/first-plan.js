@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { not, reads, filterBy, alias } from '@ember/object/computed';
+import { not, reads, alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
@@ -61,7 +61,7 @@ export default Component.extend({
   }),
 
 
-  trialPeriodSet: computed('selectedPlan','account', function() {
+  trialPeriodSet: computed('selectedPlan', 'account', function () {
     return this.selectedPlan.hasTrialPeriod && this.accounts.user.trialAllowed;
   }),
 

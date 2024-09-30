@@ -1,3 +1,4 @@
+/* eslint max-len: 0 */
 import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import profilePage from 'travis/tests/pages/profile';

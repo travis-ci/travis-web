@@ -156,7 +156,7 @@ export default Component.extend({
     },
   }),
 
-  allowedTrial:computed('availablePlans', function () {
+  allowedTrial: computed('availablePlans', function () {
     return this.account.trialAllowed;
   }),
 
