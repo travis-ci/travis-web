@@ -14,7 +14,7 @@ export default Component.extend({
   jobsPerBuild: reads('currentTrial.max_jobs_per_build'),
   concurrencyLimit: reads('currentTrial.concurrency_limit'),
   buildsTriggered: computed('currentTrial.builds_triggered', function() {
-    return this.currentTrial.builds_triggered ? this.currentTrial.builds_triggered : 0;
+    return (this.currentTrial && this.currentTrial.builds_triggered) ? this.currentTrial.builds_triggered : 0;
   }),
 
 });
