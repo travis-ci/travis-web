@@ -25,6 +25,7 @@ export default Owner.extend({
   channels: attr(),
   authToken: attr('string'),
   rssToken: attr('string'),
+  webToken: attr('string'),
   utmParams: attr(),
   confirmedAt: attr('date'),
   customKeys: attr(),
@@ -127,8 +128,8 @@ export default Owner.extend({
   },
 
   reload(options = {}) {
-    const { authToken } = this;
-    let res = this.store.queryRecord('user', Object.assign({}, options, { current: true, authToken }));
+    const { webToken } = this;
+    let res = this.store.queryRecord('user', Object.assign({}, options, { current: true, webToken }));
     return res;
   },
 
