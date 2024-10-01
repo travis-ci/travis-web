@@ -23,7 +23,7 @@ module('Acceptance | automatic sign out', function (hooks) {
   });
 
   test('when token is invalid user should be signed out', async function (assert) {
-    window.localStorage.setItem('travis.token', 'wrong-token');
+    window.localStorage.setItem('travis.webToken', 'wrong-token');
 
     await visitWithAbortedTransition('/account');
 
