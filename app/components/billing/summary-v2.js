@@ -32,7 +32,7 @@ export default Component.extend({
     } catch (e) {
       console.log(e);
     }
-    return this.subscription.validTo;
+    return this.subscription.validToFromAddon || this.subscription.validTo;
   }),
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   canceledOrExpired: or('isExpired', 'isCanceled'),
