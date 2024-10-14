@@ -50,7 +50,7 @@
       </TravisForm>
     </div>
    
-    <div class='total-usage'>All repositories total build time: {{this.totalBuildMinutes}} minutes</div>
+    <div class='total-usage' data-test-plan-usage-minutes-total>All repositories total build time: {{this.totalBuildMinutes}} minutes</div>
 
     <div class='download-csv-container'>
     <button class="download-csv" onclick={{action "downloadCsv"}}>Download .csv file for more detailed information about usage</button>
