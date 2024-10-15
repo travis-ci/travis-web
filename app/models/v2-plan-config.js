@@ -33,6 +33,8 @@ export default Model.extend({
   }),
 
   hasTrialPeriod: computed('trialConfig', function () {
+    console.log("HAS TRIAL PERIOD");
+    console.log(this.trialConfig);
     return  this.trialConfig != null;
   }),
 

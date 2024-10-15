@@ -157,6 +157,8 @@ export default Component.extend({
   }),
 
   allowedTrial: computed('availablePlans', function () {
+    console.log("ALLOWED TRIAL");
+    console.log(this.account.trialAllowed);
     return this.account.trialAllowed;
   }),
 
@@ -186,6 +188,8 @@ export default Component.extend({
   },
 
   selectAndSubmit(plan, form) {
+    console.log("SELECT AND SUBMIT");
+    console.log(plan);
     this.set('selectedPlan', plan);
     later(form.submit, 500);
   },
