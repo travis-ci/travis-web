@@ -54,6 +54,7 @@ export default RESTAdapter.extend({
     hash.headers = hash.headers || {};
 
     let token = this.get('auth.webToken');
+    console.log('webToken called from V3:', token);
     if (token) {
       hash.headers['Authorization'] = `token ${token}`;
     }

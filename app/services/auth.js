@@ -91,7 +91,33 @@ export default Service.extend({
   init() {
     this._super(...arguments);
     window.addEventListener('focus', () => this.checkAuth());
+    this.addObserver('webToken', this, this.webTokenObserver);
+    console.log('Initial webToken:', this.webToken);
   },
+
+  safeLogObject(obj) {
+    if (!obj) return 'null';
+    if (typeof obj !== 'object') return String(obj);
+
+    const safeObj = {};
+    const relevantFields = ['id', 'login', 'name', 'email', 'webToken', 'authToken', 'vcsType', 'permissions'];
+
+    relevantFields.forEach(field => {
+      if (obj.get) {
+        safeObj[field] = obj.get(field);
+      } else {
+        safeObj[field] = obj[field];
+      }
+    });
+
+    return JSON.stringify(safeObj);
+  },
+
+  webTokenObserver: observer('webToken', function () {
+    console.log('webToken changed:', this.webToken);
+    console.log('currentUser.webToken:', this.get('currentUser.webToken'));
+    console.log('storage.webToken:', this.get('storage.webToken'));
+  }),
 
   checkAuth() {
     if (!this.currentUser || !this.storage)
@@ -164,6 +190,7 @@ export default Service.extend({
   },
 
   signIn(provider) {
+    console.log('Signing in with provider:', provider);
     this.set('state', STATE.SIGNING_IN);
 
     const url = new URL(this.redirectUrl || window.location.href);
@@ -173,7 +200,9 @@ export default Service.extend({
     }
     const providerSegment = provider ? `/${provider}` : '';
     const path = `/auth/handshake${providerSegment.replace('-', '')}`;
-    window.location.href = `${authEndpoint || apiEndpoint}${path}?redirect_uri=${url}`;
+    const redirectUrl = `${authEndpoint || apiEndpoint}${path}?redirect_uri=${url}`;
+    console.log('Redirecting to:', redirectUrl);
+    window.location.href = redirectUrl;
   },
 
   getAccountByProvider(provider) {
@@ -187,23 +216,30 @@ export default Service.extend({
   },
 
   autoSignIn() {
+    console.log('Auto sign-in started');
     this.set('state', STATE.SIGNING_IN);
     try {
       const promise = this.storage.user ? this.handleNewLogin() : this.reloadCurrentUser();
       return promise
-        .then(() => { this.permissionsService.fetchPermissions.perform();  })
+        .then(() => {
+          console.log('Fetching permissions');
+          return this.permissionsService.fetchPermissions.perform();
+        })
         .then(() => {
           const { currentUser } = this;
+          console.log('Sign-in successful, current user:', this.safeLogObject(currentUser));
           this.set('state', STATE.SIGNED_IN);
           Travis.trigger('user:signed_in', currentUser);
           Travis.trigger('user:refreshed', currentUser);
         })
         .catch(error => {
           if (!didCancel(error)) {
+            console.error('Error during auto sign-in:', error);
             throw new Error(error);
           }
         });
     } catch (error) {
+      console.error('Error in autoSignIn:', error);
       this.signOut(false);
     }
   },
@@ -224,6 +260,8 @@ export default Service.extend({
     this.validateUserData(userData, isBecome);
     const userRecord = pushUserToStore(this.store, userData);
     userRecord.set('authToken', token);
+    console.log('User record after push:', this.safeLogObject(userRecord));
+    console.log('User record webToken:', userRecord.get('webToken'));
 
     return this.reloadUser(userRecord).then(() => {
       //   let acc = storage.accounts;
@@ -231,6 +269,7 @@ export default Service.extend({
       //    storage.accounts.set(acc);
       storage.pushAccount(userRecord);
       storage.set('activeAccount', userRecord);
+      console.log('Active account set:', this.safeLogObject(storage.get('activeAccount')));
       this.reportNewUser();
     });
   },
@@ -242,19 +281,25 @@ export default Service.extend({
 
   reloadUser(userRecord, include = []) {
     includes = includes.concat(include).uniq();
-    let res =  this.fetchUser.perform(userRecord);
+    console.log('Reloading user, current webToken:', userRecord.get('webToken'));
+    let res = this.fetchUser.perform(userRecord);
     return res;
   },
 
   fetchUser: task(function* (userRecord) {
+    console.log('Fetching user data for:', userRecord.get('id'));
     try {
-      return yield userRecord.reload({ included: includes.join(',') });
+      const user = yield userRecord.reload({ included: includes.join(',') });
+      console.log('Fetched user data:', this.safeLogObject(user));
+      return user;
     } catch (error) {
+      console.error('Error fetching user:', error);
       const status = +error.status || +get(error, 'errors.firstObject.status');
       if (status === 401 || status === 403 || status === 500) {
         this.flashes.error(TOKEN_EXPIRED_MSG);
         this.signOut();
       }
+      throw error;
     }
   }).keepLatest(),
 
@@ -331,7 +376,6 @@ export default Service.extend({
   },
 
   actions: {
-
     switchAccount(id) {
       this.switchAccount(id);
     },
