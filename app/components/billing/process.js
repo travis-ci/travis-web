@@ -86,9 +86,11 @@ export default Component.extend({
       console.log(this.selectedAddon);
       if (this.selectedPlan || this.selectedAddon) {
       console.log("NEXT2");
-        this.trackButtonClicks();
+ //       this.trackButtonClicks();
         const currentIndex = this.steps.indexOf(this.currentStep);
         const lastIndex = this.steps.length - 1;
+
+      console.log("NEXT2.1");
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
 
       console.log("NEXT3");
