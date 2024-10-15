@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { not, reads, filterBy, alias } from '@ember/object/computed';
+import { not, reads, alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
@@ -26,7 +26,7 @@ export default Component.extend({
   showSwitchToFreeModal: false,
   showPlanSwitchWarning: false,
   availablePlans: reads('account.eligibleV2Plans'),
-  defaultPlans: filterBy('availablePlans', 'trialPlan'),
+  defaultPlans: reads('availablePlans'),
   defaultPlanId: reads('defaultPlans.firstObject.id'),
   showCancelButton: false,
   travisTermsUrl: 'https://www.ideracorp.com/legal/TravisCI#tabs-2',
@@ -58,6 +58,11 @@ export default Component.extend({
   isTrial: computed('selectedPlan', function () {
     let plan = this.selectedPlan;
     return plan ? plan.isTrial : true;
+  }),
+
+
+  trialPeriodSet: computed('selectedPlan', 'account', function () {
+    return this.selectedPlan.hasTrialPeriod && this.accounts.user.trialAllowed;
   }),
 
   hasLocalRegistration: false,

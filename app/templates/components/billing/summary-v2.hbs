@@ -52,6 +52,7 @@
                     {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
                   >
                     {{#if (and this.isSubscribed (not this.subscription.subscriptionExpiredByDate))}}
+                    {{#if this.isCurrentTrial }}(Free Trial Period) {{/if}}
                       Valid until {{moment-format this.validto "MMMM D, YYYY"}}
                     {{else if this.isIncomplete}}
                       Incomplete
@@ -149,6 +150,10 @@
       {{/if}}
  <!--   </div> -->
 </div>
+
+{{#if this.isCurrentTrial }}
+  <Billing::CurrentTrial @subscription={{this.subscription}}/>
+{{/if}}
 
 {{#if (and this.subscription.isStripe this.showPlanInfo)}}
   {{#if this.subscription.hasUserLicenseAddons}}
