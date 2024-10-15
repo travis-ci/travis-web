@@ -174,6 +174,7 @@ export default Component.extend({
   }),
 
   save: task(function* () {
+    console.log("SAVE.NEXT");
     if (this.next.perform) {
       yield this.next.perform();
     } else {

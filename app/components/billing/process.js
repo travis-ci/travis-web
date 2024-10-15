@@ -81,22 +81,40 @@ export default Component.extend({
     },
 
     next() {
+      console.log("NEXT1");
+      console.log(this.selectedPlan);
+      console.log(this.selectedAddon);
       if (this.selectedPlan || this.selectedAddon) {
+      console.log("NEXT2");
         this.trackButtonClicks();
         const currentIndex = this.steps.indexOf(this.currentStep);
         const lastIndex = this.steps.length - 1;
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
+
+      console.log("NEXT3");
         if ((this.billingInfoExists && this.currentStep === STEPS.ONE) || this.selectedPlan.startingPrice === 0) {
+
+      console.log("NEXT3.1");
           const currentStep = STEPS.THREE;
           this.set('currentStep', currentStep);
           this.set('billingInfo', this.existingBillingInfo);
         } else {
+
+      console.log("NEXT3.2");
           const currentStep = this.steps[nextIndex];
           this.set('currentStep', currentStep);
         }
+
+      console.log("NEXT4");
         this.updateBillingQueryParams(this.currentStep);
+
+      console.log("NEXT5");
         this.persistBillingData(this.currentStep);
+
+      console.log("NEXT6");
       }
+
+      console.log("NEXT7");
     },
 
     back() {
@@ -114,6 +132,7 @@ export default Component.extend({
     },
 
     closePlansModal() {
+      console.log("CLOSE PLANS MODAL");
       this.set('showPlansSelector', false);
     }
   }
