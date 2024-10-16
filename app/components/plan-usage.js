@@ -2,15 +2,17 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, reads, empty } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 import moment from 'moment';
 
 export default Component.extend({
   features: service(),
   store: service(),
+  insights: service(),
   download: service(),
   showUserStatisticsModal: false,
-  repositoriesVisiblity: null,
-  repositoriesVisiblityOptions: ['All repositories', 'Private repositories', 'Public repositories'],
+  insightsCurrentRange: null,
+  insightsRangeOptions: ['Last Week', 'Last Month'],
   dateCenter: null,
   dateRange: null,
   showDatePicker: false,
@@ -18,20 +20,34 @@ export default Component.extend({
   subscription: reads('account.subscription'),
   v2subscription: reads('account.v2subscription'),
   isV2SubscriptionEmpty: empty('v2subscription'),
+  isOrganization: reads('owner.isOrganization'),
 
   init() {
     this._super(...arguments);
-    this.repositoriesVisiblity = 'All repositories';
     this.dateCenter = new Date();
-    let twoMonthsAgo = new Date();
-    twoMonthsAgo.setTime(twoMonthsAgo.getTime() - 60 * 24 * 60 * 60 * 1000);
+    this.interval = 'week';
+    this.insightsCurrentRange = this.insightsRangeOptions[0];
+    let weekAgo = new Date();
+    weekAgo.setTime(weekAgo.getTime() - 7 * 24 * 60 * 60 * 1000);
     this.dateRange = {
-      start: twoMonthsAgo,
+      start: weekAgo,
       end: new Date()
     };
     this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
     this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+    this.requestRepositoryData.perform();
   },
+
+  requestRepositoryData: task(function* () {
+    return yield this.insights.getChartData.perform(
+      this.owner,
+      this.interval,
+      'builds',
+      'sum',
+      ['count_started'],
+      {calcAvg: true, private: true}
+    );
+  }).drop(),
 
   summarizedRepositories: computed('summarizedCalculations.repositories', function () {
     let repos = [];
@@ -43,7 +59,15 @@ export default Component.extend({
     return repos;
   }),
 
-  summarizedMinutesByOs: reads('summarizedCalculations.minutesByOs'),
+  summarizedUsers: computed('summarizedOwnerCalculations.users', function () {
+    let users = [];
+    for (let userId in this.summarizedCalculations.users) {
+      const user = this.summarizedCalculations.users[userId];
+      if (typeof user === 'object')
+        users.push(user);
+    }
+    return users;
+  }),
 
   totalBuildMinutes: computed('summarizedRepositories', function () {
     return this.summarizedRepositories.reduce((sum, repo) => sum + repo.buildMinutes, 0);
@@ -52,51 +76,62 @@ export default Component.extend({
     return this.summarizedRepositories.reduce((sum, repo) => sum + repo.buildCredits, 0);
   }),
 
-  summarizedCalculations: computed('owner.executionsPerRepo', 'repositoriesVisiblity', function () {
-    let repositories = [];
-    let minutesByOs = [];
-    const executions = this.owner.get('executionsPerRepo');
 
-    minutesByOs[getOsIconName('linux')] = 0;
-    minutesByOs[getOsIconName('osx')] = 0;
-    minutesByOs[getOsIconName('windows')] = 0;
-    minutesByOs[getOsIconName('freebsd')] = 0;
+  summarizedCalculations: computed('owner.executionsPerRepo', function () {
+    let repositories = [];
+    const executions = this.owner.get('executionsPerRepo');
 
     if (executions) {
       executions.forEach(async (execution) => {
         const repo = execution.repository;
 
-        if (this.repositoriesVisiblity === 'All repositories' ||
-          (this.repositoriesVisiblity === 'Private repositories' && repo.private === true) ||
-          (this.repositoriesVisiblity === 'Public repositories' && repo.private === false)) {
-          const minutes = execution.minutes_consumed;
-          const credits = execution.credits_consumed;
-          const osIcon = getOsIconName(execution.os);
-          if (minutesByOs[osIcon]) {
-            minutesByOs[osIcon] += minutes;
-          } else {
-            minutesByOs[osIcon] = minutes;
-          }
-          if (repositories[`'${execution.repository_id}'`]) {
-            repositories[`'${execution.repository_id}'`].buildMinutes += minutes;
-            repositories[`'${execution.repository_id}'`].buildCredits += credits;
-          } else {
-            repositories[`'${execution.repository_id}'`] = {
-              name: repo.name,
-              provider: repo.vcs_type.replace('Repository', '').toLowerCase(),
-              urlOwnerName: repo.owner_name,
-              formattedSlug: repo.slug.replace('/', ' / '),
-              urlName: repo.slug.split('/').lastObject,
-              buildMinutes: minutes,
-              buildCredits: credits
-            };
-          }
+        const minutes = execution.minutes_consumed;
+        const credits = execution.credits_consumed;
+        if (repositories[`'${execution.repository_id}'`]) {
+          repositories[`'${execution.repository_id}'`].buildMinutes += minutes;
+          repositories[`'${execution.repository_id}'`].buildCredits += credits;
+        } else {
+          repositories[`'${execution.repository_id}'`] = {
+            name: repo.name,
+            provider: repo.vcs_type.replace('Repository', '').toLowerCase(),
+            urlOwnerName: repo.owner_name,
+            formattedSlug: repo.slug.replace('/', ' / '),
+            urlName: repo.slug.split('/').lastObject,
+            buildMinutes: minutes,
+            buildCredits: credits
+          };
         }
       });
     }
     return {
       repositories: repositories,
-      minutesByOs: minutesByOs
+    };
+  }),
+
+  summarizedOwnerCalculations: computed('owner.executionsPerSender', function () {
+    let users = [];
+    const executions = this.owner.get('executionsPerSender');
+
+    if (executions) {
+      executions.forEach(async (execution) => {
+        const sender = execution.sender;
+        const minutes = execution.minutes_consumed;
+        const credits = execution.credits_consumed;
+        if (users[`'${execution.sender_id}'`]) {
+          users[`'${execution.sender_id}'`].buildMinutes += minutes;
+          users[`'${execution.sender_id}'`].buildCredits += credits;
+        } else {
+          users[`'${execution.sender_id}'`] = {
+            login: sender.login,
+            name: sender.name,
+            buildMinutes: minutes,
+            buildCredits: credits
+          };
+        }
+      });
+    }
+    return {
+      users: users,
     };
   }),
 
@@ -187,30 +222,23 @@ export default Component.extend({
       this.download.asCSV(fileName, header, data);
     },
 
-    datePicker() {
-      this.set('showDatePicker', !this.showDatePicker);
-      if (!this.showDatePicker) {
-        this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
-          moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
-        this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
-          moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
-      }
+    async changeInsightsRange(opt) {
+      this.set('insightsCurrentRange', opt);
+      this.set('interval', opt == this.insightsRangeOptions[0] ? 'week' : 'month');
+
+      let range = new Date();
+      const distance = opt == this.insightsRangeOptions[0] ? 7 : 30;
+      range.setTime(range.getTime() - distance * 24 * 60 * 60 * 1000);
+      this.dateRange = {
+        start: range,
+        end: new Date()
+      };
+      this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+      this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+      this.requestRepositoryData.perform();
     }
+
   }
 });
 
 const calculateMinutes = (start, finish) => (start && finish ? Math.ceil((Date.parse(finish) - Date.parse(start)) / 1000 / 60) : 0);
-
-const getOsIconName = (os) => {
-  if (os === 'linux') {
-    return 'icon-linux';
-  } else if (os === 'freebsd') {
-    return 'icon-freebsd';
-  } else if (os === 'osx') {
-    return 'icon-mac';
-  } else if (os === 'windows') {
-    return 'icon-windows';
-  }  else {
-    return 'help';
-  }
-};
