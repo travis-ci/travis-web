@@ -53,7 +53,7 @@ export default RESTAdapter.extend({
 
     hash.headers = hash.headers || {};
 
-    let token = this.get('auth.token');
+    let token = this.get('auth.webToken');
     if (token) {
       hash.headers['Authorization'] = `token ${token}`;
     }

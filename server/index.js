@@ -35,12 +35,14 @@ module.exports = function (app) {
       var user = JSON.stringify(req.body['user']);
       var become = req.body['become'];
       var rssToken = req.body['rssToken'];
+      var webToken = JSON.parse(req.body['user']).web_token;
 
       var responseText = `
         <script>
           var storage = ${storage};
           storage.setItem('travis.token', '${token}');
           storage.setItem('travis.rssToken', '${rssToken}');
+          storage.setItem('travis.webToken', '${webToken}');
           storage.setItem('travis.user', ${user});
           if (${become}) {
             storage.setItem('travis.auth.become', true);

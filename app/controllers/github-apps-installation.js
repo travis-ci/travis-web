@@ -50,7 +50,7 @@ export default Controller.extend({
 
   fetchPromise() {
     let headers = new Headers({
-      'Authorization': `token ${this.get('auth.token')}`,
+      'Authorization': `token ${this.get('auth.webToken')}`,
       'Travis-API-Version': '3'
     });
 

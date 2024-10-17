@@ -31,6 +31,17 @@ export default Service.extend({
     }
   }),
 
+  webToken: computed({
+    get() {
+      return storage.getItem('travis.webToken') || null;
+    },
+    set(key, token) {
+      assert('Web Token storage is read-only', token === null);
+      storage.removeItem('travis.webToken');
+      return null;
+    }
+  }),
+
   user: computed({
     get() {
       const data = parseWithDefault(storage.getItem('travis.user'), null);

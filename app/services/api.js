@@ -36,7 +36,7 @@ export default Service.extend({
 
   setupHeaders(options = {}) {
     const { headers = {} } = options;
-    const { token } = this.auth;
+    const { webToken } = this.auth;
 
     // Release
     if (config.release) {
@@ -44,8 +44,8 @@ export default Service.extend({
     }
 
     // Authorization
-    if (token) {
-      headers['Authorization'] = `token ${token}`;
+    if (webToken) {
+      headers['Authorization'] = `token ${webToken}`;
     }
 
     // Travis-API-Version
