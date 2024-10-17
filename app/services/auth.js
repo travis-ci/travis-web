@@ -262,6 +262,8 @@ export default Service.extend({
     userRecord.set('authToken', token);
     console.log('User record after push:', this.safeLogObject(userRecord));
     console.log('User record webToken:', userRecord.get('webToken'));
+    this.set('currentUser', userRecord);
+
 
     return this.reloadUser(userRecord).then(() => {
       //   let acc = storage.accounts;
