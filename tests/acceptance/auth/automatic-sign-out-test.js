@@ -23,6 +23,15 @@ module('Acceptance | automatic sign out', function (hooks) {
   });
 
   test('when token is invalid user should be signed out', async function (assert) {
+    const userRecord = this.owner.lookup('service:store').createRecord('user', {
+      id: 1,
+      name: 'Test User',
+      webToken: 'valid-token'
+    });
+
+    // Set currentUser to userRecord
+    this.owner.lookup('service:auth').set('currentUser', userRecord);
+
     window.localStorage.setItem('travis.webToken', 'wrong-token');
 
     await visitWithAbortedTransition('/account');

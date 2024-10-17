@@ -204,7 +204,6 @@ export default Service.extend({
           }
         });
     } catch (error) {
-      console.error('Error in autoSignIn:', error);
       this.signOut(false);
     }
   },
@@ -226,7 +225,6 @@ export default Service.extend({
     const userRecord = pushUserToStore(this.store, userData);
     userRecord.set('authToken', token);
     this.set('currentUser', userRecord);
-
 
     return this.reloadUser(userRecord).then(() => {
       //   let acc = storage.accounts;
