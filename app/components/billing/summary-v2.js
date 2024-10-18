@@ -32,7 +32,7 @@ export default Component.extend({
     } catch (e) {
       console.log(e);
     }
-    return this.subscription.validTo;
+    return this.subscription.validToFromAddon || this.subscription.validTo;
   }),
   isCurrentTrial: computed('subscription.current_trial', function () {
     return this.subscription.current_trial != null;
