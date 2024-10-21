@@ -224,7 +224,7 @@ export default Service.extend({
     this.validateUserData(userData, isBecome);
     const userRecord = pushUserToStore(this.store, userData);
     userRecord.set('authToken', token);
-    this.set('currentUser', userRecord);
+    // this.set('currentUser', userRecord);
 
     return this.reloadUser(userRecord).then(() => {
       //   let acc = storage.accounts;
