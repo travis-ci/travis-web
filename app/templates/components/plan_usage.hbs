@@ -2,11 +2,7 @@
   <section>
     <h3 class='plan-usage__header'>Plan information</h3>
     <p class='plan-usage__name flex flex--v-center' data-test-plan-name='true'>
-      {{#if this.subscription.isManual}}
-        Manual plan
-      {{else}}
-        {{this.subscription.plan.name}}
-      {{/if}}
+      {{this.subscription.plan.name}}
     </p>
     <strong>Plan Activation date:</strong>
     {{#if this.subscription.createdAt}}
@@ -34,74 +30,42 @@
   <section>
     <h3 class="usage-statistics">Usage statistics</h3>
     <div class="date-picker-container">
-      <button class="date-picker" onclick={{action "datePicker"}} >
-        {{#if this.dateRange.start}}
-          {{moment-format this.dateRange.start "YYYY-MM-DD"}}
-        {{/if}}
-        &nbsp;-&nbsp;
-        {{#if this.dateRange.end}}
-          {{moment-format this.dateRange.end "YYYY-MM-DD"}}
-        {{else}}
-          {{moment-format this.dateRange.start "YYYY-MM-DD"}}
-        {{/if}}
-        <SvgImage @name="icon-dropdown-arrow" @class="icon" />
-      </button>
-      {{#if this.showDatePicker}}
-        <PowerCalendarRange
-          class="calendar-medium date-picker-calendar"
-          @center={{this.dateCenter}}
-          @onCenterChange={{action (mut this.dateCenter) value="date"}}
-          @selected={{this.dateRange}}
-          @maxRange="2 month"
-          @onSelect={{action (mut this.dateRange) value="date"}}
-          as |calendar|>
-          <calendar.Nav/>
-          <calendar.Days/>
-        </PowerCalendarRange>
-      {{/if}}
-    </div>
-    <button class="download-csv" onclick={{action "downloadCsv"}}>Download .csv file for more detailed information about usage</button>
-    {{#if this.v2subscription.plan.isNotStandardOrProTier}}
-      <button class="download-csv" onclick={{action "downloadUserLicenseCsv"}}>Download .csv file for more detailed information about user license usage</button>
-    {{/if}}
-    <div class="repositories-visiblity">
       <TravisForm
         as |form|
       >
         <form.field
-          @value={{this.repositoriesVisiblity}}
+          @value={{this.insightsCurrentRange}}
           @required={{false}}
+          @onChange={{action 'changeInsightsRange'}}
           class="repositories-visiblity-selector"
           as |field|
         >
           <field.select
-            @onChange={{action (mut this.repositoriesVisiblity)}}
-            @options={{this.repositoriesVisiblityOptions}}
-            as |repositoriesVisiblity|
+            @options={{this.insightsRangeOptions}}
+            as |insightsRange|
           >
-            {{repositoriesVisiblity}}
+            {{insightsRange}}
           </field.select>
         </form.field>
       </TravisForm>
     </div>
-    <span class="capitalize-text">{{this.repositoriesVisiblity}}</span> total build time:
-    <div class="minutes-circle-container">
-      {{#each-in this.summarizedMinutesByOs as |osicon minutes|}}
-        <div class="minutes-circle">
-          <span class="data-test-plan-usage-os-{{osicon}}-minutes">
-            <SvgImage @name={{osicon}} @class="icon" />
-            <br />
-            {{format-number minutes}} min
-          </span>
-        </div>
-      {{/each-in}}
+   
+    <div class='total-usage' data-test-plan-usage-minutes-total>All repositories total build time: {{this.totalBuildMinutes}} minutes</div>
+
+    <!--
+    <div class='download-csv-container'>
+    <button class="download-csv" onclick={{action "downloadCsv"}}>Download .csv file for more detailed information about usage</button>
+    {{#if this.v2subscription.plan.isNotStandardOrProTier}}
+      <button class="download-csv" onclick={{action "downloadUserLicenseCsv"}}>Download .csv file for more detailed information about user license usage</button>
+    {{/if}}
     </div>
+    -->
+
     <table class="repository-build-times">
       <thead>
         <tr data-test-table-header-row='true'>
           <th>Repository</th>
-          <th>Total build minutes</th>
-          <th>Total credits</th>
+          <th class='credits-row'>Total credits</th>
         </tr>
       </thead>
       <tbody>
@@ -115,21 +79,48 @@
                 {{repository.formattedSlug}}
               </LinkTo>
             </td>
-            <td>
-              {{format-number repository.buildMinutes}}
-            </td>
-            <td>
+            <td class='credits-row'>
               {{format-number repository.buildCredits}}
             </td>
           </tr>
         {{/each}}
         <tr>
           <td>Total</td>
-          <td data-test-plan-usage-minutes-total='true'>{{format-number this.totalBuildMinutes}}</td>
-          <td data-test-plan-usage-credits-total='true'>{{format-number this.totalBuildCredits}}</td>
+          <td data-test-plan-usage-credits-total='true'  class='credits-row'>{{format-number this.totalBuildCredits}}</td>
         </tr>
       </tbody>
     </table>
+
+    {{#if this.isOrganization }}
+    <table class="repository-build-times">
+      <thead>
+        <tr data-test-table-header-row='true'>
+          <th>User</th>
+          <th class='credits-row'>Total credits</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.summarizedUsers as |user|}}
+          <tr data-test-repository='true'>
+            <td>
+              <LinkTo
+                @route="user" @models={{array user}}
+              >
+                {{user.login}}
+              </LinkTo>
+            </td>
+            <td class='credits-row'>
+              {{format-number user.buildCredits}}
+            </td>
+          </tr>
+        {{/each}}
+        <tr>
+          <td>Total</td>
+          <td data-test-plan-usage-credits-total='true' class='credits-row'>{{format-number this.totalBuildCredits}}</td>
+        </tr>
+      </tbody>
+    </table>
+    {{/if}}
   </section>
 </div>
 <Dialogs::UserStatisticsModal

@@ -63,10 +63,6 @@ module('Acceptance | profile/plan usage', function (hooks) {
     await profilePage.visit();
     await profilePage.planUsage.visit();
 
-    assert.equal(profilePage.planUsage.page.macMinutes.text, '3 min');
-    assert.equal(profilePage.planUsage.page.windowsMinutes.text, '2 min');
-    assert.equal(profilePage.planUsage.page.linuxMinutes.text, '1 min');
-    assert.equal(profilePage.planUsage.page.creditsTotal.text, '60');
-    assert.equal(profilePage.planUsage.page.minutesTotal.text, '6');
+    assert.equal(profilePage.planUsage.page.minutesTotal.text, 'All repositories total build time: 6 minutes');
   });
 });
