@@ -73,7 +73,7 @@
 .topbar {
   height: auto;
   max-height: $top-height;
-  padding: 71px math.div($column-gutter,2) 20px math.div($column-gutter, 2);
+  padding: 0 math.div($column-gutter,2) 20px math.div($column-gutter, 2);
   clear: both;
   overflow: hidden;
   font-size: $font-size-m;
@@ -81,7 +81,7 @@
   transition: max-height 0.3s ease-in-out;
 
   @media #{$medium-up} {
-    padding: 71px math.div($column-gutter, 2) 66px math.div($column-gutter, 2);
+    padding: 10px math.div($column-gutter, 2) 66px math.div($column-gutter, 2);
   }
 
   a:not(.auth-button) {
