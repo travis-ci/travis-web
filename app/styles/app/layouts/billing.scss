@@ -964,6 +964,13 @@
     float: left;
   }
 
+  .total-usage {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    float: left;
+    width: 100%;
+  }
+
   .repositories-visiblity {
     clear: both;
     width: 150px;
@@ -1060,12 +1067,22 @@
     }
   }
 
+  .download-csv-container {
+    margin-bottom: 20px;
+    width: 100%;
+    float: left;
+  }
+
   .download-csv {
     text-decoration: none;
     border-bottom: 1px solid $asphalt-grey;
     padding-bottom: 0;
     transition: color 200ms ease, border 200ms ease;
     cursor: pointer;
+  }
+
+  .credits-row {
+    width: 30%;
   }
 
   .repository-build-times {
