@@ -49,7 +49,18 @@
 }
 
 .top {
-  background-color: white;
+  height: 71px;
+  border-bottom: solid 1px #eaeaea;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.top.scrolled {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
 }
 
 .landing-pro .top,
@@ -62,7 +73,7 @@
 .topbar {
   height: auto;
   max-height: $top-height;
-  padding: 0 math.div($column-gutter,2) 20px math.div($column-gutter, 2);
+  padding: 71px math.div($column-gutter,2) 20px math.div($column-gutter, 2);
   clear: both;
   overflow: hidden;
   font-size: $font-size-m;
@@ -70,7 +81,7 @@
   transition: max-height 0.3s ease-in-out;
 
   @media #{$medium-up} {
-    padding: 10px math.div($column-gutter, 2) 66px math.div($column-gutter, 2);
+    padding: 71px math.div($column-gutter, 2) 66px math.div($column-gutter, 2);
   }
 
   a:not(.auth-button) {
