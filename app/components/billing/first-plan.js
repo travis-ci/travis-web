@@ -169,7 +169,8 @@ export default Component.extend({
         if (!this.subscription.id) {
           this.subscription.creditCardInfo.setProperties({
             token: token.id,
-            lastDigits: token.card.last4
+            lastDigits: token.card.last4,
+            fingerprint: token.card.fingerprint
           });
           this.subscription.setProperties({
             coupon: this.couponId
