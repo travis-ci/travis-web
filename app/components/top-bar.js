@@ -70,6 +70,24 @@ export default Component.extend({
       const { clientHeight = 76 } = this.element;
       set(this, 'viewportTolerance.top', clientHeight);
     });
+
+    const topElement = this.element;
+    const topElementHeight = topElement.offsetHeight;
+
+    window.addEventListener('scroll', this.handleScroll.bind(this, topElement, topElementHeight));
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+
+  handleScroll(topElement, topElementHeight) {
+    if (window.scrollY > topElementHeight) {
+      topElement.classList.add('fixed', 'scrolled');
+    } else {
+      topElement.classList.remove('fixed', 'scrolled');
+    }
   },
 
   didEnterViewport() {
@@ -107,6 +125,5 @@ export default Component.extend({
     didExitViewport() {
       this.flashes.set('topBarVisible', false);
     }
-
   }
 });
