@@ -61,8 +61,8 @@ export default Component.extend({
 
   summarizedUsers: computed('summarizedOwnerCalculations.users', function () {
     let users = [];
-    for (let userId in this.summarizedCalculations.users) {
-      const user = this.summarizedCalculations.users[userId];
+    for (let userId in this.summarizedOwnerCalculations.users) {
+      const user = this.summarizedOwnerCalculations.users[userId];
       if (typeof user === 'object')
         users.push(user);
     }
