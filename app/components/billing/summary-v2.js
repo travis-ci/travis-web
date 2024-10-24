@@ -35,7 +35,7 @@ export default Component.extend({
     return this.subscription.validToFromAddon || this.subscription.validTo;
   }),
   isCurrentTrial: computed('subscription.current_trial', function () {
-    return this.subscription.current_trial != null;
+    return this.subscription.current_trial != null && this.subscription.current_trial.status == 'subscribed';
   }),
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   canceledOrExpired: or('isExpired', 'isCanceled'),
