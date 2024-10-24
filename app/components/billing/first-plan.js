@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { not, reads, filterBy, alias } from '@ember/object/computed';
+import { not, reads, alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
@@ -26,7 +26,7 @@ export default Component.extend({
   showSwitchToFreeModal: false,
   showPlanSwitchWarning: false,
   availablePlans: reads('account.eligibleV2Plans'),
-  defaultPlans: filterBy('availablePlans', 'trialPlan'),
+  defaultPlans: reads('availablePlans'),
   defaultPlanId: reads('defaultPlans.firstObject.id'),
   showCancelButton: false,
   travisTermsUrl: 'https://www.ideracorp.com/legal/TravisCI#tabs-2',
@@ -58,6 +58,11 @@ export default Component.extend({
   isTrial: computed('selectedPlan', function () {
     let plan = this.selectedPlan;
     return plan ? plan.isTrial : true;
+  }),
+
+
+  trialPeriodSet: computed('selectedPlan', 'account', function () {
+    return this.selectedPlan.hasTrialPeriod && this.accounts.user.trialAllowed;
   }),
 
   hasLocalRegistration: false,
@@ -164,7 +169,8 @@ export default Component.extend({
         if (!this.subscription.id) {
           this.subscription.creditCardInfo.setProperties({
             token: token.id,
-            lastDigits: token.card.last4
+            lastDigits: token.card.last4,
+            fingerprint: token.card.fingerprint
           });
           this.subscription.setProperties({
             coupon: this.couponId
@@ -193,6 +199,7 @@ export default Component.extend({
       }
       this.flashes.success('Your account has been successfully activated');
     } catch (error) {
+      console.log(error);
       yield this.accounts.fetchV2Subscriptions.perform().then(() => {
         if (this.accounts.user.subscription || this.accounts.user.v2subscription) {
           this.storage.clearBillingData();
@@ -201,7 +208,7 @@ export default Component.extend({
           this.wizard.update.perform(2);
           this.router.transitionTo('account.repositories');
         } else {
-          this.handleError();
+          this.handleError(error);
         }
       });
     }
@@ -249,10 +256,8 @@ export default Component.extend({
       creditCardInfo,
     });
   },
-  handleError() {
-    let message = this.get('selectedPlan.isTrial')
-      ? 'Credit card verification failed, please try again or use a different card.'
-      : 'An error occurred when creating your subscription. Please try again.';
+  handleError(error) {
+    const message = error.errors[0].detail;
     this.flashes.error(message);
   },
 

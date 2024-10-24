@@ -37,6 +37,7 @@ export default Model.extend({
   plan: belongsTo('v2-plan-config', {async: false, inverse: null}),
   addons: attr(),
   auto_refill: attr(),
+  current_trial: attr(),
 
   isCanceled: equal('status', 'canceled'),
   isExpired: equal('status', 'expired'),
