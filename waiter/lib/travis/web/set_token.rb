@@ -22,7 +22,7 @@ module Travis
         return unless env['REQUEST_METHOD'] == 'POST'
 
         request = Rack::Request.new(env)
-        token, rss_token, user, storage, become = request.params.values_at('token', 'rssToken', 'user', 'storage',
+        token, rss_token, web_token, user, storage, become = request.params.values_at('token', 'rssToken', 'webToken', 'user', 'storage',
                                                                            'become')
         if /\A[a-zA-Z\-_\d]+\Z/.match?(token)
           storage = 'sessionStorage' if storage != 'localStorage'
@@ -31,6 +31,7 @@ module Travis
             storage,
             Sanitize.fragment(token),
             Sanitize.fragment(rss_token),
+            Sanitize.fragment(web_token),
             Sanitize.fragment(user),
             become,
             request.fullpath
@@ -47,6 +48,7 @@ __END__
 var storage = %s;
 storage.setItem('travis.token', %p);
 storage.setItem('travis.rssToken', %p);
+storage.setItem('travis.webToken', %p);
 storage.setItem('travis.user',  %p);
 if (%p) {
   storage.setItem('travis.auth.become', true);
