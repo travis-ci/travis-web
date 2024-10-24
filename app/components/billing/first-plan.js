@@ -199,6 +199,7 @@ export default Component.extend({
       }
       this.flashes.success('Your account has been successfully activated');
     } catch (error) {
+      console.log(error);
       yield this.accounts.fetchV2Subscriptions.perform().then(() => {
         if (this.accounts.user.subscription || this.accounts.user.v2subscription) {
           this.storage.clearBillingData();
@@ -207,7 +208,7 @@ export default Component.extend({
           this.wizard.update.perform(2);
           this.router.transitionTo('account.repositories');
         } else {
-          this.handleError();
+          this.handleError(error);
         }
       });
     }
@@ -255,10 +256,8 @@ export default Component.extend({
       creditCardInfo,
     });
   },
-  handleError() {
-    let message = this.get('selectedPlan.isTrial')
-      ? 'Credit card verification failed, please try again or use a different card.'
-      : 'An error occurred when creating your subscription. Please try again.';
+  handleError(error) {
+    const message = error.errors[0].detail;
     this.flashes.error(message);
   },
 
