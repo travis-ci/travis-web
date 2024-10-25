@@ -49,18 +49,7 @@
 }
 
 .top {
-  height: 71px;
-  border-bottom: solid 1px #eaeaea;
-  background-color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
-.top.scrolled {
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
+  background-color: $pebble-grey;
 }
 
 .landing-pro .top,
