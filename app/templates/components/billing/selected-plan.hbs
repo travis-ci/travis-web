@@ -7,8 +7,9 @@
       <p class='selected-plan__details--desc' data-test-selected-plan-credits>
         {{format-number this.selectedPlan.privateCreditsTotal}} Credits
       </p>
-      <div class='selected-plan_details--info'>
-        Renewed {{#if this.selectedPlan.isAnnual}}annually{{else}}monthly{{/if}}
+      <div class='selected-plan__period'>
+        Renewed {{#if this.selectedPlan.isAnnual}}annually{{else}}monthly{{/if}} -
+        <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check details</a>
       </div>
     {{/if}}
     {{#if this.selectedPlan.hasOSSCreditAddons}}
@@ -18,6 +19,14 @@
     {{/if}}
       <p class='selected-plan__details--desc' data-test-selected-plan-users>
         {{#if this.selectedPlan.hasUserLicenseAddons}}
+
+          <div class='selected-plan__details--info'>
+            {{#if this.selectedPlan.isUnlimitedUsers}}
+              Unlimited unique users.
+            {{else}}
+              Up to {{format-number this.selectedPlan.startingUsers}} unique users
+            {{/if}}
+          </div>
            <div class='selected-plan__period'>
             User licenses incl. in price: {{this.selectedPlan.usersInPlan}}
           </div>
@@ -31,19 +40,18 @@
             <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
           </div>
 
-          <div class='selected-plan__period'>
-            {{#if this.selectedPlan.isUnlimitedUsers}}
-              Unlimited unique users.
-            {{else}}
-              Up to {{format-number this.selectedPlan.startingUsers}} unique users
-            {{/if}}
-          </div>
-          <div data-test-selected-plan-period='true' class='selected-plan__period'>
-            Charged monthly per usage -
-              <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
-          </div>
         {{/if}}
       </p>
+
+    {{#if this.hasPremiumVM }}
+      <p class='selected-plan__details--desc'>
+        Premium VMs on demand
+        <div class='selected-plan__period'>
+          For available options
+            <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check details</a>
+          </div>
+      </p>
+    {{/if}}
     {{#if (eq this.selectedPlan.planType 'hybrid')}}
       <p class='selected-plan__details--desc' data-test-selected-plan-concurrency>
         {{pluralize this.selectedPlan.concurrencyLimit "concurrent job"}}

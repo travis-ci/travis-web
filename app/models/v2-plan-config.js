@@ -16,6 +16,7 @@ export default Model.extend({
   autoRefillAmounts: attr(),
   trialPlan: attr(),
   trialConfig: attr(),
+  vmSize: attr(),
   travisPricingUrl: 'https://docs.travis-ci.com/user/billing-overview/#usage-based-plans',
 
 
