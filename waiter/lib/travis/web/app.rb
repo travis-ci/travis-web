@@ -282,6 +282,10 @@ class Travis::Web::App
       config['aida'] = aida
     end
 
+    if ENV['DISABLE_AIDA']
+      config['disableAida'] = ENV['DISABLE_AIDA']
+    end
+
     if ENV['TRIAL_DAYS']
       config['trialDays'] = ENV['TRIAL_DAYS']
     end
