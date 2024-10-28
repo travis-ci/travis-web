@@ -108,9 +108,19 @@ $nav-line-height: 35px;
   width: 100%;
   line-height: $top-height + 1px;
   padding: 0 1em;
+  height: auto;
+
+  &.active {
+    border-bottom: solid 4px #3eaaaf;
+    font-weight: 600;
+  }
+
+  &:hover {
+    font-weight: 600;
+  }
 
   &:last-child {
-    padding-bottom: 10px;
+    padding-bottom: 0;
   }
 
   @media #{$small-only} {
