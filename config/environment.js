@@ -158,11 +158,6 @@ module.exports = function (environment) {
     statusPageStatusUrl:
       'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
 
-    zendesk: {
-      apiHost: 'https://travisci.zendesk.com',
-      createRequestEndpoint: '/api/v2/requests.json',
-    },
-
     moment: {
       includeTimezone: 'subset',
     },
