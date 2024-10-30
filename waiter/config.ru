@@ -49,7 +49,7 @@ if ENV['REDIRECT'] && !ENV['TRAVIS_PRO']
   use RedirectSubdomain, 'secure.travis-ci.org'
   use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signin'
   use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signup'
-  use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/help'
+  use RedirectPages, '/help', ENV['TRAVIS_HELP_REDIRECT_URL'], logged_in: true, open_new_tab: true
   use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/'
 end
 
