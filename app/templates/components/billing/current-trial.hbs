@@ -2,6 +2,7 @@
   <h3>
     Free Trial Period is active!
   </h3>
+  {{#if this.creditLimit}}
   <p class='used-users' data-test-user-usage-unique-users='true'>
     Trial Credits Allowance {{this.creditLimit}}
   </p>
@@ -9,12 +10,15 @@
     The credits section below states current usage of granted free trial allowance. More detailed information in 'Plans usage' tab
   </p>
 
+  {{/if}}
+  {{#if this.userLimit}}
   <p class='used-users' data-test-user-usage-unique-users='true'>
     Unique users limit during trial {{this.userLimit}}
   </p>
   <p class='desc'>
     The users section below states current number of unique users triggering builds during free trial period
   </p>
+  {{/if}}
 
   <p class='used-users' data-test-user-usage-unique-users='true'>
     Builds: {{this.buildsTriggered}} of {{this.buildsAllowed}} trial builds triggered. {{this.jobsPerBuild}} build job(s) per single build, {{this.concurrencyLimit}} concurrent jobs allowed.
