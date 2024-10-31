@@ -249,9 +249,9 @@
         <p class="invoice-issue-banner invoice-issue-banner-no-invoices" data-test-help-text='true'>
           <SvgImage @name='icon-help' @class='icon-help' />
           Having trouble with your invoices?
-          <LinkTo @route='help' @query={{hash anchor='form' billing=true}}>
+          <ExternalLinkTo @href={{config-get 'urls.resources'}} @title="Travis CI Resources">
             We’re happy to help
-          </LinkTo>
+          </ExternalLinkTo> 
         </p>
       </div>
       <p class="no-invoices">You do not have any invoices yet</p>
