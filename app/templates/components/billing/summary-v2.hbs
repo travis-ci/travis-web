@@ -174,9 +174,9 @@
 {{#if this.subscription.isManual}}
   <div class="yellow-message" data-test-plan-yellow-message='true'>
     This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
-    <LinkTo @route="help" @query={{hash anchor="form" billing=true}}>
+    <ExternalLinkTo @href={{config-get 'urls.resources'}} @title="Travis CI Resources">
       contact our support team.
-    </LinkTo>
+    </ExternalLinkTo>       
   </div>
   <br />
   {{#if (and this.subscription.hasUserLicenseAddons)}}

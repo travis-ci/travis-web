@@ -14,8 +14,6 @@
   </p>
   <p class="page-notice">
     If you believe you've received this message in error, please
-    <LinkTo @route="help" @query={{hash anchor="form"}}>
-      contact support.
-    </LinkTo>
+    <ExternalLinkTo @href={{config-get 'urls.resources'}} @title="Travis CI Resources">contact support.</ExternalLinkTo> 
   </p>
 </div>
