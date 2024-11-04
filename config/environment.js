@@ -135,7 +135,7 @@ module.exports = function (environment) {
       billingFaq: 'https://docs.travis-ci.com/user/billing-faq/',
       privacy: 'https://www.ideracorp.com/en/legal/privacypolicy',
       quickStart: 'https://www.travis-ci.com/quickstart/',
-      resources: 'https://www.travis-ci.com/resources/'
+      resources: 'https://www.travis-ci.com/resources/',
     },
     endpoints: {},
     githubApps: false,
