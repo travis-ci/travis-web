@@ -464,5 +464,13 @@ module.exports = function (environment) {
     var s3Bucket = require('./deploy')(DEPLOY_TARGET).s3.bucket;
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
+
+  if (APP_ENDPOINT) {
+    ENV.appEndpoint = APP_ENDPOINT;
+  }
+
+  if (TRAVIS_HELP_REDIRECT_URL) {
+    ENV.travisHelpRedirectUrl = TRAVIS_HELP_REDIRECT_URL;
+  }
   return ENV;
 };
