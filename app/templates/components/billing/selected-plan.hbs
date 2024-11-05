@@ -7,31 +7,49 @@
       <p class='selected-plan__details--desc' data-test-selected-plan-credits>
         {{format-number this.selectedPlan.privateCreditsTotal}} Credits
       </p>
+      <div class='selected-plan__period'>
+        Renewed {{#if this.selectedPlan.isAnnual}}annually{{else}}monthly{{/if}} -
+        <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check details</a>
+      </div>
     {{/if}}
     {{#if this.selectedPlan.hasOSSCreditAddons}}
       <p class='selected-plan__details--desc' data-test-selected-plan-oss-credits>
         {{format-number this.selectedPlan.publicCredits}} OSS Only Credits<span class='color-cement-grey'>/month</span>
       </p>
     {{/if}}
-    {{#if this.selectedPlan.hasUserLicenseAddons}}
       <p class='selected-plan__details--desc' data-test-selected-plan-users>
-        {{#if this.selectedPlan.isUnlimitedUsers}}
-          {{#if this.selectedPlan.hasPaidUserLicenseAddons}}
-            Unlimited unique users.
-            <div data-test-selected-plan-period='true' class='selected-plan__period'>
-              Charged monthly per usage -
-              <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
-            </div>
-          {{else}}
-            Unlimited unique users.
-          {{/if}}
-        {{else}}
-          Up to {{format-number this.selectedPlan.startingUsers}} unique users
-          <div data-test-selected-plan-period='true' class='selected-plan__period'>
-            Charged monthly per usage -
-              <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
+        {{#if this.selectedPlan.hasUserLicenseAddons}}
+
+          <div class='selected-plan__details--info'>
+            {{#if this.selectedPlan.isUnlimitedUsers}}
+              Unlimited unique users.
+            {{else}}
+              Up to {{format-number this.selectedPlan.startingUsers}} unique users
+            {{/if}}
           </div>
+           <div class='selected-plan__period'>
+            User licenses incl. in price: {{this.selectedPlan.usersInPlan}}
+          </div>
+          <div class='selected-plan__period'>
+            User licenses at discounted credits price: {{this.selectedPlan.discountedUsersInPlan}}
+            <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
+          </div>
+
+          <div class='selected-plan__period'>
+            Users charged monthly per usage
+            <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check pricing</a>
+          </div>
+
         {{/if}}
+      </p>
+
+    {{#if this.hasPremiumVM }}
+      <p class='selected-plan__details--desc'>
+        Premium VMs on demand
+        <div class='selected-plan__period'>
+          For available options
+            <a href="{{this.selectedPlan.travisPricingUrl}}" class="travis-link"  target="_blank">check details</a>
+          </div>
       </p>
     {{/if}}
     {{#if (eq this.selectedPlan.planType 'hybrid')}}
