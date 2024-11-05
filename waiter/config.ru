@@ -31,36 +31,14 @@ RedirectPages = Struct.new(:app, :from, :to, :page) do
   end
 end
 
-RedirectUrls = Struct.new(:app, :from, :to, :page, :open_new_tab) do
+RedirectUrls = Struct.new(:app, :from, :to, :page) do
   def call(env)
     request = Rack::Request.new(env)
 
     if request.host == from && request.fullpath == page
       location = "#{to}"
-      response_body = nil
-      status_code = 301
 
-      if open_new_tab
-        response_body = <<-HTML
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <title>Redirecting...</title>
-                <script type="text/javascript">
-                  window.open("#{location}", "_blank");
-                </script>
-                <noscript>
-                  <a href="#{location}" target="_blank">Click here to continue</a>
-                </noscript>
-              </head>
-              <body>
-                Redirecting to <a href="#{location}" target="_blank">#{location}</a>...
-              </body>
-            </html>
-          HTML
-          status_code = 200
-        end
-      [status_code, { 'Location' => location, 'Content-Type' => 'text/html'}, [response_body]]
+      [301, { 'Location' => location, 'Content-Type' => 'text/html'}, []]
     else
       app.call(env)
     end
@@ -91,7 +69,7 @@ if ENV['REDIRECT'] && !ENV['TRAVIS_PRO']
 end
 
 use RedirectPages, ENV['REDIRECT_TO'], ENV['TRAVIS_WP_SITE'],  '/help' if ENV['TRAVIS_PRO'] && ENV['REDIRECT']
-use RedirectUrls, ENV['APP_ENDPOINT'], ENV['TRAVIS_HELP_REDIRECT_URL'], '/help', true
+use RedirectUrls, ENV['APP_ENDPOINT'], ENV['TRAVIS_HELP_REDIRECT_URL'], '/help'
 
 use Rack::MobileDetect, redirect_to: ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
 
