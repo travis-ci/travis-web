@@ -73,7 +73,7 @@ module('Integration | Component | billing-information', function (hooks) {
     assert.dom('[data-test-contact-details-title]').hasText('Contact details');
     assert.dom('[data-test-billing-details-title]').hasText('Billing address');
     assert.equal(profilePage.billing.selectedPlanOverview.name.text, `${this.plans[0].name}`);
-    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.plans[0].startingUsers} unique users Charged monthly per usage - check pricing`);
+    assert.equal(profilePage.billing.selectedPlanOverview.users.text, `Up to ${this.plans[0].startingUsers} unique users User licenses incl. in price: User licenses at discounted credits price: check pricing Users charged monthly per usage check pricing`);
     assert.equal(profilePage.billing.selectedPlanOverview.price.text, `$${this.plans[0].startingPrice / 100}`);
     assert.equal(profilePage.billing.selectedPlanOverview.changePlan.text, 'Change plan');
 
