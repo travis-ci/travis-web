@@ -33,7 +33,7 @@ const STATE = {
   SIGNING_IN: 'signing-in'
 };
 
-const USER_FIELDS = ['id', 'login', 'token', 'rss_token', 'correct_scopes', 'channels', 'vcs_type', 'confirmed_at'];
+const USER_FIELDS = ['id', 'login', 'token', 'rss_token', 'web_token', 'correct_scopes', 'channels', 'vcs_type', 'confirmed_at'];
 
 const TOKEN_EXPIRED_MSG = "You've been signed out, because your access token has expired.";
 
@@ -81,6 +81,7 @@ export default Service.extend({
   token: or('currentUser.authToken', 'storage.token'),
   assetToken: reads('currentUser.token'),
   rssToken: reads('currentUser.rssToken'),
+  webToken: or('currentUser.webToken', 'storage.webToken'),
 
   userName: reads('currentUser.fullName'),
   gravatarUrl: reads('currentUser.gravatarUrl'),
@@ -223,6 +224,7 @@ export default Service.extend({
     this.validateUserData(userData, isBecome);
     const userRecord = pushUserToStore(this.store, userData);
     userRecord.set('authToken', token);
+    this.set('currentUser', userRecord);
 
     return this.reloadUser(userRecord).then(() => {
       //   let acc = storage.accounts;
@@ -241,7 +243,7 @@ export default Service.extend({
 
   reloadUser(userRecord, include = []) {
     includes = includes.concat(include).uniq();
-    let res =  this.fetchUser.perform(userRecord);
+    let res = this.fetchUser.perform(userRecord);
     return res;
   },
 

@@ -236,15 +236,25 @@
 
       will not be able to use Travis CI features.
 
+  
       <a href="{{this.dataProcessingAgreementUrl}}" class="travis-link"  target="_blank">Data Processing Agreement</a>.
     {{else}}
+    {{#if this.trialPeriodSet }}
+      <b class="font-bold">You are starting your free trial period. Once it ends, your account will automatically upgrade to the selected plan. Please note that specific trial limits may apply.'</b><br/><br/>
 
+      After the trial period ends you'll be charged {{format-currency this.selectedPlan.startingPrice floor="true"}} {{ if
+      this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel your subscription. Previous
+      charges won't be refunded when you cancel unless it's legally required. By clicking
+      on "{{this.getActivateButtonText}}" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI Terms and Privacy
+        Policy</a>.
+    {{else}}
       You'll be charged {{format-currency this.selectedPlan.startingPrice floor="true"}} {{ if
       this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel your subscription. Previous
 
       charges won't be refunded when you cancel unless it's legally required. By clicking
       on "{{this.getActivateButtonText}}" you agree to <a href="{{this.travisTermsUrl}}" class="travis-link"  target="_blank">Travis CI Terms and Privacy
         Policy</a>.
+      {{/if}}
     {{/if}}
     <br />
 

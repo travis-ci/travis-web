@@ -25,7 +25,7 @@ export default RESTAdapter.extend({
     hash.headers['accept'] = 'application/json; version=2';
     hash.headers['X-Client-Release'] = config.release;
 
-    let token = this.get('auth.token');
+    let token = this.get('auth.webToken');
     if (token) {
       if (!hash.headers['Authorization']) {
         hash.headers['Authorization'] = `token ${token}`;
