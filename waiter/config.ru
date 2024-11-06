@@ -69,7 +69,8 @@ if ENV['REDIRECT'] && !ENV['TRAVIS_PRO']
 end
 
 use RedirectPages, ENV['REDIRECT_TO'], ENV['TRAVIS_WP_SITE'],  '/help' if ENV['TRAVIS_PRO'] && ENV['REDIRECT']
-use RedirectUrls, ENV['APP_ENDPOINT'], ENV['TRAVIS_HELP_REDIRECT_URL'], '/owner/github/help?provider=github&login=help'
+# use RedirectUrls, ENV['APP_ENDPOINT'], ENV['TRAVIS_HELP_REDIRECT_URL'], '/owner/github/help?provider=github&login=help'
+use RedirectUrls, 'https://app-staging-dev1.travis-ci.com', 'https://www.travis-ci.com/resources', '/help'
 
 use Rack::MobileDetect, redirect_to: ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
 
