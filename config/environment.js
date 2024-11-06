@@ -37,8 +37,6 @@ const {
   DISABLE_AIDA,
   AIDA_CLIENT_ID,
   AIDA_CLIENT_KEY,
-  APP_ENDPOINT,
-  TRAVIS_HELP_REDIRECT_URL,
 } = process.env;
 
 module.exports = function (environment) {
@@ -135,7 +133,6 @@ module.exports = function (environment) {
       billingFaq: 'https://docs.travis-ci.com/user/billing-faq/',
       privacy: 'https://www.ideracorp.com/en/legal/privacypolicy',
       quickStart: 'https://www.travis-ci.com/quickstart/',
-      resources: 'https://www.travis-ci.com/resources/',
     },
     endpoints: {},
     githubApps: false,
@@ -465,12 +462,5 @@ module.exports = function (environment) {
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
 
-  if (APP_ENDPOINT) {
-    ENV.appEndpoint = APP_ENDPOINT;
-  }
-
-  if (TRAVIS_HELP_REDIRECT_URL) {
-    ENV.travisHelpRedirectUrl = TRAVIS_HELP_REDIRECT_URL;
-  }
   return ENV;
 };
