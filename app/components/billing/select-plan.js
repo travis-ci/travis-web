@@ -156,6 +156,10 @@ export default Component.extend({
     },
   }),
 
+  allowedTrial: computed('availablePlans', function () {
+    return this.account.trialAllowed;
+  }),
+
   allowReactivation: computed(function () {
     if (this.subscription) {
       return (this.subscription.isCanceled || this.subscription.isExpired) && !this.subscription.scheduledPlan;

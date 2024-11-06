@@ -118,7 +118,11 @@
                     onclick={{action 'selectAndSubmit' plan form}}
                     class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
                   >
+                    {{#if (and this.allowedTrial plan.hasTrialPeriod) }}
+                    Start Trial
+                    {{else}}
                     Select plan
+                    {{/if}}
                   </button>
                 {{/if}}
                 <ExternalLinkTo
