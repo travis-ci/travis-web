@@ -91,40 +91,7 @@ export default Component.extend({
   }),
 
   checkLicenseBanner: computed('expiring', 'expiringHalfway', 'expiringSoon', function () {
-    let hideBanner = process.env.HIDE_LICENSE_BANNER;
-    console.log("************************************");
-    console.log("************************************");
-    console.log("************************************");
-    console.log("Value of environment variable HIDE_LICENSE_BANNER");
-
-    console.log(process.env.HIDE_LICENSE_BANNER);
-    console.log("************************************");
-    console.log("************************************");
-    console.log("Value of hideBanner");
-    console.log(hideBanner);
-    if (hideBanner) {
       return false;
-    }
-    console.log("************************************");
-    console.log("************************************");
-    console.log("************************************");
-    let expiring = this.expiring;
-    let halfway = this.expiringHalfway;
-    let soon = this.expiringSoon;
-    let lastSeen = this.storage.getItem(this.lsLicense);
-    if (
-      // User has never closed banner, and license expires in 60 days or less
-      (!lastSeen && expiring) ||
-      // User has either never closed the banner, or closed it before 30 days,
-      // and license expires in 30 days or less
-      ((!lastSeen || lastSeen > 30) && halfway) ||
-      // License expires in 10 days or less
-      (soon)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
   }),
 
   showTrialBanner: alias('isTrial'),

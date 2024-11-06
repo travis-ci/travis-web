@@ -10,7 +10,6 @@ const resolveTwConfig = require('tailwindcss/resolveConfig');
 const tailwind = resolveTwConfig(tailwindConfig);
 
 const {
-  HIDE_LICENSE_BANNER,
   TRAVIS_PRO,
   TRAVIS_ENTERPRISE,
   SOURCE_ENDPOINT,
@@ -209,10 +208,6 @@ module.exports = function (environment) {
     ENV.featureFlags['github-apps'] = true;
     ENV.pro = true;
   }
-
-  // if (HIDE_LICENSE_BANNER) {
-  //   ENV.HIDE_LICENSE_BANNER = true;
-  // }
 
   if (TRAVIS_ENTERPRISE) {
     ENV.featureFlags['enterprise-version'] = true;

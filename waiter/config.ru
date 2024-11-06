@@ -64,7 +64,6 @@ run lambda { |env|
 }
 else
 run Travis::Web::App.build(
-  # hide_license_banner: ENV['HIDE_LICENSE_BANNER'],
   userlike:        ENV['USERLIKE'],
   environment:     ENV['RACK_ENV'] || 'development',
   api_endpoint:    ENV['API_ENDPOINT'],
