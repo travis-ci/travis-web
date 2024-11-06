@@ -91,6 +91,10 @@ export default Component.extend({
   }),
 
   checkLicenseBanner: computed('expiring', 'expiringHalfway', 'expiringSoon', function () {
+    let hideBanner = process.env.HIDE_LICENSE_BANNER;
+    if (hideBanner) {
+      return false;
+    }
     let expiring = this.expiring;
     let halfway = this.expiringHalfway;
     let soon = this.expiringSoon;
