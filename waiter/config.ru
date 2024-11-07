@@ -8,13 +8,6 @@ ENV['TRAVIS_HELP_REDIRECT_URL'] ||= 'https://www.travis-ci.com/resources/'
 
 $LOAD_PATH << 'lib'
 require 'travis/web'
-require 'logger'
-
-
-logger = Logger.new(STDOUT)
-logger.formatter = proc do |severity, datetime, progname, msg|
-  "#{datetime}: #{severity} - #{msg}\n"
-end
 
 RedirectSubdomain = Struct.new(:app, :from) do
   def call(env)
@@ -38,18 +31,12 @@ RedirectPages = Struct.new(:app, :from, :to, :page) do
   end
 end
 
-RedirectUrls = Struct.new(:app, :from, :to, :page, :logger) do
+RedirectUrls = Struct.new(:app, :from, :to, :page) do
   def call(env)
     request = Rack::Request.new(env)
-    logger.info "Request host #{request.host}"
-    logger.info "Expected host #{from}"
-    logger.info "Request fullpath #{request.fullpath}"
-    logger.info "Expected page #{page}"
-    logger.info "Redireciting to #{to}"
 
     if request.host == from && request.fullpath == page
       location = "#{to}"
-      logger.info "Performing redirection to #{location}"
 
       [301, { 'Location' => location, 'Content-Type' => 'text/html'}, []]
     else
@@ -82,7 +69,7 @@ if ENV['REDIRECT'] && !ENV['TRAVIS_PRO']
 end
 
 use RedirectPages, ENV['REDIRECT_TO'], ENV['TRAVIS_WP_SITE'],  '/help' if ENV['TRAVIS_PRO'] && ENV['REDIRECT']
-use RedirectUrls, ENV['APP_ENDPOINT'], ENV['TRAVIS_HELP_REDIRECT_URL'], '/help', logger
+use RedirectUrls, ENV['APP_ENDPOINT'], ENV['TRAVIS_HELP_REDIRECT_URL'], '/help'
 
 use Rack::MobileDetect, redirect_to: ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
 
