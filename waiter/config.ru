@@ -48,8 +48,8 @@ RedirectUrls = Struct.new(:app, :from, :to, :page, :logger) do
     logger.info "Redireciting to #{to}"
 
     if request.host == from && request.fullpath == page
-      logger.info "Performing redirection to #{location}"
       location = "#{to}"
+      logger.info "Performing redirection to #{location}"
 
       [301, { 'Location' => location, 'Content-Type' => 'text/html'}, []]
     else
