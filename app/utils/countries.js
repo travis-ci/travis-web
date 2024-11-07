@@ -19,7 +19,6 @@ const countriesMap = {
   BH: 'Bahrain',
   BD: 'Bangladesh',
   BB: 'Barbados',
-  BY: 'Belarus',
   BE: 'Belgium',
   BZ: 'Belize',
   BJ: 'Benin',
@@ -179,7 +178,6 @@ const countriesMap = {
   QA: 'Qatar',
   RE: 'Reunion',
   RO: 'Romania',
-  RU: 'Russian Federation',
   RW: 'Rwanda',
   BL: 'Saint Barthelemy',
   SH: 'Saint Helena',
@@ -270,7 +268,6 @@ states[countriesMap['CA']] = [
 export const zeroVatThresholdCountries = [
   countriesMap['AL'],
   countriesMap['BH'],
-  countriesMap['BY'],
   countriesMap['CL'],
   countriesMap['LI'],
   countriesMap['MA'],
@@ -297,7 +294,6 @@ export const nonZeroVatThresholdCountries = [
   countriesMap['NZ'],
   countriesMap['MX'],
   countriesMap['NO'],
-  countriesMap['RU'],
   countriesMap['SG'],
   countriesMap['ZA'],
 ];
