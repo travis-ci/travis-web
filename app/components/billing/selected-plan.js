@@ -9,5 +9,10 @@ export default Component.extend({
 
   price: computed('totalPrice', 'selectedPlanPrice', function () {
     return typeOf(this.totalPrice) === 'number' && this.totalPrice >= 0 ? this.totalPrice : Math.floor(this.selectedPlanPrice / 100);
+  }),
+
+  hasPremiumVM: computed('selectedPlan', function () {
+    console.log(this.selectedPlan);
+    return this.selectedPlan.vmSize != null;
   })
 });
