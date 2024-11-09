@@ -2,7 +2,7 @@
   position: relative;
 
   .log-tail {
-    @include z-index(above-above);
+    @include z-index(above);
 
     position: absolute;
     display: block;
@@ -97,7 +97,7 @@
   }
 
   .to-top {
-    @include z-index(above-above);
+    @include z-index(above);
 
     position: absolute;
     display: block;
