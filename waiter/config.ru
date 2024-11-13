@@ -3,6 +3,8 @@
 # Make sure we set that before everything
 ENV['RACK_ENV'] ||= ENV['RAILS_ENV'] || ENV['ENV']
 ENV['RAILS_ENV']  = ENV['RACK_ENV']
+ENV['APP_ENDPOINT'] ||= 'https://app.travis-ci.com'
+ENV['TRAVIS_HELP_REDIRECT_URL'] ||= 'https://www.travis-ci.com/resources/'
 
 $LOAD_PATH << 'lib'
 require 'travis/web'
@@ -29,6 +31,20 @@ RedirectPages = Struct.new(:app, :from, :to, :page) do
   end
 end
 
+RedirectUrls = Struct.new(:app, :from, :to, :page) do
+  def call(env)
+    request = Rack::Request.new(env)
+
+    if request.host == from && request.fullpath == page
+      location = "#{to}"
+
+      [301, { 'Location' => location, 'Content-Type' => 'text/html'}, []]
+    else
+      app.call(env)
+    end
+  end
+end
+
 if ENV['TRAVIS_PRO']
   ENV['API_ENDPOINT'] ||= 'https://api.travis-ci.com'
   ENV['PAGES_ENDPOINT'] ||= 'https://travis-ci.com/account/plan'
@@ -49,11 +65,11 @@ if ENV['REDIRECT'] && !ENV['TRAVIS_PRO']
   use RedirectSubdomain, 'secure.travis-ci.org'
   use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signin'
   use RedirectPages, ENV['REDIRECT_FROM'], ENV['REDIRECT_TO'], '/signup'
-  use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/help'
   use RedirectPages, ENV['REDIRECT_FROM'], ENV['TRAVIS_WP_SITE'],  '/'
 end
 
 use RedirectPages, ENV['REDIRECT_TO'], ENV['TRAVIS_WP_SITE'],  '/help' if ENV['TRAVIS_PRO'] && ENV['REDIRECT']
+use RedirectUrls, ENV['APP_ENDPOINT'], ENV['TRAVIS_HELP_REDIRECT_URL'], '/help'
 
 use Rack::MobileDetect, redirect_to: ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
 
