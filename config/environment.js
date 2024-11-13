@@ -37,6 +37,7 @@ const {
   DISABLE_AIDA,
   AIDA_CLIENT_ID,
   AIDA_CLIENT_KEY,
+  TRAVIS_HELP_REDIRECT_URL,
 } = process.env;
 
 module.exports = function (environment) {
@@ -133,6 +134,7 @@ module.exports = function (environment) {
       billingFaq: 'https://docs.travis-ci.com/user/billing-faq/',
       privacy: 'https://www.ideracorp.com/en/legal/privacypolicy',
       quickStart: 'https://www.travis-ci.com/quickstart/',
+      resources: 'https://www.travis-ci.com/resources/',
     },
     endpoints: {},
     githubApps: false,
@@ -157,11 +159,6 @@ module.exports = function (environment) {
     emojiPrepend: '',
     statusPageStatusUrl:
       'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
-
-    zendesk: {
-      apiHost: 'https://travisci.zendesk.com',
-      createRequestEndpoint: '/api/v2/requests.json',
-    },
 
     moment: {
       includeTimezone: 'subset',
@@ -466,5 +463,10 @@ module.exports = function (environment) {
     var s3Bucket = require('./deploy')(DEPLOY_TARGET).s3.bucket;
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
+
+  if (TRAVIS_HELP_REDIRECT_URL) {
+    ENV.urls.resources = TRAVIS_HELP_REDIRECT_URL;
+  }
+
   return ENV;
 };
