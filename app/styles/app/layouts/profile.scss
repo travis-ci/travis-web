@@ -96,6 +96,22 @@ $profile-breakpoint: 600px;
 
 }
 
+.trial-no-charge-text {
+  color: #666 !important;
+  font-size: 12px;
+  margin: 4px;
+  padding: 0;
+  font-weight: bold;
+}
+
+.no-charges {
+  color: #666 !important;
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  margin: 4px;
+}
+
 .profile-main {
   flex-grow: 1;
 }
