@@ -115,6 +115,11 @@
             <p>{{stripeError.message}}</p>
           {{/if}}
         </StripeCard>
+        {{#if this.selectedPlan.hasTrialPeriod }}
+          <span class="trial-no-charge-text">
+            Your credit card will not be charged for 14 days. Enjoy your trial!
+          </span>
+        {{/if}}
         <div class='billing-checkout__payment'>
           {{#if this.isLoading}}
             <LoadingIndicator/>

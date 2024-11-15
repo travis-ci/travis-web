@@ -28,6 +28,11 @@
     <form.field @label="Credit Card details"
       onSubmit={{perform this.createSubscription}} @required={{true}} @showRequiredMark={{true}} as |field|>
       <StripeCard  class="cc-form-internal" @onComplete={{action "complete" }} @options={{this.options}} as |stripeError|>
+        {{#if this.selectedPlan.hasTrialPeriod }}
+          <span class="trial-no-charge-text">
+            Your credit card will not be charged for 14 days. Enjoy your trial!
+          </span>
+        {{/if}}
         {{#if stripeError}}
         <p>{{stripeError.message}}</p>
         {{/if}}
