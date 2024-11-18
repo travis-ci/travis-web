@@ -49,10 +49,10 @@ export default Component.extend({
 
   trackButtonClicks() {
     if (this.currentStep === STEPS.ONE) {
-      this.metrics.trackEvent({
-        category: 'Subscription',
-        action: 'Plan Chosen',
-      });
+      // this.metrics.trackEvent({
+      //   category: 'Subscription',
+      //   action: 'Plan Chosen',
+      // });
     } else if (this.currentStep === STEPS.TWO) {
       this.metrics.trackEvent({
         category: 'Subscription',
@@ -82,7 +82,7 @@ export default Component.extend({
 
     next() {
       if (this.selectedPlan || this.selectedAddon) {
-        this.trackButtonClicks();
+        // this.trackButtonClicks();
         const currentIndex = this.steps.indexOf(this.currentStep);
         const lastIndex = this.steps.length - 1;
         const nextIndex = Math.min(lastIndex, currentIndex + 1);
