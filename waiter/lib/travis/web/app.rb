@@ -301,26 +301,22 @@ class Travis::Web::App
     if ENV['GOOGLE_ANALYTICS_ID']
       config['metricsAdapters'].push({
         name: 'GoogleAnalytics',
-        environments: ['development', 'production'],
+        environments: ['development', 'production', 'staging'],
         config: {
           id: ENV['GOOGLE_ANALYTICS_ID'],
-          debug: false, # Force to false in production
-          trace: false, # Force to false in production
-          sendHitTask: true, # Force to true in production
-          anonymizeIp: true # Best practice for GDPR
+          debug: @options[:environment] === 'development',
+          trace: @options[:environment] === 'development',
+          sendHitTask: @options[:environment] != 'development'
         }
       })
     end
-
     if ENV['GOOGLE_TAGS_CONTAINER_ID']
       config['metricsAdapters'].push({
         name: 'GoogleTagManager',
-        environments: ['development', 'production'],
+        environments: ['development', 'production', 'staging'],
         config: {
           id: ENV['GOOGLE_TAGS_CONTAINER_ID'],
-          dataLayer: [], # Initialize empty dataLayer
-          envParams: ENV['GOOGLE_TAGS_PARAMS'],
-          debug: false # Force debug off in production
+          envParams: ENV['GOOGLE_TAGS_ENV_PARAMS']
         }
       })
     end
