@@ -317,7 +317,7 @@ class Travis::Web::App
         environments: ['development', 'production'],
         config: {
           id: ENV['GOOGLE_TAGS_CONTAINER_ID'],
-          envParams: ENV['GOOGLE_TAGS_ENV_PARAMS']
+          envParams: ENV['GOOGLE_TAGS_PARAMS']
         }
       })
     end
