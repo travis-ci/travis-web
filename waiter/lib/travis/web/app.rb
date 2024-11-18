@@ -204,6 +204,10 @@ class Travis::Web::App
       config['featureFlags']['enterprise-version'] = true
     end
 
+    if ENV['REDIRECT']
+      config['featureFlags']['redirect'] = true
+    end
+
     if options[:github_apps_app_name]
       config['githubApps'] ||= {}
       config['githubApps']['appName'] = options[:github_apps_app_name]
@@ -222,6 +226,8 @@ class Travis::Web::App
 
     config['defaultTitle'] = title
     config['apiEndpoint'] = options[:api_endpoint] if options[:api_endpoint]
+    config['authEndpoint'] = options[:auth_endpoint] if options[:auth_endpoint]
+    config['apiTraceEndpoint'] = options[:api_trace_endpoint] if options[:api_trace_endpoint]
     config['githubAppsEndpoint'] = options[:github_apps_endpoint]
     source_endpoint = options[:source_endpoint]
     if source_endpoint
@@ -262,6 +268,10 @@ class Travis::Web::App
       config['providers'][provider]['isDefault'] = true
     end
 
+    config['intercom'] ||= {}
+    config['intercom']['appid']= options[:intercom_app_id] || 'placeholder'
+    config['intercom']['enabled'] = !!options[:intercom_app_id]
+
     if ENV['ENDPOINT_PORTFOLIO']
       config['providers'] ||= {}
       config['providers']['assembla'] ||= {}
@@ -286,9 +296,47 @@ class Travis::Web::App
       config['disableAida'] = ENV['DISABLE_AIDA']
     end
 
+    config['metricsAdapters'] = []
+
+    if ENV['GOOGLE_ANALYTICS_ID']
+      config['metricsAdapters'].push({
+        name: 'GoogleAnalytics',
+        environments: ['development', 'production'],
+        config: {
+          id: ENV['GOOGLE_ANALYTICS_ID'],
+          debug: @options[:environment] === 'development',
+          trace: @options[:environment] === 'development',
+          sendHitTask: @options[:environment] != 'development',
+        }
+      })
+    end
+
+    if ENV['GOOGLE_TAGS_CONTAINER_ID']
+      config['metricsAdapters'].push({
+        name: 'GoogleTagManager',
+        environments: ['development', 'production'],
+        config: {
+          id: ENV['GOOGLE_TAGS_CONTAINER_ID']
+        }
+      })
+    end
+
+    config['gReCaptcha'] ||= {}
+    if ENV['GOOGLE_RECAPTCHA_SITE_KEY']
+      config['gReCaptcha']['siteKey'] = ENV['GOOGLE_RECAPTCHA_SITE_KEY']
+    end
+
     if ENV['TRIAL_DAYS']
       config['trialDays'] = ENV['TRIAL_DAYS']
     end
+
+    if ENV['DISABLE_SENTRY']
+      config['sentry']['development'] = true
+    end
+
+    config['tempBanner'] ||= {}
+    config['tempBanner']['tempBannerEnabled'] = ENV['TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED'] || false
+    config['tempBanner']['tempBannerMessage'] = ENV['TEMPORARY_ANNOUNCEMENT_MESSAGE'] || ''
 
     regexp = %r{<meta name="travis/config/environment"\s+content="([^"]+)"}
     string.gsub!(regexp) do
