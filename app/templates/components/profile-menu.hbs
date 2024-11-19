@@ -18,7 +18,7 @@
     {{on 'click' (action 'toggleMenu')}}
   >
 
-  
+
     <UserAvatar
       @url={{this.user.avatarUrl}}
       @name={{this.user.fullName}}
@@ -60,6 +60,21 @@
       </LinkTo>
     </li>
    {{/unless}}
+    {{#if this.showSubscriptionTab}}
+      <li>
+        <LinkTo
+          @route="organization.billing"
+          @title="Plan"
+          @model={{this.model}}
+          class="signed-in topbar-menu-item"
+        >
+          <SvgImage @name="icon-settings" @class="icon" />
+          <div class="topbar-menu-item__label">
+            Plan
+          </div>
+        </LinkTo>
+      </li>
+    {{/if}}
     <li>
       <a
         data-test-signout-link
