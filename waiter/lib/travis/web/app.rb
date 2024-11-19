@@ -304,10 +304,9 @@ class Travis::Web::App
         environments: ['development', 'production'],
         config: {
           id: ENV['GOOGLE_ANALYTICS_ID'],
-          debug: true, # Temporarily enable for debugging
-          trace: true, # Temporarily enable for debugging
-          sendHitTask: true,
-          anonymizeIp: true
+          debug: @options[:environment] === 'development',
+          trace: @options[:environment] === 'development',
+          sendHitTask: @options[:environment] != 'development'
         }
       })
     end
@@ -317,9 +316,7 @@ class Travis::Web::App
         environments: ['development', 'production'],
         config: {
           id: ENV['GOOGLE_TAGS_CONTAINER_ID'],
-          dataLayer: [],
-          envParams: ENV['GOOGLE_TAGS_PARAMS'],
-          debug: true # Temporarily enable for debugging
+          envParams: ENV['GOOGLE_TAGS_PARAMS']
         }
       })
     end
