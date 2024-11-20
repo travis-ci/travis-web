@@ -52,7 +52,7 @@
         @title="Plan"
         class="signed-in topbar-menu-item"
       >
-        <SvgImage @name="icon-settings" @class="icon" />
+        <SvgImage @name="icon-plan.svg" @class="icon" />
         <div class="topbar-menu-item__label">
           Plan
         </div>
@@ -90,7 +90,7 @@
     <li class="nav-nested"></li>
 
     <li class="section-header">
-      Switch accounts
+      Accounts
     </li>
 
     {{#each this.auth.inactiveAccounts as |account| }}
@@ -109,20 +109,18 @@
       </li>
     {{else}}
       <li class="navigation-nested__note">
-        We don't know your other accounts yet. You can add one!
+        Easily manage all your accounts in one place!
+        <LinkTo
+          @route="signin"
+          @query={{hash redirectUrl=this.redirectUrl}}
+          @title="Add another account"
+          class="navigation-nested__link"
+        >
+          Add an account
+        </LinkTo>
       </li>
     {{/each}}
 
-    <li class="text-right">
-      <LinkTo
-        @route="signin"
-        @query={{hash redirectUrl=this.redirectUrl}}
-        @title="Add another account"
-        class="navigation-nested__link"
-      >
-        Add an account
-      </LinkTo>
-    </li>
 
   </ul>
 
