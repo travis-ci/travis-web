@@ -33,7 +33,7 @@
             {{#if (or (and plan.isAnnual this.showAnnual) (and (not plan.isAnnual) (not this.showAnnual)))}}
               <div
                 data-test-plan-box='true'
-                class='billing-plans__box-v2 pointer {{if (eq plan.id this.selectedPlan.id) 'highlight-plan'}}'
+                class='billing-plans__box-v2 pointer {{if (or (eq plan.id this.selectedPlan.id) (eq plan.concurrencyLimit 5)) "highlight-plan"}}'
                 onclick={{action (mut this.selectedPlan) plan}}
               >
                 <p class='billing-plans__box-v2--name billing-annual-plans' data-test-selected-plan-name="true">
@@ -119,11 +119,14 @@
                     class='button--white-and-teal billing-plans__box-v2--button select-plan-{{plan.id}}'
                   >
                     {{#if (and this.allowedTrial plan.hasTrialPeriod) }}
-                    Start Trial
+                    Start Free Trial
                     {{else}}
                     Select plan
                     {{/if}}
                   </button>
+                {{/if}}
+                {{#if (and this.allowedTrial plan.hasTrialPeriod) }}
+                  <span class="no-charges">No charges for 14 days</span>
                 {{/if}}
                 <ExternalLinkTo
                   @href={{config-get 'urls.planDocs'}}

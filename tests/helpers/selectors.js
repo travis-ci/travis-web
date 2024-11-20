@@ -56,60 +56,6 @@ export const INSIGHTS_SETTINGS_MODAL_CANCEL =
 export const INSIGHTS_SETTINGS_MODAL_CONFIRM =
   '[data-test-visibility-settings-modal-confirm-button]';
 
-// travis/help
-export const HELP_PAGE_GREETING_SECTION =
-  '[data-test-help-page-greeting-section]';
-export const HELP_PAGE_GREETING_HEADER =
-  '[data-test-help-page-greeting-header]';
-export const HELP_PAGE_GREETING_USERNAME =
-  '[data-test-help-page-greeting-username]';
-export const HELP_PAGE_NAVIGATION_LINKS =
-  '[data-test-help-page-navigation-links]';
-export const HELP_PAGE_STATUS = '[data-test-help-page-status]';
-export const HELP_PAGE_SUPPORT_SECTION =
-  '[data-test-help-page-support-section]';
-export const HELP_PAGE_RESOURCES_SECTION =
-  '[data-test-help-page-resources-section]';
-export const HELP_PAGE_RESOURCES_IMAGE =
-  '[data-test-help-page-resources-image]';
-export const HELP_PAGE_RESOURCES_HEADER =
-  '[data-test-help-page-resources-header]';
-export const HELP_PAGE_RESOURCES_LIST = '[data-test-help-page-resources-list]';
-export const HELP_PAGE_RESOURCES_BUTTON =
-  '[data-test-help-page-resources-button]';
-export const HELP_PAGE_TOPICS_SECTION = '[data-test-help-page-topics-section]';
-export const HELP_PAGE_TOPICS_IMAGE = '[data-test-help-page-topics-image]';
-export const HELP_PAGE_TOPICS_HEADER = '[data-test-help-page-topics-header]';
-export const HELP_PAGE_TOPICS_LIST = '[data-test-help-page-topics-list]';
-export const HELP_PAGE_TOPICS_BUTTON = '[data-test-help-page-topics-button]';
-
-// travis/components/zendesk-request-form
-export const ZENDESK_FORM_HEADER = '[data-test-zendesk-form-header]';
-export const ZENDESK_FORM_SUPPORT_HOURS =
-  '[data-test-zendesk-form-support-hours]';
-export const ZENDESK_FORM_CONTAINER = '[data-test-zendesk-form-container]';
-export const ZENDESK_FORM_EMAIL = '[data-test-zendesk-form-email]';
-export const ZENDESK_FORM_SUBJECT = '[data-test-zendesk-form-subject]';
-export const ZENDESK_FORM_DESCRIPTION = '[data-test-zendesk-form-description]';
-export const ZENDESK_FORM_SUBMIT = '[data-test-zendesk-form-submit]';
-export const ZENDESK_FORM_LOG_IN_HEADER =
-  '[data-test-zendesk-form-log-in-header]';
-export const ZENDESK_FORM_LOG_IN_IMAGE =
-  '[data-test-zendesk-form-log-in-image]';
-export const ZENDESK_FORM_LOG_IN_BUTTON =
-  '[data-test-zendesk-form-log-in-button]';
-export const ZENDESK_FORM_SUCCESS_HEADER =
-  '[data-test-zendesk-form-success-header]';
-export const ZENDESK_FORM_SUCCESS_IMAGE =
-  '[data-test-zendesk-form-success-image]';
-export const ZENDESK_FORM_SUCCESS_MESSAGE =
-  '[data-test-zendesk-form-success-message]';
-export const ZENDESK_FORM_BACK_LINK = '[data-test-zendesk-form-back-link]';
-export const ZENDESK_FORM_COMMUNITY_HEADER =
-  '[data-test-zendesk-form-community-header]';
-export const ZENDESK_FORM_COMMUNITY_IMAGE =
-  '[data-test-zendesk-form-community-image]';
-
 // travis/plans
 export const PLANS_PAGE_HEADER_SECTION =
   '[data-test-plans-page-header-section]';
