@@ -107,21 +107,30 @@
           <SvgImage @name={{vcs-icon account.vcsType}} @height=14 />
         </div>
       </li>
+    {{/each}}
+
+    {{#if this.auth.inactiveAccounts.length}}
+      <LinkTo
+        @route="signin"
+        @query={{hash redirectUrl=this.redirectUrl}}
+        @title="Add another account"
+        class="navigation-nested__link"
+      >
+        Add an account
+      </LinkTo>
     {{else}}
       <li class="navigation-nested__note">
         Easily manage all your accounts in one place!
-        <LinkTo
-          @route="signin"
-          @query={{hash redirectUrl=this.redirectUrl}}
-          @title="Add another account"
-          class="navigation-nested__link"
-        >
-          Add an account
-        </LinkTo>
       </li>
-    {{/each}}
-
-
+      <LinkTo
+        @route="signin"
+        @query={{hash redirectUrl=this.redirectUrl}}
+        @title="Add another account"
+        class="navigation-nested__link"
+      >
+        Add an account
+      </LinkTo>
+    {{/if}}
   </ul>
 
 {{/if}}
