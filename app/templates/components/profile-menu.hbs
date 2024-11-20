@@ -46,6 +46,18 @@
         {{vcs-name this.user.vcsType}} support is currently in Beta
       </li>
     {{/if}}
+    <li>
+      <LinkTo
+        @route="account.billing"
+        @title="Plan"
+        class="signed-in topbar-menu-item"
+      >
+        <SvgImage @name="icon-settings" @class="icon" />
+        <div class="topbar-menu-item__label">
+          Plan
+        </div>
+      </LinkTo>
+    </li>
    {{#unless this.isActivation}}
     <li>
       <LinkTo
@@ -60,19 +72,6 @@
       </LinkTo>
     </li>
    {{/unless}}
-      <li>
-        <LinkTo
-          @route="organization.billing"
-          @title="Plan"
-          @model={{this.model}}
-          class="signed-in topbar-menu-item"
-        >
-          <SvgImage @name="icon-settings" @class="icon" />
-          <div class="topbar-menu-item__label">
-            Plan
-          </div>
-        </LinkTo>
-      </li>
     <li>
       <a
         data-test-signout-link
