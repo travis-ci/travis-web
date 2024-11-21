@@ -310,6 +310,7 @@ class Travis::Web::App
         }
       })
     end
+    
     if ENV['GOOGLE_TAGS_CONTAINER_ID']
       config['metricsAdapters'].push({
         name: 'GoogleTagManager',
