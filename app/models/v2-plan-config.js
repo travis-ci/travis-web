@@ -37,6 +37,18 @@ export default Model.extend({
     return  this.trialConfig != null;
   }),
 
+  trialDuration: computed('trialConfig', function () {
+    let result = this.trialConfig.duration;
+    let value = Number(result.split('_')[0]);
+    let mult = 30;
+    switch (result.slice(-1)) {
+      case 'd': mult = 1; break;
+      case 'w': mult = 7; break;
+      default:
+    }
+    return value * mult;
+  }),
+
   addonConfigs: attr(),
   hasCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
     return (this.addonConfigs || []).filter(addon => addon.type === 'credit_private').length > 0;
