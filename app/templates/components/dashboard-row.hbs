@@ -45,6 +45,21 @@
       </h1>
     </header>
     {{#if this.repo.active}}
+      <section class="dash-default dash-insights">
+        <EmberTooltip @text="Check your Organization Insights" />
+
+        <h3 class="label">
+          Insights
+        </h3>
+        <p class="row-content color">
+          <LinkTo
+            @route="owner.repositories"
+            @models={{array this.repo.provider this.repo.owner.login}}
+          >
+            <SvgImage @name="icon-scales" @class="icon" />
+          </LinkTo>
+        </p>
+      </section>
       <section class="dash-default {{this.repo.defaultBranch.lastBuild.state}} fade-out">
         <h3 class="label">
           Default branch

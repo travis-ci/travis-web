@@ -64,6 +64,14 @@
   }
 }
 
+.dash-insights {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: fit-content;
+  margin-right: 15px;
+}
+
 .dash-finished {
   display: relative;
 }
