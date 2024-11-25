@@ -18,7 +18,6 @@
     {{on 'click' (action 'toggleMenu')}}
   >
 
-
     <UserAvatar
       @url={{this.user.avatarUrl}}
       @name={{this.user.fullName}}
@@ -131,10 +130,7 @@
             Add an account!
         </LinkTo>
         <br>
-
       </li>
-
-
     {{/if}}
 
     {{#if this.user.accounts.organizations.length}}
@@ -143,11 +139,11 @@
       <li class="section-header">
         Context
       </li>
-    <LinkTo
-      @route="owner.repositories"
-      @models={{array this.user.provider this.user.login}}
-      class="organizations-list-item"
-    >
+      <LinkTo
+        @route="owner.repositories"
+        @models={{array this.user.provider this.user.login}}
+        class="organizations-list-item"
+      >
       <li class="username pointer topbar-menu-item">
         <UserAvatar
           @url={{this.user.avatarUrl}}

@@ -43,7 +43,6 @@ export default Component.extend({
       this.set('isMenuOpen', true);
       next(() => this.enableAutoClose());
     }
-    console.log(this.auth);
   },
 
   enableAutoClose() {
