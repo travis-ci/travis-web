@@ -198,7 +198,7 @@ $nav-line-height: 35px;
 
   .section-accounts {
     overflow-y: auto;
-    max-height: 130px;
+    flex-shrink: 0.7;
   }
 
   &__header {
@@ -373,7 +373,8 @@ $nav-line-height: 35px;
 
 .profile.menu.open .navigation-nested,
 .profile.signed-out:hover .navigation-nested {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile.menu:focus-within > ul {
@@ -385,9 +386,6 @@ nav.navigation-anchor:hover {
   text-decoration: underline;
 }
 
-.organizations-list.scrollable {
-  max-height: 200px; /* adjust as needed */
+.organizations-list {
   overflow-y: auto;
-  padding-bottom: 50px;
 }
-
