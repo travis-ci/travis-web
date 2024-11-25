@@ -7,7 +7,7 @@ import {
 } from 'ember-cli-page-object';
 
 export default create({
-  visit: visitable('/:username'),
+  visit: visitable('/:username?tab=repositories'),
 
   avatar: {
     scope: '.avatar',
