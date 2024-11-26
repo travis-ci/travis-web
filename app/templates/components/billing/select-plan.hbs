@@ -139,6 +139,11 @@
           {{/each}}
         </div>
       </div>
+      {{#if this.subscription.plan.isTrial}}
+        <h2 class="trial-end-warning">
+          Selecting a plan will immediately end your current Free Trial Period
+        </h2>
+      {{/if}}
       <h2>
         Looking for more credits, users or VM sizes? <a class='credits-calculator-button' href="mailto:sales@travis-ci.com">Contact our Sales Team</a>
       </h2>

@@ -25,7 +25,11 @@
     </button>
   {{else}}
     <button {{on 'click' this.openPlansSelector}} class='button--blue' data-test-change-subscription='true'>
-      Change plan
+      {{#if this.subscription.plan.isTrial}}
+        Upgrade plan
+      {{else}}
+        Change plan
+      {{/if}}
     </button>
   {{/if}}
 {{/if}}
