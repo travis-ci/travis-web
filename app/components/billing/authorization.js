@@ -14,7 +14,9 @@ export default Component.extend({
   stripeElement: null,
   account: null,
   subscription: null,
-
+  isCurrentTrial: computed('subscription.current_trial', function () {
+    return this.subscription.current_trial != null && this.subscription.current_trial.status == 'subscribed';
+  }),
   showCancelModal: false,
   isV2Subscription: false,
   selectedPlan: null,

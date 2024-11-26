@@ -20,6 +20,9 @@ export default Component.extend({
   showAnnual: false,
   showCalculator: false,
   annualPlans: [],
+  isCurrentTrial: computed('subscription.current_trial', function () {
+    return this.subscription.current_trial != null && this.subscription.current_trial.status == 'subscribed';
+  }),
 
   isCancellationMoreThanOneMonthOld: computed('subscription.{isCanceled,canceledAt}', function () {
     if (!this.subscription || !this.subscription.isCanceled) {
@@ -50,6 +53,10 @@ export default Component.extend({
   }),
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
+    if (this.isCurrentTrial) {
+      this.availablePlans = [this.subscription.plan, ...this.availablePlans];
+    }
+
     if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
       return this.sortedPlans;
     }
@@ -77,7 +84,7 @@ export default Component.extend({
   }),
 
   filterPlansByStartingPrice(plans, startingPrice) {
-    return plans.filter(plan => plan.startingPrice > startingPrice);
+    return plans.filter(plan => this.isCurrentTrial ? plan.startingPrice >= startingPrice : plan.startingPrice > startingPrice);
   },
 
   isHybridPlan(plan) {
