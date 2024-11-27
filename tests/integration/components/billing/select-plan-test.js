@@ -101,10 +101,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
   test('displayedPlans should include current plan when trial period is active', function (assert) {
     let component = this.owner.lookup('component:billing/select-plan');
-    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false,
-                                                        planType: 'hybrid annual' } ,
-                                                current_trial: {status: 'subscribed'}
-    };
+    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' }, current_trial: {status: 'subscribed'}};
 
     component.set('availablePlans', [this.plan1, this.plan2]);
     component.set('subscription', subscription);
@@ -121,8 +118,7 @@ module('Integration | Component | billing-select-plan', function (hooks) {
   });
 
   test('warning text should be present when trial period is active', async function (assert) {
-    this.subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' } ,
-                          current_trial: {status: 'subscribed'}};
+    this.subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' }, current_trial: {status: 'subscribed'}};
 
     await render(hbs`<Billing::SelectPlan
       @showPlansSelector={{true}}
@@ -132,7 +128,6 @@ module('Integration | Component | billing-select-plan', function (hooks) {
       />`
     );
 
-    assert.dom('[data-test-warning-trial]').hasText('Selecting a plan will immediately end your current Free Trial Period',
-                                                    'Warning text should be displayed when trial period for the plan is active');
+    assert.dom('[data-test-warning-trial]').hasText('Selecting a plan will immediately end your current Free Trial Period', 'Warning text should be displayed when trial period for the plan is active');
   });
 });
