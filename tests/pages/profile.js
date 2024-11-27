@@ -790,6 +790,11 @@ export default create({
         scope: '[data-test-invoice-select-year]'
       }
     },
+
+    autoRefill: {
+      scope: '.auto-refill',
+      toggleText: text('auto-refill-name'),
+    }
   },
 
   planUsage: {

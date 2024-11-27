@@ -60,7 +60,7 @@
   {{#if (not this.hideToggle)}}
     <Billing::OssCreditToggle @account={{this.account}} />
   {{/if}}
-  {{#if (not this.subscription.plan.isTrial)}}
+  {{#if this.showAutoRefill}}
     <Billing::AutoRefill @subscription={{this.subscription}} @account={{this.account}}/>
   {{/if}}
 </div>
