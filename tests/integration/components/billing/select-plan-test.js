@@ -118,4 +118,21 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     assert.equal(displayedPlans.length, 3, 'displayedPlans should contain 3 plans');
     assert.deepEqual(displayedPlans, [subscription.plan, this.plan1, this.plan2], 'displayedPlans should contain the correct plans');
   });
+
+  test('warning text should be present when trial period is active', async function (assert) {
+    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false,
+                                                        planType: 'hybrid annual' } ,
+                                                current_trial: {status: 'subscribed'}
+    };
+    component.set('subscription', subscription);
+
+    await render(hbs`<Billing::SelectPlan
+      @displayedPlans={{this.displayedPlans}}
+      @selectedPlanOverride={{this.selectedPlan}}
+      @showPlansSelector={{true}}
+      @next={{action 'next'}}/>`
+    );
+
+    assert.dom(profilePage.billing.selectedPlan).hasText('Selecting a plan will immediately end your current Free Trial Period');
+  });
 });
