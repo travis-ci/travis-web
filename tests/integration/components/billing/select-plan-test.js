@@ -97,4 +97,25 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     assert.equal(displayedPlans.length, 2, 'displayedPlans should contain 2 plans');
     assert.deepEqual(displayedPlans, [this.plan1, this.plan2], 'displayedPlans should contain the correct plans');
   });
+
+  test('displayedPlans should include current plan when trial period is active', function (assert) {
+    let component = this.owner.lookup('component:billing/select-plan');
+    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false,
+                                                        planType: 'hybrid annual' } ,
+                                                current_trial: {status: 'subscribed'}
+    };
+
+    component.set('availablePlans', [this.plan1, this.plan2]);
+    component.set('subscription', subscription);
+    const referencePlan = component.get('availablePlans')
+      .find(plan => plan.name === component.get('subscription').plan.name && plan.planType === 'hybrid annual');
+
+    component.set('referencePlan', referencePlan);
+
+    let displayedPlans = component.get('displayedPlans');
+
+    assert.ok(displayedPlans, 'displayedPlans should be defined');
+    assert.equal(displayedPlans.length, 3, 'displayedPlans should contain 3 plans');
+    assert.deepEqual(displayedPlans, [subscription.plan, this.plan1, this.plan2], 'displayedPlans should contain the correct plans');
+  });
 });
