@@ -65,6 +65,8 @@ export default Component.extend({
     return this.selectedPlan.hasTrialPeriod && this.accounts.user.trialAllowed;
   }),
 
+  trialDays: reads('selectedPlan.trialDuration'),
+
   hasLocalRegistration: false,
 
   firstName: '',
@@ -278,8 +280,6 @@ export default Component.extend({
       return value;
     }
   }),
-
-  trialDays: computed(() => parseInt(config.trialDays)),
 
   trialEndDate: computed(() => {
     let futureDate = new Date();
