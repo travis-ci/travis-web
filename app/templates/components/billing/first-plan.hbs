@@ -30,7 +30,7 @@
       <StripeCard  class="cc-form-internal" @onComplete={{action "complete" }} @options={{this.options}} as |stripeError|>
         {{#if this.selectedPlan.hasTrialPeriod }}
           <span class="trial-no-charge-text">
-            Your credit card will not be charged for 14 days. Enjoy your trial!
+            Your credit card will not be charged for {{this.trialDays}} days. Enjoy your trial!
           </span>
         {{/if}}
         {{#if stripeError}}
@@ -158,11 +158,14 @@
       </TravisForm>
     </div>
   <div class="framed-form framed-form-plan flex flex--col-2 flex--md-row">
-      <div class='inline-form-elem full-width margin-left-s'>
-        <h3 class="small-title"> {{this.selectedPlan.name}} </h3>
+      <div class='inline-form-elem full-width margin-left-s' data-test-fp-selected-plan>
+        <h3 class="small-title fp-selected-plan-name" data-test-fp-selected-plan-name> {{this.selectedPlan.name}} </h3>
+        {{#if this.trialPeriodSet}}
+        <h3 data-test-fp-selected-plan-trial><b>Free Trial: {{this.trialDays}} days</b></h3>
+        {{/if}}
         {{#unless this.isTrial}}
-        <p class="plan-desc">{{format-currency this.selectedPlan.startingPrice floor="true"}}{{ if this.selectedPlan.isAnnual '/annualy'
-          '/monthly'}}</p>
+        <p class="plan-desc" data-test-fp-selected-plan-price>{{format-currency this.selectedPlan.startingPrice floor="true"}}{{ if this.selectedPlan.isAnnual '/annualy'
+          '/monthly'}} <b>{{if this.trialPeriodSet 'after trial' }}</b> </p>
 
          <button class=" no-button plan-details" {{action 'togglePlanDetails' }}>
           Plan details </button>
@@ -241,11 +244,12 @@
 
       will not be able to use Travis CI features.
 
-  
       <a href="{{this.dataProcessingAgreementUrl}}" class="travis-link"  target="_blank">Data Processing Agreement</a>.
     {{else}}
     {{#if this.trialPeriodSet }}
-      <b class="font-bold">You are starting your free trial period. Once it ends, your account will automatically upgrade to the selected plan. Please note that specific trial limits may apply.'</b><br/><br/>
+      <b class="font-bold">You're about to start your free trial! Once it ends, your account will auto-upgrade to the selected plan, with no charges during the trial period.
+        Trial limits apply, and you can cancel anytime before it ends.
+      </b><br/><br/>
 
       After the trial period ends you'll be charged {{format-currency this.selectedPlan.startingPrice floor="true"}} {{ if
       this.selectedPlan.isAnnual 'annualy' 'monthly'}} until you cancel your subscription. Previous
