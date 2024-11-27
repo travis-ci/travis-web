@@ -84,11 +84,11 @@ export default Component.extend({
   }),
 
   filterPlansByStartingPrice(plans, startingPrice) {
-    return plans.filter(plan => {
-      return this.isCurrentTrial
+    return plans.filter(plan => (
+      this.isCurrentTrial
         ? plan.startingPrice >= startingPrice
-        : plan.startingPrice > startingPrice;
-    });
+        : plan.startingPrice > startingPrice
+    ));
   },
 
   isHybridPlan(plan) {
