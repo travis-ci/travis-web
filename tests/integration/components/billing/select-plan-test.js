@@ -48,8 +48,11 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     };
     this.plan2 = plan2;
 
+    this.subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false } };
     this.setProperties({
       displayedPlans: [plan1, plan2],
+      availablePlans: [plan1, plan2],
+      account: {trialAllowed: true},
       selectedPlan: plan1,
     });
   });
@@ -82,10 +85,8 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
   test('displayedPlans should filter availablePlans based on subscription.plan.startingPrice', function (assert) {
     let component = this.owner.lookup('component:billing/select-plan');
-    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false } };
-
     component.set('availablePlans', [this.plan1, this.plan2]);
-    component.set('subscription', subscription);
+    component.set('subscription', this.subscription);
     const referencePlan = component.get('availablePlans')
       .find(plan => plan.name === component.get('subscription').plan.name && plan.planType === 'hybrid annual');
 
@@ -120,19 +121,18 @@ module('Integration | Component | billing-select-plan', function (hooks) {
   });
 
   test('warning text should be present when trial period is active', async function (assert) {
-    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false,
-                                                        planType: 'hybrid annual' } ,
-                                                current_trial: {status: 'subscribed'}
-    };
-    component.set('subscription', subscription);
+    this.subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' } ,
+                          current_trial: {status: 'subscribed'}};
 
     await render(hbs`<Billing::SelectPlan
-      @displayedPlans={{this.displayedPlans}}
-      @selectedPlanOverride={{this.selectedPlan}}
       @showPlansSelector={{true}}
-      @next={{action 'next'}}/>`
+      @subscription={{this.subscription}}
+      @availablePlans={{this.availablePlans}}
+      @account={{this.account}}
+      />`
     );
 
-    assert.dom(profilePage.billing.selectedPlan).hasText('Selecting a plan will immediately end your current Free Trial Period');
+    assert.dom('[data-test-warning-trial]').hasText('Selecting a plan will immediately end your current Free Trial Period',
+                                                    'Warning text should be displayed when trial period for the plan is active');
   });
 });
