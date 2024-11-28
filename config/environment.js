@@ -38,6 +38,7 @@ const {
   AIDA_CLIENT_ID,
   AIDA_CLIENT_KEY,
   TRAVIS_HELP_REDIRECT_URL,
+  DEFAULT_PLAN_ID,
 } = process.env;
 
 module.exports = function (environment) {
@@ -466,6 +467,10 @@ module.exports = function (environment) {
 
   if (TRAVIS_HELP_REDIRECT_URL) {
     ENV.urls.resources = TRAVIS_HELP_REDIRECT_URL;
+  }
+
+  if (DEFAULT_PLAN_ID) {
+    ENV.defaultPlanId = DEFAULT_PLAN_ID;
   }
 
   return ENV;
