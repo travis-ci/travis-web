@@ -44,15 +44,17 @@ export default Component.extend({
         return this._selectedPlan;
       }
 
-      let plan = this.storage.selectedPlanId;
-      console.log("plan from storage: " + plan);
-      if (plan == null) {
-        console.log("default plan id: " + this.defaultPlanId);
-        plan = this.defaultPlanId;
-      }
+      let planId = this.storage.selectedPlanId || this.defaultPlanId;
+      console.log("plan id will be: " + planId);
 
-      console.log("plan search: " + this.displayedPlans.findBy('id', plan));
-      return this.displayedPlans.findBy('id', plan);
+      let selectedPlan = this.displayedPlans.find(plan => plan.id === planId);
+      console.log("selectedPlan by planId: " + selectedPlan);
+
+      if (!selectedPlan) {
+        selectedPlan = this.displayedPlans.find(plan => plan.id === this.defaultPlanId);
+        console.log("selectedPlan was invalid getting default: " + selectedPlan);
+      }
+      return selectedPlan;
     },
     set(k, v) {
       this.set('_selectedPlan', v);
