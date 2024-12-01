@@ -42,24 +42,24 @@ export default Component.extend({
   selectedPlan: computed('displayedPlans.[].id', 'defaultPlanId', {
     get() {
       if (isPresent(this._selectedPlan)) {
-        console.log('_selectedPlan: ' + this._selectedPlan);
+        console.log('_selectedPlan: ', this._selectedPlan);
         return this._selectedPlan;
       }
 
       let planId = this.storage.selectedPlanId || defaultPlanId;
-      console.log('plan id will be: ' + planId);
+      console.log('plan id will be: ', planId);
 
       let selectedPlan = this.displayedPlans.find(plan => plan.id === planId);
-      console.log('selectedPlan by planId: ' + selectedPlan);
+      console.log('selectedPlan by planId: ', selectedPlan);
 
       if (!selectedPlan) {
         selectedPlan = this.displayedPlans.find(plan => plan.id === defaultPlanId);
-        console.log('selectedPlan was invalid getting default: ' + selectedPlan);
+        console.log('selectedPlan was invalid getting default: ', selectedPlan);
       }
 
       if (!selectedPlan) {
         selectedPlan = this.defaultPlans.firstObject;
-        console.log('default selectedPlan was not found among plans getting first in the list: ' + selectedPlan);
+        console.log('default selectedPlan was not found among plans getting first in the list: ', selectedPlan);
       }
       return selectedPlan;
     },
