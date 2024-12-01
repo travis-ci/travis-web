@@ -53,7 +53,7 @@ export default Component.extend({
   }),
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
-    if (this.isCurrentTrial) {
+    if (this.isCurrentTrial && !this.availablePlans.includes(this.subscription.plan)) {
       this.availablePlans = [this.subscription.plan, ...this.availablePlans];
     }
 
