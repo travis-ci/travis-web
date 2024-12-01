@@ -198,6 +198,7 @@ $nav-line-height: 35px;
 
   .section-accounts {
     overflow-y: auto;
+    scrollbar-width: thin;
     flex-shrink: 0.7;
   }
 
@@ -387,5 +388,6 @@ nav.navigation-anchor:hover {
 }
 
 .organizations-list {
+  scrollbar-width: thin;
   overflow-y: auto;
 }
