@@ -192,6 +192,7 @@ module.exports = function (environment) {
     },
 
     trialDays: TRIAL_DAYS || 14,
+    defaultPlanId: 'standard_tier_plan',
   };
 
   ENV.metricsAdapters = [];
