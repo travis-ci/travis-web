@@ -201,12 +201,12 @@ $nav-line-height: 35px;
     flex-shrink: 0.7;
   }
 
-  @supports not (-webkit-appearance: none) {
+  @-moz-document url-prefix() {
+    /* Firefox-specific styles */
     .section-accounts {
       scrollbar-width: thin;
     }
   }
-
   .section-accounts::-webkit-scrollbar {
     width: 6px;
   }
@@ -409,7 +409,8 @@ nav.navigation-anchor:hover {
   overflow-y: auto;
 }
 
-@supports not (-webkit-appearance: none) {
+@-moz-document url-prefix() {
+  /* Firefox-specific styles */
   .organizations-list {
     scrollbar-width: thin;
   }
