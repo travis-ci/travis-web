@@ -7,8 +7,6 @@ import config from 'travis/config/environment';
 import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
 import { isPresent } from '@ember/utils';
 
-let { defaultPlanId } = config;
-
 export default Component.extend({
   stripe: service(),
   store: service(),
@@ -30,6 +28,7 @@ export default Component.extend({
   showPlanSwitchWarning: false,
   availablePlans: reads('account.eligibleV2Plans'),
   defaultPlans: reads('availablePlans'),
+  defaultPlanId: config.defaultPlanId,
   showCancelButton: false,
   travisTermsUrl: 'https://www.ideracorp.com/legal/TravisCI#tabs-2',
   travisPolicyUrl: 'https://www.ideracorp.com/legal/TravisCI#tabs-3',
@@ -46,16 +45,16 @@ export default Component.extend({
         return this._selectedPlan;
       }
 
-      console.log('default plan id from config: ', defaultPlanId);
+      console.log('default plan id from config: ', this.defaultPlanId);
 
-      let planId = this.storage.selectedPlanId || defaultPlanId;
+      let planId = this.storage.selectedPlanId || this.defaultPlanId;
       console.log('plan id will be: ', planId);
 
       let selectedPlan = this.displayedPlans.find(plan => plan.id === planId);
       console.log('selectedPlan by planId: ', selectedPlan);
 
       if (!selectedPlan) {
-        selectedPlan = this.displayedPlans.find(plan => plan.id === defaultPlanId);
+        selectedPlan = this.displayedPlans.find(plan => plan.id === this.defaultPlanId);
         console.log('selectedPlan was invalid getting default: ', selectedPlan);
       }
 

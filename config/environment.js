@@ -448,7 +448,6 @@ module.exports = function (environment) {
     ENV.billingEndpoint = 'https://travis-ci.com';
     ENV.apiEndpoint = '';
     ENV.marketplaceEndpoint = 'https://github.com/marketplace/travis-ci/';
-    ENV.defaultPlanId = 'standard_tier_plan';
   }
 
   if (environment === 'production') {
