@@ -202,6 +202,19 @@ $nav-line-height: 35px;
     flex-shrink: 0.7;
   }
 
+  .section-accounts::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .section-accounts::-webkit-scrollbar-thumb {
+    background: #7f7f7f;
+    border-radius: 6px;
+  }
+
+  .section-accounts::-webkit-scrollbar-track {
+    border-radius: 0px;
+  }
+
   &__header {
     color: $cement-grey;
     background-color: #F7F7F7;
@@ -390,4 +403,17 @@ nav.navigation-anchor:hover {
 .organizations-list {
   scrollbar-width: thin;
   overflow-y: auto;
+}
+
+.organizations-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.organizations-list::-webkit-scrollbar-thumb {
+  background: #7f7f7f;
+  border-radius: 6px;
+}
+
+.organizations-list::-webkit-scrollbar-track {
+  border-radius: 0px;
 }
