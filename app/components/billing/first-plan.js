@@ -46,6 +46,8 @@ export default Component.extend({
         return this._selectedPlan;
       }
 
+      console.log('default plan id from config: ', defaultPlanId);
+
       let planId = this.storage.selectedPlanId || defaultPlanId;
       console.log('plan id will be: ', planId);
 
