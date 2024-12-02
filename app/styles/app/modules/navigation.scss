@@ -198,8 +198,13 @@ $nav-line-height: 35px;
 
   .section-accounts {
     overflow-y: auto;
-    scrollbar-width: thin;
     flex-shrink: 0.7;
+  }
+
+  @supports not (-webkit-appearance: none) {
+    .section-accounts {
+      scrollbar-width: thin;
+    }
   }
 
   .section-accounts::-webkit-scrollbar {
@@ -401,8 +406,13 @@ nav.navigation-anchor:hover {
 }
 
 .organizations-list {
-  scrollbar-width: thin;
   overflow-y: auto;
+}
+
+@supports not (-webkit-appearance: none) {
+  .organizations-list {
+    scrollbar-width: thin;
+  }
 }
 
 .organizations-list::-webkit-scrollbar {
