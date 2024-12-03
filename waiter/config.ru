@@ -131,7 +131,6 @@ run Travis::Web::App.build(
   enable_feature_flags: ENV['ENABLE_FEATURE_FLAGS'],
   stripe_publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
   default_provider: ENV['DEFAULT_PROVIDER'],
-  log_limit: ENV['LOG_LIMIT'],
-  default_plan_id: ENV['DEFAULT_PLAN_ID']
+  log_limit: ENV['LOG_LIMIT']
 )
 end
