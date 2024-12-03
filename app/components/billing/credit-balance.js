@@ -49,6 +49,10 @@ export default Component.extend({
     return this.creditsAvailable < 0;
   }),
 
+  showAutoRefill: computed('subscription', function () {
+    return !(this.subscription.plan.isTrial || (this.subscription.current_trial != null && this.subscription.current_trial?.status == 'subscribed'));
+  }),
+
   actions: {
     setPrivateCreditsTab() {
       this.set('creditsTab', 0);

@@ -38,6 +38,7 @@ export default Model.extend({
   addons: attr(),
   auto_refill: attr(),
   current_trial: attr(),
+  deferPause: attr(),
 
   isCanceled: equal('status', 'canceled'),
   isExpired: equal('status', 'expired'),
