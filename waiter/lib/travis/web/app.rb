@@ -299,5 +299,8 @@ class Travis::Web::App
 
       %(<meta name="travis/config/environment" content="#{config}")
     end
+    if options[:default_plan_id]
+      config['defaultPlanId'] = options[:default_plan_id]
+    end
   end
 end
