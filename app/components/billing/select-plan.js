@@ -168,7 +168,7 @@ export default Component.extend({
   }),
 
   allowedTrial: computed('availablePlans', function () {
-    return this.account.trialAllowed;
+    return !this.isCurrentTrial && this.account.trialAllowed;
   }),
 
   allowReactivation: computed(function () {

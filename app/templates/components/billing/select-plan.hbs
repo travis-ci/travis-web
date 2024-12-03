@@ -109,7 +109,7 @@
                   >
                     Reactivate plan
                   </button>
-                {{else if (eq plan.id this.subscription.plan.id)}}
+                {{else if (and (eq plan.id this.subscription.plan.id ) (not this.isCurrentTrial))}}
                   <h4 class='billing-plans' data-test-current-plan-text>Your current plan</h4>
                 {{else if (eq plan.id this.subscription.scheduledPlanName)}}
                   <h4 class='billing-plans' data-test-scheduled-plan-text>Your scheduled plan</h4>
