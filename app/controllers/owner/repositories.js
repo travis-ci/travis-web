@@ -15,7 +15,7 @@ export default Controller.extend({
 
   isLoading: false,
   page: 1,
-  tab: OWNER_TABS.REPOSITORIES,
+  tab: OWNER_TABS.INSIGHTS,
   requestPrivateInsights: true,
 
   timeInterval: DEFAULT_INSIGHTS_INTERVAL,
