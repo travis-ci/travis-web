@@ -145,11 +145,9 @@ export default Component.extend({
   selectedPlan: computed('displayedPlans.[].name', 'defaultPlanName', {
     get() {
       if (isPresent(this._selectedPlan)) {
-        console.log('_selectedPlan: ', this._selectedPlan);
         return this._selectedPlan;
       }
       let result = this.displayedPlans.findBy('name', this.defaultPlanName);
-      console.log('result: ', result);
       return result;
     },
     set(key, value) {

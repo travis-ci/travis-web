@@ -40,7 +40,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   model(model, transition) {
-    console.log('plan id ', model.selectedPlanId);
     if (model.selectedPlanId) {
       this.storage.selectedPlanId = model.selectedPlanId;
     }

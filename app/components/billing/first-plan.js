@@ -41,21 +41,16 @@ export default Component.extend({
   selectedPlan: computed('displayedPlans.[].id', 'defaultPlanId', {
     get() {
       if (isPresent(this._selectedPlan)) {
-        console.log('_selectedPlan: ', this._selectedPlan);
         return this._selectedPlan;
       }
 
       const selectedPlanId = this.storage.selectedPlanId;
       const defaultPlanId = this.defaultPlanId;
-      console.log('default plan id from config: ', this.defaultPlanId);
 
       let selectedPlan = this.displayedPlans.find(plan => plan.id === selectedPlanId);
-      console.log('selectedPlan by planId: ', selectedPlan);
-
       if (!selectedPlan) {
         selectedPlan = this.displayedPlans.find(plan => plan.id === defaultPlanId)
           ?? this.defaultPlans[0];
-        console.log('final selected plan: ', selectedPlan);
       }
 
       return selectedPlan;
