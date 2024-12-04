@@ -45,23 +45,19 @@ export default Component.extend({
         return this._selectedPlan;
       }
 
+      const selectedPlanId = this.storage.selectedPlanId;
+      const defaultPlanId = this.defaultPlanId;
       console.log('default plan id from config: ', this.defaultPlanId);
 
-      let planId = this.storage.selectedPlanId || this.defaultPlanId;
-      console.log('plan id will be: ', planId);
-
-      let selectedPlan = this.displayedPlans.find(plan => plan.id === planId);
+      let selectedPlan = this.displayedPlans.find(plan => plan.id === selectedPlanId);
       console.log('selectedPlan by planId: ', selectedPlan);
 
       if (!selectedPlan) {
-        selectedPlan = this.displayedPlans.find(plan => plan.id === this.defaultPlanId);
-        console.log('selectedPlan was invalid getting default: ', selectedPlan);
+        selectedPlan = this.displayedPlans.find(plan => plan.id === defaultPlanId)
+          ?? this.defaultPlans[0];
+        console.log('final selected plan: ', selectedPlan);
       }
 
-      if (!selectedPlan) {
-        selectedPlan = this.defaultPlans.firstObject;
-        console.log('default selectedPlan was not found among plans getting first in the list: ', selectedPlan);
-      }
       return selectedPlan;
     },
     set(k, v) {
