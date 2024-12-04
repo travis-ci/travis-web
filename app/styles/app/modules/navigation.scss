@@ -158,7 +158,9 @@ $nav-line-height: 35px;
 
 .navigation-nested {
   z-index: 35;
-  width: 200px;
+  width: 210px;
+  max-height: 578px;
+  overflow: clip;
   padding: 0;
   list-style: none;
   line-height: $nav-line-height;
@@ -194,6 +196,30 @@ $nav-line-height: 35px;
     font-weight: bold;
   }
 
+  .section-accounts {
+    overflow-y: auto;
+    flex-shrink: 0.7;
+  }
+
+  @-moz-document url-prefix() {
+    /* Firefox-specific styles */
+    .section-accounts {
+      scrollbar-width: thin;
+    }
+  }
+  .section-accounts::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .section-accounts::-webkit-scrollbar-thumb {
+    background: #7f7f7f;
+    border-radius: 6px;
+  }
+
+  .section-accounts::-webkit-scrollbar-track {
+    border-radius: 0px;
+  }
+
   &__header {
     color: $cement-grey;
     background-color: #F7F7F7;
@@ -212,6 +238,7 @@ $nav-line-height: 35px;
     text-align: left;
     display: flex;
     align-items: center;
+    color: #454545;
 
     &:hover {
       text-decoration: none;
@@ -276,9 +303,10 @@ $nav-line-height: 35px;
     text-decoration: underline;
     color: $oxide-blue;
     font-size: 12px;
-    margin-right: 15px;
+    margin-right: 10px;
     position: relative;
-    top: -2px;
+    display: flex;
+    justify-content: flex-end;
 
     &:hover {
       color: darken($oxide-blue, 10%)
@@ -286,11 +314,15 @@ $nav-line-height: 35px;
   }
 
   .navigation-nested__note {
-    padding: 0 14px 0 20px;
+    padding: 0 10px 5px 20px;
     white-space: normal;
     line-height: 1.4;
     font-size: 0.8em;
     color: $cement-grey;
+  }
+
+  .navigation-nested__note a{
+    display: inline;
   }
 
   .username {
@@ -340,9 +372,28 @@ $nav-line-height: 35px;
   }
 }
 
+.organizations-list-item {
+  &.active {
+    .topbar-menu-item {
+      text-decoration: none;
+      color: $oxide-blue;
+      background-color: lighten($oxide-blue, 50%);
+
+      .icon {
+        @include colorSVG($oxide-blue);
+      }
+
+      .username__text:after {
+        background: linear-gradient(-90deg, lighten($oxide-blue, 50%) 20%, rgba(255, 255, 255, 0) 100%);
+      }
+    }
+  }
+}
+
 .profile.menu.open .navigation-nested,
 .profile.signed-out:hover .navigation-nested {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile.menu:focus-within > ul {
@@ -352,4 +403,28 @@ $nav-line-height: 35px;
 
 nav.navigation-anchor:hover {
   text-decoration: underline;
+}
+
+.organizations-list {
+  overflow-y: auto;
+}
+
+@-moz-document url-prefix() {
+  /* Firefox-specific styles */
+  .organizations-list {
+    scrollbar-width: thin;
+  }
+}
+
+.organizations-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.organizations-list::-webkit-scrollbar-thumb {
+  background: #7f7f7f;
+  border-radius: 6px;
+}
+
+.organizations-list::-webkit-scrollbar-track {
+  border-radius: 0px;
 }
