@@ -117,6 +117,20 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     assert.deepEqual(displayedPlans, [subscription.plan, this.plan1, this.plan2], 'displayedPlans should contain the correct plans');
   });
 
+  test('user should be able to select the plan on which the trial period is running at the moment', async function (assert) {
+    this.subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' }, current_trial: {status: 'subscribed'}};
+
+    await render(hbs`<Billing::SelectPlan
+      @showPlansSelector={{true}}
+      @subscription={{this.subscription}}
+      @availablePlans={{this.availablePlans}}
+      @account={{this.account}}
+      />`
+    );
+
+    assert.dom('[data-test-current-plan-text').doesNotExist();
+  });
+
   test('warning text should be present when trial period is active', async function (assert) {
     this.subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' }, current_trial: {status: 'subscribed'}};
 
@@ -129,5 +143,15 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     );
 
     assert.dom('[data-test-warning-trial]').hasText('Selecting a plan will immediately end your current Free Trial Period', 'Warning text should be displayed when trial period for the plan is active');
+  });
+
+  test('trial should not be allowed if there is already an active trial period', function (assert) {
+    let component = this.owner.lookup('component:billing/select-plan');
+    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' }, current_trial: {status: 'subscribed'}};
+    component.set('subscription', subscription);
+
+    let trialAllowed = component.get('allowedTrial');
+
+    assert.false(trialAllowed);
   });
 });
