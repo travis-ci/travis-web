@@ -33,6 +33,7 @@ export default Component.extend({
   isComplete: not('isIncomplete'),
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   cancellationRequested: reads('subscription.cancellationRequested'),
+  deferPause: reads('subscription.deferPause'),
   canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', 'cancellationRequested', function () {
     return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial && !this.cancellationRequested;
   }),

@@ -126,7 +126,7 @@
                   </button>
                 {{/if}}
                 {{#if (and this.allowedTrial plan.hasTrialPeriod) }}
-                  <span class="no-charges">No charges for 14 days</span>
+                  <span class="no-charges">No charges for {{plan.trialDuration}} days</span>
                 {{/if}}
                 <ExternalLinkTo
                   @href={{config-get 'urls.planDocs'}}

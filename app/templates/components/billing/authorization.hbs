@@ -95,22 +95,31 @@
           />
         </div>
         <div class='billing-subscription__buttons--addons'>
-          {{#if (and this.isV2Subscription this.canBuyAddons)}}
+          {{#if (and this.isV2Subscription this.canBuyAddons (not this.deferPause))}}
               <button {{on 'click' (fn (mut this.showAddonsSelector) true)}}  class='button--white-and-teal button--hover' data-test-buy-addons='true'>
                 Buy addons
               </button>
           {{/if}}
         </div>
-        {{#if this.canCancelSubscription}}
+        {{#if (and this.canCancelSubscription (not this.deferPause))}}
         <div class='billing-subscription__buttons--cancel'>
           <a {{on 'click' (action (perform this.cancelSubscription))}} href='javascript: void(0);' class='link' data-test-open-cancel-subscription-modal='true'>
             Cancel subscription
           </a>
         </div>
-        {{else if this.subscription.cancellationRequested}}
+        {{else if this.subscription.cancellationRequested }}
         <div class='billing-subscription__buttons--cancel'>
           <a href='javascript: void(0);' class='link' data-test-cancellation-requested-button='true'>
             Cancellation requested
+          </a>
+        </div>
+        {{else if this.deferPause }}
+        <div>
+          <a href='javascript: void(0);' class='link' style="display: flex" data-test-cancellation-requested-button='true'>
+            <small><i>
+              Cancellation will be processed<br>
+              after the current billing period ends
+            </i></small>
           </a>
         </div>
         {{/if}}
