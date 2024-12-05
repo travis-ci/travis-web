@@ -6,6 +6,7 @@ import { computed } from '@ember/object';
 import config from 'travis/config/environment';
 import { countries, states, zeroVatThresholdCountries, nonZeroVatThresholdCountries, stateCountries } from 'travis/utils/countries';
 import { isPresent } from '@ember/utils';
+
 export default Component.extend({
   stripe: service(),
   store: service(),
@@ -27,7 +28,7 @@ export default Component.extend({
   showPlanSwitchWarning: false,
   availablePlans: reads('account.eligibleV2Plans'),
   defaultPlans: reads('availablePlans'),
-  defaultPlanId: reads('defaultPlans.firstObject.id'),
+  defaultPlanId: config.defaultPlanId,
   showCancelButton: false,
   travisTermsUrl: 'https://www.ideracorp.com/legal/TravisCI#tabs-2',
   travisPolicyUrl: 'https://www.ideracorp.com/legal/TravisCI#tabs-3',
@@ -43,12 +44,16 @@ export default Component.extend({
         return this._selectedPlan;
       }
 
-      let plan = this.storage.selectedPlanId;
-      if (plan == null) {
-        plan = this.defaultPlanId;
+      const selectedPlanId = this.storage.selectedPlanId;
+      const defaultPlanId = this.defaultPlanId;
+
+      let selectedPlan = this.displayedPlans.find(plan => plan.id === selectedPlanId);
+      if (!selectedPlan) {
+        selectedPlan = this.displayedPlans.find(plan => plan.id === defaultPlanId)
+          ?? this.defaultPlans[0];
       }
 
-      return this.displayedPlans.findBy('id', plan);
+      return selectedPlan;
     },
     set(k, v) {
       this.set('_selectedPlan', v);
