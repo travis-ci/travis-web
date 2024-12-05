@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads, or, not, and, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import isCurrentTrial from 'travis/utils/computed-is-current-trial';
 
 export default Component.extend({
 
@@ -34,9 +35,7 @@ export default Component.extend({
     }
     return this.subscription.validToFromAddon || this.subscription.validTo;
   }),
-  isCurrentTrial: computed('subscription.current_trial', function () {
-    return this.subscription.current_trial != null && this.subscription.current_trial.status == 'subscribed';
-  }),
+  isCurrentTrial: isCurrentTrial(),
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   canceledOrExpired: or('isExpired', 'isCanceled'),
   isCompleteAndNotExpired: and('hasNotExpired', 'isComplete'),
