@@ -221,14 +221,19 @@ export default Component.extend({
   handleError(error) {
     let errorReason = '';
     const hasErrorMessage = error && error.errors && error.errors.length > 0;
+    const hasStatus504 = hasErrorMessage && error.errors[0].status == '504';
     if (hasErrorMessage) {
-      errorReason = ` Reason: ${error.errors[0].detail}`;
+      if (hasStatus504) {
+        let message = JSON.parse(error.errors[0].detail).error_message;
+        this.flashes.notice(message);
+      } else {
+        errorReason = ` Reason: ${error.errors[0].detail}`;
+        let message = this.get('selectedPlan.isTrial')
+          ? `Credit card verification failed, please try again or use a different card.${errorReason}`
+          : `An error occurred when creating your subscription. Please try again.${errorReason}`;
+        this.flashes.error(message);
+      }
     }
-
-    let message = this.get('selectedPlan.isTrial')
-      ? `Credit card verification failed, please try again or use a different card.${errorReason}`
-      : `An error occurred when creating your subscription. Please try again.${errorReason}`;
-    this.flashes.error(message);
   },
 
   closeSwitchToFreeModal: function () {
