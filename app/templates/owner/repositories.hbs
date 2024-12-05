@@ -1,13 +1,13 @@
 <nav class="travistab-nav travistab-nav--underline">
   <ul>
     <li>
-      <LinkTo @query={{hash tab="repositories" timeInterval=this.defaultTimeInterval}} >
-        Repositories
+      <LinkTo @query={{hash tab="insights" timeInterval=this.timeInterval page=1}}>
+        Insights
       </LinkTo>
     </li>
     <li>
-      <LinkTo @query={{hash tab="insights" timeInterval=this.timeInterval page=1}}>
-        Insights
+      <LinkTo @query={{hash tab="repositories" timeInterval=this.defaultTimeInterval}} >
+        Build Activity
       </LinkTo>
     </li>
   </ul>
