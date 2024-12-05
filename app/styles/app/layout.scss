@@ -128,7 +128,7 @@ $padding-top: 24px;
     margin: auto;
     padding: 0 math.div($column-gutter,2) 20px math.div($column-gutter, 2);
     @media #{$medium-up} {
-      padding: 10px math.div($column-gutter,2) 66px math.div($column-gutter, 2);
+      padding: 10px math.div($column-gutter,2) 61px math.div($column-gutter, 2);
     }
   }
 
