@@ -4,6 +4,7 @@ import { reads, not, equal, or } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { computed } from '@ember/object';
+import isCurrentTrial from 'travis/utils/computed-is-current-trial';
 
 export default Component.extend({
   stripe: service(),
@@ -14,9 +15,7 @@ export default Component.extend({
   stripeElement: null,
   account: null,
   subscription: null,
-  isCurrentTrial: computed('subscription.current_trial', function () {
-    return this.subscription.current_trial != null && this.subscription.current_trial.status == 'subscribed';
-  }),
+  isCurrentTrial: isCurrentTrial(),
   showCancelModal: false,
   isV2Subscription: false,
   selectedPlan: null,

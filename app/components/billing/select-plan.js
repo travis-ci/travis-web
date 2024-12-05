@@ -6,6 +6,7 @@ import { later } from '@ember/runloop';
 import { or, reads, filterBy } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { A } from '@ember/array';
+import isCurrentTrial from 'travis/utils/computed-is-current-trial';
 
 export default Component.extend({
   accounts: service(),
@@ -20,9 +21,7 @@ export default Component.extend({
   showAnnual: false,
   showCalculator: false,
   annualPlans: [],
-  isCurrentTrial: computed('subscription.current_trial', function () {
-    return this.subscription.current_trial != null && this.subscription.current_trial.status == 'subscribed';
-  }),
+  isCurrentTrial: isCurrentTrial(),
 
   isCancellationMoreThanOneMonthOld: computed('subscription.{isCanceled,canceledAt}', function () {
     if (!this.subscription || !this.subscription.isCanceled) {
