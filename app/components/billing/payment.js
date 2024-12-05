@@ -225,7 +225,7 @@ export default Component.extend({
     if (hasErrorMessage) {
       if (hasStatus504) {
         let message = JSON.parse(error.errors[0].detail).error_message;
-        this.flashes.notice(message);
+        this.flashes.notice(message, null);
       } else {
         errorReason = ` Reason: ${error.errors[0].detail}`;
         let message = this.get('selectedPlan.isTrial')
