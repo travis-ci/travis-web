@@ -58,6 +58,10 @@ export default Model.extend({
     return date > validToDate;
   }),
 
+  isCurrentTrial: computed('current_trial.status', function () {
+    return this.current_trial != null && this.current_trial.status === 'subscribed';
+  }),
+
   isSubscribed: computed('status', function () {
     return this.status === null || this.status == 'subscribed';
   }),
