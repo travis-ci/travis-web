@@ -6,6 +6,7 @@ import { later } from '@ember/runloop';
 import { or, reads, filterBy } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { A } from '@ember/array';
+import isCurrentTrial from 'travis/utils/computed-is-current-trial';
 
 export default Component.extend({
   accounts: service(),
@@ -20,6 +21,7 @@ export default Component.extend({
   showAnnual: false,
   showCalculator: false,
   annualPlans: [],
+  isCurrentTrial: isCurrentTrial(),
 
   isCancellationMoreThanOneMonthOld: computed('subscription.{isCanceled,canceledAt}', function () {
     if (!this.subscription || !this.subscription.isCanceled) {
@@ -50,6 +52,10 @@ export default Component.extend({
   }),
 
   displayedPlans: computed('availablePlans.[]', 'subscription.plan.startingPrice', function () {
+    if (this.isCurrentTrial && !this.availablePlans.includes(this.subscription.plan)) {
+      this.availablePlans = [this.subscription.plan, ...this.availablePlans];
+    }
+
     if (!this.subscription || !this.subscription.plan || this.subscription.plan.trialPlan) {
       return this.sortedPlans;
     }
@@ -77,7 +83,11 @@ export default Component.extend({
   }),
 
   filterPlansByStartingPrice(plans, startingPrice) {
-    return plans.filter(plan => plan.startingPrice > startingPrice);
+    return plans.filter(plan => (
+      this.isCurrentTrial
+        ? plan.startingPrice >= startingPrice
+        : plan.startingPrice > startingPrice
+    ));
   },
 
   isHybridPlan(plan) {
@@ -157,7 +167,7 @@ export default Component.extend({
   }),
 
   allowedTrial: computed('availablePlans', function () {
-    return this.account.trialAllowed;
+    return !this.isCurrentTrial && this.account.trialAllowed;
   }),
 
   allowReactivation: computed(function () {
