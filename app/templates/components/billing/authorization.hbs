@@ -102,7 +102,7 @@
         </div>
         {{#if (and this.canCancelSubscription (not this.deferPause))}}
         <div class='billing-subscription__buttons--cancel'>
-          <a {{on 'click' (fn (mut this.showCancelConfirmModal) true)}} href='javascript: void(0);' class='link' data-test-open-cancel-subscription-modal='true'>
+          <a {{on 'click' (fn (mut this.showCancelConfirmModal) true)}} href='javascript: void(0);' class='link' data-test-open-cancel-subscription-confirmation-modal='true'>
             Cancel subscription
           </a>
         </div>
