@@ -303,8 +303,6 @@
   }
 
   .travis-modal {
-    transform: scale(0.9);
-    
     overflow: scroll;
     &::-webkit-scrollbar {
       display: none;
