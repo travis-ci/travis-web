@@ -48,8 +48,11 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     };
     this.plan2 = plan2;
 
+    this.subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false } };
     this.setProperties({
       displayedPlans: [plan1, plan2],
+      availablePlans: [plan1, plan2],
+      account: {trialAllowed: true},
       selectedPlan: plan1,
     });
   });
@@ -82,7 +85,23 @@ module('Integration | Component | billing-select-plan', function (hooks) {
 
   test('displayedPlans should filter availablePlans based on subscription.plan.startingPrice', function (assert) {
     let component = this.owner.lookup('component:billing/select-plan');
-    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false } };
+    component.set('availablePlans', [this.plan1, this.plan2]);
+    component.set('subscription', this.subscription);
+    const referencePlan = component.get('availablePlans')
+      .find(plan => plan.name === component.get('subscription').plan.name && plan.planType === 'hybrid annual');
+
+    component.set('referencePlan', referencePlan);
+
+    let displayedPlans = component.get('displayedPlans');
+
+    assert.ok(displayedPlans, 'displayedPlans should be defined');
+    assert.equal(displayedPlans.length, 2, 'displayedPlans should contain 2 plans');
+    assert.deepEqual(displayedPlans, [this.plan1, this.plan2], 'displayedPlans should contain the correct plans');
+  });
+
+  test('displayedPlans should include current plan when trial period is active', function (assert) {
+    let component = this.owner.lookup('component:billing/select-plan');
+    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' }, current_trial: {status: 'subscribed'}};
 
     component.set('availablePlans', [this.plan1, this.plan2]);
     component.set('subscription', subscription);
@@ -94,7 +113,45 @@ module('Integration | Component | billing-select-plan', function (hooks) {
     let displayedPlans = component.get('displayedPlans');
 
     assert.ok(displayedPlans, 'displayedPlans should be defined');
-    assert.equal(displayedPlans.length, 2, 'displayedPlans should contain 2 plans');
-    assert.deepEqual(displayedPlans, [this.plan1, this.plan2], 'displayedPlans should contain the correct plans');
+    assert.equal(displayedPlans.length, 3, 'displayedPlans should contain 3 plans');
+    assert.deepEqual(displayedPlans, [subscription.plan, this.plan1, this.plan2], 'displayedPlans should contain the correct plans');
+  });
+
+  test('user should be able to select the plan on which the trial period is running at the moment', async function (assert) {
+    this.subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' }, current_trial: {status: 'subscribed'}};
+
+    await render(hbs`<Billing::SelectPlan
+      @showPlansSelector={{true}}
+      @subscription={{this.subscription}}
+      @availablePlans={{this.availablePlans}}
+      @account={{this.account}}
+      />`
+    );
+
+    assert.dom('[data-test-current-plan-text').doesNotExist();
+  });
+
+  test('warning text should be present when trial period is active', async function (assert) {
+    this.subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' }, current_trial: {status: 'subscribed'}};
+
+    await render(hbs`<Billing::SelectPlan
+      @showPlansSelector={{true}}
+      @subscription={{this.subscription}}
+      @availablePlans={{this.availablePlans}}
+      @account={{this.account}}
+      />`
+    );
+
+    assert.dom('[data-test-warning-trial]').hasText('Selecting a plan will immediately end your current Free Trial Period', 'Warning text should be displayed when trial period for the plan is active');
+  });
+
+  test('trial should not be allowed if there is already an active trial period', function (assert) {
+    let component = this.owner.lookup('component:billing/select-plan');
+    let subscription = { plan: { name: 'Standard Tier Plan', startingPrice: 3000, trialPlan: false, planType: 'hybrid annual' }, current_trial: {status: 'subscribed'}};
+    component.set('subscription', subscription);
+
+    let trialAllowed = component.get('allowedTrial');
+
+    assert.false(trialAllowed);
   });
 });
