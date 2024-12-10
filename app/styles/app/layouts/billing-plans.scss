@@ -303,8 +303,6 @@
   }
 
   .travis-modal {
-    transform: scale(0.9);
-    
     overflow: scroll;
     &::-webkit-scrollbar {
       display: none;
@@ -342,6 +340,10 @@
       font-weight: normal;
       color: $asphalt-grey;
       text-align: center;
+    }
+
+    .trial-end-warning {
+      font-weight: bold!important;
     }
 
     .switch {
