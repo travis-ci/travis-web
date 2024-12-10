@@ -18,7 +18,6 @@
     {{on 'click' (action 'toggleMenu')}}
   >
 
-  
     <UserAvatar
       @url={{this.user.avatarUrl}}
       @name={{this.user.fullName}}
@@ -46,6 +45,18 @@
         {{vcs-name this.user.vcsType}} support is currently in Beta
       </li>
     {{/if}}
+    <li>
+      <LinkTo
+        @route="account.billing"
+        @title="Plan"
+        class="signed-in topbar-menu-item"
+      >
+        <SvgImage @name="icon-plan" @class="icon" />
+        <div class="topbar-menu-item__label">
+          Plan
+        </div>
+      </LinkTo>
+    </li>
    {{#unless this.isActivation}}
     <li>
       <LinkTo
@@ -78,30 +89,28 @@
     <li class="nav-nested"></li>
 
     <li class="section-header">
-      Switch accounts
+      Accounts
     </li>
 
-    {{#each this.auth.inactiveAccounts as |account| }}
-      <li class="username pointer topbar-menu-item" {{on 'click' (action 'switchAccount' account.id target=this.auth)}}>
-        <UserAvatar
-          @url={{account.avatarUrl}}
-          @name={{or account.fullName account.login}}
-          @size={{12}}
-        />
-        <div class="username__text topbar-menu-item__label">
-          {{or account.login account.fullName}}
-        </div>
-        <div class="username__vcs-icon">
-          <SvgImage @name={{vcs-icon account.vcsType}} @height=14 />
-        </div>
-      </li>
-    {{else}}
-      <li class="navigation-nested__note">
-        We don't know your other accounts yet. You can add one!
-      </li>
-    {{/each}}
+    <li class="section-accounts">
+      {{#each this.auth.inactiveAccounts as |account| }}
+        <li class="username pointer topbar-menu-item" {{on 'click' (action 'switchAccount' account.id target=this.auth)}}>
+          <UserAvatar
+            @url={{account.avatarUrl}}
+            @name={{or account.fullName account.login}}
+            @size={{12}}
+          />
+          <div class="username__text topbar-menu-item__label">
+            {{or account.login account.fullName}}
+          </div>
+          <div class="username__vcs-icon">
+            <SvgImage @name={{vcs-icon account.vcsType}} @height=14 />
+          </div>
+        </li>
+      {{/each}}
+    </li>
 
-    <li class="text-right">
+    {{#if this.auth.inactiveAccounts.length}}
       <LinkTo
         @route="signin"
         @query={{hash redirectUrl=this.redirectUrl}}
@@ -110,7 +119,73 @@
       >
         Add an account
       </LinkTo>
-    </li>
+    {{else}}
+      <li class="navigation-nested__note">
+        Easily manage all your accounts in one place!
+        <LinkTo
+          @route="signin"
+          @query={{hash redirectUrl=this.redirectUrl}}
+          @title="Add another account"
+          class="navigation-nested__link">
+            Add an account!
+        </LinkTo>
+        <br>
+      </li>
+    {{/if}}
+
+    {{#if this.user.accounts.organizations.length}}
+      <li class="nav-nested"></li>
+
+      <li class="section-header">
+        Context
+      </li>
+      <LinkTo
+        @route="owner.repositories"
+        @models={{array this.user.provider this.user.login}}
+        class="organizations-list-item"
+      >
+      <li class="username pointer topbar-menu-item">
+        <UserAvatar
+          @url={{this.user.avatarUrl}}
+          @name={{or this.user.fullName this.user.login}}
+          @size={{12}}
+        />
+        <div class="username__text topbar-menu-item__label">
+          My Account
+        </div>
+        <div class="username__vcs-icon">
+          <SvgImage @name={{vcs-icon this.user.vcsType}} @height=14/>
+        </div>
+      </li>
+    </LinkTo>
+
+      <li class="nav-nested"></li>
+      <li class="organizations-list">
+
+      {{#each this.user.accounts.organizations as |organization| }}
+        <LinkTo
+          @route="owner.repositories"
+          @models={{array organization.provider organization.login}}
+          class="organizations-list-item"
+        >
+          <li class="username pointer topbar-menu-item">
+            <UserAvatar
+              @url={{organization.avatarUrl}}
+              @name={{or organization.fullName organization.login}}
+              @size={{12}}
+            />
+            <div class="username__text topbar-menu-item__label">
+              {{or organization.login organization.fullName}}
+            </div>
+            <div class="username__vcs-icon">
+              <SvgImage @name={{vcs-icon organization.vcsType}} @height=14/>
+            </div>
+          </li>
+        </LinkTo>
+      {{/each}}
+      </li>
+    {{/if}}
+
 
   </ul>
 

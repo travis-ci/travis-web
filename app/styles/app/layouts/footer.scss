@@ -68,7 +68,15 @@ $styleguide-medium: 800px;
 .profile-view,
 .wrapper.centered,
 .landing-pro,
-.layout--center,
+.layout--center {
+  & + .footer {
+    .layout-inner {
+      max-width: $styleguide-layout-max-width;
+      margin: auto;
+      padding: 0 math.div($styleguide-layout-gutter, 2);
+    }
+  }
+}
 
 .footer-elem {
   @media (max-width: $styleguide-small) {
