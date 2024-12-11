@@ -45,6 +45,7 @@
         {{vcs-name this.user.vcsType}} support is currently in Beta
       </li>
     {{/if}}
+  {{#unless this.features.enterpriseVersion}}
     <li>
       <LinkTo
         @route="account.billing"
@@ -57,6 +58,7 @@
         </div>
       </LinkTo>
     </li>
+   {{/unless}}
    {{#unless this.isActivation}}
     <li>
       <LinkTo
