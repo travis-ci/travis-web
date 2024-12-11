@@ -89,6 +89,9 @@ class Travis::Web::App
 
   def response_for(file, options = {})
     content = File.read(file)
+    nonce = SecureRandom.base64(24)
+    set_nonce(content, nonce)
+
     if fingerprinted?(file)
       headers = {
         'Content-Length' => content.bytesize.to_s,
@@ -96,7 +99,8 @@ class Travis::Web::App
         'Content-Location' => path_for(file),
         'Content-Type' => mime_type(file),
         'Expires' => expires(file),
-        'ETag' => fingerprint(file)
+        'ETag' => fingerprint(file),
+        'Content-Security-Policy' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}';"
       }
     else
       set_config(content, options) if config_needed?(file)
@@ -110,7 +114,8 @@ class Travis::Web::App
         'Last-Modified' => server_start.httpdate,
         'Expires' => expires(file),
         'Vary' => vary_for(file),
-        'ETag' => Digest::MD5.hexdigest(content)
+        'ETag' => Digest::MD5.hexdigest(content),
+        'Content-Security-Policy' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}';"
       }
     end
 
@@ -169,6 +174,11 @@ class Travis::Web::App
 
   def mime_type(file)
     Rack::Mime.mime_type File.extname(file)
+  end
+
+  def set_nonce(content, nonce)
+    puts "nonce value before sub: #{nonce}"
+    content.gsub!('<script', "<script nonce=\"#{nonce}\"")
   end
 
   def set_title(content) # rubocop:disable Naming/AccessorMethodName
