@@ -189,6 +189,7 @@ class Travis::Web::App
     config = {}
 
     config['featureFlags'] ||= {}
+    config['defaultPlanId'] = ENV['DEFAULT_PLAN_ID']
 
     options[:enable_feature_flags]&.split(',')&.each do |flag|
       config['featureFlags'][flag.strip] = true
