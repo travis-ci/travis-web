@@ -41,8 +41,9 @@ COPY . /app
 
 RUN --mount=type=secret,id=GITHUB_PERSONAL_TOKEN export GITHUB_PERSONAL_TOKEN=$(cat /run/secrets/GITHUB_PERSONAL_TOKEN) && git config --global url."https://$GITHUB_PERSONAL_TOKEN@github.com/".insteadOf ssh://git@github.com
 
+RUN npm ci
+
 RUN \
-  npm ci; \
   --mount=type=secret,id=GOOGLE_RECAPTCHA_SITE_KEY \
   sh -c ' \
   if test $AIDA_URL; then \
