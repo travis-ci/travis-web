@@ -100,7 +100,7 @@ class Travis::Web::App
         'Content-Type' => mime_type(file),
         'Expires' => expires(file),
         'ETag' => fingerprint(file),
-        'Content-Security-Policy-Report-Only' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com/v3 https://www.google.com/recaptcha/;"
+        'Content-Security-Policy-Report-Only' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com https://www.google.com https://m.stripe.network;"
       }
     else
       set_config(content, options) if config_needed?(file)
@@ -115,7 +115,7 @@ class Travis::Web::App
         'Expires' => expires(file),
         'Vary' => vary_for(file),
         'ETag' => Digest::MD5.hexdigest(content),
-        'Content-Security-Policy-Report-Only' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com/v3/ https://www.google.com/recaptcha/;"
+        'Content-Security-Policy-Report-Only' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com https://www.google.com https://m.stripe.network;"
       }
     end
 
