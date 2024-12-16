@@ -100,7 +100,7 @@ class Travis::Web::App
         'Content-Type' => mime_type(file),
         'Expires' => expires(file),
         'ETag' => fingerprint(file),
-        'Content-Security-Policy' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}';"
+        'Content-Security-Policy-Report-Only' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com;"
       }
     else
       set_config(content, options) if config_needed?(file)
@@ -115,7 +115,7 @@ class Travis::Web::App
         'Expires' => expires(file),
         'Vary' => vary_for(file),
         'ETag' => Digest::MD5.hexdigest(content),
-        'Content-Security-Policy' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}';"
+        'Content-Security-Policy-Report-Only' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com;"
       }
     end
 
@@ -177,8 +177,7 @@ class Travis::Web::App
   end
 
   def set_nonce(content, nonce)
-    puts "nonce value before sub: #{nonce}"
-    content.gsub!('<script', "<script nonce=\"#{nonce}\"")
+    content.gsub!('<script nonce=""', "<script nonce=\"#{nonce}\"")
   end
 
   def set_title(content) # rubocop:disable Naming/AccessorMethodName

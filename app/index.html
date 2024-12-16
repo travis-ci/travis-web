@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/images/favicon.png" />
 
-    <script src="/check-browser-support.js" async></script>
-    <script> function test() { console.log("inline javascript is executed") } test(); </script>
+    <script nonce="" src="/check-browser-support.js" async></script>
+    <script nonce=""> function test() { console.log("inline javascript is executed") } test(); </script>
     {{content-for "head"}}
 
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet" type="text/css">
@@ -35,8 +35,8 @@
     </noscript>
     {{content-for "body"}}
 
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/travis.js"></script>
+    <script nonce="" src="{{rootURL}}assets/vendor.js"></script>
+    <script nonce="" src="{{rootURL}}assets/travis.js"></script>
 
     {{content-for "body-footer"}}
 
