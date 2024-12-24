@@ -1,9 +1,12 @@
 <div class='billing-subscription-section plan-overview'>
   {{#if (not this.account.hasSubscriptionPermissions)}}
-    <span class="notice-banner--yellow" data-test-help='true'>
-      <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
+    <Notification
+      @severity='warning'
+      @icon='icon-help'
+      data-test-help='true'
+    >
       You don't have admin permissions to edit this subscription.
-    </span>
+    </Notification>
   {{/if}}
   {{#if (not this.showPlansSelector)}}
     <div class="flex flex--space-between flex--wrap plan-overview__details">

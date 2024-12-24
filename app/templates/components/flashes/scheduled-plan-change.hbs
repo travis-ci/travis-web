@@ -1,9 +1,8 @@
-<ul data-test-components-flash-item="true" class="flash ember-view">
-  <li class="notice below-top-bar ember-view">
-    <p class="flash-message">
-      <span data-test-flash-message-text class="message">
-        You have selected the {{@data.scheduledPlan.name}} plan. Your new plan will be effective from {{pretty-date @data.date}}
-      </span>
-    </p>
-  </li>
-</ul>
+<Notification
+  @type='global'
+  @severity='warning'
+>
+  <span data-test-flash-message-text class="message">
+    You have selected the {{@data.scheduledPlan.name}} plan. Your new plan will be effective from {{pretty-date @data.date}}
+  </span>
+</Notification>

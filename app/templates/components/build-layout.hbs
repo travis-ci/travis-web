@@ -9,9 +9,12 @@
       @repo={{this.repo}}
     />
     {{#if this.noJobsError}}
-      <p data-test-no-jobs-error-message class="notice-banner--red">
+      <Notification
+      @severity='error'
+      data-test-no-jobs-error-message
+      >
         Sorry, we're having troubles fetching jobs. Please try again later.
-      </p>
+      </Notification>
     {{else if this.build.isMatrix}}
       <BuildTabs @build={{this.build}} />
       {{#if this.jobsLoaded}}
