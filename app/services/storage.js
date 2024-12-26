@@ -5,18 +5,6 @@ export default Service.extend({
   utm: service('storage/utm'),
   store: service(),
 
-  get validToFetchInterval() {
-    return this.getItem('travis.valid_to_fetch_interval');
-  },
-
-  set validToFetchInterval(value) {
-    if (value === null) {
-      this.removeItem('travis.valid_to_fetch_interval');
-      return;
-    }
-    this.setItem('travis.valid_to_fetch_interval', +value);
-  },
-
   get billingStep() {
     return +this.getItem('travis.billing_step');
   },
