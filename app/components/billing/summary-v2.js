@@ -4,12 +4,12 @@ import { reads, or, not, and, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import isCurrentTrial from 'travis/utils/computed-is-current-trial';
 
+const VALID_TO_FETCH_INTERVAL = 10000;
+
 export default Component.extend({
 
   accounts: service(),
   storage: service(),
-
-  VALID_TO_FETCH_INTERVAL: 10000,
 
   init() {
     this._super(...arguments);
