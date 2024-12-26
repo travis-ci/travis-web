@@ -7,6 +7,15 @@ import isCurrentTrial from 'travis/utils/computed-is-current-trial';
 export default Component.extend({
 
   accounts: service(),
+  storage: service(),
+
+  VALID_TO_FETCH_INTERVAL: 10000,
+
+  init() {
+    this._super(...arguments);
+    clearInterval(+this.storage.validToFetchInterval);
+    this.storage.validToFetchInterval = null;
+  },
 
   subscription: null,
   account: null,
@@ -27,8 +36,10 @@ export default Component.extend({
   }),
   validto: computed('subscription.validTo', function () {
     try {
-      if (this.subscription.validTo == null) {
-        this.accounts.fetchV2Subscriptions.perform();
+      if (this.subscription.validTo == null && this.storage.validToFetchInterval == null) {
+        this.storage.validToFetchInterval = setInterval(() => {
+          this.accounts.fetchV2Subscriptions.perform();
+        }, VALID_TO_FETCH_INTERVAL);
       }
     } catch (e) {
       console.log(e);
