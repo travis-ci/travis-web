@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, observer } from '@ember/object';
 import { reads, or, not, and, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import isCurrentTrial from 'travis/utils/computed-is-current-trial';
@@ -25,7 +25,12 @@ export default Component.extend({
   isSubscribed: computed('subscription.isSubscribed', function () {
     return this.subscription.isSubscribed;
   }),
-  validto: computed('subscription.validTo', function () {
+  validto: computed('subscription.validTo', 'subscription.validToFromAddon', function () {
+    return this.subscription.validToFromAddon || this.subscription.validTo;
+  }),
+
+  // Use an observer to fetch subscriptions if `subscription.validTo` is null
+  onValidToChange: observer('subscription.validTo', function () {
     try {
       if (this.subscription.validTo == null) {
         this.accounts.fetchV2Subscriptions.perform();
@@ -33,7 +38,6 @@ export default Component.extend({
     } catch (e) {
       console.log(e);
     }
-    return this.subscription.validToFromAddon || this.subscription.validTo;
   }),
   isCurrentTrial: isCurrentTrial(),
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
