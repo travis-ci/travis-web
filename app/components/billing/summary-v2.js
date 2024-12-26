@@ -11,12 +11,6 @@ export default Component.extend({
   accounts: service(),
   storage: service(),
 
-  init() {
-    this._super(...arguments);
-    clearInterval(+this.storage.validToFetchInterval);
-    this.storage.validToFetchInterval = null;
-  },
-
   subscription: null,
   account: null,
 
@@ -36,8 +30,8 @@ export default Component.extend({
   }),
   validto: computed('subscription.validTo', function () {
     try {
-      if (this.subscription.validTo == null && this.storage.validToFetchInterval == null) {
-        this.storage.validToFetchInterval = setInterval(() => {
+      if (this.subscription.validTo == null) {
+        setTimeout(() => {
           this.accounts.fetchV2Subscriptions.perform();
         }, VALID_TO_FETCH_INTERVAL);
       }
