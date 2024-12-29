@@ -8,6 +8,7 @@
   </Notification>
 {{else if (lt this.subscription.addonUsage.private.remainingCredits 0)}}
   <Notification
+    @type='alert'
     @severity='warning'
     data-test-warning-message='true'
   >
@@ -17,6 +18,7 @@
 {{else if (gt this.subscription.addonUsage.private.remainingCredits 0)}}
   {{#if this.sameAddons}}
     <Notification
+      @type='alert'
       @severity='warning'
       data-test-warning-message='true'
     >
@@ -31,6 +33,7 @@
     </Notification>
   {{else}}
     <Notification
+      @type='alert'
       @severity='warning'
       data-test-warning-message='true'
     >

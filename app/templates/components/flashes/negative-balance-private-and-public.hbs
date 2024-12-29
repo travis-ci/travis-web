@@ -1,10 +1,11 @@
 <Notification
   @type='global'
   @severity='error'
+  data-test-components-flash-item="true"
 >
 <span data-test-flash-message-text class="message">
-        Builds have been temporarily disabled for private and public repositories due to a negative credit balance. 
-        Please go to the 
+        Builds have been temporarily disabled for private and public repositories due to a negative credit balance.
+        Please go to the
         {{#if @data.isUser}}
           <LinkTo @route="account.billing">Plan page</LinkTo>
         {{else}}

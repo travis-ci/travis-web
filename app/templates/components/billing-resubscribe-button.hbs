@@ -1,6 +1,7 @@
 {{#if this.account.hasSubscriptionPermissions}}
   {{#if this.isActiveGithubSubscription}}
     <Notification
+      @type='alert'
       @severity='warning'
       @icon='icon-help'
       >

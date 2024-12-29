@@ -11,7 +11,7 @@
     <p data-test-no-permission-message>
       You don't have permission to create a subscription
     </p>
-  {{/if}}  
+  {{/if}}
 {{else}}
 <div class="billing-trial">
   <span class="notice-banner--white flex flex--v-center" data-test-help-text='true'>
@@ -86,7 +86,7 @@
 
         <Notification
           @type='global'
-          @severity='warning'
+          @severity='error'
           data-test-trial-ran-out='true'
         >
           Your trial has ended. Subscribe to a plan to continue building your project!

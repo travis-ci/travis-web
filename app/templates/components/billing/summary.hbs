@@ -1,6 +1,7 @@
 <div class='billing-subscription-section plan-overview'>
   {{#if (not this.account.hasSubscriptionPermissions)}}
     <Notification
+      @type='alert'
       @severity='warning'
       @icon='icon-help'
       data-test-help='true'

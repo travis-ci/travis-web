@@ -32,10 +32,13 @@ export default Component.extend({
     let iconClass=this.icon;
     switch(this.severity) {
     case 'warning':
-      iconClass += ` ${this.icon}-yellow`;
+      iconClass += ` ${this.icon}-warning`;
       break;
     case 'info':
-      iconClass += ` ${this.icon}-alert-info`;
+      iconClass += ` ${this.icon}-info`;
+      break;
+    case 'error':
+      iconClass += ` ${this.icon}-error`;
       break;
     default:
     }
