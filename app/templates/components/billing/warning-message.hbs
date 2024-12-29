@@ -1,15 +1,25 @@
 {{#if this.isReactivation}}
-  <span class="notice-banner--yellow" data-test-warning-message='true'>
+  <Notification
+    @type='alert'
+    @severity='info'
+    data-test-warning-message='true'
+  >
     You are about to reactivate payments for your cancelled plan {{this.selectedPlan.name}}. You will not be charged.
-  </span>
+  </Notification>
 {{else if (lt this.subscription.addonUsage.private.remainingCredits 0)}}
-  <span class="notice-banner--yellow" data-test-warning-message='true'>
+  <Notification
+    @severity='warning'
+    data-test-warning-message='true'
+  >
     Your Private or OSS Credit balance is negative. After upgrading to the {{this.selectedPlan.name}} plan the negative Credit amount
     will be deducted from the respective new credit type balance. Please see our <ExternalLinkTo @href={{config-get 'urls.docs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details.
-  </span>
+  </Notification>
 {{else if (gt this.subscription.addonUsage.private.remainingCredits 0)}}
   {{#if this.sameAddons}}
-    <span class="notice-banner--yellow" data-test-warning-message='true'>
+    <Notification
+      @severity='warning'
+      data-test-warning-message='true'
+    >
       You are switching to the {{this.selectedPlan.name}}. Your remaining credits will be added to credits coming with {{this.selectedPlan.name}}.
       Credits that will be added:
       {{#if (gt this.subscription.addonUsage.public.remainingCredits 0)}}
@@ -18,10 +28,13 @@
       {{#if (gt this.subscription.addonUsage.private.remainingCredits 0)}}
         Credits remaining balance: {{this.subscription.addonUsage.private.remainingCredits}}
       {{/if}}
-    </span>
+    </Notification>
   {{else}}
-    <span class="notice-banner--yellow" data-test-warning-message='true'>
+    <Notification
+      @severity='warning'
+      data-test-warning-message='true'
+    >
       Pricing for number of users who are allowed to trigger builds may be changed. See our <ExternalLinkTo @href={{config-get 'urls.docs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details.
-    </span>
+    </Notification>
   {{/if}}
 {{/if}}

@@ -8,7 +8,11 @@
   {{/if}}
   {{#if this.showPlanInfo}}
     {{#if (and (not this.subscription.plan.isTrial) (and this.subscription.isNotManual (eq this.subscription.plan.planType 'metered')))}}
-      <span class="notice-banner--white block" data-test-plan-notice='true'>
+      <Notification
+        @type='alert'
+        @severity='info'
+        data-test-plan-notice='true'
+      >
         {{#if this.subscription.plan.isFree}}
           Trial users and other qualifying users are granted a small allocation of credits. Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances and its possible extension.
         {{else}}
@@ -22,7 +26,7 @@
             {{/if}}
           </div>
         {{/if}}
-      </span>
+      </Notification>
     {{/if}}
     <div class="flex flex--space-between flex--wrap plan-overview__details plan-grey">
       <section>
@@ -180,7 +184,7 @@
     This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
     <ExternalLinkTo @href={{config-get 'urls.resources'}} @title="Travis CI Resources">
       contact our support team.
-    </ExternalLinkTo>       
+    </ExternalLinkTo>
   </div>
   <br />
   {{#if (and this.subscription.hasUserLicenseAddons)}}

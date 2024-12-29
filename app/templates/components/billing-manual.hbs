@@ -21,17 +21,19 @@
         <h3>
           Billing details
         </h3>
-        <p class="flex px-4 py-5 shadow items-center notice-banner--white" data-test-help-text='true'>
-          <div class="mr-4">
-            <SvgImage @name='icon-help' @class='icon-help' />
-          </div>
+        <Notification
+          @type='alert'
+          @severity='info'
+          @icon='icon-help'
+          data-test-help-text
+        >
           <span class="py-1 leading-loose" data-test-manual-subscription-banner='true'>
             This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
             <ExternalLinkTo @href={{config-get 'urls.resources'}} @title="Travis CI Resources">
               contact our support team.
-            </ExternalLinkTo> 
+            </ExternalLinkTo>
           </span>
-        </p>
+        </Notification>
       </div>
     </section>
   {{/if}}

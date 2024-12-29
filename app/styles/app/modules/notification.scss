@@ -1,0 +1,21 @@
+.notification-info {
+  background-color: #eff6ff;
+  padding: 10px 16px 10px 10px;
+  color: #222222;
+  margin-top: 1.25rem;;
+}
+
+.notification-info a {
+  font-weight: 600;
+  text-decoration: underline;
+  color: #222222;
+}
+
+.info-alert-info {
+  width: 17px;
+  height: 17px;
+  margin-left: 0;
+  margin-bottom: -3px;
+  @include colorSVG($oxide-blue);
+}
+

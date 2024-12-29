@@ -1,9 +1,8 @@
-<ul data-test-components-flash-item="true" class="flash ember-view">
-  <li class="warning below-top-bar ember-view">
-    <p class="flash-message">
-      <span data-test-flash-message-text class="message">
+<Notification
+  @type='alert'
+  @severity='info'
+  >
+  <span data-test-flash-message-text class="message">
         {{config-get 'defaultTitle'}} is in read-only mode. The historical data can be downloaded to external file storage.
-      </span>
-    </p>
-  </li>
-</ul>
+  </span>
+</Notification>

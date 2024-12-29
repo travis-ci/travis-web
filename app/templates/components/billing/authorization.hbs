@@ -1,8 +1,10 @@
 {{#if this.requiresSourceAction}}
-  <span class="notice-banner--yellow" data-test-payment-error='true'>
-    <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
+  <Notification
+    @severity='error'
+    @icon='icon-help'
+    >
     There was a problem authorizing your card. Please retry.
-  </span>
+  </Notification>
   {{#if this.retryAuthorization.isRunning}}
     <LoadingIndicator/>
   {{else}}
@@ -31,9 +33,13 @@
         <p>{{stripeError.message}}</p>
       {{/if}}
     </StripeCard>
-      <span class="notice-banner--white" data-test-help-text='true'>
+      <Notification
+        @type='alert'
+        @severity='info'
+        data-test-help-text='true'
+      >
         Credit card details are never stored on nor reach our servers. Payment data is handled by Stripe.
-      </span>
+      </Notification>
     <div class='billing-checkout__payment'>
       {{#if this.retryPayment.isRunning}}
         <LoadingIndicator/>
@@ -46,9 +52,13 @@
   </TravisForm>
 </div>
 {{else if this.isPending}}
-  <span class="notice-banner--yellow" data-test-trial-running-out='true'>
+  <Notification
+    @type='alert'
+    @severity='info'
+    data-test-trial-running-out='true'
+  >
     We are currently waiting for Stripe to finish processing your order.
-  </span>
+  </Notification>
 {{else if (and this.isComplete (or this.subscription.isStripe this.subscription.isManual))}}
   {{#if (or this.showPlansSelector this.showAddonsSelector)}}
 

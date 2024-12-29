@@ -1,0 +1,23 @@
+{{#if this.isGlobal}}
+<ul data-test-components-flash-item="true" class="flash ember-view">
+  <p class="{{this.getNotificationClass}}" ...attributes>
+  {{#if this.hasIcon }}
+    <div class="mr-4">
+      <SvgImage @name="{{this.getIcon}}" @class="{{this.getIconClass}}" />
+    </div>
+  {{/if}}
+  {{yield}}
+  </p>
+</ul>
+{{else}}
+  <div class="{{this.getNotificationClass}}" ...attributes>
+  {{#if this.hasIcon }}
+    <div class="mr-4">
+      <SvgImage @name="{{this.getIcon}}" @class="{{this.getIconClass}}" />
+      {{yield}}
+    </div>
+  {{else}}
+    {{yield}}
+  {{/if}}
+  </div>
+{{/if}}

@@ -1,11 +1,13 @@
 {{#if this.error}}
-  <p class="notice-banner--red">
+  <Notification
+    @severity='error'
+    >
   {{#if (or (eq this.errorType 'log_expired') (eq this.errorType 'log_access_denied'))}}
     {{this.errorMessage}}
   {{else}}
     There was an error while trying to fetch the log.
   {{/if}}
-  </p>
+  </Notification>
 {{else if this.log.fetchTask.isRunning}}
   <LoadingIndicator />
 {{else}}
