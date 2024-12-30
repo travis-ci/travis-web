@@ -1,0 +1,22 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+  @closeButton={{true}}
+>
+  <div data-test-cancel-subscription-confirmation-modal="true" class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
+    <h2>Cancel Subscription?</h2>
+    <p class="cancel-subscription-modal__message">
+      Are you sure you want to cancel your subscription? This action cannot be undone.
+    </p>
+    <div class="full-width">
+      <div class="flex flex--v-center flex--center">
+          <a data-test-cancel-subscription="true" class="button--red confirm-cancellation-button" {{on 'click' (action @cancelSubscription)}} >
+            Yes, Cancel
+          </a>
+          <a data-test-keep-subscription="true" class="button--green cancel-cancellation-button" {{on 'click' (fn @onClose)}}>
+            No, Keep Subscription
+          </a>
+      </div>
+    </div>
+  </div>
+</Modal>
