@@ -291,6 +291,10 @@ class Travis::Web::App
       config['trialDays'] = ENV['TRIAL_DAYS']
     end
 
+    config['tempBanner'] ||= {}
+    config['tempBanner']['tempBannerEnabled'] = ENV['TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED'] || false
+    config['tempBanner']['tempBannerMessage'] = ENV['TEMPORARY_ANNOUNCEMENT_MESSAGE'] || ''
+
     regexp = %r{<meta name="travis/config/environment"\s+content="([^"]+)"}
     string.gsub!(regexp) do
       ember_config = JSON.parse(CGI.unescape(::Regexp.last_match(1)))
