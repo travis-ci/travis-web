@@ -5,6 +5,13 @@ export default Service.extend({
   utm: service('storage/utm'),
   store: service(),
 
+  get subscriptionValidToAttempts() {
+    return +this.getItem('travis.subscription_valid_to_attempts');
+  },
+  set subscriptionValidToAttempts(value) {
+    this.setItem('travis.subscription_valid_to_attempts', +value);
+  },
+
   get billingStep() {
     return +this.getItem('travis.billing_step');
   },
