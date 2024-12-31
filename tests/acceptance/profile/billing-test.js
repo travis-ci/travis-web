@@ -399,11 +399,24 @@ module('Acceptance | profile/billing', function (hooks) {
 
     await profilePage.visit();
     await profilePage.billing.visit();
-    await profilePage.billing.openCancelSubscriptionModal.click();
+    await profilePage.billing.openCancelSubscriptionConfirmationModal.click();
+    await profilePage.billing.cancelSubscriptionButton.click();
 
     assert.equal(topPage.flashMessage.text, 'Your cancellation request has been forwarded to Support. Our Support team will contact you soon. Please turn off auto-refill if you don\'t plan to use it anymore.');
 
     assert.ok(profilePage.billing.cancellationRequestedButton.isPresent);
+  });
+
+  test('keep subscription on the confirmation modal', async function (assert) {
+    this.subscription.status = 'subscribed';
+
+    await profilePage.visit();
+    await profilePage.billing.visit();
+    await profilePage.billing.openCancelSubscriptionConfirmationModal.click();
+    await profilePage.billing.keepSubscriptionButton.click();
+
+    assert.ok(topPage.flashMessage.isNotShown);
+    assert.false(profilePage.billing.cancellationRequestedButton.isPresent);
   });
 
   test('change and resubscribe to a canceled stripe plan', async function (assert) {
