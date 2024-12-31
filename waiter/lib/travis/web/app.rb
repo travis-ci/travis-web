@@ -209,7 +209,7 @@ class Travis::Web::App
       config['githubApps'] ||= {}
       config['githubApps']['appName'] = options[:github_apps_app_name]
       config['githubApps']['migrationRepositoryCountLimit'] = 50
-      end
+    end
 
     config['publicMode'] = !options[:public_mode].nil? && (options[:public_mode] == 'true' || options[:public_mode] == true)
 
