@@ -91,6 +91,7 @@ class Travis::Web::App
     content = File.read(file)
     nonce = SecureRandom.base64(24)
     set_nonce(content, nonce)
+    content_security_policy_value = "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com https://www.google.com https://m.stripe.network;"
 
     if fingerprinted?(file)
       headers = {
@@ -100,7 +101,7 @@ class Travis::Web::App
         'Content-Type' => mime_type(file),
         'Expires' => expires(file),
         'ETag' => fingerprint(file),
-        'Content-Security-Policy-Report-Only' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com https://www.google.com https://m.stripe.network;"
+        'Content-Security-Policy-Report-Only' => content_security_policy_value
       }
     else
       set_config(content, options) if config_needed?(file)
@@ -115,7 +116,7 @@ class Travis::Web::App
         'Expires' => expires(file),
         'Vary' => vary_for(file),
         'ETag' => Digest::MD5.hexdigest(content),
-        'Content-Security-Policy-Report-Only' => "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com https://www.google.com https://m.stripe.network;"
+        'Content-Security-Policy-Report-Only' => content_security_policy_value
       }
     end
 
