@@ -219,7 +219,7 @@ class Travis::Web::App
       config['githubApps'] ||= {}
       config['githubApps']['appName'] = options[:github_apps_app_name]
       config['githubApps']['migrationRepositoryCountLimit'] = 50
-      end
+    end
 
     config['publicMode'] = !options[:public_mode].nil? && (options[:public_mode] == 'true' || options[:public_mode] == true)
 
@@ -300,6 +300,10 @@ class Travis::Web::App
     if ENV['TRIAL_DAYS']
       config['trialDays'] = ENV['TRIAL_DAYS']
     end
+
+    config['tempBanner'] ||= {}
+    config['tempBanner']['tempBannerEnabled'] = ENV['TEMPORARY_ANNOUNCEMENT_BANNER_ENABLED'] || false
+    config['tempBanner']['tempBannerMessage'] = ENV['TEMPORARY_ANNOUNCEMENT_MESSAGE'] || ''
 
     regexp = %r{<meta name="travis/config/environment"\s+content="([^"]+)"}
     string.gsub!(regexp) do

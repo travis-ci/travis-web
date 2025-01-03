@@ -4,9 +4,12 @@ import { reads, or, not, and, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import isCurrentTrial from 'travis/utils/computed-is-current-trial';
 
+const VALID_TO_FETCH_MAX_ATTEMPTS = 2;
+
 export default Component.extend({
 
   accounts: service(),
+  storage: service(),
 
   subscription: null,
   account: null,
@@ -27,7 +30,8 @@ export default Component.extend({
   }),
   validto: computed('subscription.validTo', function () {
     try {
-      if (this.subscription.validTo == null) {
+      if (this.subscription.validTo == null && this.storage.subscriptionValidToAttempts < VALID_TO_FETCH_MAX_ATTEMPTS) {
+        this.storage.subscriptionValidToAttempts++;
         this.accounts.fetchV2Subscriptions.perform();
       }
     } catch (e) {
