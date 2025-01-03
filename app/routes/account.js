@@ -5,8 +5,14 @@ export default TravisRoute.extend({
   raven: service(),
   accounts: service(),
   features: service(),
+  storage: service(),
 
   needsAuth: true,
+
+  beforeModel() {
+    this._super(...arguments);
+    this.storage.subscriptionValidToAttempts = 0;
+  },
 
   titleToken(account = {}) {
     return `${account.name || account.login || 'Account'} - Profile`;
