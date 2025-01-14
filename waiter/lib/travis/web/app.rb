@@ -89,6 +89,10 @@ class Travis::Web::App
 
   def response_for(file, options = {})
     content = File.read(file)
+    nonce = SecureRandom.base64(24)
+    set_nonce(content, nonce)
+    content_security_policy_value = "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com https://www.google.com https://m.stripe.network;"
+
     if fingerprinted?(file)
       headers = {
         'Content-Length' => content.bytesize.to_s,
@@ -96,7 +100,8 @@ class Travis::Web::App
         'Content-Location' => path_for(file),
         'Content-Type' => mime_type(file),
         'Expires' => expires(file),
-        'ETag' => fingerprint(file)
+        'ETag' => fingerprint(file),
+        'Content-Security-Policy-Report-Only' => content_security_policy_value
       }
     else
       set_config(content, options) if config_needed?(file)
@@ -110,7 +115,8 @@ class Travis::Web::App
         'Last-Modified' => server_start.httpdate,
         'Expires' => expires(file),
         'Vary' => vary_for(file),
-        'ETag' => Digest::MD5.hexdigest(content)
+        'ETag' => Digest::MD5.hexdigest(content),
+        'Content-Security-Policy-Report-Only' => content_security_policy_value
       }
     end
 
@@ -169,6 +175,10 @@ class Travis::Web::App
 
   def mime_type(file)
     Rack::Mime.mime_type File.extname(file)
+  end
+
+  def set_nonce(content, nonce)
+    content.gsub!('nonce="val"', "nonce=\"#{nonce}\"")
   end
 
   def set_title(content) # rubocop:disable Naming/AccessorMethodName
