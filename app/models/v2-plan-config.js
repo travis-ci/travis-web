@@ -87,6 +87,7 @@ export default Model.extend({
     return paidAddon?.pre_purchase_user_count || 0;
   }),
 
+  // This seems to be unused
   creditsPerUserInPlan: computed('addonConfigs', function () {
     let paidAddon = this.hasUserLicenseAddons && (this.userLicenseAddons || []).filter(addon => !addon.free);
     if (paidAddon.length > 0) paidAddon = paidAddon[0];
