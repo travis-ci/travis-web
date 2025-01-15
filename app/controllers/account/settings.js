@@ -58,6 +58,11 @@ export default Controller.extend({
     return this.customKeysLoaded;
   }),
 
+  envVars: computed(function () {
+    let envVars = this.auth.currentUser.accountEnvVars;
+    return envVars.sortBy('name');
+  }),
+
   isShowingAddKeyModal: false,
 
   userHasNoEmails: computed('auth.currentUser.emails', function () {

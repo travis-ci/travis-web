@@ -166,7 +166,6 @@ textarea {
       display: flex;
       justify-content: left;
       width: auto;
-      height: 80px;
       align-items: center;
       margin-left: 1px;
 
@@ -210,6 +209,15 @@ textarea {
     }
 
   }
+}
+
+.add-account-env-var-form-elem {
+  width: 40% !important;
+}
+
+.add-var-btn {
+  text-align: left !important;
+  margin-bottom: 28px !important;
 }
 
 .form--envvar {
