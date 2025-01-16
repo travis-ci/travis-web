@@ -4,19 +4,21 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   storage: service(),
-  bannerKey: 'travis.temporary-announcement-banner',
+  bannerText: 'travis.temporary-announcement-banner',
 
   message: '',
   enabled: false,
 
   init() {
     this._super(...arguments);
-    this.set('enabled', config.tempBanner.tempBannerEnabled === 'true' && !this.storage.getItem(this.bannerKey));
+    const isBannerEnabled = config.tempBanner.tempBannerEnabled === 'true';
+    const isNewBannerMessage = this.storage.getItem(this.bannerText) !== config.tempBanner.tempBannerMessage;
+    this.set('enabled', isBannerEnabled && isNewBannerMessage);
     this.set('message', config.tempBanner.tempBannerMessage || '');
   },
 
   closeBanner() {
-    this.storage.setItem(this.bannerKey, 'true');
+    this.storage.setItem(this.bannerText, config.tempBanner.tempBannerMessage);
     this.set('enabled', false);
   }
 });
