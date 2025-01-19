@@ -37,7 +37,7 @@ export default Component.extend({
     } catch (e) {
       console.log(e);
     }
-    return this.subscription.validToFromAddon || this.subscription.validTo;
+    return this.subscription.validTo || this.subscription.validToFromAddon;
   }),
   isCurrentTrial: isCurrentTrial(),
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
