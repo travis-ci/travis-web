@@ -53,7 +53,7 @@
                   >
                     {{#if (and this.isSubscribed (not this.subscription.subscriptionExpiredByDate))}}
                     {{#if this.isCurrentTrial }}(Free Trial Period) {{/if}}
-                      Valid until {{moment-format this.validto "MMMM D, YYYY"}}
+                      Valid until {{this.subtractOneDay this.validto}}
                     {{else if this.isIncomplete}}
                       Incomplete
                     {{else if (and this.isComplete this.isCanceled)}}
@@ -180,7 +180,7 @@
     This manual subscription is paid to Travis CI by bank transfer. If you have any questions or would like to update your plan,
     <ExternalLinkTo @href={{config-get 'urls.resources'}} @title="Travis CI Resources">
       contact our support team.
-    </ExternalLinkTo>       
+    </ExternalLinkTo>
   </div>
   <br />
   {{#if (and this.subscription.hasUserLicenseAddons)}}
