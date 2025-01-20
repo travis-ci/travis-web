@@ -30,7 +30,6 @@ export default Component.extend({
     return this.subscription.isSubscribed;
   }),
 
-
   subtractOneDay(date) {
     return moment(date).subtract(1, 'days').format('MMMM D, YYYY');
   },

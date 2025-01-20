@@ -39,7 +39,7 @@
                     <span class="badge green square" data-test-active-status='true'>
                       active
                     </span>
-                  {{else if this.subscription.isExpired}}
+                  {{else if this.isExpired}}
                     <span class="badge red square" data-test-expired-status='true'>
                       expired
                     </span>
@@ -59,7 +59,7 @@
                     {{else if (and this.isComplete this.isCanceled)}}
                       {{this.subscriptionExpiredPrefix}} on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{else if (and this.isComplete this.isExpired)}}
-                      {{this.subscriptionExpiredPrefix}} on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                      {{this.subscriptionExpiredPrefix}} on {{this.subtractOneDay this.subscription.validTo}}
                     {{/if}}
                   </span>
 
