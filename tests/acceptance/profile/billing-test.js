@@ -467,7 +467,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired manual subscription');
-    assert.equal(profilePage.billing.planMessage.text, 'Expired on July 16, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Expired on July 15, 2018');
     assert.equal(profilePage.billing.price.text, '$69');
   });
 
@@ -648,7 +648,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.ok(profilePage.billing.annualInvitation.isHidden);
 
     assert.equal(profilePage.billing.plan.name, 'Small Business1 plan expired github marketplace subscription');
-    assert.equal(profilePage.billing.planMessage.text, 'Expired on June 19, 2018');
+    assert.equal(profilePage.billing.planMessage.text, 'Expired on June 18, 2018');
   });
 
   test('view billing on an annual plan', async function (assert) {
@@ -1043,7 +1043,7 @@ module('Acceptance | profile/billing', function (hooks) {
     await profilePage.billing.visit();
 
     assert.equal(profilePage.billing.plan.name, 'Unknown plan active');
-    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('Unknown concurrent jobs Valid until June 19, 2018');
+    assert.dom(profilePage.billing.plan.concurrency.scope).hasTextContaining('Unknown concurrent jobs Valid until June 18, 2018');
     assert.ok(profilePage.billing.price.isHidden);
     assert.ok(profilePage.billing.annualInvitation.isHidden);
   });
