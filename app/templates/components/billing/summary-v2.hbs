@@ -53,13 +53,13 @@
                   >
                     {{#if (and this.isSubscribed (not this.subscription.subscriptionExpiredByDate))}}
                     {{#if this.isCurrentTrial }}(Free Trial Period) {{/if}}
-                      Valid until {{this.subtractOneDay this.validto}}
+                      Valid until {{this.formattedValidTo}}
                     {{else if this.isIncomplete}}
                       Incomplete
                     {{else if (and this.isComplete this.isCanceled)}}
                       {{this.subscriptionExpiredPrefix}} on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{else if (and this.isComplete this.isExpired)}}
-                      {{this.subscriptionExpiredPrefix}} on {{this.subtractOneDay this.subscription.validTo}}
+                      {{this.subscriptionExpiredPrefix}} on {{this.formattedValidTo}}
                     {{/if}}
                   </span>
 

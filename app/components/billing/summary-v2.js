@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { reads, or, not, and, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import isCurrentTrial from 'travis/utils/computed-is-current-trial';
-import moment from 'moment';
+import { subtractOneDay } from 'travis/utils/subtract-day';
 
 const VALID_TO_FETCH_MAX_ATTEMPTS = 2;
 
@@ -30,10 +30,6 @@ export default Component.extend({
     return this.subscription.isSubscribed;
   }),
 
-  subtractOneDay(date) {
-    return moment(date).subtract(1, 'days').format('MMMM D, YYYY');
-  },
-
   validto: computed('subscription.validTo', function () {
     try {
       if (this.subscription.validTo == null && this.storage.subscriptionValidToAttempts < VALID_TO_FETCH_MAX_ATTEMPTS) {
@@ -45,6 +41,11 @@ export default Component.extend({
     }
     return this.subscription.validTo || this.subscription.validToFromAddon;
   }),
+
+  formattedValidTo: computed('validto', function () {
+    return subtractOneDay(this.validto);
+  }),
+
   isCurrentTrial: isCurrentTrial(),
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   canceledOrExpired: or('isExpired', 'isCanceled'),
