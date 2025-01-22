@@ -53,6 +53,7 @@ RUN \
   export GOOGLE_RECAPTCHA_SITE_KEY=$(cat /run/secrets/GOOGLE_RECAPTCHA_SITE_KEY) && \
   export GOOGLE_ANALYTICS_ID=$(cat /run/secrets/GOOGLE_ANALYTICS_ID) && \
   export GOOGLE_TAGS_CONTAINER_ID=$(cat /run/secrets/GOOGLE_TAGS_CONTAINER_ID) && \
+  export GOOGLE_TAGS_PARAMS=$(cat /run/secrets/GOOGLE_TAGS_PARAMS) && \
   ember build --environment=production'
 
 
