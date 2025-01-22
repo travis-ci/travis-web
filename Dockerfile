@@ -51,6 +51,8 @@ RUN \
    curl -o /app/node_modules/asktravis/dist/aida.js.map $AIDA_URL.map || true; \
   fi; \
   export GOOGLE_RECAPTCHA_SITE_KEY=$(cat /run/secrets/GOOGLE_RECAPTCHA_SITE_KEY) && \
+  export GOOGLE_ANALYTICS_ID=$(cat /run/secrets/GOOGLE_ANALYTICS_ID) && \
+  export GOOGLE_TAGS_CONTAINER_ID=$(cat /run/secrets/GOOGLE_TAGS_CONTAINER_ID) && \
   ember build --environment=production'
 
 
