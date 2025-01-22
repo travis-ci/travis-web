@@ -45,6 +45,9 @@ RUN npm ci
 
 RUN \
   --mount=type=secret,id=GOOGLE_RECAPTCHA_SITE_KEY \
+  --mount=type=secret,id=GOOGLE_ANALYTICS_ID \
+  --mount=type=secret,id=GOOGLE_TAGS_CONTAINER_ID \
+  --mount=type=secret,id=GOOGLE_TAGS_PARAMS \
   sh -c ' \
   if test $AIDA_URL; then \
    curl -o /app/node_modules/asktravis/dist/aida.js $AIDA_URL; \
