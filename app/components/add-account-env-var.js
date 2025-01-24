@@ -23,44 +23,35 @@ export default Component.extend(BranchSearching, {
     return this.setProperties({
       name: null,
       value: null,
-      'public': null,
-      branch: null
+      'public': null
     });
   },
 
-  search: task(function* (query) {
-    const searchResults = yield this.searchBranch.perform(this.repo.id, query);
-    return searchResults.mapBy('name');
-  }),
-
   save: task(function* () {
-    // this.set('valueError', false);
+    this.set('valueError', false);
 
-    console.log("saving env var");
-    if (true) {
-      try {
-        yield this.api.post(
-          '/account_env_var',
-          {
-            data: {
-              owner_id: this.owner.id,
-              owner_type: this.ownerType,
-              name: this.name.trim(),
-              value: this.value.trim(),
-              'public': this.public
-            }
+    try {
+      yield this.api.post(
+        '/account_env_var',
+        {
+          data: {
+            owner_id: this.owner.id,
+            owner_type: this.ownerType,
+            name: this.name.trim(),
+            value: this.value.trim(),
+            'public': this.public
           }
-        ).then((data) => {
-          this.envVarAdded(data);
-          this.set('value', '');
-          this.set('name', '');
-        });
-      } catch (errors) {
-        errors.clone().json().then((error) => {
-          this.set('valueError', error.error_message);
-        });
-      }
+        }
+      ).then((data) => {
+        this.envVarAdded(data);
+        this.reset();
+      });
+    } catch (errors) {
+      errors.clone().json().then((error) => {
+        this.set('valueError', error.error_message);
+      });
     }
+
   }).drop(),
 
   actions: {

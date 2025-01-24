@@ -168,6 +168,7 @@ textarea {
       width: auto;
       align-items: center;
       margin-left: 1px;
+      height: 80px;
 
       button {
         order: 1;
@@ -213,6 +214,10 @@ textarea {
 
 .add-account-env-var-form-elem {
   width: 40% !important;
+
+  .display-value-switch {
+    height: auto !important;
+  }
 }
 
 .add-var-btn {
