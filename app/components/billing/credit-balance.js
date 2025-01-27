@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
+import { subtractOneDay } from 'travis/utils/subtract-day';
 
 export default Component.extend({
 
@@ -22,6 +23,11 @@ export default Component.extend({
     return date;
   }),
   creditsPrivateValidDate: reads('subscription.addonUsage.private.validDate'),
+
+  formattedCreditsPrivateValidDate: computed('creditsPrivateValidDate', function () {
+    let validDate = this.get('creditsPrivateValidDate');
+    return subtractOneDay(validDate);
+  }),
 
   creditsTotal: computed('creditsTab', 'creditsPublicTotal', 'creditsPrivateTotal', function () {
     if (this.creditsTab === 1)

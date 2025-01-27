@@ -2,6 +2,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads, or, not, and, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { subtractOneDay } from 'travis/utils/subtract-day';
+
 
 export default Component.extend({
   store: service(),
@@ -41,5 +43,10 @@ export default Component.extend({
 
   subscriptionExpiredPrefix: computed('subscription.validTo', function () {
     return Date.now() > Date.parse(this.subscription.validTo) ? 'Expired' : 'Expires';
+  }),
+
+  formattedValidTo: computed('subscription.validTo', function () {
+    let validDate = this.get('subscription.validTo');
+    return subtractOneDay(validDate);
   }),
 });
