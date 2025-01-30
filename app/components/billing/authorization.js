@@ -16,6 +16,8 @@ export default Component.extend({
   account: null,
   subscription: null,
   isCurrentTrial: isCurrentTrial(),
+
+  showCancelConfirmModal: false,
   showCancelModal: false,
   isV2Subscription: false,
   selectedPlan: null,
@@ -137,6 +139,7 @@ export default Component.extend({
       }
       yield this.subscription.cancelSubscription.perform();
       // this.set('showCancelModal', true);
+      this.set('showCancelConfirmModal', false);
     } catch (error) {
       this.flashes.error('An error occurred when submitting your cancellation request. Please try again.');
     }
