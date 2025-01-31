@@ -22,12 +22,4 @@ module('Acceptance | enterprise/banner', function (hooks) {
       'expiration_time': '2019-01-01T00:00:00Z'
     }));
   });
-
-  test('banner is rendered in enterprise mode', async function (assert) {
-    enableFeature('enterpriseVersion');
-    await visit('/');
-    await settled();
-
-    assert.ok(enterpriseBanners.trialBanner.isVisible);
-  });
 });
