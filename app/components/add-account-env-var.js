@@ -6,6 +6,7 @@ import BranchSearching from 'travis/mixins/branch-searching';
 
 export default Component.extend(BranchSearching, {
   classNames: ['form--envvar'],
+  classNameBindings: ['valueError:form-error'],
 
   api: service(),
   store: service(),
@@ -52,20 +53,5 @@ export default Component.extend(BranchSearching, {
       });
     }
 
-  }).drop(),
-
-  actions: {
-    validateEnvName(name) {
-      const { branch, repo } = this;
-      const existingEnvVars = this.store.peekAll('env-var')
-        .filterBy('repo.id', repo.id)
-        .filterBy('name', name)
-        .filterBy('branch', branch);
-      const envAlreadyDefined = isPresent(existingEnvVars);
-      if (envAlreadyDefined) {
-        return `Variable with this name ${branch ? 'for selected branch ' : ''}is already defined.`;
-      }
-      return true;
-    }
-  }
+  }).drop()
 });

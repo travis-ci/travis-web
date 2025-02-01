@@ -76,11 +76,11 @@
         </span>
       </p>
     </div>
-    <AddAccountEnvVar @owner={{this.account}} @ownerType='Organization' @repo={{this.repo}} />
+    <AddAccountEnvVar @owner={{this.organization}} @envVarAdded={{action "envVarAdded"}} @ownerType='Organization' />
 
     <ul class="settings-list--envvars">
       {{#each this.envVars as |envVar|}}
-        <AccountEnvVar @envVar={{envVar}} />
+        <AccountEnvVar @envVar={{envVar}} @envVarDeleted={{action "envVarDeleted"}}  />
       {{/each}}
     </ul>
   </section>

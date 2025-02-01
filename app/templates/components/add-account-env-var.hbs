@@ -17,6 +17,11 @@
         as |field|
       >
         <field.input class="env-name" placeholder="Name" />
+        {{#if this.valueError}}
+          <p class="form-error-message">
+            {{this.valueError}}
+          </p>
+        {{/if}}
       </form.field>
     </div>
     <div class="form-elem add-account-env-var-form-elem">

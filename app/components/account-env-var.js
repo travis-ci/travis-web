@@ -15,6 +15,8 @@ export default Component.extend({
   actionType: 'Save',
   showValueField: alias('public'),
 
+  envVarDeleted(key) {},
+
   value: computed('envVar.{value,public}', function () {
     let value = this.get('envVar.value');
     let isPublic = this.get('envVar.public');
@@ -32,6 +34,6 @@ export default Component.extend({
       yield this.api.delete(`/account_env_var/${this.envVar.id}`);
     } catch (e) {}
 
-    // this.customKeyDeleted(this.key);
+    this.envVarDeleted(this.envVar);
   }).drop()
 });
