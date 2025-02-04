@@ -43,7 +43,7 @@ export default Controller.extend({
     return this.organization.accountEnvVars;
   }),
   envVars: computed('envVarsLoaded.[]', function () {
-    return this.envVarsLoaded.sortBy('name');
+    return (this.envVarsLoaded || []).sortBy('name');
   }),
 
   preferences: computed('model.preferences.@each.{name,value}', function () {
