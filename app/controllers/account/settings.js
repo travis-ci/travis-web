@@ -58,7 +58,7 @@ export default Controller.extend({
     return this.customKeysLoaded;
   }),
 
-  envVarsLoaded: computed('auth.currentUser.accountEnvVars',function () {
+  envVarsLoaded: computed('auth.currentUser.accountEnvVars', function () {
     return this.auth.currentUser.accountEnvVars;
   }),
   envVars: computed('envVarsLoaded.[]', function () {

@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render  } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import EmberObject from "@ember/object";
+import EmberObject from '@ember/object';
 
 module('Integration | Component | account-env-var', function (hooks) {
   setupRenderingTest(hooks);

@@ -51,6 +51,5 @@ export default Component.extend(BranchSearching, {
         this.set('valueError', error.error_message);
       });
     }
-
   }).drop()
 });

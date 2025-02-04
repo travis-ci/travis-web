@@ -39,7 +39,7 @@ export default Controller.extend({
     return this.model.organization.customKeys;
   }),
 
-  envVarsLoaded: computed('organization.accountEnvVars',function () {
+  envVarsLoaded: computed('organization.accountEnvVars', function () {
     return this.organization.accountEnvVars;
   }),
   envVars: computed('envVarsLoaded.[]', function () {

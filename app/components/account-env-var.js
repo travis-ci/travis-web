@@ -29,7 +29,6 @@ export default Component.extend({
 
 
   delete: task(function* () {
-    console.log("remove env ", this.envVar.id);
     try {
       yield this.api.delete(`/account_env_var/${this.envVar.id}`);
     } catch (e) {}
