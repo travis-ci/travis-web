@@ -6,7 +6,7 @@
     flex-direction: column;">
 
   <div>
-    <div class="form-elem add-account-env-var-form-elem">
+    <div data-test-name-error class="form-elem add-account-env-var-form-elem">
       <form.field
         @label="Name"
         @value={{this.name}}
@@ -24,7 +24,7 @@
         {{/if}}
       </form.field>
     </div>
-    <div class="form-elem add-account-env-var-form-elem">
+    <div data-test-value-error class="form-elem add-account-env-var-form-elem">
       <form.field
         @label="Value"
         @value={{this.value}}

@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import BranchSearching from 'travis/mixins/branch-searching';
 
