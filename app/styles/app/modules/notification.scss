@@ -7,7 +7,7 @@
 }
 
 
-.notification-warning, .global-notification-warning {
+.notification-warning {
   background-color: #faf6db;
   padding: 10px 16px 10px 10px;
   color: #222222;
@@ -15,6 +15,22 @@
   font-size: 14px;
 }
 
+.global-notification {
+  margin-top: 71px;
+}
+
+.global-notification-container {
+  height: auto;
+
+}
+
+.global-notification-warning {
+  background-color: #faf6db;
+  margin: 0 0 2px;
+  padding: 10px 16px 10px 10px;
+  color: #222222;
+  font-size: 14px;
+}
 
 .notification-error {
   background-color: #fce8e2;

@@ -1,0 +1,21 @@
+<div class="global-notification">
+  {{#if this.isUnconfirmed}}
+    <UnconfirmedUserBanner />
+  {{/if}}
+  {{#if this.hasNoPlan}}
+    {{#unless (and this.model.isUser this.model.isAssembla)}}
+      <NoPlan @model={{this.model}} />
+    {{/unless}}
+  {{/if}}
+    <EnterpriseBanner />
+  <TemporaryAnnouncementBanner />
+  {{#if this.user}}
+    <RepositorySecurityBanner />
+  {{/if}}
+  {{#unless this.features.proVersion}}
+    <MigrationBanner />
+  {{/unless}}
+  {{#if (has-block)}}
+    {{yield}}
+  {{/if}}
+</div>

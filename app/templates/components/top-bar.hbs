@@ -7,24 +7,3 @@
   <HeaderLinks @isOpen={{this.isNavigationOpen}} @isActivation={{this.isActivation}}/>
   <ProfileMenu   id='profile-menu' @isActivation={{this.isActivation}} />
 </div>
-{{#if this.isUnconfirmed}}
- <UnconfirmedUserBanner />
-{{/if}}
-{{#if this.hasNoPlan}}
-  {{#unless (and this.model.isUser this.model.isAssembla)}}
-    <NoPlan @model={{this.model}} />
-  {{/unless}}
-{{/if}}
-{{#if this.features.enterpriseVersion}}
-  <EnterpriseBanner />
-{{/if}}
-<TemporaryAnnouncementBanner />
-{{#if this.user}}
-  <RepositorySecurityBanner />
-{{/if}}
-{{#unless this.features.proVersion}}
-  <MigrationBanner />
-{{/unless}}
-{{#if (has-block)}}
-  {{yield}}
-{{/if}}
