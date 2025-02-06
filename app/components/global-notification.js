@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import { inject as service } from "@ember/service";
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   auth: service(),
