@@ -38,7 +38,7 @@
                   {{if this.canceledOrExpired 'dark-red' 'cement-grey'}}'
                 >
                   {{#if this.isSubscribed}}
-                    Valid until {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                    Valid until {{this.formattedValidTo}}
                   {{else if this.isIncomplete}}
                     Incomplete
                   {{else if (and this.isComplete this.isCanceled)}}
@@ -50,7 +50,7 @@
                   {{else if (and this.isComplete this.subscription.cancellationRequested)}}
                     Expires {{moment-from-now this.subscription.validTo}} on {{moment-format this.subscription.validTo "MMMM D"}}, cancellation requested
                   {{else if (and this.isComplete this.isExpired)}}
-                    {{this.subscriptionExpiredPrefix}} on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                    {{this.subscriptionExpiredPrefix}} on {{this.formattedValidTo}}
                   {{/if}}
                 </span>
               {{/if}}

@@ -46,7 +46,7 @@
                     <span class="badge green square" data-test-active-status='true'>
                       active
                     </span>
-                  {{else if this.subscription.isExpired}}
+                  {{else if this.isExpired}}
                     <span class="badge red square" data-test-expired-status='true'>
                       expired
                     </span>
@@ -60,13 +60,13 @@
                   >
                     {{#if (and this.isSubscribed (not this.subscription.subscriptionExpiredByDate))}}
                     {{#if this.isCurrentTrial }}(Free Trial Period) {{/if}}
-                      Valid until {{moment-format this.validto "MMMM D, YYYY"}}
+                      Valid until {{this.formattedValidTo}}
                     {{else if this.isIncomplete}}
                       Incomplete
                     {{else if (and this.isComplete this.isCanceled)}}
                       {{this.subscriptionExpiredPrefix}} on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
                     {{else if (and this.isComplete this.isExpired)}}
-                      {{this.subscriptionExpiredPrefix}} on {{moment-format this.subscription.validTo "MMMM D, YYYY"}}
+                      {{this.subscriptionExpiredPrefix}} on {{this.formattedValidTo}}
                     {{/if}}
                   </span>
 

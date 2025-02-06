@@ -49,7 +49,7 @@ module('Integration | Component | billing-summary', function (hooks) {
   });
 
   test('it renders active subscription', async function (assert) {
-    const date = moment(this.subscription.validTo.getTime()).format('MMMM D, YYYY');
+    const date = moment(this.subscription.validTo.getTime()).subtract(1, 'days').format('MMMM D, YYYY');
 
     await render(hbs`<Billing::Summary
       @subscription={{this.subscription}}
@@ -89,7 +89,7 @@ module('Integration | Component | billing-summary', function (hooks) {
   });
 
   test('it renders expired subscription', async function (assert) {
-    const date = moment(this.subscription.validTo.getTime()).format('MMMM D, YYYY');
+    const date = moment(this.subscription.validTo.getTime()).subtract(1, 'days').format('MMMM D, YYYY');
 
     this.set('subscription', {
       ...this.subscription,

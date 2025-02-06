@@ -113,19 +113,19 @@
         </div>
         {{#if (and this.canCancelSubscription (not this.deferPause))}}
         <div class='billing-subscription__buttons--cancel'>
-          <a {{on 'click' (action (perform this.cancelSubscription))}} href='javascript: void(0);' class='link' data-test-open-cancel-subscription-modal='true'>
+          <a {{on 'click' (fn (mut this.showCancelConfirmModal) true)}} href='#' class='link' data-test-open-cancel-subscription-confirmation-modal='true'>
             Cancel subscription
           </a>
         </div>
         {{else if this.subscription.cancellationRequested }}
         <div class='billing-subscription__buttons--cancel'>
-          <a href='javascript: void(0);' class='link' data-test-cancellation-requested-button='true'>
+          <a href='#' class='link' data-test-cancellation-requested-button='true'>
             Cancellation requested
           </a>
         </div>
         {{else if this.deferPause }}
         <div>
-          <a href='javascript: void(0);' class='link' style="display: flex" data-test-cancellation-requested-button='true'>
+          <a href='#' class='link' style="display: flex" data-test-cancellation-requested-button='true'>
             <small><i>
               Cancellation will be processed<br>
               after the current billing period ends
@@ -142,4 +142,10 @@
   @isOpen={{this.showCancelModal}}
   @onClose={{fn (mut this.showCancelModal) false}}
   @subscription={{this.subscription}}
+/>
+<Dialogs::CancelSubscriptionConfirmationModal
+  @isOpen={{this.showCancelConfirmModal}}
+  @onClose={{fn (mut this.showCancelConfirmModal) false}}
+  @subscription={{this.subscription}}
+  @cancelSubscription={{perform this.cancelSubscription}}
 />

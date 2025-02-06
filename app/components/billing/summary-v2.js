@@ -3,10 +3,14 @@ import { computed } from '@ember/object';
 import { reads, or, not, and, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import isCurrentTrial from 'travis/utils/computed-is-current-trial';
+import { subtractOneDay } from 'travis/utils/subtract-day';
+
+const VALID_TO_FETCH_MAX_ATTEMPTS = 2;
 
 export default Component.extend({
 
   accounts: service(),
+  storage: service(),
 
   subscription: null,
   account: null,
@@ -25,16 +29,23 @@ export default Component.extend({
   isSubscribed: computed('subscription.isSubscribed', function () {
     return this.subscription.isSubscribed;
   }),
+
   validto: computed('subscription.validTo', function () {
     try {
-      if (this.subscription.validTo == null) {
+      if (this.subscription.validTo == null && this.storage.subscriptionValidToAttempts < VALID_TO_FETCH_MAX_ATTEMPTS) {
+        this.storage.subscriptionValidToAttempts++;
         this.accounts.fetchV2Subscriptions.perform();
       }
     } catch (e) {
       console.log(e);
     }
-    return this.subscription.validToFromAddon || this.subscription.validTo;
+    return this.subscription.validTo || this.subscription.validToFromAddon;
   }),
+
+  formattedValidTo: computed('validto', function () {
+    return subtractOneDay(this.validto);
+  }),
+
   isCurrentTrial: isCurrentTrial(),
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   canceledOrExpired: or('isExpired', 'isCanceled'),
