@@ -11,6 +11,7 @@
     <TopBar />
   {{/if}}
   <FlashDisplay />
+  <GlobalNotification @model={{this.model}} />
   <div class="wrapper-main">
     <div id="main" class="main" role="main">
       {{#if this.repo.isLoaded}}

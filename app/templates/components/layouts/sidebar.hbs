@@ -1,6 +1,7 @@
 <div class="wrapper {{if this.hideSidebar 'centered'}}" ...attributes>
   <TopBar />
   <FlashDisplay />
+  <GlobalNotification @model={{this.model}} />
   <div class="wrapper-main">
     <div id="main" class="main" role="main">
       {{yield}}

@@ -1,6 +1,7 @@
 <div class="wrapper layout-striped">
   <TopBar />
   <FlashDisplay />
+  <GlobalNotification @model={{this.model}} />
   <div id="main" class="main" role="main">
     {{yield (hash section=(component "layouts/striped-section"))}}
   </div>
