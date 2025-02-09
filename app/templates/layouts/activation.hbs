@@ -1,7 +1,7 @@
 <div class="wrapper layout-activation">
   <TopBar @isActivation=true/>
   <FlashDisplay />
-  <GlobalNotification @model={{this.model}} />
+  <GlobalNotification />
   <div id="main" class="main" role="main">
     {{yield (hash activation-section=(component "layouts/activation-section"))}}
   </div>

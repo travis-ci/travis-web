@@ -13,3 +13,6 @@
   <HeaderLinks @isOpen={{this.isNavigationOpen}} @isActivation={{this.isActivation}}/>
   <ProfileMenu   id='profile-menu' @isActivation={{this.isActivation}} />
 </div>
+{{#if (has-block)}}
+  {{yield}}
+{{/if}}

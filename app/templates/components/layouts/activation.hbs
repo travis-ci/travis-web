@@ -1,7 +1,7 @@
 <div class="wrapper layout-activation {{if this.useTailwind 'tailwind-overrides'}}">
   <TopBar @isWhite={{this.isTopBarWhite}} />
   <FlashDisplay />
-  <GlobalNotification @model={{this.model}} />
+  <GlobalNotification />
   <div id="main" class="main {{if this.isFlush 'main--flush'}}" role="main">
     {{yield (hash section=(component "layouts/activation-section"))}}
   </div>

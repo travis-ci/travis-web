@@ -1,7 +1,7 @@
 <div class="wrapper centered">
   <TopBar @activeModel={{this.model}} />
   <FlashDisplay />
-  <GlobalNotification @model={{this.model}} />
+  <GlobalNotification @activeModel={{this.model}} />
   <div id="main" class="main" role="main">
     <div class="profile-page inner">
       {{yield}}

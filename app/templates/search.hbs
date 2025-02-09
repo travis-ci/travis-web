@@ -1,7 +1,7 @@
 <div class="wrapper {{if this.auth.signedOut 'centered'}}">
   <TopBar />
   <FlashDisplay />
-  <GlobalNotification @model={{this.model}} />
+  <GlobalNotification />
   <div class="wrapper-main">
     <div id="main" class="main" role="main">
       {{#if this.repo}}
