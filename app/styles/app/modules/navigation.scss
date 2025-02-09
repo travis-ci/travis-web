@@ -199,6 +199,7 @@ $nav-line-height: 35px;
   .section-accounts {
     overflow-y: auto;
     flex-shrink: 0.7;
+    min-height: 46px;
   }
 
   @-moz-document url-prefix() {
@@ -407,6 +408,7 @@ nav.navigation-anchor:hover {
 
 .organizations-list {
   overflow-y: auto;
+  min-height: 46px;
 }
 
 @-moz-document url-prefix() {
