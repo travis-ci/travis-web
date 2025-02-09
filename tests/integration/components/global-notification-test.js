@@ -5,7 +5,7 @@ import { render, settled } from '@ember/test-helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
-import Service from "@ember/service";
+import Service from '@ember/service';
 import config from 'travis/config/environment';
 
 module('Integration | Component | global notification', function (hooks) {
@@ -54,7 +54,7 @@ module('Integration | Component | global notification', function (hooks) {
         subscriptionType: 3
       },
       vcsType: 'Organization'
-    }
+    };
     this.set('model', model);
     await render(hbs`{{global-notification model=this.model}}`);
 
@@ -82,15 +82,15 @@ module('Integration | Component | global notification', function (hooks) {
 
     settled().then(() => {
       assert.dom('.enterprise-banner.security').exists('page renders');
-      assert.dom('.enterprise-banner.security p').containsText('If you have SSH keys defined for your repositories, please review their settings now. The new Share ssh keys with forks (PRs) repository setting are present and set to ON for repositories already in Travis CI in order to not break existing build setups.');
+      assert.dom('.enterprise-banner.security p').containsText('If you have SSH keys defined for your repositories, please review their settings now.');
     });
   });
 
   test('renders global notification with temporary announcement banner', async function (assert) {
     assert.expect(2);
-    this.storage.setItem('travis.temporary-announcement-banner', 'Old message')
+    this.storage.setItem('travis.temporary-announcement-banner', 'Old message');
     config.tempBanner.tempBannerEnabled = 'true';
-    config.tempBanner.tempBannerMessage ='Temporary announcement!';
+    config.tempBanner.tempBannerMessage = 'Temporary announcement!';
     await render(hbs`{{global-notification}}`);
 
     settled().then(() => {
