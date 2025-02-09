@@ -1,7 +1,13 @@
 <div class="topbar {{if this.isNavigationOpen 'expanded'}} {{if this.showBroadcasts 'expanded'}}" >
   <HeaderBurgerMenu @isOpen={{this.isNavigationOpen}} onClick={{action 'toggleNavigation'}} @onClick={{action 'toggleNavigation'}}/>
   <h1 id="logo" class="logo">
-    <NavLogo />
+    {{#if this.features.enterpriseVersion}}
+      <LinkTo @route="index">
+        Travis CI
+      </LinkTo>
+    {{else}}
+      <NavLogo />
+    {{/if}}
   </h1>
   <HeaderBroadcasts @showBroadcasts={{this.showBroadcasts}} />
   <HeaderLinks @isOpen={{this.isNavigationOpen}} @isActivation={{this.isActivation}}/>
