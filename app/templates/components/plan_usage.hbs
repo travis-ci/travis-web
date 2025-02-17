@@ -92,7 +92,7 @@
     </table>
 
     {{#if this.isOrganization }}
-    <table class="repository-build-times">
+    <table class="repository-build-times" data-test-sender-build-times >
       <thead>
         <tr data-test-table-header-row='true'>
           <th>User</th>
@@ -101,13 +101,17 @@
       </thead>
       <tbody>
         {{#each this.summarizedUsers as |user|}}
-          <tr data-test-repository='true'>
+          <tr data-test-usage-sender>
             <td>
+              {{#if user.internal}}
+                {{user.login}}
+              {{else}}
               <LinkTo
-                @route="user" @models={{array user}}
+                @route="owner" @models={{array user.provider user.login}}
               >
                 {{user.login}}
               </LinkTo>
+              {{/if}}
             </td>
             <td class='credits-row'>
               {{format-number user.buildCredits}}

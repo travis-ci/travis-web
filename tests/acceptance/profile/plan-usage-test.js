@@ -3,6 +3,7 @@ import { setupApplicationTest } from 'travis/tests/helpers/setup-application-tes
 import profilePage from 'travis/tests/pages/profile';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { enableFeature } from 'ember-feature-flags/test-support';
 
 module('Acceptance | profile/plan usage', function (hooks) {
   setupApplicationTest(hooks);
@@ -19,6 +20,23 @@ module('Acceptance | profile/plan usage', function (hooks) {
         createSubscription: true
       }
     });
+
+    this.organization = this.server.create('organization', {
+      name: 'Org Name',
+      type: 'organization',
+      login: 'org-login',
+      vcs_type: 'GithubOrganization',
+      vcs_id: 1983,
+      github_id: 1983,
+      permissions: {
+        createSubscription: true,
+        billing_view: true,
+        plan_usage: true,
+        plan_invoices: true,
+        plan_view: true,
+      }
+    });
+    this.organization.save();
     this.server.create('allowance', {subscription_type: 2, publicRepos: true, privateRepos: true});
 
     signInUser(this.user);
@@ -53,16 +71,34 @@ module('Acceptance | profile/plan usage', function (hooks) {
       ]
     });
 
+    this.v2OrgSubscription = this.server.create('v2-subscription', {
+      owner: this.organization,
+      status: 'subscribed',
+      valid_to: new Date(),
+      addons: [
+        {name: 'User license addon', type: 'user_license', current_usage: {addon_usage: 1}},
+        {name: 'Private credit addon', type: 'credit_private', current_usage: {addon_usage: 60}}
+      ]
+    });
+
     const account = { id: 1, hasSubscriptionPermissions: true, type: 'Organization' };
     this.setProperties({
       account,
     });
   });
 
-  test('view plan usage', async function (assert) {
+  test('view user plan usage', async function (assert) {
     await profilePage.visit();
     await profilePage.planUsage.visit();
-
     assert.equal(profilePage.planUsage.page.minutesTotal.text, 'All repositories total build time: 6 minutes');
+  });
+
+  test('view organization plan usage', async function (assert) {
+    enableFeature('github-apps');
+    enableFeature('proVersion');
+    await profilePage.visitOrganization({ name: 'org-login' });
+    await profilePage.planUsage.visit();
+    assert.equal(profilePage.planUsage.page.minutesTotal.text, 'All repositories total build time: 6 minutes');
+    assert.equal(profilePage.planUsage.page.senders.items[1].login, 'cron');
   });
 });
