@@ -809,29 +809,16 @@ export default create({
   planUsage: {
     visit: clickable('li[data-test-plan-usage-tab] a'),
     page: {
-      uniquUsers: {
-        scope: '[data-test-user-usage-unique-users]',
-        text: text()
-      },
-      macMinutes: {
-        scope: '.data-test-plan-usage-os-icon-mac-minutes',
-        text: text()
-      },
-      windowsMinutes: {
-        scope: '.data-test-plan-usage-os-icon-windows-minutes',
-        text: text()
-      },
-      linuxMinutes: {
-        scope: '.data-test-plan-usage-os-icon-linux-minutes',
-        text: text()
-      },
-      creditsTotal: {
-        scope: '[data-test-plan-usage-credits-total]',
-        text: text()
-      },
       minutesTotal: {
         scope: '[data-test-plan-usage-minutes-total]',
         text: text()
+      },
+      senders: {
+        scope: '[data-test-sender-build-times]',
+        items: collection('[data-test-usage-sender]', {
+          login: text('td', { at: 0 }),
+          credits: text('td', { at: 1 }),
+        })
       }
     },
     checkUserActivity: {
