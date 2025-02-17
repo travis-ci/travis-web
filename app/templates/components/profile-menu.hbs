@@ -94,6 +94,7 @@
       Accounts
     </li>
 
+  {{#if this.auth.inactiveAccounts.length}}
     <li class="section-accounts">
       {{#each this.auth.inactiveAccounts as |account| }}
         <li class="username pointer topbar-menu-item" {{on 'click' (action 'switchAccount' account.id target=this.auth)}}>
@@ -111,29 +112,27 @@
         </li>
       {{/each}}
     </li>
-
-    {{#if this.auth.inactiveAccounts.length}}
+    <LinkTo
+      @route="signin"
+      @query={{hash redirectUrl=this.redirectUrl}}
+      @title="Add another account"
+      class="navigation-nested__link"
+    >
+      Add an account
+    </LinkTo>
+  {{else}}
+    <li class="navigation-nested__note">
+      Easily manage all your accounts in one place!
       <LinkTo
         @route="signin"
         @query={{hash redirectUrl=this.redirectUrl}}
         @title="Add another account"
-        class="navigation-nested__link"
-      >
-        Add an account
+        class="navigation-nested__link">
+          Add an account!
       </LinkTo>
-    {{else}}
-      <li class="navigation-nested__note">
-        Easily manage all your accounts in one place!
-        <LinkTo
-          @route="signin"
-          @query={{hash redirectUrl=this.redirectUrl}}
-          @title="Add another account"
-          class="navigation-nested__link">
-            Add an account!
-        </LinkTo>
-        <br>
-      </li>
-    {{/if}}
+      <br>
+    </li>
+  {{/if}}
 
     {{#if this.user.accounts.organizations.length}}
       <li class="nav-nested"></li>
