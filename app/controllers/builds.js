@@ -37,10 +37,10 @@ export default Controller.extend(...mixins, {
   displayShowMoreButton: computed('tab', 'loadMoreBuilds.isRunning', 'builds', function () {
     const builds = this.get('builds');
     let tab = this.tab;
-
-    if (this.oldBuilds.length === builds.length) {
-      return false;
+    if (builds.length == this.repo.buildCount) {
+      return false
     }
+
     this.set('oldBuilds', builds);
     return tab !== 'branches' && true;
   }),

@@ -9,7 +9,7 @@ export default Factory.extend({
   email_subscribed: true,
   migration_status: null,
   owner_name: 'travis-ci',
-
+  build_count: 100,
   owner: Object.freeze({
     login: 'travis-ci',
   }),
