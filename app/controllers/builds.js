@@ -38,7 +38,7 @@ export default Controller.extend(...mixins, {
     const builds = this.get('builds');
     let tab = this.tab;
     if (builds.length == this.repo.buildCount) {
-      return false
+      return false;
     }
 
     this.set('oldBuilds', builds);
