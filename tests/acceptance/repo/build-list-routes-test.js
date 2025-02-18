@@ -140,6 +140,14 @@ module('Acceptance | repo build list routes', function (hooks) {
     pullRequestBuild.save();
   });
 
+  test('build history shows, all builds loaded, no button for more builds', async function (assert) {
+    this.repository.build_count = 4;
+    this.repository.save();
+    await page.visitBuildHistory({ organization: 'org-login', repo: 'repository-name' });
+    assert.equal(page.builds.length, 4, 'expected four non-PR builds');
+    assert.equal(page.showMoreButton.text, 'Show export files');
+  });
+
   test('build history shows, more can be loaded, and a created build gets added and can be cancelled', async function (assert) {
     assert.expect(24);
 

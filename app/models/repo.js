@@ -51,6 +51,7 @@ const Repo = VcsEntity.extend({
   historyMigrationStatus: attr('string'),
   scanFailedAt: attr('date'),
   serverType: attr('string', { defaultValue: 'git' }),
+  buildCount: attr(),
 
 
   currentScan: computed('scanFailedAt', function () {

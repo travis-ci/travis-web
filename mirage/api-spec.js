@@ -1811,7 +1811,8 @@ export default {
         "last_started_build",
         "next_build_number",
         "allow_migration",
-        "email_subscribed"
+        "email_subscribed",
+        "build_count",
       ],
       "representations": {
         "minimal": [
@@ -1835,7 +1836,8 @@ export default {
           "starred",
           "managed_by_installation",
           "active_on_org",
-          "migration_status"
+          "migration_status",
+          "build_count"
         ],
         "additional": [
           "allow_migration"
