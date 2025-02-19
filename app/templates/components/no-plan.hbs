@@ -1,3 +1,7 @@
-<div class='notice-banner--red align-center'>
+<Notification
+  @type='global'
+  @severity='warning'
+  data-test-no-plan-banner='true'
+>
   Please <LinkTo @route={{this.accountRoute}}>select a plan</LinkTo> in order to use Travis CI
-</div>
+</Notification>
