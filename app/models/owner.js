@@ -44,6 +44,7 @@ export default VcsEntity.extend({
   isOrganization: equal('type', 'organization'),
   isAssembla: match('vcsType', /Assembla\S+$/),
   trialAllowed: attr('boolean', { defaultValue: false}),
+  accountEnvVars: attr(),
 
   allowance: belongsTo('allowance', { async: true, inverse: 'owner', polymorphic: true, as: 'owner' }),
 
