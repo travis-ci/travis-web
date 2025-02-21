@@ -32,14 +32,14 @@ export default Component.extend(BranchSearching, {
 
     try {
       yield this.api.post(
-        '/account_env_var',
+        '/account_env_vars',
         {
           data: {
             owner_id: this.owner.id,
             owner_type: this.ownerType,
             name: this.name.trim(),
             value: this.value.trim(),
-            'public': this.public
+            'public': !!this.public
           }
         }
       ).then((data) => {
