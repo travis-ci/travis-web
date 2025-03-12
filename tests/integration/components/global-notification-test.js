@@ -47,7 +47,7 @@ module('Integration | Component | global notification', function (hooks) {
   test('renders global notification with no plan banner', async function (assert) {
     assert.expect(2);
 
-    let model = {
+    let user = {
       hasV2Subscription: false,
       subscription: undefined,
       allowance: {
@@ -55,8 +55,8 @@ module('Integration | Component | global notification', function (hooks) {
       },
       vcsType: 'Organization'
     };
-    this.set('model', model);
-    await render(hbs`{{global-notification model=this.model}}`);
+    this.set('user', user);
+    await render(hbs`{{global-notification user=this.user}}`);
 
     settled().then(() => {
       assert.dom('.global-notification-warning').exists('page renders');
@@ -106,7 +106,7 @@ module('Integration | Component | global notification', function (hooks) {
     await render(hbs`{{global-notification}}`);
 
     settled().then(() => {
-      assert.dom('.enterprise-banner-trial').exists();
+      assert.dom('.enterprise-banner').exists();
     });
   });
 });

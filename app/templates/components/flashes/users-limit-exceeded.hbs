@@ -1,10 +1,10 @@
-<Notification
-  @type='alert'
+<FlashNotification
   @severity='error'
-  data-test-components-flash-item='true'
-  >
+  @componentName='users-limit-exceeded'
+>
 <span data-test-flash-message-text class="message">
         We are unable to start your build at this time. You exceeded the number of users allowed for your plan.
         Please review your plan details and follow the steps to resolution.
       </span>
-</Notification>
+</FlashNotification>
+

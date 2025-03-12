@@ -1,6 +1,6 @@
-<Notification
-  @type='global'
-  @severity='error'
+<FlashNotification
+  @severity='warning'
+  @componentName='negative-balance-private'
 >
     <span data-test-flash-message-text class="message">
       Builds have been temporarily disabled for private repositories due to a negative credit balance.
@@ -12,4 +12,4 @@
       {{/if}}
       to replenish your credit balance.
     </span>
-</Notification>
+</FlashNotification>

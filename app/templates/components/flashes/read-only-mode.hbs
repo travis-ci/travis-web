@@ -1,8 +1,9 @@
-<Notification
-  @type='alert'
+<FlashNotification
   @severity='info'
-  >
+  @componentName='read-only-mode'
+>
   <span data-test-flash-message-text class="message">
         {{config-get 'defaultTitle'}} is in read-only mode. The historical data can be downloaded to external file storage.
   </span>
-</Notification>
+</FlashNotification>
+

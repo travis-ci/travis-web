@@ -1,7 +1,8 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import { equal, lt, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import config from 'travis/config/environment';
 
 export default Component.extend({
   auth: service(),
@@ -9,11 +10,23 @@ export default Component.extend({
   router: service(),
   features: service(),
   user: reads('auth.currentUser'),
-  activeModel: null,
-  model: reads('activeModel'),
+  trial: reads('user.trial'),
+  isBuildLessThanEleven: lt('trial.buildsRemaining', 11),
+  isBuildFinished: equal('trial.buildsRemaining', 0),
+  bannerText: 'travis.temporary-announcement-banner',
 
-  hasNoPlan: computed('model.allowance.subscriptionType', 'model.hasV2Subscription', 'model.subscription', function () {
-    return !this.get('model.hasV2Subscription') && this.get('model.subscription') === undefined && this.get('model.allowance.subscriptionType') === 3;
+  isTemporaryAnnouncementBannerEnabled: computed(function () {
+    const isBannerEnabled = config.tempBanner.tempBannerEnabled === 'true';
+    const isNewBannerMessage = this.storage.getItem(this.bannerText) !== config.tempBanner.tempBannerMessage;
+    return isBannerEnabled && isNewBannerMessage;
+  }),
+
+  hasNoPlan: computed('user.allowance.subscriptionType', 'user.hasV2Subscription', 'user.subscription', function () {
+    console.log("user ", this.user);
+    return !this.get('user.hasV2Subscription')
+              && this.get('user.subscription') === undefined
+              && this.get('user.allowance.subscriptionType') === 3
+              && !(this.get('user.isUser') && this.get('user.isAssembla'));
   }),
 
   isUnconfirmed: computed('user.confirmedAt', function () {
@@ -23,5 +36,29 @@ export default Component.extend({
         this.router.currentRouteName == 'github_apps_installation')
       return false;
     return !this.user.confirmedAt;
-  })
+  }),
+
+  bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished', 'isBuildLessThanEleven', 'isUnconfirmed', function() {
+    const banners = [];
+
+    if (this.hasNoPlan) {
+      banners.push('NoPlan');
+    }
+
+    if (this.isTemporaryAnnouncementBannerEnabled) {
+      banners.push('TemporaryAnnouncementBanner');
+    }
+
+    if (this.isBuildFinished) {
+      banners.push('BuildFinished');
+    } else if (this.isBuildLessThanEleven) {
+      banners.push('BuildRunningOut');
+    }
+
+    if (this.isUnconfirmed) {
+      banners.push('UnconfirmedUserBanner');
+    }
+
+    return banners.slice(0, 2);
+  }),
 });

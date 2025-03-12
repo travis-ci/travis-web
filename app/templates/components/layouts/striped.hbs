@@ -1,7 +1,6 @@
 <div class="wrapper layout-striped {{if this.useTailwind 'tailwind-overrides'}}">
   <TopBar @isWhite={{this.isTopBarWhite}} />
   <FlashDisplay />
-  <GlobalNotification />
   <div id="main" class="main {{if this.isFlush 'main--flush'}}" role="main">
     {{yield (hash section=(component "layouts/striped-section"))}}
   </div>

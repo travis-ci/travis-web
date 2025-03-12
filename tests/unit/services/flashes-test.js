@@ -22,14 +22,14 @@ module('Unit | Service | flashes', function (hooks) {
     assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was an error!', type: 'error' }, 'there should be an error message in flashes');
   });
 
-  test('it allows to show a notice', function (assert) {
+  test('it allows to show a warning', function (assert) {
     let service = this.owner.lookup('service:flashes');
 
     assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
 
-    service.notice('There was a notice!');
+    service.warning('There was a warning!');
 
-    assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was a notice!', type: 'notice' }, 'there should be a notice message in flashes');
+    assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was a warning!', type: 'warning' }, 'there should be a warning message in flashes');
   });
 
   test('it allows to show a success', function (assert) {

@@ -21,7 +21,15 @@
 
 .global-notification-warning {
   background-color: #faf6db;
-  margin: 0 0 2px;
+  margin: 0 0 0;
+  padding: 10px 16px 10px 10px;
+  color: #222222;
+  font-size: 14px;
+}
+
+.global-notification-success {
+  background-color: $seed-green;
+  margin: 0 0 0;
   padding: 10px 16px 10px 10px;
   color: #222222;
   font-size: 14px;
@@ -30,8 +38,16 @@
 .notification-error {
   background-color: #fce8e2;
   padding: 10px 16px 10px 10px;
-  color: #a7191d;
+  color: #222222;
   margin-top: 1.25rem;
+  font-size: 14px;
+}
+
+.global-notification-error {
+  background-color: #fce8e2;
+  margin: 0 0 0;
+  padding: 10px 16px 10px 10px;
+  color: #a7191d;
   font-size: 14px;
 }
 
@@ -41,7 +57,7 @@
   color: #222222;
 }
 
-.notification-error a {
+.notification-error a, .global-notification-error a {
   font-weight: 600;
   text-decoration: underline;
   color: #a7191d;

@@ -74,24 +74,7 @@
           </div>
         </div>
       </div>
-      {{#if this.showBuildRunningOutBanner}}
-        <Notification
-          @type='global'
-          @severity='warning'
-          data-test-trial-running-out='true'
-        >
-          Your trial is almost finished. Subscribe to a plan before your free builds run out!
-        </Notification>
-      {{else if this.isBuildFinished}}
 
-        <Notification
-          @type='global'
-          @severity='error'
-          data-test-trial-ran-out='true'
-        >
-          Your trial has ended. Subscribe to a plan to continue building your project!
-        </Notification>
-      {{/if}}
     </div>
     <hr />
   </div>
