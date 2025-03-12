@@ -702,7 +702,7 @@ export default create({
       }
     },
 
-    trialBanner:{
+    trialBanner: {
       scope: '.top',
       buildsRunningOutBanner: text('[data-test-trial-running-out]'),
       buildsRanOutBanner: text('[data-test-trial-ran-out]')

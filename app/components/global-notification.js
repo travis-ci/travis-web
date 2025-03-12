@@ -22,7 +22,6 @@ export default Component.extend({
   }),
 
   hasNoPlan: computed('user.allowance.subscriptionType', 'user.hasV2Subscription', 'user.subscription', function () {
-    console.log("user ", this.user);
     return !this.get('user.hasV2Subscription')
               && this.get('user.subscription') === undefined
               && this.get('user.allowance.subscriptionType') === 3
@@ -38,7 +37,8 @@ export default Component.extend({
     return !this.user.confirmedAt;
   }),
 
-  bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished', 'isBuildLessThanEleven', 'isUnconfirmed', function() {
+  bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
+      'isBuildLessThanEleven', 'isUnconfirmed', function () {
     const banners = [];
 
     if (this.hasNoPlan) {
