@@ -61,10 +61,11 @@ export default Component.extend({
 
   summarizedUsers: computed('summarizedOwnerCalculations.users', function () {
     let users = [];
-    for (let userId in this.summarizedCalculations.users) {
-      const user = this.summarizedCalculations.users[userId];
-      if (typeof user === 'object')
+    for (let userId in this.summarizedOwnerCalculations.users) {
+      const user = this.summarizedOwnerCalculations.users[userId];
+      if (typeof user === 'object') {
         users.push(user);
+      }
     }
     return users;
   }),
@@ -125,7 +126,9 @@ export default Component.extend({
             login: sender.login,
             name: sender.name,
             buildMinutes: minutes,
-            buildCredits: credits
+            buildCredits: credits,
+            internal: sender.internal,
+            provider: sender.vcs_type?.replace('User', '')?.toLowerCase()
           };
         }
       });
