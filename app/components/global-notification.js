@@ -38,7 +38,7 @@ export default Component.extend({
   }),
 
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
-      'isBuildLessThanEleven', 'isUnconfirmed', function () {
+    'isBuildLessThanEleven', 'isUnconfirmed', function () {
     const banners = [];
 
     if (this.hasNoPlan) {
