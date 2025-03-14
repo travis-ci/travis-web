@@ -157,7 +157,7 @@ export default Component.extend({
         { owner: this.model, isUser: this.model.isUser }, 'pending-user-licenses');
     } else if (!this.usersUsage) {
       this.flashes.custom('flashes/users-limit-exceeded',
-          { owner: this.model, isUser: this.model.isUser }, 'users-limit-exceeded');
+        { owner: this.model, isUser: this.model.isUser }, 'users-limit-exceeded');
     }
   },
 
