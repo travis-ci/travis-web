@@ -38,27 +38,27 @@ export default Component.extend({
   }),
 
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
-    'isBuildLessThanEleven', 'isUnconfirmed', function () {
-    const banners = [];
+      'isBuildLessThanEleven', 'isUnconfirmed', function () {
+      const banners = [];
 
-    if (this.hasNoPlan) {
-      banners.push('NoPlan');
-    }
+      if (this.hasNoPlan) {
+        banners.push('NoPlan');
+      }
 
-    if (this.isTemporaryAnnouncementBannerEnabled) {
-      banners.push('TemporaryAnnouncementBanner');
-    }
+      if (this.isTemporaryAnnouncementBannerEnabled) {
+        banners.push('TemporaryAnnouncementBanner');
+      }
 
-    if (this.isBuildFinished) {
-      banners.push('BuildFinished');
-    } else if (this.isBuildLessThanEleven) {
-      banners.push('BuildRunningOut');
-    }
+      if (this.isBuildFinished) {
+        banners.push('BuildFinished');
+      } else if (this.isBuildLessThanEleven) {
+        banners.push('BuildRunningOut');
+      }
 
-    if (this.isUnconfirmed) {
-      banners.push('UnconfirmedUserBanner');
-    }
+      if (this.isUnconfirmed) {
+        banners.push('UnconfirmedUserBanner');
+      }
 
-    return banners.slice(0, 2);
+      return banners.slice(0, 2);
   }),
 });
