@@ -146,4 +146,31 @@
       <AddCustomKey @owner={{this.account}} @ownerType='User' @customKeyAdded={{action "customKeyAdded"}} @onClose={{action "toggleAddKeyModal"}} />
     </Modal>
   </section>
+  <section class="settings-section account-env-vars-section">
+    <h2 class="small-title">
+      Account Environment Variables
+    </h2>
+    <p>
+      Customize your build using environment variables. For secure tips on generating private keys
+      <ExternalLinkTo @href={{config-get "urls.bestpracticessecurity"}}>
+        read our documentation
+      </ExternalLinkTo>
+    </p>
+    <div id="env-var-secrecy">
+      <p>
+        <span class="label-align">
+          If your secret variable has special characters like <code>&amp;</code>,
+          escape them by adding <code>\</code> in front of each special character.
+          For example, <code>ma&amp;w!doc</code> would be entered as <code>ma\&amp;w\!doc</code>.
+        </span>
+      </p>
+    </div>
+    <AddAccountEnvVar @owner={{this.account}} @envVarAdded={{action "envVarAdded"}} @ownerType='User' />
+
+    <ul class="settings-list--envvars">
+      {{#each this.envVars as |envVar|}}
+        <AccountEnvVar @envVar={{envVar}} @envVarDeleted={{action "envVarDeleted"}} />
+      {{/each}}
+    </ul>
+  </section>
 </section>
