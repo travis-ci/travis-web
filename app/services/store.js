@@ -188,7 +188,6 @@ export default Store.extend({
 
       this.subscriptions.forEach(sub => {
         if (sub.modelType == type && sub.beforeCb) {
-          console.log('BEFORECB');
           sub.beforeCb(sub.object, sub.caller);
         }
       });
@@ -196,7 +195,6 @@ export default Store.extend({
 
       this.subscriptions.forEach(sub => {
         if (sub.modelType == type && sub.afterCb) {
-          console.log('AFTERCB');
           sub.afterCb(sub.object, sub.caller);
         }
       });

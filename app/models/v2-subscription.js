@@ -26,6 +26,7 @@ export default Model.extend({
   scheduledPlanName: attr('string'),
   cancellationRequested: attr('boolean'),
   canceledAt: attr('date'),
+  sharedBy: attr(),
 
   v1SubscriptionId: attr('number'),
 
@@ -39,6 +40,7 @@ export default Model.extend({
   auto_refill: attr(),
   current_trial: attr(),
   deferPause: attr(),
+  planShares: attr(),
 
   isCanceled: equal('status', 'canceled'),
   isExpired: equal('status', 'expired'),
@@ -212,6 +214,28 @@ export default Model.extend({
       data: { reason, reason_details: details }
     });
     yield this.accounts.fetchV2Subscriptions.perform();
+  }).drop(),
+
+  shareMultiple: task(function* (receivers, value) {
+    for(let receiver_id of receivers) {
+      const data = { receiver_id };
+      console.log(data);
+      yield this.api.post(`/v2_subscription/${this.id}/${value ? 'share' : 'delete_share'}`, { data });
+    }
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
+  }).drop(),
+
+  share: task(function* (receiver_id) {
+    const data = { receiver_id };
+    console.log(data);
+    yield this.api.post(`/v2_subscription/${this.id}/share`, { data });
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
+  }).drop(),
+
+  delete_share: task(function* (receiver_id) {
+    const data = { receiver_id };
+    yield this.api.post(`/v2_subscription/${this.id}/delete_share`, { data });
+    yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
   changePlan: task(function* (plan, coupon) {

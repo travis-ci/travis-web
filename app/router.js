@@ -43,6 +43,7 @@ Router.map(function () {
     this.route('plan_usage', { path: '/plan/usage' });
     this.route('payment_details', { path: '/payment-details' });
     this.route('migrate');
+    this.route('share_plan', { path: '/plan/share' });
   });
   this.route('organization', { path: '/organizations/:login' }, function () {
     this.route('repositories');
@@ -50,6 +51,7 @@ Router.map(function () {
     this.route('billing', { path: '/plan' });
     this.route('plan_usage', { path: '/plan/usage' });
     this.route('payment_details', { path: '/payment-details' });
+    this.route('share_plan', { path: '/plan/share' });
     this.route('migrate');
   });
   this.route('unsubscribe', { path: '/account/preferences/unsubscribe' });
