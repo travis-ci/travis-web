@@ -33,10 +33,6 @@ module('Integration | Component | global notification', function (hooks) {
     }));
   });
 
-  hooks.afterEach(function() {
-    this.server.shutdown();
-  });
-
   test('renders global notification with unconfirmed user banner', async function (assert) {
     assert.expect(2);
 

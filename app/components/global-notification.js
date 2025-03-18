@@ -11,10 +11,17 @@ export default Component.extend({
   features: service(),
   user: reads('auth.currentUser'),
   trial: reads('user.trial'),
-  isBuildLessThanEleven: lt('trial.buildsRemaining', 11),
-  isBuildFinished: equal('trial.buildsRemaining', 0),
+
   bannerText: 'travis.temporary-announcement-banner',
   bannerKey: 'travis.repository-security-banner',
+
+  isBuildLessThanEleven: computed('trial.buildsRemaining', function() {
+    return lt('trial.buildsRemaining', 11);
+  }),
+
+  isBuildFinished: computed('trial.buildsRemaining', function() {
+    return equal('trial.buildsRemaining', 0);
+  }),
 
   isTemporaryAnnouncementBannerEnabled: computed(function () {
     const isBannerEnabled = config.tempBanner.tempBannerEnabled === 'true';
@@ -43,7 +50,7 @@ export default Component.extend({
   }),
 
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
-    'isBuildLessThanEleven', 'isUnconfirmed', function () {
+    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', function () {
       const banners = [];
 
       if (this.hasNoPlan) {
