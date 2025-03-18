@@ -1,24 +1,9 @@
 <div class="global-notification">
-  <Notification
-          @type='global'
-          @severity='error'
-          data-test-trial-ran-out='true'
-  >
-    Your trial has ended. Subscribe to a plan to continue building your project!
-  </Notification>
   {{#each this.bannersToDisplay as |banner|}}
     {{#if (eq banner 'NoPlan')}}
       <NoPlan @model={{this.user}} />
     {{else if (eq banner 'TemporaryAnnouncementBanner')}}
       <TemporaryAnnouncementBanner />
-    {{else if (eq banner 'BuildRunningOut')}}
-      <Notification
-        @type='global'
-        @severity='warning'
-        data-test-trial-running-out='true'
-      >
-        Your trial is almost finished. Subscribe to a plan before your free builds run out!
-      </Notification>
     {{else if (eq banner 'BuildFinished')}}
       <Notification
         @type='global'
@@ -27,18 +12,20 @@
       >
         Your trial has ended. Subscribe to a plan to continue building your project!
       </Notification>
+    {{else if (eq banner 'BuildRunningOut')}}
+      <Notification
+        @type='global'
+        @severity='warning'
+        data-test-trial-running-out='true'
+      >
+        Your trial is almost finished. Subscribe to a plan before your free builds run out!
+      </Notification>
+    {{else if (eq banner 'RepositorySecurityBanner')}}
+      <RepositorySecurityBanner />
     {{else if (eq banner 'UnconfirmedUserBanner')}}
       <UnconfirmedUserBanner />
+    {{else if (eq banner 'EnterpriseBanner')}}
+      <EnterpriseBanner />
     {{/if}}
   {{/each}}
-
-  {{#if this.features.enterpriseVersion}}
-    <EnterpriseBanner />
-  {{/if}}
-  {{#unless this.features.proVersion}}
-    <MigrationBanner />
-  {{/unless}}
-  {{#if this.user}}
-    <RepositorySecurityBanner />
-  {{/if}}
 </div>

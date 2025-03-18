@@ -25,6 +25,12 @@
   padding: 10px 16px 10px 10px;
   color: #222222;
   font-size: 14px;
+
+  .close {
+    height: 0;
+
+    @include colorSVGFill($color-bg-log-fold);
+  }
 }
 
 .global-notification-success {

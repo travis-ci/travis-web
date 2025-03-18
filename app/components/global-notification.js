@@ -14,6 +14,7 @@ export default Component.extend({
   isBuildLessThanEleven: lt('trial.buildsRemaining', 11),
   isBuildFinished: equal('trial.buildsRemaining', 0),
   bannerText: 'travis.temporary-announcement-banner',
+  bannerKey: 'travis.repository-security-banner',
 
   isTemporaryAnnouncementBannerEnabled: computed(function () {
     const isBannerEnabled = config.tempBanner.tempBannerEnabled === 'true';
@@ -37,6 +38,10 @@ export default Component.extend({
     return !this.user.confirmedAt;
   }),
 
+  showLicenseBanner: computed(function () {
+    return this.user && this.user.isUser && !this.storage.getItem(this.bannerKey);
+  }),
+
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
     'isBuildLessThanEleven', 'isUnconfirmed', function () {
       const banners = [];
@@ -55,10 +60,17 @@ export default Component.extend({
         banners.push('BuildRunningOut');
       }
 
+      if (this.showLicenseBanner) {
+        banners.push('RepositorySecurityBanner');
+      }
+
       if (this.isUnconfirmed) {
         banners.push('UnconfirmedUserBanner');
       }
 
+      if (this.features.get('enterpriseVersion')) {
+        banners.push('EnterpriseBanner');
+      }
       return banners.slice(0, 2);
     }),
 });

@@ -13,7 +13,7 @@ module('Integration | Component | global notification', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUser = this.server.create('user');
+    const currentUser = this.server.create('user', { confirmedAt: Date.now() });
     signInUser(currentUser);
     const authStub = Service.extend({
       currentUser: currentUser
@@ -26,17 +26,25 @@ module('Integration | Component | global notification', function (hooks) {
 
     this.server.get('/v3/enterprise_license', (schema, request) => ({
       'license_id': 'ad12345',
-      'seats': '30',
+      'seats': '0',
       'active_users': '21',
       'license_type': 'trial',
       'expiration_time': '2019-01-01T00:00:00Z'
     }));
   });
 
+  hooks.afterEach(function() {
+    this.server.shutdown();
+  });
+
   test('renders global notification with unconfirmed user banner', async function (assert) {
     assert.expect(2);
 
-    await render(hbs`{{global-notification}}`);
+    let user = {
+      confirmedAt: undefined
+    };
+    this.set('user', user);
+    await render(hbs`{{global-notification user=this.user}}`);
 
     settled().then(() => {
       assert.dom('.global-notification-warning').exists('page renders');
@@ -64,25 +72,20 @@ module('Integration | Component | global notification', function (hooks) {
     });
   });
 
-  test('renders global notification with migration banner', async function (assert) {
-    assert.expect(2);
-
-    await render(hbs`{{global-notification}}`);
-
-    settled().then(() => {
-      assert.dom('.global-notification-warning').exists();
-      assert.dom('[data-test-migration-banner]').containsText('Since June 15th, 2021, the building on travis-ci.org is ceased. Please use travis-ci.com from now on.');
-    });
-  });
-
   test('renders global notification with repository security banner', async function (assert) {
     assert.expect(2);
 
     await render(hbs`{{global-notification}}`);
 
+    let user = {
+      isUser: true
+    };
+    this.set('user', user);
+    await render(hbs`{{global-notification user=this.user}}`);
+
     settled().then(() => {
-      assert.dom('.enterprise-banner.security').exists('page renders');
-      assert.dom('.enterprise-banner.security p').containsText('If you have SSH keys defined for your repositories, please review their settings now.');
+      assert.dom('[data-test-security-banner]').exists('page renders');
+      assert.dom('[data-test-security-banner]').containsText('If you have SSH keys defined for your repositories, please review their settings now.');
     });
   });
 
@@ -94,8 +97,8 @@ module('Integration | Component | global notification', function (hooks) {
     await render(hbs`{{global-notification}}`);
 
     settled().then(() => {
-      assert.dom('.notice-banner--yellow').exists('page renders');
-      assert.dom('.notice-banner--yellow').containsText('Temporary announcement!');
+      assert.dom('[data-test-temporary-announcement]').exists('page renders');
+      assert.dom('[data-test-temporary-announcement]').containsText('Temporary announcement!');
     });
   });
 
@@ -106,7 +109,7 @@ module('Integration | Component | global notification', function (hooks) {
     await render(hbs`{{global-notification}}`);
 
     settled().then(() => {
-      assert.dom('.enterprise-banner').exists();
+      assert.dom('.enterprise-banner-seats').exists();
     });
   });
 });
