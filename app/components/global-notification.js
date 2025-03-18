@@ -14,14 +14,8 @@ export default Component.extend({
 
   bannerText: 'travis.temporary-announcement-banner',
   bannerKey: 'travis.repository-security-banner',
-
-  isBuildLessThanEleven: computed('trial.buildsRemaining', function() {
-    return lt('trial.buildsRemaining', 11);
-  }),
-
-  isBuildFinished: computed('trial.buildsRemaining', function() {
-    return equal('trial.buildsRemaining', 0);
-  }),
+  isBuildLessThanEleven: lt('trial.buildsRemaining', 11),
+  isBuildFinished: equal('trial.buildsRemaining', 0),
 
   isTemporaryAnnouncementBannerEnabled: computed(function () {
     const isBannerEnabled = config.tempBanner.tempBannerEnabled === 'true';

@@ -23,6 +23,7 @@ module('Integration | Component | global notification', function (hooks) {
     this.owner.register('service:auth', authStub);
     this.auth = this.owner.lookup('service:auth');
     this.features = this.owner.lookup('service:features');
+    config.tempBanner.tempBannerEnabled = 'false';
 
     this.server.get('/v3/enterprise_license', (schema, request) => ({
       'license_id': 'ad12345',
@@ -63,7 +64,7 @@ module('Integration | Component | global notification', function (hooks) {
     await render(hbs`{{global-notification user=this.user}}`);
 
     settled().then(() => {
-      assert.dom('.global-notification-warning').exists('page renders');
+      assert.dom('.global-notification-error').exists('page renders');
       assert.dom('[data-test-no-plan-banner]').containsText('Please select a plan in order to use Travis CI');
     });
   });
