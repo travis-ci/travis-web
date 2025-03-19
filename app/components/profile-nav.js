@@ -89,7 +89,7 @@ export default Component.extend({
     }),
 
   showSharePlanTab: computed('features.enterpriseVersion', 'hasPlanViewPermissions',
-    'hasPlanCreatePermissions', 'model.isAssembla', 'model.isUser','model.v2subscription',
+    'hasPlanCreatePermissions', 'model.isAssembla', 'model.isUser', 'model.v2subscription',
     'isOrganization', function () {
       const forOrganization = !this.isOrganization ||
         ((this.model.hasSubscription || this.model.hasV2Subscription) && !!this.hasPlanViewPermissions) ||
@@ -97,8 +97,10 @@ export default Component.extend({
 
       const isAssemblaUser = this.model.isUser && this.model.isAssembla;
       const isEnterprise = this.features.get('enterpriseVersion');
-      const isOnSharedPlan = this.model.hasV2Subscription && (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id);
-      console.log(`SHOWSHARE: ${isOnSharedPlan} ${forOrganization} ${isAssemblaUser}`);
+      const isOnSharedPlan = !!(
+        this.model.hasV2Subscription &&
+                                (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id)
+      );
       return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization && !isOnSharedPlan;
     }),
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',

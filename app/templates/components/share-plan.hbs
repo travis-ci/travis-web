@@ -57,7 +57,7 @@
       </thead>
       <tbody>
         {{#each this.planShares as |org| }}
-        <tr>
+        <tr data-test-share-plan-row>
           <td>
             <TravisForm as |form|>
             <form.field
@@ -78,7 +78,7 @@
           <td>
 
             <LinkTo @route="organization.share_plan" @model={{this.owner}}>
-            <button type="button" class="profile-settings" onclick={{action 'setShared' org (not org.onSharedPlan)}}>
+            <button type="button" class="profile-settings" onclick={{action 'setShared' org (not org.onSharedPlan)}} data-test-share-plan-button>
               {{#if org.onSharedPlan}}Stop Sharing{{else}}Share Plan{{/if}}
             </button>
             </LinkTo>

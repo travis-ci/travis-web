@@ -200,13 +200,12 @@ export default VcsEntity.extend({
     function () {
       let subscriptions = this.v2subscriptions || [];
       let ownedSubscriptions = subscriptions.filterBy('owner.login', this.login);
+
       if (!ownedSubscriptions || ownedSubscriptions.length == 0) {
-        for(let s of subscriptions) {
-          let shares =  s.planShares || []
+        for (let s of subscriptions) {
+          let shares =  s.planShares || [];
           for (let share of shares) {
-            if(share.receiver.id == this.id) {
-              console.log(`return share ${share}`);
-              console.log(s)
+            if (share.receiver.id == this.id) {
               s.sharedBy = share.donor.id;
               return [s];
             }
@@ -217,9 +216,7 @@ export default VcsEntity.extend({
     }),
 
   v2subscription: computed(
-    'accountv2Subscriptions.[]','login', function () {
-      console.log("GET V2 SUB!");
-      console.log(this.login);
+    'accountv2Subscriptions.[]', 'login', function () {
       if (this.accountv2Subscriptions.length > 1) {
         this.logMultipleSubscriptionsError();
       }

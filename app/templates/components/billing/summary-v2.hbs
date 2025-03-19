@@ -29,7 +29,7 @@
         <div class='plan'>
           <div>
             <span class="payment-details-label plan-label-color">Current plan:</span>
-            <div class='plan-overview__description'>
+            <div class='plan-overview__description' data-test-shared-plan-message>
               {{#if this.isSharedFrom }} Shared by {{or this.planDonor.login this.planDonor.fullName}} {{/if}}
             </div>
             <p class='plan-name flex flex--v-center' data-test-plan-name='true'>

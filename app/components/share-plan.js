@@ -4,7 +4,6 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, reads, empty } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
-import moment from 'moment';
 
 export default Component.extend({
   router: service(),
@@ -19,21 +18,15 @@ export default Component.extend({
   filter: '',
 
   init() {
-    console.log("INIT!");
     this._super(...arguments);
-    console.log(this.v2subscription)
-    console.log(this.account)
-    console.log(this.auth.currentUser)
     let orgs = this.fetchPlanShares();
-    for(let org of orgs) {
+    for (let org of orgs) {
       org.set('selectedToSwitch', false);
     }
-
   },
 
-  planShares : computed('v2subscription','user','owner','filter','allSelected', function () {
-    var result = [];
-    console.log("PSLOAD");
+  planShares: computed('v2subscription', 'user', 'owner', 'filter', 'allSelected', function () {
+    let result = [];
     const orgs = this.user.accounts.organizations?.toArray() || [];
     for (let org of orgs) {
       if (org.id != this.owner.id || !this.isOrganization) {
@@ -42,10 +35,9 @@ export default Component.extend({
               org.login != null && org.login.indexOf(this.filter) < 0 ||
               org.fullName != null && org.fullName.indexOf(this.filter) < 0
             )
-          ) continue;
+        ) continue;
 
         if (this.hasOwnPlan(org)) continue;
-        console.log(org.selectedToSwitch);
         result.push(org);
       }
     }
@@ -53,7 +45,7 @@ export default Component.extend({
   }),
 
   fetchPlanShares() {
-    var result = [];
+    let result = [];
     const orgs = this.user.accounts.organizations?.toArray() || [];
     for (let org of orgs) {
       if (org.id != this.owner.id || !this.isOrganization) {
@@ -65,7 +57,7 @@ export default Component.extend({
           org.set('planSharedFrom', this.getDate(p.created_at));
         } else {
           org.set('onSharedPlan', false);
-          org.set('planSharedFrom', "-");
+          org.set('planSharedFrom', '-');
         }
         result.push(org);
       }
@@ -73,8 +65,8 @@ export default Component.extend({
     return result;
   },
 
-  filterPlaceholder: computed( function() {
-    return `Filter ${this.user.isAssembla ? "Assembla Spaces" : "Organizations"}`;
+  filterPlaceholder: computed(function () {
+    return `Filter ${this.user.isAssembla ? 'Assembla Spaces' : 'Organizations'}`;
   }),
 
   getDate(val = null) {
@@ -83,10 +75,7 @@ export default Component.extend({
   },
 
   hasOwnPlan(org) {
-    console.log(`HASOWN ${org.id}`);
-
-    console.log(`HASOWN ${org.id}`);
-    return (org.v2subscription && (!org.v2subscription.sharedBy || org.v2subscription.sharedBy != this.owner.id))|| org.subscription != null;
+    return (org.v2subscription && (!org.v2subscription.sharedBy || org.v2subscription.sharedBy != this.owner.id)) || org.subscription != null;
   },
 
   getShared(id) {
@@ -100,61 +89,45 @@ export default Component.extend({
   },
 
   switchShare(org, value) {
-      console.log(`org: ${org}, v: ${value}`);
-      console.log(`SUBid: ${this.v2subscription?.id}`);
-      if(value) {
-        org.set('onSharedPlan', true);
-        org.set('planSharedFrom',this.getDate());
-        this.v2subscription.share.perform(org.id)
-      } else {
-        org.set('onSharedPlan', false);
-        org.set('planSharedFrom',"-");
-        this.v2subscription.delete_share.perform(org.id)
-      }
+    if (value) {
+      org.set('onSharedPlan', true);
+      org.set('planSharedFrom', this.getDate());
+      this.v2subscription.share.perform(org.id);
+    } else {
+      org.set('onSharedPlan', false);
+      org.set('planSharedFrom', '-');
+      this.v2subscription.delete_share.perform(org.id);
+    }
   },
 
   bulkShare: task(function* () {
-    console.log("BULKSHARE");
     let orgs = this.fetchPlanShares();
-    var ids = []
-    for(let org of orgs) {
+    let ids = [];
+    for (let org of orgs) {
       if (org.selectedToSwitch) {
         ids.push(org.id);
         org.set('onSharedPlan', true);
-        org.set('planSharedFrom',this.getDate());
+        org.set('planSharedFrom', this.getDate());
       }
     }
-    this.v2subscription.shareMultiple.perform(ids, true);
+    yield this.v2subscription.shareMultiple.perform(ids, true);
   }).drop(),
 
   bulkUnshare: task(function* () {
-    console.log("BULKUNSHARE");
-    var ids = []
+    let ids = [];
     let orgs = this.fetchPlanShares();
-    for(let org of orgs) {
+    for (let org of orgs) {
       if (org.selectedToSwitch) {
         ids.push(org.id);
         org.set('onSharedPlan', false);
-        org.set('planSharedFrom','-');
+        org.set('planSharedFrom', '-');
       }
     }
-    this.v2subscription.shareMultiple.perform(ids, false);
+    yield this.v2subscription.shareMultiple.perform(ids, false);
   }).drop(),
 
   actions: {
     setShared(org, value) {
-      console.log(`org: ${org}, v: ${value}`);
-      console.log(`SUBid: ${this.v2subscription?.id}`);
-      /*
-      if(value) {
-        org.set('onSharedPlan', true);
-        org.set('planSharedFrom',this.getDate());
-        this.v2subscription.share.perform(org.id)
-      } else {
-        org.set('onSharedPlan', false);
-        org.set('planSharedFrom',"-");
-        this.v2subscription.delete_share.perform(org.id)
-      }*/
       this.switchShare(org, value);
     },
 
@@ -163,9 +136,8 @@ export default Component.extend({
     },
 
     switchAll() {
-      console.log('switch all');
       let orgs = this.fetchPlanShares();
-      for(let org of orgs) {
+      for (let org of orgs) {
         org.set('selectedToSwitch', !this.allSelected);
       }
       this.set('allSelected', !this.allSelected);

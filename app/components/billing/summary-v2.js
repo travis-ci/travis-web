@@ -64,14 +64,10 @@ export default Component.extend({
     return Date.now() > Date.parse(this.subscription.validTo) ? 'Expired' : 'Expires';
   }),
 
-  isSharedFrom: computed('subscription.sharedBy','account', function() {
-    console.log(`IS SHARED FROM: ${this.subscription.sharedBy && this.subscription.sharedBy != this.account.id}`);
-    console.log(this.subscription.sharedBy);
-    console.log(this.account.id);
+  isSharedFrom: computed('subscription.sharedBy', 'account', function () {
     return this.subscription.sharedBy && this.subscription.sharedBy != this.account.id;
   }),
-  planDonor: computed('subscription.sharedBy', function() {
-    console.log(`IS SHARED FROM: ${!!this.subscription.sharedBy}`);
+  planDonor: computed('subscription.sharedBy', function () {
     return this.subscription.sharedBy ? this.store.peekRecord('organization', this.subscription.sharedBy) : null;
   }),
 });

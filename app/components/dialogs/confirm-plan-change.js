@@ -1,8 +1,5 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import { reads, map } from '@ember/object/computed';
-import { task } from 'ember-concurrency';
 
 export default Component.extend({
   accounts: service(),
@@ -15,19 +12,16 @@ export default Component.extend({
   actions: {
 
     onConfirm() {
-      console.log("CONFIRMPLANCHANGEINITCONFIRM");
       this.openPlansSelector();
       this.onClose();
     },
 
     onClose() {
-      console.log("CONFIRMPLANCHANGEINITCLOSE");
       this.onClose();
     },
 
     init() {
       this._super(...arguments);
-      console.log("CONFIRMPLANCHANGEINIT");
     },
 
     preventErase(select, { keyCode, target }) {

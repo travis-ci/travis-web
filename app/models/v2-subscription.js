@@ -217,23 +217,21 @@ export default Model.extend({
   }).drop(),
 
   shareMultiple: task(function* (receivers, value) {
-    for(let receiver_id of receivers) {
-      const data = { receiver_id };
-      console.log(data);
+    for (let receiverId of receivers) {
+      const data = { receiver_id: receiverId };
       yield this.api.post(`/v2_subscription/${this.id}/${value ? 'share' : 'delete_share'}`, { data });
     }
     yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
-  share: task(function* (receiver_id) {
-    const data = { receiver_id };
-    console.log(data);
+  share: task(function* (receiverId) {
+    const data = { receiver_id: receiverId };
     yield this.api.post(`/v2_subscription/${this.id}/share`, { data });
     yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
-  delete_share: task(function* (receiver_id) {
-    const data = { receiver_id };
+  delete_share: task(function* (receiverId) {
+    const data = { receiver_id: receiverId };
     yield this.api.post(`/v2_subscription/${this.id}/delete_share`, { data });
     yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),

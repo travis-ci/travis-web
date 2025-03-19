@@ -37,9 +37,14 @@ export default Component.extend({
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   cancellationRequested: reads('subscription.cancellationRequested'),
   deferPause: reads('subscription.deferPause'),
-  canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', 'cancellationRequested','isSharedFrom', function () {
-    return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial && !this.cancellationRequested && !this.isSharedFrom;
-  }),
+  canCancelSubscription: computed(
+    'isSubscribed', 'hasSubscriptionPermissions',
+    'freeV2Plan', 'isTrial', 'cancellationRequested',
+    'isSharedFrom', function () {
+      return this.isSubscribed && this.hasSubscriptionPermissions &&
+             !this.freeV2Plan && !this.isTrial &&
+             !this.cancellationRequested && !this.isSharedFrom;
+    }),
 
   hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function () {
     return this.account.hasSubscriptionPermissions && (!this.account.isOrganization || this.account.permissions.plan_create);
@@ -49,7 +54,7 @@ export default Component.extend({
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
-  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', 'isExpired','isSharedFrom',
+  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', 'isExpired', 'isSharedFrom',
     'cancellationRequested', 'isSubscribed', function () {
       return !this.freeV2Plan && !this.subscription.isCanceled &&
            !this.isTrial && !this.cancellationRequested &&
