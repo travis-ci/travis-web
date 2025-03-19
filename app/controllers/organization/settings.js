@@ -39,6 +39,13 @@ export default Controller.extend({
     return this.model.organization.customKeys;
   }),
 
+  envVarsLoaded: computed('organization.accountEnvVars', function () {
+    return this.organization.accountEnvVars;
+  }),
+  envVars: computed('envVarsLoaded.[]', function () {
+    return (this.envVarsLoaded || []).sortBy('name');
+  }),
+
   preferences: computed('model.preferences.@each.{name,value}', function () {
     const list = this.model.preferences || [];
     return list.reduce((hash, record) => {
@@ -87,6 +94,16 @@ export default Controller.extend({
 
     customKeyAdded(key) {
       this.get('model.organization.customKeys').pushObject(key);
+    },
+
+    envVarDeleted(envVar) {
+      const envVars = this.organization.accountEnvVars;
+      envVars.removeObject(envVar);
+    },
+
+    envVarAdded(envVar) {
+      const envVars = this.organization.accountEnvVars;
+      envVars.pushObject(envVar);
     }
   },
 });

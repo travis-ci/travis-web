@@ -159,6 +159,12 @@
   }
 }
 
+.account-env-vars-section {
+  .env-var-name, .env-var-value {
+    width: 40% !important;
+  }
+}
+
 %settings-value-section {
   display: inline-block;
   vertical-align: middle;
