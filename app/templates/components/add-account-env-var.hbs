@@ -1,0 +1,68 @@
+<TravisForm
+  @onSubmit={{perform this.save}}
+  as |form|
+>
+<div style="display: flex;
+    flex-direction: column;">
+
+  <div>
+    <div data-test-name-error class="form-elem add-account-env-var-form-elem">
+      <form.field
+        @label="Name"
+        @value={{this.name}}
+        @required={{true}}
+        @validateOnField={{false}}
+        @showValidationStatusIcons={{false}}
+        @onChange={{action (mut this.name)}}
+        as |field|
+      >
+        <field.input class="env-name" placeholder="Name" />
+        {{#if this.valueError}}
+          <p class="form-error-message">
+            {{this.valueError}}
+          </p>
+        {{/if}}
+      </form.field>
+    </div>
+    <div data-test-value-error class="form-elem add-account-env-var-form-elem">
+      <form.field
+        @label="Value"
+        @value={{this.value}}
+        @required={{true}}
+        @onChange={{action (mut this.value)}}
+        @showValidationStatusIcons={{false}}
+        as |field|
+      >
+        <field.input class="env-value" placeholder="Value" />
+      </form.field>
+    </div>
+    <div class="form-elem">
+    </div>
+  </div>
+
+  <div class="form-elem add-account-env-var-form-elem">
+    <form.field
+      @label="Display value in build log"
+      @disableFrame={{true}}
+      class="display-value-switch"
+      @value={{this.public}}
+      @onChange={{action (mut this.public)}}
+      as |field|
+    >
+      {{field.switch}}
+    </form.field>
+  </div>
+  <div class="form-elem add-account-env-var-form-elem add-var-btn">
+    {{#if this.save.isRunning}}
+      <LoadingIndicator />
+    {{else}}
+      <button onclick={{form.submit}} class="add-account-env-form-submit form-submit">
+        Add New Variable
+      </button>
+    {{/if}}
+  </div>
+
+  </div>
+
+
+</TravisForm>

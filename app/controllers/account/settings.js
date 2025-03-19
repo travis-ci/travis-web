@@ -58,6 +58,13 @@ export default Controller.extend({
     return this.customKeysLoaded;
   }),
 
+  envVarsLoaded: computed('auth.currentUser.accountEnvVars', function () {
+    return this.auth.currentUser.accountEnvVars;
+  }),
+  envVars: computed('envVarsLoaded.[]', function () {
+    return (this.envVarsLoaded || []).sortBy('name');
+  }),
+
   isShowingAddKeyModal: false,
 
   userHasNoEmails: computed('auth.currentUser.emails', function () {
@@ -110,6 +117,14 @@ export default Controller.extend({
     },
     customKeyAdded(key) {
       this.get('customKeysLoaded').pushObject(key);
+    },
+    envVarDeleted(envVar) {
+      const envVars = this.auth.currentUser.accountEnvVars;
+      envVars.removeObject(envVar);
+    },
+    envVarAdded(envVar) {
+      const envVars = this.auth.currentUser.accountEnvVars;
+      envVars.pushObject(envVar);
     }
   },
 
