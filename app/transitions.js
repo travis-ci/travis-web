@@ -1,5 +1,4 @@
-import ENV from 'travis/config/environment';
-
+import ENV from 'travis/config/environment'; 
 let duration;
 
 if (ENV.environment === 'test') {
