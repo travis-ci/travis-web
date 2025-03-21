@@ -2159,6 +2159,7 @@ export default {
         "created_at",
         "source",
         "cancellation_requested",
+        "plan_shares",
       ],
       "representations":  {
         "standard":       [
@@ -2172,6 +2173,7 @@ export default {
           "created_at",
           "source",
           "cancellation_requested",
+          "plan_shares",
         ],
       },
     },

@@ -87,6 +87,22 @@ export default Component.extend({
       const isEnterprise = this.features.get('enterpriseVersion');
       return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization;
     }),
+
+  showSharePlanTab: computed('features.enterpriseVersion', 'hasPlanViewPermissions',
+    'hasPlanCreatePermissions', 'model.isAssembla', 'model.isUser', 'model.v2subscription',
+    'isOrganization', function () {
+      const forOrganization = !this.isOrganization ||
+        ((this.model.hasSubscription || this.model.hasV2Subscription) && !!this.hasPlanViewPermissions) ||
+        !!this.hasPlanCreatePermissions;
+
+      const isAssemblaUser = this.model.isUser && this.model.isAssembla;
+      const isEnterprise = this.features.get('enterpriseVersion');
+      const isOnSharedPlan = !!(
+        this.model.hasV2Subscription &&
+                                (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id)
+      );
+      return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization && !isOnSharedPlan;
+    }),
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
     'hasBillingViewPermissions', 'hasInvoicesViewPermissions', 'model.isNotGithubOrManual', function () {
       if (this.isOrganization) {

@@ -695,6 +695,21 @@ function routes() {
     return response;
   });
 
+  this.post(
+    '/v2_subscription/:subscription_id/share',
+    function (schema, { params }) {
+      const subscription = schema.v2Subscriptions.where({
+        id: params.subscription_id,
+      });
+      subscription.update('shared_by', true);
+    },
+  );
+
+  this.post(
+    '/v2_subscription/:subscription_id/delete_share',
+    function (schema, { params }) {},
+  );
+
   this.get(
     '/v2_subscription/:subscription_id/invoices',
     function (schema, { params }) {

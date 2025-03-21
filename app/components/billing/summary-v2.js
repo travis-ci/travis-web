@@ -11,6 +11,7 @@ export default Component.extend({
 
   accounts: service(),
   storage: service(),
+  store: service(),
 
   subscription: null,
   account: null,
@@ -61,5 +62,12 @@ export default Component.extend({
 
   subscriptionExpiredPrefix: computed('subscription.validTo', function () {
     return Date.now() > Date.parse(this.subscription.validTo) ? 'Expired' : 'Expires';
+  }),
+
+  isSharedFrom: computed('subscription.sharedBy', 'account', function () {
+    return this.subscription.sharedBy && this.subscription.sharedBy != this.account.id;
+  }),
+  planDonor: computed('subscription.sharedBy', function () {
+    return this.subscription.sharedBy ? this.store.peekRecord('organization', this.subscription.sharedBy) : null;
   }),
 });

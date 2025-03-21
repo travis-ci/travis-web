@@ -266,6 +266,11 @@ export default create({
       isPresent: isPresent(),
     },
 
+    planSharedMessage: {
+      scope: '[data-test-shared-plan-message]',
+      isPresent: isPresent(),
+    },
+
     planManualMessage: {
       scope: '[data-test-plan-manual-message]',
       isPresent: isPresent(),
@@ -839,6 +844,19 @@ export default create({
         scope: '[data-test-plan-usage-user-statistics-modal-credits-consumed]',
         text: text()
       },
+    }
+  },
+  sharePlan: {
+    visit: clickable('li[data-test-share-plan-tab] a'),
+    page: {
+      receivers: collection('[data-test-share-plan-row]', {
+        login: text('td', { at: 1 }),
+        shareTime: text('td', { at: 2 }),
+        shareButton: {
+          scope: '[data-test-share-plan-button]',
+          click: clickable()
+        },
+      })
     }
   },
 

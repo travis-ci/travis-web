@@ -1,0 +1,30 @@
+<Modal
+  @isVisible={{this.isOpen}}
+  @closeOnClickOverlay={{false}}
+  @closeButton={{true}}
+  @onClose={{fn @onClose}}
+>
+  <div class="migrate-beta-dialog">
+    <h2 class="h2--teal align-center">
+      Warning!
+    </h2>
+    <p>
+    Once you purchase a new plan, you will no longer<br/> be using {{this.subscription.owner.login}}’s plan
+    </p>
+    <div class="modal-controls align-center">
+      <button
+        class="button--green"
+        onclick={{action 'onConfirm'}}
+      >
+        Proceed
+      </button>
+
+      <button
+        class="button--green"
+        onclick={{action 'onClose'}}
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</Modal>
