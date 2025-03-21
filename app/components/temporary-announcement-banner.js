@@ -15,10 +15,5 @@ export default Component.extend({
     const isNewBannerMessage = this.storage.getItem(this.bannerText) !== config.tempBanner.tempBannerMessage;
     this.set('enabled', isBannerEnabled && isNewBannerMessage);
     this.set('message', config.tempBanner.tempBannerMessage || '');
-  },
-
-  closeBanner() {
-    this.storage.setItem(this.bannerText, config.tempBanner.tempBannerMessage);
-    this.set('enabled', false);
   }
 });

@@ -1,18 +1,18 @@
-<p class="flash-message">
-  {{#if this.flash.icon}}
-    <SvgImage @name={{this.flash.icon}} />
-  {{/if}}
-  {{#if this.flash.preamble}}
-    <span data-test-flash-message-preamble class="preamble">
-      {{this.flash.preamble}}
+<Notification
+  @type='global'
+  @severity="{{this.type}}"
+>
+    {{#if this.flash.preamble}}
+      <span data-test-flash-message-preamble class="preamble">
+        {{this.flash.preamble}}
+      </span>
+    {{/if}}
+    <span data-test-flash-message-text class="message">
+      {{{this.flash.message}}}
     </span>
+  {{#if this.flash.closeButton}}
+    <button type="button" class="no-button close" onclick={{action "close"}}>
+      <SvgImage @name="flash-close" @class="icon" />
+    </button>
   {{/if}}
-  <span data-test-flash-message-text class="message">
-    {{{this.flash.message}}}
-  </span>
-</p>
-{{#if this.flash.closeButton}}
-  <button type="button" class="no-button close" onclick={{action "close"}}>
-    <SvgImage @name="flash-close" @class="icon" />
-  </button>
-{{/if}}
+</Notification>

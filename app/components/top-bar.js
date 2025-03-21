@@ -29,14 +29,7 @@ export default Component.extend({
   model: reads('activeModel'),
 
   user: reads('auth.currentUser'),
-  isUnconfirmed: computed('user.confirmedAt', function () {
-    if (!this.user ||
-        (this.storage.wizardStep > 0 && this.storage.wizardStep <= 1) ||
-        this.router.currentRouteName == 'first_sync' ||
-        this.router.currentRouteName == 'github_apps_installation')
-      return false;
-    return !this.user.confirmedAt;
-  }),
+
 
   userName: computed('user.{login,name}', function () {
     let login = this.get('user.login');
@@ -50,10 +43,6 @@ export default Component.extend({
     let ctaEnabled = this.get('features.landingPageCta');
 
     return !signedIn && !landingPage && ctaEnabled;
-  }),
-
-  hasNoPlan: computed('model.allowance.subscriptionType', 'model.hasV2Subscription', 'model.subscription', function () {
-    return !this.get('model.hasV2Subscription') && this.get('model.subscription') === undefined && this.get('model.allowance.subscriptionType') === 3;
   }),
 
   didInsertElement() {

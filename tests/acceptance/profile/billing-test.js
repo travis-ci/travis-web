@@ -880,7 +880,7 @@ module('Acceptance | profile/billing', function (hooks) {
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.name.text, 'You have 10 trial builds left');
     assert.ok(profilePage.billing.trial.name.hasRedText, 'Should have red text when builds are less than 11');
-    assert.equal(profilePage.billing.trial.buildsRunningOutBanner, 'Your trial is almost finished. Subscribe to a plan before your free builds run out!');
+    assert.equal(profilePage.billing.trialBanner.buildsRunningOutBanner, 'Your trial is almost finished. Subscribe to a plan before your free builds run out!');
     assert.equal(profilePage.billing.trial.subtext, 'The trial includes 2 concurrent jobs for both public and private projects.');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
@@ -918,7 +918,7 @@ module('Acceptance | profile/billing', function (hooks) {
 
     assert.equal(profilePage.billing.trial.overviewHeading, 'Overview');
     assert.equal(profilePage.billing.trial.subtext, 'Your trial has just ended. To get the most out of Travis CI, set up a plan below!');
-    assert.equal(profilePage.billing.trial.buildsRanOutBanner, 'Your trial has ended. Subscribe to a plan to continue building your project!');
+    assert.equal(profilePage.billing.trialBanner.buildsRanOutBanner, 'Your trial has ended. Subscribe to a plan to continue building your project!');
     assert.ok(profilePage.billing.trial.openSourceMessage.isPresent);
     assert.equal(profilePage.billing.trial.openSourceMessage.heading, '5 concurrent jobs, free!');
     assert.equal(profilePage.billing.trial.openSourceMessage.body, 'We <3 open source! You will always get 3 free additional concurrent jobs for your open source projects.');

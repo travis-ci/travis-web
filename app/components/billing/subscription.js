@@ -63,7 +63,7 @@ export default Component.extend({
           scheduledPlan: this.v2subscription.scheduledPlan,
           date: new Date(date.getFullYear(), date.getMonth() + 1, 1)
         },
-        'warning'
+        'scheduled-plan-change'
       );
     }
   }
