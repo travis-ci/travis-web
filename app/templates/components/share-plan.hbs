@@ -1,0 +1,91 @@
+
+<div class="plan-usage" data-test-plan-usage-content>
+  <section>
+    <Input
+    class="filter-users-input"
+    placeholder={{this.filterPlaceholder}}
+    onkeyup={{action "setFilter"}}/>
+    <table class="plan-share-list">
+      <thead>
+        <tr>
+          <th>
+            <TravisForm as |form|>
+            <form.field
+              @disableFrame={{true}}
+              @value={{this.allSelected}}
+              onclick={{action "switchAll"}}
+              as |field|>
+              <field.checkbox />
+            </form.field>
+            </TravisForm>
+          </th>
+          <th>
+            {{#if this.isAssembla}}Space{{else}}Organization{{/if}} Name
+          </th>
+          <th>
+            Shared From
+          </th>
+          <th>
+            <nav
+              class="option-button {{if this.isBulkMenuUpen 'is-open'}}"
+              {{on 'click' (fn (mut this.isBulkMenuUpen) true)}}
+              {{on 'mouseleave' (fn (mut this.isBulkMenuUpen) false)}}
+              >
+              <button type="button" class="option-display" title="Bulk Options">
+                <span class="label-align">
+                  Bulk Options
+                  <SvgImage @name="icon-dropdown-arrow" @class="icon" />
+                </span>
+              </button>
+              <ul class="option-dropdown">
+                <li>
+                  <button type="button" onclick={{perform this.bulkShare}}>
+                    Share selected
+                  </button>
+                </li>
+
+                <li>
+                  <button type="button" onclick={{perform this.bulkUnshare}}>
+                    Un-share selected
+                  </button>
+                </li>
+              </ul>
+            </nav>
+
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.planShares as |org| }}
+        <tr data-test-share-plan-row>
+          <td>
+            <TravisForm as |form|>
+            <form.field
+              @disableFrame={{true}}
+              @value={{org.selectedToSwitch}}
+              onclick={{action "switchOrgSelection" org}}
+              as |field|>
+              <field.checkbox />
+            </form.field>
+            </TravisForm>
+          </td>
+          <td>
+            <span class="profile-repo-name">{{or org.login org.fullName}}</span>
+          </td>
+          <td>
+            {{ org.planSharedFrom }}
+          </td>
+          <td>
+
+            <LinkTo @route="organization.share_plan" @model={{this.owner}}>
+            <button type="button" class="profile-settings" onclick={{action 'setShared' org (not org.onSharedPlan)}} data-test-share-plan-button>
+              {{#if org.onSharedPlan}}Stop Sharing{{else}}Share Plan{{/if}}
+            </button>
+            </LinkTo>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </section>
+</div>

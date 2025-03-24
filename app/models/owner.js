@@ -196,15 +196,28 @@ export default VcsEntity.extend({
   v2subscriptions: reads('accounts.v2subscriptions'),
 
   accountv2Subscriptions: computed(
-    'v2subscriptions.@each.{owner}',
+    'v2subscriptions',
     'login',
     function () {
       let subscriptions = this.v2subscriptions || [];
-      return subscriptions.filterBy('owner.login', this.login);
+      let ownedSubscriptions = subscriptions.filterBy('owner.login', this.login);
+
+      if (!ownedSubscriptions || ownedSubscriptions.length == 0) {
+        for (let s of subscriptions) {
+          let shares =  s.planShares || [];
+          for (let share of shares) {
+            if (share.receiver.id == this.id) {
+              s.sharedBy = share.donor.id;
+              return [s];
+            }
+          }
+        }
+      }
+      return ownedSubscriptions;
     }),
 
   v2subscription: computed(
-    'accountv2Subscriptions.[]', function () {
+    'accountv2Subscriptions.[]', 'login', function () {
       if (this.accountv2Subscriptions.length > 1) {
         this.logMultipleSubscriptionsError();
       }
