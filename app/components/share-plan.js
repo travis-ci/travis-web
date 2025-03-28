@@ -16,6 +16,7 @@ export default Component.extend({
   user: reads('auth.currentUser'),
   allSelected: false,
   filter: '',
+  isDonorUser: reads('owner.isUser'),
 
   init() {
     this._super(...arguments);
