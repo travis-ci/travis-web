@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { equal, lt, reads } from '@ember/object/computed';
+import { and, equal, lt, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -11,11 +11,46 @@ export default Component.extend({
   features: service(),
   user: reads('auth.currentUser'),
   trial: reads('user.trial'),
-
+  isProVersion: reads('features.proVersion'),
+  hasAdminPermissions: reads('model.permissions.admin'),
+  isOrganization: reads('model.isOrganization'),
+  isOrganizationAdmin: and('isOrganization', 'hasAdminPermissions'),
+  isUser: reads('user.isUser'),
   bannerText: 'travis.temporary-announcement-banner',
   bannerKey: 'travis.repository-security-banner',
-  isBuildLessThanEleven: lt('trial.buildsRemaining', 11),
-  isBuildFinished: equal('trial.buildsRemaining', 0),
+  isBuildLessThanEleven: lt('user.trial.buildsRemaining', 11),
+  isBuildFinished: equal('user.trial.buildsRemaining', 0),
+  activeModel: null,
+  model: reads('activeModel'),
+
+  paymentDetailsEditLockedTime: computed( 'model.allowance.paymentChangesBlockCaptcha', function () {
+    const allowance = this.model?.allowance;
+    if (!allowance) return undefined;
+
+    let time;
+    if (allowance.get('paymentChangesBlockCaptcha')) time = allowance.get('captchaBlockDuration');
+    if (allowance.get('paymentChangesBlockCredit')) time = allowance.get('creditCardBlockDuration');
+
+    return time;
+  }),
+
+  isBalanceNegative: computed('model.allowance', function () {
+    const repo = this.get('repo');
+
+    if (repo) {
+      if (repo.hasBuildBackups === undefined) {
+        repo.fetchInitialBuildBackups.perform();
+      }
+
+      const allowance = repo.get('allowance');
+      if (allowance && this.isProVersion && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
+        return true;
+      }
+    } else if (this.model && this.model.allowance && (this.isOrganizationAdmin || this.model.isUser)) {
+      return true;
+    }
+    return false;
+  }),
 
   isTemporaryAnnouncementBannerEnabled: computed(function () {
     const isBannerEnabled = config.tempBanner.tempBannerEnabled === 'true';
@@ -44,11 +79,29 @@ export default Component.extend({
   }),
 
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
-    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', function () {
+    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime', function () {
       const banners = [];
 
       if (this.hasNoPlan) {
         banners.push('NoPlan');
+      }
+
+      if (this.isBalanceNegative) {
+        const repo = this.get('repo');
+        let allowance;
+        if (repo) {
+          allowance = repo.get('allowance');
+        } else {
+          allowance = this.model.allowance;
+        }
+        console.log('allowance', allowance);
+        if (allowance && !allowance.get('privateRepos') && !allowance.get('publicRepos')) {
+          banners.push('NegativeBalancePrivateAndPublic');
+        } else if (allowance && !allowance.get('privateRepos')) {
+          banners.push('NegativeBalancePrivate');
+        } else if (allowance && !allowance.get('publicRepos')) {
+          banners.push('NegativeBalancePublic');
+        }
       }
 
       if (this.isTemporaryAnnouncementBannerEnabled) {
@@ -67,6 +120,10 @@ export default Component.extend({
 
       if (this.isUnconfirmed) {
         banners.push('UnconfirmedUserBanner');
+      }
+
+      if (this.paymentDetailsEditLockedTime) {
+        banners.push('PaymentDetailsEditLock');
       }
 
       if (this.features.get('enterpriseVersion')) {

@@ -1,20 +1,20 @@
-<FlashNotification
+<Notification
+  @type='global'
   @severity='warning'
-  @componentName='negative-balance-public'
 >
   <span data-test-flash-message-text class="message">
         Builds can not run for public repositories due to an insufficient or disabled credit allowance.
         Please go to the
-        {{#if @data.isUser}}
+        {{#if @isUser}}
           <LinkTo @route="account.billing">Plan page</LinkTo>
         {{else}}
-          <LinkTo @route="organization.billing" @model={{@data.owner}}>Plan page</LinkTo>
+          <LinkTo @route="organization.billing" @model={{@owner}}>Plan page</LinkTo>
         {{/if}}
         to replenish your credit balance or alter your
-        {{#if @data.isUser}}
+        {{#if @isUser}}
           <LinkTo @route="account.billing" @query={{hash anchor="oss-consumption"}}>Consume paid credits for OSS setting</LinkTo>.
         {{else}}
-          <LinkTo @route="organization.billing" @model={{@data.owner}} @query={{hash anchor="oss-consumption"}}>Consume paid credits for OSS setting</LinkTo>.
+          <LinkTo @route="organization.billing" @model={{@owner}} @query={{hash anchor="oss-consumption"}}>Consume paid credits for OSS setting</LinkTo>.
         {{/if}}
       </span>
-</FlashNotification>
+</Notification>

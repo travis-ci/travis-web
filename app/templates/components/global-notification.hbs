@@ -2,6 +2,12 @@
   {{#each this.bannersToDisplay as |banner|}}
     {{#if (eq banner 'NoPlan')}}
       <NoPlan @model={{this.user}} />
+    {{else if (eq banner 'NegativeBalancePrivateAndPublic')}}
+      <NegativeBalancePrivateAndPublic @isUser={{this.isUser}} @owner={{this.user}} />
+    {{else if (eq banner 'NegativeBalancePrivate')}}
+      <NegativeBalancePrivate @isUser={{this.isUser}} @owner={{this.user}} />
+    {{else if (eq banner 'NegativeBalancePublic')}}
+      <NegativeBalancePublic @isUser={{this.isUser}} @owner={{this.user}} />
     {{else if (eq banner 'TemporaryAnnouncementBanner')}}
       <TemporaryAnnouncementBanner />
     {{else if (eq banner 'BuildFinished')}}
@@ -24,6 +30,8 @@
       <RepositorySecurityBanner />
     {{else if (eq banner 'UnconfirmedUserBanner')}}
       <UnconfirmedUserBanner />
+    {{else if (eq banner 'PaymentDetailsEditLock')}}
+      <PaymentDetailsEditLock @time={{this.paymentDetailsEditLockedTime}}/>
     {{else if (eq banner 'EnterpriseBanner')}}
       <EnterpriseBanner />
     {{/if}}

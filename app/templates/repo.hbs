@@ -1,6 +1,6 @@
 <div class="wrapper {{if this.isCentered 'centered'}}">
   {{#if this.showGitHubAppsCTA}}
-    <TopBar>
+    <TopBar @repo={{this.repo}}>
       <div class="cta">
         <p class="row">
           Join over 500,000 developers testing and building on Travis CI
@@ -8,7 +8,7 @@
       </div>
     </TopBar>
   {{else}}
-    <TopBar />
+    <TopBar @repo={{this.repo}}/>
   {{/if}}
   <FlashDisplay />
   <div class="wrapper-main">

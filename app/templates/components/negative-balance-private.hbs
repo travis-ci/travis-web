@@ -1,15 +1,15 @@
-<FlashNotification
+<Notification
+  @type='global'
   @severity='warning'
-  @componentName='negative-balance-private'
 >
     <span data-test-flash-message-text class="message">
       Builds have been temporarily disabled for private repositories due to a negative credit balance.
       Please go to the
-      {{#if @data.isUser}}
+      {{#if @isUser}}
         <LinkTo @route="account.billing">Plan page</LinkTo>
       {{else}}
-        <LinkTo @route="organization.billing" @model={{@data.owner}}>Plan page</LinkTo>
+        <LinkTo @route="organization.billing" @model={{@owner}}>Plan page</LinkTo>
       {{/if}}
       to replenish your credit balance.
     </span>
-</FlashNotification>
+</Notification>

@@ -8,6 +8,7 @@ export default Component.extend({
   auth: service(),
   externalLinks: service(),
   features: service(),
+  storage: service(),
   flashes: service(),
   isProVersion: reads('features.proVersion'),
   isShowingTriggerBuildModal: false,
@@ -62,7 +63,7 @@ export default Component.extend({
     }
   },
 
-  didRender() {
+  didReceiveAttrs() {
     const repo = this.get('repo');
 
     if (repo.hasBuildBackups === undefined) {
@@ -72,20 +73,19 @@ export default Component.extend({
     const allowance = repo.get('allowance');
     const ownerRoMode = repo.get('owner').ro_mode || false;
 
+    this.storage.setItem('users-limit-exceeded' + '_' + this.currentUser.id, true);
     if (this.isProVersion && allowance && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
       const isUser = repo.ownerType === 'user';
-      if (repo.private) {
-        this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: isUser }, 'negative-balance-private');
-      } else {
-        this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'negative-balance-public');
-      }
       if (allowance.get('pendingUserLicenses')) {
         this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'pending-user-licenses');
+        this.storage.setItem('pending-user-licenses' + '_' + this.currentUser.id, true);
       } else if (!allowance.get('userUsage')) {
         this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'users-limit-exceeded');
+        this.storage.setItem('users-limit-exceeded' + '_' + this.currentUser.id, true);
       }
     } else if (this.userRoMode && ownerRoMode) {
       this.flashes.custom('flashes/read-only-mode', {}, 'read-only-mode');
+      this.storage.setItem('read-only-mode' + '_' + this.currentUser.id, true);
     }
   },
 });

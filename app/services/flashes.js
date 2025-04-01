@@ -13,6 +13,7 @@ const messageTypeToPreamble = {
 export default Service.extend({
   auth: service(),
   store: service(),
+  storage: service(),
 
   currentUser: alias('auth.currentUser'),
 
@@ -103,8 +104,10 @@ export default Service.extend({
 
     const flash = { component, data, type: 'custom', className: className };
 
-    this.flashes.unshiftObject(flash);
-    this.removeFlash(flash);
+    if (!this.storage.getItem(className +  '_' + this.currentUser.id)) {
+      this.flashes.unshiftObject(flash);
+      this.removeFlash(flash);
+    }
   },
 
   removeCustomsByClassName(className) {

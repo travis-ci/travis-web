@@ -7,7 +7,8 @@ import { isPresent } from '@ember/utils';
 export default Component.extend({
   store: service(),
   flashes: service(),
-
+  auth: service(),
+  currentUser: alias('auth.currentUser'),
   account: null,
   newSubscriptionProcess: false,
 
@@ -55,7 +56,7 @@ export default Component.extend({
     });
   }),
 
-  didRender() {
+  didReceiveAttrs() {
     const date = new Date();
     if (this.v2subscription && this.v2subscription.scheduledPlanName) {
       this.flashes.custom('flashes/scheduled-plan-change',
@@ -65,6 +66,7 @@ export default Component.extend({
         },
         'scheduled-plan-change'
       );
+      this.storage.setItem('scheduled-plan-change', this.currentUser.id);
     }
   }
 });
