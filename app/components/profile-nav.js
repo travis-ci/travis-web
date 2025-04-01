@@ -100,8 +100,14 @@ export default Component.extend({
         this.model.hasV2Subscription &&
                                 (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id)
       );
-      const isOnTrialOrFree = !!(this.model.hasV2Subscription && (this.model.v2subscription.current_trial || (this.model.v2subscription.plan && this.model.v2subscription.plan.isFree)));
-      return this.model.isPlanShareEnabled && !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization && !isOnSharedPlan && !isOnTrialOrFree;
+      const isOnTrialOrFree = !!(
+        this.model.hasV2Subscription &&
+        (
+          this.model.v2subscription.current_trial || (this.model.v2subscription.plan && this.model.v2subscription.plan.isFree)
+        )
+      );
+      return this.model.isPlanShareEnabled && !isEnterprise && !isAssemblaUser &&
+        !!billingEndpoint && !!forOrganization && !isOnSharedPlan && !isOnTrialOrFree;
     }),
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
     'hasBillingViewPermissions', 'hasInvoicesViewPermissions', 'model.isNotGithubOrManual', function () {

@@ -240,7 +240,7 @@ module.exports = function (environment) {
     'enable-assembla-plan-share': true,
     'enable-gitlab-plan-share': false,
     'enable-github-plan-share': false,
-    'enable-bitbucket-plan-share': false
+    'enable-bitbucket-plan-share': false,
   };
 
   if (TRAVIS_PRO) {
