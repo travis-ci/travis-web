@@ -73,7 +73,6 @@ export default Component.extend({
     const allowance = repo.get('allowance');
     const ownerRoMode = repo.get('owner').ro_mode || false;
 
-    this.storage.setItem('users-limit-exceeded' + '_' + this.currentUser.id, true);
     if (this.isProVersion && allowance && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
       const isUser = repo.ownerType === 'user';
       if (allowance.get('pendingUserLicenses')) {
