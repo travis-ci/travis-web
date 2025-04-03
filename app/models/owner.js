@@ -296,4 +296,9 @@ export default VcsEntity.extend({
     const result = yield this.api.get(url);
     return result ? result.executionspersender : [];
   }).keepLatest(),
+
+  isPlanShareEnabled: computed('vcsType', function () {
+    const vcs = this.vcsType ? this.vcsType.replace(/User|Organization/g, '').toLowerCase() : 'github';
+    return !!this.features.get(`enable-${vcs}-plan-share`);
+  }),
 });
