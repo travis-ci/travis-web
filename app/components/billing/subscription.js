@@ -66,7 +66,7 @@ export default Component.extend({
         },
         'scheduled-plan-change'
       );
-      this.storage.setItem('scheduled-plan-change', this.currentUser.id);
+      this.storage.setItem('scheduled-plan-change' + '_' + this.currentUser.id, true);
     }
   }
 });

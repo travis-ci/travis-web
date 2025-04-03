@@ -34,22 +34,22 @@ export default Component.extend({
     return time;
   }),
 
-  isBalanceNegative: computed('model.allowance', function () {
-    const repo = this.get('repo');
-
-    if (repo) {
-      if (repo.hasBuildBackups === undefined) {
-        repo.fetchInitialBuildBackups.perform();
-      }
-
-      const allowance = repo.get('allowance');
-      if (allowance && this.isProVersion && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
-        return true;
-      }
-    } else if (this.model && this.model.allowance && (this.isOrganizationAdmin || this.model.isUser)) {
-      return true;
+  isBalanceNegativeProfile: computed('model.allowance.publicRepos', 'model.allowance.privateRepos', function () {
+    const allowance = this.model?.allowance;
+    if (!allowance) {
+      return;
     }
-    return false;
+
+    return (this.isOrganizationAdmin || this.model.isUser) && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
+  }),
+
+  isBalanceNegativeRepo: computed( 'repo.allowance', function () {
+    const repo = this.get('repo');
+    if (!repo) {
+      return;
+    }
+
+    return this.isProVersion && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt;
   }),
 
   isTemporaryAnnouncementBannerEnabled: computed(function () {
@@ -79,27 +79,31 @@ export default Component.extend({
   }),
 
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
-    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime', function () {
+    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime', 'isBalanceNegativeRepo', 'isBalanceNegativeProfile', function () {
       const banners = [];
 
       if (this.hasNoPlan) {
         banners.push('NoPlan');
       }
 
-      if (this.isBalanceNegative) {
-        const repo = this.get('repo');
-        let allowance;
-        if (repo) {
-          allowance = repo.get('allowance');
-        } else {
-          allowance = this.model.allowance;
-        }
-        console.log('allowance', allowance);
+      if (this.isBalanceNegativeProfile) {
+        const allowance = this.model.allowance;
+
         if (allowance && !allowance.get('privateRepos') && !allowance.get('publicRepos')) {
           banners.push('NegativeBalancePrivateAndPublic');
         } else if (allowance && !allowance.get('privateRepos')) {
           banners.push('NegativeBalancePrivate');
         } else if (allowance && !allowance.get('publicRepos')) {
+          banners.push('NegativeBalancePublic');
+        }
+      }
+
+      if (this.isBalanceNegativeRepo) {
+        const repo = this.get('repo');
+
+        if (repo.private) {
+          banners.push('NegativeBalancePrivate');
+        } else {
           banners.push('NegativeBalancePublic');
         }
       }
