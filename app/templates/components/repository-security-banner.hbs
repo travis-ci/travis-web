@@ -1,3 +1,4 @@
+{{#if this.showLicenseBanner}}
 <Notification
   @type='global'
   @severity='warning'
@@ -11,3 +12,4 @@ setups.
             <SvgImage @name="flash-close" @class="icon" />
           </button>
 </Notification>
+{{/if}}
