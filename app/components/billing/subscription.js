@@ -9,6 +9,7 @@ export default Component.extend({
   flashes: service(),
   auth: service(),
   currentUser: alias('auth.currentUser'),
+  storage: service(),
   account: null,
   newSubscriptionProcess: false,
 
