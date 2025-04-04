@@ -50,11 +50,11 @@ export default create({
     scope: 'ul.flash li:eq(0)',
     resetScope: true,
 
-    text: text('p.flash-message .message'),
-    preamble: text('p.flash-message .preamble'),
+    text: text('p .message'),
+    preamble: text('p .preamble'),
 
     isSuccess: hasClass('success'),
-    isNotice: hasClass('notice'),
+    isWarning: hasClass('warning'),
     isError: hasClass('error'),
 
     isNotShown: isHidden(),

@@ -1,0 +1,11 @@
+{{#if this.isGlobal}}
+<ul class="flash ember-view global-notification-container">
+  <p class="{{this.getNotificationClass}}" ...attributes>
+  {{yield}}
+  </p>
+</ul>
+{{else}}
+  <div class="{{this.getNotificationClass}}" ...attributes>
+    {{yield}}
+  </div>
+{{/if}}

@@ -33,7 +33,7 @@ module('Acceptance | job/log error', function (hooks) {
 
     await visit(`/travis-ci/travis-web/jobs/${job.id}`);
 
-    await waitFor('.job-log > p');
+    await waitFor('.job-log >  .notification-error');
     assert.equal(jobPage.branch, 'acceptance-tests');
     assert.equal(jobPage.message, 'acceptance-tests This is a message');
     assert.equal(jobPage.state, '#1234.1 passed');

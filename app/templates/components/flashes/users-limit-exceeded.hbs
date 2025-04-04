@@ -1,10 +1,10 @@
-<ul data-test-components-flash-item="true" class="flash ember-view">
-  <li class="warning below-top-bar ember-view">
-    <p class="flash-message">
-      <span data-test-flash-message-text class="message">
+<FlashNotification
+  @severity='error'
+  @componentName='users-limit-exceeded'
+>
+<span data-test-flash-message-text class="message">
         We are unable to start your build at this time. You exceeded the number of users allowed for your plan.
         Please review your plan details and follow the steps to resolution.
       </span>
-    </p>
-  </li>
-</ul>
+</FlashNotification>
+
