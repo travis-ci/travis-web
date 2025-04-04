@@ -27,9 +27,9 @@
           </th>
           <th>
             <nav
-              class="option-button {{if this.isBulkMenuUpen 'is-open'}}"
-              {{on 'click' (fn (mut this.isBulkMenuUpen) true)}}
-              {{on 'mouseleave' (fn (mut this.isBulkMenuUpen) false)}}
+              class="option-button {{if this.isBulkMenuOpen 'is-open'}}"
+              {{on 'click' (fn (mut this.isBulkMenuOpen) true)}}
+              {{on 'mouseleave' (fn (mut this.isBulkMenuOpen) false)}}
               >
               <button type="button" class="option-display" title="Bulk Options">
                 <span class="label-align">

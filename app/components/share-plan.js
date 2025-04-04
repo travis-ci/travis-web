@@ -52,10 +52,10 @@ export default Component.extend({
       if (org.id != this.owner.id || !this.isOrganization) {
         if (this.hasOwnPlan(org)) continue;
 
-        let p = this.getShared(org.id);
-        if (p != null) {
+        let planShare = this.getShared(org.id);
+        if (planShare != null) {
           org.set('onSharedPlan', true);
-          org.set('planSharedFrom', this.getDate(p.created_at));
+          org.set('planSharedFrom', this.getDate(planShare.created_at));
         } else {
           org.set('onSharedPlan', false);
           org.set('planSharedFrom', '-');
@@ -82,8 +82,8 @@ export default Component.extend({
   getShared(id) {
     const shares = this.owner.v2subscription?.planShares;
     if (shares != null) {
-      for (let p of shares.toArray()) {
-        if (p.donor?.id == this.owner.id && p.receiver?.id == id) return p;
+      for (let planShare of shares.toArray()) {
+        if (planShare.donor?.id == this.owner.id && planShare.receiver?.id == id) return planShare;
       }
     }
     return null;

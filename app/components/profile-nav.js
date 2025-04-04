@@ -106,7 +106,7 @@ export default Component.extend({
           this.model.v2subscription.current_trial || (this.model.v2subscription.plan && this.model.v2subscription.plan.isFree)
         )
       );
-      return this.model.isPlanShareEnabled && !isEnterprise && !isAssemblaUser &&
+      return this.model.isPlanShareEnabled && this.model.hasV2Subscription && !isEnterprise && !isAssemblaUser &&
         !!billingEndpoint && !!forOrganization && !isOnSharedPlan && !isOnTrialOrFree;
     }),
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
