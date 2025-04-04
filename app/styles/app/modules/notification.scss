@@ -27,9 +27,13 @@
   font-size: 14px;
 
   .close {
-    position: relative;
-
     @include colorSVGFill($color-bg-log-fold);
+  }
+}
+
+.top .global-notification-warning {
+  .close {
+    position: relative;
   }
 
   .close .icon {
