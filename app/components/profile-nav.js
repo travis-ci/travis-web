@@ -113,8 +113,12 @@ export default Component.extend({
     'hasBillingViewPermissions', 'hasInvoicesViewPermissions', 'model.isNotGithubOrManual', function () {
       if (this.isOrganization) {
         const forOrganization = !this.isOrganization || this.hasBillingViewPermissions || this.hasInvoicesViewPermissions;
+        const isOnSharedPlan = !!(
+          this.model.hasV2Subscription &&
+                                (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id)
+      );
 
-        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin || forOrganization);
+        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin || forOrganization) && !isOnSharedPlan;
       } else {
         return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
       }
