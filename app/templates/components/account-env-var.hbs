@@ -1,0 +1,24 @@
+<EmberTooltip @text={{this.envVar.name}} @targetId='env-var-name-{{this.envVar.id}}'  @popperContainer='body'/>
+<div class="env-var-name" id='env-var-name-{{this.envVar.id}}'>
+  {{this.envVar.name}}
+</div>
+<div class="env-var-value">
+  {{#unless this.envVar.public}}
+    <SvgImage @name="icon-private" @class="icon" />
+  {{/unless}}
+  <input type="pw" value={{this.value}} readonly="readonly" />
+</div>
+<div class="env-var-action">
+  {{#if this.delete.isRunning}}
+    <LoadingIndicator />
+  {{else}}
+    <button
+      type="button"
+      class="no-button env-var-delete"
+      onclick={{action (perform this.delete)}}
+    >
+      <SvgImage @name="icon-trash" @class="icon" />
+      <EmberTooltip @text="Delete" />
+    </button>
+  {{/if}}
+</div>
