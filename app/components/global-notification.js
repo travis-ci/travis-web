@@ -22,7 +22,7 @@ export default Component.extend({
   activeModel: null,
   model: reads('activeModel'),
 
-  paymentDetailsEditLockedTime: computed( 'model.allowance.paymentChangesBlockCaptcha', function () {
+  paymentDetailsEditLockedTime: computed('model.allowance.paymentChangesBlockCaptcha', function () {
     const allowance = this.model?.allowance;
     if (!allowance) return undefined;
 
@@ -42,7 +42,7 @@ export default Component.extend({
     return (this.isOrganizationAdmin || this.model.isUser) && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
   }),
 
-  isBalanceNegativeRepo: computed( 'repo.allowance', function () {
+  isBalanceNegativeRepo: computed('repo.allowance', function () {
     const repo = this.get('repo');
     if (!repo) {
       return;
@@ -78,7 +78,8 @@ export default Component.extend({
   }),
 
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
-    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime', 'isBalanceNegativeRepo', 'isBalanceNegativeProfile', function () {
+    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime',
+    'isBalanceNegativeRepo', 'isBalanceNegativeProfile', function () {
       const banners = [];
 
       if (this.hasNoPlan) {
