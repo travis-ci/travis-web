@@ -63,7 +63,7 @@ export default Component.extend({
     }
   },
 
-  didReceiveAttrs() {
+  didRender() {
     const repo = this.get('repo');
 
     if (repo.hasBuildBackups === undefined) {
@@ -77,14 +77,11 @@ export default Component.extend({
       const isUser = repo.ownerType === 'user';
       if (allowance.get('pendingUserLicenses')) {
         this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'pending-user-licenses');
-        this.storage.setItem('pending-user-licenses' + '_' + this.currentUser.id, true);
       } else if (!allowance.get('userUsage')) {
         this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'users-limit-exceeded');
-        this.storage.setItem('users-limit-exceeded' + '_' + this.currentUser.id, true);
       }
     } else if (this.userRoMode && ownerRoMode) {
       this.flashes.custom('flashes/read-only-mode', {}, 'read-only-mode');
-      this.storage.setItem('read-only-mode' + '_' + this.currentUser.id, true);
     }
   },
 });

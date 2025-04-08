@@ -118,12 +118,11 @@ export default Component.extend({
     return state && state <= 3;
   }),
 
-  didReceiveAttrs() {
+  didRender() {
     const allowance = this.model.allowance;
 
     if (this.userRoMode) {
       this.flashes.custom('flashes/read-only-mode', {}, 'read-only-mode');
-      this.storage.setItem('read-only-mode' + '_' + this.currentUser.id, true);
     }
 
     if (!allowance) {
@@ -137,11 +136,9 @@ export default Component.extend({
     if (allowance.get('pendingUserLicenses')) {
       this.flashes.custom('flashes/pending-user-licenses',
         { owner: this.model, isUser: this.model.isUser }, 'pending-user-licenses');
-      this.storage.setItem('pending-user-licenses' + '_' + this.currentUser.id, true);
     } else if (!this.usersUsage) {
       this.flashes.custom('flashes/users-limit-exceeded',
         { owner: this.model, isUser: this.model.isUser }, 'users-limit-exceeded');
-      this.storage.setItem('users-limit-exceeded' + '_' + this.currentUser.id, true);
     }
   },
 

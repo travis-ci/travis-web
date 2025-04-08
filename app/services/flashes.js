@@ -100,13 +100,13 @@ export default Service.extend({
 
   custom(component, data = {}, className = null) {
     assert('Component name is mandatory for custom flashes', !!component);
-    this.removeCustomsByClassName(className);
 
     const flash = { component, data, type: 'custom', className: className };
 
     if (!this.storage.getItem(className +  '_' + this.currentUser.id)) {
       this.flashes.unshiftObject(flash);
       this.removeFlash(flash);
+      this.storage.setItem(className + '_' + this.currentUser.id, true);
     }
   },
 

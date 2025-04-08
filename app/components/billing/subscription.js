@@ -57,7 +57,7 @@ export default Component.extend({
     });
   }),
 
-  didReceiveAttrs() {
+  didRender() {
     const date = new Date();
     if (this.v2subscription && this.v2subscription.scheduledPlanName) {
       this.flashes.custom('flashes/scheduled-plan-change',
@@ -67,7 +67,6 @@ export default Component.extend({
         },
         'scheduled-plan-change'
       );
-      this.storage.setItem('scheduled-plan-change' + '_' + this.currentUser.id, true);
     }
   }
 });

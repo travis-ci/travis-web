@@ -10,7 +10,6 @@ export default Component.extend({
   router: service(),
   features: service(),
   user: reads('auth.currentUser'),
-  trial: reads('user.trial'),
   isProVersion: reads('features.proVersion'),
   hasAdminPermissions: reads('model.permissions.admin'),
   isOrganization: reads('model.isOrganization'),
@@ -18,8 +17,8 @@ export default Component.extend({
   isUser: reads('user.isUser'),
   bannerText: 'travis.temporary-announcement-banner',
   bannerKey: 'travis.repository-security-banner',
-  isBuildLessThanEleven: lt('user.trial.buildsRemaining', 11),
-  isBuildFinished: equal('user.trial.buildsRemaining', 0),
+  isBuildLessThanEleven: lt('model.trial.buildsRemaining', 11),
+  isBuildFinished: equal('model.trial.buildsRemaining', 0),
   activeModel: null,
   model: reads('activeModel'),
 
@@ -134,5 +133,5 @@ export default Component.extend({
         banners.push('EnterpriseBanner');
       }
       return banners.slice(0, 2);
-    }),
+    })
 });
