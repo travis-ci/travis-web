@@ -49,8 +49,10 @@ export default Component.extend({
 
   canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', 'isExpired',
     'cancellationRequested', 'isSubscribed', function () {
+      let isOnTrial = this.subscription.current_trial != null && this.subscription.current_trial.status == 'subscribed'
+
       return !this.freeV2Plan && !this.subscription.isCanceled &&
-           !this.isTrial && !this.cancellationRequested &&
+           !this.isTrial && !isOnTrial && !this.cancellationRequested &&
         !this.isExpired && this.isSubscribed;
     }),
 
