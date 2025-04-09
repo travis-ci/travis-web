@@ -79,13 +79,13 @@
 
           {{#if this.isDonorUser}}
             <LinkTo @route="account.share_plan">
-              <button type="button" class="profile-settings" onclick={{action 'setShared' org (not org.onSharedPlan)}} data-test-share-plan-button>
+              <button type="button" class="plan-share-button" onclick={{action 'setShared' org (not org.onSharedPlan)}} data-test-share-plan-button>
               {{#if org.onSharedPlan}}Stop Sharing{{else}}Share Plan{{/if}}
               </button>
             </LinkTo>
           {{else}}
             <LinkTo @route="organization.share_plan" @model={{this.owner}}>
-              <button type="button" class="profile-settings" onclick={{action 'setShared' org (not org.onSharedPlan)}} data-test-share-plan-button>
+              <button type="button" class="plan-share-button" onclick={{action 'setShared' org (not org.onSharedPlan)}} data-test-share-plan-button>
                 {{#if org.onSharedPlan}}Stop Sharing{{else}}Share Plan{{/if}}
               </button>
             </LinkTo>
