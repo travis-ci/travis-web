@@ -11,7 +11,6 @@ export default Component.extend({
   features: service(),
   store: service(),
   user: reads('auth.currentUser'),
-  trial: reads('user.trial'),
   isProVersion: reads('features.proVersion'),
   hasAdminPermissions: reads('model.permissions.admin'),
   isOrganization: reads('model.isOrganization'),
@@ -19,13 +18,13 @@ export default Component.extend({
   isUser: reads('user.isUser'),
   bannerText: 'travis.temporary-announcement-banner',
   bannerKey: 'travis.repository-security-banner',
-  isBuildLessThanEleven: lt('user.trial.buildsRemaining', 11),
-  isBuildFinished: equal('user.trial.buildsRemaining', 0),
+  isBuildLessThanEleven: lt('model.trial.buildsRemaining', 11),
+  isBuildFinished: equal('model.trial.buildsRemaining', 0),
   activeModel: null,
   model: reads('activeModel'),
   planShareReceiver: null,
 
-  paymentDetailsEditLockedTime: computed( 'model.allowance.paymentChangesBlockCaptcha', function () {
+  paymentDetailsEditLockedTime: computed('model.allowance.paymentChangesBlockCaptcha', function () {
     const allowance = this.model?.allowance;
     if (!allowance) return undefined;
 
@@ -45,7 +44,7 @@ export default Component.extend({
     return (this.isOrganizationAdmin || this.model.isUser) && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
   }),
 
-  isBalanceNegativeRepo: computed( 'repo.allowance', function () {
+  isBalanceNegativeRepo: computed('repo.allowance', function () {
     const repo = this.get('repo');
     if (!repo) {
       return;
@@ -79,15 +78,16 @@ export default Component.extend({
   isPlanShareAdminRevoked: computed('model.v2subscription', function () {
     let sharedPlanDonor = !!(this.model && this.model.v2subscription &&
                           (
-                            !this.model.v2subscription.sharedBy && this.model.v2subscription.planShares && this.model.v2subscription.planShares.length > 0 ||
+                            !this.model.v2subscription.sharedBy && this.model.v2subscription.planShares &&
+                            this.model.v2subscription.planShares.length > 0 ||
                             this.model.v2subscription.sharedBy == this.model.id)
-                          )
-    let adminRevoked = false
+    );
+    let adminRevoked = false;
     if (sharedPlanDonor && this.model.v2subscription.planShares) {
-      this.model.v2subscription.planShares.forEach( item => {
+      this.model.v2subscription.planShares.forEach(item => {
         adminRevoked |= !!item.admin_revoked;
         if (item.admin_revoked) {
-          this.user.accounts?.organizations?.forEach( (org) => {
+          this.user.accounts?.organizations?.forEach((org) => {
             if (org.id == item.receiver.id) {
               this.planShareReceiver = org.login || org.fullName;
             }
@@ -103,7 +103,8 @@ export default Component.extend({
   }),
 
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
-    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime', 'isBalanceNegativeRepo', 'isBalanceNegativeProfile', 'isPlanShareAdminRevoked', function () {
+    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime',
+    'isBalanceNegativeRepo', 'isBalanceNegativeProfile', 'isPlanShareAdminRevoked', function () {
       const banners = [];
 
       if (this.hasNoPlan) {
@@ -161,5 +162,5 @@ export default Component.extend({
         banners.push('PlanShareAdminRevokedBanner');
       }
       return banners.slice(0, 2);
-    }),
+    })
 });

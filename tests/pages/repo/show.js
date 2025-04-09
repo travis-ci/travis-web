@@ -15,6 +15,7 @@ export default create({
   },
 
   flash: text('[data-test-flash-message-text]'),
+  customFlash: text('[data-test-custom-flash-message-text]'),
   owner: text('[data-test-repo-header-title] a:first-of-type'),
   name: text('[data-test-repo-header-title] a:last-of-type'),
   gitHubLink: {
