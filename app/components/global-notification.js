@@ -17,6 +17,7 @@ export default Component.extend({
   isUser: reads('user.isUser'),
   bannerText: 'travis.temporary-announcement-banner',
   bannerKey: 'travis.repository-security-banner',
+  lsSeats: 'travis.enterprise.seats_msg_seen',
   isBuildLessThanEleven: lt('model.trial.buildsRemaining', 11),
   isBuildFinished: equal('model.trial.buildsRemaining', 0),
   activeModel: null,
@@ -130,7 +131,7 @@ export default Component.extend({
         banners.push('PaymentDetailsEditLock');
       }
 
-      if (this.features.get('enterpriseVersion')) {
+      if (this.features.get('enterpriseVersion') && !this.storage.getItem(this.lsSeats)) {
         banners.push('EnterpriseBanner');
       }
       return banners.slice(0, 2);
