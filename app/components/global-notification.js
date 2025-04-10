@@ -40,7 +40,7 @@ export default Component.extend({
       return;
     }
 
-    return (this.isOrganizationAdmin || this.model.isUser) && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
+    return allowance.subscription_type !== 3 && (this.isOrganizationAdmin || this.model.isUser) && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
   }),
 
   isBalanceNegativeRepo: computed('repo.allowance', function () {
@@ -49,7 +49,7 @@ export default Component.extend({
       return;
     }
 
-    return this.isProVersion && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt;
+    return this.user.allowance.subscriptionType !== 3 && this.isProVersion && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt;
   }),
 
   isTemporaryAnnouncementBannerEnabled: computed(function () {
