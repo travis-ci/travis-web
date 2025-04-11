@@ -43,7 +43,7 @@ export default Component.extend({
     return allowance.subscription_type !== 3 && (this.isOrganizationAdmin || this.model.isUser) && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
   }),
 
-  isBalanceNegativeRepo: computed(function () {
+  isBalanceNegativeRepo: computed('repo.allowance', function () {
     const repo = this.get('repo');
     if (!repo) {
       return;

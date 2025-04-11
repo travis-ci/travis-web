@@ -48,16 +48,12 @@ export default Component.extend({
     let almostExceeding = this.almostExceedingSeats;
     let exceeding = this.exceedingSeats;
     let closed = this.storage.getItem(this.lsSeats);
-    if (exceeding) {
+    if (!closed && (almostExceeding || exceeding)) {
       return true;
-    } else if (almostExceeding && !closed) {
-      return true;
-    } else {
+    }  else {
       return false;
     }
   }),
-
-  seatsClass: 'alert',
 
   actions: {
     closeSeatsBanner() {

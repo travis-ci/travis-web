@@ -1,4 +1,5 @@
-  <div class="enterprise-banner-seats {{this.seatsClass}}">
+{{#if this.showSeatsBanner}}
+  <div class="enterprise-banner-seats">
       {{#if this.exceedingSeats}}
       <Notification
         @type='global'
@@ -27,3 +28,4 @@
       </Notification>
       {{/if}}
   </div>
+{{/if}}
