@@ -92,7 +92,7 @@ export default Component.extend({
     'hasPlanCreatePermissions', 'model.isAssembla', 'model.isUser', 'model.v2subscription',
     'isOrganization', function () {
       const forOrganization = !this.isOrganization ||
-        ((this.model.hasSubscription || this.model.hasV2Subscription) && !!this.hasPlanViewPermissions);
+        ((this.model.hasSubscription || this.model.hasV2Subscription) && !!this.hasPlanViewPermissions) && !!this.hasPlanCreatePermissions;
 
       const isAssemblaUser = this.model.isUser && this.model.isAssembla;
       const isEnterprise = this.features.get('enterpriseVersion');
