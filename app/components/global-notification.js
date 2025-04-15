@@ -39,8 +39,7 @@ export default Component.extend({
     if (!allowance) {
       return;
     }
-
-    return allowance.subscription_type !== 3 && (this.isOrganizationAdmin || this.model.isUser)
+    return allowance.get('subscriptionType') !== 3 && (this.isOrganizationAdmin || this.model.isUser)
       && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
   }),
 
