@@ -79,9 +79,13 @@ export default Component.extend({
     return this.user && this.user.isUser && !this.storage.getItem(this.bannerKey);
   }),
 
+  showEnterpriseBanner: computed(function () {
+    return this.features.get('enterpriseVersion') && !this.storage.getItem(this.lsSeats);
+  }),
+
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
     'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime',
-    'isBalanceNegativeRepo', 'isBalanceNegativeProfile', function () {
+    'isBalanceNegativeRepo', 'isBalanceNegativeProfile', 'showEnterpriseBanner', function () {
       const banners = [];
 
       if (this.hasNoPlan) {
@@ -132,7 +136,7 @@ export default Component.extend({
         banners.push('PaymentDetailsEditLock');
       }
 
-      if (this.features.get('enterpriseVersion') && !this.storage.getItem(this.lsSeats)) {
+      if (this.showEnterpriseBanner) {
         banners.push('EnterpriseBanner');
       }
       return banners.slice(0, 2);
