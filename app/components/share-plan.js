@@ -9,6 +9,7 @@ export default Component.extend({
   router: service(),
   auth: service(),
   store: service(),
+  accounts: service(),
   owner: alias('account'),
   v2subscription: reads('owner.v2subscription'),
   isV2SubscriptionEmpty: empty('v2subscription'),
@@ -20,10 +21,12 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    let orgs = this.fetchPlanShares();
-    for (let org of orgs) {
-      org.set('selectedToSwitch', false);
-    }
+    this.accounts.fetchV2Subscriptions.perform().then(() => {
+      let orgs = this.fetchPlanShares();
+      for (let org of orgs) {
+        org.set('selectedToSwitch', false);
+      }
+    });
   },
 
   planShares: computed('v2subscription', 'user', 'owner', 'filter', 'allSelected', function () {
