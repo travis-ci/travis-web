@@ -33,6 +33,7 @@ module('Acceptance | profile/share plan', function (hooks) {
         plan_usage: true,
         plan_invoices: true,
         plan_view: true,
+        plan_create: true,
       }
     });
     this.organization.save();
