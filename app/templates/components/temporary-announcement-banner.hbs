@@ -5,5 +5,9 @@
     data-test-temporary-announcement='true'
   >
     {{this.message}}
+
+    <button type="button" class="no-button close" {{action "closeBanner"}}>
+      <SvgImage @name="flash-close" @class="icon" />
+    </button>
   </Notification>
 {{/if}}
