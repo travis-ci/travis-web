@@ -35,6 +35,7 @@ TravisPusher.prototype.init = function (config, apiService) {
   }
 
   let pusherConfig = {
+    enabledTransports: ['ws'],
     encrypted: config.encrypted,
     disableStats: true,
     wsHost: config.host,
