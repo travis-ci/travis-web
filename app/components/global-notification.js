@@ -48,8 +48,10 @@ export default Component.extend({
     if (!repo) {
       return;
     }
+    const allowance = repo.get('allowance');
 
-    return this.isProVersion && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt;
+    return allowance && allowance.get('subscriptionType') !== 3 && this.isProVersion && !repo.canOwnerBuild
+      && this.auth.currentUser && this.auth.currentUser.confirmedAt;
   }),
 
   isTemporaryAnnouncementBannerEnabled: computed(function () {
