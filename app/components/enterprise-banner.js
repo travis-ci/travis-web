@@ -49,7 +49,7 @@ export default Component.extend({
     let almostExceeding = this.almostExceedingSeats;
     let exceeding = this.exceedingSeats;
     let closed = this.storage.getItem(this.lsSeats);
-    if (!closed && (almostExceeding || exceeding)) {
+    if ((!closed && almostExceeding) || exceeding) {
       return true;
     }  else {
       return false;

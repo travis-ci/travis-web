@@ -79,7 +79,7 @@ export default Component.extend({
   }),
 
   showEnterpriseBanner: computed(function () {
-    return this.features.get('enterpriseVersion') && !this.storage.getItem(this.lsSeats);
+    return this.features.get('enterpriseVersion');
   }),
 
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
