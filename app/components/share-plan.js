@@ -45,6 +45,27 @@ export default Component.extend({
         result.push(org);
       }
     }
+    const shares = this.owner.v2subscription?.planShares;
+    if (shares) {
+      for (let planShare of shares.toArray()) {
+        let found = false;
+        for (let org of result) {
+          if (planShare.receiver.id == org.id) {
+            found = true;
+          }
+        }
+        if (!found) {
+          let org = {
+            id: planShare.receiver.id,
+            login: '[removed from organization]',
+            onSharedPlan: true,
+            planSharedFrom: this.getDate(planShare.created_at),
+            set: function (value) {}
+          };
+          result.push(org);
+        }
+      }
+    }
     return result;
   }),
 
