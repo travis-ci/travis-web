@@ -55,7 +55,7 @@ export default Component.extend({
           }
         }
         if (!found) {
-          let org = this.store.createRecord('organization',{
+          let org = this.store.createRecord('organization', {
             id: planShare.receiver.id,
             login: '[removed from organization]',
             onSharedPlan: true,

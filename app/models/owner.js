@@ -202,7 +202,7 @@ export default VcsEntity.extend({
       let subscriptions = this.v2subscriptions || [];
       let ownedSubscriptions = subscriptions.filterBy('owner.login', this.login);
 
-      if (!ownedSubscriptions || ownedSubscriptions.length == 0) {
+      if ((!ownedSubscriptions || ownedSubscriptions.length == 0) && this.isOrganization) {
         for (let s of subscriptions) {
           let shares =  s.planShares || [];
           for (let share of shares) {
