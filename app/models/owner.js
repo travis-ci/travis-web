@@ -204,15 +204,9 @@ export default VcsEntity.extend({
       if (this.isUser) {
       console.log(this.login);
       console.log(subscriptions);
-      let i = 0;
       for(let sub of ownedSubscriptions) {
         console.log("subowner");
         console.log(sub.owner.id);
-        if (sub.owner.id  != this.id) {
-          console.log("REM");
-          ownedSubscriptions.splice(i,1);
-        }
-        i++;
       }
       console.log(ownedSubscriptions);
       console.log(this.isOrganization);

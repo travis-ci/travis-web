@@ -21,12 +21,20 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
+    if(!this.account.v2subscriptions) {
     this.accounts.fetchV2Subscriptions.perform().then(() => {
       let orgs = this.fetchPlanShares();
       for (let org of orgs) {
         org.set('selectedToSwitch', false);
       }
     });
+    } else {
+      let orgs = this.fetchPlanShares();
+      for (let org of orgs) {
+        org.set('selectedToSwitch', false);
+      }
+    }
+    
   },
 
   planShares: computed('v2subscription', 'user', 'owner', 'filter', 'allSelected', function () {
