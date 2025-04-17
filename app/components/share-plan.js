@@ -55,12 +55,20 @@ export default Component.extend({
           }
         }
         if (!found) {
-          let org = this.store.createRecord('organization', {
+          let org = {
             id: planShare.receiver.id,
             login: '[removed from organization]',
             onSharedPlan: true,
             planSharedFrom: this.getDate(planShare.created_at),
-          });
+            set: function(key,value) {
+              switch(key) {
+              case "onSharedPlan":
+                self.onSharedPlan = value
+              default:
+                break
+              }
+            }
+          }
           result.push(org);
         }
       }
