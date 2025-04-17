@@ -82,6 +82,7 @@ export default Component.extend({
     for (let org of orgs) {
       if (org.id != this.owner.id || !this.isOrganization) {
         if (this.hasOwnPlan(org)) continue;
+        if (!org.permissions.plan_create) continue;
 
         let planShare = this.getShared(org.id);
         if (planShare != null) {
