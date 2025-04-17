@@ -45,7 +45,7 @@ export default Component.extend({
         result.push(org);
       }
     }
-    const shares = this.owner.v2subscription?.planShares;
+    const shares = this.v2subscription?.planShares;
     if (shares) {
       for (let planShare of shares.toArray()) {
         let found = false;

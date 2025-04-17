@@ -200,10 +200,20 @@ export default VcsEntity.extend({
     'login',
     function () {
       let subscriptions = this.v2subscriptions || [];
-      let ownedSubscriptions = subscriptions.filterBy('owner.id', this.id).filterBy('owner.type', this.type);
+      let ownedSubscriptions = subscriptions.filterBy('owner.login', this.login); //.filterBy('owner.id', this.id).filterBy('owner.type', this.type);
       if (this.isUser) {
       console.log(this.login);
       console.log(subscriptions);
+      let i = 0;
+      for(let sub of ownedSubscriptions) {
+        console.log("subowner");
+        console.log(sub.owner.id);
+        if (sub.owner.id  != this.id) {
+          console.log("REM");
+          ownedSubscriptions.splice(i,1);
+        }
+        i++;
+      }
       console.log(ownedSubscriptions);
       console.log(this.isOrganization);
       }
