@@ -68,6 +68,11 @@ export default Component.extend({
     return this.subscription.sharedBy && this.subscription.sharedBy != this.account.id;
   }),
   planDonor: computed('subscription.sharedBy', function () {
-    return this.subscription.sharedBy ? this.store.peekRecord('organization', this.subscription.sharedBy) : null;
+    let result = null;
+    if (this.subscription.planShares.length > 0) {
+      let owner = this.subscription.planShares[0].donor;
+      result = this.store.peekRecord(owner.type.toLowerCase(), owner.id);
+    }
+    return result;
   }),
 });
