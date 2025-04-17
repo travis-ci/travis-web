@@ -18,6 +18,7 @@ export default Component.extend({
   isUser: reads('user.isUser'),
   bannerText: 'travis.temporary-announcement-banner',
   bannerKey: 'travis.repository-security-banner',
+  lsSeats: 'travis.enterprise.seats_msg_seen',
   isBuildLessThanEleven: lt('model.trial.buildsRemaining', 11),
   isBuildFinished: equal('model.trial.buildsRemaining', 0),
   activeModel: null,
@@ -40,8 +41,8 @@ export default Component.extend({
     if (!allowance) {
       return;
     }
-
-    return (this.isOrganizationAdmin || this.model.isUser) && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
+    return allowance.get('subscriptionType') !== 3 && (this.isOrganizationAdmin || this.model.isUser)
+      && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
   }),
 
   isBalanceNegativeRepo: computed('repo.allowance', function () {
@@ -49,8 +50,10 @@ export default Component.extend({
     if (!repo) {
       return;
     }
+    const allowance = repo.get('allowance');
 
-    return this.isProVersion && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt;
+    return allowance && allowance.get('subscriptionType') !== 3 && this.isProVersion && !repo.canOwnerBuild
+      && this.auth.currentUser && this.auth.currentUser.confirmedAt;
   }),
 
   isTemporaryAnnouncementBannerEnabled: computed(function () {
@@ -102,9 +105,13 @@ export default Component.extend({
     return this.user && this.user.isUser && !this.storage.getItem(this.bannerKey);
   }),
 
+  showEnterpriseBanner: computed(function () {
+    return this.features.get('enterpriseVersion');
+  }),
+
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
     'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime',
-    'isBalanceNegativeRepo', 'isBalanceNegativeProfile', 'isPlanShareAdminRevoked', function () {
+    'isBalanceNegativeRepo', 'isBalanceNegativeProfile', 'isPlanShareAdminRevoked', 'showEnterpriseBanner',  function () {
       const banners = [];
 
       if (this.hasNoPlan) {
@@ -155,7 +162,7 @@ export default Component.extend({
         banners.push('PaymentDetailsEditLock');
       }
 
-      if (this.features.get('enterpriseVersion')) {
+      if (this.showEnterpriseBanner) {
         banners.push('EnterpriseBanner');
       }
       if (this.isPlanShareAdminRevoked) {

@@ -113,7 +113,7 @@ export default Service.extend({
   clearFlashMessages() {
     Object.keys(this.storage)
       .filter(key => key.startsWith('pending-user-licenses') || key.startsWith('scheduled-plan-change')
-        || key.startsWith('read-only-mode') || key.startsWith('users-limit-exceeded'))
+        || key.startsWith('read-only-mode') || key.startsWith('users-limit-exceeded') || key.startsWith('travis.enterprise.seats_msg_seen'))
       .forEach(key => this.removeItem(key));
   },
 

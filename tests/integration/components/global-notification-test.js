@@ -102,6 +102,13 @@ module('Integration | Component | global notification', function (hooks) {
   test('renders global notification with enterprise banner', async function (assert) {
     assert.expect(1);
     enableFeature('enterpriseVersion');
+    this.server.get('/v3/enterprise_license', (schema, response) => ({
+      'license_id': 'ad12345',
+      'seats': '30',
+      'active_users': '47',
+      'license_type': 'paid',
+      'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 8).toISOString()
+    }));
 
     await render(hbs`{{global-notification}}`);
 
