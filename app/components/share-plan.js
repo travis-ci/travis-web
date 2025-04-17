@@ -121,7 +121,7 @@ export default Component.extend({
   },
 
   switchShare(org, value) {
-    if (value && org.permissions.plan_create) {
+    if (value) {
       org.set('onSharedPlan', true);
       org.set('planSharedFrom', this.getDate());
       this.v2subscription.share.perform(org.id);
@@ -136,7 +136,7 @@ export default Component.extend({
     let orgs = this.fetchPlanShares();
     let ids = [];
     for (let org of orgs) {
-      if (org.selectedToSwitch && org.permissions.plan_create) {
+      if (org.selectedToSwitch) {
         ids.push(org.id);
         org.set('onSharedPlan', true);
         org.set('planSharedFrom', this.getDate());
