@@ -200,11 +200,13 @@ export default VcsEntity.extend({
     'login',
     function () {
       let subscriptions = this.v2subscriptions || [];
-      let ownedSubscriptions = subscriptions.filterBy('owner.login', this.login);
+      let ownedSubscriptions = subscriptions.filterBy('owner.id', this.id).filterBy('owner.type', this.type);
+      if (this.isUser) {
       console.log(this.login);
       console.log(subscriptions);
       console.log(ownedSubscriptions);
       console.log(this.isOrganization);
+      }
       if ((!ownedSubscriptions || ownedSubscriptions.length == 0) && this.isOrganization) {
         for (let s of subscriptions) {
           let shares =  s.planShares || [];
