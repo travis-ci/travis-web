@@ -81,7 +81,7 @@ export default Component.extend({
       }
       if (allowance.get('pendingUserLicenses')) {
         this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'warning');
-      } else if (!allowance.get('userUsage')) {
+      } else if (!allowance.get('userUsage')  && allowance.get('subscriptionType') !== 3) {
         this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'warning');
       }
     } else if (this.userRoMode && ownerRoMode) {
