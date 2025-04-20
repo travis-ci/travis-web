@@ -60,11 +60,11 @@ export default Component.extend({
     return isBannerEnabled && isNewBannerMessage;
   }),
 
-  hasNoPlan: computed('user.allowance.subscriptionType', 'user.hasV2Subscription', 'user.subscription', function () {
-    return !this.get('user.hasV2Subscription')
-              && this.get('user.subscription') === undefined
-              && this.get('user.allowance.subscriptionType') === 3
-              && !(this.get('user.isUser') && this.get('user.isAssembla'));
+  hasNoPlan: computed('model.allowance.subscriptionType', 'model.hasV2Subscription', 'model.subscription', function () {
+    return !this.get('model.hasV2Subscription')
+              && this.get('model.subscription') === undefined
+              && this.get('model.allowance.subscriptionType') === 3
+              && !(this.get('model.isUser') && this.get('model.isAssembla'));
   }),
 
   isUnconfirmed: computed('user.confirmedAt', function () {
