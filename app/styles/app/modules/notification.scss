@@ -17,6 +17,15 @@
   font-size: 14px;
 }
 
+.notification-error {
+  background-color: #fce8e2;
+  padding: 10px 16px 10px 10px;
+  color: #a7191d;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
 .global-notification-container {
   height: auto;
 }
@@ -49,15 +58,6 @@
   margin: 0 0 0;
   padding: 10px 16px 10px 10px;
   color: #222222;
-  font-size: 14px;
-}
-
-.notification-error {
-  background-color: #fce8e2;
-  padding: 10px 16px 10px 10px;
-  color: #222222;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
   font-size: 14px;
 }
 
