@@ -41,24 +41,14 @@ COPY . /app
 
 RUN --mount=type=secret,id=GITHUB_PERSONAL_TOKEN export GITHUB_PERSONAL_TOKEN=$(cat /run/secrets/GITHUB_PERSONAL_TOKEN) && git config --global url."https://$GITHUB_PERSONAL_TOKEN@github.com/".insteadOf ssh://git@github.com
 
-RUN npm ci
-
-RUN \
-  --mount=type=secret,id=GOOGLE_RECAPTCHA_SITE_KEY \
-  --mount=type=secret,id=GOOGLE_ANALYTICS_ID \
-  --mount=type=secret,id=GOOGLE_TAGS_CONTAINER_ID \
-  --mount=type=secret,id=GOOGLE_TAGS_PARAMS \
-  sh -c ' \
+RUN (\
+  npm ci; \
   if test $AIDA_URL; then \
    curl -o /app/node_modules/asktravis/dist/aida.js $AIDA_URL; \
    curl -o /app/node_modules/asktravis/dist/aida.js.map $AIDA_URL.map || true; \
   fi; \
-  export GOOGLE_RECAPTCHA_SITE_KEY=$(cat /run/secrets/GOOGLE_RECAPTCHA_SITE_KEY) && \
-  export GOOGLE_ANALYTICS_ID=$(cat /run/secrets/GOOGLE_ANALYTICS_ID) && \
-  export GOOGLE_TAGS_CONTAINER_ID=$(cat /run/secrets/GOOGLE_TAGS_CONTAINER_ID) && \
-  export GOOGLE_TAGS_PARAMS=$(cat /run/secrets/GOOGLE_TAGS_PARAMS) && \
-  ember build --environment=production'
-
+  ember build --environment=production; \
+)
 
 RUN cp -a public/* dist/
 
