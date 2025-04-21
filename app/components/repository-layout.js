@@ -73,7 +73,8 @@ export default Component.extend({
     const allowance = repo.get('allowance');
     const ownerRoMode = repo.get('owner').ro_mode || false;
 
-    if (this.isProVersion && allowance && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
+    if (this.isProVersion && allowance && !repo.canOwnerBuild && this.auth.currentUser
+        && this.auth.currentUser.confirmedAt && allowance.get('subscriptionType') !== 3) {
       const isUser = repo.ownerType === 'user';
       if (allowance.get('pendingUserLicenses')) {
         this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'pending-user-licenses');
