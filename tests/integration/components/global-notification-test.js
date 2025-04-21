@@ -7,6 +7,7 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import Service from '@ember/service';
 import config from 'travis/config/environment';
+import EmberObject from '@ember/object';
 
 module('Integration | Component | global notification', function (hooks) {
   setupRenderingTest(hooks);
@@ -52,16 +53,16 @@ module('Integration | Component | global notification', function (hooks) {
   test('renders global notification with no plan banner', async function (assert) {
     assert.expect(2);
 
-    let user = {
+    let user = EmberObject.create({
       hasV2Subscription: false,
       subscription: undefined,
-      allowance: {
+      allowance: EmberObject.create({
         subscriptionType: 3
-      },
+      }),
       vcsType: 'Organization'
-    };
-    this.set('user', user);
-    await render(hbs`{{global-notification user=this.user}}`);
+    });
+    this.set('activeModel', user);
+    await render(hbs`{{global-notification activeModel=this.activeModel}}`);
 
     settled().then(() => {
       assert.dom('.global-notification-warning').exists('page renders');
