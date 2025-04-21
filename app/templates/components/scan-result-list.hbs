@@ -30,8 +30,11 @@
       {{/if}}
     </div>
 {{else}}
-  <p class="notice-banner--red">
+  <Notification
+    @type='alert'
+    @severity='error'
+  >
     We’re sorry, but you have insufficient access rights to view this information.
     Please contact your repository administrators. <ExternalLinkTo href="https://docs.travis-ci.com/">Learn more</ExternalLinkTo>
-  </p>
+  </Notification>
 {{/if}}

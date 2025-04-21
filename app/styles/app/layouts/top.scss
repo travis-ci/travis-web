@@ -49,10 +49,10 @@
 }
 
 .top {
-  height: 71px;
+  height: auto;
   border-bottom: solid 1px #eaeaea;
   background-color: #fff;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;

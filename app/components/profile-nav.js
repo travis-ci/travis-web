@@ -122,36 +122,23 @@ export default Component.extend({
     const allowance = this.model.allowance;
 
     if (this.userRoMode) {
-      this.flashes.custom('flashes/read-only-mode', {}, 'warning');
+      this.flashes.custom('flashes/read-only-mode', {}, 'read-only-mode');
     }
 
     if (!allowance) {
       return;
     }
 
-    if (allowance.get('paymentChangesBlockCredit') || allowance.get('paymentChangesBlockCaptcha')) {
-      let time;
-      if (allowance.get('paymentChangesBlockCaptcha')) time = allowance.get('captchaBlockDuration');
-      if (allowance.get('paymentChangesBlockCredit')) time = allowance.get('creditCardBlockDuration');
-      this.flashes.custom('flashes/payment-details-edit-lock', { owner: this.model, isUser: this.model.isUser, time: time}, 'warning');
-    }
-
     if (allowance.get('subscriptionType') !== 2) {
       return;
     }
 
-    if (!allowance.get('privateRepos') && !allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
-      this.flashes.custom('flashes/negative-balance-private-and-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('privateRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
-      this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
-      this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    }
-
     if (allowance.get('pendingUserLicenses')) {
-      this.flashes.custom('flashes/pending-user-licenses', { owner: this.model, isUser: this.model.isUser }, 'warning');
+      this.flashes.custom('flashes/pending-user-licenses',
+        { owner: this.model, isUser: this.model.isUser }, 'pending-user-licenses');
     } else if (!this.usersUsage) {
-      this.flashes.custom('flashes/users-limit-exceeded', { owner: this.model, isUser: this.model.isUser }, 'warning');
+      this.flashes.custom('flashes/users-limit-exceeded',
+        { owner: this.model, isUser: this.model.isUser }, 'users-limit-exceeded');
     }
   },
 
