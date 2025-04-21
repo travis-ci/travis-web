@@ -1,28 +1,31 @@
-{{#if this.showSeatsBanner}}
-  <div class="enterprise-banner enterprise-banner-seats {{this.seatsClass}}">
-    <div class="inner">
+{{#if this.showEnterpriseBanner}}
+  <div class="enterprise-banner-seats">
       {{#if this.exceedingSeats}}
-        <p>
-          <SvgImage @name="icon-flag" @class="icon" />
+      <Notification
+        @type='global'
+        @severity='error'
+      >
           You’ve exceeded the <strong>maximum seats</strong> that your license permits, please contact
           <a href="mailto:enterprise@travis-ci.com">
             enterprise@travis-ci.com
           </a>
           if you need more seats.
-        </p>
+      </Notification>
       {{else if this.almostExceedingSeats}}
-        <p>
-          <SvgImage @name="icon-flag" @class="icon" />
+      <Notification
+        @type='global'
+        @severity='warning'
+      >
           You’re approaching the <strong>maximum seats</strong> that your license permits, please contact
           <a href="mailto:enterprise@travis-ci.com">
             enterprise@travis-ci.com
           </a>
           if you need more seats.
-          <button class="close-btn" {{action "closeSeatsBanner"}}>
-            <SvgImage @name="flash-close" @class="close-icon" />
+
+          <button type="button" class="no-button close" {{action "closeSeatsBanner"}}>
+            <SvgImage @name="flash-close" @class="icon" />
           </button>
-        </p>
+      </Notification>
       {{/if}}
-    </div>
   </div>
 {{/if}}

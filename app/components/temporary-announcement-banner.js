@@ -17,8 +17,10 @@ export default Component.extend({
     this.set('message', config.tempBanner.tempBannerMessage || '');
   },
 
-  closeBanner() {
-    this.storage.setItem(this.bannerText, config.tempBanner.tempBannerMessage);
-    this.set('enabled', false);
+  actions: {
+    closeBanner() {
+      this.storage.setItem(this.bannerText, config.tempBanner.tempBannerMessage);
+      this.set('enabled', false);
+    },
   }
 });

@@ -4,30 +4,16 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { assert } from '@ember/debug';
 
-const messageTypeToIcon = {
-  notice: 'icon-flag',
-  success: 'flash-success',
-  'success-with-close': 'flash-success',
-  error: 'flash-error'
-};
-
 const messageTypeToPreamble = {
-  notice: 'Heads up!',
+  warning: 'Heads up!',
   success: 'Hooray!',
-  'success-with-close': 'Hooray!',
   error: 'Oh no!'
-};
-
-const messageTypeToCloseButton = {
-  notice: true,
-  success: false,
-  'success-with-close': true,
-  error: true
 };
 
 export default Service.extend({
   auth: service(),
   store: service(),
+  storage: service(),
 
   currentUser: alias('auth.currentUser'),
 
@@ -63,13 +49,11 @@ export default Service.extend({
     flashes.forEach(flash => {
       const type = Object.keys(flash)[0];
       const { message, preamble = messageTypeToPreamble[type], aboveOverlay } = flash[type];
-      const icon = messageTypeToIcon[type];
-      const closeButton = messageTypeToCloseButton[type];
-      const item = { type, message, icon, preamble, closeButton, aboveOverlay };
+      const closeButton = true;
+      const item = { type, message, preamble, closeButton, aboveOverlay };
 
       this.flashes.unshiftObject(item);
-
-      if (!closeButton) this.removeFlash(item);
+      this.removeFlash(item);
     });
   },
 
@@ -82,7 +66,7 @@ export default Service.extend({
       });
       // Fadeout is currently done separatly with css, and completes at 7s. Keeping the message around longer than that can result in weird situations
       // where reloading a page can result in a message showing again that you thought was gone.
-    }, 7000);
+    }, 15000);
   },
 
   close(msg) {
@@ -94,9 +78,9 @@ export default Service.extend({
   },
 
   display(type, message, preamble, aboveOverlay = false) {
-    if (!['error', 'notice', 'success', 'success-with-close'].includes(type)) {
+    if (!['error', 'warning', 'success'].includes(type)) {
       // eslint-disable-next-line
-      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
+      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'warning' and 'success' types");
     }
 
     this.loadFlashes([{ [type]: { message, preamble, aboveOverlay } }]);
@@ -110,19 +94,20 @@ export default Service.extend({
     this.display('error', message, preamble, aboveOverlay);
   },
 
-  notice(message, preamble = messageTypeToPreamble['notice'], aboveOverlay = false) {
-    this.display('notice', message, preamble, aboveOverlay);
-  },
-
-  successWithClose(message, preamble = messageTypeToPreamble['success-with-close'], aboveOverlay = false) {
-    this.display('success-with-close', message, preamble, aboveOverlay);
+  warning(message, preamble = messageTypeToPreamble['warning'], aboveOverlay = false) {
+    this.display('warning', message, preamble, aboveOverlay);
   },
 
   custom(component, data = {}, className = null) {
     assert('Component name is mandatory for custom flashes', !!component);
-    this.removeCustomsByClassName(className);
+
     const flash = { component, data, type: 'custom', className: className };
-    this.flashes.unshiftObject(flash);
+
+    if (!this.storage.getItem(`${className}_${this.currentUser.id}`)) {
+      this.flashes.unshiftObject(flash);
+      this.removeFlash(flash);
+      this.storage.setItem(`${className}_${this.currentUser.id}`, true);
+    }
   },
 
   removeCustomsByClassName(className) {

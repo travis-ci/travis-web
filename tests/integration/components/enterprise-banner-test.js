@@ -16,13 +16,12 @@ module('Integration | Component | enterprise banner', function (hooks) {
       'license_type': 'paid',
       'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 8).toISOString()
     }));
-    assert.expect(2);
+    assert.expect(1);
 
     await render(hbs`{{enterprise-banner}}`);
 
     settled().then(() => {
       assert.dom('.enterprise-banner-seats').hasText(/You’re approaching the maximum seats that your license permits/);
-      assert.dom('.enterprise-banner-seats').hasClass('alert');
     });
   });
 
@@ -34,13 +33,12 @@ module('Integration | Component | enterprise banner', function (hooks) {
       'license_type': 'paid',
       'expiration_time': new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 8).toISOString()
     }));
-    assert.expect(2);
+    assert.expect(1);
 
     await render(hbs`{{enterprise-banner}}`);
 
     settled().then(() => {
       assert.dom('.enterprise-banner-seats').hasText(/You’ve exceeded the maximum seats that your license permits/);
-      assert.dom('.enterprise-banner-seats').hasClass('alert');
     });
   });
 });

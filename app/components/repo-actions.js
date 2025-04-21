@@ -141,7 +141,7 @@ export default Component.extend({
     yield eventually(this.item, (record) => {
       record.debug().then(() => {
         this.flashes
-          .notice(`The ${type} was successfully restarted in debug mode
+          .warning(`The ${type} was successfully restarted in debug mode
             but make sure to watch the log for a host to connect to.`);
       }, () => {
         this.flashes
