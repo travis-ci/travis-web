@@ -1,6 +1,6 @@
 {{#if this.auth.signedIn}}
   <div class="wrapper {{if this.auth.signedOut 'centered'}}">
-    <TopBar />
+    <TopBar @repo={{this.repo}} />
     <FlashDisplay />
     <div class="wrapper-main">
       <div id="main" role="main" class="main">

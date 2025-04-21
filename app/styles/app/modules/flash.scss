@@ -5,7 +5,7 @@
   height: 0;
 
   li {
-    position: fixed;
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -13,16 +13,14 @@
     width: 100%;
   }
 
-  li.notice, li.success, li.error, li.warning, li.success-with-close {
+  li.success, li.error, li.warning {
     opacity: 1;
 
     @include z-index(flashes);
 
-    height: $top-height;
     @media #{$small-only} {
       height: $top-height-mobile;
     }
-    top: 71px;
 
     &.fixed {
       position: fixed;
@@ -40,8 +38,9 @@
 
     .icon {
       margin-right: 0;
-      height: 24px;
-      width: 22px;
+      height: 33px;
+      width: 31px;
+      color: #222;
     }
   }
 
@@ -49,22 +48,7 @@
     color: $turf-green;
     background-color: $seed-green;
 
-    @include colorSVGFill($turf-green);
-
-    animation: fadeFlashOut 7s 1 ease forwards;
-
-    .flash-message svg {
-      height: 38px;
-      width: 32px;
-      margin-top: -5px;
-    }
-  }
-
-  .success-with-close {
-    color: $turf-green;
-    background-color: $seed-green;
-
-    @include colorSVGFill($turf-green);
+    @include colorSVGFill($color-bg-log-fold);
 
     .flash-message svg {
       height: 38px;
@@ -77,7 +61,7 @@
     color: $brick-red;
     background-color: $quartz-red;
 
-    @include colorSVGFill($brick-red);
+    @include colorSVGFill($color-bg-log-fold);
 
     .flash-message svg {
       height: 34px;
@@ -86,11 +70,11 @@
     }
   }
 
-  .notice {
+  .warning {
     color: $dozer-yellow;
     background-color: $haze-yellow;
 
-    @include colorSVGFill($dozer-yellow);
+    @include colorSVGFill($color-bg-log-fold);
 
     .flash-message svg {
       height: 19px;
@@ -101,11 +85,6 @@
 
       stroke-width: 1.5px;
     }
-  }
-
-  .warning {
-    color: $brick-red;
-    background-color: $quartz-red;
   }
 }
 

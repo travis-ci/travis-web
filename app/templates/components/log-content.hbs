@@ -125,10 +125,13 @@
       </div>
     </div>
     {{#if this.limited}}
-      <p class="warning notice-banner--red">
+      <Notification
+        @type='alert'
+        @severity='warning'
+      >
         This log is too long to be displayed. Please reduce the verbosity of your build or download the
         <ExternalLinkTo @href={{this.plainTextLogUrl}}>raw log</ExternalLinkTo>.
-      </p>
+      </Notification>
     {{/if}}
   </div>
 </section>

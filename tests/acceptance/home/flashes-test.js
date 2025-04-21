@@ -17,11 +17,11 @@ module('Acceptance | home/flashes', function (hooks) {
   });
 
   test('the flashes service permits overriding the preamble', async function (assert) {
-    this.owner.lookup('service:flashes').notice('A notice!', 'Custom preamble');
+    this.owner.lookup('service:flashes').warning('A notice!', 'Custom preamble');
 
     await visit('/');
 
-    assert.dom('[data-test-components-flash-item]').hasClass('notice');
+    assert.dom('[data-test-components-flash-item]').hasClass('warning');
     assert.dom('[data-test-flash-message-text]').hasText('A notice!');
     assert.dom('[data-test-flash-message-preamble]').hasText('Custom preamble');
   });

@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 import { and } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   api: service(),
@@ -48,21 +49,30 @@ export default Component.extend({
     let almostExceeding = this.almostExceedingSeats;
     let exceeding = this.exceedingSeats;
     let closed = this.storage.getItem(this.lsSeats);
-    if (exceeding) {
+    if ((!closed && almostExceeding) || exceeding) {
       return true;
-    } else if (almostExceeding && !closed) {
-      return true;
-    } else {
+    }  else {
       return false;
     }
   }),
 
-  seatsClass: 'alert',
+  showEnterpriseBanner: computed('showSeatsBanner', {
+    get() {
+      if (isPresent(this._showEnterpriseBanner)) {
+        return this._showEnterpriseBanner;
+      }
+      return this.showSeatsBanner;
+    },
+    set(key, value) {
+      this.set('_showEnterpriseBanner', value);
+      return this._showEnterpriseBanner;
+    }
+  }),
 
   actions: {
     closeSeatsBanner() {
-      this.storage.setItem(this.lsSeats, true);
-      this.set('showSeatsBanner', false);
+      this.storage.setItem(this.lsSeats, 'true');
+      this.set('showEnterpriseBanner', false);
     }
   }
 });
