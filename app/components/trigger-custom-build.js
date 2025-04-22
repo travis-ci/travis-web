@@ -100,7 +100,7 @@ export default Component.extend(BranchSearching, {
   showProcessingRequest(requestId) {
     const preamble = 'Hold tight!';
     const notice = `You successfully triggered a build for ${this.repo.slug}. It might take a moment to show up though.`;
-    this.flashes.notice(notice, preamble);
+    this.flashes.warning(notice, preamble);
     this.onClose();
     return this.showRequest(requestId);
   },

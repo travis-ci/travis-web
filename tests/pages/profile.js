@@ -67,7 +67,7 @@ export default create({
   name: text('.profile-header h1'),
   nameBadge: { scope: '.profile-header .badge' },
   login: text('.login'),
-  flash: text('[data-test-components-flash-item]'),
+  flash: text('[data-test-flash-message-text]'),
 
   avatar: {
     scope: '.profile-header .avatar-wrapper',
@@ -707,12 +707,16 @@ export default create({
       }
     },
 
+    trialBanner: {
+      scope: '.top',
+      buildsRunningOutBanner: text('[data-test-trial-running-out]'),
+      buildsRanOutBanner: text('[data-test-trial-ran-out]')
+    },
+
     trial: {
       scope: '.billing',
       bannerInformation: text('[data-test-help-text]'),
       overviewHeading: text('[data-test-overview-heading]'),
-      buildsRunningOutBanner: text('[data-test-trial-running-out]'),
-      buildsRanOutBanner: text('[data-test-trial-ran-out]'),
       subtext: text('[data-test-trial-subtext]'),
       name: {
         scope: '[data-test-trial-message]',

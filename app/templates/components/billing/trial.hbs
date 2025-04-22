@@ -11,7 +11,7 @@
     <p data-test-no-permission-message>
       You don't have permission to create a subscription
     </p>
-  {{/if}}  
+  {{/if}}
 {{else}}
 <div class="billing-trial">
   <span class="notice-banner--white flex flex--v-center" data-test-help-text='true'>
@@ -74,15 +74,7 @@
           </div>
         </div>
       </div>
-      {{#if this.showBuildRunningOutBanner}}
-        <span class="notice-banner--yellow" data-test-trial-running-out='true'>
-          Your trial is almost finished. Subscribe to a plan before your free builds run out!
-        </span>
-      {{else if this.isBuildFinished}}
-        <span class="notice-banner--yellow trial-ended" data-test-trial-ran-out='true'>
-          Your trial has ended. Subscribe to a plan to continue building your project!
-        </span>
-      {{/if}}
+
     </div>
     <hr />
   </div>
