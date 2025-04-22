@@ -27,9 +27,9 @@ export default RavenLogger.extend({
     // eslint-disable-next-line
     console.log('Caught an exception:', e);
 
-    if (!this.ignoreError(e, forceSampling)) {
-      this.captureException(e);
-    }
+    // if (!this.ignoreError(e, forceSampling)) {
+    //   this.captureException(e);
+    // }
   },
 
   captureMessage(/* message */) {
@@ -41,16 +41,7 @@ export default RavenLogger.extend({
   },
 
   ignoreError(error, forceSampling = false) {
-    if (!this.shouldReportError(forceSampling)) {
-      return true;
-    } else {
-      const message = error.message;
-      if (message) {
-        return this.benignErrors.some(error => message.includes(error));
-      } else {
-        return false;
-      }
-    }
+    return true;
   },
 
   callRaven(/* methodName, ...optional */) {
@@ -62,13 +53,6 @@ export default RavenLogger.extend({
     // frontend errors. This can get *very* noisy otherwise.
     // console.log("enterpriseVersion", this.get('features.enterpriseVersion'));
     return false;
-    if (this.get('features.enterpriseVersion') || config.sentry.development) {
-      return false;
-    } else if (forceSampling) {
-      return true;
-    } else {
-      return this.sampleError();
-    }
   },
 
   sampleError() {
