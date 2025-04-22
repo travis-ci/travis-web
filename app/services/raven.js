@@ -60,7 +60,8 @@ export default RavenLogger.extend({
   shouldReportError(forceSampling) {
     // Sentry recommends only reporting a small subset of the actual
     // frontend errors. This can get *very* noisy otherwise.
-    console.log("enterpriseVersion", this.get('features.enterpriseVersion'));
+    // console.log("enterpriseVersion", this.get('features.enterpriseVersion'));
+    return false;
     if (this.get('features.enterpriseVersion') || config.sentry.development) {
       return false;
     } else if (forceSampling) {
