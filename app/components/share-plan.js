@@ -72,7 +72,7 @@ export default Component.extend({
 
   getDate(val = null) {
     const date = val == null ? new Date() : new Date(val);
-    return date.toLocaleDateString();
+    return date.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
   },
 
   hasOwnPlan(org) {
