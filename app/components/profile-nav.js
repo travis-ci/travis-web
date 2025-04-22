@@ -106,15 +106,19 @@ export default Component.extend({
           this.model.v2subscription.current_trial || (this.model.v2subscription.plan && this.model.v2subscription.plan.isFree)
         )
       );
-      return this.model.isPlanShareEnabled && !isEnterprise && !isAssemblaUser &&
+      return this.model.isPlanShareEnabled && this.model.hasV2Subscription && !isEnterprise && !isAssemblaUser &&
         !!billingEndpoint && !!forOrganization && !isOnSharedPlan && !isOnTrialOrFree;
     }),
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
     'hasBillingViewPermissions', 'hasInvoicesViewPermissions', 'model.isNotGithubOrManual', function () {
       if (this.isOrganization) {
         const forOrganization = !this.isOrganization || this.hasBillingViewPermissions || this.hasInvoicesViewPermissions;
+        const isOnSharedPlan = !!(
+          this.model.hasV2Subscription &&
+                                (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id)
+        );
 
-        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin || forOrganization);
+        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin || forOrganization) && !isOnSharedPlan;
       } else {
         return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
       }

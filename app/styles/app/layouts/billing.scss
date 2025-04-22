@@ -1550,6 +1550,51 @@
   }
 }
 
+.plan-share-button {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid $pebble-grey;
+  font-size: $font-size-s;
+  color: $asphalt-grey;
+  padding: 0.3rem 0.4rem;
+  margin: 0.3rem 0;
+  margin-left: auto;
+  transform: translateY(1px);
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    color: $cement-grey;
+
+    .icon {
+      @include colorSVG(white);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    color: inherit;
+    background: inherit;
+    cursor: default;
+
+    &:hover {
+      color: inherit;
+      background: inherit;
+
+      .icon {
+        @include colorSVG($cement-grey);
+      }
+    }
+  }
+}
+
+.plan-share-button .icon-disabled {
+  @include colorSVG(rgba(black, 0.2));
+}
 
 .plan-share-list {
   float: right;

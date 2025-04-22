@@ -232,7 +232,7 @@ export default Model.extend({
 
   delete_share: task(function* (receiverId) {
     const data = { receiver_id: receiverId };
-    yield this.api.post(`/v2_subscription/${this.id}/delete_share`, { data });
+    yield this.api.delete(`/v2_subscription/${this.id}/share`, { data });
     yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
