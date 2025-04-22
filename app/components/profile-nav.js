@@ -98,23 +98,26 @@ export default Component.extend({
       const isEnterprise = this.features.get('enterpriseVersion');
       const isOnSharedPlan = !!(
         this.model.hasV2Subscription &&
-                                (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id)
+        (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id)
       );
-      const isOnTrialOrFree = !!(
-        this.model.hasV2Subscription &&
-        (
-          this.model.v2subscription.current_trial || (this.model.v2subscription.plan && this.model.v2subscription.plan.isFree)
-        )
-      );
+
       return this.model.isPlanShareEnabled && this.model.hasV2Subscription && !isEnterprise && !isAssemblaUser &&
-        !!billingEndpoint && !!forOrganization && !isOnSharedPlan && !isOnTrialOrFree;
+        !!billingEndpoint && !!forOrganization && !isOnSharedPlan;
     }),
 
-  isSharePlanTabDisabled: computed('model.v2subscription.isCanceled', 'model.v2subscription.isExpired', function () {
-    const isCanceled = this.model.v2subscription?.isCanceled;
-    const isExpired = this.model.v2subscription?.isExpired;
-    return isCanceled || isExpired;
-  }),
+  isSharePlanTabDisabled: computed('model.v2subscription.isCanceled', 'model.v2subscription.isExpired',
+    'model.v2subscription.current_trial', 'model.v2subscription.plan.isFree', function () {
+      const isCanceled = this.model.v2subscription?.isCanceled;
+      const isExpired = this.model.v2subscription?.isExpired;
+      const isOnTrialOrFree = !!(
+        this.model.v2subscription &&
+        (
+          this.model.v2subscription.current_trial ||
+          (this.model.v2subscription.plan && this.model.v2subscription.plan.isFree)
+        )
+      );
+      return isCanceled || isExpired || isOnTrialOrFree;
+    }),
 
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
     'hasBillingViewPermissions', 'hasInvoicesViewPermissions', 'model.isNotGithubOrManual', function () {
