@@ -1554,6 +1554,7 @@
   display: flex;
   align-items: center;
   background-color: white;
+  border: 1px solid $pebble-grey;
   font-size: $font-size-s;
   color: $asphalt-grey;
   padding: 0.3rem 0.4rem;
@@ -1588,6 +1589,23 @@
         @include colorSVG($cement-grey);
       }
     }
+  }
+}
+
+.plan-share-tab-button {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: $asphalt-grey;
+  padding: 0.3rem 0.4rem;
+  margin: 0.3rem 0;
+  margin-left: auto;
+
+  &.disabled {
+    opacity: 0.4;
+    color: inherit;
+    background: inherit;
+    cursor: default;
   }
 }
 
