@@ -302,7 +302,7 @@ module.exports = function (environment) {
   }
 
   ENV.sentry = {
-    dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
+    dsn: null,
     whitelistUrls: [
       /https:\/\/cdn\.travis-ci\.(org|com)\/assets\/(vendor|travis)-.+.js/,
     ],
