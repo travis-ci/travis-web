@@ -109,6 +109,13 @@ export default Component.extend({
       return this.model.isPlanShareEnabled && this.model.hasV2Subscription && !isEnterprise && !isAssemblaUser &&
         !!billingEndpoint && !!forOrganization && !isOnSharedPlan && !isOnTrialOrFree;
     }),
+
+  isSharePlanTabDisabled: computed('model.v2subscription.isCanceled', 'model.v2subscription.isExpired', function () {
+    const isCanceled = this.model.v2subscription?.isCanceled;
+    const isExpired = this.model.v2subscription?.isExpired;
+    return isCanceled || isExpired;
+  }),
+
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
     'hasBillingViewPermissions', 'hasInvoicesViewPermissions', 'model.isNotGithubOrManual', function () {
       if (this.isOrganization) {
