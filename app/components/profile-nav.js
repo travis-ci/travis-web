@@ -106,7 +106,7 @@ export default Component.extend({
     }),
 
   isSharePlanTabDisabled: computed('model.v2subscription.isCanceled', 'model.v2subscription.isExpired',
-    'model.v2subscription.current_trial', 'model.v2subscription.plan.isFree', function () {
+    'model.v2subscription.current_trial', 'model.v2subscription.plan.isFree', 'model.isUser', 'model.isOrganzaition', function () {
       const isCanceled = this.model.v2subscription?.isCanceled;
       const isExpired = this.model.v2subscription?.isExpired;
       const isOnTrialOrFree = !!(
