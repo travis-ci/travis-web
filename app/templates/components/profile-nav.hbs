@@ -204,9 +204,16 @@
           {{/if}}
           {{#if this.showSharePlanTab}}
             <li data-test-share-plan-tab>
-              <LinkTo @route="organization.share_plan" @model={{this.model}}>
-                Share Plan
-              </LinkTo>
+              {{#if this.isSharePlanTabDisabled}}
+                <span class="plan-share-tab-button disabled">Share Plan</span>
+                <EmberPopover @side='top'>
+                  <span>Sharing a plan is possible only for active paid plans.</span>
+                </EmberPopover>
+              {{else}}
+                <LinkTo @route="organization.share_plan" @model={{this.model}}>
+                  Share Plan
+                </LinkTo>
+              {{/if}}
             </li>
           {{/if}}
         {{/if}}

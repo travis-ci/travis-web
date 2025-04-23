@@ -115,6 +115,9 @@ export default Component.extend({
   }).drop(),
 
   bulkUnshare: task(function* () {
+    if (!window.confirm('Are you sure you want to stop sharing these plans?')) {
+      return;
+    }
     let ids = [];
     let orgs = this.fetchPlanShares();
     for (let org of orgs) {
