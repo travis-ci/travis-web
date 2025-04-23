@@ -1,0 +1,44 @@
+<nav
+  class="option-button {{if this.isOpen 'is-open'}}"
+  {{on 'click' (action this.toggle)}}
+  {{on 'mouseleave' (action this.close)}}
+>
+<button class="option-display" type="button" title="Show more options">
+  <span class="label-align">
+    More options
+  </span>
+  <span class="option-tofu">
+    <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
+  </span>
+</button>
+<ul class="option-dropdown">
+  <li>
+    <button
+      type="button"
+    >
+      Select All
+    </button>
+  </li>
+  <li>
+    <button
+      type="button"
+    >
+      Set As Public
+    </button>
+  </li>
+  <li>
+    <button
+      type="button"
+    >
+      Set As Private
+    </button>
+  </li>
+  <li>
+    <button
+      type="button"
+    >
+      Delete
+    </button>
+  </li>
+</ul>
+</nav>

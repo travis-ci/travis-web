@@ -1,0 +1,6 @@
+<ul class="images-list">
+  {{#each this.customImages as |image|}}
+    <CustomImages::ListRow @image={{image}} />
+  {{/each}}
+</ul>
+<CustomImages::Pagination />

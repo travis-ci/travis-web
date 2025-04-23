@@ -6,6 +6,7 @@ import { DEFAULT_INSIGHTS_INTERVAL } from 'travis/services/insights';
 export const OWNER_TABS = {
   REPOSITORIES: 'repositories',
   INSIGHTS: 'insights',
+  CUSTOM_IMAGES: 'custom-images',
 };
 
 export default Controller.extend({
@@ -22,6 +23,7 @@ export default Controller.extend({
   defaultTimeInterval: DEFAULT_INSIGHTS_INTERVAL,
 
   isInsights: equal('tab', OWNER_TABS.INSIGHTS),
+  isCustomImages: equal('tab', OWNER_TABS.CUSTOM_IMAGES),
   isPrivateInsightsViewable: and('features.proVersion', 'builds.value.private'),
   includePrivateInsights: and('isPrivateInsightsViewable', 'requestPrivateInsights'),
 

@@ -136,6 +136,7 @@ module.exports = function (environment) {
       privacy: 'https://www.ideracorp.com/en/legal/privacypolicy',
       quickStart: 'https://www.travis-ci.com/quickstart/',
       resources: 'https://www.travis-ci.com/resources/',
+      customImagesDocs: 'https://docs.travis-ci.com/',
     },
     endpoints: {},
     githubApps: false,

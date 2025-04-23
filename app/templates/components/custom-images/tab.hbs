@@ -1,0 +1,36 @@
+{{#if this.isCustomImagesEmpty}}
+<CustomImages::NoImages />
+{{else}}
+<div class="summary-grid">
+  <CustomImages::SummaryBlock
+    @title="Images"
+    @data={{this.customImagesCount}}
+  />
+  <CustomImages::SummaryBlock
+    @title="GB Used"
+    @data={{this.customImagesTotalSizeInGB}}
+  />
+  <CustomImages::SummaryBlock
+    @title="Est. Month Credits"
+    @data={{this.estimatedCreditsUsage}}
+  />
+</div>
+<div class="options-block">
+  <div class="search">
+    <div class="search-inner">
+      <Input
+        id="travis-search"
+        placeholder="Filter all custom images"
+      />
+      <label for="travis-search">
+        <SvgImage @name="icon-search" @class="icon" />
+      </label>
+    </div>
+  </div>
+  <CustomImages::Options />
+</div>
+
+<CustomImages::List
+  @customImages={{this.owner.customImages}}
+/>
+{{/if}}
