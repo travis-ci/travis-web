@@ -9,6 +9,7 @@ export default Component.extend({
   storage: service(),
   router: service(),
   features: service(),
+  store: service(),
   user: reads('auth.currentUser'),
   isProVersion: reads('features.proVersion'),
   hasAdminPermissions: reads('model.permissions.admin'),
@@ -22,6 +23,7 @@ export default Component.extend({
   isBuildFinished: equal('model.trial.buildsRemaining', 0),
   activeModel: null,
   model: reads('activeModel'),
+  planShareReceiver: null,
 
   paymentDetailsEditLockedTime: computed('model.allowance.paymentChangesBlockCaptcha', function () {
     const allowance = this.model?.allowance;
@@ -76,6 +78,29 @@ export default Component.extend({
     return !this.user.confirmedAt;
   }),
 
+  isPlanShareAdminRevoked: computed('model.v2subscription', function () {
+    let sharedPlanDonor = !!(this.model && this.model.v2subscription &&
+                          (
+                            !this.model.v2subscription.sharedBy && this.model.v2subscription.planShares &&
+                            this.model.v2subscription.planShares.length > 0 ||
+                            this.model.v2subscription.sharedBy == this.model.id)
+    );
+    let adminRevoked = false;
+    if (sharedPlanDonor && this.model.v2subscription.planShares) {
+      this.model.v2subscription.planShares.forEach(item => {
+        adminRevoked |= !!item.admin_revoked;
+        if (item.admin_revoked) {
+          this.user.accounts?.organizations?.forEach((org) => {
+            if (org.id == item.receiver.id) {
+              this.planShareReceiver = org.login || org.fullName;
+            }
+          });
+        }
+      });
+    }
+    return adminRevoked;
+  }),
+
   showLicenseBanner: computed(function () {
     return this.user && this.user.isUser && !this.storage.getItem(this.bannerKey);
   }),
@@ -86,7 +111,7 @@ export default Component.extend({
 
   bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
     'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime',
-    'isBalanceNegativeRepo', 'isBalanceNegativeProfile', 'showEnterpriseBanner', function () {
+    'isBalanceNegativeRepo', 'isBalanceNegativeProfile', 'isPlanShareAdminRevoked', 'showEnterpriseBanner',  function () {
       const banners = [];
 
       if (this.hasNoPlan) {
@@ -139,6 +164,9 @@ export default Component.extend({
 
       if (this.showEnterpriseBanner) {
         banners.push('EnterpriseBanner');
+      }
+      if (this.isPlanShareAdminRevoked) {
+        banners.push('PlanShareAdminRevokedBanner');
       }
       return banners.slice(0, 2);
     })

@@ -219,7 +219,11 @@ export default Model.extend({
   shareMultiple: task(function* (receivers, value) {
     for (let receiverId of receivers) {
       const data = { receiver_id: receiverId };
-      yield this.api.post(`/v2_subscription/${this.id}/${value ? 'share' : 'delete_share'}`, { data });
+      if (value) {
+        yield this.api.post(`/v2_subscription/${this.id}/share`, { data });
+      } else {
+        yield this.api.delete(`/v2_subscription/${this.id}/share`, { data });
+      }
     }
     yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),

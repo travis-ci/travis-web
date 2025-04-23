@@ -9,6 +9,7 @@ export default Component.extend({
   router: service(),
   auth: service(),
   store: service(),
+  accounts: service(),
   owner: alias('account'),
   v2subscription: reads('owner.v2subscription'),
   isV2SubscriptionEmpty: empty('v2subscription'),
@@ -20,9 +21,18 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    let orgs = this.fetchPlanShares();
-    for (let org of orgs) {
-      org.set('selectedToSwitch', false);
+    if (!this.account.v2subscriptions) {
+      this.accounts.fetchV2Subscriptions.perform().then(() => {
+        let orgs = this.fetchPlanShares();
+        for (let org of orgs) {
+          org.set('selectedToSwitch', false);
+        }
+      });
+    } else {
+      let orgs = this.fetchPlanShares();
+      for (let org of orgs) {
+        org.set('selectedToSwitch', false);
+      }
     }
   },
 
@@ -40,6 +50,35 @@ export default Component.extend({
 
         if (this.hasOwnPlan(org)) continue;
         result.push(org);
+      }
+    }
+    const shares = this.v2subscription?.planShares;
+    if (shares) {
+      for (let planShare of shares.toArray()) {
+        let found = false;
+        for (let org of result) {
+          if (planShare.receiver.id == org.id) {
+            found = true;
+          }
+        }
+        if (!found) {
+          let org = {
+            id: planShare.receiver.id,
+            login: '[removed from organization]',
+            onSharedPlan: true,
+            planSharedFrom: this.getDate(planShare.created_at),
+            set: function (key, value) {
+              switch (key) {
+                case 'onSharedPlan':
+                  self.onSharedPlan = value;
+                  break;
+                default:
+                  break;
+              }
+            }
+          };
+          result.push(org);
+        }
       }
     }
     return result;
