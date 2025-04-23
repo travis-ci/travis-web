@@ -74,6 +74,15 @@
         @showCancelButton={{true}}
         @retryAuthorization={{this.retryAuthorization}}
       />
+      {{else if this.isSharedFrom }}
+      <Billing::Process
+        @account={{this.account}}
+        @subscription={{this.emptyV2Subscription}}
+        @selectedPlan={{this.selectedPlan}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showCancelButton={{true}}
+        @retryAuthorization={{this.retryAuthorization}}
+      />
     {{else}}
       <Billing::Process
         @account={{this.account}}
