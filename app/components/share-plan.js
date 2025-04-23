@@ -132,11 +132,11 @@ export default Component.extend({
     if (value) {
       org.set('onSharedPlan', true);
       org.set('planSharedFrom', this.getDate());
-      this.v2subscription.share.perform(org.id);
+      this.v2subscription.share.perform(org);
     } else {
       org.set('onSharedPlan', false);
       org.set('planSharedFrom', '-');
-      this.v2subscription.delete_share.perform(org.id);
+      this.v2subscription.delete_share.perform(org);
     }
   },
 

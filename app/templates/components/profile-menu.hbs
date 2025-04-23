@@ -45,7 +45,7 @@
         {{vcs-name this.user.vcsType}} support is currently in Beta
       </li>
     {{/if}}
-  {{#unless this.features.enterpriseVersion}}
+  {{#unless (or this.features.enterpriseVersion this.isAssembla)}}
     <li>
       <LinkTo
         @route="account.billing"

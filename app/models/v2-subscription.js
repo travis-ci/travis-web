@@ -14,6 +14,7 @@ let sourceToWords = {
 export default Model.extend({
   api: service(),
   accounts: service(),
+  flashes: service(),
 
   source: attr('string'),
   status: attr('string'),
@@ -217,20 +218,35 @@ export default Model.extend({
   }).drop(),
 
   shareMultiple: task(function* (receivers, value) {
+    let fail = false;
     for (let receiverId of receivers) {
       const data = { receiver_id: receiverId };
-      if (value) {
-        yield this.api.post(`/v2_subscription/${this.id}/share`, { data });
-      } else {
-        yield this.api.delete(`/v2_subscription/${this.id}/share`, { data });
+      try {
+        if (value) {
+          yield this.api.post(`/v2_subscription/${this.id}/share`, { data });
+        } else {
+          yield this.api.delete(`/v2_subscription/${this.id}/share`, { data });
+        }
+      } catch (e) {
+        fail = true;
       }
+    }
+    if (fail) {
+      this.flashes.error('Could not share the plan with some receivers. Please refresh the screen and check if these are eligible for plan sharing.');
     }
     yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
-  share: task(function* (receiverId) {
-    const data = { receiver_id: receiverId };
-    yield this.api.post(`/v2_subscription/${this.id}/share`, { data });
+  share: task(function* (receiver) {
+    const data = { receiver_id: receiver.id };
+    try {
+      yield this.api.post(`/v2_subscription/${this.id}/share`, { data });
+    } catch (e) {
+      receiver.set('onSharedPlan', false);
+      receiver.set('planSharedFrom', '-');
+      this.flashes.error(`Could not share the plan with ${receiver.login}.\
+                          Please refresh the screen and check if these are eligible for plan sharing.`);
+    }
     yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
