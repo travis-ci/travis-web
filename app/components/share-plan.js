@@ -129,6 +129,9 @@ export default Component.extend({
 
   actions: {
     setShared(org, value) {
+      if (value === false && !window.confirm('Are you sure you want to stop sharing this plan?')) {
+        return;
+      }
       this.switchShare(org, value);
     },
 
