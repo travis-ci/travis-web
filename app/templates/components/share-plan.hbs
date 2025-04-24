@@ -1,6 +1,12 @@
 
 <div class="plan-usage" data-test-plan-usage-content>
   <section>
+  <h3>Share your plan</h3>
+  <p class="description"> You can share your plan with selected {{this.orgPlaceholder}}, allowing them to use your plan's credits without having to own one.
+  </p>
+  <br/>
+  </section>
+  <section>
     <Input
     class="filter-users-input"
     placeholder={{this.filterPlaceholder}}
@@ -95,5 +101,11 @@
         {{/each}}
       </tbody>
     </table>
+  </section>
+  <section>
+  <p class="description italic">To share a plan with another Travis CI Organization, you must:<br/>
+    Be a member of the receiver Organization in Travis CI (a Space member in Assembla, organization member in GitHub/BitBucket/GitLab).<br/>
+    Have administrative access to the plan donor Organization in Travis CI.<br/>
+  </p>
   </section>
 </div>

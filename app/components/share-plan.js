@@ -105,6 +105,10 @@ export default Component.extend({
     return result;
   },
 
+  orgPlaceholder: computed(function () {
+    return `${this.user.isAssembla ? 'Spaces' : 'Organizations'}`;
+  }),
+
   filterPlaceholder: computed(function () {
     return `Filter ${this.user.isAssembla ? 'Assembla Spaces' : 'Organizations'}`;
   }),
