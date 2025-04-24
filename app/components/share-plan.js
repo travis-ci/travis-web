@@ -64,7 +64,7 @@ export default Component.extend({
         if (!found) {
           let org = {
             id: planShare.receiver.id,
-            login: '[removed from organization]',
+            login: `${planShare.receiver.login} [removed from organization]`,
             onSharedPlan: true,
             planSharedFrom: this.getDate(planShare.created_at),
             set: function (key, value) {
