@@ -71,7 +71,9 @@ export default Component.extend({
     let result = null;
     if (this.subscription.planShares.length > 0) {
       let owner = this.subscription.planShares[0].donor;
-      result = this.store.peekRecord(owner.type.toLowerCase(), owner.id);
+      if (owner) {
+        result = owner.login;
+      }
     }
     return result;
   }),
