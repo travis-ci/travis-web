@@ -7,6 +7,6 @@ export default Model.extend({
   createdAt: attr('date'),
   updatedAt: attr('date'),
   osVersion: attr('string'),
-  createdBy: belongsTo('user', { async: false, inverse: null }),
+  createdBy: attr(),
   private: attr('boolean'),
 });

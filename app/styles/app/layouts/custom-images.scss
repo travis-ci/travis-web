@@ -141,6 +141,10 @@
 
     .dash-head {
       justify-content: center;
+
+      .checkbox {
+        transform: scale(1.231);
+      }
     }
 
     .dash-visibility {
@@ -164,6 +168,10 @@
 
     .dash-os-dist {
       flex: 0 0 12%;
+
+      .row-content {
+        text-transform: capitalize;
+      }
     }
 
     .dash-created-at {

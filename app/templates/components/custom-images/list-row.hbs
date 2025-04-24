@@ -3,8 +3,9 @@
   {{on 'mouseleave' (action this.closeDropup)}}
 >
 <div class="dash-head">
-  <SquareCheckbox
-    @checked={{false}}
+  <input
+    type="checkbox"
+    class="checkbox"
   />
 </div>
 <div class="dash-body">
@@ -41,7 +42,7 @@
         Author
       </h3>
       <p class="row-content color">
-        <UserAvatar @url={{this.image.createdBy.avatarUrl}} @name={{this.image.createdBy.name}} @size={{15}} @small={{true}} />
+        <UserAvatar @url={{this.image.createdBy.avatar_url}} @name={{this.image.createdBy.name}} @size={{15}} @small={{true}} />
         <span class="label-align">
         {{this.image.createdBy.name}}
         </span>
