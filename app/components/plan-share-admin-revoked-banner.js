@@ -6,8 +6,11 @@ import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   storage: service(),
+  planShareReceiver: null,
 
-  bannerKey: 'travis.plan-share-admin-revoked-banner',
+  bannerKey: computed('planShareReceiver', function() {
+    return `travis.plan-share-admin-revoked-banner-${this.planShareReceiver}`;
+  }),
 
   showBanner: computed({
     get() {
