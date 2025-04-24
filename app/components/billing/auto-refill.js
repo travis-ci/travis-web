@@ -59,7 +59,8 @@ export default Component.extend({
 
   show: computed('subscription', function () {
     let isOrganization = this.subscription.owner.get('isOrganization');
-    let isAdmin = this.subscription.owner.get('permissions').admin;
+    let permissions = this.subscription && this.subscription.owner ? this.subscription.owner.get('permissions') : null;
+    let isAdmin = permissions && permissions.admin;
 
     let currentAccountId = this.account.id;
     let planShares = this.subscription.planShares || [];
