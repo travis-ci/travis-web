@@ -8,7 +8,7 @@ export default Component.extend({
   storage: service(),
   planShareReceiver: null,
 
-  bannerKey: computed('planShareReceiver', function() {
+  bannerKey: computed('planShareReceiver', function () {
     return `travis.plan-share-admin-revoked-banner-${this.planShareReceiver}`;
   }),
 
