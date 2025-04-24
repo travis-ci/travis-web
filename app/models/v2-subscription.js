@@ -250,8 +250,8 @@ export default Model.extend({
     yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
 
-  delete_share: task(function* (receiverId) {
-    const data = { receiver_id: receiverId };
+  delete_share: task(function* (receiver) {
+    const data = { receiver_id: receiver.id };
     yield this.api.delete(`/v2_subscription/${this.id}/share`, { data });
     yield this.accounts.fetchV2Subscriptions.linked().perform();
   }).drop(),
