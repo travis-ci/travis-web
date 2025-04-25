@@ -75,8 +75,13 @@
             </form.field>
             </TravisForm>
           </td>
-          <td>
+          <td id="not-member-popover-context">
             <span class="profile-repo-name">{{or org.login org.fullName}}</span>
+            {{#if org.showPopover}}
+              <EmberPopover @side='top'>
+                <span>You are no longer a member of this space, Contact an admin if you think this is a mistake.</span>
+              </EmberPopover>
+            {{/if}}
           </td>
           <td>
             {{ org.planSharedFrom }}

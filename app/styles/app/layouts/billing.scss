@@ -1705,3 +1705,23 @@
     }
   }
 }
+
+.plan-share-not-member-text {
+  font-size: $font-size-s;
+  color: $dark-red;
+  font-weight: bold;
+  background-color: $quartz-red;
+  padding: 0% 0.5em;
+}
+
+#not-member-popover-context ~ .ember-popover {
+  color: white !important;
+  background-color: $cement-grey !important;
+  border-radius: 0 !important;
+  border: none !important;
+  padding: 0.5em !important;
+  display: flex !important;
+  width: 190px !important;
+  word-wrap: break-word !important;
+  text-align: center !important;
+}

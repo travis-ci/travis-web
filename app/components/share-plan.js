@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { alias, reads, empty } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
+import { htmlSafe } from '@ember/template';
 
 export default Component.extend({
   router: service(),
@@ -64,7 +65,8 @@ export default Component.extend({
         if (!found) {
           let org = {
             id: planShare.receiver.id,
-            login: `${planShare.receiver.login} [removed from organization]`,
+            login: htmlSafe(`${planShare.receiver.login} <span class="plan-share-not-member-text"> NOT A MEMBER</span>`),
+            showPopover: true,
             onSharedPlan: true,
             planSharedFrom: this.getDate(planShare.created_at),
             set: function (key, value) {
