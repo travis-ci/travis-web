@@ -267,6 +267,7 @@ module.exports = function (environment) {
     dashboardReposPerPage: 25,
     profileReposPerPage: 25,
     repoBuildsPerPage: 25,
+    customImagesPerPage: 25,
   };
 
   if (STRIPE_PUBLISHABLE_KEY) {

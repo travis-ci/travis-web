@@ -1,6 +1,26 @@
+<CustomImages::Options
+  @isOwnerAdmin={{this.isOwnerAdmin}}
+  @onSelectAll={{action "selectAllImages"}}
+  @onDeleteSelected={{action "deleteSelectedImages"}}
+  @onFilter={{action "filterImages"}}
+/>
+
 <ul class="images-list">
-  {{#each this.customImages as |image|}}
-    <CustomImages::ListRow @image={{image}} />
+  {{#each this.customImagesPaginated as |image|}}
+    <CustomImages::ListRow
+      @image={{image}}
+      @isOwnerAdmin={{this.isOwnerAdmin}}
+      @onSelect={{action "selectImage" image}}
+      @onDelete={{action "deleteImage" image}}
+      @selectedImageIds={{this.selectedImageIds}}
+    />
   {{/each}}
 </ul>
-<CustomImages::Pagination />
+<CustomImages::Pagination
+  @currentPage={{this.page}}
+  @perPage={{this.perPage}}
+  @totalCount={{this.customImagesTotalCount}}
+  @onPageChange={{action 'switchToPage'}}
+  @inner={{2}}
+  @outer={{1}}
+/>

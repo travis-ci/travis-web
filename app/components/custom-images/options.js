@@ -1,6 +1,8 @@
 import Component from '@ember/component';
 
 export default Component.extend({
+  classNames: ['options-block'],
+
   isOpen: false,
 
   close() {

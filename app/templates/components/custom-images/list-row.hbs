@@ -6,6 +6,8 @@
   <input
     type="checkbox"
     class="checkbox"
+    checked={{this.isSelected}}
+    {{on 'change' (action this.onSelect)}}
   />
 </div>
 <div class="dash-body">
@@ -26,7 +28,7 @@
         {{this.image.name}}
       </h1>
       <h2 class="row-label">
-        # {{this.image.id}}
+        # {{this.image.usage}}
       </h2>
     </section>
     <section class="dash-size fade-out">
@@ -34,7 +36,7 @@
         Size
       </h3>
       <p class="row-content color">
-        {{format-size this.image.usage}}
+        {{format-size this.image.sizeBytes}}
       </p>
     </section>
     <section class="dash-author">
@@ -74,6 +76,7 @@
         </span>
       </p>
     </section>
+    {{#if this.isOwnerAdmin}}
     <div class="dash-menu">
         <div class="dropup {{if this.dropupIsOpen 'is-open'}}">
           <button
@@ -84,6 +87,8 @@
           <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
           </button>
           <ul class="dropup-list">
+            {{!-- Commented out for future implementation --}}
+            {{!--
             <li>
               <button
                 title="Set as public"
@@ -104,9 +109,11 @@
                 </span>
               </button>
             </li>
+            --}}
             <li>
               <button
                 title="Delete"
+                {{on 'click' (action this.onDelete)}}
               >
                 <SvgImage @name="icon-trash" @class="icon" />
                 <span class="label-align">
@@ -117,6 +124,7 @@
           </ul>
         </div>
     </div>
+    {{/if}}
   </div>
 </div>
 </li>
