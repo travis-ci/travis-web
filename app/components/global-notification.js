@@ -88,13 +88,15 @@ export default Component.extend({
     let adminRevoked = false;
     if (sharedPlanDonor && this.model.v2subscription.planShares) {
       this.model.v2subscription.planShares.forEach(item => {
-        adminRevoked |= !!item.admin_revoked;
+        const key = `travis.plan-share-admin-revoked-banner-${item.receiver.login}`;
+        let isDismissed = !!this.storage.getItem(key);
         if (item.admin_revoked) {
-          this.user.accounts?.organizations?.forEach((org) => {
-            if (org.id == item.receiver.id) {
-              this.planShareReceiver = org.login || org.fullName;
-            }
-          });
+          if (!isDismissed) {
+            adminRevoked = true;
+            this.planShareReceiver = item.receiver.login;
+          }
+        } else if (isDismissed) {
+          this.storage.removeItem(key);
         }
       });
     }
