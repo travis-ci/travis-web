@@ -11,7 +11,7 @@ export default Component.extend({
 
   filter: null,
 
-  isOwnerAdmin: computed('owner', function() {
+  isOwnerAdmin: computed('owner', function () {
     const owner = this.owner;
     if (owner.type === 'user') {
       return owner.permissions.sync;
@@ -23,19 +23,18 @@ export default Component.extend({
   selectedImageIds: [],
   allImagesSelected: false,
 
-  filteredCustomImages: computed('customImages', 'filter', function() {
+  filteredCustomImages: computed('customImages', 'filter', function () {
     const { customImages, filter } = this;
     if (filter) {
-      return customImages.filter(image => {
-        return image.name.toLowerCase().includes(filter.toLowerCase()) || image.createdBy.name.toLowerCase().includes(filter.toLowerCase())
-          || image.osVersion.toLowerCase().includes(filter.toLowerCase()) || image.usage.toString() === filter;
-      });
+      return customImages.filter(image => image.name.toLowerCase().includes(filter.toLowerCase()) 
+          || image.createdBy.name.toLowerCase().includes(filter.toLowerCase())
+          || image.osVersion.toLowerCase().includes(filter.toLowerCase()) || image.usage.toString() === filter);
     }
     return customImages;
   }),
 
   customImagesTotalCount: reads('filteredCustomImages.length'),
-  customImagesPaginated: computed('filteredCustomImages', 'page', function() {
+  customImagesPaginated: computed('filteredCustomImages', 'page', function () {
     const { filteredCustomImages, page, perPage } = this;
     return filteredCustomImages.slice((page - 1) * perPage, page * perPage);
   }),
