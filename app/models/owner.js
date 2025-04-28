@@ -91,6 +91,18 @@ export default VcsEntity.extend({
     }, { live: false });
   },
 
+  customImages: computed('id', 'fetchCustomImages.lastSuccessful.value', function () {
+    const images = this.fetchCustomImages.lastSuccessful && this.fetchCustomImages.lastSuccessful.value;
+    if (!images) {
+      this.fetchCustomImages.perform();
+    }
+    return images || [];
+  }),
+
+  fetchCustomImages: task(function* () {
+    return yield this.store.query('custom-image', { login: this.login, provider: this.provider });
+  }).drop(),
+
   fetchPlans: task(function* () {
     const url = this.isOrganization ? `/plans_for/organization/${this.id}` : '/plans_for/user';
     const result = yield this.api.get(url);
