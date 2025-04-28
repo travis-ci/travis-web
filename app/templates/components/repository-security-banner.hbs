@@ -1,15 +1,15 @@
 {{#if this.showLicenseBanner}}
-  <div class="enterprise-banner security">
-    <div>
-        <p>
+<Notification
+  @type='global'
+  @severity='warning'
+  data-test-security-banner='true'
+>
             If you have <ExternalLinkTo href="https://docs.travis-ci.com/user/private-dependencies/">SSH keys</ExternalLinkTo> defined for your repositories, please review their settings now.
 The new Share ssh keys with forks ({{vcs-vocab this.repo.vcsType 'pr' plural=true}}) repository setting are present and set
 to ON for <LinkTo @route="account.repositories">repositories</LinkTo> already in Travis CI in order to not break existing build
 setups.
-            <button class="close-btn" {{action "closeLicenseBanner"}}>
-                <SvgImage @name="flash-close" @class="close-icon" />
-            </button>
-        </p>
-    </div>
-  </div>
+          <button type="button" class="no-button close" {{action "closeLicenseBanner"}}>
+            <SvgImage @name="flash-close" @class="icon" />
+          </button>
+</Notification>
 {{/if}}

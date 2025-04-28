@@ -1,14 +1,21 @@
 <!--<div class="plan"> -->
 <div class='billing-subscription-section plan-overview'>
   {{#if (not this.account.hasSubscriptionPermissions)}}
-    <span class="notice-banner--yellow" data-test-help='true'>
-      <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
+    <Notification
+      @type='alert'
+      @severity='warning'
+      data-test-help='true'
+    >
       You don't have admin permissions to edit this subscription.
-    </span>
+    </Notification>
   {{/if}}
   {{#if this.showPlanInfo}}
     {{#if (and (not this.subscription.plan.isTrial) (and this.subscription.isNotManual (eq this.subscription.plan.planType 'metered')))}}
-      <span class="notice-banner--white block" data-test-plan-notice='true'>
+      <Notification
+        @type='alert'
+        @severity='info'
+        data-test-plan-notice='true'
+      >
         {{#if this.subscription.plan.isFree}}
           Trial users and other qualifying users are granted a small allocation of credits. Please see our <ExternalLinkTo @href={{config-get 'urls.planCreditDocs'}} @title="Travis CI Docs">documentation</ExternalLinkTo> for more details on allowances and its possible extension.
         {{else}}
@@ -22,13 +29,16 @@
             {{/if}}
           </div>
         {{/if}}
-      </span>
+      </Notification>
     {{/if}}
     <div class="flex flex--space-between flex--wrap plan-overview__details plan-grey">
       <section>
         <div class='plan'>
           <div>
             <span class="payment-details-label plan-label-color">Current plan:</span>
+            <div class='plan-overview__description' data-test-shared-plan-message>
+              {{#if this.isSharedFrom }} Shared by {{this.planDonor}} {{/if}}
+            </div>
             <p class='plan-name flex flex--v-center' data-test-plan-name='true'>
                 {{#if this.subscription.plan}}
                   {{this.subscription.plan.name}}
@@ -118,6 +128,7 @@
                   @isPending={{this.isPending}}
                   @showPlansSelector={{this.showPlansSelector}}
                   @showAddonsSelector={{this.showAddonsSelector}}
+                  @isSharedFrom={{this.isSharedFrom}}
                 />
               {{/if}}
               {{#if (or this.subscription.isStripe this.subscription.isManual)}}
@@ -130,6 +141,7 @@
                   @isPending={{this.isPending}}
                   @showPlansSelector={{this.showPlansSelector}}
                   @showAddonsSelector={{this.showAddonsSelector}}
+                  @isSharedFrom={{this.isSharedFrom}}
                 />
               {{/if}}
             {{/if}}

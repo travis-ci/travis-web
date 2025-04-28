@@ -11,6 +11,8 @@ export default Component.extend({
   accounts: service(),
   store: service(),
   flashes: service(),
+  activeModel: null,
+  model: reads('activeModel'),
 
   stripeElement: null,
   account: null,
@@ -19,9 +21,11 @@ export default Component.extend({
 
   showCancelConfirmModal: false,
   showCancelModal: false,
+  showPlanChangeConfirmation: false,
   isV2Subscription: false,
   selectedPlan: null,
   selectedAddon: null,
+  isSharedFrom: false,
 
   requiresSourceAction: equal('subscription.paymentIntent.status', 'requires_source_action'),
   requiresSource: equal('subscription.paymentIntent.status', 'requires_source'),
@@ -35,9 +39,14 @@ export default Component.extend({
   isExpired: or('subscription.isExpired', 'subscription.subscriptionExpiredByDate'),
   cancellationRequested: reads('subscription.cancellationRequested'),
   deferPause: reads('subscription.deferPause'),
-  canCancelSubscription: computed('isSubscribed', 'hasSubscriptionPermissions', 'freeV2Plan', 'isTrial', 'cancellationRequested', function () {
-    return this.isSubscribed && this.hasSubscriptionPermissions && !this.freeV2Plan && !this.isTrial && !this.cancellationRequested;
-  }),
+  canCancelSubscription: computed(
+    'isSubscribed', 'hasSubscriptionPermissions',
+    'freeV2Plan', 'isTrial', 'cancellationRequested',
+    'isSharedFrom', function () {
+      return this.isSubscribed && this.hasSubscriptionPermissions &&
+             !this.freeV2Plan && !this.isTrial &&
+             !this.cancellationRequested && !this.isSharedFrom;
+    }),
 
   hasSubscriptionPermissions: computed('account.hasSubscriptionPermissions', 'account.permissions', function () {
     return this.account.hasSubscriptionPermissions && (!this.account.isOrganization || this.account.permissions.plan_create);
@@ -47,13 +56,13 @@ export default Component.extend({
   isLoading: or('accounts.fetchSubscriptions.isRunning', 'accounts.fetchV2Subscriptions.isRunning',
     'cancelSubscriptionLoading', 'editPlan.isRunning', 'resubscribe.isRunning'),
 
-  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', 'isExpired',
+  canBuyAddons: computed('freeV2Plan', 'subscription.isCanceled', 'isTrial', 'isExpired', 'isSharedFrom',
     'cancellationRequested', 'isSubscribed', function () {
       let isOnTrial = this.subscription.current_trial != null && this.subscription.current_trial.status == 'subscribed';
 
       return !this.freeV2Plan && !this.subscription.isCanceled &&
            !this.isTrial && !isOnTrial && !this.cancellationRequested &&
-        !this.isExpired && this.isSubscribed;
+        !this.isExpired && this.isSubscribed && !this.isSharedFrom;
     }),
 
   handleError: reads('stripe.handleError'),
@@ -130,10 +139,34 @@ export default Component.extend({
     });
   }),
 
+  emptyV2Subscription: computed(function () {
+    const plan = this.store.createRecord('v2-plan-config');
+    const billingInfo = this.store.createRecord('v2-billing-info');
+    const creditCardInfo = this.store.createRecord('v2-credit-card-info');
+    billingInfo.setProperties({
+      firstName: '',
+      lastName: '',
+      address: '',
+      city: '',
+      zipCode: '',
+      country: '',
+      billingEmail: ''
+    });
+    creditCardInfo.setProperties({
+      token: '',
+      lastDigits: ''
+    });
+    return this.store.createRecord('v2-subscription', {
+      billingInfo,
+      plan,
+      creditCardInfo,
+    });
+  }),
+
   cancelSubscription: task(function* () {
     try {
       if (this.subscription.current_trial == null || this.subscription.current_trial.status != 'subscribed') {
-        this.flashes.successWithClose(
+        this.flashes.success(
           'Your cancellation request has been forwarded to Support. Our Support team will contact you soon. ' +
           'Please turn off auto-refill if you don\'t plan to use it anymore.',
           'We’re sorry to see you go'

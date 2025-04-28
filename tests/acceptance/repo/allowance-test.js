@@ -206,13 +206,13 @@ module('Acceptance | repo allowance', function (hooks) {
   test('warning is displayed in case owner cannot build due to user limit exceeded', async function (assert) {
     await page.visit({ organization: 'user-login4', repo: 'repository-users-exceeded' });
 
-    assert.equal(page.flash, 'We are unable to start your build at this time. You exceeded the number of users allowed for your plan. Please review your plan details and follow the steps to resolution.');
+    assert.equal(page.customFlash, 'We are unable to start your build at this time. You exceeded the number of users allowed for your plan. Please review your plan details and follow the steps to resolution.');
   });
 
   test('warning is displayed in case owner cannot build due to pending user license', async function (assert) {
     await page.visit({ organization: 'user-login5', repo: 'repository-pending-users' });
 
-    assert.equal(page.flash, 'We are unable to start your build at this time. There are charges pending on your account. Please review your plan details and follow the steps to resolution.');
+    assert.equal(page.customFlash, 'We are unable to start your build at this time. There are charges pending on your account. Please review your plan details and follow the steps to resolution.');
   });
 
   test('warning is not displayed in case owner can build in private repository', async function (assert) {

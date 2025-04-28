@@ -237,6 +237,10 @@ module.exports = function (environment) {
     'gitlab-login': false,
     'enable-travisproxy-login': false,
     'travisproxy-login': false,
+    'enable-assembla-plan-share': true,
+    'enable-gitlab-plan-share': false,
+    'enable-github-plan-share': false,
+    'enable-bitbucket-plan-share': false,
   };
 
   if (TRAVIS_PRO) {
@@ -441,6 +445,7 @@ module.exports = function (environment) {
     ENV.featureFlags['dashboard'] = false;
     ENV.featureFlags['pro-version'] = false;
     ENV.featureFlags['github-apps'] = false;
+    ENV.featureFlags['enable-github-plan-share'] = true;
 
     ENV.statusPageStatusUrl = undefined;
 

@@ -1,13 +1,15 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { reads, bool, empty, not } from '@ember/object/computed';
+import { reads, bool, empty, not, alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   store: service(),
   flashes: service(),
-
+  auth: service(),
+  currentUser: alias('auth.currentUser'),
+  storage: service(),
   account: null,
   newSubscriptionProcess: false,
 
@@ -63,7 +65,7 @@ export default Component.extend({
           scheduledPlan: this.v2subscription.scheduledPlan,
           date: new Date(date.getFullYear(), date.getMonth() + 1, 1)
         },
-        'warning'
+        'scheduled-plan-change'
       );
     }
   }

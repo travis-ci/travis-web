@@ -1137,6 +1137,15 @@
       }
     }
   }
+  .description {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .italic {
+    font-size: 12px;
+    font-style: italic;
+  }
+
 }
 
 .billing,
@@ -1547,5 +1556,152 @@
 @media (min-width: 588px) {
   .stripe-error {
     width: 588px;
+  }
+}
+
+.plan-share-button {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid $pebble-grey;
+  font-size: $font-size-s;
+  color: $asphalt-grey;
+  padding: 0.3rem 0.4rem;
+  margin: 0.3rem 0;
+  margin-left: auto;
+  transform: translateY(1px);
+
+  .icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    color: $cement-grey;
+
+    .icon {
+      @include colorSVG(white);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    color: inherit;
+    background: inherit;
+    cursor: default;
+
+    &:hover {
+      color: inherit;
+      background: inherit;
+
+      .icon {
+        @include colorSVG($cement-grey);
+      }
+    }
+  }
+}
+
+.plan-share-tab-button {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: $asphalt-grey;
+  padding: 0.3rem 0.4rem;
+  margin: 0.3rem 0;
+  margin-left: auto;
+
+  &.disabled {
+    opacity: 0.4;
+    color: inherit;
+    background: inherit;
+    cursor: default;
+  }
+}
+
+.plan-share-button .icon-disabled {
+  @include colorSVG(rgba(black, 0.2));
+}
+
+.plan-share-list {
+  float: right;
+  clear: both;
+  font-size: $font-size-s;
+  width: 100%;
+  border-spacing: 0;
+  margin-top: 10px;
+
+  .option-button {
+    float: right;
+    width: 12em;
+    svg {
+      margin-left: 8px;
+      margin-right: 2px;
+    }
+  }
+  nav {
+    .label-align {
+      float: right;
+    }
+  }
+  thead
+  {
+    background-color: $ansi-white;
+    tr
+    {
+      th {
+        color: #666;
+        text-transform: uppercase;
+        padding: 6px 10px;
+        border: none;
+        text-align: left;
+        font-size: 12px;
+        &:first-child,
+        &:last-child {
+          text-align: right;
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+  .travis-form .travis-form__field .travis-form__field-checkbox .travis-form__field-checkbox-wrapper {
+    margin-right: 0;
+  }
+  tbody {
+    tr {
+      td {
+        @include linkStyle;
+        background-color: #fff;
+        font-weight: normal;
+        color: $asphalt-grey;
+        text-align: left;
+        padding: 6px 10px;
+        font-size: 14px;
+        &:first-child,
+        &:last-child {
+          text-align: center;
+        }
+        .avatar {
+          border-radius: 0;
+          width: 42px;
+          height: 42px;
+          .real-avatar {
+            border-radius: 0;
+          }
+        }
+        .avatar-wrapper {
+          float: left;
+          margin-right: 16px;
+        }
+        .sender {
+          float: left;
+          font-size: 14px;
+        }
+        .sender-name {
+          font-size: 14px;
+          color: #000;
+          font-weight: 600;
+        }
+      }
+    }
   }
 }

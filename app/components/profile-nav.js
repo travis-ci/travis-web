@@ -87,12 +87,48 @@ export default Component.extend({
       const isEnterprise = this.features.get('enterpriseVersion');
       return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization;
     }),
+
+  showSharePlanTab: computed('features.enterpriseVersion', 'hasPlanViewPermissions',
+    'hasPlanCreatePermissions', 'model.isAssembla', 'model.isUser', 'model.v2subscription',
+    'isOrganization', function () {
+      const forOrganization = !this.isOrganization ||
+        ((this.model.hasSubscription || this.model.hasV2Subscription) && !!this.hasPlanViewPermissions) && !!this.hasPlanCreatePermissions;
+
+      const isAssemblaUser = this.model.isUser && this.model.isAssembla;
+      const isEnterprise = this.features.get('enterpriseVersion');
+      const isOnSharedPlan = !!(
+        this.model.hasV2Subscription &&
+        (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id)
+      );
+
+      return this.model.isPlanShareEnabled && this.model.hasV2Subscription && !isEnterprise && !isAssemblaUser &&
+        !!billingEndpoint && !!forOrganization && !isOnSharedPlan;
+    }),
+
+  isSharePlanTabDisabled: computed('model.v2subscription.isCanceled', 'model.v2subscription.isExpired',
+    'model.v2subscription.current_trial', 'model.v2subscription.plan.isFree', 'model.v2subscription', 'model.isUser', 'isOrganization', function () {
+      const isCanceled = this.model.v2subscription?.isCanceled;
+      const isExpired = this.model.v2subscription?.isExpired;
+      const isOnTrialOrFree = !!(
+        this.model.v2subscription &&
+        (
+          this.model.v2subscription.current_trial ||
+          (this.model.v2subscription.plan && this.model.v2subscription.plan.isFree)
+        )
+      );
+      return isCanceled || isExpired || isOnTrialOrFree;
+    }),
+
   showPaymentDetailsTab: computed('showSubscriptionTab', 'isOrganization', 'isOrganizationAdmin',
     'hasBillingViewPermissions', 'hasInvoicesViewPermissions', 'model.isNotGithubOrManual', function () {
       if (this.isOrganization) {
         const forOrganization = !this.isOrganization || this.hasBillingViewPermissions || this.hasInvoicesViewPermissions;
+        const isOnSharedPlan = !!(
+          this.model.hasV2Subscription &&
+                                (this.model.v2subscription.sharedBy && this.model.v2subscription.sharedBy != this.model.id)
+        );
 
-        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin || forOrganization);
+        return this.showSubscriptionTab &&  this.model.get('isNotGithubOrManual') && (this.isOrganizationAdmin || forOrganization) && !isOnSharedPlan;
       } else {
         return this.showSubscriptionTab && this.model.get('isNotGithubOrManual');
       }
@@ -122,36 +158,23 @@ export default Component.extend({
     const allowance = this.model.allowance;
 
     if (this.userRoMode) {
-      this.flashes.custom('flashes/read-only-mode', {}, 'warning');
+      this.flashes.custom('flashes/read-only-mode', {}, 'read-only-mode');
     }
 
     if (!allowance) {
       return;
     }
 
-    if (allowance.get('paymentChangesBlockCredit') || allowance.get('paymentChangesBlockCaptcha')) {
-      let time;
-      if (allowance.get('paymentChangesBlockCaptcha')) time = allowance.get('captchaBlockDuration');
-      if (allowance.get('paymentChangesBlockCredit')) time = allowance.get('creditCardBlockDuration');
-      this.flashes.custom('flashes/payment-details-edit-lock', { owner: this.model, isUser: this.model.isUser, time: time}, 'warning');
-    }
-
     if (allowance.get('subscriptionType') !== 2) {
       return;
     }
 
-    if (!allowance.get('privateRepos') && !allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
-      this.flashes.custom('flashes/negative-balance-private-and-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('privateRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
-      this.flashes.custom('flashes/negative-balance-private', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    } else if (!allowance.get('publicRepos') && (this.isOrganizationAdmin || this.model.isUser)) {
-      this.flashes.custom('flashes/negative-balance-public', { owner: this.model, isUser: this.model.isUser }, 'warning');
-    }
-
     if (allowance.get('pendingUserLicenses')) {
-      this.flashes.custom('flashes/pending-user-licenses', { owner: this.model, isUser: this.model.isUser }, 'warning');
+      this.flashes.custom('flashes/pending-user-licenses',
+        { owner: this.model, isUser: this.model.isUser }, 'pending-user-licenses');
     } else if (!this.usersUsage) {
-      this.flashes.custom('flashes/users-limit-exceeded', { owner: this.model, isUser: this.model.isUser }, 'warning');
+      this.flashes.custom('flashes/users-limit-exceeded',
+        { owner: this.model, isUser: this.model.isUser }, 'users-limit-exceeded');
     }
   },
 

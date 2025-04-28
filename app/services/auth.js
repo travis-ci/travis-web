@@ -120,6 +120,7 @@ export default Service.extend({
 
     [this.localStorage, this.sessionStorage].forEach(storage => {
       storage.clearPreferencesData();
+      storage.clearFlashMessages();
     });
 
     this.set('state', STATE.SIGNED_OUT);

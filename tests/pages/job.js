@@ -20,7 +20,7 @@ export default create({
   state: text('.build-status .inner-underline'),
   badge: text('[data-test-build-header-draft-badge]'),
   log: text('#log'),
-  logError: text('.job-log .notice-banner--red'),
+  logError: text('.job-log .notification-error'),
   rawLogUrl: attribute('href', '.download-log-button'),
 
   createdBy: {
@@ -86,7 +86,7 @@ export default create({
     }
   },
 
-  hasTruncatedLog: isVisible('.log-container p.warning'),
+  hasTruncatedLog: isVisible('.notification-warning'),
 
   toggleLog: clickable('.toggle-log-button'),
 
