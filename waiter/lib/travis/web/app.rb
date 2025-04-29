@@ -91,7 +91,8 @@ class Travis::Web::App
     content = File.read(file)
     nonce = SecureRandom.base64(24)
     set_nonce(content, nonce)
-    content_security_policy_value = "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com https://www.google.com https://m.stripe.network;"
+    # content_security_policy_value = "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com https://www.google.com https://m.stripe.network;"
+    content_security_policy_value = "script-src 'self' 'unsafe-eval' 'nonce-#{nonce}' https://www.googletagmanager.com https://js.stripe.com https://www.google.com https://m.stripe.network https://www.google-analytics.com https://connect.facebook.net https://bat.bing.com;"
 
     if fingerprinted?(file)
       headers = {
