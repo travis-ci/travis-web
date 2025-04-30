@@ -74,6 +74,15 @@
         @showCancelButton={{true}}
         @retryAuthorization={{this.retryAuthorization}}
       />
+      {{else if this.isSharedFrom }}
+      <Billing::Process
+        @account={{this.account}}
+        @subscription={{this.emptyV2Subscription}}
+        @selectedPlan={{this.selectedPlan}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showCancelButton={{true}}
+        @retryAuthorization={{this.retryAuthorization}}
+      />
     {{else}}
       <Billing::Process
         @account={{this.account}}
@@ -101,7 +110,9 @@
             @resubscribe={{this.resubscribe}}
             @isV2Subscription={{this.isV2Subscription}}
             @openPlansSelector={{fn (mut this.showPlansSelector) true}}
+            @openPlanChangeConfirmation={{(fn (mut this.showPlanChangeConfirmation) true)}}
             @isCurrentTrial={{this.isCurrentTrial}}
+            @isSharedFrom={{this.isSharedFrom}}
           />
         </div>
         <div class='billing-subscription__buttons--addons'>
@@ -148,4 +159,11 @@
   @onClose={{fn (mut this.showCancelConfirmModal) false}}
   @subscription={{this.subscription}}
   @cancelSubscription={{perform this.cancelSubscription}}
+/>
+
+ <Dialogs::ConfirmPlanChange
+  @isOpen={{this.showPlanChangeConfirmation}}
+  @onClose={{fn (mut this.showPlanChangeConfirmation) false}}
+  @openPlansSelector={{fn (mut this.showPlansSelector) true}}
+  @subscription={{this.subscription}}
 />

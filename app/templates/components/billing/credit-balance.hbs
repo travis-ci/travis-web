@@ -57,6 +57,20 @@
   <p class='credits-bar-left'>
     {{format-number this.creditsAvailable}} available <span class='credits-bar-right'>{{format-number this.creditsUsed}} used</span>
   </p>
+
+  {{#if this.sharesPlan}}
+    <p class='used-credits'>
+    <span class='avail-credits'>Plan shares</span>
+      <ul>
+        <li>
+        {{format-number this.planShareReceiversCredits}} credits used by plan share receivers
+        </li>
+        <li>
+        {{format-number this.planShareDonorCredits}} credits used by this account
+        </li>
+      </ul>
+    </p>
+  {{/if}}
   {{#if (not this.hideToggle)}}
     <Billing::OssCreditToggle @account={{this.account}} />
   {{/if}}

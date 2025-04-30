@@ -22,6 +22,12 @@
       Subscribe to different plan
     </button>
   {{else}}
+
+    {{#if this.isSharedFrom}}
+      <button {{on 'click' this.openPlanChangeConfirmation}} class='button--blue' data-test-change-subscription='true'>
+        Buy New Plan
+      </button>
+    {{else}}
     <button {{on 'click' this.openPlansSelector}} class='button--blue' data-test-change-subscription='true'>
       {{#if this.isCurrentTrial}}
         Upgrade now!
@@ -29,5 +35,6 @@
         Change plan
       {{/if}}
     </button>
+    {{/if}}
   {{/if}}
 {{/if}}
