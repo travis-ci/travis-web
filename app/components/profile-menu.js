@@ -24,10 +24,12 @@ export default Component.extend({
 
   userName: or('user.name', 'user.login'),
 
+
   get redirectUrl() {
     return window.location.href;
   },
 
+  isAssembla: equal('user.vcsType', 'AssemblaUser'),
   isSignInPage: equal('router.currentRouteName', 'signin'),
   showSignInButton: not('isSignInPage'),
 

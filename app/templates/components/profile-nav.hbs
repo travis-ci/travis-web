@@ -146,6 +146,20 @@
               </LinkTo>
             </li>
           {{/if}}
+          {{#if this.showSharePlanTab}}
+            <li data-test-share-plan-tab>
+              {{#if this.isSharePlanTabDisabled}}
+                <span class="plan-share-tab-button disabled">Share Plan</span>
+                <EmberPopover @side='top'>
+                  <span>Sharing a plan is possible only for active paid plans.</span>
+                </EmberPopover>
+              {{else}}
+                <LinkTo @route="account.share_plan">
+                Share plan
+                </LinkTo>
+              {{/if}}
+            </li>
+          {{/if}}
         {{/if}}
         {{#if this.model.isOrganization}}
           <li>
@@ -186,6 +200,20 @@
               <LinkTo @route="organization.plan_usage" @model={{this.model}}>
                 Plan usage
               </LinkTo>
+            </li>
+          {{/if}}
+          {{#if this.showSharePlanTab}}
+            <li data-test-share-plan-tab>
+              {{#if this.isSharePlanTabDisabled}}
+                <span class="plan-share-tab-button disabled">Share Plan</span>
+                <EmberPopover @side='top'>
+                  <span>Sharing a plan is possible only for active paid plans.</span>
+                </EmberPopover>
+              {{else}}
+                <LinkTo @route="organization.share_plan" @model={{this.model}}>
+                Share plan
+                </LinkTo>
+              {{/if}}
             </li>
           {{/if}}
         {{/if}}

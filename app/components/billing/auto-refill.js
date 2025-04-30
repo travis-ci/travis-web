@@ -59,9 +59,21 @@ export default Component.extend({
 
   show: computed('subscription', function () {
     let isOrganization = this.subscription.owner.get('isOrganization');
-    let isAdmin = this.subscription.owner.get('permissions').admin;
-    return !(this.subscription.plan.get('id') === 'free_tier_plan' || this.subscription.plan.get('id') === 'starter_plan'
-        || this.subscription.get('isManual') || isOrganization && !isAdmin);
+    let permissions = this.subscription && this.subscription.owner ? this.subscription.owner.get('permissions') : null;
+    let isAdmin = permissions && permissions.admin;
+
+    let currentAccountId = this.account.id;
+    let planShares = this.subscription.planShares || [];
+    let isReceiver = planShares.some(share => {
+      let receiverId = Array.isArray(share.receiver?.id) ? share.receiver.id : [share.receiver?.id];
+      return receiverId.map(String).includes(String(currentAccountId));
+    });
+
+    return !(this.subscription.plan.get('id') === 'free_tier_plan' ||
+    this.subscription.plan.get('id') === 'starter_plan' ||
+    this.subscription.get('isManual') ||
+    isReceiver ||
+    (isOrganization && !isAdmin));
   }),
 
   toggleAutoRefill: task(function* (value) {
