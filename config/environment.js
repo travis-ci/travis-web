@@ -445,7 +445,6 @@ module.exports = function (environment) {
     ENV.featureFlags['dashboard'] = false;
     ENV.featureFlags['pro-version'] = false;
     ENV.featureFlags['github-apps'] = false;
-    ENV.featureFlags['enable-github-plan-share'] = true;
 
     ENV.statusPageStatusUrl = undefined;
 
