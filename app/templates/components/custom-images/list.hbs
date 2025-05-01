@@ -24,3 +24,11 @@
   @inner={{2}}
   @outer={{1}}
 />
+
+<CustomImages::DeleteImageConfirmationModal
+  @isOpen={{this.showDeleteImageConfirmModal}}
+  @onClose={{action "closeDeleteImageConfirmModal"}}
+  @deleteImages={{action "deleteImages"}}
+  @images={{this.selectedImageIdsForDeletion}}
+  @imageName={{this.selectedImageName}}
+/>
