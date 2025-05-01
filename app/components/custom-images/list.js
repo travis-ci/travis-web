@@ -49,7 +49,7 @@ export default Component.extend({
   deleteImage: task(function* (imageIds) {
     const { owner } = this;
     try {
-      yield this.api.delete(`/owner/${owner.provider}/${owner.id}/custom_images`, {
+      yield this.api.delete(`/owner/${owner.provider}/${owner.login}/custom_images`, {
         data: {
           image_ids: imageIds
         }
