@@ -1,0 +1,31 @@
+<Modal
+  @isVisible={{@isOpen}}
+  @onClose={{fn @onClose}}
+  @closeButton={{true}}
+  class="delete-image-modal"
+>
+  <div class="flex flex--center flex--col">
+    {{#if this.isMultipleImages}}
+    <h2>Delete {{this.images.length}} images?</h2>
+    {{else}}
+    <h2>Delete {{this.imageName}}?</h2>
+    {{/if}}
+    <p class="delete-image-modal__message">
+      {{#if this.isMultipleImages}}
+      These images can be used in Your build settings. This action cannot be undone.
+      {{else}}
+      The {{this.imageName}} can be used in your build settings. This action cannot be undone.
+      {{/if}}
+    </p>
+    <div class="full-width">
+      <div class="flex flex--v-center flex--center">
+          <a class="button--red delete-confirm-button" {{on 'click' (action @deleteImages this.images)}} >
+            Delete
+          </a>
+          <a class="link" {{on 'click' (fn @onClose)}}>
+            Cancel
+          </a>
+      </div>
+    </div>
+  </div>
+</Modal>
