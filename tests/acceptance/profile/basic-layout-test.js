@@ -196,7 +196,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
 
     assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
 
-    assert.equal(profilePage.accounts.length, 12, 'expected all accounts to be listed');
+    assert.equal(profilePage.accounts.length, 11, 'expected all accounts to be listed');
 
     assert.equal(profilePage.accounts[0].name, 'User Name of exceeding length');
     assert.ok(profilePage.accounts[0].avatar.checkmark.isVisible, 'expected a subscription checkmark for user account');
