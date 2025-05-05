@@ -74,7 +74,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
     });
 
     // Pad with extra organisations to force an extra API response page
-    for (let orgIndex = 0; orgIndex < 10; orgIndex++) {
+    for (let orgIndex = 0; orgIndex < 9; orgIndex++) {
       let organization = this.server.create('organization', {
         name: `Generic org ${orgIndex}`,
         type: 'organization',
@@ -83,7 +83,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
         vcs_type: 'GithubOrganization'
       });
 
-      if (orgIndex === 9) {
+      if (orgIndex === 8) {
         this.server.create('subscription', {
           owner: organization,
           status: 'subscribed'
@@ -196,7 +196,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
 
     assert.ok(profilePage.subscriptionStatus.isHidden, 'expected no subscription status banner');
 
-    assert.equal(profilePage.accounts.length, 11, 'expected all accounts to be listed');
+    assert.equal(profilePage.accounts.length, 11, 'expected filtered accounts to be listed');
 
     assert.equal(profilePage.accounts[0].name, 'User Name of exceeding length');
     assert.ok(profilePage.accounts[0].avatar.checkmark.isVisible, 'expected a subscription checkmark for user account');
@@ -204,7 +204,7 @@ module('Acceptance | profile/basic layout', function (hooks) {
     assert.equal(profilePage.accounts[1].name, 'Org Name');
     assert.ok(profilePage.accounts[1].avatar.checkmark.isHidden, 'expected no subscription checkmark for org account');
 
-    assert.ok(profilePage.accounts[11].avatar.checkmark.isVisible, 'expected a subscription checkmark for the last org account');
+    assert.ok(profilePage.accounts[10].avatar.checkmark.isVisible, 'expected a subscription checkmark for the last org account');
 
     assert.notOk(profilePage.githubAppsInvitation.isVisible, 'expected GitHub Apps invitation not to be visible');
 
