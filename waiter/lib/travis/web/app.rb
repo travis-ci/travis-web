@@ -179,6 +179,7 @@ class Travis::Web::App
 
   def set_nonce(content, nonce)
     content.gsub!('nonce="val"', "nonce=\"#{nonce}\"")
+    content.gsub!('content="val"', "content=\"#{nonce}\"")
   end
 
   def set_title(content) # rubocop:disable Naming/AccessorMethodName
