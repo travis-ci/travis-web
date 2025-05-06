@@ -88,11 +88,27 @@ class Travis::Web::App
   end
 
   def response_for(file, options = {})
-    content = File.read(file).dup
+    content = File.read(file)
     nonce = SecureRandom.base64(24)
     set_nonce(content, nonce)
-    content_security_policy_value = "script-src 'self' 'nonce-#{nonce}' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://bat.bing.com https://js.stripe.com https://www.google.com https://m.stripe.network https://pi.pardot.com;"
-
+    content_security_policy_value = <<~CSP
+      script-src
+        'self'
+        'nonce-#{nonce}'
+        'sha256-1cjlAsz1tC3J/k8jgt404sFyStmJ0aAr3UAn7xDoyng='
+        'sha256-2e332MjNZQr2VbZZlu/BepEJm8q22r5oQ7PFZiF27CM='
+        'sha256-bN1j6DGOV9BDjFvFVT6cmzm1EQqjO6eBHbA7m02XJRE='
+        'sha256-gI7nVmLs0aOa4REgUOSAbCdEbddbY5Ojef6rM1/+1cg='
+        'sha256-FQnwEr51/dvILYpXGzPt0xHtru/wgNyzR5sPaD1vEW8='
+        https://www.googletagmanager.com
+        https://www.google-analytics.com
+        https://connect.facebook.net
+        https://bat.bing.com
+        https://js.stripe.com
+        https://www.google.com
+        https://m.stripe.network
+        https://pi.pardot.com;
+    CSP
     if fingerprinted?(file)
       headers = {
         'Content-Length' => content.bytesize.to_s,
