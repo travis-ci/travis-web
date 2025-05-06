@@ -101,7 +101,7 @@ class Travis::Web::App
         'Content-Type' => mime_type(file),
         'Expires' => expires(file),
         'ETag' => fingerprint(file),
-        'Content-Security-Policy-Report-Only' => content_security_policy_value
+        'Content-Security-Policy' => content_security_policy_value
       }
     else
       set_config(content, options) if config_needed?(file)
@@ -116,7 +116,7 @@ class Travis::Web::App
         'Expires' => expires(file),
         'Vary' => vary_for(file),
         'ETag' => Digest::MD5.hexdigest(content),
-        'Content-Security-Policy-Report-Only' => content_security_policy_value
+        'Content-Security-Policy' => content_security_policy_value
       }
     end
 
