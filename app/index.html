@@ -6,7 +6,6 @@
     <title>Travis CI</title>
     <meta name="description" content="Travis CI enables your team to test and ship your apps with confidence. Easily sync your projects with Travis CI and you'll be testing your code in minutes.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csp-nonce" content="val">
     <link rel="icon" type="image/png" href="/images/favicon.png" />
 
     <script nonce="val" src="/check-browser-support.js" async></script>
@@ -21,6 +20,14 @@
     {{content-for "head-footer"}}
   </head>
   <body>
+    <script nonce="val">
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;var n=d.querySelector('[nonce]');
+      n&&j.setAttribute('nonce',n.nonce||n.getAttribute('nonce'));f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','<%= ENV["GOOGLE_TAGS_CONTAINER_ID"] %>');
+    </script>
     <noscript>
       <div style="width: 60%; margin: auto;">
         <img src="/images/logos/TravisCI-Mascot-1.png" alt="Travis CI mascot" width="200" style="float: left; margin: 1em 3em;">
