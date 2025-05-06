@@ -88,7 +88,7 @@ class Travis::Web::App
   end
 
   def response_for(file, options = {})
-    content = File.read(file)
+    content = File.read(file).dup
     nonce = SecureRandom.base64(24)
     set_nonce(content, nonce)
     content_security_policy_value = "script-src 'self' 'nonce-#{nonce}' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://bat.bing.com https://js.stripe.com https://www.google.com https://m.stripe.network https://pi.pardot.com;"
