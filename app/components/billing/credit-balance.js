@@ -41,6 +41,29 @@ export default Component.extend({
     return this.creditsPrivateUsed;
   }),
 
+  planShareReceiversCredits: computed('creditsTab', 'subscription', function () {
+    let credits = 0;
+    if (this.subscription) {
+      for (let share of (this.subscription.planShares || [])) {
+        credits += share.credits_consumed;
+      }
+    }
+    return credits;
+  }),
+
+  planShareDonorCredits: computed('planShareReceiversCredits', 'creditsPrivateUsed', 'subscription', function () {
+    let credits = this.planShareReceiversCredits;
+    return this.creditsPrivateUsed - credits;
+  }),
+
+  sharesPlan: computed('subscription', 'creditsTab', function () {
+    if (this.creditsTab == 1) {
+      return false;
+    }
+    return this.subscription && this.subscription.planShares?.length > 0 &&
+      (!this.subscription.sharedBy || this.subscription.sharedBy == this.account.id);
+  }),
+
   creditsAvailable: computed('creditsTab', 'creditsPublicAvailable', 'creditsPrivateAvailable', function () {
     if (this.creditsTab === 1)
       return this.creditsPublicAvailable;

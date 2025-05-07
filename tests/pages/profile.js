@@ -67,7 +67,7 @@ export default create({
   name: text('.profile-header h1'),
   nameBadge: { scope: '.profile-header .badge' },
   login: text('.login'),
-  flash: text('[data-test-components-flash-item]'),
+  flash: text('[data-test-flash-message-text]'),
 
   avatar: {
     scope: '.profile-header .avatar-wrapper',
@@ -263,6 +263,11 @@ export default create({
 
     planYellowMessage: {
       scope: '[data-test-plan-yellow-message]',
+      isPresent: isPresent(),
+    },
+
+    planSharedMessage: {
+      scope: '[data-test-shared-plan-message]',
       isPresent: isPresent(),
     },
 
@@ -702,12 +707,16 @@ export default create({
       }
     },
 
+    trialBanner: {
+      scope: '.top',
+      buildsRunningOutBanner: text('[data-test-trial-running-out]'),
+      buildsRanOutBanner: text('[data-test-trial-ran-out]')
+    },
+
     trial: {
       scope: '.billing',
       bannerInformation: text('[data-test-help-text]'),
       overviewHeading: text('[data-test-overview-heading]'),
-      buildsRunningOutBanner: text('[data-test-trial-running-out]'),
-      buildsRanOutBanner: text('[data-test-trial-ran-out]'),
       subtext: text('[data-test-trial-subtext]'),
       name: {
         scope: '[data-test-trial-message]',
@@ -839,6 +848,19 @@ export default create({
         scope: '[data-test-plan-usage-user-statistics-modal-credits-consumed]',
         text: text()
       },
+    }
+  },
+  sharePlan: {
+    visit: clickable('li[data-test-share-plan-tab] a'),
+    page: {
+      receivers: collection('[data-test-share-plan-row]', {
+        login: text('td', { at: 1 }),
+        shareTime: text('td', { at: 2 }),
+        shareButton: {
+          scope: '[data-test-share-plan-button]',
+          click: clickable()
+        },
+      })
     }
   },
 

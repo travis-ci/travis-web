@@ -8,6 +8,7 @@ export default Component.extend({
   auth: service(),
   externalLinks: service(),
   features: service(),
+  storage: service(),
   flashes: service(),
   isProVersion: reads('features.proVersion'),
   isShowingTriggerBuildModal: false,
@@ -72,26 +73,28 @@ export default Component.extend({
     const allowance = repo.get('allowance');
     const ownerRoMode = repo.get('owner').ro_mode || false;
 
-    if (this.isProVersion && allowance && !repo.canOwnerBuild && this.auth.currentUser && this.auth.currentUser.confirmedAt) {
+    if (this.shouldShowLicenseWarning(repo, allowance)) {
       const isUser = repo.ownerType === 'user';
-      if (repo.private) {
-        this.flashes.custom('flashes/negative-balance-private', { owner: repo.owner, isUser: isUser }, 'warning');
-      } else {
-        this.flashes.custom('flashes/negative-balance-public', { owner: repo.owner, isUser: isUser }, 'warning');
-      }
       if (allowance.get('pendingUserLicenses')) {
-        this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'warning');
+        this.flashes.custom('flashes/pending-user-licenses', { owner: repo.owner, isUser: isUser }, 'pending-user-licenses');
       } else if (!allowance.get('userUsage')) {
-        this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'warning');
+        this.flashes.custom('flashes/users-limit-exceeded', { owner: repo.owner, isUser: isUser }, 'users-limit-exceeded');
       }
     } else if (this.userRoMode && ownerRoMode) {
-      this.flashes.custom('flashes/read-only-mode', {}, 'warning');
-    } else {
-      this.flashes.removeCustomsByClassName('warning');
+      this.flashes.custom('flashes/read-only-mode', {}, 'read-only-mode');
     }
   },
 
-  willDestroyElement() {
-    this.flashes.removeCustomsByClassName('warning');
+  shouldShowLicenseWarning(repo, allowance) {
+    const METERED_PLAN = 3;
+    const user = this.auth.currentUser;
+    const isUserConfirmed = user && user.confirmedAt;
+    const isNotMeteredPlan = allowance && allowance.get('subscriptionType') !== METERED_PLAN;
+
+    return this.isProVersion &&
+      allowance &&
+      !repo.canOwnerBuild &&
+      isUserConfirmed &&
+      isNotMeteredPlan;
   }
 });

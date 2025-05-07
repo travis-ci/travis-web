@@ -301,7 +301,7 @@ module('Acceptance | job/basic layout', function (hooks) {
 
     // An unfortunate workaround for log displaying being outside Ember facilities.
     // eslint-disable-next-line
-    await waitFor('.log-container p.warning');
+    await waitFor('.notification-warning');
 
     assert.ok(jobPage.hasTruncatedLog);
 

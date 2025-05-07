@@ -1,0 +1,130 @@
+.notification-info {
+  background-color: #eff6ff;
+  padding: 10px 16px 10px 10px;
+  color: #222222;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+
+.notification-warning {
+  background-color: #faf6db;
+  padding: 10px 16px 10px 10px;
+  color: #222222;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+.notification-error {
+  background-color: #fce8e2;
+  padding: 10px 16px 10px 10px;
+  color: #a7191d;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+.global-notification-container {
+  height: auto;
+}
+
+.global-notification-warning {
+  background-color: #faf6db;
+  margin: 0 0 0;
+  padding: 10px 16px 10px 10px;
+  color: #222222;
+  font-size: 14px;
+
+  .close {
+    @include colorSVGFill($color-bg-log-fold);
+  }
+}
+
+.top .global-notification-warning {
+  .close {
+    position: relative;
+  }
+
+  .close .icon {
+    width: 40px;
+    height: 17px;
+  }
+}
+
+.global-notification-success {
+  background-color: $seed-green;
+  margin: 0 0 0;
+  padding: 10px 16px 10px 10px;
+  color: #222222;
+  font-size: 14px;
+}
+
+.global-notification-error {
+  background-color: #fce8e2;
+  margin: 0 0 0;
+  padding: 10px 16px 10px 10px;
+  color: #a7191d;
+  font-size: 14px;
+}
+
+.notification-info a, .notification-warning a, .global-notification-warning a {
+  font-weight: 600;
+  text-decoration: underline;
+  color: #222222;
+}
+
+.notification-error a, .global-notification-error a {
+  font-weight: 600;
+  text-decoration: underline;
+  color: #a7191d;
+}
+
+.icon-help-info {
+  border: 1px solid #222222 !important;
+  @include colorSVG(#222222);
+
+  &:hover {
+    @include colorSVG(#222222);
+  }
+}
+
+.info-info {
+  width: 20px;
+  height: 20px;
+  margin-bottom: -6px;
+  @include colorSVG(#222222);
+}
+
+.icon-help-warning {
+  border: 1px solid #222222 !important;
+  @include colorSVG(#222222);
+
+  &:hover {
+    @include colorSVG(#222222);
+  }
+}
+
+.info-warning {
+  width: 20px;
+  height: 20px;
+  margin-bottom: -6px;
+  @include colorSVG(#222222);
+}
+
+.icon-help-error {
+  border: 1px solid #a7191d !important;
+  @include colorSVG(#a7191d);
+
+  &:hover {
+    @include colorSVG(#a7191d);
+  }
+}
+
+.info-error {
+  width: 20px;
+  height: 20px;
+  margin-bottom: -6px;
+  @include colorSVG(#a7191d);
+}

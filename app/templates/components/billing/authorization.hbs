@@ -1,8 +1,10 @@
 {{#if this.requiresSourceAction}}
-  <span class="notice-banner--yellow" data-test-payment-error='true'>
-    <SvgImage @name='icon-help' @class='icon-help icon-help-yellow' />
+  <Notification
+    @type='alert'
+    @severity='error'
+    >
     There was a problem authorizing your card. Please retry.
-  </span>
+  </Notification>
   {{#if this.retryAuthorization.isRunning}}
     <LoadingIndicator/>
   {{else}}
@@ -31,9 +33,13 @@
         <p>{{stripeError.message}}</p>
       {{/if}}
     </StripeCard>
-      <span class="notice-banner--white" data-test-help-text='true'>
+      <Notification
+        @type='alert'
+        @severity='info'
+        data-test-help-text='true'
+      >
         Credit card details are never stored on nor reach our servers. Payment data is handled by Stripe.
-      </span>
+      </Notification>
     <div class='billing-checkout__payment'>
       {{#if this.retryPayment.isRunning}}
         <LoadingIndicator/>
@@ -46,9 +52,13 @@
   </TravisForm>
 </div>
 {{else if this.isPending}}
-  <span class="notice-banner--yellow" data-test-trial-running-out='true'>
+  <Notification
+    @type='alert'
+    @severity='info'
+    data-test-trial-running-out='true'
+  >
     We are currently waiting for Stripe to finish processing your order.
-  </span>
+  </Notification>
 {{else if (and this.isComplete (or this.subscription.isStripe this.subscription.isManual))}}
   {{#if (or this.showPlansSelector this.showAddonsSelector)}}
 
@@ -59,6 +69,15 @@
         @subscription={{this.newV2Subscription}}
         @isProcessCompleted={{this.isProcessCompleted}}
         @v1SubscriptionId={{this.subscription.id}}
+        @selectedPlan={{this.selectedPlan}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showCancelButton={{true}}
+        @retryAuthorization={{this.retryAuthorization}}
+      />
+      {{else if this.isSharedFrom }}
+      <Billing::Process
+        @account={{this.account}}
+        @subscription={{this.emptyV2Subscription}}
         @selectedPlan={{this.selectedPlan}}
         @showPlansSelector={{this.showPlansSelector}}
         @showCancelButton={{true}}
@@ -91,7 +110,9 @@
             @resubscribe={{this.resubscribe}}
             @isV2Subscription={{this.isV2Subscription}}
             @openPlansSelector={{fn (mut this.showPlansSelector) true}}
+            @openPlanChangeConfirmation={{(fn (mut this.showPlanChangeConfirmation) true)}}
             @isCurrentTrial={{this.isCurrentTrial}}
+            @isSharedFrom={{this.isSharedFrom}}
           />
         </div>
         <div class='billing-subscription__buttons--addons'>
@@ -138,4 +159,11 @@
   @onClose={{fn (mut this.showCancelConfirmModal) false}}
   @subscription={{this.subscription}}
   @cancelSubscription={{perform this.cancelSubscription}}
+/>
+
+ <Dialogs::ConfirmPlanChange
+  @isOpen={{this.showPlanChangeConfirmation}}
+  @onClose={{fn (mut this.showPlanChangeConfirmation) false}}
+  @openPlansSelector={{fn (mut this.showPlansSelector) true}}
+  @subscription={{this.subscription}}
 />

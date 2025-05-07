@@ -1,13 +1,11 @@
 {{#if this.account.hasSubscriptionPermissions}}
   {{#if this.isActiveGithubSubscription}}
-    <span class="notice-banner--white flex flex--v-center" data-test-help-text='true'>
-      <div>
-        <SvgImage @name='icon-help' @class='icon-help' />
-      </div>
-      <span class="pl-3">
+    <Notification
+      @type='alert'
+      @severity='warning'
+      >
         You can have only one subscription at a time. Please cancel your current GitHub marketplace subscription and resubscribe.
-      </span>
-    </span>
+    </Notification>
     <div class='button disabled' data-test-resubscribe-subscription-disabled='true'>
       Resubscribe to plan
     </div>
@@ -24,6 +22,12 @@
       Subscribe to different plan
     </button>
   {{else}}
+
+    {{#if this.isSharedFrom}}
+      <button {{on 'click' this.openPlanChangeConfirmation}} class='button--blue' data-test-change-subscription='true'>
+        Buy New Plan
+      </button>
+    {{else}}
     <button {{on 'click' this.openPlansSelector}} class='button--blue' data-test-change-subscription='true'>
       {{#if this.isCurrentTrial}}
         Upgrade now!
@@ -31,5 +35,6 @@
         Change plan
       {{/if}}
     </button>
+    {{/if}}
   {{/if}}
 {{/if}}

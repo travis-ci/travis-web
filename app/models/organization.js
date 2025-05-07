@@ -8,6 +8,8 @@ export default Owner.extend({
   type: 'organization',
   allowMigration: attr('boolean'),
   customKeys: attr(),
+  onSharedPlan: attr(),
+  planSharedFrom: attr(),
 
   buildPermissions: reads('fetchBuildPermissions.lastSuccessful.value'),
 
