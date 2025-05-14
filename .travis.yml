@@ -18,7 +18,7 @@ cache:
   npm: false
 
 before_install:
-  - git config --global url."https://$GITHUB_PERSONAL_TOKEN@github.com/".insteadOf ssh://git@github.com
+  - git config --global url."https://x-access-token:$GITHUB_PERSONAL_TOKEN@github.com/".insteadOf ssh://git@github.com
   - npm install -g greenkeeper-lockfile@1
   - gem install bundler:2.3.7
 
