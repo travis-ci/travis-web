@@ -109,8 +109,9 @@ export default Component.extend({
     return this.features.get('enterpriseVersion');
   }),
 
-  bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative',
-    'paymentDetailsEditLockedTime', 'isBalanceNegativeRepo', 'isBalanceNegativeProfile', 'isPlanShareAdminRevoked', 'showEnterpriseBanner',  function () {
+  bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'showLicenseBanner', 'isUnconfirmed',
+    'isBalanceNegative', 'paymentDetailsEditLockedTime', 'isBalanceNegativeRepo', 'isBalanceNegativeProfile',
+    'isPlanShareAdminRevoked', 'showEnterpriseBanner',  function () {
       const banners = [];
 
       if (this.hasNoPlan) {
