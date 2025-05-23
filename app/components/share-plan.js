@@ -121,7 +121,16 @@ export default Component.extend({
   },
 
   hasOwnPlan(org) {
-    return (org.v2subscription && (!org.v2subscription.sharedBy || org.v2subscription.sharedBy != this.owner.id)) || org.subscription != null;
+    const hasActiveV2 = org.v2subscription &&
+      (!org.v2subscription.sharedBy || org.v2subscription.sharedBy != this.owner.id) &&
+      !org.v2subscription.isExpired &&
+      !org.v2subscription.isCanceled;
+
+    const hasActiveSubscription = org.subscription &&
+      !org.subscription.isExpired &&
+      !org.subscription.isCanceled;
+
+    return hasActiveV2 || hasActiveSubscription;
   },
 
   getShared(id) {
