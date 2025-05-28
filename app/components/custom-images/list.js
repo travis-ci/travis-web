@@ -37,7 +37,8 @@ export default Component.extend({
         const createdByName = image.createdBy ? image.createdBy.name || image.createdBy.login : '';
         return image.name.toLowerCase().includes(filter.toLowerCase())
           || createdByName.toLowerCase().includes(filter.toLowerCase())
-          || image.osVersion.toLowerCase().includes(filter.toLowerCase()) || image.usage.toString() === filter;
+          || (image.osVersion && image.osVersion.toLowerCase().includes(filter.toLowerCase()))
+          || image.usage.toString() === filter;
       });
     }
     return customImages;
