@@ -33,9 +33,12 @@ export default Component.extend({
   filteredCustomImages: computed('customImages', 'filter', function () {
     const { customImages, filter } = this;
     if (filter) {
-      return customImages.filter(image => image.name.toLowerCase().includes(filter.toLowerCase())
-          || image.createdBy.name.toLowerCase().includes(filter.toLowerCase())
-          || image.osVersion.toLowerCase().includes(filter.toLowerCase()) || image.usage.toString() === filter);
+      return customImages.filter((image) => {
+        const createdByName = image.createdBy ? image.createdBy.name || image.createdBy.login : '';
+        return image.name.toLowerCase().includes(filter.toLowerCase())
+          || createdByName.toLowerCase().includes(filter.toLowerCase())
+          || image.osVersion.toLowerCase().includes(filter.toLowerCase()) || image.usage.toString() === filter;
+      });
     }
     return customImages;
   }),

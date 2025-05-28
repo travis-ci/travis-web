@@ -44,9 +44,9 @@
         Author
       </h3>
       <p class="row-content color">
-        <UserAvatar @url={{this.image.createdBy.avatar_url}} @name={{this.image.createdBy.name}} @size={{15}} @small={{true}} />
+        <UserAvatar @url={{this.image.createdBy.avatar_url}} @name={{this.image.createdByName}} @size={{15}} @small={{true}} />
         <span class="label-align">
-        {{this.image.createdBy.name}}
+        {{this.image.createdByName}}
         </span>
       </p>
     </section>
@@ -63,7 +63,7 @@
     </section>
     <section class="fade-out dash-created-at">
       <h3 class="label">
-        Created at
+        Created
       </h3>
       <p class="row-content" title="{{this.image.createdAt}}">
         <SvgImage @name="icon-calendar" @class="icon" />
