@@ -11,8 +11,8 @@
       {{{this.flash.message}}}
     </span>
   {{#if this.flash.closeButton}}
-    <button type="button" class="no-button close" onclick={{action "close"}}>
-      <SvgImage @name="flash-close" @class="icon" />
+    <button type="button" class="no-button close-banner" onclick={{action "close"}}>
+      <SvgImage @name="flash-close" @class="icon-close" />
     </button>
   {{/if}}
 </Notification>

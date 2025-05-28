@@ -51,7 +51,7 @@ module('Acceptance | home/flashes', function (hooks) {
 
     assert.dom('[data-test-flash-message-text]').hasText('A new error');
 
-    await click('[data-test-components-flash-item] .close');
+    await click('[data-test-components-flash-item] .close-banner');
 
     assert.dom('[data-test-flash-message-text]').hasText('An old error');
   });
