@@ -12,7 +12,7 @@ export default Model.extend({
   createdBy: attr(),
   private: attr('boolean'),
 
-  createdByName: computed('createdBy.name', function() {
+  createdByName: computed('createdBy.name', function () {
     if (!this.createdBy) {
       return '';
     }
