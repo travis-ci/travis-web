@@ -5,8 +5,8 @@
   data-test-share-plan-admin-revoked-banner='true'
 >
 Your last admin user has lost access to {{this.planShareReceiver}} Travis CI account associated with your shared plan. As a result, they no longer have visibility into the receiver account.
-          <button type="button" class="no-button close" {{action "closeBanner"}}>
-            <SvgImage @name="flash-close" @class="icon" />
+          <button type="button" class="no-button close-banner" {{action "closeBanner"}}>
+            <SvgImage @name="flash-close" @class="icon-close" />
           </button>
 </Notification>
 {{/if}}
