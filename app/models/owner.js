@@ -90,14 +90,12 @@ export default VcsEntity.extend({
       custom: { owner, type, },
     }, { live: false });
   },
-
-  customImages: computed('id', 'fetchCustomImages.lastSuccessful.value', function () {
-    const images = this.fetchCustomImages.lastSuccessful && this.fetchCustomImages.lastSuccessful.value;
-    if (!images) {
-      this.fetchCustomImages.perform();
-    }
-    return images || [];
+  customImagesInstance: computed(function () {
+    return this.fetchCustomImages.perform();
   }),
+
+  customImagesLoading: reads('customImagesInstance.isRunning'),
+  customImages: reads('customImagesInstance.value'),
 
   fetchCustomImages: task(function* () {
     return yield this.store.query('custom-image', { login: this.login, provider: this.provider });
