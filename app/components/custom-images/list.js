@@ -128,7 +128,8 @@ export default Component.extend({
 
     filterImages(evt) {
       const filter = evt.target.value;
-      if (filter.length < 4) {
+
+      if (filter.length < 4 && isNaN(filter)) {
         this.set('filter', null);
         this.set('page', 1);
         return;

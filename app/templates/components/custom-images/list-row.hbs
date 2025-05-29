@@ -65,7 +65,7 @@
       <h3 class="label">
         Created
       </h3>
-      <p class="row-content" title="{{this.image.createdAt}}">
+      <p class="row-content" title="{{pretty-date this.image.createdAt}}">
         <SvgImage @name="icon-calendar" @class="icon" />
         <span class="label-align">
           {{#if this.image.createdAt}}

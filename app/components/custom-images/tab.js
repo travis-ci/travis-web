@@ -6,6 +6,7 @@ export default Component.extend({
   classNames: ['custom-images'],
 
   customImages: reads('owner.customImages'),
+  customImagesLoading: reads('owner.customImagesLoading'),
   isCustomImagesEmpty: empty('customImages'),
 
   customImagesCount: reads('customImages.length'),
