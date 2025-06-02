@@ -90,12 +90,8 @@ export default VcsEntity.extend({
       custom: { owner, type, },
     }, { live: false });
   },
-  customImagesInstance: computed(function () {
-    return this.fetchCustomImages.perform();
-  }),
 
-  customImagesLoading: reads('customImagesInstance.isRunning'),
-  customImages: reads('customImagesInstance.value'),
+  customImages: reads('fetchCustomImages.lastSuccessful.value'),
 
   fetchCustomImages: task(function* () {
     return yield this.store.query('custom-image', { login: this.login, provider: this.provider });

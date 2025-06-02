@@ -4,9 +4,17 @@ import { empty, reads } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['custom-images'],
+  customImagesLoading: false,
+
+  init() {
+    this._super(...arguments);
+    this.set('customImagesLoading', true);
+    this.owner.fetchCustomImages.perform().then(() => {
+      this.set('customImagesLoading', false);
+    });
+  },
 
   customImages: reads('owner.customImages'),
-  customImagesLoading: reads('owner.customImagesLoading'),
   isCustomImagesEmpty: empty('customImages'),
 
   customImagesCount: reads('customImages.length'),
