@@ -29,8 +29,6 @@ export default Service.extend({
   }),
 
   fetchOrganizations: task(function* () {
-    this.store.unloadAll('organization');
-
     const allOrgs = yield fetchAll(this.store, 'organization', {});
     return allOrgs;
   }).keepLatest(),
