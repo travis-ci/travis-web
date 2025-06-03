@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import config from 'travis/config/environment';
+import fetchAll from 'travis/utils/fetch-all';
 import { sortBy } from 'lodash';
 
 const { billingEndpoint } = config;
@@ -28,8 +29,10 @@ export default Service.extend({
   }),
 
   fetchOrganizations: task(function* () {
-    const orgs = yield this.store.query('organization', {});
-    return orgs;
+    this.store.unloadAll('organization');
+
+    const allOrgs = yield fetchAll(this.store, 'organization', {});
+    return allOrgs;
   }).keepLatest(),
 
   fetchSubscriptions: task(function* () {
