@@ -61,6 +61,10 @@
   margin-right: 0;
 }
 
+.icon-close.red {
+  @include colorSVGFill($brick-red);
+}
+
 .button:hover,
 .button:focus,
 .button:active,
