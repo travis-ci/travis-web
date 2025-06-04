@@ -15,4 +15,9 @@ export default Component.extend({
     const pre = this.type === 'global' ? 'global-' : '';
     return `${pre}notification-${sev}`;
   }),
+
+  getBackgroundColorClass: computed('severity', function () {
+    return `${this.severity}-background`;
+  }),
+
 });

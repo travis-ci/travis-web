@@ -17,6 +17,10 @@
   font-size: 14px;
 }
 
+.warning-background {
+  background-color: #faf6db;
+}
+
 .notification-error {
   background-color: #fce8e2;
   padding: 10px 16px 10px 10px;
@@ -24,6 +28,10 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-size: 14px;
+}
+
+.error-background {
+  background-color: #fce8e2;
 }
 
 .global-notification-container {
