@@ -340,6 +340,17 @@ $profile-breakpoint: 600px;
       color: $brick-red;
       text-decoration: underline;
     }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: -0.5em;
+      left: 1.5em;
+      width: 1.2em;
+      height: 1.2em;
+      background: $quartz-red;
+      transform: rotate(45deg);
+    }
   }
 
   .close {

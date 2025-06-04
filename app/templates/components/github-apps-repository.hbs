@@ -50,15 +50,17 @@
 <EmailSwitch class="email-switch"
   @active={{this.hasEmailSubscription}}
   @onToggle={{perform this.toggleRepositoryEmailSubscription}}/>
-<EmberTooltip @text={{this.emailSubscriptionDescription}} @side="right" />
+ <EmberTooltip @text={{this.emailSubscriptionDescription}} @side="right" />
 </a>
-
+{{#if this.apiError}}
   <div class="repositories-error">
     <p>
-
-
+      {{#if this.is409error}}
+        Request cannot be completed because the repository ssh key is still pending to be created.
+        Please retry in a bit, or try syncing the repository if this condition does not resolve.
+      {{else}}
         An error happened when we tried to alter settings on {{vcs-name this.user.vcsType}}.
-
+        {{#if this.accessSettingsUrl}}
           It may be caused by API restrictions, please
           <ExternalLinkTo
             @href={{this.accessSettingsUrl}}
@@ -67,11 +69,11 @@
             review and add
           </ExternalLinkTo>
           your authorized {{vcs-vocab this.model.vcsType 'organization' plural=true lower=false}}.
-
+        {{/if}}
         <button type="button" class="no-button close" onclick={{action "close"}}>
           <SvgImage @name="flash-close" @class="icon-close red" />
         </button>
-
+      {{/if}}
     </p>
   </div>
-
+{{/if}}
