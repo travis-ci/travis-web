@@ -2,8 +2,8 @@
   <ul data-test-components-flash-item="true" class="flash ember-view global-notification-container">
     <p class="{{this.getNotificationClass}}" ...attributes>
       {{yield}}
-      <button type="button" class="no-button close" onclick={{action "close"}}>
-        <SvgImage @name="flash-close" @class="icon" />
+      <button type="button" class="no-button close-banner" onclick={{action "close"}}>
+        <SvgImage @name="flash-close" @class="icon-close" />
       </button>
     </p>
   </ul>
