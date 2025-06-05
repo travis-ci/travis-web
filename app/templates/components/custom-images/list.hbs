@@ -6,6 +6,7 @@
 />
 
 <ul class="images-list">
+  {{#if this.customImagesPaginated.length}}
   {{#each this.customImagesPaginated as |image|}}
     <CustomImages::ListRow
       @image={{image}}
@@ -15,7 +16,13 @@
       @selectedImageIds={{this.selectedImageIds}}
     />
   {{/each}}
+{{else}}
+  <li class="no-results">Sorry, no results found.</li>
+{{/if}}
+
 </ul>
+
+{{#if (gt this.customImagesPaginated.length 25)}}
 <CustomImages::Pagination
   @currentPage={{this.page}}
   @perPage={{this.perPage}}
@@ -24,6 +31,7 @@
   @inner={{2}}
   @outer={{1}}
 />
+{{/if}}
 
 <CustomImages::DeleteImageConfirmationModal
   @isOpen={{this.showDeleteImageConfirmModal}}
