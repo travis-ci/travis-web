@@ -2,6 +2,7 @@
   class="rows rows--dashboard"
   {{on 'mouseleave' (action this.closeDropup)}}
 >
+{{#if this.isOwnerAdmin}}
 <div class="dash-head">
   <input
     type="checkbox"
@@ -10,6 +11,7 @@
     {{on 'change' (action this.onSelect)}}
   />
 </div>
+{{/if}}
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-visibility">
