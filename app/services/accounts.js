@@ -29,8 +29,7 @@ export default Service.extend({
   }),
 
   fetchOrganizations: task(function* () {
-    const allOrgs = yield fetchAll(this.store, 'organization', {});
-    console.log('allOrgs size:', allOrgs.length);
+    const allOrgs = yield fetchAll(this.store, 'organization', { include: '' });
 
     return allOrgs;
   }).keepLatest(),
