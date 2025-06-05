@@ -35,10 +35,14 @@ export default Component.extend({
     if (filter) {
       return customImages.filter((image) => {
         const createdByName = image.createdBy ? image.createdBy.name || image.createdBy.login : '';
+        const createdAt = image.createdAt ? image.createdAt.toString() : "";
+        const ago = moment(createdAt).fromNow();
         return image.name.toLowerCase().includes(filter.toLowerCase())
           || createdByName.toLowerCase().includes(filter.toLowerCase())
           || (image.osVersion && image.osVersion.toLowerCase().includes(filter.toLowerCase()))
-          || image.usage.toString() === filter;
+          || image.usage.toString() === filter
+          || createdAt.toLowerCase().includes(filter.toLowerCase())
+          || ago.toLowerCase().includes(filter.toLowerCase());
       });
     }
     return customImages;
