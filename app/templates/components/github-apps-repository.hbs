@@ -52,7 +52,7 @@
   @onToggle={{perform this.toggleRepositoryEmailSubscription}}/>
  <EmberTooltip @text={{this.emailSubscriptionDescription}} @side="right" />
 </a>
-
+{{#if this.apiError}}
   <div class="repositories-error">
     <p>
       {{#if this.is409error}}
@@ -76,4 +76,4 @@
       {{/if}}
     </p>
   </div>
-
+{{/if}}
