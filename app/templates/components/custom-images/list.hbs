@@ -21,8 +21,7 @@
 {{/if}}
 
 </ul>
-
-{{#if (gt this.customImagesPaginated.length 25)}}
+{{#if (gt this.customImages.length 25)}}
 <CustomImages::Pagination
   @currentPage={{this.page}}
   @perPage={{this.perPage}}
