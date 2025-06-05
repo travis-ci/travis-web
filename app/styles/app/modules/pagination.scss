@@ -22,6 +22,7 @@
   border: solid 1px $pebble-grey;
   border-radius: 2px;
   text-transform: uppercase;
+  cursor: pointer;
 
   &:hover,
   &:active {
@@ -38,6 +39,7 @@
   border-radius: 50%;
   text-align: center;
   border: solid 1px transparent;
+  cursor: pointer;
 
   &:hover,
   &:active {
