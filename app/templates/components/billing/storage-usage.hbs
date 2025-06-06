@@ -1,0 +1,16 @@
+<div class="billing-subscription-credits">
+  <h3>
+    Storage
+  </h3>
+  <p class='used-credits'>
+      Current period: {{pretty-date this.storageAddonUsage.purchase_date false}} until {{pretty-date this.storageAddonUsage.valid_to false}}
+  </p>
+  <p class='avail-credits'>
+    {{this.storageAddonUsage.total_usage}} GB of {{this.storageAddonUsage.addon_quantity}} GB (excess usage: {{#if (eq this.storageAddonUsage.quantity_limit_type 'soft')}}allowed{{else}}not allowed{{/if}})
+  </p>
+  <p class='used-credits'>
+    You may be billed in credits for storage.<br>
+    If you exceed your limit, any extra charges will be billed at the end of the period.
+  </p>
+</div>
+<hr />

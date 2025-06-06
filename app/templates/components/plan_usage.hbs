@@ -49,7 +49,7 @@
         </form.field>
       </TravisForm>
     </div>
-   
+
     <div class='total-usage' data-test-plan-usage-minutes-total>All repositories total build time: {{this.totalBuildMinutes}} minutes</div>
 
     <!--
@@ -123,6 +123,54 @@
           <td data-test-plan-usage-credits-total='true' class='credits-row'>{{format-number this.totalBuildCredits}}</td>
         </tr>
       </tbody>
+    </table>
+    {{/if}}
+
+    {{#if this.subscription.hasStorageAddons}}
+    <div class='total-usage' data-test-plan-usage-minutes-total>
+      Storage: {{this.storageAddonUsage.total_usage}} GB / {{this.storageAddonUsage.addon_quantity}} GB
+      <br>
+      You may be billed in credits for storage.<br>
+      If you exceed your limit, any extra charges will be billed at the end of the period.
+      <br>
+      <ExternalLinkTo
+        @href="http://docs.travis-ci.com/user/getting-started/"
+        class="documentation-link"
+        title="Travis documentation on getting set up"
+      >
+        Check documentation.
+      </ExternalLinkTo>
+    </div>
+
+    <table class="storage-usage-table" data-test-storage-usage >
+      <thead>
+        <tr data-test-table-header-row='true'>
+          <th>Item</th>
+          <th class='credits-row'>Total storage usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.storageUsageItems as |item|}}
+          <tr data-test-usage-item>
+            <td>
+              {{item.ownerName}}<br>{{item.name}}
+            </td>
+            <td class='credits-row'>
+              {{format-number item.totalUsage}} GBhours
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Excess usage in period:</td>
+          <td data-test-plan-usage-credits-total='true' class='credits-row'>{{format-number this.totalExcessStorageUsage}} GBhours</td>
+        </tr>
+        <tr>
+          <td>Total usage:</td>
+          <td data-test-plan-usage-credits-total='true' class='credits-row'>{{format-number this.totalStorageUsage}} GBhours</td>
+        </tr>
+      </tfoot>
     </table>
     {{/if}}
   </section>

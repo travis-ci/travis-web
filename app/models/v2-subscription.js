@@ -140,6 +140,11 @@ export default Model.extend({
     }
   }),
 
+  storageAddon: computed('addons.[]', function () {
+    const storageAddons = this.addons.filter(addon => addon.type === 'storage');
+    return storageAddons ? storageAddons[0] : null;
+  }),
+
   hasPublicCredits: computed('addonUsage.public.remainingCredits', function () {
     return this.addonUsage.public.remainingCredits > 0;
   }),
@@ -156,6 +161,9 @@ export default Model.extend({
   }),
   hasUserLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addons.filter(addon => addon.type === 'user_license').length > 0;
+  }),
+  hasStorageAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+    return this.addons.filter(addon => addon.type === 'storage').length > 0;
   }),
   hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons'),
 
