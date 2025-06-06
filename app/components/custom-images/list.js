@@ -4,6 +4,7 @@ import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
+import moment from 'moment';
 
 export default Component.extend({
   api: service(),
@@ -35,7 +36,7 @@ export default Component.extend({
     if (filter) {
       return customImages.filter((image) => {
         const createdByName = image.createdBy ? image.createdBy.name || image.createdBy.login : '';
-        const createdAt = image.createdAt ? image.createdAt.toString() : "";
+        const createdAt = image.createdAt ? image.createdAt.toString() : '';
         const ago = moment(createdAt).fromNow();
         return image.name.toLowerCase().includes(filter.toLowerCase())
           || createdByName.toLowerCase().includes(filter.toLowerCase())
