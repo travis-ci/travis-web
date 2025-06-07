@@ -127,6 +127,7 @@ export default Component.extend({
         this.set('selectedImageIdsForDeletion', []);
         this.set('showDeleteImageConfirmModal', false);
         this.set('allImagesSelected', false);
+        this.set('selectedImageIds', []);
         this.set('page', 1);
       });
     },
