@@ -207,18 +207,16 @@ export default Component.extend({
       return [];
     }
 
-    return usages.map((usage) => {
-      return {
-        excessUsage: usage.excess_usage,
-        freeUsage: usage.free_usage,
-        quantityLimitCharge: usage.quantity_limit_charge,
-        quantityLimitFree: usage.quantity_limit_free,
-        quantityLimitType: usage.quantity_limit_type,
-        totalUsage: usage.total_usage,
-        ownerName: `${this.owner.get('vcsType')} / ${this.owner.get('login')}`,
-        name: 'Custom build environment images'
-      };
-    });
+    return usages.map((usage) => ({
+      excessUsage: usage.excess_usage,
+      freeUsage: usage.free_usage,
+      quantityLimitCharge: usage.quantity_limit_charge,
+      quantityLimitFree: usage.quantity_limit_free,
+      quantityLimitType: usage.quantity_limit_type,
+      totalUsage: usage.total_usage,
+      ownerName: `${this.owner.get('vcsType')} / ${this.owner.get('login')}`,
+      name: 'Custom build environment images'
+    }));
   }),
 
   totalExcessStorageUsage: computed('storageUsageItems.@each.excessUsage', function () {
