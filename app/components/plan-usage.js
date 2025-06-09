@@ -35,6 +35,7 @@ export default Component.extend({
     };
     this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
     this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+    this.owner.fetchCustomImageUsages.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
     this.requestRepositoryData.perform();
   },
 
@@ -198,6 +199,34 @@ export default Component.extend({
     return data;
   }),
 
+  storageAddonUsage: reads('subscription.storageAddon.current_usage'),
+
+  storageUsageItems: computed('owner.customImageUsages', function () {
+    const usages = this.owner.get('customImageUsages');
+    if (!usages) {
+      return [];
+    }
+
+    return usages.map((usage) => ({
+      excessUsage: usage.excess_usage,
+      freeUsage: usage.free_usage,
+      quantityLimitCharge: usage.quantity_limit_charge,
+      quantityLimitFree: usage.quantity_limit_free,
+      quantityLimitType: usage.quantity_limit_type,
+      totalUsage: usage.total_usage,
+      ownerName: `${this.owner.get('vcsType')} / ${this.owner.get('login')}`,
+      name: 'Custom build environment images'
+    }));
+  }),
+
+  totalExcessStorageUsage: computed('storageUsageItems.@each.excessUsage', function () {
+    return this.storageUsageItems.reduce((sum, item) => sum + (item.excessUsage || 0), 0);
+  }),
+
+  totalStorageUsage: computed('storageUsageItems.@each.totalUsage', function () {
+    return this.storageUsageItems.reduce((sum, item) => sum + (item.totalUsage || 0), 0);
+  }),
+
   actions: {
     async downloadCsv() {
       const startDate = moment(this.dateRange.start).format('YYYY-MM-DD');
@@ -238,6 +267,7 @@ export default Component.extend({
       };
       this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
       this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+      this.owner.fetchCustomImageUsages.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
       this.requestRepositoryData.perform();
     }
 

@@ -185,6 +185,9 @@
   {{#if this.subscription.hasCredits}}
     <Billing::CreditBalance @subscription={{this.subscription}} @account={{this.account}}/>
   {{/if}}
+  {{#if this.subscription.hasStorageAddons}}
+    <Billing::StorageUsage @subscription={{this.subscription}} @account={{this.account}}/>
+  {{/if}}
 {{/if}}
 
 {{#if this.subscription.isManual}}
