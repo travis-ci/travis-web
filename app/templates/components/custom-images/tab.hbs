@@ -1,5 +1,7 @@
 {{#if this.customImagesLoading}}
 <LoadingIndicator @center={{true}} />
+{{else unless this.hasCustomImageAllowance}}
+<CustomImages::NotAllowed />
 {{else if this.isCustomImagesEmpty}}
 <CustomImages::NoImages />
 {{else}}
