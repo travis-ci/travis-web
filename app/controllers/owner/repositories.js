@@ -28,12 +28,12 @@ export default Controller.extend({
   isCustomImages: equal('tab', OWNER_TABS.CUSTOM_IMAGES),
   isPrivateInsightsViewable: and('features.proVersion', 'builds.value.private'),
   includePrivateInsights: and('isPrivateInsightsViewable', 'requestPrivateInsights'),
-  canViewCustomImages: computed(function() {
-    if(this.model.owner.isUser) {
+  canViewCustomImages: computed('model.owner', function () {
+    if (this.model.owner.isUser) {
       return this.model.owner.id == this.auth.currentUser.id;
     } else {
       let membership = this.auth.currentUser.memberships.find((memb) => memb.organization_id == this.model.owner.id);
-      return membership.build_permission;
+      return membership.build_permission == null || membership.build_permission;
     }
   }),
 
