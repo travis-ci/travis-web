@@ -92,9 +92,16 @@ export default VcsEntity.extend({
   },
 
   customImages: reads('fetchCustomImages.lastSuccessful.value'),
+  hasCustomImageAllowance: attr('boolean'),
 
   fetchCustomImages: task(function* () {
-    return yield this.store.query('custom-image', { login: this.login, provider: this.provider });
+    try {
+      this.hasCustomImageAllowance = true
+      return yield this.store.query('custom-image', { login: this.login, provider: this.provider });
+    } catch(e) {
+      this.hasCustomImageAllowance = false
+      return []
+    }
   }).drop(),
 
   fetchPlans: task(function* () {
