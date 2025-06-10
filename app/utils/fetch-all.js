@@ -1,11 +1,19 @@
-let fetchAll = function (store, type, query) {
-  return store.query(type, query).then((collection) => {
-    let nextPage = collection.get('meta.pagination.next');
-    if (nextPage) {
-      let { limit, offset } = nextPage;
-      return fetchAll(store, type, Object.assign(query, { limit, offset }));
-    }
-  });
-};
+export default async function fetchAll(store, type, query = {}) {
+  let allRecords = [];
+  let currentQuery = Object.assign({}, query);
+  let hasNextPage = true;
 
-export default fetchAll;
+  while (hasNextPage) {
+    const collection = await store.query(type, currentQuery);
+    allRecords = allRecords.concat(collection.toArray());
+
+    const nextPage = collection.get('meta.pagination.next');
+    if (nextPage) {
+      currentQuery = { ...currentQuery, ...nextPage };
+    } else {
+      hasNextPage = false;
+    }
+  }
+
+  return allRecords;
+}
