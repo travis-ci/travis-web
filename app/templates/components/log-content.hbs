@@ -1,4 +1,4 @@
-<section id="log-container" class="log">
+<section id="log-container" class="log" {{on-page-scroll this.handleScroll}}>
   {{#if this.job.notStarted}}
     <div class="job-waiting-stages-container">
       <div class="stage-loading stage-1-container {{if this.job.isCreated 'spinner-container'}} {{if this.job.toBeStarted 'stage-loaded-ring'}}">
@@ -70,7 +70,7 @@
       </span>
     </button>
     <div class="log-main {{if this.logIsVisible 'is-visible'}} {{if this.job.notStarted 'hidden'}}">
-      <div class="log-header">
+      <div class="log-header" style={{this.pageHeaderHeight}}>
         <button
           type="button"
           class="toggle-log-button--dark {{unless this.logIsVisible 'hidden'}}"
@@ -82,6 +82,28 @@
             Hide log
           </span>
         </button>
+        {{#if this.showScrollToTop}}
+          <button
+            type="button"
+            class="scroll-to-top"
+            title="Scroll to Top"
+            onclick={{action "toTop"}}
+          >
+              Scroll to Top
+            <SvgImage @name="workers-close" @class="icon" />
+          </button>
+        {{/if}}
+        {{#if this.showScrollToBottom}}
+          <button
+            type="button"
+            class="scroll-to-button"
+            title="Scroll to Bottom"
+            onclick={{action "toggleTailing"}}
+          >
+              Scroll to Bottom
+            <SvgImage @name="workers-open" @class="icon" />
+          </button>
+        {{/if}}
         {{#if this.canRemoveLog}}
           <button
             class="remove-log-button open-popup"
@@ -93,14 +115,16 @@
             Remove log
           </button>
         {{/if}}
-        <ExternalLinkTo
-          class="download-log-button"
-          @href={{this.plainTextLogUrl}}
-          @title="Display the log in plaintext"
-        >
-          <SvgImage @name="icon-downloadlogs" @class="icon" />
-          Raw log
-        </ExternalLinkTo>
+        {{#if this.showRawLog}}
+          <ExternalLinkTo
+            class="download-log-button"
+            @href={{this.plainTextLogUrl}}
+            @title="Display the log in plaintext"
+          >
+            <SvgImage @name="icon-downloadlogs" @class="icon" />
+            Raw log
+          </ExternalLinkTo>
+        {{/if}}
       </div>
       <div class="log-body">
         {{#if this.showTailing}}

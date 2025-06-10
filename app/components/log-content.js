@@ -11,11 +11,15 @@ import config from 'travis/config/environment';
 
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { alias, and, reads} from '@ember/object/computed';
+import { alias, and, reads, not} from '@ember/object/computed';
+
+import { htmlSafe } from '@ember/template';
 
 const SELECTORS = {
   CONTENT: '.log-body-content',
-  FIRST_HIGHLIGHT: '.log-line.highlight'
+  FIRST_HIGHLIGHT: '.log-line.highlight',
+  PAGE_HEADER: 'header.top',
+  LOG_HEADER: '.log-header'
 };
 
 Log.LIMIT = config.logLimit;
@@ -105,6 +109,12 @@ export default Component.extend({
   router: service(),
   scroller: service(),
 
+  init() {
+    this._super(...arguments);
+    // Bind the handler to the component instance
+    this.handleScroll = this.handleScroll.bind(this);
+  },
+
   globalEnv: reads('job.build.content.request.content.config.env.global'),
   jobEnv: reads('job.build.content.request.content.config.env.jobs'),
 
@@ -126,6 +136,14 @@ export default Component.extend({
   currentUser: alias('auth.currentUser'),
 
   isShowingRemoveLogModal: false,
+
+  isStickyTop: false,
+
+  isOnTheEndOfLog: false,
+
+  pageHeaderHeight: computed(function () {
+    return htmlSafe("top: " + this.readPageHeaderHeight() + "px");
+  }),
 
   didInsertElement() {
     if (this.get('features.debugLogging')) {
@@ -217,6 +235,11 @@ export default Component.extend({
     }
   },
 
+  readPageHeaderHeight() {
+    const pageHeader = document.querySelector(SELECTORS.PAGE_HEADER);
+    return pageHeader.offsetHeight;
+  },
+
   unfoldHighlight() {
     return this.lineSelector.unfoldLines();
   },
@@ -272,19 +295,46 @@ export default Component.extend({
     return this.permissions.hasPermission(repo);
   }),
 
-  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', 'currentUser', function () {
+  canRemoveLog: computed('job', 'job.canRemoveLog', 'hasPermission', 'currentUser', 'isStickyTop', function () {
     let job = this.job;
     let canRemoveLog = this.get('job.canRemoveLog');
     let hasPermission = this.hasPermission;
     let access = this.currentUser && this.currentUser.hasPermissionToRepo(this.get('job.repo'), 'log_delete');
     if (job) {
-      return canRemoveLog && hasPermission && access;
+      return canRemoveLog && hasPermission && access && !this.isStickyTop;
     }
   }),
 
   showToTop: and('log.hasContent', 'job.canRemoveLog'),
 
   showTailing: alias('showToTop'),
+
+  showRawLog: not('isStickyTop'),
+
+  showScrollToTop: and('isStickyTop', 'showToTop'),
+
+  isNotOnTheEndOfLog: not('isOnTheEndOfLog'),
+
+  showScrollToBottom: and('isNotOnTheEndOfLog', 'showTailing'),
+
+  handleScroll(e) {
+    const element = document.querySelector(SELECTORS.LOG_HEADER);
+    const stickyTop = this.readPageHeaderHeight();
+    const currentTop = element.getBoundingClientRect().top;
+    const isSticky = currentTop == stickyTop;
+
+    const windowHeight = e.currentTarget.innerHeight;
+    const logContentElement = document.querySelector(SELECTORS.CONTENT);
+    const isOnTheEnd = windowHeight >= logContentElement.getBoundingClientRect().bottom;
+
+    if(isSticky != this.get('isStickyTop')) {
+      this.toggleProperty('isStickyTop')
+    }
+
+    if(isOnTheEnd != this.get('isOnTheEndOfLog')) {
+      this.toggleProperty('isOnTheEndOfLog')
+    }
+  },
 
   actions: {
     toTop() {

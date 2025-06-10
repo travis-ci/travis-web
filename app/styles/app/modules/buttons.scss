@@ -421,3 +421,25 @@
     }
   }
 }
+
+.scroll-to-button, .scroll-to-top {
+  @extend %log-button;
+  color: white;
+  border: none;
+  font-weight: 400;
+  font-size: 15px;
+  padding: 0 .7em;
+  .icon {
+    margin-left: 5px;
+    width: 12px;
+    height: 6px;
+    margin-bottom: 1px;
+    @include colorSVGFill(white);
+  }
+}
+
+.scroll-to-top {
+  .icon {
+    margin-bottom: 5px;
+  }
+}
