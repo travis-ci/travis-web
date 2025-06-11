@@ -321,7 +321,7 @@ export default Component.extend({
     const element = document.querySelector(SELECTORS.LOG_HEADER);
     const stickyTop = this.readPageHeaderHeight();
     const currentTop = element.getBoundingClientRect().top;
-    const isSticky = currentTop == stickyTop;
+    const isSticky = currentTop <= stickyTop;
 
     const windowHeight = e.currentTarget.innerHeight;
     const logContentElement = document.querySelector(SELECTORS.CONTENT);

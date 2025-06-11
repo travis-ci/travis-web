@@ -88,6 +88,7 @@
             class="scroll-to-top"
             title="Scroll to Top"
             onclick={{action "toTop"}}
+            data-test-scroll-to-top
           >
               Scroll to Top
             <SvgImage @name="workers-close" @class="icon" />
@@ -99,6 +100,7 @@
             class="scroll-to-button"
             title="Scroll to Bottom"
             onclick={{action "toggleTailing"}}
+            data-test-scroll-to-bottom
           >
               Scroll to Bottom
             <SvgImage @name="workers-open" @class="icon" />
@@ -110,6 +112,7 @@
             title="Remove the log"
             type="button"
             onclick={{action "toggleRemoveLogModal"}}
+            data-test-remove-log
           >
             <SvgImage @name="icon-deletelogs" @class="icon" />
             Remove log
@@ -120,6 +123,7 @@
             class="download-log-button"
             @href={{this.plainTextLogUrl}}
             @title="Display the log in plaintext"
+            data-test-raw-log
           >
             <SvgImage @name="icon-downloadlogs" @class="icon" />
             Raw log
