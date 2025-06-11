@@ -100,9 +100,14 @@
             class="scroll-to-button"
             title="Scroll to Bottom"
             onclick={{action "toggleTailing"}}
+            id="tail"
             data-test-scroll-to-bottom
           >
-              Scroll to Bottom
+              {{#if this.job.isFinished}}
+                Scroll to Bottom
+              {{else}}
+                Follow Log
+              {{/if}}
             <SvgImage @name="workers-open" @class="icon" />
           </button>
         {{/if}}
@@ -131,19 +136,6 @@
         {{/if}}
       </div>
       <div class="log-body">
-        {{#if this.showTailing}}
-          <a id="tail" class="log-tail pointer" onclick={{action "toggleTailing"}}>
-            <span class="tail-status"></span>
-            <span class="tail-label">
-              <SvgImage @name="icon-arrowdown" @class="icon-arrow" />
-              {{#if this.job.isFinished}}
-                Scroll to End of Log
-              {{else}}
-                Follow Log
-              {{/if}}
-            </span>
-          </a>
-        {{/if}}
         <pre id="log" class="ansi log-body-content"></pre>
         {{#if this.showToTop}}
           <a class="to-top pointer" onclick={{action "toTop"}}>

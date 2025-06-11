@@ -142,7 +142,7 @@ export default Component.extend({
   isOnTheEndOfLog: false,
 
   pageHeaderHeight: computed(function () {
-    return htmlSafe(`top: ${this.readPageHeaderHeight()} px`);
+    return htmlSafe(`top: ${this.readPageHeaderHeight()}px`);
   }),
 
   didInsertElement() {
@@ -315,7 +315,9 @@ export default Component.extend({
 
   isNotOnTheEndOfLog: not('isOnTheEndOfLog'),
 
-  showScrollToBottom: and('isNotOnTheEndOfLog', 'showTailing'),
+  showScrollToBottom: computed('isNotOnTheEndOfLog', 'showTailing', 'job.isFinished', function () {
+    return (this.get('isNotOnTheEndOfLog') || !this.get('job.isFinished')) && this.get('showTailing');
+  }),
 
   handleScroll(e) {
     const element = document.querySelector(SELECTORS.LOG_HEADER);
