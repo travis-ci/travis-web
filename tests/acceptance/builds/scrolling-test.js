@@ -1,11 +1,10 @@
 import { module, test } from 'qunit';
-import { visit, settled, pauseTest, waitFor } from '@ember/test-helpers';
+import { visit, settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'travis/tests/helpers/setup-application-test';
 import signInUser from 'travis/tests/helpers/sign-in-user';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | builds/scroll', function (hooks) {
-
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -26,11 +25,11 @@ module('Acceptance | builds/scroll', function (hooks) {
     let job = this.server.create('job', { number: '1234.1', repository, state: 'passed', build, commit });
 
     let logLines = [];
-    for(var i = 0; i < 99; i++) {
+    for (let i = 0; i < 99; i++) {
       logLines.push(`Log line no ${i}`);
     }
 
-    this.server.create('log', { id: job.id, content: logLines.join("\n") });
+    this.server.create('log', { id: job.id, content: logLines.join('\n') });
 
 
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
@@ -47,13 +46,10 @@ module('Acceptance | builds/scroll', function (hooks) {
     testContainer.dispatchEvent(new Event('scroll'));
     window.dispatchEvent(new Event('scroll'));
     await settled();
-    window.dispatchEvent(new Event('scroll'));
-    await settled();
 
     assert.dom('[data-test-scroll-to-bottom]').doesNotExist();
     assert.dom('[data-test-scroll-to-top]').exists();
     assert.dom('[data-test-remove-log]').doesNotExist();
     assert.dom('[data-test-raw-log]').doesNotExist();
   });
-
 });

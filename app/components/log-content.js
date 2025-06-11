@@ -142,7 +142,7 @@ export default Component.extend({
   isOnTheEndOfLog: false,
 
   pageHeaderHeight: computed(function () {
-    return htmlSafe("top: " + this.readPageHeaderHeight() + "px");
+    return htmlSafe(`top: ${this.readPageHeaderHeight()} px`);
   }),
 
   didInsertElement() {
@@ -327,12 +327,12 @@ export default Component.extend({
     const logContentElement = document.querySelector(SELECTORS.CONTENT);
     const isOnTheEnd = windowHeight >= logContentElement.getBoundingClientRect().bottom;
 
-    if(isSticky != this.get('isStickyTop')) {
-      this.toggleProperty('isStickyTop')
+    if (isSticky != this.get('isStickyTop')) {
+      this.toggleProperty('isStickyTop');
     }
 
-    if(isOnTheEnd != this.get('isOnTheEndOfLog')) {
-      this.toggleProperty('isOnTheEndOfLog')
+    if (isOnTheEnd != this.get('isOnTheEndOfLog')) {
+      this.toggleProperty('isOnTheEndOfLog');
     }
   },
 
