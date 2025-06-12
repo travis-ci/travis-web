@@ -19,6 +19,7 @@ export default Component.extend({
   steps: computed(() => [...Object.values(STEPS)]),
 
   showCancelButton: false,
+  showStorageWarning: false,
 
   currentStep: computed({
     get() {
@@ -78,6 +79,26 @@ export default Component.extend({
       this.set('currentStep', STEPS.ONE);
       this.persistBillingData(STEPS.ONE);
       this.updateBillingQueryParams(STEPS.ONE);
+    },
+
+    closeStorageWarning() {
+      this.set('showStorageWarning', false);
+      this.send('next');
+    },
+
+    checkStorageChange() {
+      if (this.selectedPlan && this.currentStep === STEPS.ONE) {
+        let currentStorage = this.subscription.addons.find(item => item.type == 'storage');
+        if (currentStorage && this.selectedPlan.addonConfigs.find(item => item.type == 'storage') == null) {
+          this.set('showStorageWarning', true);
+        } else {
+          this.send('next');
+        }
+      }
+    },
+
+    cancelPlanChange() {
+      this.set('showStorageWarning', false);
     },
 
     next() {

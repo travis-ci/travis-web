@@ -201,6 +201,10 @@ export default Component.extend({
 
   storageAddonUsage: reads('subscription.storageAddon.current_usage'),
 
+  storageAddonTotalUsage: computed('storageAddonUsage', function () {
+    return this.storageAddonUsage.total_usage || 0;
+  }),
+
   storageUsageItems: computed('owner.customImageUsages', function () {
     const usages = this.owner.get('customImageUsages');
     if (!usages) {
@@ -210,10 +214,10 @@ export default Component.extend({
     return usages.map((usage) => ({
       excessUsage: usage.excess_usage,
       freeUsage: usage.free_usage,
-      quantityLimitCharge: usage.quantity_limit_charge,
-      quantityLimitFree: usage.quantity_limit_free,
-      quantityLimitType: usage.quantity_limit_type,
-      totalUsage: usage.total_usage,
+      quantityLimitCharge: usage.quantity_limit_charge || 0,
+      quantityLimitFree: usage.quantity_limit_free || 0,
+      quantityLimitType: usage.quantity_limit_type || 0,
+      totalUsage: usage.total_usage || 0,
       ownerName: `${this.owner.get('vcsType')} / ${this.owner.get('login')}`,
       name: 'Custom build environment images'
     }));

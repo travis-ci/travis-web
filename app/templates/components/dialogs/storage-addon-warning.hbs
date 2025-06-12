@@ -1,0 +1,33 @@
+<Modal
+  @isVisible={{this.isOpen}}
+  @closeOnClickOverlay={{false}}
+  @onClose={{fn @onClose}}
+  @onConfirm={{fn @onConfirm}}
+>
+  <div data-test-cancel-subscription-confirmation-modal="true" class="flex flex--v-center flex--center flex--col cancel-subscription-modal">
+    <h2 class="h2--teal align-center">
+      Warning!
+    </h2>
+    <p>
+      You are switching to a plan that does not support storage allowance. Storage
+items will be deleted.
+    </p>
+    <div class="full-width">
+      <div class="flex flex--v-center flex--center">
+        <button
+          class="button--red confirm-cancellation-button"
+          {{on 'click' (action this.onConfirm)}}
+        >
+          I understand, proceed
+        </button>
+
+        <button
+          class="button--green cancel-cancellation-button"
+          {{on 'click' (action this.onClose)}}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</Modal>

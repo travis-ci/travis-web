@@ -16,6 +16,7 @@ export default Component.extend({
 
   customImages: reads('owner.customImages'),
   isCustomImagesEmpty: empty('customImages'),
+  hasCustomImageAllowance: reads('owner.hasCustomImageAllowance'),
 
   customImagesCount: reads('customImages.length'),
   customImagesTotalSizeInGB: computed('customImages.@each.sizeBytes', function () {

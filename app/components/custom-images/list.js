@@ -4,6 +4,7 @@ import { reads } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
+import moment from 'moment';
 
 export default Component.extend({
   api: service(),
@@ -35,10 +36,15 @@ export default Component.extend({
     if (filter) {
       return customImages.filter((image) => {
         const createdByName = image.createdBy ? image.createdBy.name || image.createdBy.login : '';
+        const createdAt = image.createdAt ? image.createdAt.toString() : '';
+        const ago = moment(createdAt).fromNow();
+        this.set('page', 1);
         return image.name.toLowerCase().includes(filter.toLowerCase())
           || createdByName.toLowerCase().includes(filter.toLowerCase())
           || (image.osVersion && image.osVersion.toLowerCase().includes(filter.toLowerCase()))
-          || image.usage.toString() === filter;
+          || image.usage.toString() === filter
+          || createdAt.toLowerCase().includes(filter.toLowerCase())
+          || ago.toLowerCase().includes(filter.toLowerCase());
       });
     }
     return customImages;
@@ -122,6 +128,7 @@ export default Component.extend({
         this.set('selectedImageIdsForDeletion', []);
         this.set('showDeleteImageConfirmModal', false);
         this.set('allImagesSelected', false);
+        this.set('selectedImageIds', []);
         this.set('page', 1);
       });
     },
