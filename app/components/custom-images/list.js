@@ -38,6 +38,7 @@ export default Component.extend({
         const createdByName = image.createdBy ? image.createdBy.name || image.createdBy.login : '';
         const createdAt = image.createdAt ? image.createdAt.toString() : '';
         const ago = moment(createdAt).fromNow();
+        this.set('page', 1);
         return image.name.toLowerCase().includes(filter.toLowerCase())
           || createdByName.toLowerCase().includes(filter.toLowerCase())
           || (image.osVersion && image.osVersion.toLowerCase().includes(filter.toLowerCase()))
