@@ -29,6 +29,10 @@ export default Controller.extend({
   isPrivateInsightsViewable: and('features.proVersion', 'builds.value.private'),
   includePrivateInsights: and('isPrivateInsightsViewable', 'requestPrivateInsights'),
   canViewCustomImages: computed('model.owner', function () {
+    if (this.auth.currentUser  == null) {
+      return false;
+    }
+
     if (this.model.owner.isUser) {
       return this.model.owner.id == this.auth.currentUser.id;
     } else {
