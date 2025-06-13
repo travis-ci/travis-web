@@ -55,9 +55,14 @@
 }
 
 .icon-close {
+  @include colorSVGFill($color-bg-log-fold);
   width: 22px;
   height: 24px;
   margin-right: 0;
+}
+
+.icon-close.red {
+  @include colorSVGFill($brick-red);
 }
 
 .button:hover,
