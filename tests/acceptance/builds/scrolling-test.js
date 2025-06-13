@@ -31,11 +31,12 @@ module('Acceptance | builds/scroll', function (hooks) {
 
     this.server.create('log', { id: job.id, content: logLines.join('\n') });
 
-
     await visit(`/travis-ci/travis-web/builds/${build.id}`);
 
-
     await settled();
+    // Make sure log block is long enough to detect changes
+    document.querySelector('.log-body-content').style.height = `${window.innerHeight * 2}px`;
+
     assert.dom('[data-test-scroll-to-bottom]').exists();
     assert.dom('[data-test-scroll-to-top]').doesNotExist();
     assert.dom('[data-test-remove-log]').exists();

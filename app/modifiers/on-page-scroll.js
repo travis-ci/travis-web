@@ -1,6 +1,6 @@
 import { modifier } from 'ember-modifier';
 
-export default modifier((element, [handler]) => {
+export default modifier((_, [handler]) => {
   window.addEventListener('scroll', handler);
 
   return () => {

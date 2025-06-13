@@ -1,4 +1,4 @@
-<section id="log-container" class="log" {{on-page-scroll this.handleScroll}}>
+<section id="log-container" class="log" {{on-page-scroll this.handleScroll}} {{on-page-resize this.handleResize}}>
   {{#if this.job.notStarted}}
     <div class="job-waiting-stages-container">
       <div class="stage-loading stage-1-container {{if this.job.isCreated 'spinner-container'}} {{if this.job.toBeStarted 'stage-loaded-ring'}}">

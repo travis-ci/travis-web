@@ -113,6 +113,7 @@ export default Component.extend({
     this._super(...arguments);
     // Bind the handler to the component instance
     this.handleScroll = this.handleScroll.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   },
 
   globalEnv: reads('job.build.content.request.content.config.env.global'),
@@ -141,8 +142,10 @@ export default Component.extend({
 
   isOnTheEndOfLog: false,
 
-  pageHeaderHeight: computed(function () {
-    return htmlSafe(`top: ${this.readPageHeaderHeight()}px`);
+  stickyPosition: 0,
+
+  pageHeaderHeight: computed('stickyPosition', function () {
+    return htmlSafe(`top: ${this.get('stickyPosition')}px`);
   }),
 
   didInsertElement() {
@@ -320,14 +323,17 @@ export default Component.extend({
   }),
 
   handleScroll(e) {
-    const element = document.querySelector(SELECTORS.LOG_HEADER);
-    const stickyTop = this.readPageHeaderHeight();
-    const currentTop = element.getBoundingClientRect().top;
-    const isSticky = currentTop <= stickyTop;
-
-    const windowHeight = e.currentTarget.innerHeight;
     const logContentElement = document.querySelector(SELECTORS.CONTENT);
-    const isOnTheEnd = windowHeight >= logContentElement.getBoundingClientRect().bottom;
+    const logHeader = document.querySelector(SELECTORS.LOG_HEADER);
+
+    const stickyTop = this.readPageHeaderHeight();
+    const currentTop = logContentElement.getBoundingClientRect().top;
+    const currentBottom = logContentElement.getBoundingClientRect().bottom;
+    const logHeaderHeight = logHeader.offsetHeight;
+    const windowHeight = e.currentTarget.innerHeight;
+
+    const isSticky = currentTop - logHeaderHeight <= stickyTop;
+    const isOnTheEnd = windowHeight >= currentBottom;
 
     if (isSticky != this.get('isStickyTop')) {
       this.toggleProperty('isStickyTop');
@@ -336,6 +342,16 @@ export default Component.extend({
     if (isOnTheEnd != this.get('isOnTheEndOfLog')) {
       this.toggleProperty('isOnTheEndOfLog');
     }
+  },
+
+  handleResize(e) {
+    const pageHeaderHeight = this.readPageHeaderHeight();
+    if (pageHeaderHeight != this.get('stickyPosition')) {
+      this.set('stickyPosition', this.readPageHeaderHeight());
+    }
+    this.handleScroll({
+      currentTarget: window
+    });
   },
 
   actions: {
