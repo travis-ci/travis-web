@@ -122,6 +122,8 @@
   padding: 0.7em 0.8em 0.6em;
   text-align: right;
   background-color: $log-header-bg;
+  position: sticky;
+  z-index: 11;
 
   @media #{$small-only} {
     display: flex;
