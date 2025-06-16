@@ -88,11 +88,15 @@ export default Component.extend({
 
     checkStorageChange() {
       if (this.selectedPlan && this.currentStep === STEPS.ONE) {
-        let currentStorage = this.subscription.addons.find(item => item.type == 'storage');
-        if (currentStorage && this.selectedPlan.addonConfigs.find(item => item.type == 'storage') == null) {
-          this.set('showStorageWarning', true);
-        } else {
+        if (!this.subscription || !this.subscription.addons) {
           this.send('next');
+        } else {
+          let currentStorage = this.subscription.addons.find(item => item.type == 'storage');
+          if (currentStorage && (!this.selectedPlan.addonConfigs || this.selectedPlan.addonConfigs.find(item => item.type == 'storage') == null)) {
+            this.set('showStorageWarning', true);
+          } else {
+            this.send('next');
+          }
         }
       }
     },
