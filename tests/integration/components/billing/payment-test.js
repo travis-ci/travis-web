@@ -30,7 +30,7 @@ module('Integration | Component | billing-payment', function (hooks) {
         firstName: '',
         lastName: '',
         companyName: '',
-        billingEmail: '',
+        billingEmail: 'some@email.com',
         street: '',
         billingSuite: '',
         billingCity: '',
