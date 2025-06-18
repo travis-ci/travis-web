@@ -17,9 +17,22 @@ export default Component.extend({
   customImages: reads('owner.customImages'),
   isCustomImagesEmpty: empty('customImages'),
   hasCustomImageAllowance: reads('owner.hasCustomImageAllowance'),
+  subscription: reads('owner.v2subscription'),
 
   customImagesCount: reads('customImages.length'),
+
   customImagesTotalSizeInGB: computed('customImages.@each.sizeBytes', function () {
+    var size = 0.0;
+    if(this.subscription.addons) {
+      const addon = this.subscription.addons.find( addon =>  addon.type == 'storage');
+      if (addon && addon.current_usage) {
+        size = addon.current_usage.addon_quantity;
+      }
+    }
+    return `${size.toFixed(2)} GB`;
+  }),
+
+  customImagesUsedSizeInGB: computed('customImages.@each.sizeBytes', function () {
     const size = this.customImages.reduce((total, image) => (total + Math.round(image.sizeBytes / Math.pow(1024, 3) * 100) / 100), 0);
     return `${size.toFixed(2)} GB`;
   }),
