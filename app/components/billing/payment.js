@@ -21,6 +21,7 @@ export default Component.extend({
   options: config.stripeOptions,
   showSwitchToFreeModal: false,
   showPlanSwitchWarning: false,
+  showStorageWarning: false,
 
   firstName: reads('subscription.billingInfo.firstName'),
   lastName: reads('subscription.billingInfo.lastName'),
