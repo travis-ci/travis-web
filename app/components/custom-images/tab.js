@@ -1,14 +1,20 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { empty, reads } from '@ember/object/computed';
 
 export default Component.extend({
+  accounts: service(),
+
   classNames: ['custom-images'],
   customImagesLoading: false,
 
   init() {
     this._super(...arguments);
     this.set('customImagesLoading', true);
+    if (!this.owner.v2subscription) {
+      this.accounts.fetchV2Subscriptions.perform();
+    }
     this.owner.fetchCustomImages.perform().then(() => {
       this.set('customImagesLoading', false);
     });
