@@ -35,6 +35,8 @@
                 {{format-number addon.quantity}}
                 {{#if (eq addon.type 'user_license')}}
                   user licenses
+                {{else if (eq addon.type 'storage')}}
+                  GB
                 {{else}}
                   credits
                 {{/if}}

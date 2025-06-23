@@ -1,14 +1,20 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { empty, reads } from '@ember/object/computed';
 
 export default Component.extend({
+  accounts: service(),
+
   classNames: ['custom-images'],
   customImagesLoading: false,
 
   init() {
     this._super(...arguments);
     this.set('customImagesLoading', true);
+    if (!this.owner.v2subscription) {
+      this.accounts.fetchV2Subscriptions.perform();
+    }
     this.owner.fetchCustomImages.perform().then(() => {
       this.set('customImagesLoading', false);
     });
@@ -21,10 +27,10 @@ export default Component.extend({
 
   customImagesCount: reads('customImages.length'),
 
-  customImagesTotalSizeInGB: computed('customImages.@each.sizeBytes', function () {
-    var size = 0.0;
-    if(this.subscription?.addons) {
-      const addon = this.subscription.addons.find( addon =>  addon.type == 'storage');
+  customImagesTotalSizeInGB: computed('customImages.@each.sizeBytes', 'subscription', function () {
+    let size = 0.0;
+    if (this.subscription?.addons) {
+      const addon = this.subscription.addons.find(addon =>  addon.type == 'storage');
       if (addon && addon.current_usage) {
         size = addon.current_usage.addon_quantity;
       }
