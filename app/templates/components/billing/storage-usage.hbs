@@ -8,6 +8,9 @@
   <p class='avail-credits'>
     {{this.storageAddonUsageTotalUsage}} GB of {{this.storageAddonUsage.addon_quantity}} GB (excess usage: {{#if (eq this.storageAddonUsage.quantity_limit_type 'soft')}}allowed{{else}}not allowed{{/if}})
   </p>
+  <div class='credits-bar-bg'>
+    <div class='credits-bar' style='width: {{this.storageAddonUsageTotalUsagePercentage}}%'></div>
+  </div>
   <p class='used-credits'>
     You may be billed in credits for storage.<br>
     If you exceed your limit, any extra charges will be billed at the end of the period.
