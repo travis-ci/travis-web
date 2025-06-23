@@ -158,6 +158,29 @@ function routes() {
     return response;
   });
 
+  this.get('/v3/owner/:provider/:login/custom_images/usage', function (schema, request) {
+    const from = request.queryParams.from;
+    const to = request.queryParams.to;
+    const login = request.params.login;
+    const provider = request.params.provider;
+    let response = {
+      '@type': 'custom_images_usages',
+      '@href': `/v3/owner/${provider}/${login}/custom_images/usage?from=${from}&to=${to}`,
+      '@representation': 'standard',
+      custom_images_usages: [
+        {
+          total_usage: 12.4,
+          excess_usage: 0,
+          free_usage: 0,
+          quantity_limit_free: 0.0,
+          quantity_limit_type: 'hard',
+          quantity_limit_charge: 'excess'
+        }
+      ]
+    };
+    return response;
+  });
+
   this.get('/v3/owner/:provider/:login/executions', function (schema, request) {
     const from = request.queryParams.from;
     const to = request.queryParams.to;
