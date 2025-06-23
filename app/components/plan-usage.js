@@ -202,7 +202,8 @@ export default Component.extend({
   storageAddonUsage: reads('subscription.storageAddon.current_usage'),
 
   storageAddonTotalUsage: computed('storageAddonUsage', function () {
-    return this.storageAddonUsage.total_usage || 0;
+    console.log("this.storageAddonUsage", this.storageAddonUsage)
+    return this.storageAddonUsage.addon_usage || 0;
   }),
 
   storageUsageItems: computed('owner.customImageUsages', function () {
