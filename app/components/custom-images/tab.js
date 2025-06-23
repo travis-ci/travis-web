@@ -27,7 +27,7 @@ export default Component.extend({
 
   customImagesCount: reads('customImages.length'),
 
-  customImagesTotalSizeInGB: computed('customImages.@each.sizeBytes', function () {
+  customImagesTotalSizeInGB: computed('customImages.@each.sizeBytes', 'subscription', function () {
     let size = 0.0;
     if (this.subscription?.addons) {
       const addon = this.subscription.addons.find(addon =>  addon.type == 'storage');
