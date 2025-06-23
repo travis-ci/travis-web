@@ -202,7 +202,7 @@ export default Component.extend({
   storageAddonUsage: reads('subscription.storageAddon.current_usage'),
 
   storageAddonTotalUsage: computed('storageAddonUsage', function () {
-    console.log("this.storageAddonUsage", this.storageAddonUsage)
+    console.log('this.storageAddonUsage', this.storageAddonUsage);
     return this.storageAddonUsage.addon_usage || 0;
   }),
 
