@@ -162,8 +162,8 @@ export default Model.extend({
   hasUserLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addons.filter(addon => addon.type === 'user_license').length > 0;
   }),
-  hasStorageAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
-    return this.addons.filter(addon => addon.type === 'storage').length > 0;
+  hasStorageAddons: computed('plan', 'addonConfigs', 'addonConfigs.@each.type', function () {
+    return this.addons.filter(addon => addon.type === 'storage').length > 0 && this.plan.addonConfigs.length > 0;
   }),
   hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons'),
 
