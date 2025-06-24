@@ -12,11 +12,10 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.set('customImagesLoading', true);
-    if (!this.owner.v2subscription) {
-      this.accounts.fetchV2Subscriptions.perform();
-    }
-    this.owner.fetchCustomImages.perform().then(() => {
-      this.set('customImagesLoading', false);
+    this.accounts.fetchV2Subscriptions.perform().then(() => {
+      this.owner.fetchCustomImages.perform().then(() => {
+        this.set('customImagesLoading', false);
+      });
     });
   },
 
