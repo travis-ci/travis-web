@@ -23,10 +23,8 @@
                 {{format-currency addon.price floor="true"}}
               </p>
               <p class='billing-plans__addons_box--name color-asphalt-grey' data-test-selected-addon-name>
-                {{#if (eq addon.type 'user_license')}}
+                {{#if (or (eq addon.type 'user_license') (eq addon.type 'storage'))}}
                   {{addon.name}}
-                {{else if (eq addon.type 'storage')}}
-                  Storage
                 {{else}}
                   Additional credits
                 {{/if}}
