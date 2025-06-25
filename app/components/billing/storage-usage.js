@@ -11,10 +11,10 @@ export default Component.extend({
   storageAddonUsage: reads('subscription.storageAddon.current_usage'),
 
   storageAddonUsageTotalUsage: computed('storageAddonUsage', function () {
-    return Math.round(this.storageAddonUsage.total_usage / 1024 * 100) / 100 || 0;
+    return Math.ceil(this.storageAddonUsage.total_usage) || 0;
   }),
   storageAddonUsageTotalUsagePercentage: computed('storageAddonUsage', function () {
-    const used = Math.round(this.storageAddonUsage.total_usage / 1024 * 100) / 100;
+    const used = Math.ceil(this.storageAddonUsage.total_usage);
     const percentage = 100 - used / this.storageAddonUsage.addon_quantity * 100;
     return percentage > 0 ? percentage : 0;
   }),
