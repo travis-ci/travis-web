@@ -24,7 +24,7 @@
       {{addon.name}}{{#if (eq addon.type 'storage')}}:
         <ul>
           <li>
-            Free limit: {{format-thousands addon.current_usage.quantity_free_limit}} GB
+            Free limit: {{format-thousands addon.current_usage.quantity_limit_free}} GB
           </li>
           <li>
             Limit: {{format-thousands addon.current_usage.addon_quantity}} GB
