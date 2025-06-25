@@ -153,16 +153,16 @@ export default Model.extend({
     return this.addonUsage.public.remainingCredits > 0;
   }),
 
-  hasCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+  hasCreditAddons: computed('addons', 'addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addons.filter(addon => addon.type === 'credit_private').length > 0;
   }),
-  hasOSSCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+  hasOSSCreditAddons: computed('addons', 'addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addons.filter(addon => addon.type === 'credit_public').length > 0;
   }),
-  hasUserLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+  hasUserLicenseAddons: computed('addons', 'addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addons.filter(addon => addon.type === 'user_license').length > 0;
   }),
-  hasStorageAddons: computed('plan', 'addonConfigs', 'addonConfigs.@each.type', function () {
+  hasStorageAddons: computed('addons', 'plan', 'addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addons.filter(addon => addon.type === 'storage').length > 0 && this.plan.addonConfigs.length > 0;
   }),
   hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons'),

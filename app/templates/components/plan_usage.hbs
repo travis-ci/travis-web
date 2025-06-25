@@ -21,17 +21,16 @@
       {{else if (eq addon.type 'user_license')}}
         User license:
       {{/if}}
-      {{addon.name}}
-      {{#if (eq addon.type 'storage')}}
+      {{addon.name}}{{#if (eq addon.type 'storage')}}:
         <ul>
           <li>
-            Free limit: {{addon.current_usage.quantity_free_limit}} GB
+            Free limit: {{format-thousands addon.current_usage.quantity_limit_free}} GB
           </li>
           <li>
-            Limit: {{addon.current_usage.addon_quantity}} GB
+            Limit: {{format-thousands addon.current_usage.addon_quantity}} GB
           </li>
           <li>
-            Excess usage: {{#if (eq addon.current_usage.quantity_limit_type 'soft')}}allowed{{else}}not allowed{{/if}}
+            Excess usage: {{#if (eq addon.current_usage.quantity_limit_type 'soft')}}Allowed{{else}}Not allowed{{/if}}
           </li>
         </ul>
       {{/if}}
