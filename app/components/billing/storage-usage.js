@@ -11,7 +11,7 @@ export default Component.extend({
   storageAddonUsage: reads('subscription.storageAddon.current_usage'),
 
   storageAddonUsageTotalUsage: computed('storageAddonUsage', function () {
-    return Math.ceil(this.storageAddonUsage.total_usage) || 0;
+    return Math.round(this.storageAddonUsage.total_usage / 1024 * 100) / 100 || 0;
   }),
   storageAddonUsageTotalUsagePercentage: computed('storageAddonUsage', function () {
     const used = Math.ceil(this.storageAddonUsage.total_usage);
