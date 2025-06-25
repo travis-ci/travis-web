@@ -217,7 +217,7 @@ export default Component.extend({
       quantityLimitCharge: usage.quantity_limit_charge || 0,
       quantityLimitFree: usage.quantity_limit_free || 0,
       quantityLimitType: usage.quantity_limit_type || 0,
-      totalUsage: usage.total_usage || 0,
+      totalUsage: Math.ceil(usage.total_usage || 0),
       ownerName: `${this.owner.get('vcsType')} / ${this.owner.get('login')}`,
       name: 'Custom build environment images'
     }));
