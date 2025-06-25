@@ -34,12 +34,18 @@ export default Component.extend({
         size = addon.current_usage.addon_quantity;
       }
     }
-    return `${size.toFixed(2)}`;
+    let out = "";
+    if (size % 1 !== 0) {
+      out = size.toFixed(2);
+    } else {
+      out = size.toString();
+    }
+    return `${out}GB`;
   }),
 
   customImagesUsedSizeInGB: computed('customImages.@each.sizeBytes', function () {
     const size = this.customImages.reduce((total, image) => (total + Math.round(image.sizeBytes / Math.pow(1024, 3) * 100) / 100), 0);
-    return `${size.toFixed(2)}`;
+    return `${size.toFixed(2)}GB`;
   }),
 
   estimatedCreditsUsage: 0,
