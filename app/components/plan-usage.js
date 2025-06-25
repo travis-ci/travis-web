@@ -175,7 +175,6 @@ export default Component.extend({
       const url = `/owner/${provider}/${login}/csv_exports`;
       const startDate = moment(this.dateRange.start).format('YYYY-MM-DD');
       const endDate = moment(this.dateRange.end).format('YYYY-MM-DD');
-      console.log(`Requesting CSV export for ${reportType} from ${startDate} to ${endDate} for owner ${login} (${provider})`);
 
       this.api.post(url, {
         data: {
