@@ -85,7 +85,7 @@ export default Component.extend({
 
       const isAssemblaUser = this.model.isUser && this.model.isAssembla;
       const isEnterprise = this.features.get('enterpriseVersion');
-      return !isEnterprise && !isAssemblaUser && !!billingEndpoint && !!forOrganization;
+      return !isEnterprise && !!billingEndpoint && !!forOrganization;
     }),
 
   showSharePlanTab: computed('features.enterpriseVersion', 'hasPlanViewPermissions',
