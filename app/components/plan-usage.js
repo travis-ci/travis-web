@@ -26,7 +26,8 @@ export default Component.extend({
   currentUser: reads('auth.currentUser'),
   flashes: service(),
 
-  isGeneratingReport: false,
+  isGeneratingUsageReport: false,
+  isGeneratingLicenseReport: false,
   reportStatusMessage: null,
 
   init() {
@@ -161,23 +162,29 @@ export default Component.extend({
 
   actions: {
     requestCsvExport(reportType) {
-      this.setProperties({
-        isGeneratingReport: true,
-        reportStatusMessage: `Preparing your ${reportType} report...`
-      });
+      if (reportType === 'usage') {
+        this.set('isGeneratingUsageReport', true);
+      } else if (reportType === 'license') {
+        this.set('isGeneratingLicenseReport', true);
+      }
 
       const owner = this.get('owner');
       const provider = owner.get('provider') || 'github'; // Default to github if not set
       const login = owner.get('login');
       const email = this.get('currentUser.email');
       const url = `/owner/${provider}/${login}/csv_exports`;
+      const startDate = moment(this.dateRange.start).format('YYYY-MM-DD');
+      const endDate = moment(this.dateRange.end).format('YYYY-MM-DD');
+      console.log(`Requesting CSV export for ${reportType} from ${startDate} to ${endDate} for owner ${login} (${provider})`);
 
       this.api.post(url, {
         data: {
           csv_export: {
             report_type: reportType,
             recipient_email: email,
-            expires_in: 86400 // 24 hours in seconds
+            expires_in: 86400, // 24 hours in seconds
+            start_date: startDate,
+            end_date: endDate
           }
         }
       }).then(() => {
@@ -189,7 +196,11 @@ export default Component.extend({
           `Error: ${error.message}. Please try again.`);
         this.set('reportStatusMessage', null);
       }).finally(() => {
-        this.set('isGeneratingReport', false);
+        if (reportType === 'usage') {
+          this.set('isGeneratingUsageReport', false);
+        } else if (reportType === 'license') {
+          this.set('isGeneratingLicenseReport', false);
+        }
       });
     },
 

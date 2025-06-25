@@ -56,10 +56,10 @@
       <button
         class="download-csv"
         onclick={{action "requestCsvExport" "usage"}}
-        disabled={{this.isGeneratingReport}}
+        disabled={{this.isGeneratingUsageReport}}
       >
-        {{#if this.isGeneratingReport}}
-          Generating Report...
+        {{#if this.isGeneratingUsageReport}}
+          Generating Usage Report...
         {{else}}
           Download .csv file for more detailed information about usage
         {{/if}}
@@ -69,10 +69,10 @@
         <button
           class="download-csv"
           onclick={{action "requestCsvExport" "license"}}
-          disabled={{this.isGeneratingReport}}
+          disabled={{this.isGeneratingLicenseReport}}
         >
-          {{#if this.isGeneratingReport}}
-            Generating Report...
+          {{#if this.isGeneratingLicenseReport}}
+            Generating License Report...
           {{else}}
             Download .csv file for more detailed information about user license usage
           {{/if}}
