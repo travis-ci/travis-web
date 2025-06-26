@@ -34,7 +34,7 @@ export default Component.extend({
         size = addon.current_usage.addon_quantity;
       }
     }
-    return `${size.toFixed(2)}`;
+    return `${Math.trunc(size)}`;
   }),
 
   customImagesUsedSizeInGB: computed('customImages.@each.sizeBytes', function () {
