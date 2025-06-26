@@ -12,9 +12,12 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.set('customImagesLoading', true);
+
     this.accounts.fetchV2Subscriptions.perform().then(() => {
       this.owner.fetchCustomImages.perform().then(() => {
-        this.set('customImagesLoading', false);
+        this.owner.fetchCurrentImageStorage.perform().then(() => {
+          this.set('customImagesLoading', false);
+        });
       });
     });
   },
@@ -23,6 +26,7 @@ export default Component.extend({
   isCustomImagesEmpty: empty('customImages'),
   hasCustomImageAllowance: reads('owner.hasCustomImageAllowance'),
   subscription: reads('owner.v2subscription'),
+  currentStorage: reads('owner.currentImageStorage'),
 
   customImagesCount: reads('customImages.length'),
 
@@ -37,9 +41,8 @@ export default Component.extend({
     return `${Math.trunc(size)}`;
   }),
 
-  customImagesUsedSizeInGB: computed('customImages.@each.sizeBytes', function () {
-    const size = this.customImages.reduce((total, image) => (total + Math.round(image.sizeBytes / Math.pow(1024, 3) * 100) / 100), 0);
-    return `${size.toFixed(2)}`;
+  customImagesUsedSizeInGB: computed('currentStorage', function () {
+    return Number.parseFloat(this.currentStorage ? this.currentStorage.current_aggregated_storage : '0').toFixed(2);
   }),
 
   estimatedCreditsUsage: 0,

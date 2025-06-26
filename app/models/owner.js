@@ -105,12 +105,20 @@ export default VcsEntity.extend({
   }).drop(),
 
   customImageUsages: reads('fetchCustomImageUsages.lastSuccessful.value'),
+  currentImageStorage: reads('fetchCurrentImageStorage.lastSuccessful.value'),
 
   fetchCustomImageUsages: task(function* (from, to) {
     const url = `/v3/owner/${this.provider}/${this.login}/custom_images/usage?from=${from}&to=${to}`;
     const result = yield this.api.get(url);
     return result ? result.custom_images_usages : [];
   }).drop(),
+
+  fetchCurrentImageStorage: task(function* (from, to) {
+    const url = `/v3/owner/${this.provider}/${this.login}/custom_images/current_storage`;
+    const result = yield this.api.get(url);
+    return result;
+  }).drop(),
+
 
   fetchPlans: task(function* () {
     const url = this.isOrganization ? `/plans_for/organization/${this.id}` : '/plans_for/user';
