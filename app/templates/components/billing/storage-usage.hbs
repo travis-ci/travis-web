@@ -6,7 +6,7 @@
       Current period: {{pretty-date this.storageAddonUsage.purchase_date false}} until {{pretty-date this.storageAddonUsage.valid_to false}}
   </p>
   <p class='avail-credits'>
-    {{this.storageAddonUsageTotalUsage}} GB of {{this.storageAddonUsage.addon_quantity}} GB (excess usage: {{#if (eq this.storageAddonUsage.quantity_limit_type 'soft')}}allowed{{else}}not allowed{{/if}})
+    {{format-thousands this.storageAddonUsageTotalUsage}} GB of {{format-thousands this.storageAddonUsage.addon_quantity}} GB (excess usage: {{#if (eq this.storageAddonUsage.quantity_limit_type 'soft')}}allowed{{else}}not allowed{{/if}})
   </p>
   <div class='credits-bar-bg'>
     <div class='credits-bar' style='width: {{this.storageAddonUsageTotalUsagePercentage}}%'></div>
