@@ -25,7 +25,7 @@
           @account={{this.account}}
           @showPlansSelector={{this.showPlansSelector}}
           @showAddonsSelector={{this.showAddonsSelector}}
-          @next={{action 'next'}}
+          @next={{action 'checkStorageChange'}}
           @showCancelButton={{this.showCancelButton}}
         />
       </Modal>
@@ -60,3 +60,10 @@
     You don't have permission to create a subscription
   </p>
 {{/if}}
+
+<Dialogs::StorageAddonWarning
+@isOpen={{this.showStorageWarning}}
+@onClose={{action 'cancelPlanChange'}}
+@onConfirm={{action 'closeStorageWarning'}}
+/>
+

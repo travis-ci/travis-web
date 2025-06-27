@@ -12,8 +12,12 @@ export default Component.extend({
   account: null,
   title: null,
   selectedAddon: null,
-  availableStandaloneAddons: computed('account.availableStandaloneAddons.[].price', function () {
-    return this.account.availableStandaloneAddons.sortBy('price');
+  availableStandaloneAddons: computed('account.availableStandaloneAddons.[].price', 'account.v2subscription.storageAddon', function () {
+    let addons = this.account.availableStandaloneAddons.sortBy('price');
+    if (this.account.v2subscription.storageAddon) {
+      addons = addons.reject((item) => item.type == 'storage');
+    }
+    return addons;
   }),
   isButtonDisabled: not('selectedAddon'),
   displayedStandaloneAddons: reads('availableStandaloneAddons'),
