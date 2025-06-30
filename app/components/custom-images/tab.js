@@ -17,6 +17,10 @@ export default Component.extend({
       this.owner.fetchCustomImages.perform().then(() => {
         this.owner.fetchCurrentImageStorage.perform().then(() => {
           this.set('customImagesLoading', false);
+        }).catch((error) => {
+          if (error && error.status === 404) {
+            this.set('customImagesLoading', false);
+          }
         });
       });
     });
