@@ -16,7 +16,9 @@ export default Component.extend({
     this.accounts.fetchV2Subscriptions.perform().then(() => {
       this.owner.fetchCustomImages.perform().then(() => {
         this.owner.fetchCurrentImageStorage.perform().then(() => {
-          this.set('customImagesLoading', false);
+          this.owner.fetchStorageExecutionsUsages.perform().then(() => {
+            this.set('customImagesLoading', false);
+          });
         });
       });
     });
@@ -27,6 +29,7 @@ export default Component.extend({
   hasCustomImageAllowance: reads('owner.hasCustomImageAllowance'),
   subscription: reads('owner.v2subscription'),
   currentStorage: reads('owner.currentImageStorage'),
+  storageExecutionsUsages: reads('owner.storageExecutionsUsages'),
 
   customImagesCount: reads('customImages.length'),
 
@@ -45,5 +48,7 @@ export default Component.extend({
     return Number.parseFloat(this.currentStorage ? this.currentStorage.current_aggregated_storage : '0').toFixed(2);
   }),
 
-  estimatedCreditsUsage: 0,
+  estimatedCreditsUsage: computed('storageExecutionsUsages.@each.estimated_usage', function () {
+    return this.storageExecutionsUsages ? this.storageExecutionsUsages.reduce((accumulator, usage) => accumulator + usage.estimated_usage, 0) : 0;
+  }),
 });
