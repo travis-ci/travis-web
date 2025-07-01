@@ -234,6 +234,12 @@ export default Component.extend({
           : `An error occurred when creating your subscription. Please try again.${errorReason}`;
         this.flashes.error(message);
       }
+    } else {
+      try {
+        error.json().then(data => this.flashes.error(data.error_message));
+      } catch {
+        this.flashes.error('An error occurred when creating your subscription. Please try again.');
+      }
     }
   },
 

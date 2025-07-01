@@ -19,6 +19,10 @@ export default Component.extend({
           this.owner.fetchStorageExecutionsUsages.perform().then(() => {
             this.set('customImagesLoading', false);
           });
+        }).catch((error) => {
+          if (error && error.status === 404) {
+            this.set('customImagesLoading', false);
+          }
         });
       });
     });

@@ -33,6 +33,11 @@ export default Controller.extend({
       return false;
     }
 
+    const storageAddon = this.model.owner.v2subscription?.addons?.find(addon => addon.type === 'storage');
+    if (!storageAddon) {
+      return false;
+    }
+
     if (this.model.owner.isUser) {
       return this.model.owner.id == this.auth.currentUser.id;
     } else {

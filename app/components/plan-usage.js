@@ -212,8 +212,8 @@ export default Component.extend({
     }
 
     return usages.map((usage) => ({
-      excessUsage: usage.excess_usage,
-      freeUsage: usage.free_usage,
+      excessUsage: Math.ceil(usage.excess_usage || 0),
+      freeUsage: Math.ceil(usage.free_usage),
       quantityLimitCharge: usage.quantity_limit_charge || 0,
       quantityLimitFree: usage.quantity_limit_free || 0,
       quantityLimitType: usage.quantity_limit_type || 0,
