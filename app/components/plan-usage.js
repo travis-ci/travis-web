@@ -217,10 +217,27 @@ export default Component.extend({
       quantityLimitCharge: usage.quantity_limit_charge || 0,
       quantityLimitFree: usage.quantity_limit_free || 0,
       quantityLimitType: usage.quantity_limit_type || 0,
-      totalUsage: Math.ceil(usage.total_usage || 0),
-      ownerName: `${this.owner.get('vcsType')} / ${this.owner.get('login')}`,
-      name: 'Custom build environment images'
+      totalUsage: Math.ceil(usage.total_usage || 0)
     }));
+  }),
+
+  storageUsageItemsOwners: computed('owner.customImageUsages', function () {
+    const usages = this.owner.get('customImageUsages');
+    if (!usages) {
+      return [];
+    }
+
+    const usagesByOwner = [];
+    usages.forEach((usage) => {
+      usage.usage_by_owner.forEach((item) => {
+        usagesByOwner.push({
+          totalUsage: Math.ceil(item.total_usage || 0),
+          ownerName: `${item.vcs_type} / ${item.login}`,
+        });
+      });
+    });
+
+    return usagesByOwner;
   }),
 
   totalExcessStorageUsage: computed('storageUsageItems.@each.excessUsage', function () {

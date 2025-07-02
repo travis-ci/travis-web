@@ -162,10 +162,10 @@
         </tr>
       </thead>
       <tbody>
-        {{#each this.storageUsageItems as |item|}}
+        {{#each this.storageUsageItemsOwners as |item|}}
           <tr data-test-usage-item>
             <td>
-              {{item.ownerName}}<br>{{item.name}}
+              {{item.ownerName}}<br>Custom build environment images
             </td>
             <td class='credits-row'>
               {{format-number item.totalUsage}} GBhours
