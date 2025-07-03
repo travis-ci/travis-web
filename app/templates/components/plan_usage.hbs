@@ -55,29 +55,15 @@
     <div class='download-csv-container'>
       <button
         class="download-csv"
-        onclick={{action "requestCsvExport" "usage"}}
-        disabled={{this.isGeneratingUsageReport}}
+        onclick={{action "requestCsvExport" }}
+        disabled={{this.isGeneratingReport}}
       >
-        {{#if this.isGeneratingUsageReport}}
-          Generating Usage Report...
+        {{#if this.isGeneratingUReport}}
+          Generating Report...
         {{else}}
-          Download .csv file for more detailed information about usage
+          Request CSV report with details about credits consumption
         {{/if}}
       </button>
-
-      {{#if this.v2subscription.plan.isNotStandardOrProTier}}
-        <button
-          class="download-csv"
-          onclick={{action "requestCsvExport" "license"}}
-          disabled={{this.isGeneratingLicenseReport}}
-        >
-          {{#if this.isGeneratingLicenseReport}}
-            Generating License Report...
-          {{else}}
-            Download .csv file for more detailed information about user license usage
-          {{/if}}
-        </button>
-      {{/if}}
     </div>
 
     <table class="repository-build-times">
