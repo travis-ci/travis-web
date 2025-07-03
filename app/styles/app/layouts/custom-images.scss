@@ -40,6 +40,11 @@
         width: 22%;
         margin-bottom: 40px;
       }
+
+      &--large {
+        min-width: 22%;
+        width: auto;
+      }
     }
   }
 
