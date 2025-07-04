@@ -163,9 +163,7 @@ export default Model.extend({
     return this.addons.filter(addon => addon.type === 'user_license').length > 0;
   }),
   hasStorageAddons: computed('addons', 'plan', 'addonConfigs', 'addonConfigs.@each.type', function () {
-    const addons = this.addons.filter(addon => addon.type === 'storage').length;
-    const planAddons = this.plan.addonConfigs.filter(addon => addon.type === 'storage').length;
-    return addons > 0 || planAddons > 0;
+    return this.addons.filter(addon => addon.type === 'storage').length > 0;
   }),
   hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons'),
 
