@@ -14,6 +14,10 @@
       flex-basis: auto;
       margin-right: 5px;
 
+      &.storage {
+        width: 233px;
+      }
+
       &--desc {
         color: $cement-grey;
         font-weight: 600;
