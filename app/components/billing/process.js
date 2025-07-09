@@ -16,7 +16,6 @@ export default Component.extend({
   router: service(),
 
   account: null,
-  subscription: null,
   sharedSubscription: null,
   steps: computed(() => [...Object.values(STEPS)]),
 
@@ -44,8 +43,8 @@ export default Component.extend({
     return false;
   }),
 
-  subscriptionForStorageCheck: computed('subscription', 'sharedSubscription', function () {
-    return this.subscription || this.sharedSubscription;
+  subscriptionForStorageCheck: computed('subscription.{status}', 'sharedSubscription', function () {
+    return typeof this.subscription.status === 'undefined' && this.sharedSubscription ? this.sharedSubscription : this.subscription;
   }),
 
   isStepOne: equal('currentStep', STEPS.ONE),
