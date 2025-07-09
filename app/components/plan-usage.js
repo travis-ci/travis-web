@@ -26,9 +26,7 @@ export default Component.extend({
   currentUser: reads('auth.currentUser'),
   flashes: service(),
 
-  isGeneratingUsageReport: false,
-  isGeneratingLicenseReport: false,
-  reportStatusMessage: null,
+  isGeneratingReport: false,
 
   init() {
     this._super(...arguments);
@@ -161,12 +159,8 @@ export default Component.extend({
   }),
 
   actions: {
-    requestCsvExport(reportType) {
-      if (reportType === 'usage') {
-        this.set('isGeneratingUsageReport', true);
-      } else if (reportType === 'license') {
-        this.set('isGeneratingLicenseReport', true);
-      }
+    requestCsvExport() {
+      this.set('isGeneratingReport', true);
 
       const owner = this.get('owner');
       const provider = owner.get('provider') || 'github'; // Default to github if not set
@@ -179,7 +173,6 @@ export default Component.extend({
       this.api.post(url, {
         data: {
           csv_export: {
-            report_type: reportType,
             recipient_email: email,
             expires_in: 86400, // 24 hours in seconds
             start_date: startDate,
@@ -188,18 +181,12 @@ export default Component.extend({
         }
       }).then(() => {
         this.flashes.warning(
-          `Your ${reportType} report is being generated. We'll email it to ${email} when ready.`);
-        this.set('reportStatusMessage', null);
+          `We're generating your report. We'll email it to ${email} when ready.`);
       }).catch(error => {
         this.flashes.error(
           `Error: ${error.message}. Please try again.`);
-        this.set('reportStatusMessage', null);
       }).finally(() => {
-        if (reportType === 'usage') {
-          this.set('isGeneratingUsageReport', false);
-        } else if (reportType === 'license') {
-          this.set('isGeneratingLicenseReport', false);
-        }
+        this.set('isGeneratingReport', false);
       });
     },
 
