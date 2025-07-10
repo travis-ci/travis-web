@@ -21,7 +21,19 @@
       {{else if (eq addon.type 'user_license')}}
         User license:
       {{/if}}
-      {{addon.name}}
+      {{addon.name}}{{#if (eq addon.type 'storage')}}:
+        <ul>
+          <li>
+            Free limit: {{format-thousands addon.current_usage.quantity_limit_free}} GB
+          </li>
+          <li>
+            Limit: {{format-thousands addon.current_usage.addon_quantity}} GB
+          </li>
+          <li>
+            Excess usage: {{#if (eq addon.current_usage.quantity_limit_type 'soft')}}Allowed{{else}}Not allowed{{/if}}
+          </li>
+        </ul>
+      {{/if}}
       </li>
     {{/each}}
     </ul>
@@ -49,7 +61,7 @@
         </form.field>
       </TravisForm>
     </div>
-   
+
     <div class='total-usage' data-test-plan-usage-minutes-total>All repositories total build time: {{this.totalBuildMinutes}} minutes</div>
 
     <!--
@@ -123,6 +135,54 @@
           <td data-test-plan-usage-credits-total='true' class='credits-row'>{{format-number this.totalBuildCredits}}</td>
         </tr>
       </tbody>
+    </table>
+    {{/if}}
+
+    {{#if this.subscription.hasStorageAddons}}
+    <div class='total-usage' data-test-plan-usage-minutes-total>
+      Storage: {{format-thousands this.storageAddonTotalUsage}} GB / {{format-thousands this.storageAddonUsage.addon_quantity}} GB
+      <br>
+      You may be billed in credits for storage.<br>
+      If you exceed your limit, any extra charges will be billed at the end of the period.
+      <br>
+      <ExternalLinkTo
+        @href="http://docs.travis-ci.com/user/getting-started/"
+        class="custom-images-docs-link"
+        title="Travis documentation on getting set up"
+      >
+        Check documentation.
+      </ExternalLinkTo>
+    </div>
+
+    <table class="storage-usage-table" data-test-storage-usage >
+      <thead>
+        <tr data-test-table-header-row='true'>
+          <th>Item</th>
+          <th class='credits-row'>Total storage usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.storageUsageItemsOwners as |item|}}
+          <tr data-test-usage-item>
+            <td>
+              {{item.ownerName}}<br>Custom build environment images
+            </td>
+            <td class='credits-row'>
+              {{format-number item.totalUsage}} GBhours
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Excess usage in period:</td>
+          <td data-test-plan-usage-credits-total='true' class='credits-row'>{{format-number this.totalExcessStorageUsage}} GBhours</td>
+        </tr>
+        <tr>
+          <td>Total usage:</td>
+          <td data-test-plan-usage-credits-total='true' class='credits-row'>{{format-number this.totalStorageUsage}} GBhours</td>
+        </tr>
+      </tfoot>
     </table>
     {{/if}}
   </section>

@@ -10,6 +10,13 @@
         Build Activity
       </LinkTo>
     </li>
+    {{#if this.canViewCustomImages}}
+    <li>
+      <LinkTo @query={{hash tab="custom-images" timeInterval=this.defaultTimeInterval}} >
+        Custom Images
+      </LinkTo>
+    </li>
+    {{/if}}
   </ul>
 </nav>
 <div class="owner-repo">
@@ -71,6 +78,10 @@
     {{else}}
       <LoadingScreen @center={{true}} @margin={{true}} />
     {{/if}}
+  {{else if this.isCustomImages}}
+    <CustomImages::Tab
+      @owner={{this.model.owner}}
+    />
   {{else}}
     {{#unless this.reposLoading}}
       <ul class="owner-tiles">

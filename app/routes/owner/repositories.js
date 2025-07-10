@@ -7,6 +7,7 @@ export default TravisRoute.extend({
   features: service(),
   insights: service(),
   store: service(),
+  accounts: service(),
 
   needsAuth: false,
 
@@ -29,6 +30,12 @@ export default TravisRoute.extend({
     this.setProperties({ tab, page, owner });
 
     return { owner };
+  },
+
+  afterModel() {
+    if (this.tab === OWNER_TABS.CUSTOM_IMAGES) {
+      return this.accounts.fetchV2Subscriptions.perform();
+    }
   },
 
   loadRepositories() {
@@ -64,6 +71,14 @@ export default TravisRoute.extend({
 
     if (this.tab === OWNER_TABS.INSIGHTS) {
       controller.set('builds', this.loadInsights());
+    } else if (this.tab === OWNER_TABS.CUSTOM_IMAGES) {
+      const owner = this.modelFor('owner');
+      const subscription = owner.v2subscription;
+      const storageAddon = subscription?.addons?.find(addon => addon.type === 'storage');
+      if (!storageAddon) {
+        this.transitionTo('account.repositories');
+        return;
+      }
     } else {
       this.loadRepositories().then(data => controller.set('repos', data));
     }
