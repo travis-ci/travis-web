@@ -13,6 +13,7 @@
     <br />
     <ul>
     {{#each this.sortedAddons as |addon|}}
+    {{ log addon }}
       <li>
       {{#if (eq addon.type 'credit_public')}}
         Public:
@@ -24,7 +25,9 @@
       {{addon.name}}
       {{#if (eq addon.type 'user_license')}}
         {{#if (eq addon.free true)}}
-          <span>({{addon.current_usage.addon_quantity}} {{#if (eq addon.current_usage.addon_quantity 1)}}user{{else}}users{{/if}} in month w/o extra charges)</span>
+          {{#if (eq addon.current_usage.status 'subscribed')}}
+            <span>({{addon.current_usage.addon_quantity}} {{#if (eq addon.current_usage.addon_quantity 1)}}user{{else}}users{{/if}} in month w/o extra charges)</span>
+          {{/if}}
         {{else}}
           <span>(additional users in month at a <a href="https://docs.travis-ci.com/user/billing-overview/#usage-based-plans-credit-costs" target="_blank" class="documentation-link">pre-defined cost</a>)</span>
         {{/if}}
