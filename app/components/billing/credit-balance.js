@@ -41,6 +41,22 @@ export default Component.extend({
     return this.creditsPrivateUsed;
   }),
 
+  isCreditsPrivateInactive: computed('subscription', function() {
+    let addon = this.subscription.addons.filter(addon => addon.type === 'credit_private')[0];
+    if (addon) {
+      return addon.current_usage.status !== 'subscribed';
+    }
+    return false;
+  }),
+
+  isCreditsPublicInactive: computed('subscription', function() {
+    let addon = this.subscription.addons.filter(addon => addon.type === 'credit_public')[0];
+    if (addon) {
+      return addon.current_usage.status !== 'subscribed';
+    }
+    return false;
+  }),
+
   planShareReceiversCredits: computed('creditsTab', 'subscription', function () {
     let credits = 0;
     if (this.subscription) {
