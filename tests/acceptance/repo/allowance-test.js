@@ -194,13 +194,13 @@ module('Acceptance | repo allowance', function (hooks) {
   test('warning is displayed in case owner cannot build in private repository', async function (assert) {
     await page.visit({ organization: 'user-login', repo: 'repository-private' });
 
-    assert.equal(page.flash, 'Builds have been temporarily disabled for private repositories due to a negative credit balance. Please go to the Plan page to replenish your credit balance.');
+    assert.equal(page.flash, 'Builds temporarily disabled for private repositories due to insufficient or disabled credits. Please visit Plan page to replenish your credit balance.');
   });
 
   test('warning is displayed in case owner cannot build in public repository', async function (assert) {
     await page.visit({ organization: 'user-login', repo: 'repository-public' });
 
-    assert.equal(page.flash, 'Builds can not run for public repositories due to an insufficient or disabled credit allowance. Please go to the Plan page to replenish your credit balance or alter your Consume paid credits for OSS setting.');
+    assert.equal(page.flash, 'Builds temporarily disabled for public repositories due to an insufficient or disabled credit allowance. Please visit Plan page to replenish your credit balance or alter your Consume paid credits for OSS setting.');
   });
 
   test('warning is displayed in case owner cannot build due to user limit exceeded', async function (assert) {
