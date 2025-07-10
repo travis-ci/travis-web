@@ -41,18 +41,24 @@ export default Component.extend({
     return this.creditsPrivateUsed;
   }),
 
-  isCreditsPrivateInactive: computed('subscription', function() {
-    let addon = this.subscription.addons.filter(addon => addon.type === 'credit_private')[0];
-    if (addon) {
-      return addon.current_usage.status !== 'subscribed';
+  isCreditsPrivateInactive: computed('subscription', function () {
+    if (this.subscription && this.subscription.addons) {
+      let privateCredit = this.subscription.addons?.filter(addon => addon.type === 'credit_private')[0];
+      if (privateCredit) {
+        return privateCredit.current_usage.status !== 'subscribed';
+      }
+      return false;
     }
     return false;
   }),
 
-  isCreditsPublicInactive: computed('subscription', function() {
-    let addon = this.subscription.addons.filter(addon => addon.type === 'credit_public')[0];
-    if (addon) {
-      return addon.current_usage.status !== 'subscribed';
+  isCreditsPublicInactive: computed('subscription', function () {
+    if (this.subscription && this.subscription.addons) {
+      let publicCredit = this.subscription.addons?.filter(addon => addon.type === 'credit_public')[0];
+      if (publicCredit) {
+        return publicCredit.current_usage.status !== 'subscribed';
+      }
+      return false;
     }
     return false;
   }),
