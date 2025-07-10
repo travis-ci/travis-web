@@ -21,6 +21,12 @@ export default Component.extend({
   v2subscription: reads('account.v2subscription'),
   isV2SubscriptionEmpty: empty('v2subscription'),
   isOrganization: reads('owner.isOrganization'),
+  api: service(),
+  auth: service(),
+  currentUser: reads('auth.currentUser'),
+  flashes: service(),
+
+  isGeneratingReport: false,
 
   init() {
     this._super(...arguments);
@@ -152,77 +158,36 @@ export default Component.extend({
     return this.invoices && this.invoices.lastObject ? this.invoices.lastObject : null;
   }),
 
-  executionsDataForCsv: computed('owner.executions', function () {
-    let data = [];
-    const executions = this.owner.get('executions');
-    if (executions) {
-      executions.forEach(async (execution) => {
-        const minutes = calculateMinutes(execution.started_at, execution.finished_at);
-        data.push([
-          execution.job_id,
-          execution.started_at,
-          execution.finished_at,
-          execution.os,
-          execution.credits_consumed,
-          minutes,
-          execution.repo_slug,
-          execution.repo_owner_name,
-          execution.sender_login
-        ]);
-      });
-    }
-    return data;
-  }),
-
-  userLicenseExecutionsDataForCsv: computed('owner.executions', function () {
-    const executions = this.owner.get('executions');
-    if (!executions) {
-      return [];
-    }
-
-    let data = [];
-    executions.forEach(async (execution) => {
-      const sender = this.store.peekRecord('user', execution.sender_id) || (await this.store.findRecord('user', execution.sender_id));
-      if (!execution.user_license_credits_consumed) {
-        return;
-      }
-
-      data.push([
-        execution.job_id,
-        sender.login,
-        execution.user_license_credits_consumed,
-        moment(execution.started_at).format('YYYY-MM-DD'),
-      ]);
-    });
-
-    return data;
-  }),
-
   actions: {
-    async downloadCsv() {
+    requestCsvExport() {
+      this.set('isGeneratingReport', true);
+
+      const owner = this.get('owner');
+      const provider = owner.get('provider') || 'github'; // Default to github if not set
+      const login = owner.get('login');
+      const email = this.get('currentUser.email');
+      const url = `/owner/${provider}/${login}/csv_exports`;
       const startDate = moment(this.dateRange.start).format('YYYY-MM-DD');
-      const endDate = moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD');
-      const fileName = `usage_${startDate}_${endDate}.csv`;
+      const endDate = moment(this.dateRange.end).format('YYYY-MM-DD');
 
-      await this.owner.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
-        moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
-      const header = ['Job Id', 'Started at', 'Finished at', 'OS', 'Credits consumed', 'Minutes consumed', 'Repository', 'Owner', 'Sender'];
-      const data = this.get('executionsDataForCsv');
-
-      this.download.asCSV(fileName, header, data);
-    },
-
-    async downloadUserLicenseCsv() {
-      const startDate = moment(this.dateRange.start).format('YYYY-MM-DD');
-      const endDate = moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD');
-      const fileName = `user_license_usage_${startDate}_${endDate}.csv`;
-
-      await this.owner.fetchExecutions.perform(moment(this.dateRange.start).format('YYYY-MM-DD'),
-        moment(this.dateRange.end || this.dateRange.start).format('YYYY-MM-DD'));
-      const header = ['Job Id', 'Sender', 'Credits consumed', 'Date'];
-      const data = await this.get('userLicenseExecutionsDataForCsv');
-
-      this.download.asCSV(fileName, header, data);
+      this.api.post(url, {
+        data: {
+          csv_export: {
+            recipient_email: email,
+            expires_in: 86400, // 24 hours in seconds
+            start_date: startDate,
+            end_date: endDate
+          }
+        }
+      }).then(() => {
+        this.flashes.warning(
+          `We're generating your report. We'll email it to ${email} when ready.`);
+      }).catch(error => {
+        this.flashes.error(
+          `Error: ${error.message}. Please try again.`);
+      }).finally(() => {
+        this.set('isGeneratingReport', false);
+      });
     },
 
     async changeInsightsRange(opt) {
@@ -243,5 +208,3 @@ export default Component.extend({
 
   }
 });
-
-const calculateMinutes = (start, finish) => (start && finish ? Math.ceil((Date.parse(finish) - Date.parse(start)) / 1000 / 60) : 0);
