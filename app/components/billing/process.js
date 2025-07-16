@@ -97,7 +97,9 @@ export default Component.extend({
           this.send('next');
         } else {
           let currentStorage = this.subscriptionForStorageCheck.addons.find(item => item.type === 'storage');
-          if (currentStorage && (!this.selectedPlan.addonConfigs || this.selectedPlan.addonConfigs.find(item => item.type === 'storage') === undefined)) {
+          if (currentStorage &&
+              (!this.selectedPlan.addonConfigs || this.selectedPlan.addonConfigs.find(item => item.type === 'storage') === undefined)
+          ) {
             this.set('showStorageWarning', true);
           } else {
             this.send('next');
