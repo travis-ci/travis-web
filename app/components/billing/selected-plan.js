@@ -12,7 +12,6 @@ export default Component.extend({
   }),
 
   hasPremiumVM: computed('selectedPlan', function () {
-    console.log(this.selectedPlan);
     return this.selectedPlan.vmSize != null;
   })
 });
