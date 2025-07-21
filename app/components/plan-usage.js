@@ -158,6 +158,26 @@ export default Component.extend({
     return this.invoices && this.invoices.lastObject ? this.invoices.lastObject : null;
   }),
 
+  sortedAddons: computed('subscription.addons.[]', function () {
+    const addons = this.get('subscription.addons') || [];
+
+    return addons.slice().sort((a, b) => {
+      const getTypePriority = (addon) => {
+        if (addon.type === 'credit_public' || addon.type === 'credit_private') {
+          return 1; // Credit type come first
+        } else if (addon.type === 'user_license') {
+          return addon.free ? 2 : 3; // Free user_license comes before paid
+        }
+        return 4;
+      };
+
+      const priorityA = getTypePriority(a);
+      const priorityB = getTypePriority(b);
+
+      return priorityA - priorityB;
+    });
+  }),
+
   actions: {
     requestCsvExport() {
       this.set('isGeneratingReport', true);
