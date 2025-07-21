@@ -26,7 +26,7 @@
     </ul>
   </nav>
 
-  <p class="avail-credits" style="{{if this.isCreditsPrivateInactive 'color: #DB4545;'}} {{if this.isCreditsPublicInactive 'color: #DB4545;'}}">
+  <p class="avail-credits" style="{{if (and (eq this.creditsTab 0) this.isCreditsPrivateInactive) 'color: #DB4545;'}} {{if (and (eq this.creditsTab 1) this.isCreditsPublicInactive) 'color: #DB4545;'}}">
     {{#if (eq this.creditsTab 1)}}
       {{#if (eq this.creditsAvailable 0)}}
         {{format-number this.creditsAvailable}} available credits
