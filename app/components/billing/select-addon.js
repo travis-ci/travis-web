@@ -27,13 +27,13 @@ export default Component.extend({
     } else {
       this.next();
     }
-    window.location.reload();
   }).drop(),
 
   actions: {
     selectAndSubmit(form) {
       this.set('selectedAddon', this.selectedAddon);
       later(() => form.submit(), 500);
+      window.location.reload();
     },
     cancel() {
       this.set('selectedAddon', null);
