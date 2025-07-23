@@ -15,12 +15,12 @@
     <ul>
       <li>
         <a class="{{if (eq this.creditsTab 0) 'active' ''}}" onclick={{action "setPrivateCreditsTab"}}>Credits
-          <span style="{{unless this.isCreditsPrivateInactive 'display: none;'}}" class="badge red square" data-test-expired-status="true">inactive</span>
+          <span style="{{unless this.isCreditsPrivateExpired 'display: none;'}}" class="badge red square" data-test-expired-status="true">inactive</span>
         </a>
       </li>
       <li>
         <a class="{{if (eq this.creditsTab 1) 'active' ''}}" onclick={{action "setOSSCreditsTab"}}>OSS only credits
-          <span style="{{unless this.isCreditsPublicInactive 'display: none;'}}" class="badge red square" data-test-expired-status="true">inactive</span>
+          <span style="{{unless this.isCreditsPublicExpired 'display: none;'}}" class="badge red square" data-test-expired-status="true">inactive</span>
         </a>
       </li>
     </ul>
