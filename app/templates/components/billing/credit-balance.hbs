@@ -39,7 +39,7 @@
       {{else}}
         {{format-number this.creditsAvailable}} available credits (purchased on: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}}
       {{#if this.creditsPrivateValidDate}}
-        {{#if this.isCreditsPrivateInactive}}
+        {{#if this.isCreditsPrivateExpired}}
         , expired on: {{this.formattedCreditsPrivateValidDate}}
         {{else}}
         , valid until: {{this.formattedCreditsPrivateValidDate}}
