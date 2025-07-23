@@ -27,7 +27,7 @@ export default Component.extend({
     } else {
       this.next();
     }
-    yield this.account.reload();
+    window.location.reload();
   }).drop(),
 
   actions: {
