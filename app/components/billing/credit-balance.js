@@ -41,27 +41,27 @@ export default Component.extend({
     return this.creditsPrivateUsed;
   }),
 
-  isCreditsPrivateInactive: computed('subscription', function () {
+  privateCreditsStatus: computed('subscription', function () {
     if (this.subscription && this.subscription.addons) {
       console.log("addons ", this.subscription.addons);
       let privateCredit = this.subscription.addons?.filter(addon => addon.type === 'credit_private')[0];
       if (privateCredit) {
-        return privateCredit.current_usage.status !== 'subscribed';
+        return privateCredit.current_usage.status;
       }
-      return false;
+      return "";
     }
-    return false;
+    return "";
   }),
 
-  isCreditsPublicInactive: computed('subscription', function () {
+  publicCreditsStatus: computed('subscription', function () {
     if (this.subscription && this.subscription.addons) {
       let publicCredit = this.subscription.addons?.filter(addon => addon.type === 'credit_public')[0];
       if (publicCredit) {
-        return publicCredit.current_usage.status !== 'subscribed';
+        return publicCredit.current_usage.status;
       }
-      return false;
+      return "";
     }
-    return false;
+    return "";
   }),
 
   planShareReceiversCredits: computed('creditsTab', 'subscription', function () {
