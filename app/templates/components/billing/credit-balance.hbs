@@ -15,18 +15,18 @@
     <ul>
       <li>
         <a class="{{if (eq this.creditsTab 0) 'active' ''}}" onclick={{action "setPrivateCreditsTab"}}>Credits
-          <span style="{{unless this.isCreditsPrivateExpired 'display: none;'}}" class="badge red square" data-test-expired-status="true">inactive</span>
+          <span style="{{unless this.isCreditsPrivateInactive 'display: none;'}}" class="badge red square" data-test-expired-status="true">inactive</span>
         </a>
       </li>
       <li>
         <a class="{{if (eq this.creditsTab 1) 'active' ''}}" onclick={{action "setOSSCreditsTab"}}>OSS only credits
-          <span style="{{unless this.isCreditsPublicExpired 'display: none;'}}" class="badge red square" data-test-expired-status="true">inactive</span>
+          <span style="{{unless this.isCreditsPublicInactive 'display: none;'}}" class="badge red square" data-test-expired-status="true">inactive</span>
         </a>
       </li>
     </ul>
   </nav>
 
-  <p class="avail-credits" style="{{if (and (eq this.creditsTab 0) this.isCreditsPrivateExpired) 'color: #DB4545;'}} {{if (and (eq this.creditsTab 1) this.isCreditsPublicExpired) 'color: #DB4545;'}}">
+  <p class="avail-credits" style="{{if (and (eq this.creditsTab 0) this.isCreditsPrivateInactive) 'color: #DB4545;'}} {{if (and (eq this.creditsTab 1) this.isCreditsPublicInactive) 'color: #DB4545;'}}">
     {{#if (eq this.creditsTab 1)}}
       {{#if (eq this.creditsAvailable 0)}}
         {{format-number this.creditsAvailable}} available credits
@@ -39,7 +39,7 @@
       {{else}}
         {{format-number this.creditsAvailable}} available credits (purchased on: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}}
       {{#if this.creditsPrivateValidDate}}
-        {{#if this.isCreditsPrivateExpired}}
+        {{#if this.isCreditsPrivateInactive}}
         , expired on: {{this.formattedCreditsPrivateValidDate}}
         {{else}}
         , valid until: {{this.formattedCreditsPrivateValidDate}}
