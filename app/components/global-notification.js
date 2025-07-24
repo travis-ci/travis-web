@@ -39,9 +39,6 @@ export default Component.extend({
     if (!allowance) {
       return;
     }
-    console.log("allowance: ", allowance);
-    console.log("this.isOrganizationAdmin: ", this.isOrganizationAdmin);
-    console.log("this.model.isUser: ", this.model.isUser);
     return allowance.get('subscriptionType') !== 3 && (this.isOrganizationAdmin || this.model.isUser)
       && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
   }),
@@ -52,9 +49,6 @@ export default Component.extend({
       return;
     }
     const allowance = repo.get('allowance');
-    console.log("allowance: ", allowance);
-    console.log("this.auth.currentUser: ", this.auth.currentUser);
-    console.log("repo.canOwnerBuild: ", repo.canOwnerBuild);
     return allowance && allowance.get('subscriptionType') !== 3 && this.isProVersion && !repo.canOwnerBuild
       && this.auth.currentUser && this.auth.currentUser.confirmedAt;
   }),

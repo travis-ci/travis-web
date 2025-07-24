@@ -43,7 +43,6 @@ export default Component.extend({
 
   privateCreditsStatus: computed('subscription', function () {
     if (this.subscription && this.subscription.addons) {
-      console.log("addons ", this.subscription.addons);
       let privateCredit = this.subscription.addons?.filter(addon => addon.type === 'credit_private')[0];
       if (privateCredit) {
         return privateCredit.current_usage.status;
