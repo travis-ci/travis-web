@@ -47,9 +47,9 @@ export default Component.extend({
       if (privateCredit) {
         return privateCredit.current_usage.status;
       }
-      return "";
+      return '';
     }
-    return "";
+    return '';
   }),
 
   publicCreditsStatus: computed('subscription', function () {
@@ -58,9 +58,9 @@ export default Component.extend({
       if (publicCredit) {
         return publicCredit.current_usage.status;
       }
-      return "";
+      return '';
     }
-    return "";
+    return '';
   }),
 
   planShareReceiversCredits: computed('creditsTab', 'subscription', function () {
