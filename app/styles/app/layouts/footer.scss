@@ -39,6 +39,10 @@ $styleguide-medium: 800px;
     font-style: normal;
     color: $styleguide-color-black;
     line-height: $styleguide-font-size-title;
+
+    &.text-center {
+      text-align: center;
+    }
   }
   address {
     line-height: $styleguide-font-size-title + 1px;
