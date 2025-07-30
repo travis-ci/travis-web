@@ -30,6 +30,10 @@
 
   <p class="avail-credits" style="{{if (and (eq this.creditsTab 0) (eq this.privateCreditsStatus "expired")) 'color: #DB4545;'}} {{if (and (eq this.creditsTab 1) (eq this.publicCreditsStatus "expired")) 'color: #DB4545;'}}">
     {{#if (eq this.creditsTab 1)}}
+      {{#if (eq this.privateCreditsStatus "pending")}}
+        Waiting for payment confirmation to enable credits. If this takes longer than usual, please contact support.
+      {{/if}})
+      <br>
       {{#if (eq this.creditsAvailable 0)}}
         {{format-number this.creditsAvailable}} available credits
       {{else}}
