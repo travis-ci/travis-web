@@ -14,29 +14,45 @@
   <nav class="travistab-nav--secondary">
     <ul>
       <li>
-        <a class="{{if (eq this.creditsTab 0) 'active' ''}}" onclick={{action "setPrivateCreditsTab"}}>Credits</a>
+        <a class="{{if (eq this.creditsTab 0) 'active' ''}}" onclick={{action "setPrivateCreditsTab"}}>Credits
+          <span style="{{unless (eq this.privateCreditsStatus "expired") 'display: none;'}}" class="badge red square" data-test-expired-status="true">expired</span>
+          <span style="{{unless (eq this.privateCreditsStatus "pending") 'display: none;'}}" class="badge blue square" data-test-expired-status="true">pending</span>
+        </a>
       </li>
       <li>
-        <a class="{{if (eq this.creditsTab 1) 'active' ''}}" onclick={{action "setOSSCreditsTab"}}>OSS only credits</a>
+        <a class="{{if (eq this.creditsTab 1) 'active' ''}}" onclick={{action "setOSSCreditsTab"}}>OSS only credits
+          <span style="{{unless (eq this.publicCreditsStatus "expired") 'display: none;'}}" class="badge red square" data-test-expired-status="true">expired</span>
+          <span style="{{unless (eq this.publicCreditsStatus "pending") 'display: none;'}}" class="badge blue square" data-test-expired-status="true">pending</span>
+        </a>
       </li>
     </ul>
   </nav>
 
-  <p class='avail-credits'>
+  <p class="avail-credits" style="{{if (and (eq this.creditsTab 0) (eq this.privateCreditsStatus "expired")) 'color: #DB4545;'}} {{if (and (eq this.creditsTab 1) (eq this.publicCreditsStatus "expired")) 'color: #DB4545;'}}">
     {{#if (eq this.creditsTab 1)}}
+      {{#if (eq this.publicCreditsStatus "pending")}}
+        Waiting for payment confirmation to enable credits. If this takes longer than usual, please contact support.<br>
+      {{/if}}
       {{#if (eq this.creditsAvailable 0)}}
         {{format-number this.creditsAvailable}} available credits
       {{else}}
         {{format-number this.creditsAvailable}} available credits (next replenish date: {{moment-format this.creditsPublicValidDate 'MMMM DD, YYYY'}})
       {{/if}}
     {{else}}
+      {{#if (eq this.privateCreditsStatus "pending")}}
+        Waiting for payment confirmation to enable credits. If this takes longer than usual, please contact support.<br>
+      {{/if}}
       {{#if this.subscription.isCanceled}}
         {{format-number this.creditsAvailable}} available credits (expiry date: {{moment-format this.creditsValidityDate 'MMMM DD, YYYY'}})
       {{else}}
         {{format-number this.creditsAvailable}} available credits (purchased on: {{moment-format this.creditsPrivatePurchaseDate 'MMMM DD, YYYY'}}
       {{#if this.creditsPrivateValidDate}}
+        {{#if (eq this.privateCreditsStatus "expired")}}
+        , expired on: {{this.formattedCreditsPrivateValidDate}}
+        {{else}}
         , valid until: {{this.formattedCreditsPrivateValidDate}}
-      {{/if}})
+        {{/if}})
+      {{/if}}
       {{/if}}
     {{/if}}
   </p>
