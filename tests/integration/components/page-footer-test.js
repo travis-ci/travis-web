@@ -32,4 +32,11 @@ module('Integration | Component | page footer', function (hooks) {
 
     assert.dom('div.status').doesNotExist();
   });
+
+  test('it renders licensing information link', async function (assert) {
+    await render(hbs`{{page-footer}}`);
+
+    assert.dom().includesText('Licensing information');
+    assert.dom('a').exists();
+  });
 });

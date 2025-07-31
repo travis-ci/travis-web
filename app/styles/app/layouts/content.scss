@@ -80,3 +80,65 @@
     transform: rotateY(360deg);
   }
 }
+
+.licensing-page {
+  text-align: left;
+  max-width: none;
+
+  .licensing-title {
+    font-size: 28px;
+    color: $oxide-blue;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .licensing-content {
+    text-align: left;
+    margin: 0;
+    width: 100%;
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    a {
+      text-decoration: underline;
+      color: $oxide-blue;
+
+      &:hover {
+        text-decoration: underline;
+        color: darken($oxide-blue, 10);
+      }
+    }
+  }
+
+  .licensing-subtitle {
+    font-size: 20px;
+    margin: 20px 0 10px 0;
+    color: $oxide-blue;
+  }
+}
+
+.license-text {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 20px 0;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+
+  p {
+    margin-bottom: 15px;
+
+    &:first-child {
+      font-weight: bold;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
