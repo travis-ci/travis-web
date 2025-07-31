@@ -115,4 +115,16 @@
   font-size: 14px;
   line-height: 1.4;
   text-align: left;
+
+  p {
+    margin-bottom: 15px;
+
+    &:first-child {
+      font-weight: bold;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
