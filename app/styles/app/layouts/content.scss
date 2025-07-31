@@ -96,6 +96,20 @@
     text-align: left;
     margin: 0;
     width: 100%;
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    a {
+      text-decoration: underline;
+      color: $oxide-blue;
+
+      &:hover {
+        text-decoration: underline;
+        color: darken($oxide-blue, 10);
+      }
+    }
   }
 
   .licensing-subtitle {
