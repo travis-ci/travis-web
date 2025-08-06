@@ -49,7 +49,6 @@ export default Component.extend({
       return;
     }
     const allowance = repo.get('allowance');
-
     return allowance && allowance.get('subscriptionType') !== 3 && this.isProVersion && !repo.canOwnerBuild
       && this.auth.currentUser && this.auth.currentUser.confirmedAt;
   }),
