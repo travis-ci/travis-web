@@ -10,11 +10,13 @@
         Build Activity
       </LinkTo>
     </li>
+    {{#if this.canViewCustomImages}}
     <li>
       <LinkTo @query={{hash tab="custom-images" timeInterval=this.defaultTimeInterval}} >
         Custom Images
       </LinkTo>
     </li>
+    {{/if}}
   </ul>
 </nav>
 <div class="owner-repo">
