@@ -1,0 +1,27 @@
+{{#if this.customImagesLoading}}
+<LoadingIndicator @center={{true}} />
+{{else unless this.hasCustomImageAllowance}}
+<CustomImages::NotAllowed />
+{{else if this.isCustomImagesEmpty}}
+<CustomImages::NoImages />
+{{else}}
+<div class="summary-grid">
+  <CustomImages::SummaryBlock
+    @title="Images"
+    @data={{this.customImagesCount}}
+  />
+  <CustomImages::SummaryBlock
+    @title="GB Used"
+    @data={{this.customImagesTotalSizeInGB}}
+  />
+  <CustomImages::SummaryBlock
+    @title="Est. Month Credits"
+    @data={{this.estimatedCreditsUsage}}
+  />
+</div>
+
+<CustomImages::List
+  @owner={{this.owner}}
+  @customImages={{this.owner.customImages}}
+/>
+{{/if}}

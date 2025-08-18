@@ -91,6 +91,19 @@ export default VcsEntity.extend({
     }, { live: false });
   },
 
+  customImages: reads('fetchCustomImages.lastSuccessful.value'),
+  hasCustomImageAllowance: attr('boolean'),
+
+  fetchCustomImages: task(function* () {
+    try {
+      this.hasCustomImageAllowance = true;
+      return yield this.store.query('custom-image', { login: this.login, provider: this.provider });
+    } catch (e) {
+      this.hasCustomImageAllowance = false;
+      return [];
+    }
+  }).drop(),
+
   fetchPlans: task(function* () {
     const url = this.isOrganization ? `/plans_for/organization/${this.id}` : '/plans_for/user';
     const result = yield this.api.get(url);
