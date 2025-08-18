@@ -35,6 +35,7 @@ export default Component.extend({
     };
     this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
     this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+    this.owner.fetchCustomImageUsages.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
     this.requestRepositoryData.perform();
   },
 
@@ -198,6 +199,55 @@ export default Component.extend({
     return data;
   }),
 
+  storageAddonUsage: reads('subscription.storageAddon.current_usage'),
+
+  storageAddonTotalUsage: computed('storageAddonUsage', function () {
+    return this.storageAddonUsage.addon_usage || 0;
+  }),
+
+  storageUsageItems: computed('owner.customImageUsages', function () {
+    const usages = this.owner.get('customImageUsages');
+    if (!usages) {
+      return [];
+    }
+
+    return usages.map((usage) => ({
+      excessUsage: Math.ceil(usage.excess_usage || 0),
+      freeUsage: Math.ceil(usage.free_usage),
+      quantityLimitCharge: usage.quantity_limit_charge || 0,
+      quantityLimitFree: usage.quantity_limit_free || 0,
+      quantityLimitType: usage.quantity_limit_type || 0,
+      totalUsage: Math.ceil(usage.total_usage || 0)
+    }));
+  }),
+
+  storageUsageItemsOwners: computed('owner.customImageUsages', function () {
+    const usages = this.owner.get('customImageUsages');
+    if (!usages) {
+      return [];
+    }
+
+    const usagesByOwner = [];
+    usages.forEach((usage) => {
+      usage.usage_by_owner.forEach((item) => {
+        usagesByOwner.push({
+          totalUsage: Math.ceil(item.total_usage || 0),
+          ownerName: `${item.vcs_type} / ${item.login}`,
+        });
+      });
+    });
+
+    return usagesByOwner;
+  }),
+
+  totalExcessStorageUsage: computed('storageUsageItems.@each.excessUsage', function () {
+    return this.storageUsageItems.reduce((sum, item) => sum + (item.excessUsage || 0), 0);
+  }),
+
+  totalStorageUsage: computed('storageUsageItems.@each.totalUsage', function () {
+    return this.storageUsageItems.reduce((sum, item) => sum + (item.totalUsage || 0), 0);
+  }),
+
   actions: {
     async downloadCsv() {
       const startDate = moment(this.dateRange.start).format('YYYY-MM-DD');
@@ -238,6 +288,7 @@ export default Component.extend({
       };
       this.owner.fetchExecutionsPerRepo.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
       this.owner.fetchExecutionsPerSender.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
+      this.owner.fetchCustomImageUsages.perform(moment(this.dateRange.start).format('YYYY-MM-DD'), moment(this.dateRange.end).format('YYYY-MM-DD'));
       this.requestRepositoryData.perform();
     }
 
