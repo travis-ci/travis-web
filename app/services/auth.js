@@ -93,6 +93,33 @@ export default Service.extend({
     window.addEventListener('focus', () => this.checkAuth());
   },
 
+  /**
+   * Sets a domain-wide ( .travis-ci.com ) cookie indicating whether the user
+   * is currently signed in (1) or signed out (0). The cookie is consumed by
+   * the marketing / WordPress site to perform automatic redirects.
+   *
+   * Note: Cookie cannot be marked HttpOnly because it must be readable by
+   * client-side JavaScript on marketing pages.
+   */
+  setSharedLoginCookie(isLoggedIn) {
+    try {
+      const host = window.location.hostname;
+      const cfg = config.loginStateCookie || {};
+      const name = cfg.name;
+      const days = cfg.expiryDays || 90;
+      const expires = new Date(Date.now() + days * 864e5).toUTCString();
+      const domainPart = /travis-ci\.com$/.test(host) ? '; Domain=.travis-ci.com' : '';
+      const securePart = window.location.protocol === 'https:' ? '; Secure' : '';
+      const value = isLoggedIn ? '1' : '0'; // (1=logged in,0=out)
+      document.cookie = `${name}=${value}; Expires=${expires}; Path=/${domainPart}${securePart}; SameSite=Lax`;
+    } catch (e) {}
+  },
+
+  clearSharedLoginCookie() {
+    this.setSharedLoginCookie(false);
+  },
+
+
   checkAuth() {
     if (!this.currentUser || !this.storage)
       return;
@@ -141,6 +168,7 @@ export default Service.extend({
         this.router.transitionTo('signin');
       } catch (e) {}
     }
+    this.clearSharedLoginCookie();
   },
 
   afterSignOut(callback) {
@@ -198,6 +226,7 @@ export default Service.extend({
           this.set('state', STATE.SIGNED_IN);
           Travis.trigger('user:signed_in', currentUser);
           Travis.trigger('user:refreshed', currentUser);
+          this.setSharedLoginCookie(true);
         })
         .catch(error => {
           if (!didCancel(error)) {

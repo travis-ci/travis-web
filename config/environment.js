@@ -52,6 +52,12 @@ module.exports = function (environment) {
     plans,
     screens,
     tailwind,
+    // login state cookie (used by marketing site for redirect decisions)
+    loginStateCookie: {
+      name: 'logged_in_to_app',
+      expiryDays:
+        parseInt(process.env.LOGGED_IN_TO_APP_COOKIE_EXPIRY, 10) || 90,
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
