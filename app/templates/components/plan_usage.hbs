@@ -12,7 +12,7 @@
     <strong>Plan Add-ons list:</strong>
     <br />
     <ul>
-    {{#each this.subscription.addons as |addon|}}
+    {{#each this.sortedAddons as |addon|}}
       <li>
       {{#if (eq addon.type 'credit_public')}}
         Public:
@@ -33,6 +33,14 @@
             Excess usage: {{#if (eq addon.current_usage.quantity_limit_type 'soft')}}Allowed{{else}}Not allowed{{/if}}
           </li>
         </ul>
+      {{#if (eq addon.type 'user_license')}}
+        {{#if (eq addon.free true)}}
+          {{#if (eq addon.current_usage.status 'subscribed')}}
+            <span>({{addon.current_usage.addon_quantity}} {{#if (eq addon.current_usage.addon_quantity 1)}}user{{else}}users{{/if}} in month w/o extra charges)</span>
+          {{/if}}
+        {{else}}
+          <span>(additional users in month at a <a href="https://docs.travis-ci.com/user/billing-overview/#usage-based-plans-credit-costs" target="_blank" class="documentation-link">pre-defined cost</a>)</span>
+        {{/if}}
       {{/if}}
       </li>
     {{/each}}
@@ -64,14 +72,19 @@
 
     <div class='total-usage' data-test-plan-usage-minutes-total>All repositories total build time: {{this.totalBuildMinutes}} minutes</div>
 
-    <!--
     <div class='download-csv-container'>
-    <button class="download-csv" onclick={{action "downloadCsv"}}>Download .csv file for more detailed information about usage</button>
-    {{#if this.v2subscription.plan.isNotStandardOrProTier}}
-      <button class="download-csv" onclick={{action "downloadUserLicenseCsv"}}>Download .csv file for more detailed information about user license usage</button>
-    {{/if}}
+      <button
+        class="download-csv"
+        onclick={{action "requestCsvExport" }}
+        disabled={{this.isGeneratingReport}}
+      >
+        {{#if this.isGeneratingUReport}}
+          Generating Report...
+        {{else}}
+          Request CSV report with details about credits consumption
+        {{/if}}
+      </button>
     </div>
-    -->
 
     <table class="repository-build-times">
       <thead>

@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { and, equal, lt, reads } from '@ember/object/computed';
+import { and, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import config from 'travis/config/environment';
 
@@ -19,8 +19,6 @@ export default Component.extend({
   bannerText: 'travis.temporary-announcement-banner',
   bannerKey: 'travis.repository-security-banner',
   lsSeats: 'travis.enterprise.seats_msg_seen',
-  isBuildLessThanEleven: lt('model.trial.buildsRemaining', 11),
-  isBuildFinished: equal('model.trial.buildsRemaining', 0),
   activeModel: null,
   model: reads('activeModel'),
   planShareReceiver: null,
@@ -51,7 +49,6 @@ export default Component.extend({
       return;
     }
     const allowance = repo.get('allowance');
-
     return allowance && allowance.get('subscriptionType') !== 3 && this.isProVersion && !repo.canOwnerBuild
       && this.auth.currentUser && this.auth.currentUser.confirmedAt;
   }),
@@ -111,9 +108,9 @@ export default Component.extend({
     return this.features.get('enterpriseVersion');
   }),
 
-  bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'isBuildFinished',
-    'isBuildLessThanEleven', 'showLicenseBanner', 'isUnconfirmed', 'isBalanceNegative', 'paymentDetailsEditLockedTime',
-    'isBalanceNegativeRepo', 'isBalanceNegativeProfile', 'isPlanShareAdminRevoked', 'showEnterpriseBanner',  function () {
+  bannersToDisplay: computed('hasNoPlan', 'isTemporaryAnnouncementBannerEnabled', 'showLicenseBanner', 'isUnconfirmed',
+    'isBalanceNegative', 'paymentDetailsEditLockedTime', 'isBalanceNegativeRepo', 'isBalanceNegativeProfile',
+    'isPlanShareAdminRevoked', 'showEnterpriseBanner',  function () {
       const banners = [];
 
       if (this.hasNoPlan) {
@@ -144,12 +141,6 @@ export default Component.extend({
 
       if (this.isTemporaryAnnouncementBannerEnabled) {
         banners.push('TemporaryAnnouncementBanner');
-      }
-
-      if (this.isBuildFinished) {
-        banners.push('BuildFinished');
-      } else if (this.isBuildLessThanEleven) {
-        banners.push('BuildRunningOut');
       }
 
       if (this.showLicenseBanner) {

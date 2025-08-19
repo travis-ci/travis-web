@@ -10,22 +10,6 @@
       <NegativeBalancePublic @isUser={{this.isUser}} @owner={{this.user}} />
     {{else if (eq banner 'TemporaryAnnouncementBanner')}}
       <TemporaryAnnouncementBanner />
-    {{else if (eq banner 'BuildFinished')}}
-      <Notification
-        @type='global'
-        @severity='error'
-        data-test-trial-ran-out='true'
-      >
-        Your trial has ended. Subscribe to a plan to continue building your project!
-      </Notification>
-    {{else if (eq banner 'BuildRunningOut')}}
-      <Notification
-        @type='global'
-        @severity='warning'
-        data-test-trial-running-out='true'
-      >
-        Your trial is almost finished. Subscribe to a plan before your free builds run out!
-      </Notification>
     {{else if (eq banner 'RepositorySecurityBanner')}}
       <RepositorySecurityBanner />
     {{else if (eq banner 'UnconfirmedUserBanner')}}
@@ -35,7 +19,7 @@
     {{else if (eq banner 'EnterpriseBanner')}}
       <EnterpriseBanner />
     {{else if (eq banner 'PlanShareAdminRevokedBanner')}}
-    <PlanShareAdminRevokedBanner @planShareReceiver={{this.planShareReceiver}}/>
+      <PlanShareAdminRevokedBanner @planShareReceiver={{this.planShareReceiver}}/>
     {{/if}}
   {{/each}}
 </div>

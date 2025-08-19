@@ -17,13 +17,21 @@
   font-size: 14px;
 }
 
+.warning-background {
+  background-color: #faf6db;
+}
+
 .notification-error {
-  background-color: #fce8e2;
+  background-color: $quartz-red;
   padding: 10px 16px 10px 10px;
-  color: #a7191d;
+  color: $brick-red;
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-size: 14px;
+}
+
+.error-background {
+  background-color: #fce8e2;
 }
 
 .global-notification-container {
@@ -62,10 +70,10 @@
 }
 
 .global-notification-error {
-  background-color: #fce8e2;
+  background-color: $quartz-red;
   margin: 0 0 0;
   padding: 10px 16px 10px 10px;
-  color: #a7191d;
+  color: $brick-red;
   font-size: 14px;
 }
 
@@ -78,7 +86,7 @@
 .notification-error a, .global-notification-error a {
   font-weight: 600;
   text-decoration: underline;
-  color: #a7191d;
+  color: $brick-red;
 }
 
 .icon-help-info {
@@ -114,11 +122,11 @@
 }
 
 .icon-help-error {
-  border: 1px solid #a7191d !important;
-  @include colorSVG(#a7191d);
+  border: 1px solid $brick-red !important;
+  @include colorSVG($brick-red);
 
   &:hover {
-    @include colorSVG(#a7191d);
+    @include colorSVG($brick-red);
   }
 }
 
@@ -126,5 +134,5 @@
   width: 20px;
   height: 20px;
   margin-bottom: -6px;
-  @include colorSVG(#a7191d);
+  @include colorSVG($brick-red);
 }

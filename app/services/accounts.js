@@ -29,8 +29,9 @@ export default Service.extend({
   }),
 
   fetchOrganizations: task(function* () {
-    yield fetchAll(this.store, 'organization', {});
-    return this.store.peekAll('organization') || [];
+    const allOrgs = yield fetchAll(this.store, 'organization', { include: '' });
+
+    return allOrgs;
   }).keepLatest(),
 
   fetchSubscriptions: task(function* () {

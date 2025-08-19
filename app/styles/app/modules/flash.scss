@@ -1,11 +1,10 @@
 .flash {
   @include resetul;
 
-  text-align: center;
   height: 0;
 
   li {
-    position: relative;
+    position: fixed;
     display: flex;
     flex-direction: row;
     justify-content: center;
