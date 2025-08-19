@@ -21,7 +21,8 @@
       {{else if (eq addon.type 'user_license')}}
         User license:
       {{/if}}
-      {{addon.name}}{{#if (eq addon.type 'storage')}}:
+      {{addon.name}}
+      {{#if (eq addon.type 'storage')}}:
         <ul>
           <li>
             Free limit: {{format-thousands addon.current_usage.quantity_limit_free}} GB
@@ -33,6 +34,7 @@
             Excess usage: {{#if (eq addon.current_usage.quantity_limit_type 'soft')}}Allowed{{else}}Not allowed{{/if}}
           </li>
         </ul>
+      {{/if}}
       {{#if (eq addon.type 'user_license')}}
         {{#if (eq addon.free true)}}
           {{#if (eq addon.current_usage.status 'subscribed')}}
