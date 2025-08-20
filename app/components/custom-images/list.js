@@ -42,9 +42,9 @@ export default Component.extend({
         return image.name.toLowerCase().includes(filter.toLowerCase())
           || createdByName.toLowerCase().includes(filter.toLowerCase())
           || (image.osVersion && image.osVersion.toLowerCase().includes(filter.toLowerCase()))
-          || image.usage.toString() === filter
           || createdAt.toLowerCase().includes(filter.toLowerCase())
-          || ago.toLowerCase().includes(filter.toLowerCase());
+          || ago.toLowerCase().includes(filter.toLowerCase())
+          || filter.includes(image.usage.toString());
       });
     }
     return customImages;
