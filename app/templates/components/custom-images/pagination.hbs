@@ -1,0 +1,49 @@
+{{#if this.showPagination}}
+  <ul role="navigation">
+    {{#if this.prevPage}}
+      <li>
+        <a
+          data-test-prev-pagination-link
+          href={{this.prevPage.url}}
+          rel="prev"
+          class="pagination-button"
+          title="Go to previous page"
+          onclick={{action "switchToPage" this.prevPage}}
+        >
+          prev
+        </a>
+      </li>
+    {{/if}}
+    {{#each this.pages as |page|}}
+      <li>
+        {{#if page.num}}
+          <a
+            href={{page.url}}
+            data-test-page-pagination-link={{page.num}}
+            class="pagination-link {{if page.isCurrent 'active'}}"
+            title="Go to page number {{page.num}}"
+            onclick={{action "switchToPage" page}}
+          >
+            {{page.num}}
+          </a>
+        {{else}}
+          ...
+        {{/if}}
+      </li>
+    {{/each}}
+    {{#if this.nextPage}}
+      <li>
+        <a
+          data-test-next-pagination-link
+          href={{this.nextPage.url}}
+          rel="next"
+          class="pagination-button"
+          title="Go to next page"
+          onclick={{action "switchToPage" this.nextPage}}
+        >
+          next
+        </a>
+      </li>
+    {{/if}}
+  </ul>
+{{/if}}

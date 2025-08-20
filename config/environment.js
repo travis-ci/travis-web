@@ -39,6 +39,7 @@ const {
   AIDA_CLIENT_KEY,
   TRAVIS_HELP_REDIRECT_URL,
   DEFAULT_PLAN_ID,
+  CUSTOM_IMAGE_DOC_URL,
 } = process.env;
 
 module.exports = function (environment) {
@@ -143,6 +144,7 @@ module.exports = function (environment) {
       privacy: 'https://www.ideracorp.com/en/legal/privacypolicy',
       quickStart: 'https://www.travis-ci.com/quickstart/',
       resources: 'https://www.travis-ci.com/resources/',
+      customImagesDocs: CUSTOM_IMAGE_DOC_URL || 'https://docs.travis-ci.com/',
     },
     endpoints: {},
     githubApps: false,
@@ -272,6 +274,7 @@ module.exports = function (environment) {
     dashboardReposPerPage: 25,
     profileReposPerPage: 25,
     repoBuildsPerPage: 25,
+    customImagesPerPage: 25,
   };
 
   if (STRIPE_PUBLISHABLE_KEY) {

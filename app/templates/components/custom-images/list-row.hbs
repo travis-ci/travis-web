@@ -1,0 +1,132 @@
+<li
+  class="rows rows--dashboard"
+  {{on 'mouseleave' (action this.closeDropup)}}
+>
+{{#if this.isOwnerAdmin}}
+<div class="dash-head">
+  <input
+    type="checkbox"
+    class="checkbox"
+    checked={{this.isSelected}}
+    {{on 'change' (action this.onSelect)}}
+  />
+</div>
+{{/if}}
+<div class="dash-body">
+  <div class="dash-main">
+    <header class="fade-out dash-visibility">
+      <h1 class="row-content">
+        {{#if this.image.private}}
+          <SvgImage @name="icon-lock" @alt="Private image" @class="icon--m" />
+          <EmberTooltip @text="Private image" />
+        {{else}}
+          <SvgImage @name="icon-os" @alt="Public image" @class="icon--m" />
+          <EmberTooltip @text="Public image" />
+        {{/if}}
+      </h1>
+    </header>
+    <section class="fade-out dash-image-name">
+      <h1 class="row-content">
+        {{this.image.name}}
+      </h1>
+      <h2 class="row-label">
+        Used {{this.image.usage}} times
+      </h2>
+    </section>
+    <section class="dash-size fade-out">
+      <h3 class="label">
+        Size
+      </h3>
+      <p class="row-content color">
+        {{format-size this.image.sizeBytes}}
+      </p>
+    </section>
+    <section class="dash-author">
+      <h3 class="label">
+        Author
+      </h3>
+      <p class="row-content color">
+        <UserAvatar @url={{this.image.createdBy.avatar_url}} @name={{this.image.createdByName}} @size={{15}} @small={{true}} />
+        <span class="label-align">
+        {{this.image.createdByName}}
+        </span>
+      </p>
+    </section>
+    <section class="dash-os-dist">
+      <h3 class="label">
+        OS Distribution
+      </h3>
+      <p class="row-content color">
+        <SvgImage @name="icon-linux" @class="icon" />
+        <span class="label-align">
+          {{this.image.osVersion}}
+        </span>
+      </p>
+    </section>
+    <section class="fade-out dash-created-at">
+      <h3 class="label">
+        Created
+      </h3>
+      <p class="row-content" title="{{pretty-date this.image.createdAt}}">
+        <SvgImage @name="icon-calendar" @class="icon" />
+        <span class="label-align">
+          {{#if this.image.createdAt}}
+            {{format-time this.image.createdAt}}
+          {{else}}
+            ---
+          {{/if}}
+        </span>
+      </p>
+    </section>
+    {{#if this.isOwnerAdmin}}
+    <div class="dash-menu">
+        <div class="dropup {{if this.dropupIsOpen 'is-open'}}">
+          <button
+            type="button"
+            class="dropup-tofu"
+            {{on 'click' (action this.openDropup)}}
+          >
+          <SvgImage @name="icon-tofuburger" @class="icon-tofu" />
+          </button>
+          <ul class="dropup-list">
+            {{!-- Commented out for future implementation --}}
+            {{!--
+            <li>
+              <button
+                title="Set as public"
+              >
+                <SvgImage @name="icon-os" @class="icon" />
+                <span class="label-align">
+                  Set as public
+                </span>
+              </button>
+            </li>
+            <li>
+              <button
+                title="Set as private"
+              >
+                <SvgImage @name="icon-lock" @class="icon" />
+                <span class="label-align">
+                  Set as private
+                </span>
+              </button>
+            </li>
+            --}}
+            <li>
+              <button
+                title="Delete"
+                {{on 'click' (action this.onDelete)}}
+              >
+                <SvgImage @name="icon-trash" @class="icon" />
+                <span class="label-align">
+                  Delete
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+</li>

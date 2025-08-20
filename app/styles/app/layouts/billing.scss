@@ -1150,6 +1150,72 @@
     font-style: italic;
   }
 
+  .storage-usage-table {
+    font-size: $font-size-s;
+    width: 100%;
+    border-spacing: 0;
+    margin-top: 85px;
+
+    td {
+      padding: 10px;
+    }
+
+    thead
+    {
+      background-color: $ansi-white;
+      tr
+      {
+        th {
+          color: $cement-grey;
+          text-transform: uppercase;
+          padding: 10px;
+          border: none;
+          text-align: right;
+          &:first-child {
+            text-align: left;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          @include linkStyle;
+          background-color: #fff;
+          font-weight: normal;
+          color: $asphalt-grey;
+          text-align: right;
+          padding: 10px;
+          &:first-child {
+            text-align: left;
+          }
+        }
+        &:nth-child(even) {
+          td {
+            background-color: #f3f3f3;
+          }
+        }
+      }
+    }
+    tfoot {
+      tr {
+        td {
+          &:first-child {
+            text-align: center;
+            font-weight: bold;
+          }
+          &:last-child {
+            text-align: right;
+          }
+        }
+        &:nth-child(even) {
+          td:nth-child(2) {
+            background-color: #f3f3f3;
+          }
+        }
+      }
+    }
+  }
 }
 
 .billing,

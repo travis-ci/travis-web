@@ -30,6 +30,7 @@ export default Owner.extend({
   confirmedAt: attr('date'),
   customKeys: attr(),
   collaborator: attr('boolean'),
+  memberships: attr(),
 
   type: 'user',
 
