@@ -140,6 +140,11 @@ export default Model.extend({
     }
   }),
 
+  storageAddon: computed('addons.[]', function () {
+    const storageAddons = this.addons.filter(addon => addon.type === 'storage');
+    return storageAddons ? storageAddons[0] : null;
+  }),
+
   hasPublicCredits: computed('addonUsage.public.remainingCredits', function () {
     return this.addonUsage.public.remainingCredits > 0;
   }),
@@ -148,14 +153,17 @@ export default Model.extend({
     return this.addonUsage.public.remainingCredits > 0;
   }),
 
-  hasCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+  hasCreditAddons: computed('addons', 'addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addons.filter(addon => addon.type === 'credit_private').length > 0;
   }),
-  hasOSSCreditAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+  hasOSSCreditAddons: computed('addons', 'addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addons.filter(addon => addon.type === 'credit_public').length > 0;
   }),
-  hasUserLicenseAddons: computed('addonConfigs', 'addonConfigs.@each.type', function () {
+  hasUserLicenseAddons: computed('addons', 'addonConfigs', 'addonConfigs.@each.type', function () {
     return this.addons.filter(addon => addon.type === 'user_license').length > 0;
+  }),
+  hasStorageAddons: computed('addons', 'plan', 'addonConfigs', 'addonConfigs.@each.type', function () {
+    return this.addons.filter(addon => addon.type === 'storage').length > 0;
   }),
   hasCredits: or('hasCreditAddons', 'hasOSSCreditAddons'),
 

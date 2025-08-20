@@ -16,9 +16,11 @@ export default Component.extend({
   router: service(),
 
   account: null,
+  sharedSubscription: null,
   steps: computed(() => [...Object.values(STEPS)]),
 
   showCancelButton: false,
+  showStorageWarning: false,
 
   currentStep: computed({
     get() {
@@ -39,6 +41,10 @@ export default Component.extend({
       return billingInfo.firstName && billingInfo.lastName && billingInfo.billingEmail && billingInfo.address
                                    && billingInfo.city && billingInfo.zipCode && billingInfo.country;
     return false;
+  }),
+
+  subscriptionForStorageCheck: computed('subscription.{status}', 'sharedSubscription', function () {
+    return typeof this.subscription.status === 'undefined' && this.sharedSubscription ? this.sharedSubscription : this.subscription;
   }),
 
   isStepOne: equal('currentStep', STEPS.ONE),
@@ -78,6 +84,32 @@ export default Component.extend({
       this.set('currentStep', STEPS.ONE);
       this.persistBillingData(STEPS.ONE);
       this.updateBillingQueryParams(STEPS.ONE);
+    },
+
+    closeStorageWarning() {
+      this.set('showStorageWarning', false);
+      this.send('next');
+    },
+
+    checkStorageChange() {
+      if (this.selectedPlan && this.currentStep === STEPS.ONE) {
+        if (!this.subscriptionForStorageCheck || !this.subscriptionForStorageCheck.addons) {
+          this.send('next');
+        } else {
+          let currentStorage = this.subscriptionForStorageCheck.addons.find(item => item.type === 'storage');
+          if (currentStorage &&
+              (!this.selectedPlan.addonConfigs || this.selectedPlan.addonConfigs.find(item => item.type === 'storage') === undefined)
+          ) {
+            this.set('showStorageWarning', true);
+          } else {
+            this.send('next');
+          }
+        }
+      }
+    },
+
+    cancelPlanChange() {
+      this.set('showStorageWarning', false);
     },
 
     next() {

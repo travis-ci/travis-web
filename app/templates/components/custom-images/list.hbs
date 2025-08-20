@@ -1,0 +1,42 @@
+<CustomImages::Options
+  @isOwnerAdmin={{this.isOwnerAdmin}}
+  @onSelectAll={{action "selectAllImages"}}
+  @onDeleteSelected={{action "deleteSelectedImages"}}
+  @onFilter={{action "filterImages"}}
+/>
+
+<ul class="images-list">
+  {{#if this.customImagesPaginated.length}}
+  {{#each this.customImagesPaginated as |image|}}
+    <CustomImages::ListRow
+      @image={{image}}
+      @isOwnerAdmin={{this.isOwnerAdmin}}
+      @onSelect={{action "selectImage" image}}
+      @onDelete={{action "deleteImage" image}}
+      @selectedImageIds={{this.selectedImageIds}}
+    />
+  {{/each}}
+{{else}}
+  <li class="no-results">Sorry, no results found.</li>
+{{/if}}
+
+</ul>
+
+{{#if (gt this.customImagesTotalCount 25)}}
+<CustomImages::Pagination
+  @currentPage={{this.page}}
+  @perPage={{this.perPage}}
+  @totalCount={{this.customImagesTotalCount}}
+  @onPageChange={{action 'switchToPage'}}
+  @inner={{2}}
+  @outer={{1}}
+/>
+{{/if}}
+
+<CustomImages::DeleteImageConfirmationModal
+  @isOpen={{this.showDeleteImageConfirmModal}}
+  @onClose={{action "closeDeleteImageConfirmModal"}}
+  @deleteImages={{action "deleteImages"}}
+  @images={{this.selectedImageIdsForDeletion}}
+  @imageName={{this.selectedImageName}}
+/>
