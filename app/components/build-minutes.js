@@ -26,7 +26,8 @@ export default Component.extend({
       {
         calcAvg: true,
         private: this.private,
-        customSerialize: (key, val) => [key, Math.round(val / 60)],
+        // Convert seconds to minutes without rounding per data point to avoid collapsing small values to 0
+        customSerialize: (key, val) => [key, (val / 60)],
       }
     );
   }).drop(),
@@ -44,9 +45,11 @@ export default Component.extend({
 
   totalBuildText: computed('isLoading', 'totalBuildMins', function () {
     if (this.isLoading || typeof this.totalBuildMins !== 'number') { return '\xa0'; }
+    // Round total to the nearest whole minute for display consistency
+    const rounded = Math.round(this.totalBuildMins);
     return `
-      ${this.totalBuildMins.toLocaleString()}
-      ${pluralize(this.totalBuildMins, 'min', { withoutCount: true })}
+      ${rounded.toLocaleString()}
+      ${pluralize(rounded, 'min', { withoutCount: true })}
     `.trim();
   }),
 

@@ -22,7 +22,8 @@ export default Component.extend({
       {
         calcAvg: true,
         private: this.private,
-        customSerialize: (key, val) => [key, (Math.round((val / 60) * 100) / 100)],
+        // Convert seconds to minutes without rounding per point; show rounding only in text
+        customSerialize: (key, val) => [key, (val / 60)],
       }
     );
   }).drop(),
