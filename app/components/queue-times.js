@@ -66,7 +66,8 @@ export default Component.extend({
         endInterval: -1,
         calcAvg: true,
         private: this.private,
-        customSerialize: (key, val) => [key, Math.round(val / 60)]
+        // Convert seconds to minutes without rounding per point
+        customSerialize: (key, val) => [key, (val / 60)]
       }
     );
   }).drop(),
