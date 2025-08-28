@@ -6,7 +6,8 @@ import moment from 'moment';
 
 export function prettyDate(params) {
   let date = new Date(params[0]);
-  return new htmlSafe(moment(date).format('MMMM D, YYYY H:mm:ss') || '-');
+  const showTime = params[1] === undefined ? true : params[1];
+  return new htmlSafe(moment(date).format(showTime ? 'MMMM D, YYYY H:mm:ss' : 'MMMM D, YYYY') || '-');
 }
 
 export default helper(prettyDate);

@@ -16,14 +16,18 @@
           {{#each this.displayedStandaloneAddons as |addon|}}
             <div
               data-test-addon-box='true'
-              class='billing-plans__addons_box pointer {{if (eq addon.id this.selectedAddon.id) 'highlight-plan'}}'
+              class='billing-plans__addons_box {{addon.type}} pointer {{if (eq addon.id this.selectedAddon.id) 'highlight-plan'}}'
               onclick={{action (mut this.selectedAddon) addon}}
             >
               <p class='billing-plans__addons_box--price' data-test-selected-addon-price>
-                {{format-currency addon.price floor="true"}}
+                {{#if (eq addon.type 'storage')}}
+                  {{addon.price}} credits/GBhour
+                {{else}}
+                  {{format-currency addon.price floor="true"}}
+                {{/if}}
               </p>
               <p class='billing-plans__addons_box--name color-asphalt-grey' data-test-selected-addon-name>
-                {{#if (eq addon.type 'user_license')}}
+                {{#if (or (eq addon.type 'user_license') (eq addon.type 'storage'))}}
                   {{addon.name}}
                 {{else}}
                   Additional credits
@@ -33,6 +37,8 @@
                 {{format-number addon.quantity}}
                 {{#if (eq addon.type 'user_license')}}
                   user licenses
+                {{else if (eq addon.type 'storage')}}
+                  GB
                 {{else}}
                   credits
                 {{/if}}
