@@ -85,6 +85,26 @@
   text-align: left;
   max-width: none;
 
+  .licensing-toc {
+    list-style: disc inside;
+    margin: 0 0 20px 0;
+    padding: 0;
+    color: $oxide-blue;
+
+    li {
+      margin: 4px 0;
+    }
+
+    a {
+      color: $oxide-blue;
+      text-decoration: underline;
+
+      &:hover {
+        color: darken($oxide-blue, 10);
+      }
+    }
+  }
+
   .licensing-title {
     font-size: 28px;
     color: $oxide-blue;
@@ -115,7 +135,7 @@
   .licensing-subtitle {
     font-size: 20px;
     margin: 20px 0 10px 0;
-    color: $oxide-blue;
+    color: $turf-green;
   }
 }
 
@@ -141,4 +161,9 @@
       margin-bottom: 0;
     }
   }
+}
+
+// Headings inside licensing page
+.licensing-heading-tertiary {
+  color: $oxide-blue;
 }
