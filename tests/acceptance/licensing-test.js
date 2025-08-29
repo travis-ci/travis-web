@@ -16,7 +16,7 @@ module('Acceptance | licensing', function (hooks) {
 
     assert.equal(currentURL(), '/licensing');
     assert.dom('.content-page h1').hasText('Licensing Information');
-    assert.dom('.content-page h2').hasText('EmberJS MIT License');
+    assert.dom('.content-page h2').hasText('MIT Licenses');
     assert.dom('.license-text').exists();
     assert.dom('.content-page').includesText('Travis CI relies on multiple Open-Source modules');
   });
@@ -25,7 +25,7 @@ module('Acceptance | licensing', function (hooks) {
     await visit('/licensing');
 
     assert.notEqual(currentURL(), '/licensing');
-    // Should redirect to auth page
-    assert.ok(currentURL().includes('auth'));
+    // Should redirect to signin page
+    assert.ok(currentURL().includes('/signin'));
   });
 });
