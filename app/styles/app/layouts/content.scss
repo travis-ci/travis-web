@@ -84,12 +84,25 @@
 .licensing-page {
   text-align: left;
   max-width: none;
+  padding-top: inherit;
 
   .licensing-toc {
     list-style: disc inside;
     margin: 0 0 20px 0;
     padding: 0;
     color: $oxide-blue;
+    column-count: 1;
+
+    @media #{$medium-up} {
+      column-count: 2;
+      column-gap: 24px;
+
+      // Put the 3rd item at the top of the second column
+      li:nth-child(3) {
+        -webkit-column-break-before: always; // Safari/WebKit
+        break-before: column; // Standard
+      }
+    }
 
     li {
       margin: 4px 0;
@@ -97,17 +110,19 @@
 
     a {
       color: $oxide-blue;
-      text-decoration: underline;
+      text-decoration: none;
 
       &:hover {
         color: darken($oxide-blue, 10);
+        text-decoration: none;
       }
     }
   }
 
   .licensing-title {
     font-size: 28px;
-    color: $oxide-blue;
+    margin-top: 0;
+    color: $asphalt-grey;
     margin-bottom: 20px;
     text-align: left;
   }
@@ -136,6 +151,11 @@
     font-size: 20px;
     margin: 20px 0 10px 0;
     color: $turf-green;
+    scroll-margin-top: $top-height-mobile + 24px;
+
+    @media #{$medium-up} {
+      scroll-margin-top: $top-height + 24px;
+    }
   }
 }
 
@@ -166,4 +186,24 @@
 // Headings inside licensing page
 .licensing-heading-tertiary {
   color: $oxide-blue;
+  font-weight: bold;
+  scroll-margin-top: $top-height-mobile + 24px;
+
+  @media #{$medium-up} {
+    scroll-margin-top: $top-height + 24px;
+  }
+
+  .licensing-anchor {
+    margin-left: 6px;
+    text-decoration: none;
+    color: $oxide-blue;
+    opacity: 0.6;
+    font-weight: normal;
+
+    &:hover {
+      text-decoration: underline;
+      opacity: 1;
+      color: darken($oxide-blue, 10);
+    }
+  }
 }
