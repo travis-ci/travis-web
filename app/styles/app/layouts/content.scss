@@ -156,6 +156,20 @@
     @media #{$medium-up} {
       scroll-margin-top: $top-height + 24px;
     }
+
+    .licensing-anchor {
+      margin-left: 6px;
+      text-decoration: none;
+      color: $turf-green;
+      opacity: 0.6;
+      font-weight: normal;
+
+      &:hover {
+        text-decoration: underline;
+        opacity: 1;
+        color: darken($turf-green, 10);
+      }
+    }
   }
 }
 
