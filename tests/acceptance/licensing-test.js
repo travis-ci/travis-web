@@ -16,7 +16,7 @@ module('Acceptance | licensing', function (hooks) {
 
     assert.equal(currentURL(), '/licensing');
     assert.dom('.content-page h1').hasText('Licensing Information');
-    assert.dom('.content-page h2').hasText('MIT Licenses');
+    assert.dom('.content-page h2').hasText('MIT Licenses #');
     assert.dom('.license-text').exists();
     assert.dom('.content-page').includesText('Travis CI relies on multiple Open-Source modules');
   });
