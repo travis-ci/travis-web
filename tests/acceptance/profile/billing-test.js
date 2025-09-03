@@ -446,7 +446,7 @@ module('Acceptance | profile/billing', function (hooks) {
   test('view billing on a manual plan with no invoices', async function (assert) {
     this.subscription.source = 'manual';
     this.subscription.status = undefined;
-    this.subscription.valid_to = new Date(2025, 7, 16).toISOString();
+    this.subscription.valid_to = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)).toISOString();
 
     await profilePage.visit();
     await profilePage.billing.visit();
