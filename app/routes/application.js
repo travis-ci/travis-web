@@ -149,7 +149,10 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     error(error) {
       if (error === 'needs-auth') {
         const currentURL = new URL(window.location.href);
-        const redirectUrl = currentURL.href;
+        // Avoid redirecting back to the signin page and prevent nested redirectUrl
+        currentURL.searchParams.delete('redirectUrl');
+        const isSignin = currentURL.pathname.includes('/signin');
+        const redirectUrl = isSignin ? `${window.location.origin}/` : currentURL.href;
         const queryParams = { redirectUrl };
         return this.router.transitionTo('signin', { queryParams });
       } else {

@@ -39,12 +39,27 @@ export default Component.extend({
         const createdAt = image.createdAt ? image.createdAt.toString() : '';
         const ago = moment(createdAt).fromNow();
         this.set('page', 1);
-        return image.name.toLowerCase().includes(filter.toLowerCase())
+
+        if (image.name.toLowerCase().includes(filter.toLowerCase())
           || createdByName.toLowerCase().includes(filter.toLowerCase())
           || (image.osVersion && image.osVersion.toLowerCase().includes(filter.toLowerCase()))
-          || image.usage.toString() === filter
           || createdAt.toLowerCase().includes(filter.toLowerCase())
-          || ago.toLowerCase().includes(filter.toLowerCase());
+          || ago.toLowerCase().includes(filter.toLowerCase())) {
+          return true;
+        }
+
+        const filterLower = filter.toLowerCase().trim();
+        if ('used'.startsWith(filterLower)) {
+          return true;
+        }
+
+        const match = filterLower.match(/^used\s+(\d+)/);
+        if (match) {
+          const targetUsage = parseInt(match[1], 10);
+          return image.usage === targetUsage;
+        }
+
+        return false;
       });
     }
     return customImages;

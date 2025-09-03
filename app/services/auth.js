@@ -156,7 +156,7 @@ export default Service.extend({
     this.set('state', STATE.SIGNING_IN);
     const url = new URL(this.redirectUrl || window.location.href);
 
-    if (['/signin', '/plans', '/integration/bitbucket'].includes(url.pathname)) {
+    if (['/signin', '/plans', '/integration/bitbucket', '/licensing'].includes(url.pathname)) {
       url.pathname = '/';
     }
     const providerSegment = provider ? `/${provider}` : '';
@@ -169,7 +169,7 @@ export default Service.extend({
 
     const url = new URL(this.redirectUrl || window.location.href);
 
-    if (['/signin', '/plans', '/integration/bitbucket'].includes(url.pathname)) {
+    if (['/signin', '/plans', '/integration/bitbucket', '/licensing'].includes(url.pathname)) {
       url.pathname = '/';
     }
     const providerSegment = provider ? `/${provider}` : '';
