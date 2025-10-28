@@ -2,7 +2,7 @@
   <div class="error-text">
     Your confirmation link is expired or invalid.
     We need you to verify your contact address. Please check your email to retrieve your confirmation link.
-   {{#if model.signedIn}}
+   {{#if this.model.signedIn}}
      If you need a new confirmation email, please
      <LinkTo @route="account.settings">go to Settings to resend your confirmation email</LinkTo>.
    {{else}}
