@@ -2,11 +2,11 @@
   <div class="error-text">
     Your confirmation link is expired or invalid.
     We need you to verify your contact address. Please check your email to retrieve your confirmation link.
-   {{#if model.signedIn}}
-     If you need to a new confirmation email, please
-    <a class="link" href="/account/preferences" target="_blank">GENERATE NEW TOKEN</a>
+   {{#if this.model.signedIn}}
+     If you need a new confirmation email, please
+     <LinkTo @route="account.settings">go to Settings to resend your confirmation email</LinkTo>.
    {{else}}
-     Log in to generate the new token.
+     Log in to resend your confirmation email.
    {{/if}}
   </div>
 

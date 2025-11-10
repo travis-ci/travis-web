@@ -8,22 +8,22 @@ export default TravisRoute.extend({
 
   beforeModel(transition) {
     const { token } = transition.to.params;
-    const that = this;
-    this.api.get(`/auth/confirm_user/${token}`, {'travisApiVersion': null})
+    return this.api.get(`/auth/confirm_user/${token}`, {'travisApiVersion': null})
       .then(() => {
         if (this.auth.signedIn) {
-          that.auth.sync()
-            .then(() => that.transitionTo('/'));
+          return this.auth.sync()
+            .then(() => this.transitionTo('/'));
         } else {
-          that.transitionTo('/');
+          return this.transitionTo('/');
         }
       })
-      .catch(_error => _error);
+      .catch(_error => {
+      });
   },
 
   model() {
     return {
-      signedIn: this.auth.signedIn
+      signedIn: this.get('auth.signedIn')
     };
   },
 });
