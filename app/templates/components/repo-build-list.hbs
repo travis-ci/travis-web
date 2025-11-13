@@ -1,15 +1,15 @@
-<LoadMore
-  @dynamicQuery={{this.buildsLoader}}
-  @liveItems={{this.builds}}
-  as |loader|
->
-  {{#if loader.isNoneFound}}
-    <MissingNotice @title={{@missingNotice}} />
-  {{else}}
+{{#if loader.isNoneFound}}
+  <MissingNotice @title={{@missingNotice}} />
+{{else}}
+  <LoadMore
+    @dynamicQuery={{this.buildsLoader}}
+    @liveItems={{this.builds}}
+    as |loader|
+  >
     <ul class="build-list">
       {{#each loader.items as |build|}}
         <BuildsItem @build={{build}} @vcsType={{@repo.vcsType}} />
       {{/each}}
     </ul>
-  {{/if}}
-</LoadMore>
+  </LoadMore>
+{{/if}}
