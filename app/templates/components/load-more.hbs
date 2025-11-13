@@ -3,7 +3,7 @@
   <div>
     {{#if this.dynamicQuery.isLoading}}
       <LoadingIndicator />
-    {{else if (and this.dynamicQuery.hasNextPage (or (not loader) (not loader.isNoneFound)))}}
+    {{else if (and this.dynamicQuery.hasNextPage (not this.isNoneFound))}}
       <ShowMoreButton @click={{action 'showMore'}} />
     {{/if}}
   </div>
