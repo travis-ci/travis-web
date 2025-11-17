@@ -1,4 +1,10 @@
 .custom-images {
+  .ellipsis {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .missing-notice {
     margin-top: 10rem;
   }
