@@ -166,20 +166,21 @@ export default Component.extend({
     },
   }),
 
-  allowedTrial: computed('availablePlans', 'subscription.{isActive,plan}', function () {
+  allowedTrial: computed('availablePlans', 'subscription.{isActive,plan,status}', function () {
     const sub = this.subscription;
-    console.log('1. Full Subscription Object:', sub);
 
-    console.log('1. Full this Object:', this);
-
-    console.log('this.subscription.isActive ==', this.subscription.isActive);
-    console.log('this.isCurrentTrial ==', this.isCurrentTrial);
-
-    if (this.subscription && (this.subscription.isActive || this.isCurrentTrial)) {
-      console.log('yayyy... In the if block')
+    if (this.isCurrentTrial) {
+      console.log('-> Blocked: User is currently on a trial');
       return false;
     }
 
+    if (sub && sub.status === 'subscribed') {
+      console.log('-> Blocked: User status is "subscribed"');
+      return false;
+    }
+
+    // Condition 3: Otherwise, allow based on account permissions
+    console.log('-> check passed, returning account.trialAllowed:', this.account.trialAllowed);
     return this.account.trialAllowed;
   }),
 
