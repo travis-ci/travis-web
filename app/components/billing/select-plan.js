@@ -169,15 +169,14 @@ export default Component.extend({
   allowedTrial: computed('availablePlans', 'subscription.{isActive,plan}', function () {
     const sub = this.subscription;
     console.log('1. Full Subscription Object:', sub);
-    // --- DEBUG START ---
-    console.log('%c allowedTrial Triggered', 'color: orange; font-weight: bold;');
-    console.log('1. Subscription exists?', !!this.subscription);
-    console.log('2. Plan exists?', this.subscription ? !!this.subscription.plan : 'No subscription');
-    console.log('3. Is Active?', this.subscription ? this.subscription.isActive : 'N/A');
-    console.log('4. Account Trial Allowed?', this.account.trialAllowed);
-    // --- DEBUG END ---
+
+    console.log('1. Full this Object:', this);
+
+    console.log('this.subscription.isActive ==', this.subscription.isActive);
+    console.log('this.isCurrentTrial ==', this.isCurrentTrial);
 
     if (this.subscription && (this.subscription.isActive || this.isCurrentTrial)) {
+      console.log('yayyy... In the if block')
       return false;
     }
 
