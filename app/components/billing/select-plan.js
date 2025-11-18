@@ -169,7 +169,6 @@ export default Component.extend({
   allowedTrial: computed('availablePlans', 'subscription.{isActive,plan}', function () {
     const sub = this.subscription;
     console.log('1. Full Subscription Object:', sub);
-    console.log('1. Full this Object:', this);
     // --- DEBUG START ---
     console.log('%c allowedTrial Triggered', 'color: orange; font-weight: bold;');
     console.log('1. Subscription exists?', !!this.subscription);
