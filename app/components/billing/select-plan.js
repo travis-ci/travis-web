@@ -166,7 +166,8 @@ export default Component.extend({
     },
   }),
 
-  allowedTrial: computed('availablePlans', function () {
+  allowedTrial: computed('availablePlans','account.trialAllowed','isCurrentTrial', function () {
+    console.log('-> check passed, returning account.trialAllowed:', this.account.trialAllowed);
     return !this.isCurrentTrial && this.account.trialAllowed;
   }),
 
