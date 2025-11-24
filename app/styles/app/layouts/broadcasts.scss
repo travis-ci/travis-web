@@ -22,7 +22,6 @@
   height: 0;
   transform-origin: center center;
   opacity: 0;
-  pointer-events: none;
   will-change: opacity;
   transition: opacity 150ms ease;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.15);
@@ -59,7 +58,6 @@
     @include z-index(above-flashes);
     opacity: 1;
     height: auto;
-    pointer-events: auto;
   }
 
   @media #{$medium-up} {
