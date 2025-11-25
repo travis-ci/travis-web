@@ -1,4 +1,10 @@
 .custom-images {
+  .ellipsis {
+    width: 185px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .missing-notice {
     margin-top: 10rem;
   }
@@ -159,7 +165,7 @@
 
     .dash-image-name {
       position: relative;
-      flex: 0 0 30%;
+      flex: 0 0 22%;
     }
 
     .dash-size {

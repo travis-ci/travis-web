@@ -26,7 +26,7 @@
       </h1>
     </header>
     <section class="fade-out dash-image-name">
-      <h1 class="row-content">
+      <h1 class="row-content ellipsis" title="{{this.image.name}}">
         {{this.image.name}}
       </h1>
       <h2 class="row-label">
@@ -45,7 +45,7 @@
       <h3 class="label">
         Author
       </h3>
-      <p class="row-content color">
+      <p class="row-content color ellipsis" title="{{this.image.createdByName}}">
         <UserAvatar @url={{this.image.createdBy.avatar_url}} @name={{this.image.createdByName}} @size={{15}} @small={{true}} />
         <span class="label-align">
         {{this.image.createdByName}}
@@ -56,7 +56,7 @@
       <h3 class="label">
         OS Distribution
       </h3>
-      <p class="row-content color">
+      <p class="row-content color ellipsis" title="{{this.image.osVersion}}">
         <SvgImage @name="icon-linux" @class="icon" />
         <span class="label-align">
           {{this.image.osVersion}}
