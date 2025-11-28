@@ -33,7 +33,7 @@
             {{#if (or (and plan.isAnnual this.showAnnual) (and (not plan.isAnnual) (not this.showAnnual)))}}
               <div
                 data-test-plan-box='true'
-                class='billing-plans__box-v2 pointer {{if (or (eq plan.id this.selectedPlan.id) (eq plan.concurrencyLimit 5)) "highlight-plan"}}'
+                class='billing-plans__box-v2 pointer {{if this.selectedPlan.id (if (eq plan.id this.selectedPlan.id) "highlight-plan") (if (eq plan.concurrencyLimit 5) "highlight-plan")}}'
                 onclick={{action (mut this.selectedPlan) plan}}
               >
                 <p class='billing-plans__box-v2--name billing-annual-plans' data-test-selected-plan-name="true">
@@ -147,12 +147,6 @@
       <h2>
         Looking for more credits, users or VM sizes? <a class='credits-calculator-button' href="mailto:sales@travis-ci.com">Contact our Sales Team</a>
       </h2>
-      <p class="mac_os_additional_credits">
-        MacOS builds need additional credits. See our
-        <a class="documentation-link" href="https://docs.travis-ci.com/user/billing-overview/#usage---credits">
-          documentation for details.
-        </a>
-      </p>
       {{#if this.showCalculator}}
         <Billing::CreditsCalculator
           @hideCalculator={{action 'hideCalculator'}}
