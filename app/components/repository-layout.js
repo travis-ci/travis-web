@@ -22,10 +22,11 @@ export default Component.extend({
   }),
 
   repositoryType: computed('repo.serverType', function () {
+    console.log('repo serverType:', this.repo.serverType);
     switch (this.repo.serverType) {
       case 'git':
         return 'GIT';
-      case 'subversion':
+      case 'svn':
         return 'SVN';
       case 'perforce':
         return 'P4';
