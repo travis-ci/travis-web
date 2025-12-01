@@ -45,7 +45,7 @@ class Travis::Web::App
          options[:environment] == 'staging'
         builder.use Rack::SSL, hsts: Travis.config.ssl.hsts
       end
-      # Temporarily disable Rack::Deflater for Rack 3.x compatibility testing
+      # Rack::Deflater disabled to avoid double-compression issues with Rack 3.x
       # builder.use Rack::Deflater
       builder.use Rack::Head
       builder.use Rack::Protection::XSSHeader
