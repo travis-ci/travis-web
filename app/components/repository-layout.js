@@ -22,7 +22,6 @@ export default Component.extend({
   }),
 
   repositoryType: computed('repo.serverType', function () {
-    console.log('repo serverType:', this.repo.serverType);
     switch (this.repo.serverType) {
       case 'git':
         return 'GIT';
