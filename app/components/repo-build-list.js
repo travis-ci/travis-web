@@ -32,7 +32,8 @@ export default Component.extend({
       event_type: eventTypes,
       limit,
       offset,
-      representation: 'list'
+      representation: 'list',
+      noInclude: true
     });
   },
 
