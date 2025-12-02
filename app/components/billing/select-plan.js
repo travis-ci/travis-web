@@ -166,8 +166,18 @@ export default Component.extend({
     },
   }),
 
-  allowedTrial: computed('availablePlans', function () {
-    return !this.isCurrentTrial && this.account.trialAllowed;
+  allowedTrial: computed('availablePlans', 'subscription.{isActive,plan,status}', 'isCurrentTrial', function () {
+    const subscription = this.subscription;
+
+    if (this.isCurrentTrial) {
+      return false;
+    }
+
+    if (subscription && subscription.status === 'subscribed') {
+      return false;
+    }
+
+    return this.account.trialAllowed;
   }),
 
   allowReactivation: computed(function () {
