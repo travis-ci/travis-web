@@ -32,7 +32,7 @@ export default Component.extend({
     switch (this.repository.serverType) {
       case 'git':
         return 'GIT';
-      case 'subversion':
+      case 'svn':
         return 'SVN';
       case 'perforce':
         return 'P4';
