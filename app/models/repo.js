@@ -253,6 +253,7 @@ const Repo = VcsEntity.extend({
     this.store.subscribe(builds, 'build', {
       event_type: ['push', 'api', 'cron', 'release'],
       repository_id: id,
+      representation: 'list'
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron', 'release'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
