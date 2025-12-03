@@ -244,6 +244,7 @@ const Repo = VcsEntity.extend({
     const builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron', 'release'],
       repository_id: id,
+      representation: 'list'
     }, (b) => {
       let eventTypes = ['push', 'api', 'cron', 'release'];
       return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
