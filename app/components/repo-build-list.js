@@ -31,9 +31,7 @@ export default Component.extend({
       repository_id: repoId,
       event_type: eventTypes,
       limit,
-      offset,
-      representation: 'list',
-      noInclude: true
+      offset
     });
   },
 
