@@ -37,8 +37,7 @@ export default Mixin.create({
   _constructOptions(type) {
     let options = {
       repository_id: this.get('repo.id'),
-      offset: this.get('builds.length'),
-      representation: 'list'
+      offset: this.get('builds.length')
     };
     if (type != null) {
       options.event_type = type.replace(/s$/, '');

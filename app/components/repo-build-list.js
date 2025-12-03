@@ -31,7 +31,8 @@ export default Component.extend({
       repository_id: repoId,
       event_type: eventTypes,
       limit,
-      offset
+      offset,
+      representation: 'list'
     });
   },
 
