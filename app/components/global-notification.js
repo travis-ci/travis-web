@@ -34,23 +34,25 @@ export default Component.extend({
     return time;
   }),
 
-  isBalanceNegativeProfile: computed('model.allowance.publicRepos', 'model.allowance.privateRepos', function () {
+  isBalanceNegativeProfile: computed('model.allowance.publicRepos', 'model.allowance.privateRepos', 'features.enterpriseVersion', function () {
     const allowance = this.model?.allowance;
     if (!allowance) {
       return;
     }
     return allowance.get('subscriptionType') !== 3 && (this.isOrganizationAdmin || this.model.isUser)
-      && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false);
+      && (allowance.get('privateRepos') === false || allowance.get('publicRepos') === false)
+      && !this.features.get('enterpriseVersion');
   }),
 
-  isBalanceNegativeRepo: computed('repo.allowance', function () {
+  isBalanceNegativeRepo: computed('repo.allowance', 'features.enterpriseVersion', function () {
     const repo = this.get('repo');
     if (!repo) {
       return;
     }
     const allowance = repo.get('allowance');
     return allowance && allowance.get('subscriptionType') !== 3 && this.isProVersion && !repo.canOwnerBuild
-      && this.auth.currentUser && this.auth.currentUser.confirmedAt;
+      && this.auth.currentUser && this.auth.currentUser.confirmedAt
+      && !this.features.get('enterpriseVersion');
   }),
 
   isTemporaryAnnouncementBannerEnabled: computed(function () {
@@ -59,11 +61,12 @@ export default Component.extend({
     return isBannerEnabled && isNewBannerMessage;
   }),
 
-  hasNoPlan: computed('model.allowance.subscriptionType', 'model.hasV2Subscription', 'model.subscription', function () {
+  hasNoPlan: computed('model.allowance.subscriptionType', 'model.hasV2Subscription', 'model.subscription', 'features.enterpriseVersion', function () {
     return !this.get('model.hasV2Subscription')
               && this.get('model.subscription') === undefined
               && this.get('model.allowance.subscriptionType') === 3
-              && !(this.get('model.isUser') && this.get('model.isAssembla'));
+              && !(this.get('model.isUser') && this.get('model.isAssembla'))
+              && !this.features.get('enterpriseVersion');
   }),
 
   isUnconfirmed: computed('user.confirmedAt', function () {
