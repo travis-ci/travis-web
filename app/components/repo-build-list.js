@@ -30,7 +30,8 @@ export default Component.extend({
     return store.query('build', {
       repository_id: repoId,
       event_type: eventTypes,
-      limit, offset
+      limit,
+      offset
     });
   },
 
