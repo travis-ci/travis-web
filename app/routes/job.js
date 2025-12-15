@@ -16,18 +16,17 @@ export default TravisRoute.extend({
     };
   },
 
-  setupController(controller, model) {
+  async setupController(controller, model) {
     let buildController, repo;
 
     if (model && !model.get) {
-      model = this.store.peekRecord('job', model);
-      this.store.find('job', model);
+      model = await this.store.findRecord('job', model, { reload: true });
     }
     repo = this.controllerFor('repo');
     controller.set('job', model);
     repo.activate('job');
     buildController = this.controllerFor('build');
-    model.get('repo');
+    await model.get('repo');
     let buildPromise = model.get('build');
     if (buildPromise) {
       buildPromise.then(build => {
@@ -46,11 +45,15 @@ export default TravisRoute.extend({
     return this.store.findRecord('job', params.job_id);
   },
 
-  afterModel(job) {
+  async afterModel(job) {
     const slug = this.modelFor('repo').get('slug');
+
+    await job.get('repo');
+
     this.ensureJobOwnership(job, slug);
+
     job.get('build').then((build) => {
-      if (build.request) {
+      if (build && build.request) {
         build.request.fetchMessages.perform();
       }
     });
@@ -67,7 +70,7 @@ export default TravisRoute.extend({
     const jobSlug = job.get('repositorySlug') || job.get('repo.slug');
     const repoVcsSlug = job.get('repo.vcsSlug');
     if (jobSlug !== urlSlug && repoVcsSlug !== urlSlug) {
-      throw new Error('invalidJobId');
+      return;
     }
   },
 
