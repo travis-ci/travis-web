@@ -5,7 +5,7 @@ export default TravisRoute.extend({
   auth: service(),
   store: service(),
 
-  model(params) {
+  model() {
     let currentUserId = this.get('auth.currentUser.id');
     let eventTypes = ['api', 'pull_request', 'push', 'release'];
     let query = {
