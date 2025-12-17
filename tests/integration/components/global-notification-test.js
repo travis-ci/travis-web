@@ -117,4 +117,47 @@ module('Integration | Component | global notification', function (hooks) {
       assert.dom('.enterprise-banner-seats').exists();
     });
   });
+
+  test('does not render no plan banner for enterprise users', async function (assert) {
+    assert.expect(1);
+    enableFeature('enterpriseVersion');
+
+    let user = EmberObject.create({
+      hasV2Subscription: false,
+      subscription: undefined,
+      allowance: EmberObject.create({
+        subscriptionType: 3
+      }),
+      vcsType: 'Organization'
+    });
+    this.set('activeModel', user);
+    await render(hbs`{{global-notification activeModel=this.activeModel}}`);
+
+    settled().then(() => {
+      assert.dom('[data-test-no-plan-banner]').doesNotExist('no plan banner should not render for enterprise users');
+    });
+  });
+
+  test('does not render negative balance banner for enterprise users', async function (assert) {
+    assert.expect(1);
+    enableFeature('enterpriseVersion');
+
+    let user = EmberObject.create({
+      isUser: true,
+      allowance: EmberObject.create({
+        subscriptionType: 2,
+        privateRepos: false,
+        publicRepos: true
+      }),
+      permissions: {
+        admin: true
+      }
+    });
+    this.set('activeModel', user);
+    await render(hbs`{{global-notification activeModel=this.activeModel}}`);
+
+    settled().then(() => {
+      assert.dom('[data-test-flash-message-text]').doesNotExist('negative balance banner should not render for enterprise users');
+    });
+  });
 });
