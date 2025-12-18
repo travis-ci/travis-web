@@ -7,7 +7,7 @@ module('Acceptance | job/invalid log', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('viewing invalid job shows error', async function (assert) {
+  test('viewing job with correct repository slug loads successfully', async function (assert) {
     const user = this.server.create('user', {login: 'travis-ci'});
     this.server.create('allowance', {subscription_type: 1});
     this.server.create('repository', {
