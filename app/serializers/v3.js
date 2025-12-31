@@ -252,8 +252,10 @@ export default JSONSerializer.extend({
         relationshipHashes.forEach((relationshipHash) => {
           let meta = relationshipHash.meta || {};
           let relationshipIncluded = relationshipHash.included || [];
+          let relationshipType = relationshipHash.data?.type;
 
-          if (meta.representation === 'standard') {
+          if (meta.representation === 'standard' ||
+              (meta.representation === 'minimal' && relationshipType === 'branch')) {
             included.push(relationshipHash.data);
           }
 
