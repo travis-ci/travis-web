@@ -79,6 +79,9 @@
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-os="true">
                     <SvgImage @name="stage-passed" @class="icon icon-desc" /> Premium VMs available
                   </p>
+                  <p class='billing-plans__box-v2--desc' data-test-selected-plan-custom-images="true">
+                    <SvgImage @name="stage-passed" @class="icon icon-desc" /> Linux Customized Images
+                  </p>
                 {{else}}
                   <p class='billing-plans__box-v2--desc' data-test-selected-plan-jobs="true">
                     <SvgImage @name="stage-passed" @class="icon icon-desc" /> {{pluralize plan.concurrencyLimit "concurrent job"}}
