@@ -5,6 +5,7 @@ import { alias } from '@ember/object/computed';
 
 export default Route.extend({
   auth: service(),
+  cookies: service(),
   tabStates: service(),
   repositories: service(),
   features: service(),
@@ -16,6 +17,10 @@ export default Route.extend({
     let redirect = this.get('features.redirect');
     if (!this.auth.signedIn && config.environment !== 'test' && pro && redirect) {
       window.location.replace('https://www.travis-ci.com');
+    }
+
+    if (this.auth.signedIn) {
+      this.cookies.setSignedInCookie(true);
     }
   },
 
