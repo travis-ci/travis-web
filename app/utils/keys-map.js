@@ -17,6 +17,8 @@ languageConfigKeys = {
   erlang: 'Erlang',
   ghc: 'GHC',
   go: 'Go',
+  groovy: 'Groovy',
+  hhvm: 'Hack (HHVM)',
   haskell: 'Haskell',
   haxe: 'Haxe',
   java: 'Java',
